@@ -710,6 +710,8 @@ BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer , "Team Fortress 2 Playe
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetCustomAttribute, "GetCustomAttribute", "Get a custom attribute float from the player" )
 
 	DEFINE_SCRIPTFUNC_WRAPPED( StunPlayer, "" )
+
+	DEFINE_SCRIPTFUNC_WRAPPED(GenerateAndWearItem, "Give me an item!")
 END_SCRIPTDESC();
 
 
