@@ -83,7 +83,7 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 			}
 		}
 		
-		if ( !TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat() )
+		if ( !TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() != 0.0f && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat() )
 		{
 			return Done( "Time to push for the objective" );
 		}
