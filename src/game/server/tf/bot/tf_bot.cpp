@@ -2053,7 +2053,7 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		switch( flag->GetType() )
 		{
 		case TF_FLAGTYPE_CTF:
-			if ( flag->GetTeamNumber() == GetEnemyTeam( GetTeamNumber() ) )
+			if ( flag->GetTeamNumber() != GetTeamNumber() )
 			{
 				// we want to steal the other team's flag
 				flagsVector.AddToTail( flag );
@@ -2063,6 +2063,9 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		case TF_FLAGTYPE_ATTACK_DEFEND:
 		case TF_FLAGTYPE_TERRITORY_CONTROL:
 		case TF_FLAGTYPE_INVADE:
+		case TF_FLAGTYPE_RESOURCE_CONTROL:
+		case TF_FLAGTYPE_ROBOT_DESTRUCTION:
+		case TF_FLAGTYPE_PLAYER_DESTRUCTION:
 			if ( flag->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) )
 			{
 				// we want to move our team's flag or a neutral flag
@@ -2167,7 +2170,7 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 	for( int i=0; i<ICaptureZoneAutoList::AutoList().Count(); ++i )
 	{
 		CCaptureZone *zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
-		if ( zone->GetTeamNumber() == GetTeamNumber() )
+		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
 		{
 			return zone;
 		}
