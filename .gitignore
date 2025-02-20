@@ -502,3 +502,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# TF-SOLO
+game/mod_tf/
