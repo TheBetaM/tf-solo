@@ -20886,6 +20886,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) c
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the red cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
+					{
+						m_redPayloadToPush = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -20904,6 +20913,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) c
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the blue cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
+					{
+						m_bluePayloadToPush = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -20943,6 +20961,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the red cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
+					{
+						m_redPayloadToBlock = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -20969,6 +20996,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the blue cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
+					{
+						m_bluePayloadToBlock = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
