@@ -22,8 +22,8 @@
 
 using namespace vgui;
 
-ConVar tf_spec_xray_disable( "tf_spec_xray_disable", "0", FCVAR_ARCHIVE, "Disable the spectator xray mode." );
-ConVar tf_enable_glows_after_respawn( "tf_enable_glows_after_respawn", "1", FCVAR_ARCHIVE, "Enable teammate glow effects after respawn." );
+ConVar tf_spec_xray_disable( "tf_spec_xray_disable", "1", FCVAR_ARCHIVE, "Disable the spectator xray mode." );
+ConVar tf_enable_glows_after_respawn( "tf_enable_glows_after_respawn", "0", FCVAR_ARCHIVE, "Enable teammate glow effects after respawn." );
 
 DECLARE_HUDELEMENT( CTFHudSpectatorExtras );
 
