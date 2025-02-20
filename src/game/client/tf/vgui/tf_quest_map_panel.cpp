@@ -1229,6 +1229,7 @@ void CQuestMapPanel::GoToCurrentQuest()
 
 CON_COMMAND( show_quest_log, "Show the quest map panel" )
 {
+	/*
 	if ( GetQuestMapPanel()->IsVisible() )
 	{
 		engine->ClientCmd_Unrestricted( "gameui_hide" );
@@ -1248,4 +1249,5 @@ CON_COMMAND( show_quest_log, "Show the quest map panel" )
 			GetQuestMapPanel()->GoToCurrentQuest();
 		}
 	}
+	*/
 }

@@ -926,6 +926,10 @@ void CTFMatchmakingDashboard::OnCreateServer()
 	ClearAllStacks();
 	// Just call the command directly
 	engine->ClientCmd_Unrestricted( "gamemenucommand OpenCreateMultiplayerGameDialog" );
+	if (!engine->IsInGame())
+	{
+		engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
+	}
 }
 
 void CTFMatchmakingDashboard::OnPlayEvent()
