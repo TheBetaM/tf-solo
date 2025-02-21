@@ -2283,6 +2283,10 @@ float CTFBot::GetTimeLeftToCapture( void ) const
 			return TFGameRules()->GetKothTeamTimer( GetEnemyTeam( GetTeamNumber() ) )->GetTimeRemaining();
 		}
 	}
+	else if ( TFGameRules()->IsInArenaMode() )
+	{
+		return 0.0f;
+	}
 	else if ( TFGameRules()->GetActiveRoundTimer() )
 	{
 		return TFGameRules()->GetActiveRoundTimer()->GetTimeRemaining();
