@@ -251,16 +251,22 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
 	{
-		// push the cart
-		if ( me->GetTeamNumber() == TF_TEAM_BLUE )
+		if (TFGameRules()->HasMultipleTrains())
 		{
-			// blu is pushing
 			return new CTFBotPayloadPush;
 		}
-		else if ( me->GetTeamNumber() == TF_TEAM_RED )
+		else
 		{
-			// red is blocking
-			return new CTFBotPayloadGuard;
+			if (me->GetTeamNumber() == TF_TEAM_BLUE)
+			{
+				// blu is pushing
+				return new CTFBotPayloadPush;
+			}
+			else if (me->GetTeamNumber() == TF_TEAM_RED)
+			{
+				// red is blocking
+				return new CTFBotPayloadGuard;
+			}
 		}
 	}
 	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP )
