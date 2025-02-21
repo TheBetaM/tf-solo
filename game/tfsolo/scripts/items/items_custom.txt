@@ -13,15 +13,56 @@
 				"heavy"	"1"
 			}
 		}
+		"weapon_test1"
+		{
+			"item_name"	"Degreaser Two"
+			"static_attrs"
+			{
+				"weapon burn dmg reduced"				"0.30"
+			}
+		}
+		"weapon_test2"
+		{
+			"item_name"	"Degreaser Three"
+			"static_attrs"
+			{
+				"weapon burn dmg reduced"				"0.25"
+			}
+		}
+		"weapon_test3"
+		{
+			"item_name"	"Degreaser Four"
+			"static_attrs"
+			{
+				"weapon burn dmg reduced"				"0.99"
+			}
+		}
 	}
 	"items"
 	{
 		"34444"
 		{
-			"name"	"The Other Degreaser"
-			"prefab" "weapon_degreaser paintkit_base"
+			"name"	"Degreaser Two"
+			"prefab" "weapon_test1 weapon_degreaser paintkit_base"
 			"particle_suffix"	"degreaser"
 			"baseitem" "0"
+			"soloitem" "1"
+		}
+		"34445"
+		{
+			"name"	"Degreaser Three"
+			"prefab" "weapon_test2 weapon_degreaser paintkit_base"
+			"particle_suffix"	"degreaser"
+			"baseitem" "0"
+			"soloitem" "1"
+		}
+		"34446"
+		{
+			"name"	"Degreaser Four"
+			"prefab" "weapon_test3 weapon_degreaser paintkit_base"
+			"particle_suffix"	"degreaser"
+			"baseitem" "0"
+			"soloitem" "1"
 		}
 	}
 }
