@@ -1,0 +1,27 @@
+#base items_game.txt
+
+"items_game"
+{
+	"prefabs"
+	{
+		"weapon_russian_riot"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"pyro"	"1"
+				"heavy"	"1"
+			}
+		}
+	}
+	"items"
+	{
+		"34444"
+		{
+			"name"	"The Other Degreaser"
+			"prefab" "weapon_degreaser paintkit_base"
+			"particle_suffix"	"degreaser"
+			"baseitem" "0"
+		}
+	}
+}
