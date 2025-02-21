@@ -197,6 +197,7 @@ void CBaseAchievement::Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pA
 //-----------------------------------------------------------------------------
 void CBaseAchievement::IncrementCount( int iOptIncrement )
 {
+	return;
 	if ( !IsAchieved() && LocalPlayerCanEarn() )
 	{
 		if ( !AlwaysEnabled() && !m_pAchievementMgr->CheckAchievementsEnabled() )
@@ -421,7 +422,7 @@ void CBaseAchievement::EnsureComponentBitSetAndEvaluate( int iBitNumber )
 	{				
 		if ( !AlwaysEnabled() && !m_pAchievementMgr->CheckAchievementsEnabled() )
 		{
-			Msg( "Achievements disabled, ignoring achievement component for %s\n", GetName() );
+			//Msg( "Achievements disabled, ignoring achievement component for %s\n", GetName() );
 			return;
 		}
 

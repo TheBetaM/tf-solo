@@ -893,7 +893,7 @@ void CAchievementMgr::AwardAchievement( int iAchievementID )
 
 	if ( !pAchievement->AlwaysEnabled() && !CheckAchievementsEnabled() )
 	{
-		Msg( "Achievements disabled, ignoring achievement unlock for %s\n", pAchievement->GetName() );
+		//Msg( "Achievements disabled, ignoring achievement unlock for %s\n", pAchievement->GetName() );
 		return;
 	}
 
@@ -971,6 +971,7 @@ void CAchievementMgr::AwardAchievement( int iAchievementID )
 //-----------------------------------------------------------------------------
 void CAchievementMgr::UpdateAchievement( int iAchievementID, int nData )
 {
+	return;
 	CBaseAchievement *pAchievement = GetAchievementByID( iAchievementID );
 	Assert( pAchievement );
 	if ( !pAchievement )
@@ -1028,7 +1029,7 @@ bool CAchievementMgr::CheckAchievementsEnabled()
 	// if PC, Steam must be running and user logged in
 	if ( IsPC() && !LoggedIntoSteam() )
 	{
-		Msg( "Achievements disabled: Steam not running.\n" );
+		//Msg( "Achievements disabled: Steam not running.\n" );
 		return false;
 	}
 
@@ -1109,7 +1110,7 @@ bool CAchievementMgr::CheckAchievementsEnabled()
 			// on Steam public
 			if ( developer.GetInt() == 0 || ( k_EUniverseInvalid == GetUniverse() ) || ( k_EUniversePublic == GetUniverse() ) )
 			{
-				Msg( "Achievements disabled: cheats turned on in this app session.\n" );
+				//Msg( "Achievements disabled: cheats turned on in this app session.\n" );
 				return false;
 			}
 #endif
@@ -1834,6 +1835,7 @@ void CAchievementMgr::SetAchievementThink( CBaseAchievement *pAchievement, float
 
 void CAchievementMgr::UpdateStateFromSteam_Internal()
 {
+	return;
 #ifndef NO_STEAM
 	// run through the achievements and set their achieved state according to Steam data
 	FOR_EACH_MAP( m_mapAchievement, i )

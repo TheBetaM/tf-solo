@@ -250,6 +250,7 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 //-----------------------------------------------------------------------------
 void CTFSteamStats::UploadStats()
 {
+	return;
 	if ( IsX360() )
 	{
 		ReportLiveStats();
