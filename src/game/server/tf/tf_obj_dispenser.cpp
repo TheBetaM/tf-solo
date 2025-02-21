@@ -874,7 +874,7 @@ void CObjectDispenser::StopHealing( CBaseEntity *pOther )
 			float flHealingDone = pPlayer->m_Shared.StopHealing( this );
 			if ( GetBuilder() && pOther != GetBuilder() && flHealingDone > 0 )
 			{
-				GetBuilder()->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_DISPENSER_HEAL_GRIND, floor( flHealingDone ) );
+				//GetBuilder()->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_DISPENSER_HEAL_GRIND, floor( flHealingDone ) );
 
 				if ( GetBuilder()->GetTeam() == pOther->GetTeam() )
 				{
