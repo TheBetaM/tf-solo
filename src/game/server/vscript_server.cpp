@@ -3503,7 +3503,9 @@ REGISTER_SCRIPT_CONST_TABLE( Server )
 				}
 				g_VScriptGameEventListener.Init();
 
+				VScriptRunScript( "tfsolo_init", false );
 				VScriptRunScript( "mapspawn", false );
+				VScriptRunScript( "tfsolo_postinit", false );
 
 				if ( script_connect_debugger_on_mapspawn.GetBool() )
 				{
