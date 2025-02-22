@@ -105,6 +105,10 @@ public:
 
 	bool RemoveBotFromTeamAndKick( int nTeam );
 
+	void SetBotPresetsFile( CUtlString path );
+
+	KeyValues* m_presetsKV;
+
 protected:
 	void MaintainBotQuota();
 	void SetIsInOfflinePractice( bool bIsInOfflinePractice );

@@ -333,6 +333,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 	const char *teamname = "auto";
 	const char *pszBotNameViaArg = NULL;
 	CTFBot::DifficultyType skill = clamp( (CTFBot::DifficultyType)tf_bot_difficulty.GetInt(), CTFBot::EASY, CTFBot::EXPERT );
+	const char *preset = NULL;
 
 	int i;
 	for( i=1; i<args.ArgC(); ++i )
@@ -341,7 +342,12 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 		int nArgAsInteger = atoi( args.Arg(i) );
 
 		// each argument could be a classname, a team, a difficulty level, a count, or a name
-		if ( IsPlayerClassname( args.Arg(i) ) )
+		if (!stricmp(args.Arg(i), "preset"))
+		{
+			i++;
+			preset = args.Arg(i);
+		}
+		else if ( IsPlayerClassname( args.Arg(i) ) )
 		{
 			classname = args.Arg(i);
 		}
@@ -412,7 +418,12 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 
 		if ( pBot ) 
 		{
-			if ( bQuotaManaged )
+			if (preset != NULL)
+			{
+				CUtlString spreset(preset);
+				pBot->SetPreset(spreset);
+			}
+			if ( bQuotaManaged || preset != NULL )
 			{
 				pBot->SetAttribute( CTFBot::QUOTA_MANANGED );
 			}
@@ -422,14 +433,17 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			pBot->SetDifficulty( skill );
 
 			// if no class is set, auto-select one
-			const char *thisClassname = classname ? classname : pBot->GetNextSpawnClassname();
-			pBot->HandleCommand_JoinClass( thisClassname );
+			const char* thisClassname = classname ? classname : pBot->GetNextSpawnClassname();
+			pBot->HandleCommand_JoinClass(thisClassname);
 
-			// set up a proper name now that we are in training
-			if ( TFGameRules()->IsInTraining() )
+			if (preset != NULL)
 			{
-				CreateBotName( pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name) );
-				engine->SetFakeClientConVarValue( pBot->edict(), "name", name );
+				// set up a proper name now that we are in training
+				if (TFGameRules()->IsInTraining())
+				{
+					CreateBotName(pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name));
+					engine->SetFakeClientConVarValue(pBot->edict(), "name", name);
+				}
 			}
 
 			++iNumAdded;
@@ -709,6 +723,9 @@ DEFINE_SCRIPTFUNC( IsBehaviorFlagSet, "Return true if the given behavior flag(s)
 
 DEFINE_SCRIPTFUNC_WRAPPED( SetActionPoint, "Set the given action point for this bot" )
 DEFINE_SCRIPTFUNC_WRAPPED( GetActionPoint, "Get the given action point for this bot" )
+
+DEFINE_SCRIPTFUNC_WRAPPED( GetPreset, "GetPreset", "Get the preset for this bot");
+DEFINE_SCRIPTFUNC_WRAPPED( SetPreset, "SetPreset", "Set the preset for this bot");
 
 END_SCRIPTDESC();
 
@@ -1355,6 +1372,8 @@ void CTFBot::Spawn()
 	SetBrokenFormation( false );
 
 	GetVisionInterface()->ForgetAllKnownEntities();
+
+	SpawnCustom();
 }
 
 
@@ -1428,7 +1447,7 @@ void CTFBot::PhysicsSimulate( void )
 	// If we're dead, choose a new class.
 	// We need to do this outside of the behavior system, since changing class can
 	// sometimes force an immediate respawn, which will destroy the bot's existing actions out from under it.
-	if ( !IsAlive() && !m_didReselectClass && tf_bot_keep_class_after_death.GetBool() == false && TFGameRules()->CanBotChangeClass( this ) )
+	if ( !IsAlive() && !m_didReselectClass && tf_bot_keep_class_after_death.GetBool() == false && TFGameRules()->CanBotChangeClass( this ) && !GetPreset() )
 	{
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 			return;
@@ -4994,4 +5013,169 @@ float CTFBot::GetUberDeployDelayDuration()
 	}
 	
 	return -1.f;
+}
+
+void CTFBot::SpawnCustom()
+{
+	if (!m_preset || m_preset == "")
+	{
+		return;
+	}
+
+	auto preset = TheTFBots().m_presetsKV->FindKey(m_preset);
+	if (!preset)
+	{
+		Msg("Bot preset not found.\n");
+		return;
+	}
+
+	RemovePlayerAttributes(false);
+
+	if (preset->FindKey("Name"))
+	{
+		engine->SetFakeClientConVarValue(edict(), "name", preset->GetString("Name"));
+	}
+	int iClassIndex = 0;
+	if (preset->FindKey("Class"))
+	{
+		HandleCommand_JoinClass(preset->GetString("Class"));
+		iClassIndex = GetClassIndexFromString(preset->GetString("Class"));
+	}
+	if (preset->FindKey("Team"))
+	{
+		ChangeTeam(preset->GetInt("Team"), false, true);
+	}
+
+	auto kConds = preset->FindKey("Conds");
+	if (kConds)
+	{
+		FOR_EACH_SUBKEY(kConds, kCond)
+		{
+			ETFCond cond = static_cast<ETFCond>(kCond->GetInt());
+			m_Shared.AddCond(cond);
+		}
+	}
+
+	if (preset->FindKey("Scale"))
+	{
+		SetScaleOverride(preset->GetFloat("Scale"));
+	}
+	if (preset->FindKey("Miniboss"))
+	{
+		SetIsMiniBoss(true);
+	}
+	if (preset->FindKey("Robot") && iClassIndex != 0)
+	{
+		if (preset->FindKey("Miniboss") && g_pFullFileSystem->FileExists(g_szBotBossModels[iClassIndex]))
+		{
+			GetPlayerClass()->SetCustomModel(g_szBotBossModels[iClassIndex], USE_CLASS_ANIMATIONS);
+			UpdateModel();
+			SetBloodColor(DONT_BLEED);
+		}
+		else if (g_pFullFileSystem->FileExists(g_szBotModels[iClassIndex]))
+		{
+			GetPlayerClass()->SetCustomModel(g_szBotModels[iClassIndex], USE_CLASS_ANIMATIONS);
+			UpdateModel();
+			SetBloodColor(DONT_BLEED);
+		}
+	}
+
+	if (preset->FindKey("Skill"))
+	{
+		auto skill = static_cast<DifficultyType>(preset->GetInt("Skill"));
+		SetDifficulty(skill);
+	}
+
+	ClearWeaponRestrictions();
+	if (preset->FindKey("WeaponRestrictions"))
+	{
+		SetWeaponRestriction(preset->GetInt("WeaponRestrictions"));
+	}
+	if (preset->FindKey("Mission"))
+	{
+		auto mission = static_cast<MissionType>(preset->GetInt("Mission"));
+		SetMission(mission);
+	}
+
+	ClearAllAttributes();
+	auto kBAttrs = preset->FindKey("BotAttributes");
+	if (kBAttrs)
+	{
+		FOR_EACH_SUBKEY(kBAttrs, kBAttr)
+		{
+			SetAttribute(kBAttr->GetInt());
+		}
+	}
+	SetAttribute(CTFBot::QUOTA_MANANGED);
+	
+	if (preset->FindKey("MaxVisionRange"))
+	{
+		SetMaxVisionRangeOverride(preset->GetFloat("MaxVisionRange"));
+	}
+
+	auto kAttrs = preset->FindKey("Attributes");
+	if (kAttrs)
+	{
+		FOR_EACH_SUBKEY(kAttrs, kAttr)
+		{
+			const CEconItemAttributeDefinition* pAttrDef = GetItemSchema()->GetAttributeDefinitionByName(kAttr->GetName());
+			GetAttributeList()->SetRuntimeAttributeValue(pAttrDef, kAttr->GetFloat());
+		}
+	}
+
+	NetworkStateChanged();
+
+	if (preset->FindKey("Health"))
+	{
+		ModifyMaxHealth(preset->GetInt("Health"));
+		SetHealth(preset->GetInt("Health"));
+	}
+
+	auto kItems = preset->FindKey("Items");
+	if (kItems)
+	{
+		FOR_EACH_SUBKEY(kItems, kItem)
+		{
+			auto itemName = kItem->GetName();
+			AddItem(itemName);
+			if (kItem->GetFirstSubKey())
+			{
+				CSchemaItemDefHandle itemDef(itemName);
+				for (int iItemSlot = LOADOUT_POSITION_PRIMARY; iItemSlot < CLASS_LOADOUT_POSITION_COUNT; iItemSlot++)
+				{
+					CEconEntity* pEntity = NULL;
+					CEconItemView* pCurItemData = CTFPlayerSharedUtils::GetEconItemViewByLoadoutSlot(this, iItemSlot, &pEntity);
+					if (pCurItemData && itemDef && (pCurItemData->GetItemDefIndex() == itemDef->GetDefinitionIndex()))
+					{
+						FOR_EACH_SUBKEY(kItem, kAttr)
+						{
+							CAttributeList* pAttribList = pCurItemData->GetAttributeList();
+							if (pAttribList)
+							{
+								const CEconItemAttributeDefinition* pAttrDef = GetItemSchema()->GetAttributeDefinitionByName(kAttr->GetName());
+								pAttribList->SetRuntimeAttributeValue(pAttrDef, kAttr->GetFloat());
+							}
+						}
+
+						if (pEntity)
+						{
+							pEntity->UpdateModelToClass();
+						}
+
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	ClearTags();
+	auto kTags = preset->FindKey("Tags");
+	if (kTags)
+	{
+		FOR_EACH_SUBKEY(kTags, kTag)
+		{
+			AddTag(kTag->GetName());
+		}
+	}
 }

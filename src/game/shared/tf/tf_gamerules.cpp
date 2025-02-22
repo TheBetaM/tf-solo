@@ -22410,6 +22410,8 @@ bool	ScriptGetOvertimeAllowedForCTF()							{ return TFGameRules()->GetOvertimeA
 void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUpgrades( nState ); }
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
 
+void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
+
 void CTFGameRules::RegisterScriptFunctions()
 {
 	TF_GAMERULES_SCRIPT_FUNC( GetRoundState,							"Get current round state. See Constants.ERoundState" );
@@ -22466,6 +22468,8 @@ void CTFGameRules::RegisterScriptFunctions()
 
 	TF_GAMERULES_SCRIPT_FUNC( ForceEnableUpgrades,						"Whether to force on MvM-styled upgrades on/off. 0 -> default, 1 -> force off, 2 -> force on" );
 	TF_GAMERULES_SCRIPT_FUNC( ForceEscortPushLogic,						"Forces payload pushing logic. 0 -> default, 1 -> force off, 2 -> force on" );
+
+	TF_GAMERULES_SCRIPT_FUNC( SetBotPresetsFile,						"Reload bot presets file from this path" );
 
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }

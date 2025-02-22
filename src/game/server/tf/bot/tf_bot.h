@@ -488,6 +488,12 @@ public:
 	bool ShouldReEvaluateCurrentClass( void ) const;
 	void ReEvaluateCurrentClass( void );
 
+	void SpawnCustom( void );
+	CUtlString GetPreset() { return m_preset; }
+	void SetPreset(CUtlString preset) { m_preset = preset; }
+	CUtlString ScriptGetPreset() { return GetPreset(); }
+	void ScriptSetPreset(const char* preset) { SetPreset(preset); }
+
 private:
 	CTFBotLocomotion	*m_locomotor;
 	CTFBotBody			*m_body;
@@ -578,6 +584,8 @@ private:
 	CHandle< CCaptureFlag > m_hFollowingFlagTarget;
 
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
+
+	CUtlString m_preset;
 };
 
 

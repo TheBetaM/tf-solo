@@ -111,6 +111,7 @@ void CTFBotManager::OnMapLoaded( void )
 	NextBotManager::OnMapLoaded();
 
 	ClearStuckBotData();
+	SetBotPresetsFile("cfg/bot_presets.txt");
 }
 
 
@@ -867,4 +868,13 @@ void CTFBotManager::DrawStuckBotData( float deltaT )
 	}
 }
 
-
+//----------------------------------------------------------------------------------------------------------------
+void CTFBotManager::SetBotPresetsFile(CUtlString path)
+{
+	m_presetsKV = new KeyValues("bot_presets");
+	if (!m_presetsKV->LoadFromFile(g_pFullFileSystem, path, "GAME"))
+	{
+		Msg("Unable to parse bot_presets.txt into keyvalues.\n");
+		return;
+	}
+}

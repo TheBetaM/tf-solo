@@ -153,6 +153,7 @@ ActionResult< CTFBot >	CTFBotMainAction::Update( CTFBot *me, float interval )
 	if ( tf_bot_reevaluate_class_in_spawnroom.GetBool() &&
 	     !TFGameRules()->IsMannVsMachineMode() && 
 		 !TFGameRules()->IsInTraining() && 
+		 !me->GetPreset() &&
 		 myArea && myArea->HasAttributeTF( spawnRoomFlag ) )
 	{
 		if ( !m_reevaluateClassTimer.HasStarted() )
