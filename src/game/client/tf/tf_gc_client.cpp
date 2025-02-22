@@ -305,7 +305,7 @@ void CTFGCClientSystem::InvalidatePingData()
 }
 
 
-// Backoff api
+/* Backoff api
 void CTFGCClientSystem::WebapiInventoryState_t::Backoff()
 {
 	if ( m_nBackoffSec == 0 )
@@ -326,14 +326,14 @@ bool CTFGCClientSystem::WebapiInventoryState_t::IsBackingOff()
 {
 	return m_rtNextRequest != 0 && CRTime::RTime32TimeCur() <= m_rtNextRequest;
 }
-
+*/
 void CTFGCClientSystem::WebapiInventoryThink()
 {
 	WebapiInventoryState_t &state = m_WebapiInventory;
 
 	// Early out if we are waiting backoff timer
-	if ( state.IsBackingOff() )
-		return;
+	//if ( state.IsBackingOff() )
+	//	return;
 
 	switch ( state.m_eState )
 	{
@@ -354,7 +354,7 @@ void CTFGCClientSystem::WebapiInventoryThink()
 		state.m_hSteamAuthTicket = SteamUser()->GetAuthTicketForWebApi( "tf2sdk" );
 		if ( state.m_hSteamAuthTicket == k_HAuthTicketInvalid )
 		{
-			state.Backoff();
+			//state.Backoff();
 			return;
 		}
 
@@ -417,7 +417,7 @@ void CTFGCClientSystem::WebapiInventoryThink()
 		SteamAPICall_t callResult;
 		if ( !SteamHTTP()->SendHTTPRequest( state.m_hInventoryRequest, &callResult ) )
 		{
-			state.Backoff();
+			//state.Backoff();
 			return;
 		}
 
@@ -626,7 +626,7 @@ void CTFGCClientSystem::OnWebapiAuthTicketReceived( GetTicketForWebApiResponse_t
 		return;
 
 	// This is our ticket.  Assume failure for now, we'll correct this if we find it worked.
-	state.Backoff();
+	//state.Backoff();
 	state.m_eState = kWebapiInventoryState_RequestAuthToken;
 
 	// Check that the request succeeded
@@ -642,7 +642,7 @@ void CTFGCClientSystem::OnWebapiAuthTicketReceived( GetTicketForWebApiResponse_t
 	memcpy( state.m_bufAuthToken.Base(), pInfo->m_rgubTicket, pInfo->m_cubTicket );
 
 	// Success
-	state.RequestSucceeded();
+	//state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_AuthTokenReceived;
 }
 
@@ -657,7 +657,7 @@ void CTFGCClientSystem::OnWebapiServerAuthTicketReceived( GetTicketForWebApiResp
 		return;
 
 	// This is our ticket.  Assume failure for now, we'll correct this if we find it worked.
-	state.Backoff();
+	//state.Backoff();
 	state.m_eState = kWebapiInventoryState_RequestServerAuthToken;
 
 	// Check that the request succeeded
@@ -673,7 +673,7 @@ void CTFGCClientSystem::OnWebapiServerAuthTicketReceived( GetTicketForWebApiResp
 	memcpy( state.m_bufServerAuthToken.Base(), pInfo->m_rgubTicket, pInfo->m_cubTicket );
 
 	// Success
-	state.RequestSucceeded();
+	//state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_ServerAuthTokenReceived;
 }
 
@@ -707,7 +707,7 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 	}
 
 	// Assume failure -- we'll correct this if this isn't the case
-	state.Backoff();
+	//state.Backoff();
 	state.m_eState = kWebapiInventoryState_RequestInventory;
 
 	// This is our handle -- we'll free it by the end of this.
@@ -800,7 +800,7 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 	}
 
 	// We were successful, clear backoff timers
-	state.RequestSucceeded();
+	//state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_InventoryReceived;
 }
 

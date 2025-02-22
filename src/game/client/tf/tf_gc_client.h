@@ -356,11 +356,11 @@ private:
 		bool m_bLocalChangesApplied = false;
 
 		// Backoff
-		RTime32 m_rtNextRequest = 0;
-		int m_nBackoffSec = 0;
-		void Backoff();
-		void RequestSucceeded();	// resets backoff timers
-		bool IsBackingOff();
+		//RTime32 m_rtNextRequest = 0;
+		//int m_nBackoffSec = 0;
+		//void Backoff();
+		//void RequestSucceeded();	// resets backoff timers
+		//bool IsBackingOff();
 	};
 	WebapiInventoryState_t m_WebapiInventory;
 
