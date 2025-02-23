@@ -201,7 +201,8 @@ void CCharacterInfoPanel::ShowPanel(bool bShow)
 			C_TFPlayer *pLocal = C_TFPlayer::GetLocalTFPlayer();
 			if ( pLocal && pLocal->m_Shared.IsLoadoutUnavailable() )
 			{
-				OpenServerNotConnectedToSteamDialog( this );
+				Msg("Online loadout unavailable.");
+				//OpenServerNotConnectedToSteamDialog( this );
 			}
 		}
 	}

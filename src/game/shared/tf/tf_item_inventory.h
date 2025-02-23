@@ -196,7 +196,7 @@ public:
 	// Returns the item data for the base item in the loadout slot for a given class
 	CEconItemView		*GetBaseItemForClass( int iClass, int iSlot );
 	void				GenerateBaseItems( void );
-	void				AddSoloItem( int id );
+	CEconItemView		*AddSoloItem( int id );
 
 	// Gets the specified inventory for the steam ID
 	CTFPlayerInventory	*GetInventoryForPlayer( const CSteamID &playerID );

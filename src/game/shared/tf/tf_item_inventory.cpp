@@ -218,6 +218,7 @@ CTFInventoryManager::CTFInventoryManager( void )
 CTFInventoryManager::~CTFInventoryManager( void )
 {
 	m_pBaseLoadoutItems.PurgeAndDeleteElements();
+	m_pSoloLoadoutItems.PurgeAndDeleteElements();
 }
 
 //-----------------------------------------------------------------------------
@@ -229,7 +230,7 @@ void CTFInventoryManager::PostInit( void )
 	GenerateBaseItems();
 }
 
-void CTFInventoryManager::AddSoloItem(int id)
+CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 {
 	CEconItemView* pItemView = new CEconItemView;
 	CEconItem* pItem = new CEconItem;
@@ -240,6 +241,7 @@ void CTFInventoryManager::AddSoloItem(int id)
 	pItemView->SetItemID(id);
 	pItemView->SetNonSOEconItem(pItem);
 	m_pSoloLoadoutItems.AddToTail(pItemView);
+	return pItemView;
 }
 
 //-----------------------------------------------------------------------------
@@ -1121,9 +1123,19 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	if (ulItemID < LOCAL_LOADOUT_RESERVE)
 	{
 		int count = TFInventoryManager()->GetSoloItemCount();
+		CEconItemView* pItem;
 		for (int i = 0; i < count; i++)
 		{
-			CEconItemView* pItem = TFInventoryManager()->GetSoloItem(i);
+			pItem = TFInventoryManager()->GetSoloItem(i);
+			if (pItem && pItem->GetItemDefIndex() == ulItemID)
+			{
+				pItem->GetSOCData()->Equip(unClass, unSlot);
+				break;
+			}
+		}
+		if (!pItem)
+		{
+			pItem = TFInventoryManager()->AddSoloItem(ulItemID);
 			if (pItem && pItem->GetItemDefIndex() == ulItemID)
 			{
 				pItem->GetSOCData()->Equip(unClass, unSlot);
@@ -1553,6 +1565,7 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 							return pItem;
 					}
 				}
+				return TFInventoryManager()->AddSoloItem(m_LoadoutItems[iClass][iSlot]);
 			}
 		}
 	}
