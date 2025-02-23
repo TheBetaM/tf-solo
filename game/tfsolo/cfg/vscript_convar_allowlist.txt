@@ -214,6 +214,7 @@ vscript_convar_allowlist
     tf_bot_pyro_shove_away_range                                      allowed
     tf_bot_quota                                                      allowed
     tf_bot_quota_mode                                                 allowed
+    tf_bot_quota_use_presets                                          allowed
     tf_bot_reevaluate_class_in_spawnroom                              allowed
     tf_bot_retreat_to_cover_range                                     allowed
     tf_bot_sniper_aim_error                                           allowed

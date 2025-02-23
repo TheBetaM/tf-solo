@@ -42,6 +42,7 @@ ConVar nav_generate_fixup_jump_areas( "nav_generate_fixup_jump_areas", "1", FCVA
 ConVar nav_generate_jump_connections( "nav_generate_jump_connections", "1", FCVAR_CHEAT, "If disabled, don't generate jump connections from jump areas" );
 ConVar nav_generate_incremental_range( "nav_generate_incremental_range", "2000", FCVAR_CHEAT );
 ConVar nav_generate_incremental_tolerance( "nav_generate_incremental_tolerance", "0", FCVAR_CHEAT, "Z tolerance for adding new nav areas." );
+ConVar nav_generate_noreload( "nav_generate_noreload", "1", FCVAR_CHEAT, "Reload only the navmesh after generation/analysis instead of the entire map." );
 ConVar nav_area_max_size( "nav_area_max_size", "50", FCVAR_CHEAT, "Max area size created in nav generation" );
 
 // Common bounding box for traces
@@ -4025,7 +4026,14 @@ bool CNavMesh::UpdateGeneration( float maxTime )
 			}
 			else if ( restart )
 			{
-				engine->ChangeLevel( STRING( gpGlobals->mapname ), NULL );
+				if (nav_generate_noreload.GetInt() == 0)
+				{
+					engine->ChangeLevel(STRING(gpGlobals->mapname), NULL);
+				}
+				else
+				{
+					Load();
+				}
 			}
 			else
 			{
