@@ -25,6 +25,7 @@ static CTFBotManager sTFBotManager;
 ConVar tf_bot_difficulty( "tf_bot_difficulty", "1", FCVAR_NONE, "Defines the skill of bots joining the game.  Values are: 0=easy, 1=normal, 2=hard, 3=expert." );
 ConVar tf_bot_quota( "tf_bot_quota", "0", FCVAR_NONE, "Determines the total number of tf bots in the game." );
 ConVar tf_bot_quota_mode( "tf_bot_quota_mode", "normal", FCVAR_NONE, "Determines the type of quota.\nAllowed values: 'normal', 'fill', and 'match'.\nIf 'fill', the server will adjust bots to keep N players in the game, where N is bot_quota.\nIf 'match', the server will maintain a 1:N ratio of humans to bots, where N is bot_quota." );
+ConVar tf_bot_quota_use_presets("tf_bot_quota_use_presets", "0", FCVAR_NONE, "Set a random preset to every bot added by quota.");
 ConVar tf_bot_join_after_player( "tf_bot_join_after_player", "1", FCVAR_NONE, "If nonzero, bots wait until a player joins before entering the game." );
 ConVar tf_bot_auto_vacate( "tf_bot_auto_vacate", "1", FCVAR_NONE, "If nonzero, bots will automatically leave to make room for human players." );
 ConVar tf_bot_offline_practice( "tf_bot_offline_practice", "0", FCVAR_NONE, "Tells the server that it is in offline practice mode." );
@@ -473,16 +474,50 @@ void CTFBotManager::MaintainBotQuota()
 			{
 				pBot->SetAttribute( CTFBot::QUOTA_MANANGED );
 
-				// join a team before we pick our class, since we use our teammates to decide what class to be
-				pBot->HandleCommand_JoinTeam( "auto" );
+				if (tf_bot_quota_use_presets.GetInt() != 0)
+				{
+					int count = 0;
+					auto key = m_presetsKV->GetFirstSubKey();
+					while (key)
+					{
+						key = key->GetNextKey();
+						count++;
+					}
+					int rand = RandomInt(0, count - 1);
+					count = 0;
+					const char* preset = "";
+					key = m_presetsKV->GetFirstSubKey();
+					while (key)
+					{
+						if (count == rand)
+						{
+							preset = key->GetName();
+							break;
+						}
+						else
+						{
+							key = key->GetNextKey();
+							count++;
+						}
+					}
+					
+					pBot->SetPreset(preset);
+					pBot->HandleCommand_JoinTeam("auto");
+					pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
+				}
+				else
+				{
+					// join a team before we pick our class, since we use our teammates to decide what class to be
+					pBot->HandleCommand_JoinTeam("auto");
 
-				pBot->HandleCommand_JoinClass( pBot->GetNextSpawnClassname() );
+					pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
 
-				// give the bot a proper name
-				char name[256];
-				CTFBot::DifficultyType skill = pBot->GetDifficulty();
-				CreateBotName( pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof( name ) );
-				engine->SetFakeClientConVarValue( pBot->edict(), "name", name );
+					// give the bot a proper name
+					char name[256];
+					CTFBot::DifficultyType skill = pBot->GetDifficulty();
+					CreateBotName(pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name));
+					engine->SetFakeClientConVarValue(pBot->edict(), "name", name);
+				}
 
 				// Keep track of any bots we add during a match
 				CMatchInfo *pMatchInfo = GTFGCClientSystem()->GetMatch();
