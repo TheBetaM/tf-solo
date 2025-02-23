@@ -13636,6 +13636,27 @@ void CTFPlayer::StateEnterWELCOME( void )
 
 		ChangeTeam( TEAM_SPECTATOR );
 	}
+	else if (IsFakeClient() == false)
+	{
+		m_bSeenRoundInfo = true;
+		if (TFGameRules() && TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY)
+		{
+			ChangeTeam(TFGameRules()->GetAssignedHumanTeam(), false, true);
+			ShowViewPortPanel((GetTeamNumber() == TF_TEAM_BLUE) ? PANEL_CLASS_BLUE : PANEL_CLASS_RED);
+		}
+		else
+		{
+			if (ShouldForceAutoTeam())
+			{
+				ChangeTeam(GetAutoTeam(), true, true);
+				ShowViewPortPanel((GetTeamNumber() == TF_TEAM_BLUE) ? PANEL_CLASS_BLUE : PANEL_CLASS_RED);
+			}
+			else
+			{
+				ShowViewPortPanel(PANEL_MAPINFO, true);
+			}
+		}
+	}
 	else if ( (TFGameRules() && TFGameRules()->IsLoadingBugBaitReport()) )
 	{
 		m_bSeenRoundInfo = true;
