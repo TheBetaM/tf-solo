@@ -344,6 +344,8 @@ public:
 
 	virtual bool	PointsMayBeCaptured( void ) OVERRIDE;
 
+	int				GetAssignedHumanClass(void);
+
 #ifdef GAME_DLL
 public:
 	virtual void	Precache( void );

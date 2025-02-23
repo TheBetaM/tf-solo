@@ -796,12 +796,13 @@ ConVar tf_autobalance_dead_candidates_maxtime( "tf_autobalance_dead_candidates_m
 ConVar tf_autobalance_force_candidates_maxtime( "tf_autobalance_force_candidates_maxtime", "5", FCVAR_REPLICATED );
 ConVar tf_autobalance_xp_bonus( "tf_autobalance_xp_bonus", "500", FCVAR_REPLICATED );
 
-
+ConVar mp_humans_must_join_class("mp_humans_must_join_class", "any", FCVAR_REPLICATED, "Restricts human players to a single class {any, scout, soldier, etc.}");
 #ifdef GAME_DLL
 
 static const float g_flStrangeEventBatchProcessInterval = 30.0f;
 
 ConVar mp_humans_must_join_team("mp_humans_must_join_team", "any", FCVAR_REPLICATED, "Restricts human players to a single team {any, blue, red, spectator}" );
+
 
 void cc_tf_medieval_changed( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -22475,3 +22476,25 @@ void CTFGameRules::RegisterScriptFunctions()
 }
 
 #endif // GAME_DLL
+
+//-----------------------------------------------------------------------------
+// Purpose: Restrict class human players can join
+//-----------------------------------------------------------------------------
+int CTFGameRules::GetAssignedHumanClass(void)
+{
+	auto cvar = mp_humans_must_join_class.GetString();
+	if (!cvar)
+	{
+		return TF_CLASS_UNDEFINED;
+	}
+
+	for (int i = TF_CLASS_SCOUT; i < TF_CLASS_COUNT_ALL; ++i)
+	{
+		if (!stricmp(cvar, GetPlayerClassData(i)->m_szClassName))
+		{
+			return i;
+		}
+	}
+
+	return TF_CLASS_UNDEFINED;
+}

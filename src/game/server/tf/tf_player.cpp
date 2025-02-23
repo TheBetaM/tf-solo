@@ -3335,7 +3335,7 @@ void CTFPlayer::InitialSpawn( void )
 
 	ResetScores();
 	StateEnter( TF_STATE_WELCOME );
-	UpdateInventory( true );
+	//UpdateInventory(true);
 
 	ResetAccumulatedSentryGunDamageDealt();
 	ResetAccumulatedSentryGunKillCount();
@@ -6694,6 +6694,10 @@ void CTFPlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAu
 
 		ResetPlayerClass();
 	}
+	if ( !IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	{
+		SetDesiredPlayerClassIndex(TFGameRules()->GetAssignedHumanClass());
+	}
 
 	RemoveNemesisRelationships();
 
@@ -6771,6 +6775,14 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	if ( TFGameRules()->State_Get() == GR_STATE_GAME_OVER )
 	{
 		return;
+	}
+	if (!IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	{
+		if (stricmp(pClassName, GetPlayerClassData(TFGameRules()->GetAssignedHumanClass())->m_szClassName))
+		{
+			ClientPrint(this, HUD_PRINTCENTER, "#TF_CantChangeClassNow");
+			return;
+		}
 	}
 
 // 	if ( TFGameRules()->ArePlayersInHell() && ( m_Shared.m_iDesiredPlayerClass > TF_CLASS_UNDEFINED ) )
@@ -13639,22 +13651,26 @@ void CTFPlayer::StateEnterWELCOME( void )
 	else if (IsFakeClient() == false)
 	{
 		m_bSeenRoundInfo = true;
-		if (TFGameRules() && TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY)
+		if (TFGameRules() && (TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam()))
 		{
-			ChangeTeam(TFGameRules()->GetAssignedHumanTeam(), false, true);
-			ShowViewPortPanel((GetTeamNumber() == TF_TEAM_BLUE) ? PANEL_CLASS_BLUE : PANEL_CLASS_RED);
-		}
-		else
-		{
+			int team = TFGameRules()->GetAssignedHumanTeam();
 			if (ShouldForceAutoTeam())
 			{
-				ChangeTeam(GetAutoTeam(), true, true);
-				ShowViewPortPanel((GetTeamNumber() == TF_TEAM_BLUE) ? PANEL_CLASS_BLUE : PANEL_CLASS_RED);
+				team = GetAutoTeam();
+			}
+			if (TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+			{
+				MarkTeamJoinTime();
 			}
 			else
 			{
-				ShowViewPortPanel(PANEL_MAPINFO, true);
+				ChangeTeam(team, false, true);
+				ShowViewPortPanel((GetTeamNumber() == TF_TEAM_BLUE) ? PANEL_CLASS_BLUE : PANEL_CLASS_RED);
 			}
+		}
+		else
+		{
+			ShowViewPortPanel(PANEL_MAPINFO, true);
 		}
 	}
 	else if ( (TFGameRules() && TFGameRules()->IsLoadingBugBaitReport()) )
@@ -13733,6 +13749,20 @@ void CTFPlayer::StateThinkWELCOME( void )
 			ChangeTeam( iTeam != TEAM_ANY ? iTeam : TF_TEAM_BLUE );
 			SetDesiredPlayerClassIndex( iClass );
 			ForceRespawn();
+		}
+		else
+		{
+			if (TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED && (TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam()))
+			{
+				int team = TFGameRules()->GetAssignedHumanTeam();
+				if (ShouldForceAutoTeam())
+				{
+					team = GetAutoTeam();
+				}
+				ChangeTeam(team, false, true);
+				SetDesiredPlayerClassIndex(TFGameRules()->GetAssignedHumanClass());
+				ForceRespawn();
+			}
 		}
 	}
 }
@@ -14665,6 +14695,11 @@ void CTFPlayer::ForceRespawn( void )
 		do{
 			iDesiredClass = random->RandomInt( TF_FIRST_NORMAL_CLASS, TF_LAST_NORMAL_CLASS );
 		} while( iDesiredClass == GetPlayerClass()->GetClassIndex() );
+	}
+
+	if (!IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	{
+		iDesiredClass = TFGameRules()->GetAssignedHumanClass();
 	}
 
 	if ( HasTheFlag() )

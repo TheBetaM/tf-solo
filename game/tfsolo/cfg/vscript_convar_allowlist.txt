@@ -39,6 +39,7 @@ vscript_convar_allowlist
     mp_friendlyfire                                                   allowed
     mp_highlander                                                     allowed
     mp_humans_must_join_team                                          allowed
+    mp_humans_must_join_class                                         allowed
     mp_match_end_at_timelimit                                         allowed
     mp_maxrounds                                                      allowed
     mp_respawnwavetime                                                allowed

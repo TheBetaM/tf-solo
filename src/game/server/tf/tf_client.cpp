@@ -95,6 +95,7 @@ void ClientPutInServer( edict_t *pEdict, const char *playername )
 	// Allocate a CBaseTFPlayer for pev, and call spawn
 	CTFPlayer *pPlayer = CTFPlayer::CreatePlayer( "player", pEdict );
 	pPlayer->SetPlayerName( playername );
+	pPlayer->UpdateInventory(true);
 }
 
 

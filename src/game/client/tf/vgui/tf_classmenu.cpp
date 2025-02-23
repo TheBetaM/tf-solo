@@ -642,11 +642,12 @@ void CTFClassMenu::ShowPanel( bool bShow )
 			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED
 			 && GetSpectatorMode() == OBS_MODE_NONE ) ||
 			 TFGameRules()->State_Get() == GR_STATE_GAME_OVER ||
+			 TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED ||
 			( TFGameRules()->IsInTraining() && C_TFPlayer::GetLocalTFPlayer() &&
 			  ( C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass() == NULL || C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
 		{
 			SetVisible( false );
-
+			/*
 			CHudNotificationPanel *pNotifyPanel = GET_HUDELEMENT( CHudNotificationPanel );
 			if ( pNotifyPanel )
 			{
@@ -655,7 +656,7 @@ void CTFClassMenu::ShowPanel( bool bShow )
 					pNotifyPanel->SetupNotifyCustom( "#TF_CantChangeClassNow", "ico_notify_flag_moving", C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() );
 				}
 			}
-
+			*/
 			return;
 		}
 
