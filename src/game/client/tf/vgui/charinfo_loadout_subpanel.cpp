@@ -508,8 +508,8 @@ void CCharInfoLoadoutSubPanel::OnCommand( const char *command )
 	if ( !Q_strnicmp( command, "loadout ", 8 ) )
 	{
 		// Ignore selection while we don't have a steam connection
-		if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
-			return;
+		//if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
+		//	return;
 
 		m_flStartExplanationsAt = 0;
 
@@ -611,7 +611,7 @@ void CCharInfoLoadoutSubPanel::RequestInventoryRefresh()
 	// Don't respond to the mouse if we don't have items
 	if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
 	{
-		ShowWaitingDialog( new CGenericWaitingDialog(this), "#NoSteamNoItems_Refresh", true, true, 30.0f );
+		//ShowWaitingDialog( new CGenericWaitingDialog(this), "#NoSteamNoItems_Refresh", true, true, 30.0f );
 		if ( !m_bRequestingInventoryRefresh )
 		{
 			// make sure the local inventory is added as a listener
@@ -757,7 +757,8 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 		}
 	}
 
-	if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
+	//if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
+	if (false)
 	{
 		bool bLoggedIntoSteam = steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn();
 		if ( m_pNoGCLabel ) 
@@ -859,7 +860,7 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 		int i = g_nLoadoutClassOrder[iPanel];
 		m_pClassButtons[i]->SetArmed( false );
 
-		m_pClassButtons[i]->SetEnabled( TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() );
+		m_pClassButtons[i]->SetEnabled( true );
 
 		if ( m_pClassButtons[i]->IsWithin( x,y ) && iBestZ < m_pClassButtons[i]->GetZPos() )
 		{
@@ -981,7 +982,7 @@ void CCharInfoLoadoutSubPanel::UpdateLabelFromSubButton( int nButton )
 		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "Loadout_OpenCraftingDesc" ) );
 		break;
 	case CHSB_ARMORY:
-		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "Loadout_OpenArmoryDesc" ) );
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenArmoryDesc" ) );
 		break;
 	case CHSB_TRADING:
 		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "Loadout_OpenTradingDesc" ) );
@@ -1024,7 +1025,7 @@ void CCharInfoLoadoutSubPanel::OnTick( void )
 	if ( m_bRequestingInventoryRefresh && TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
 	{
 		m_bRequestingInventoryRefresh = false;
-		CloseWaitingDialog();
+		//CloseWaitingDialog();
 		return;
 	}
 
@@ -1039,8 +1040,8 @@ void CCharInfoLoadoutSubPanel::OnTick( void )
 		return;
 
 	// Don't respond to the mouse if we don't have items
-	if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
-		return;
+	//if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
+	//	return;
 
 	if ( m_flStartExplanationsAt && m_flStartExplanationsAt < engine->Time() )
 	{

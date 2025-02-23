@@ -229,6 +229,19 @@ void CTFInventoryManager::PostInit( void )
 	GenerateBaseItems();
 }
 
+void CTFInventoryManager::AddSoloItem(int id)
+{
+	CEconItemView* pItemView = new CEconItemView;
+	CEconItem* pItem = new CEconItem;
+	pItem->m_ulID = id;
+	pItem->m_unAccountID = 0;
+	pItem->m_unDefIndex = id;
+	pItemView->Init(id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
+	pItemView->SetItemID(id);
+	pItemView->SetNonSOEconItem(pItem);
+	m_pSoloLoadoutItems.AddToTail(pItemView);
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Generate & store the base item details for each class & loadout slot
 //-----------------------------------------------------------------------------
@@ -256,15 +269,7 @@ void CTFInventoryManager::GenerateBaseItems( void )
 	iStart = 0;
 	for (int it = iStart; it != mapItemsSolo.InvalidIndex(); it = mapItemsSolo.NextInorder(it))
 	{
-		CEconItemView* pItemView = new CEconItemView;
-		CEconItem* pItem = new CEconItem;
-		pItem->m_ulID = mapItemsSolo[it]->GetDefinitionIndex();
-		pItem->m_unAccountID = 0;
-		pItem->m_unDefIndex = mapItemsSolo[it]->GetDefinitionIndex();
-		pItemView->Init(mapItemsSolo[it]->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
-		pItemView->SetItemID(mapItemsSolo[it]->GetDefinitionIndex());
-		pItemView->SetNonSOEconItem(pItem);
-		m_pSoloLoadoutItems.AddToTail(pItemView);
+		AddSoloItem(mapItemsSolo[it]->GetDefinitionIndex());
 	}
 }
 

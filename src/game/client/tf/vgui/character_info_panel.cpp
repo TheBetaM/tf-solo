@@ -576,7 +576,7 @@ ConCommand open_charinfo_direct( "open_charinfo_direct", Open_CharInfoDirect, "O
 //-----------------------------------------------------------------------------
 void Open_CharInfoBackpack( const CCommand &args )
 {
-	//EconUI()->OpenEconUI( ECONUI_BACKPACK );	
+	EconUI()->OpenEconUI( ECONUI_BACKPACK );	
 }
 ConCommand open_charinfo_backpack( "open_charinfo_backpack", Open_CharInfoBackpack, "Open the character info panel directly to backpack.", FCVAR_NONE );
 
@@ -594,7 +594,7 @@ ConCommand open_charinfo_crafting( "open_charinfo_crafting", Open_CharInfoCrafti
 //-----------------------------------------------------------------------------
 void Open_CharInfoArmory( const CCommand &args )
 {
-	//EconUI()->OpenEconUI( ECONUI_ARMORY );	
+	EconUI()->OpenEconUI( ECONUI_ARMORY );	
 }
 ConCommand open_charinfo_armory( "open_charinfo_armory", Open_CharInfoArmory, "Open the character info panel directly to armory.", FCVAR_NONE );
 

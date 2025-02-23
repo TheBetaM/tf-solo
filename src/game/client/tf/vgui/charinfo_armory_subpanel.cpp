@@ -64,6 +64,7 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 	m_pPrevPageButton = NULL;
 	m_pViewSetButton = NULL;
 	m_pStoreButton = NULL;
+	m_pWikiButton = NULL;
 	m_bAllowGotoStore = false;
 
 	m_pDataPanel = new vgui::EditablePanel( this, "DataPanel" );
@@ -113,6 +114,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pPrevPageButton = dynamic_cast<CExButton*>( FindChildByName("PrevPageButton") );
 	m_pViewSetButton = dynamic_cast<CExButton*>( FindChildByName("ViewSetButton") );
 	m_pStoreButton = dynamic_cast<CExButton*>( FindChildByName("StoreButton") );
+	m_pWikiButton = dynamic_cast<CExButton*>( FindChildByName("WikiButton") );
 
 	m_pDataTextRichText->SetURLClickedHandler( this );
 
@@ -355,6 +357,12 @@ void CArmoryPanel::OnCommand( const char *command )
 	}
 	else if ( !Q_stricmp( command, "wiki" ) )
 	{
+		if (IsVisible() && m_SelectedItem.IsValid())
+		{
+			TFInventoryManager()->AddSoloItem(m_SelectedItem.GetItemDefIndex());
+			m_pWikiButton->SetEnabled(false);
+		}
+		/*
 		if ( steamapicontext && steamapicontext->SteamFriends() )
 		{
 			if ( IsVisible() && m_SelectedItem.IsValid() )
@@ -372,6 +380,7 @@ void CArmoryPanel::OnCommand( const char *command )
 				C_CTF_GameStats.Event_Catalog( IE_ARMORY_BROWSE_WIKI, NULL, &m_SelectedItem );
 			}
 		}
+		*/
 	}
 	else if ( !Q_stricmp( command, "viewset" ) )
 	{
@@ -766,6 +775,21 @@ void CArmoryPanel::UpdateSelectedItem( void )
 	{
 		bool bShowStoreButton = m_bAllowGotoStore && EconUI()->GetStorePanel() && EconUI()->GetStorePanel()->GetPriceSheet() && EconUI()->GetStorePanel()->GetPriceSheet()->GetEntry( m_SelectedItem.GetItemDefIndex() );
 		m_pStoreButton->SetVisible( bShowStoreButton );
+	}
+
+	if (m_SelectedItem.IsValid())
+	{
+		m_pWikiButton->SetEnabled(true);
+		int count = TFInventoryManager()->GetSoloItemCount();
+		for (int i = 0; i < count; i++)
+		{
+			auto pItem = TFInventoryManager()->GetSoloItem(i);
+			if (pItem && pItem->GetItemDefIndex() == m_SelectedItem.GetItemDefIndex())
+			{
+				m_pWikiButton->SetEnabled(false);
+				break;
+			}
+		}
 	}
 }
 

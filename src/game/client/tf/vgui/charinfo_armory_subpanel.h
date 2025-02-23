@@ -133,6 +133,7 @@ private:
 
 	bool							m_bAllowGotoStore;
 	CExButton						*m_pStoreButton;
+	CExButton						*m_pWikiButton;
 
 	CPanelAnimationVar( int, m_iThumbnailRows, "thumbnails_rows", "1" );
 	CPanelAnimationVar( int, m_iThumbnailColumns, "thumbnails_columns", "1" );
