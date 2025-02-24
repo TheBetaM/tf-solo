@@ -28,7 +28,7 @@
 DECLARE_BUILD_FACTORY( CImageButton );
 
 
-ConVar tf_explanations_charinfopanel( "tf_explanations_charinfopanel", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
+ConVar tf_explanations_charinfopanel( "tf_explanations_charinfopanel", "1", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
 
 //-----------------------------------------------------------------------------
 // Purpose: 

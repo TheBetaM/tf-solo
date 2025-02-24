@@ -11425,7 +11425,7 @@ void C_TFPlayer::GetPowerupGlowEffectColor( float *r, float *g, float *b )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-static ConVar tf_inspect_hint_count( "tf_inspect_hint_count", "0", FCVAR_ARCHIVE );
+static ConVar tf_inspect_hint_count( "tf_inspect_hint_count", "11", FCVAR_ARCHIVE );
 void C_TFPlayer::HandleInspectHint()
 {
 	int nNotifyCount = tf_inspect_hint_count.GetInt();

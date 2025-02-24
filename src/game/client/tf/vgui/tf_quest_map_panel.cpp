@@ -29,7 +29,7 @@
 #include "c_tf_player.h"
 #include "vguicenterprint.h"
 
-ConVar tf_quest_map_intro_viewed( "tf_quest_map_intro_viewed", "0", FCVAR_ARCHIVE ); 
+ConVar tf_quest_map_intro_viewed( "tf_quest_map_intro_viewed", "1", FCVAR_ARCHIVE ); 
 ConVar tf_quest_map_tuner_wobble_magnitude( "tf_quest_map_tuner_wobble_magnitude", "0.01" );
 extern ConVar tf_quest_map_zoom_rest_scale;
 

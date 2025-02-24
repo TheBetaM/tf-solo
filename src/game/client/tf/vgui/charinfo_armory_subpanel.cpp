@@ -104,6 +104,8 @@ CArmoryPanel::~CArmoryPanel()
 		m_pThumbnailModelPanelKVs->deleteThis();
 		m_pThumbnailModelPanelKVs = NULL;
 	}
+	m_armoryConfig->deleteThis();
+	m_armoryConfig = NULL;
 }
 
 //-----------------------------------------------------------------------------

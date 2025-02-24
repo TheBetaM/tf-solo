@@ -35,10 +35,10 @@ using namespace vgui;
 ConVar _cl_classmenuopen( "_cl_classmenuopen", "0", 0, "internal cvar used to tell server when class menu is open" );
 
 #if defined( REPLAY_ENABLED )
-ConVar replay_replaywelcomedlgcount( "replay_replaywelcomedlgcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the replay help dialog has displayed." );
+ConVar replay_replaywelcomedlgcount( "replay_replaywelcomedlgcount", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the replay help dialog has displayed." );
 #endif
 
-ConVar tf_mvm_classupgradehelpcount( "tf_mvm_classupgradehelpcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the player upgrade help dialog has displayed." );
+ConVar tf_mvm_classupgradehelpcount( "tf_mvm_classupgradehelpcount", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the player upgrade help dialog has displayed." );
 
 //-----------------------------------------------------------------------------
 // Purpose: 

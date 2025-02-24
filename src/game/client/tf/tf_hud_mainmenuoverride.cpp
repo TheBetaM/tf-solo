@@ -95,12 +95,12 @@ void cc_tf_mainmenu_match_panel_type( IConVar *pConVar, const char *pOldString, 
 
 
 ConVar tf_recent_achievements( "tf_recent_achievements", "0", FCVAR_ARCHIVE );
-ConVar tf_find_a_match_hint_viewed( "tf_find_a_match_hint_viewed", "0", FCVAR_ARCHIVE );
-ConVar tf_training_has_prompted_for_training( "tf_training_has_prompted_for_training", "0", FCVAR_ARCHIVE, "Whether the user has been prompted for training" );
-ConVar tf_training_has_prompted_for_offline_practice( "tf_training_has_prompted_for_offline_practice", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to try offline practice." );
-ConVar tf_training_has_prompted_for_forums( "tf_training_has_prompted_for_forums", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to view the new user forums." );
-ConVar tf_training_has_prompted_for_options( "tf_training_has_prompted_for_options", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to view the TF2 advanced options." );
-ConVar tf_training_has_prompted_for_loadout( "tf_training_has_prompted_for_loadout", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to equip something in their loadout." );
+ConVar tf_find_a_match_hint_viewed( "tf_find_a_match_hint_viewed", "1", FCVAR_ARCHIVE );
+ConVar tf_training_has_prompted_for_training( "tf_training_has_prompted_for_training", "1", FCVAR_ARCHIVE, "Whether the user has been prompted for training" );
+ConVar tf_training_has_prompted_for_offline_practice( "tf_training_has_prompted_for_offline_practice", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to try offline practice." );
+ConVar tf_training_has_prompted_for_forums( "tf_training_has_prompted_for_forums", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to view the new user forums." );
+ConVar tf_training_has_prompted_for_options( "tf_training_has_prompted_for_options", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to view the TF2 advanced options." );
+ConVar tf_training_has_prompted_for_loadout( "tf_training_has_prompted_for_loadout", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to equip something in their loadout." );
 ConVar cl_ask_bigpicture_controller_opt_out( "cl_ask_bigpicture_controller_opt_out", "0", FCVAR_ARCHIVE, "Whether the user has opted out of being prompted for controller support in Big Picture." );
 ConVar cl_mainmenu_operation_motd_start( "cl_mainmenu_operation_motd_start", "0", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 ConVar cl_mainmenu_operation_motd_reset( "cl_mainmenu_operation_motd_reset", "0", FCVAR_ARCHIVE | FCVAR_HIDDEN );
