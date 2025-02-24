@@ -22412,6 +22412,9 @@ void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUp
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
 
 void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
+void	ScriptSoloSaveData()										{ TFInventoryManager()->WriteSaveData(); }
+uint64_t	ScriptSoloGetCredits( )									{ return TFInventoryManager()->GetCredits(); }
+void	ScriptSoloAddCredits( int amount )							{ TFInventoryManager()->AddCredits(amount); }
 
 void CTFGameRules::RegisterScriptFunctions()
 {
@@ -22471,6 +22474,9 @@ void CTFGameRules::RegisterScriptFunctions()
 	TF_GAMERULES_SCRIPT_FUNC( ForceEscortPushLogic,						"Forces payload pushing logic. 0 -> default, 1 -> force off, 2 -> force on" );
 
 	TF_GAMERULES_SCRIPT_FUNC( SetBotPresetsFile,						"Reload bot presets file from this path" );
+	TF_GAMERULES_SCRIPT_FUNC( SoloSaveData,								"Save solo progress" );
+	TF_GAMERULES_SCRIPT_FUNC( SoloGetCredits,							"Get credits in solo save data" );
+	TF_GAMERULES_SCRIPT_FUNC( SoloAddCredits,							"Add or remove credits in solo save data" );
 
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }

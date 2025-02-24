@@ -25,7 +25,7 @@
 #include <tier0/memdbgon.h>
 
 ConVar tf_explanations_charinfo_armory_panel( "tf_explanations_charinfo_armory_panel", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
-ConVar tf_armory_custom( "tf_armory_config", "cfg/armory_config.txt", FCVAR_ARCHIVE, "" );
+ConVar tf_armory_custom( "tf_armory_config", "cfg/solo/armory_config.txt", FCVAR_ARCHIVE, "" );
 
 const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 {
@@ -127,6 +127,8 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pViewSetButton = dynamic_cast<CExButton*>( FindChildByName("ViewSetButton") );
 	m_pStoreButton = dynamic_cast<CExButton*>( FindChildByName("StoreButton") );
 	m_pWikiButton = dynamic_cast<CExButton*>( FindChildByName("WikiButton") );
+	m_pSoloCreditsLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCreditsLabel") );
+	m_pSoloCostLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCostLabel") );
 
 	m_pDataTextRichText->SetURLClickedHandler( this );
 
@@ -222,6 +224,13 @@ void CArmoryPanel::OnShowPanel( void )
 	}
 
 	SetVisible( true );
+
+	auto kvSave = TFInventoryManager()->GetSaveData();
+	uint64_t credits = kvSave->GetUint64("Credits");
+	CUtlString creditsText;
+	creditsText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Credits"));
+	creditsText.Append(CFmtStr1024("\n%d", credits));
+	m_pSoloCreditsLabel->SetText(creditsText);
 
 	if ( !m_bEventLogging )
 	{
@@ -378,8 +387,27 @@ void CArmoryPanel::OnCommand( const char *command )
 	{
 		if (IsVisible() && m_SelectedItem.IsValid())
 		{
+			auto kvSave = TFInventoryManager()->GetSaveData();
+			auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
+			uint64_t credits = kvSave->GetUint64("Credits");
+			uint64_t price = 0;
+			if (m_armoryConfig->FindKey(name))
+			{
+				auto key = m_armoryConfig->FindKey(name);
+				if (key->GetUint64("Cost"))
+				{
+					price = key->GetUint64("Cost");
+				}
+			}
+			kvSave->SetUint64("Credits", credits - price);
 			TFInventoryManager()->AddSoloItem(m_SelectedItem.GetItemDefIndex());
+			auto itemsKey = kvSave->FindKey("UnlockedItems");
+			itemsKey->SetInt(name, 1);
+
+			TFInventoryManager()->WriteSaveData();
 			m_pWikiButton->SetEnabled(false);
+
+			UpdateSelectedItem();
 		}
 		/*
 		if ( steamapicontext && steamapicontext->SteamFriends() )
@@ -826,6 +854,29 @@ void CArmoryPanel::UpdateSelectedItem( void )
 	if (m_SelectedItem.IsValid())
 	{
 		m_pWikiButton->SetEnabled(true);
+
+		auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
+		auto kvSave = TFInventoryManager()->GetSaveData();
+		uint64_t credits = kvSave->GetUint64("Credits");
+		uint64_t price = 0;
+		if (m_armoryConfig->FindKey(name))
+		{
+			auto key = m_armoryConfig->FindKey(name);
+			if (key->GetUint64("Cost"))
+			{
+				price = key->GetUint64("Cost");
+			}
+		}
+		CUtlString costText;
+		costText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Cost"));
+		costText.Append(CFmtStr1024("\n%d", price));
+		m_pSoloCostLabel->SetText(costText);
+		CUtlString creditsText;
+		creditsText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Credits"));
+		creditsText.Append(CFmtStr1024("\n%d", credits));
+		m_pSoloCreditsLabel->SetText(creditsText);
+
+		// is the item already unlocked?
 		int count = TFInventoryManager()->GetSoloItemCount();
 		for (int i = 0; i < count; i++)
 		{
@@ -833,9 +884,17 @@ void CArmoryPanel::UpdateSelectedItem( void )
 			if (pItem && pItem->GetItemDefIndex() == m_SelectedItem.GetItemDefIndex())
 			{
 				m_pWikiButton->SetEnabled(false);
-				break;
+				return;
 			}
 		}
+
+		// can we unlock it?
+		if (credits < price)
+		{
+			m_pWikiButton->SetEnabled(false);
+			return;
+		}
+
 	}
 }
 

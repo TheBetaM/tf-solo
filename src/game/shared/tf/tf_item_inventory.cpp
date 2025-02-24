@@ -10,11 +10,11 @@
 #include "tf_item_system.h"
 #include "vgui/ILocalize.h"
 #include "tier3/tier3.h"
+#include "KeyValues.h"
+#include "filesystem.h"
 #ifdef CLIENT_DLL
 #include "c_tf_player.h"
 #include "item_pickup_panel.h"
-#include "KeyValues.h"
-#include "filesystem.h"
 #include "character_info_panel.h"
 #include "ienginevgui.h"
 #include "c_tf_gamestats.h"
@@ -219,6 +219,8 @@ CTFInventoryManager::~CTFInventoryManager( void )
 {
 	m_pBaseLoadoutItems.PurgeAndDeleteElements();
 	m_pSoloLoadoutItems.PurgeAndDeleteElements();
+	m_SoloSaveData->deleteThis();
+	m_SoloSaveConfigData->deleteThis();
 }
 
 //-----------------------------------------------------------------------------
@@ -228,6 +230,8 @@ void CTFInventoryManager::PostInit( void )
 {
 	BaseClass::PostInit();
 	GenerateBaseItems();
+	InitSaveData();
+	LoadSaveData();
 }
 
 CEconItemView* CTFInventoryManager::AddSoloItem(int id)
@@ -2225,3 +2229,98 @@ bool CTFPlayerInventory::EquipLocalPreset(equipped_class_t unClass, equipped_pre
 	return true;
 }
 #endif
+
+#define TFSOLO_SAVE_PATH "cfg/solo/"
+#define TFSOLO_SAVE_CONFIG "cfg/solo/save_config.txt"
+
+void CTFInventoryManager::InitSaveData()
+{
+	if (!m_SoloSaveConfigData)
+	{
+		m_SoloSaveConfigData = new KeyValues("solo_config_data");
+		if (!m_SoloSaveConfigData->LoadFromFile(g_pFullFileSystem, TFSOLO_SAVE_CONFIG, "GAME"))
+		{
+			Msg("Unable to parse solo config data into keyvalues.\n");
+			return;
+		}
+	}
+	if (m_SoloSaveData)
+	{
+		m_SoloSaveData->deleteThis();
+	}
+	m_SoloSaveData = new KeyValues("solo_data");
+
+	m_SoloSaveData->SetUint64("Credits", m_SoloSaveConfigData->GetUint64("Credits"));
+	auto itemsKey = m_SoloSaveConfigData->FindKey("UnlockedItems")->MakeCopy();
+	m_SoloSaveData->AddSubKey(itemsKey);
+}
+
+void CTFInventoryManager::WriteSaveData()
+{
+	if (!m_SoloSaveData)
+	{
+		return;
+	}
+
+	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
+
+	CUtlString path;
+	path.Append(TFSOLO_SAVE_PATH);
+	path.Append(CFmtStr("save_%d.txt", steamID.GetAccountID()));
+	m_SoloSaveData->SaveToFile(g_pFullFileSystem, path, "GAME");
+}
+
+void CTFInventoryManager::LoadSaveData()
+{
+	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
+
+	CUtlString path;
+	path.Append(TFSOLO_SAVE_PATH);
+	path.Append(CFmtStr("save_%d.txt", steamID.GetAccountID()));
+	if (m_SoloSaveData)
+	{
+		m_SoloSaveData->deleteThis();
+	}
+	m_SoloSaveData = new KeyValues("solo_data");
+	if (!m_SoloSaveData->LoadFromFile(g_pFullFileSystem, path, "GAME"))
+	{
+		Msg("Unable to parse solo data into keyvalues.\n");
+		InitSaveData();
+	}
+
+	auto itemsKey = m_SoloSaveData->FindKey("UnlockedItems");
+	FOR_EACH_SUBKEY(itemsKey, key)
+	{
+		const CEconItemDefinition* pItemDef = GetItemSchema()->GetItemDefinitionByName(key->GetName());
+		if (pItemDef)
+		{
+			AddSoloItem(pItemDef->GetDefinitionIndex());
+		}
+	}
+}
+
+uint64_t CTFInventoryManager::GetCredits()
+{
+	return m_SoloSaveData->GetUint64("Credits");
+}
+void CTFInventoryManager::AddCredits(long amount)
+{
+	m_SoloSaveData->SetUint64("Credits", m_SoloSaveData->GetUint64("Credits") + amount);
+}
+
+#ifdef CLIENT_DLL
+CON_COMMAND(tfsolo_save, "Save mod progress.", FCVAR_GAME)
+{
+	TFInventoryManager()->WriteSaveData();
+}
+
+CON_COMMAND(tfsolo_reset, "Reset mod progress to default.", FCVAR_GAME)
+{
+	TFInventoryManager()->InitSaveData();
+}
+
+CON_COMMAND(tfsolo_load, "Load mod progress.", FCVAR_GAME | FCVAR_CHEAT)
+{
+	TFInventoryManager()->LoadSaveData();
+}
+#endif // CLIENT_DLL

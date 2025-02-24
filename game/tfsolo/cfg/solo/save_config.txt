@@ -1,0 +1,8 @@
+save_config
+{
+	Credits 10000
+	UnlockedItems
+	{
+		"The Flare Gun" "1"
+	}
+}

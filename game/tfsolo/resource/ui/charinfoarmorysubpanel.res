@@ -445,4 +445,42 @@
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
 	}
+	
+	"SoloCreditsLabel"
+	{
+		"ControlName"	"CExLabel"
+		"fieldName"		"SoloCreditsLabel"
+		"font"			"HudFontSmallBold"
+		"labelText"		""
+		"textAlignment"	"center"
+		"xpos"			"c50"
+		"ypos"			"320"
+		"zpos"			"20"
+		"wide"			"160"
+		"tall"			"40"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"fgcolor_override" "255 255 255 255"
+	}
+	
+	"SoloCostLabel"
+	{
+		"ControlName"	"CExLabel"
+		"fieldName"		"SoloCostLabel"
+		"font"			"HudFontSmallBold"
+		"labelText"		""
+		"textAlignment"	"center"
+		"xpos"			"c150"
+		"ypos"			"320"
+		"zpos"			"20"
+		"wide"			"160"
+		"tall"			"40"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"fgcolor_override" "255 255 255 255"
+	}
 }
