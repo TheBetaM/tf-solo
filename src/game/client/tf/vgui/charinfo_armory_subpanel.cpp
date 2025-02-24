@@ -84,6 +84,7 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBG, "thumbnail_bgcolor" );
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGMouseover, "thumbnail_bgcolor_mouseover" );
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGSelected, "thumbnail_bgcolor_selected" );
+	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGUnlocked, "thumbnail_bgcolor_unlocked" );
 
 	m_bEventLogging = false;
 
@@ -964,6 +965,20 @@ void CArmoryPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOve
 	else
 	{
 		pItemPanel->SetBgColor( m_colThumbnailBG );
+		auto item = pItemPanel->GetItem();
+		if (item)
+		{
+			int count = TFInventoryManager()->GetSoloItemCount();
+			for (int i = 0; i < count; i++)
+			{
+				auto pItem = TFInventoryManager()->GetSoloItem(i);
+				if (pItem && pItem->GetItemDefIndex() == item->GetItemDefIndex())
+				{
+					pItemPanel->SetBgColor(m_colThumbnailBGUnlocked);
+					break;
+				}
+			}
+		}
 	}
 }
 

@@ -20,6 +20,7 @@
 		"thumbnail_bgcolor"			"51 47 46 255"
 		"thumbnail_bgcolor_mouseover"	"156 146 128 255"
 		"thumbnail_bgcolor_selected"	"176 166 148 255"
+		"thumbnail_bgcolor_unlocked"	"CreditsGreen"
 		
 		"thumbnails_rows"		"4"
 		"thumbnails_columns"	"4"
@@ -368,7 +369,7 @@
 		"brighttext"	"0"
 		"Command"		"wiki"
 		"sound_depressed"	"UI/buttonclick.wav"
-		"sound_released"	"UI/buttonclickrelease.wav"
+		"sound_released"	"mvm/mvm_bought_upgrade.wav"
 	}		
 	
 	"ViewSetButton"
