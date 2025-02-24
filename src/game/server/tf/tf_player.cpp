@@ -4549,7 +4549,7 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 	{
 		ManageRegularWeaponsLegacy( pData );
 	}
-	else
+	else if (!IsFakeClient() || !m_bRegenerating)
 	{
 		// Loop through our current wearables and ensure we're supposed to have them.
 		ValidateWearables( pData );
