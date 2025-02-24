@@ -18,11 +18,14 @@
 #include "iachievementmgr.h"
 #include "store/store_panel.h"
 #include "character_info_panel.h"
+#include "KeyValues.h"
+#include "filesystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
 ConVar tf_explanations_charinfo_armory_panel( "tf_explanations_charinfo_armory_panel", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
+ConVar tf_armory_custom( "tf_armory_config", "cfg/armory_config.txt", FCVAR_ARCHIVE, "" );
 
 const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 {
@@ -83,6 +86,12 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGSelected, "thumbnail_bgcolor_selected" );
 
 	m_bEventLogging = false;
+
+	m_armoryConfig = new KeyValues("armory_config");
+	if (!m_armoryConfig->LoadFromFile(g_pFullFileSystem, tf_armory_custom.GetString(), "GAME"))
+	{
+		Msg("Unable to parse armory_config.txt into keyvalues.\n");
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -190,6 +199,13 @@ void CArmoryPanel::ApplySettings( KeyValues *inResourceData )
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnShowPanel( void )
 {
+	m_armoryConfig->deleteThis();
+	m_armoryConfig = new KeyValues("armory_config");
+	if (!m_armoryConfig->LoadFromFile(g_pFullFileSystem, tf_armory_custom.GetString(), "GAME"))
+	{
+		Msg("Unable to parse armory_config.txt into keyvalues.\n");
+	}
+
 	InvalidateLayout( true, true );
 
 	m_pMouseOverItemPanel->SetVisible( false );
@@ -496,19 +512,46 @@ void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 	}
 	else
 	{
+		bool CustomArmory = false;
+		CUtlVector<int> ArmoryList;
+		if (tf_armory_custom.GetString() != "")
+		{
+			CustomArmory = true;
+			auto key = m_armoryConfig->GetFirstSubKey();
+			while (key)
+			{
+				auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
+				if (item)
+				{
+					ArmoryList.AddToTail(item->GetDefinitionIndex());
+				}
+				key = key->GetNextKey();
+			}
+		}
+
 		// First, build a list of all the items that match the filter
 		const CEconItemSchema::SortedItemDefinitionMap_t& mapItemDefs = ItemSystem()->GetItemSchema()->GetSortedItemDefinitionMap();
 		FOR_EACH_MAP( mapItemDefs, i )
 		{
 			const CTFItemDefinition *pDef = dynamic_cast<const CTFItemDefinition *>( mapItemDefs[i] );
 
-			// Never show:
-			//	- Hidden items
-			//	- Items that don't have fixed qualities
-			//	- Normal quality items
-			//	- Items that haven't asked to be shown
-			if ( pDef->IsHidden() || pDef->GetQuality() == k_unItemQuality_Any || pDef->GetQuality() == AE_NORMAL || !pDef->ShouldShowInArmory() )
-				continue;
+			if (CustomArmory)
+			{
+				if (!ArmoryList.HasElement(pDef->GetDefinitionIndex()))
+				{
+					continue;
+				}
+			}
+			else
+			{
+				// Never show:
+				//	- Hidden items
+				//	- Items that don't have fixed qualities
+				//	- Normal quality items
+				//	- Items that haven't asked to be shown
+					if (pDef->IsHidden() || pDef->GetQuality() == k_unItemQuality_Any || pDef->GetQuality() == AE_NORMAL || !pDef->ShouldShowInArmory())
+						continue;
+			}
 
 #ifdef DEBUG
 			// In Debug, make sure that every item shows up in a filter other than the All Items list

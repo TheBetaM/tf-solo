@@ -146,6 +146,8 @@ private:
 	Color						m_colThumbnailBGSelected;
 
 	Color						m_colSetName;
+
+	KeyValues*					m_armoryConfig;
 };
 
 #endif // CHARINFO_ARMORY_SUBPANEL_H
