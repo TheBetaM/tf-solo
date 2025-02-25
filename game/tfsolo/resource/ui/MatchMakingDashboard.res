@@ -819,14 +819,57 @@
 			}
 		}
 
-		"HostGameButton"
+		"PlayGameButton"
 		{
 			"ControlName"	"CExImageButton"
-			"fieldName"		"HostGameButton"
+			"fieldName"		"PlayGameButton"
 			"xpos"			"cs-0.5"
 			"ypos"			"0"
 			"zpos"			"100"
 			"wide"			"200"
+			"tall"			"f6"
+			"autoResize"	"0"
+			"pinCorner"		"3"
+			"visible"		"1"
+			"enabled"		"1"
+			"tabPosition"	"0"
+			"font"			"HudFontSmallBold"
+			"textAlignment"	"center"
+			"dulltext"		"0"
+			"brighttext"	"0"
+			"Command"		"open_solo"
+			"proportionaltoparent"	"1"
+			"labeltext"		"#TFSOLO_PlayButton"
+			"mouseinputenabled"	"1"
+			"keyboardinputenabled"	"0"
+			"actionsignallevel"	"2"
+			"roundedcorners"	"1"
+			"textinsety"	"2.5"
+			"textinsetx"	"15"
+			"use_proportional_insets"	"1"
+
+
+			"sound_depressed"	"UI/buttonclick.wav"
+			"sound_released"	"UI/buttonclickrelease.wav"
+
+			"armedBgColor_override"		"CreditsGreen"
+			"defaultBgColor_override"	"GreenSolid"
+
+			"defaultFgColor_override" "TanLight"
+			"armedFgColor_override" "TanLight"
+			"image_drawcolor"	"235 226 202 255"
+			"image_armedcolor"	"235 226 202 255"
+
+		}
+		
+		"HostGameButton"
+		{
+			"ControlName"	"CExImageButton"
+			"fieldName"		"HostGameButton"
+			"xpos"			"rs1-185"
+			"ypos"			"0"
+			"zpos"			"100"
+			"wide"			"115"
 			"tall"			"f6"
 			"autoResize"	"0"
 			"pinCorner"		"3"
@@ -852,8 +895,8 @@
 			"sound_depressed"	"UI/buttonclick.wav"
 			"sound_released"	"UI/buttonclickrelease.wav"
 
-			"armedBgColor_override"		"CreditsGreen"
-			"defaultBgColor_override"	"GreenSolid"
+			"armedBgColor_override"		"LighterDarkBrown"
+			"defaultBgColor_override"	"DarkBrown"
 
 			"defaultFgColor_override" "TanLight"
 			"armedFgColor_override" "TanLight"
@@ -861,5 +904,49 @@
 			"image_armedcolor"	"235 226 202 255"
 
 		}
+		
+		"CampaignsButton"
+		{
+			"ControlName"	"CExImageButton"
+			"fieldName"		"CampaignsButton"
+			"xpos"			"190"
+			"ypos"			"0"
+			"zpos"			"100"
+			"wide"			"115"
+			"tall"			"f6"
+			"autoResize"	"0"
+			"pinCorner"		"3"
+			"visible"		"1"
+			"enabled"		"1"
+			"tabPosition"	"0"
+			"font"			"HudFontSmallBold"
+			"textAlignment"	"center"
+			"dulltext"		"0"
+			"brighttext"	"0"
+			"Command"		"open_campaigns"
+			"proportionaltoparent"	"1"
+			"labeltext"		"#TFSOLO_CampaignsButton"
+			"mouseinputenabled"	"1"
+			"keyboardinputenabled"	"0"
+			"actionsignallevel"	"2"
+			"roundedcorners"	"1"
+			"textinsety"	"2.5"
+			"textinsetx"	"15"
+			"use_proportional_insets"	"1"
+
+
+			"sound_depressed"	"UI/buttonclick.wav"
+			"sound_released"	"UI/buttonclickrelease.wav"
+
+			"armedBgColor_override"		"LighterDarkBrown"
+			"defaultBgColor_override"	"DarkBrown"
+
+			"defaultFgColor_override" "TanLight"
+			"armedFgColor_override" "TanLight"
+			"image_drawcolor"	"235 226 202 255"
+			"image_armedcolor"	"235 226 202 255"
+
+		}
+
 	}
 }

@@ -377,6 +377,16 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 		OnCreateServer();
 		return;
 	}
+	else if (FStrEq("open_campaigns", command))
+	{
+		OnCreateServer();
+		return;
+	}
+	else if (FStrEq("open_solo", command))
+	{
+		OnCreateServer();
+		return;
+	}
 	else if ( FStrEq( command, "find_game" ) )
 	{
 		OnPlayCommunity();
