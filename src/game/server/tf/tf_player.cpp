@@ -113,6 +113,7 @@
 #include "tf_player_resource.h"
 #include "gcsdk/gcclient_sharedobjectcache.h"
 #include "tf_party.h"
+#include "nav_mesh.h"
 
 #ifdef TF_RAID_MODE
 #include "bot_npc/bot_npc_decoy.h"
@@ -168,6 +169,7 @@ extern ConVar	tf_gravetalk;
 extern ConVar	tf_bot_quota_mode;
 extern ConVar	tf_bot_quota;
 extern ConVar	halloween_starting_souls;
+extern ConVar	nav_generate_auto;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -6647,6 +6649,12 @@ void CTFPlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAu
 
 	// can only be on TEAM_SPECTATOR when coaching
 	if ( IsCoaching() && ( iTeamNum >= FIRST_GAME_TEAM ) )
+	{
+		return;
+	}
+
+	// deny team changes while nav is generating
+	if (nav_generate_auto.GetBool() && TheNavMesh->IsGenerating() && iTeamNum >= FIRST_GAME_TEAM)
 	{
 		return;
 	}
@@ -13636,6 +13644,25 @@ void CTFPlayer::StateEnterWELCOME( void )
 
 	PhysObjectSleep();
 
+	if (nav_generate_auto.GetBool())
+	{
+		if (TheNavMesh->IsGenerating())
+		{
+			m_bSeenRoundInfo = true;
+			ChangeTeam(TEAM_SPECTATOR, false, true);
+			ClientPrint(this, HUD_PRINTCENTER, "#TFSOLO_NavGenerateAuto");
+			return;
+		}
+		else if (TheNavMesh->GetNavAreaCount() == 0)
+		{
+			m_bSeenRoundInfo = true;
+			engine->ServerCommand("nav_generate\n");
+			ChangeTeam(TEAM_SPECTATOR, false, true);
+			ClientPrint(this, HUD_PRINTCENTER, "#TFSOLO_NavGenerateAuto");
+			return;
+		}
+	}
+
 	if ( g_pServerBenchmark->IsLocalBenchmarkPlayer( this ) )
 	{
 		m_bSeenRoundInfo = true;
@@ -13752,6 +13779,8 @@ void CTFPlayer::StateThinkWELCOME( void )
 		}
 		else
 		{
+			if (nav_generate_auto.GetBool() && TheNavMesh->IsGenerating())
+				return;
 			if (TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED && (TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam()))
 			{
 				int team = TFGameRules()->GetAssignedHumanTeam();
