@@ -2286,6 +2286,7 @@ void CTFInventoryManager::LoadSaveData()
 	{
 		Msg("Unable to parse solo data into keyvalues.\n");
 		InitSaveData();
+		engine->ClientCmd_Unrestricted("clear_loadout\n");
 	}
 
 	auto itemsKey = m_SoloSaveData->FindKey("UnlockedItems");
@@ -2316,10 +2317,18 @@ CON_COMMAND(tfsolo_save, "Save mod progress.", FCVAR_GAME)
 
 CON_COMMAND(tfsolo_reset, "Reset mod progress to default.", FCVAR_GAME)
 {
+	if (engine->IsInGame())
+	{
+		return;
+	}
 	TFInventoryManager()->InitSaveData();
+	TFInventoryManager()->GenerateBaseItems();
+	TFInventoryManager()->WriteSaveData();
+	TFInventoryManager()->LoadSaveData();
+	engine->ClientCmd_Unrestricted("clear_loadout\n");
 }
 
-CON_COMMAND(tfsolo_load, "Load mod progress.", FCVAR_GAME | FCVAR_CHEAT)
+CON_COMMAND(tfsolo_load, "Load mod progress.", FCVAR_GAME | FCVAR_CHEAT | FCVAR_HIDDEN)
 {
 	TFInventoryManager()->LoadSaveData();
 }

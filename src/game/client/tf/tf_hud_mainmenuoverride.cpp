@@ -516,7 +516,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	RemoveAllMenuEntries();
 
-	LoadControlSettings( "resource/UI/MainMenuOverride.res", NULL, NULL, pConditions );
+	LoadControlSettings( "resource/UI/MainMenuOverrideSolo.res", NULL, NULL, pConditions );
 
 	BaseClass::ApplySchemeSettings( vgui::scheme()->GetIScheme(pScheme) );
 
@@ -649,6 +649,14 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	GetMMDashboard();
 	GetCompRanksTooltip();
+}
+
+void ConfirmModProgressReset(bool bConfirmed, void* pContext)
+{
+	if (bConfirmed)
+	{
+		engine->ClientCmd_Unrestricted("tfsolo_reset");
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -2076,6 +2084,17 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	{
 		ETFMatchGroup eMatchGroup = (ETFMatchGroup)atoi( command + 16 );
 		tf_mainmenu_match_panel_type.SetValue( eMatchGroup );
+	}
+	else if (!Q_stricmp(command, "openmodcredits"))
+	{
+		ShowConfirmDialog("#TFSOLO_ModCredits_Title", "#TFSOLO_ModCredits_Body", "#TF_OK", "#TF_OK", NULL, this);
+	}
+	else if (!Q_stricmp(command, "resetmodprogress"))
+	{
+		if (!engine->IsInGame())
+		{
+			ShowConfirmDialog("#TFSOLO_ResetProgress_Title", "#TFSOLO_ResetProgress_Body", "#TF_Coach_Yes", "#TF_Coach_No", ConfirmModProgressReset, this);
+		}
 	}
 	else
 	{
