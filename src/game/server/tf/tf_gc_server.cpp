@@ -4400,6 +4400,11 @@ void CTFGCServerSystem::SDK_ApplyLocalLoadout(CGCClientSharedObjectCache* pCache
 			*/
 		}
 	}
+
+	if (CTFPlayer* pPlayer = ToTFPlayer(UTIL_PlayerBySteamID(pCache->GetOwner())))
+	{
+		pPlayer->CheckInstantLoadoutRespawn();
+	}
 }
 
 #endif // #ifdef ENABLE_GC_MATCHMAKING

@@ -1030,6 +1030,7 @@ void CTFPlayerInventory::LoadLocalLoadout()
 	pLoadoutKV->deleteThis();
 
 	GTFGCClientSystem()->LocalInventoryChanged();
+	SendInventoryUpdateEvent();
 }
 
 //-----------------------------------------------------------------------------
@@ -2286,7 +2287,9 @@ void CTFInventoryManager::LoadSaveData()
 	{
 		Msg("Unable to parse solo data into keyvalues.\n");
 		InitSaveData();
+#if CLIENT_DLL
 		engine->ClientCmd_Unrestricted("clear_loadout\n");
+#endif
 	}
 
 	auto itemsKey = m_SoloSaveData->FindKey("UnlockedItems");
