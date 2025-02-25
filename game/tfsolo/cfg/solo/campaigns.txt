@@ -1,0 +1,39 @@
+"campaigns"
+{
+	"campaign1"
+	{
+		"Name" "Campaign One"
+		"Desc" ""
+		"Map" "koth_viaduct"
+		"ShowProgress" "1"
+		"ProgressKey" "campaign1progress"
+		"BGArt" "animated/tf2_logo_hourglass"
+	}
+	"campaign2"
+	{
+		"Name" "Campaign Two"
+		"Desc" "This is the second campaign."
+		"Map" "koth_badlands"
+		"ShowProgress" "1"
+		"ProgressKey" "campaign2progress"
+		"BGArt" "animated/tf2_logo_hourglass"
+	}
+	"campaign3"
+	{
+		"Name" "Campaign Three"
+		"Desc" ""
+		"Map" "cp_foundry"
+		"ShowProgress" "0"
+		"ProgressKey" "campaign3progress"
+		"BGArt" "animated/tf2_logo_hourglass"
+	}
+	"campaign4"
+	{
+		"Name" "Campaign Four"
+		"Desc" ""
+		"Map" "pl_badwater"
+		"ShowProgress" "1"
+		"ProgressKey" "campaign4progress"
+		"BGArt" "animated/tf2_logo_hourglass"
+	}
+}

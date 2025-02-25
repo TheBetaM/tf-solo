@@ -520,7 +520,7 @@ void CQuestMapPanel::SetVisible( bool bVisible )
 		{
 			m_pIntroPanel->SetVisible( false );
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "QuestMap_Start", false );	
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_bMapLoaded && GTFGCClientSystem()->BHealthyGCConnection() ? "QuestMap_MapLoaded" : "QuestMap_LoadingLoop", false );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_bMapLoaded && true ? "QuestMap_MapLoaded" : "QuestMap_LoadingLoop", false );	
 		}
 		else 
 		{
@@ -1009,8 +1009,8 @@ void CQuestMapPanel::UpdateControls( bool bIgnoreInvalidLayout )
 		m_pMapAreaPanel->SetControlVisible( "StaticOverlay", false );
 	}
 
-	if ( !GTFGCClientSystem()->BConnectedtoGC() )
-		return;
+	//if ( !GTFGCClientSystem()->BConnectedtoGC() )
+	//	return;
 
 	// Maybe they activated a pass?
 	UpdatePassAdPanel();
@@ -1229,7 +1229,6 @@ void CQuestMapPanel::GoToCurrentQuest()
 
 CON_COMMAND( show_quest_log, "Show the quest map panel" )
 {
-	/*
 	if ( GetQuestMapPanel()->IsVisible() )
 	{
 		engine->ClientCmd_Unrestricted( "gameui_hide" );
@@ -1249,5 +1248,4 @@ CON_COMMAND( show_quest_log, "Show the quest map panel" )
 			GetQuestMapPanel()->GoToCurrentQuest();
 		}
 	}
-	*/
 }

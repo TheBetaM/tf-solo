@@ -383,7 +383,8 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	}
 	else if (FStrEq("open_campaigns", command))
 	{
-		OnCreateServer();
+		//OnCreateServer();
+		OnOpenCampaigns();
 		return;
 	}
 	else if (FStrEq("open_solo", command))
@@ -566,6 +567,11 @@ void CTFMatchmakingDashboard::OnLeaveParty()
 void CTFMatchmakingDashboard::OnOpenSettings()
 {
 	PushSlidePanel( GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >( k_eMMSettings ) );
+}
+
+void CTFMatchmakingDashboard::OnOpenCampaigns()
+{
+	PushSlidePanel(GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >(k_eCampaigns));
 }
 
 //-----------------------------------------------------------------------------

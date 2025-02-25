@@ -61,6 +61,7 @@ enum EMMDashboadSidePanel
 	k_eCompAccess,
 	k_eEventMatch,
 	k_eToolTipCompRanks,
+	k_eCampaigns,
 	k_ePanelCount,
 };
 
@@ -142,6 +143,7 @@ public:
 	// Context menu actions
 	MESSAGE_FUNC( OnLeaveParty, "Context_LeaveParty" );
 	MESSAGE_FUNC( OnOpenSettings, "Context_OpenSettings" );
+	MESSAGE_FUNC( OnOpenCampaigns, "Context_OpenCampaigns" );
 
 private:
 
