@@ -277,6 +277,7 @@ CTFMatchmakingDashboard::CTFMatchmakingDashboard()
 	m_pResumeButton = new CExImageButton( m_pTopBar, "ResumeButton", (const char*)NULL );
 	m_pQuitButton = new CExImageButton( m_pTopBar, "QuitButton", (const char*)NULL );
 	m_pDisconnectButton = new CExImageButton( m_pTopBar, "DisconnectButton", (const char*)NULL );
+	m_pRestartButton = new CExImageButton(m_pTopBar, "RestartButton", (const char*)NULL);
 
 	ListenForGameEvent( "gameui_hidden" );
 	ListenForGameEvent( "gameui_activated" );
@@ -298,7 +299,7 @@ void CTFMatchmakingDashboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	SetMouseInputEnabled( true );
-	LoadControlSettings( "resource/UI/MatchMakingDashboard.res" );
+	LoadControlSettings( "resource/UI/MatchMakingDashboardSolo.res" );
 
 	// This cannot ever be true or else things get weird when in-game
 	SetKeyBoardInputEnabled( false );
@@ -361,11 +362,14 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 {
 	if ( FStrEq( command, "disconnect" ) )
 	{
+		engine->ClientCmd_Unrestricted("disconnect");
+		/*
 		CTFDisconnectConfirmDialog *pDialog = BuildDisconnectConfirmDialog();
 		if ( pDialog )
 		{
 			pDialog->Show();
 		}
+		*/
 	}
 	else if ( FStrEq( command, "toggle_chat" ) )
 	{
@@ -385,6 +389,12 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	else if (FStrEq("open_solo", command))
 	{
 		OnCreateServer();
+		return;
+	}
+	else if (FStrEq("restart_round", command))
+	{
+		engine->ClientCmd_Unrestricted("mp_restartgame_immediate 1");
+		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand("ResumeGame");
 		return;
 	}
 	else if ( FStrEq( command, "find_game" ) )
@@ -1296,14 +1306,15 @@ void CTFMatchmakingDashboard::UpdateDisconnectAndResume()
 	bool bInGame = engine->IsInGame();
 
 	m_pResumeButton->SetVisible( bInGame && !BInEndOfMatch() );
+	m_pRestartButton->SetVisible( bInGame && !BInEndOfMatch() );
 
 	m_pTopBar->SetControlVisible( "DisconnectButton", bInGame );
 	m_pTopBar->SetControlVisible( "QuitButton", !bInGame );
 
-	Panel* pOffsetPanel = bInGame ? m_pDisconnectButton : m_pQuitButton;
+	//Panel* pOffsetPanel = bInGame ? m_pDisconnectButton : m_pQuitButton;
 
-	m_pPlayButton->SetPos( pOffsetPanel->GetXPos() - m_pPlayButton->GetWide() - 1, m_pPlayButton->GetYPos() );
-	m_pResumeButton->SetPos( m_pPlayButton->GetXPos() - m_pResumeButton->GetWide() - 1, m_pResumeButton->GetYPos() );
+	//m_pPlayButton->SetPos( pOffsetPanel->GetXPos() - m_pPlayButton->GetWide() - 1, m_pPlayButton->GetYPos() );
+	//m_pResumeButton->SetPos( m_pPlayButton->GetXPos() - m_pResumeButton->GetWide() - 1, m_pResumeButton->GetYPos() );
 }
 
 bool CTFMatchmakingDashboard::BAnySidePanelsShowing() const

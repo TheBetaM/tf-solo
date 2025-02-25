@@ -122,7 +122,7 @@ extern bool Training_IsComplete();
 
 void PromptOrFireCommand( const char* pszCommand )
 {
-	if ( engine->IsInGame()  )
+	if ( false )
 	{
 		CTFDisconnectConfirmDialog *pDialog = BuildDisconnectConfirmDialog();
 		if ( pDialog )

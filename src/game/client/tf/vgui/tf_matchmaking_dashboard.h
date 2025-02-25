@@ -177,6 +177,7 @@ private:
 	CExImageButton* m_pDisconnectButton;
 	CExImageButton* m_pPlayButton;
 	CExImageButton* m_pResumeButton;
+	CExImageButton* m_pRestartButton;
 	vgui::Menu* m_pContextMenu = NULL;
 	CUtlVector< vgui::DHANDLE< CInviteNotification > > m_vecInviteHandles;
 
