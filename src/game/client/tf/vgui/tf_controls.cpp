@@ -1301,6 +1301,7 @@ void CTFTextToolTip::ShowTooltip( Panel *pCurrentPanel )
 }
 
 static vgui::DHANDLE<CTFAdvancedOptionsDialog> g_pTFAdvancedOptionsDialog;
+static vgui::DHANDLE<CTFModCreditsDialog> g_pTFModCreditsDialog;
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback to open the game menus
@@ -1314,9 +1315,19 @@ void CL_OpenTFAdvancedOptionsDialog( const CCommand &args )
 
 	g_pTFAdvancedOptionsDialog->Deploy();
 }
+void CL_OpenTFModCreditsDialog(const CCommand& args)
+{
+	if (g_pTFModCreditsDialog.Get() == NULL)
+	{
+		g_pTFModCreditsDialog = vgui::SETUP_PANEL(new CTFModCreditsDialog(NULL));
+	}
+
+	g_pTFModCreditsDialog->Deploy();
+}
 
 // the console commands
 static ConCommand opentf2options( "opentf2options", &CL_OpenTFAdvancedOptionsDialog, "Displays the TF2 Advanced Options dialog." );
+static ConCommand openmodcredits( "openmodcredits", &CL_OpenTFModCreditsDialog, "Displays the TF2 Advanced Options dialog." );
 
 //-----------------------------------------------------------------------------
 // Purpose: A scroll bar that can have specified width
@@ -2469,4 +2480,490 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 	CGenericSwoop* pSwoop = new CGenericSwoop( flDelay, bDown );
 	pSwoop->MakeReadyForUse();
 	pSwoop->SetBounds( nX, nY, nWide, nTall );
+}
+
+#define MOD_CREDITS_FILE "cfg/solo/mod_credits.txt"
+
+//-----------------------------------------------------------------------------
+// Purpose: Constructor
+//-----------------------------------------------------------------------------
+CTFModCreditsDialog::CTFModCreditsDialog(vgui::Panel* parent) : BaseClass(NULL, "TFModCreditsDialog")
+{
+	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
+	SetScheme(scheme);
+	SetProportional(true);
+
+	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+
+	m_pList = NULL;
+
+	m_pToolTip = new CTFTextToolTip(this);
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled(false);
+	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
+	m_pToolTip->SetTooltipDelay(0);
+
+	m_pDescription = new CInfoDescription();
+	m_pDescription->InitFromFile(MOD_CREDITS_FILE);
+	m_pDescription->TransferCurrentValues(NULL);
+
+	// 	MoveToCenterOfScreen();
+	// 	SetSizeable( false );
+	// 	SetDeleteSelfOnClose( true );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Destructor
+//-----------------------------------------------------------------------------
+CTFModCreditsDialog::~CTFModCreditsDialog()
+{
+	delete m_pDescription;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
+{
+	BaseClass::ApplySchemeSettings(pScheme);
+
+	LoadControlSettings("resource/ui/TFModCreditsDialog.res");
+	m_pListPanel->SetFirstColumnWidth(0);
+
+	CreateControls();
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::ApplySettings(KeyValues* inResourceData)
+{
+	BaseClass::ApplySettings(inResourceData);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::OnClose()
+{
+	BaseClass::OnClose();
+
+	TFModalStack()->PopModal(this);
+	MarkForDeletion();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  : *command - 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::OnCommand(const char* command)
+{
+	if (!stricmp(command, "Ok"))
+	{
+		OnClose();
+		return;
+	}
+	else if (!stricmp(command, "Close"))
+	{
+		OnClose();
+		return;
+	}
+
+	BaseClass::OnCommand(command);
+}
+
+void CTFModCreditsDialog::OnKeyCodeTyped(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (code == KEY_ESCAPE)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodeTyped(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::OnKeyCodePressed(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (GetBaseButtonCode(code) == KEY_XBUTTON_B || GetBaseButtonCode(code) == STEAMCONTROLLER_B || GetBaseButtonCode(code) == STEAMCONTROLLER_START)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodePressed(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::GatherCurrentValues()
+{
+	if (!m_pDescription)
+		return;
+
+	// OK
+	CheckButton* pBox;
+	TextEntry* pEdit;
+	ComboBox* pCombo;
+	CCvarSlider* pSlider;
+
+	mpcontrol_t* pList;
+
+	CScriptObject* pObj;
+	CScriptListItem* pItem;
+
+	char szValue[256];
+	char strValue[256];
+
+	pList = m_pList;
+	while (pList)
+	{
+		pObj = pList->pScrObj;
+
+		if (pObj->type == O_CATEGORY || pObj->type == O_BUTTON)
+		{
+			pList = pList->next;
+			continue;
+		}
+
+		if (!pList->pControl)
+		{
+			pObj->SetCurValue(pObj->defValue);
+			pList = pList->next;
+			continue;
+		}
+
+		switch (pObj->type)
+		{
+		case O_BOOL:
+			pBox = (CheckButton*)pList->pControl;
+			sprintf(szValue, "%s", pBox->IsSelected() ? "1" : "0");
+			break;
+		case O_NUMBER:
+			pEdit = (TextEntry*)pList->pControl;
+			pEdit->GetText(strValue, sizeof(strValue));
+			sprintf(szValue, "%s", strValue);
+			break;
+		case O_STRING:
+			pEdit = (TextEntry*)pList->pControl;
+			pEdit->GetText(strValue, sizeof(strValue));
+			sprintf(szValue, "%s", strValue);
+			break;
+		case O_LIST:
+		{
+			pCombo = (ComboBox*)pList->pControl;
+			// pCombo->GetText( strValue, sizeof( strValue ) );
+			int activeItem = pCombo->GetActiveItem();
+
+			pItem = pObj->pListItems;
+			//			int n = (int)pObj->fdefValue;
+
+			while (pItem)
+			{
+				if (!activeItem--)
+					break;
+
+				pItem = pItem->pNext;
+			}
+
+			if (pItem)
+			{
+				sprintf(szValue, "%s", pItem->szValue);
+			}
+			else  // Couln't find index
+			{
+				//assert(!("Couldn't find string in list, using default value"));
+				sprintf(szValue, "%s", pObj->defValue);
+			}
+			break;
+		}
+		case O_SLIDER:
+			pSlider = (CCvarSlider*)pList->pControl;
+			sprintf(szValue, "%.2f", pSlider->GetSliderValue());
+			break;
+		}
+
+		// Remove double quotes and % characters
+		UTIL_StripInvalidCharacters(szValue, sizeof(szValue));
+
+		V_strcpy_safe(strValue, szValue);
+
+		pObj->SetCurValue(strValue);
+
+		pList = pList->next;
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::CreateControls()
+{
+	DestroyControls();
+
+	// Go through desciption creating controls
+	CScriptObject* pObj;
+
+	pObj = m_pDescription->pObjList;
+
+	// Build out the clan dropdown
+	CScriptObject* pClanObj = m_pDescription->FindObject("cl_clanid");
+	ISteamFriends* pFriends = steamapicontext->SteamFriends();
+	if (pFriends && pClanObj)
+	{
+		pClanObj->RemoveAndDeleteAllItems();
+		int iGroupCount = pFriends->GetClanCount();
+		pClanObj->AddItem(new CScriptListItem("#Cstrike_ClanTag_None", "0"));
+		for (int k = 0; k < iGroupCount; ++k)
+		{
+			CSteamID clanID = pFriends->GetClanByIndex(k);
+			const char* pName = pFriends->GetClanName(clanID);
+			const char* pTag = pFriends->GetClanTag(clanID);
+
+			char id[12];
+			Q_snprintf(id, sizeof(id), "%d", clanID.GetAccountID());
+			pClanObj->AddItem(new CScriptListItem(CFmtStr("%s (%s)", pTag, pName), id));
+		}
+	}
+
+	mpcontrol_t* pCtrl;
+
+	Button* pButton;
+	Label* pBox;
+	TextEntry* pEdit;
+	ComboBox* pCombo;
+	CCvarSlider* pSlider;
+	CScriptListItem* pListItem;
+
+	Panel* objParent = m_pListPanel;
+
+	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
+	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
+	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
+	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
+	Color creditColor = Color(255, 255, 255, 255);
+
+	while (pObj)
+	{
+		if (pObj->type == O_OBSOLETE)
+		{
+			pObj = pObj->pNext;
+			continue;
+		}
+
+		pCtrl = new mpcontrol_t(objParent, "mpcontrol_t");
+		pCtrl->type = pObj->type;
+
+		// Force it to invalidate scheme now, so we can change color afterwards and have it persist
+		pCtrl->InvalidateLayout(true, true);
+
+		switch (pCtrl->type)
+		{
+		case O_BOOL:
+			//pBox = new CheckButton(pCtrl, "DescCheckButton", pObj->prompt);
+			//pBox->SetSelected(false);
+			pBox = new Label(pCtrl, "CreditLabel", pObj->prompt);
+
+			pCtrl->pControl = (Panel*)pBox;
+			pBox->SetFont(hCreditFont);
+
+			pBox->InvalidateLayout(true, true);
+
+			pBox->SetFgColor(creditColor);
+			//pBox->SetDefaultColor(creditColor, pBox->GetBgColor());
+			//pBox->SetArmedColor(creditColor, pBox->GetBgColor());
+			//pBox->SetDepressedColor(creditColor, pBox->GetBgColor());
+			//pBox->SetSelectedColor(creditColor, pBox->GetBgColor());
+			//pBox->SetHighlightColor(creditColor);
+			break;
+		case O_STRING:
+		case O_NUMBER:
+			pEdit = new TextEntry(pCtrl, "DescTextEntry");
+			pEdit->InsertString(pObj->defValue);
+			pCtrl->pControl = (Panel*)pEdit;
+			pEdit->SetFont(hTextFont);
+
+			pEdit->InvalidateLayout(true, true);
+			pEdit->SetBgColor(Color(0, 0, 0, 255));
+			break;
+		case O_LIST:
+		{
+			pCombo = new ComboBox(pCtrl, "DescComboBox", 5, false);
+
+			// track which row matches the current value
+			int iRow = -1;
+			int iCount = 0;
+			pListItem = pObj->pListItems;
+			while (pListItem)
+			{
+				if (iRow == -1 && !Q_stricmp(pListItem->szValue, pObj->curValue))
+					iRow = iCount;
+
+				pCombo->AddItem(pListItem->szItemText, NULL);
+				pListItem = pListItem->pNext;
+				++iCount;
+			}
+
+
+			pCombo->ActivateItemByRow(iRow);
+
+			pCtrl->pControl = (Panel*)pCombo;
+			pCombo->SetFont(hTextFont);
+		}
+		break;
+		case O_SLIDER:
+			pSlider = new CCvarSlider(pCtrl, "DescSlider", "Test", pObj->fMin, pObj->fMax, pObj->cvarname, false);
+			pCtrl->pControl = (Panel*)pSlider;
+			break;
+		case O_BUTTON:
+			pButton = new CExButton(pCtrl, "DescButton", pObj->prompt, this, pObj->defValue);
+			pButton->SetFont(hTextFont);
+			pCtrl->pControl = (Panel*)pButton;
+			break;
+		case O_CATEGORY:
+			pCtrl->SetBorder(pScheme->GetBorder("OptionsCategoryBorder"));
+			break;
+		default:
+			break;
+		}
+
+		if (pCtrl->type != O_BOOL && pCtrl->type != O_BUTTON)
+		{
+			pCtrl->pPrompt = new vgui::Label(pCtrl, "DescLabel", "");
+			pCtrl->pPrompt->SetContentAlignment(vgui::Label::a_west);
+			pCtrl->pPrompt->SetTextInset(5, 0);
+			pCtrl->pPrompt->SetText(pObj->prompt);
+			pCtrl->pPrompt->SetFont(hTextFont);
+
+			pCtrl->pPrompt->InvalidateLayout(true, true);
+
+			if (pCtrl->type == O_CATEGORY)
+			{
+				pCtrl->pPrompt->SetFont(pScheme->GetFont("HudFontSmallBold", true));
+				pCtrl->pPrompt->SetFgColor(pScheme->GetColor("TanLight", Color(255, 0, 0, 255)));
+			}
+			else
+			{
+				pCtrl->pPrompt->SetFgColor(tanDark);
+			}
+		}
+
+		pCtrl->pScrObj = pObj;
+
+		switch (pCtrl->type)
+		{
+		case O_BOOL:
+		case O_STRING:
+		case O_NUMBER:
+		case O_LIST:
+		case O_BUTTON:
+		case O_CATEGORY:
+			pCtrl->SetSize(m_iControlW, m_iControlH);
+			break;
+		case O_SLIDER:
+			pCtrl->SetSize(m_iSliderW, m_iSliderH);
+			break;
+		default:
+			break;
+		}
+
+		// Hook up the tooltip, if the entry has one
+		if (pObj->tooltip && pObj->tooltip[0])
+		{
+			if (pCtrl->pPrompt)
+			{
+				pCtrl->pPrompt->SetTooltip(m_pToolTip, pObj->tooltip);
+			}
+			else
+			{
+				pCtrl->SetTooltip(m_pToolTip, pObj->tooltip);
+				pCtrl->pControl->SetTooltip(m_pToolTip, pObj->tooltip);
+			}
+		}
+
+		m_pListPanel->AddItem(NULL, pCtrl);
+
+		// Link it in
+		if (!m_pList)
+		{
+			m_pList = pCtrl;
+			pCtrl->next = NULL;
+		}
+		else
+		{
+			mpcontrol_t* p;
+			p = m_pList;
+			while (p)
+			{
+				if (!p->next)
+				{
+					p->next = pCtrl;
+					pCtrl->next = NULL;
+					break;
+				}
+				p = p->next;
+			}
+		}
+
+		pObj = pObj->pNext;
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::DestroyControls()
+{
+	mpcontrol_t* p, * n;
+
+	p = m_pList;
+	while (p)
+	{
+		n = p->next;
+		//
+		if (p->pControl)
+		{
+			p->pControl->MarkForDeletion();
+			p->pControl = NULL;
+		}
+		if (p->pPrompt)
+		{
+			p->pPrompt->MarkForDeletion();
+			p->pPrompt = NULL;
+		}
+		delete p;
+		p = n;
+	}
+
+	m_pList = NULL;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFModCreditsDialog::Deploy(void)
+{
+	SetVisible(true);
+	MakePopup();
+	MoveToFront();
+	SetKeyBoardInputEnabled(true);
+	SetMouseInputEnabled(true);
+	TFModalStack()->PushModal(this);
+
+	// Center it, keeping requested size
+	int x, y, ww, wt, wide, tall;
+	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
+	GetSize(wide, tall);
+	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
 }

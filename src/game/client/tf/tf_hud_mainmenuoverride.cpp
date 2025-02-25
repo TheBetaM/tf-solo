@@ -2087,7 +2087,7 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	}
 	else if (!Q_stricmp(command, "openmodcredits"))
 	{
-		ShowConfirmDialog("#TFSOLO_ModCredits_Title", "#TFSOLO_ModCredits_Body", "#TF_OK", "#TF_OK", NULL, this);
+		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand("engine openmodcredits");
 	}
 	else if (!Q_stricmp(command, "resetmodprogress"))
 	{
