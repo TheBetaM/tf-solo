@@ -1067,7 +1067,7 @@ ConVar tf_gamemode_mvm ( "tf_gamemode_mvm", "0", FCVAR_REPLICATED | FCVAR_NOTIFY
 ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 
-ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
+ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
 #ifdef _DEBUG
 ConVar tf_debug_ammo_and_health( "tf_debug_ammo_and_health", "0", FCVAR_CHEAT );
@@ -18687,34 +18687,7 @@ static bool BIgnoreConvarChangeInPVEMode(void)
 // tags are recalculated and uploaded to the master server when the convar is changed.
 convar_tags_t convars_to_check_for_tags[] =
 {
-	{ "mp_friendlyfire", "friendlyfire", NULL },
-	{ "tf_birthday", "birthday", NULL },
-	{ "mp_respawnwavetime", "respawntimes", NULL },
-	{ "mp_fadetoblack", "fadetoblack", NULL },
-	{ "tf_weapon_criticals", "nocrits", NULL },
-	{ "mp_disable_respawn_times", "norespawntime", NULL },
-	{ "tf_gamemode_arena", "arena", NULL },
-	{ "tf_gamemode_cp", "cp", NULL },
-	{ "tf_gamemode_ctf", "ctf", NULL },
-	{ "tf_gamemode_sd", "sd", NULL },
-	{ "tf_gamemode_mvm", "mvm", NULL },
-	{ "tf_gamemode_payload", "payload", NULL },
-	{ "tf_gamemode_rd",	"rd", NULL },
-	{ "tf_gamemode_pd",	"pd", NULL },
-	{ "tf_gamemode_tc",	"tc", NULL },
 	{ "tf_beta_content", "beta", NULL },
-	{ "tf_damage_disablespread", "dmgspread", NULL },
-	{ "mp_highlander", "highlander", NULL },
-	{ "tf_bot_count", "bots", &BIgnoreConvarChangeInPVEMode },
-	{ "tf_pve_mode", "pve" },
-	{ "sv_registration_successful", "_registered", NULL },
-	{ "tf_server_identity_disable_quickplay", "noquickplay", NULL },
-	{ "tf_mm_strict", "hidden", NULL },
-	{ "tf_medieval", "medieval", NULL },
-	{ "mp_holiday_nogifts", "nogifts" },
-	{ "tf_powerup_mode", "powerup", NULL },
-	{ "tf_gamemode_passtime", "passtime", NULL },
-	{ "tf_gamemode_misc", "misc", NULL }, // catch-all for matchmaking to identify sd, tc, and pd servers via sv_tags
 };
 
 //-----------------------------------------------------------------------------

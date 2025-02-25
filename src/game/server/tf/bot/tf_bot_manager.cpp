@@ -465,48 +465,101 @@ void CTFBotManager::MaintainBotQuota()
 		if ( !TFGameRules()->WouldChangeUnbalanceTeams( TF_TEAM_BLUE, TEAM_UNASSIGNED ) ||
 			 !TFGameRules()->WouldChangeUnbalanceTeams( TF_TEAM_RED, TEAM_UNASSIGNED ) )
 		{
-			CTFBot *pBot = GetAvailableBotFromPool();
-			if ( pBot == NULL )
-			{
-				pBot = NextBotCreatePlayerBot< CTFBot >( GetRandomBotName() );
-			}
-			if ( pBot )
-			{
-				pBot->SetAttribute( CTFBot::QUOTA_MANANGED );
 
-				if (tf_bot_quota_use_presets.GetInt() != 0)
+			if (tf_bot_quota_use_presets.GetInt() != 0)
+			{
+				int count = 0;
+				auto key = m_presetsKV->GetFirstSubKey();
+				while (key)
 				{
-					int count = 0;
-					auto key = m_presetsKV->GetFirstSubKey();
-					while (key)
+					key = key->GetNextKey();
+					count++;
+				}
+				int rand = RandomInt(0, count - 1);
+				count = 0;
+				const char* preset = "";
+				auto presetKey = m_presetsKV->GetFirstSubKey();
+				key = m_presetsKV->GetFirstSubKey();
+				while (key)
+				{
+					if (count == rand)
+					{
+						preset = key->GetName();
+						presetKey = key;
+						break;
+					}
+					else
 					{
 						key = key->GetNextKey();
 						count++;
 					}
-					int rand = RandomInt(0, count - 1);
-					count = 0;
-					const char* preset = "";
-					key = m_presetsKV->GetFirstSubKey();
-					while (key)
+				}
+
+				CTFBot* pBot = GetAvailableBotFromPool();
+				if (pBot == NULL)
+				{
+					if (presetKey->FindKey("Name"))
 					{
-						if (count == rand)
+						pBot = NextBotCreatePlayerBot< CTFBot >(presetKey->GetString("Name"), false);
+					}
+					else
+					{
+						pBot = NextBotCreatePlayerBot< CTFBot >(GetRandomBotName(), false);
+					}
+				}
+				if (pBot)
+				{
+					pBot->SetAttribute(CTFBot::QUOTA_MANANGED);
+
+					pBot->SetPreset(preset);
+					if (presetKey->FindKey("Team"))
+					{
+						int team = presetKey->GetInt("Team");
+						if (team == 2)
 						{
-							preset = key->GetName();
-							break;
+							pBot->HandleCommand_JoinTeam("red");
+						}
+						else if (team == 3)
+						{
+							pBot->HandleCommand_JoinTeam("blue");
 						}
 						else
 						{
-							key = key->GetNextKey();
-							count++;
+							pBot->HandleCommand_JoinTeam("spectate");
 						}
 					}
-					
-					pBot->SetPreset(preset);
-					pBot->HandleCommand_JoinTeam("auto");
-					pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
+					else
+					{
+						pBot->HandleCommand_JoinTeam("auto");
+					}
+					if (presetKey->FindKey("Class"))
+					{
+						pBot->HandleCommand_JoinClass(presetKey->GetString("Class"));
+					}
+					else
+					{
+						pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
+					}
+
+					// Keep track of any bots we add during a match
+					CMatchInfo* pMatchInfo = GTFGCClientSystem()->GetMatch();
+					if (pMatchInfo)
+					{
+						pMatchInfo->m_nBotsAdded++;
+					}
 				}
-				else
+			}
+			else
+			{
+				CTFBot* pBot = GetAvailableBotFromPool();
+				if (pBot == NULL)
 				{
+					pBot = NextBotCreatePlayerBot< CTFBot >(GetRandomBotName());
+				}
+				if (pBot)
+				{
+					pBot->SetAttribute(CTFBot::QUOTA_MANANGED);
+
 					// join a team before we pick our class, since we use our teammates to decide what class to be
 					pBot->HandleCommand_JoinTeam("auto");
 
@@ -517,13 +570,13 @@ void CTFBotManager::MaintainBotQuota()
 					CTFBot::DifficultyType skill = pBot->GetDifficulty();
 					CreateBotName(pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name));
 					engine->SetFakeClientConVarValue(pBot->edict(), "name", name);
-				}
 
-				// Keep track of any bots we add during a match
-				CMatchInfo *pMatchInfo = GTFGCClientSystem()->GetMatch();
-				if ( pMatchInfo )
-				{
-					pMatchInfo->m_nBotsAdded++;
+					// Keep track of any bots we add during a match
+					CMatchInfo* pMatchInfo = GTFGCClientSystem()->GetMatch();
+					if (pMatchInfo)
+					{
+						pMatchInfo->m_nBotsAdded++;
+					}
 				}
 			}
 		}

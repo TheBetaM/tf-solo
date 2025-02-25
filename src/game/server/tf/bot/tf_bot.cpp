@@ -396,6 +396,38 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 	{
 		skill = CTFBot::EASY;
 	}
+
+	if (preset != NULL)
+	{
+		auto presetKey = TheTFBots().m_presetsKV->FindKey(preset);
+		if (presetKey)
+		{
+			if (presetKey->FindKey("Name"))
+			{
+				pszBotNameViaArg = presetKey->GetString("Name");
+			}
+			if (presetKey->FindKey("Class"))
+			{
+				iClassIndex = GetClassIndexFromString(presetKey->GetString("Class"));
+			}
+			if (presetKey->FindKey("Team"))
+			{
+				iTeam = presetKey->GetInt("Team");
+				if (iTeam == 2)
+				{
+					teamname = "red";
+				}
+				else if (iTeam == 3)
+				{
+					teamname = "blue";
+				}
+				else
+				{
+					teamname = "spectate";
+				}
+			}
+		}
+	}
 	
 	char name[256];
 	int iNumAdded = 0;
@@ -414,7 +446,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			pszBotName = pszBotNameViaArg;
 		}
 
-		pBot = NextBotCreatePlayerBot< CTFBot >( pszBotName );
+		pBot = NextBotCreatePlayerBot< CTFBot >( pszBotName, false );
 
 		if ( pBot ) 
 		{
