@@ -64,5 +64,17 @@
 			"baseitem" "0"
 			"soloitem" "1"
 		}
+		
+	}
+	"armory_data"
+	{
+		"armory_items"
+		{
+			"action"					""
+			"charity"					""
+			"can_customize_texture"		""
+			"tournamentmedal"			""
+			"duckbadge"					""
+		}
 	}
 }
