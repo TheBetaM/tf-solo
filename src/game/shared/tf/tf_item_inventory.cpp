@@ -51,6 +51,8 @@ using namespace GCSDK;
 #define LOCAL_LOADOUT_FILE		"cfg/local_loadout.txt"
 #define LOCAL_LOADOUT_RESERVE   65536
 
+ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "0", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
+
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 CEconNotification_HasNewItems::CEconNotification_HasNewItems() : CEconNotification()
@@ -305,6 +307,10 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 			}
 		}
 	}
+	else if (tf_disable_base_econ_items.GetBool())
+	{
+		return false;
+	}
 
 	if (!pItem)
 		return false;
@@ -364,6 +370,9 @@ int	CTFInventoryManager::GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVe
 
 		// Ignore unpack'd items
 		if ( IsUnacknowledged( pItem->GetInventoryPosition() ) )
+			continue;
+
+		if (tf_disable_base_econ_items.GetBool())
 			continue;
 
 		pList->AddToTail( m_LocalInventory.GetItem(i) );
@@ -1146,24 +1155,33 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 				pItem->GetSOCData()->Equip(unClass, unSlot);
 			}
 		}
+
+		m_LoadoutItems[unClass][unSlot] = ulItemID;
+
+#ifdef CLIENT_DLL
+		int activePreset = m_ActivePreset[unClass];
+		m_PresetItems[activePreset][unClass][unSlot] = ulItemID;
+
+		GTFGCClientSystem()->LocalInventoryChanged();
+#endif
 	}
-	else
+	else if (!tf_disable_base_econ_items.GetBool())
 	{
 		CEconItemView* pItem = GetInventoryItemByItemID(ulItemID);
 		if (pItem)
 		{
 			pItem->GetSOCData()->Equip(unClass, unSlot);
 		}
-	}
 
-	m_LoadoutItems[unClass][unSlot] = ulItemID;
+		m_LoadoutItems[unClass][unSlot] = ulItemID;
 
 #ifdef CLIENT_DLL
-	int activePreset = m_ActivePreset[unClass];
-	m_PresetItems[activePreset][unClass][unSlot] = ulItemID;
+		int activePreset = m_ActivePreset[unClass];
+		m_PresetItems[activePreset][unClass][unSlot] = ulItemID;
 
-	GTFGCClientSystem()->LocalInventoryChanged();
+		GTFGCClientSystem()->LocalInventoryChanged();
 #endif
+	}
 }
 
 void CTFPlayerInventory::UnequipLocal(uint64 ulItemID)
@@ -1555,8 +1573,17 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 
 			// To protect against users lying to the backend about the position of their items,
 			// we need to validate their position on the server when we retrieve them.
-			if ( pItem && AreSlotsConsideredIdentical( pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot( iClass ), iSlot ) )
-				return pItem;
+			if (pItem && AreSlotsConsideredIdentical(pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot(iClass), iSlot))
+			{
+				if (!tf_disable_base_econ_items.GetBool())
+				{
+					return pItem;
+				}
+				else
+				{
+					return TFInventoryManager()->GetBaseItemForClass(iClass, iSlot);
+				}
+			}
 
 			if (m_LoadoutItems[iClass][iSlot] < LOCAL_LOADOUT_RESERVE)
 			{
