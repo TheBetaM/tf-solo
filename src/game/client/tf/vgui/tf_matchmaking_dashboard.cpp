@@ -383,7 +383,6 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	}
 	else if (FStrEq("open_campaigns", command))
 	{
-		//OnCreateServer();
 		OnOpenCampaigns();
 		return;
 	}
@@ -423,6 +422,11 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	{
 		ClearAllStacks();
 		UpdateDimmer();
+	}
+	else if (FStrEq(command, "dimmer_hide"))
+	{
+		ClearAllStacks();
+		HideDimmer();
 	}
 	else if ( FStrEq( command, "leave_queue" ) ) 
 	{
@@ -1355,8 +1359,15 @@ void CTFMatchmakingDashboard::UpdateDimmer()
 
 	Panel* pDimmer = GetDashboardPanel().GetPanel( k_eBGDimmer );
 	int nDimmerAlpha = bShowDimmer ? 230 : 0;
+	pDimmer->SetMouseInputEnabled(bShowDimmer);
+	pDimmer->SetVisible(bShowDimmer);
 	g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( pDimmer, "alpha", nDimmerAlpha, 0.0f, 0.4f, vgui::AnimationController::INTERPOLATOR_GAIN, 0.8f, true, false );
-	pDimmer->SetMouseInputEnabled( bShowDimmer );
+}
+void CTFMatchmakingDashboard::HideDimmer()
+{
+	Panel* pDimmer = GetDashboardPanel().GetPanel(k_eBGDimmer);
+	pDimmer->SetMouseInputEnabled(false);
+	pDimmer->SetVisible(false);
 }
 
 void GetQueuedString( wchar_t* pwszBuff, int nSize )

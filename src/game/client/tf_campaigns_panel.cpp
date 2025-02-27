@@ -145,11 +145,21 @@ public:
 				return;
 			}
 			const char* cMap = m_Config->GetString("Map");
-			CUtlString line;
-			line.Append("map ");
-			line.Append(cMap);
-			line.Append("\n");
-			engine->ClientCmd(line);
+
+			// reset server enforced cvars
+			g_pCVar->RevertFlaggedConVars(FCVAR_REPLICATED);
+			g_pCVar->RevertFlaggedConVars(FCVAR_CHEAT);
+
+			//ConVarRef sv_use_steam_netorwking("sv_use_steam_netorwking");
+			//sv_use_steam_netorwking.SetValue(0);
+
+			// create the command to execute
+			CFmtStr1024 fmtMapCommand(
+				"disconnect\nwait\nwait\nmaxplayers 32\n\nprogress_enable\nmap %s\n", cMap
+			);
+			engine->ClientCmd_Unrestricted(fmtMapCommand.Access());
+			GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >(k_eCampaigns)->SetVisible(false);
+			GetMMDashboard()->OnCommand("dimmer_hide");
 
 			return;
 		}
