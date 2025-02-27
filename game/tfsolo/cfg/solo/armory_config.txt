@@ -1,51 +1,14 @@
+#base armory_valve_weapons.txt
+//#base armory_valve_cosmetics.txt
+//#base armory_valve_taunts.txt
+#base armory_community_weapons.txt
+//#base armory_community_cosmetics.txt
+//#base armory_community_taunts.txt
+#base armory_solo_weapons.txt
+#base armory_solo_cosmetics.txt
+#base armory_solo_taunts.txt
+
 armory_config
 {
-	"The Kritzkrieg"
-	{
-		Cost 1000
-	}
-	"The Blutsauger"
-	{
-		Cost 1200
-	}
-	"The Ubersaw"
-	{
-		Cost 1500
-	}
-	"The Backburner"
-	{
-		Cost 1000
-	}
-	"The Flare Gun"
-	{
-		Cost 1200
-	}
-	"The Axtinguisher"
-	{
-		Cost 1500
-	}
-	"Natascha"
-	{
-		Cost 1000
-	}
-	"The Sandvich"
-	{
-		Cost 1200
-	}
-	"The Killing Gloves of Boxing"
-	{
-		Cost 1500
-	}
-	"The Sandman"
-	{
-		Cost 1000
-	}
-	"The Force-a-Nature"
-	{
-		Cost 1200
-	}
-	"Bonk! Atomic Punch"
-	{
-		Cost 1500
-	}
+	
 }

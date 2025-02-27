@@ -1,0 +1,119 @@
+armory_config
+{
+	"Battin' a Thousand Taunt"
+	{
+		Cost 1000
+	}
+	"Taunt: The Boiling Point"
+	{
+		Cost 1000
+	}
+	"Buy A Life Taunt"
+	{
+		Cost 1000
+	}
+	"Taunt: The Carlton"
+	{
+		Cost 1000
+	}
+	"Conga Taunt"
+	{
+		Cost 1000
+	}
+	"Deep Fried Desire Taunt"
+	{
+		Cost 1000
+	}
+	"Replay Taunt"
+	{
+		Cost 1000
+	}
+	"Flippin' Awesome Taunt"
+	{
+		Cost 1000
+	}
+	"Fresh Brewed Victory Taunt"
+	{
+		Cost 1000
+	}
+	"High Five Taunt"
+	{
+		Cost 1000
+	}
+	"I See You Taunt"
+	{
+		Cost 1000
+	}
+	"Taunt: Kazotsky Kick"
+	{
+		Cost 1000
+	}
+	"Taunt: Mannrobics"
+	{
+		Cost 1000
+	}
+	"Meet the Medic Heroic Taunt"
+	{
+		Cost 1000
+	}
+	"Oblooterated Taunt"
+	{
+		Cost 1000
+	}
+	"Taunt: Panzer Pants"
+	{
+		Cost 1000
+	}
+	"Party Trick Taunt"
+	{
+		Cost 1000
+	}
+	"Rancho Relaxo Taunt"
+	{
+		Cost 1000
+	}
+	"Results Are In Taunt"
+	{
+		Cost 1000
+	}
+	"RPS Taunt"
+	{
+		Cost 1000
+	}
+	"Laugh Taunt"
+	{
+		Cost 1000
+	}
+	"Taunt: The Scooty Scoot"
+	{
+		Cost 1000
+	}
+	"Skullcracker Taunt"
+	{
+		Cost 1000
+	}
+	"Spent Well Spirits Taunt"
+	{
+		Cost 1000
+	}
+	"Square Dance Taunt"
+	{
+		Cost 1000
+	}
+	"Taunt: The Table Tantrum"
+	{
+		Cost 1000
+	}
+	"Taunt: The Victory Lap"
+	{
+		Cost 1000
+	}
+	"Taunt: Yeti Punch"
+	{
+		Cost 1000
+	}
+	"Taunt: Yeti Smash"
+	{
+		Cost 1000
+	}
+}

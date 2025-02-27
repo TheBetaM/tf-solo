@@ -1,0 +1,437 @@
+armory_config
+{
+	"The Air Strike"
+	{
+		Cost 1000
+	}
+	"Ali Baba's Wee Booties"
+	{
+		Cost 1000
+	}
+	"The Amputator"
+	{
+		Cost 1000
+	}
+	"The Atomizer"
+	{
+		Cost 1000
+	}
+	"The B.A.S.E. Jumper"
+	{
+		Cost 1000
+	}
+	"Baby Face's Blaster"
+	{
+		Cost 1000
+	}
+	"The Back Scatter"
+	{
+		Cost 1000
+	}
+	"The Back Scratcher"
+	{
+		Cost 1000
+	}
+	"The Bat Outta Hell"
+	{
+		Cost 1000
+	}
+	"Batsaber"
+	{
+		Cost 1000
+	}
+	"The Battalion's Backup"
+	{
+		Cost 1000
+	}
+	"The Bazaar Bargain"
+	{
+		Cost 1000
+	}
+	"The Beggar's Bazooka"
+	{
+		Cost 1000
+	}
+	"The Big Earner"
+	{
+		Cost 1000
+	}
+	"The Black Box"
+	{
+		Cost 1000
+	}
+	"The Bootlegger"
+	{
+		Cost 1000
+	}
+	"The Boston Basher"
+	{
+		Cost 1000
+	}
+	"The Brass Beast"
+	{
+		Cost 1000
+	}
+	"The Buffalo Steak Sandvich"
+	{
+		Cost 1000
+	}
+	"The Bushwacka"
+	{
+		Cost 1000
+	}
+	"The C.A.P.P.E.R"
+	{
+		Cost 1000
+	}
+	"The Claidheamohmor"
+	{
+		Cost 1000
+	}
+	"The Cleaner's Carbine"
+	{
+		Cost 1000
+	}
+	"The Concheror"
+	{
+		Cost 1000
+	}
+	"Conniver's Kunai"
+	{
+		Cost 1000
+	}
+	"The Conscientious Objector"
+	{
+		Cost 1000
+	}
+	"The Cozy Camper"
+	{
+		Cost 1000
+	}
+	"The Crossing Guard"
+	{
+		Cost 1000
+	}
+	"The Crusader's Crossbow"
+	{
+		Cost 1000
+	}
+	"The Dalokohs Bar"
+	{
+		Cost 1000
+	}
+	"Darwin's Danger Shield"
+	{
+		Cost 1000
+	}
+	"The Degreaser"
+	{
+		Cost 1000
+	}
+	"The Detonator"
+	{
+		Cost 1000
+	}
+	"The Diamondback"
+	{
+		Cost 1000
+	}
+	"The Disciplinary Action"
+	{
+		Cost 1000
+	}
+	"The Enforcer"
+	{
+		Cost 1000
+	}
+	"The Eureka Effect"
+	{
+		Cost 1000
+	}
+	"The Eviction Notice"
+	{
+		Cost 1000
+	}
+	"The Family Business"
+	{
+		Cost 1000
+	}
+	"The Fan O'War"
+	{
+		Cost 1000
+	}
+	"Fists of Steel"
+	{
+		Cost 1000
+	}
+	"The Flying Guillotine"
+	{
+		Cost 1000
+	}
+	"The Freedom Staff"
+	{
+		Cost 1000
+	}
+	"The Giger Counter"
+	{
+		Cost 1000
+	}
+	"The Half-Zatoichi"
+	{
+		Cost 1000
+	}
+	"The Ham Shank"
+	{
+		Cost 1000
+	}
+	"The Hitman's Heatmaker"
+	{
+		Cost 1000
+	}
+	"The Holiday Punch"
+	{
+		Cost 1000
+	}
+	"The Holy Mackerel"
+	{
+		Cost 1000
+	}
+	"The Homewrecker"
+	{
+		Cost 1000
+	}
+	"The Huo Long Heatmaker"
+	{
+		Cost 1000
+	}
+	"The Iron Bomber"
+	{
+		Cost 1000
+	}
+	"The Jag"
+	{
+		Cost 1000
+	}
+	"L'Etranger"
+	{
+		Cost 1000
+	}
+	"The Liberty Launcher"
+	{
+		Cost 1000
+	}
+	"The Loch-n-Load"
+	{
+		Cost 1000
+	}
+	"The Loose Cannon"
+	{
+		Cost 1000
+	}
+	"The Machina"
+	{
+		Cost 1000
+	}
+	"Mad Milk"
+	{
+		Cost 1000
+	}
+	"The Manmelter"
+	{
+		Cost 1000
+	}
+	"The Mantreads"
+	{
+		Cost 1000
+	}
+	"The Market Gardener"
+	{
+		Cost 1000
+	}
+	"The Neon Annihilator"
+	{
+		Cost 1000
+	}
+	"Nessie's Nine Iron"
+	{
+		Cost 1000
+	}
+	"The Nostromo Napalmer"
+	{
+		Cost 1000
+	}
+	"The Pain Train"
+	{
+		Cost 1000
+	}
+	"Panic Attack Shotgun"
+	{
+		Cost 1000
+	}
+	"The Persian Persuader"
+	{
+		Cost 1000
+	}
+	"The Phlogistinator"
+	{
+		Cost 1000
+	}
+	"The Pomson 6000"
+	{
+		Cost 1000
+	}
+	"The Postal Pummeler"
+	{
+		Cost 1000
+	}
+	"The Powerjack"
+	{
+		Cost 1000
+	}
+	"Pretty Boy's Pocket Pistol"
+	{
+		Cost 1000
+	}
+	"Prinny Machete"
+	{
+		Cost 1000
+	}
+	"The Quickiebomb Launcher"
+	{
+		Cost 1000
+	}
+	"The Quackenbirdt"
+	{
+		Cost 1000
+	}
+	"The Red-Tape Recorder"
+	{
+		Cost 1000
+	}
+	"The Rescue Ranger"
+	{
+		Cost 1000
+	}
+	"The Reserve Shooter"
+	{
+		Cost 1000
+	}
+	"The Scorch Shot"
+	{
+		Cost 1000
+	}
+	"The Scotsman's Skullcutter"
+	{
+		Cost 1000
+	}
+	"The Scottish Handshake"
+	{
+		Cost 1000
+	}
+	"The Second Banana"
+	{
+		Cost 1000
+	}
+	"The Shahanshah"
+	{
+		Cost 1000
+	}
+	"Shooting Star"
+	{
+		Cost 1000
+	}
+	"The Short Circuit"
+	{
+		Cost 1000
+	}
+	"The Shortstop"
+	{
+		Cost 1000
+	}
+	"The Soda Popper"
+	{
+		Cost 1000
+	}
+	"The Southern Hospitality"
+	{
+		Cost 1000
+	}
+	"The Splendid Screen"
+	{
+		Cost 1000
+	}
+	"The Spy-cicle"
+	{
+		Cost 1000
+	}
+	"The Sydney Sleeper"
+	{
+		Cost 1000
+	}
+	"The Third Degree"
+	{
+		Cost 1000
+	}
+	"The Tide Turner"
+	{
+		Cost 1000
+	}
+	"Tomislav"
+	{
+		Cost 1000
+	}
+	"The Tribalman's Shiv"
+	{
+		Cost 1000
+	}
+	"The Ullapool Caber"
+	{
+		Cost 1000
+	}
+	"Unarmed Combat"
+	{
+		Cost 1000
+	}
+	"The Vaccinator"
+	{
+		Cost 1000
+	}
+	"The Vita-Saw"
+	{
+		Cost 1000
+	}
+	"The Wanga Prick"
+	{
+		Cost 1000
+	}
+	"Warrior's Spirit"
+	{
+		Cost 1000
+	}
+	"The Widowmaker"
+	{
+		Cost 1000
+	}
+	"The Winger"
+	{
+		Cost 1000
+	}
+	"The Wrap Assassin"
+	{
+		Cost 1000
+	}
+	"Your Eternal Reward"
+	{
+		Cost 1000
+	}
+	
+	//"Battery Canteens"
+	//{
+	//}
+	//"Kritz Or Treat Canteen"
+	//{
+	//}
+	//"Duck Badge"
+	//{
+	//}
+}
