@@ -236,6 +236,9 @@ void CLoadoutPresetPanel::UpdatePresetButtonStates()
 {
 	equipped_preset_t unEquippedPresetID = GetSelectedPresetID();
 
+	if (!steamapicontext->SteamUser())
+		return;
+
 	CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
 	CTFPlayerInventory *pInv = TFInventoryManager()->GetInventoryForPlayer(localSteamID);
 	if (pInv) {

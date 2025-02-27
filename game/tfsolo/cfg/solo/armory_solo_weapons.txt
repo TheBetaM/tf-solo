@@ -1,4 +1,11 @@
 armory_config
 {
-	
+	"Bottled Sorrow"
+	{
+		Cost 1000
+	}
+	"Shocking Truth"
+	{
+		Cost 1000
+	}
 }

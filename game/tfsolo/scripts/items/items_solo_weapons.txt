@@ -1,0 +1,152 @@
+"items_game"
+{
+	"prefabs"
+	{
+		"weapon_bottledsorrow"
+		{
+			"item_class"	"saxxy"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+			}
+			"item_logname"	"bottledsorrow"
+			"item_iconname"	"bottledsorrow"
+			"show_in_armory"	"1"
+			"item_type_name"	"Bottle"
+			"item_name"	"Bottled Sorrow"
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/w_models/w_bottle"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/workshop/player/items/demo/taunt_scotsmans_stagger/taunt_scotsmans_stagger.mdl"
+			"attach_to_hands"	"1"
+			"inspect_panel_dist" "40"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"scout"	"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"	"1"
+				"heavy"	"1"
+				"pyro" "1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+				"slow enemy on hit major" "3.0"
+				"move speed bonus" "1.05"
+				"single wep holster time increased" "1.5"
+				"fire rate penalty" "1.25"
+			}
+			"attributes"
+			{
+				"always tradable"
+				{
+					"attribute_class"	"always_tradable"
+					"value"				"1"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_hit"		"Weapon_Bottle.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Bottle.HitWorld"
+				"sound_melee_miss"	"Weapon_Bottle.Miss"
+				"sound_burst"		"Weapon_Bottle.MissCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_bottle_pickup.wav"
+			"drop_sound"		"ui/item_bottle_drop.wav"
+		}
+		"weapon_shockingtruth"
+		{
+			"item_class"	"saxxy"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+			}
+			"item_logname"	"shockingtruth"
+			"item_iconname"	"shockingtruth"
+			"show_in_armory"	"1"
+			"item_type_name"	"Defibrillator"
+			"item_name"	"Shocking Truth"
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/c_models/c_bat"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/workshop/player/items/medic/tauntdoctors_defibrillators/tauntdoctors_defibrillators.mdl"
+			"attach_to_hands"	"1"
+			"inspect_panel_dist" "40"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"scout"	"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"	"1"
+				"heavy"	"1"
+				"pyro" "1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+				"self dmg push force increased" "2.0"
+				"damage force increase" "4.0"
+				"damage blast push" "4.0"
+				"move speed bonus" "1.05"
+				"hit self on miss" "1"
+				"single wep deploy time increased" "1.5"
+			}
+			"attributes"
+			{
+				"always tradable"
+				{
+					"attribute_class"	"always_tradable"
+					"value"				"1"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_hit"		"Weapon_BatSaber.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_BatSaber.HitWorld"
+				"sound_melee_miss"	"Weapon_BatSaber.Swing"
+				"sound_burst"		"Weapon_BatSaber.SwingCrit"
+				"sound_deploy"		"Weapon_BatSaber.Draw"
+			}
+			"mouse_pressed_sound"	"ui/item_bottle_pickup.wav"
+			"drop_sound"		"ui/item_bottle_drop.wav"
+		}
+	}
+	"items"
+	{
+		"34444"
+		{
+			"name" "Bottled Sorrow"
+			"prefab" "weapon_melee_allclass weapon_bottledsorrow"
+		}
+		"34445"
+		{
+			"name" "Shocking Truth"
+			"prefab" "weapon_melee_allclass weapon_shockingtruth"
+		}
+	}
+}

@@ -276,9 +276,12 @@ void CTFInventoryManager::GenerateBaseItems( void )
 	}
 	const CEconItemSchema::BaseItemDefinitionMap_t& mapItemsSolo = GetItemSchema()->GetSoloItemDefinitionMap();
 	iStart = 0;
-	for (int it = iStart; it != mapItemsSolo.InvalidIndex(); it = mapItemsSolo.NextInorder(it))
+	if (mapItemsSolo.Count() != 0)
 	{
-		AddSoloItem(mapItemsSolo[it]->GetDefinitionIndex());
+		for (int it = iStart; it != mapItemsSolo.InvalidIndex(); it = mapItemsSolo.NextInorder(it))
+		{
+			AddSoloItem(mapItemsSolo[it]->GetDefinitionIndex());
+		}
 	}
 }
 

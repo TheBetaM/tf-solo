@@ -1,0 +1,15 @@
+"items_game"
+{
+	"prefabs"
+	{
+		"weapon_russian_riot"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"pyro"	"1"
+				"heavy"	"1"
+			}
+		}
+	}
+}
