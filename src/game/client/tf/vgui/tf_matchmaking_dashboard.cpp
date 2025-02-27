@@ -28,6 +28,7 @@
 #include "tf_matchmaking_dashboard_side_panel.h"
 #include "tf_matchmaking_dashboard_explanations.h"
 #include "tf_matchmaking_dashboard_mvm_criteria.h"
+#include "tf_statsummary.h"
 
 using namespace vgui;
 using namespace GCSDK;
@@ -630,7 +631,10 @@ void CTFMatchmakingDashboard::OnTick()
 	{
 		bShouldBeVisible = true;
 	}
-
+	if (GStatsSummaryPanel()->IsVisible())
+	{
+		bShouldBeVisible = false;
+	}
 
 	if ( BIsExpanded() && !bShouldBeVisible )
 	{
