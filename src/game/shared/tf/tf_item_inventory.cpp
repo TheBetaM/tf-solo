@@ -975,6 +975,7 @@ void CTFPlayerInventory::UpdateRealTFLoadoutItems()
 	V_memcpy( m_RealTFLoadoutItems, m_LoadoutItems, sizeof( itemid_t ) * ARRAYSIZE( m_RealTFLoadoutItems ) * ARRAYSIZE( m_RealTFLoadoutItems[0] ) );
 }
 
+#endif
 void CTFPlayerInventory::LoadLocalLoadout()
 {
 	if (GetOwner() != steamapicontext->SteamUser()->GetSteamID())
@@ -990,9 +991,11 @@ void CTFPlayerInventory::LoadLocalLoadout()
 	KeyValues *pLoadoutKV = new KeyValues("local_loadout");
 	if (!pLoadoutKV->LoadFromFile(g_pFullFileSystem, path, "MOD"))
 	{
+#ifdef CLIENT_DLL
 		SaveLocalLoadout( true, true );
 
 		if ( !pLoadoutKV->LoadFromFile( g_pFullFileSystem, path, "MOD" ) )
+#endif
 		{
 			Warning( "Unable to parse local_loadout.txt into keyvalues.\n" );
 			return;
@@ -1029,7 +1032,9 @@ void CTFPlayerInventory::LoadLocalLoadout()
 				const int iSlot = V_atoi(pLoadoutEntry->GetName());
 				const itemid_t uItemId = pLoadoutEntry->GetUint64();
 
+#ifdef CLIENT_DLL
 				m_PresetItems[iPreset][iClass][iSlot] = uItemId;
+#endif // CLIENT_DLL
 
 				if (iPreset == m_ActivePreset[iClass]) {
 					m_LoadoutItems[iClass][iSlot] = uItemId;
@@ -1045,10 +1050,12 @@ void CTFPlayerInventory::LoadLocalLoadout()
 
 	pLoadoutKV->deleteThis();
 
+#ifdef CLIENT_DLL
 	GTFGCClientSystem()->LocalInventoryChanged();
+#endif // CLIENT_DLL
 	SendInventoryUpdateEvent();
 }
-
+#ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: If we are in mod mode, we track loadout changes locally.
 //-----------------------------------------------------------------------------
@@ -1566,6 +1573,14 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 {
 	if ( iSlot < 0 || iSlot >= CLASS_LOADOUT_POSITION_COUNT )
 		return NULL;
+
+#if GAME_DLL
+	if (!m_bOfflineLoaded)
+	{
+		m_bOfflineLoaded = true;
+		LoadLocalLoadout();
+	}
+#endif
 
 	if ( iClass == GEconItemSchema().GetAccountIndex() )
 	{

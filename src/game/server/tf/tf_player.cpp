@@ -4533,6 +4533,9 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 	// Remove our disguise weapon.
 	m_Shared.RemoveDisguiseWeapon();
 
+	// Reload local inventory
+	m_Inventory.InvalidateOffline();
+
 	CUtlVector<const char *> precacheStrings;
 
 	CBaseCombatWeapon* pCurrentWeapon = m_hActiveWeapon;

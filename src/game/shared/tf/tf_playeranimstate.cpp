@@ -600,18 +600,18 @@ void CTFPlayerAnimState::CheckCYOAPDAAnimtion()
 #ifdef GAME_DLL
 	if ( pPlayer->Inventory() )
 	{
-		pItem = pPlayer->GetEquippedItemForLoadoutSlot( LOADOUT_POSITION_ACTION );
+		//pItem = pPlayer->GetEquippedItemForLoadoutSlot( LOADOUT_POSITION_ACTION );
 	}
 #else
 	CSteamID steamID;
 	if ( pPlayer->GetSteamID( &steamID ) )
 	{
-		pItem = TFInventoryManager()->GetItemInLoadoutForClass( pPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, &steamID );
+		//pItem = TFInventoryManager()->GetItemInLoadoutForClass( pPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, &steamID );
 	}
 #endif
-	item_definition_index_t contractTrackerDefIndex = 5869;
-	if ( pItem && pItem->GetItemDefIndex() != contractTrackerDefIndex )
-	{
+	//item_definition_index_t contractTrackerDefIndex = 5869;
+	//if ( pItem && pItem->GetItemDefIndex() != contractTrackerDefIndex )
+	//{
 		// If we don't have the contracker equipped, we can't be looking at it.
 		// We may have been looking at it and only just now removed it,
 		// so we still need to check the animation state and maybe animate out.
@@ -619,7 +619,7 @@ void CTFPlayerAnimState::CheckCYOAPDAAnimtion()
 		// Old code used to return here which would cause the client to stay
 		// locked in the look sequence, but also able to move and shoot.
 		isViewingCYOAPDA = false;
-	}
+	//}
 
 	TFCYOAPDAAnimState_t state = pPlayer->m_Shared.m_iCYOAPDAAnimState;
 	if ( isViewingCYOAPDA
