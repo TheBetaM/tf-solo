@@ -20,6 +20,7 @@
 #include "nav_entities.h"
 #include "utlstack.h"
 #include "bot/map_entities/tf_bot_generator.h"		// action point
+#include "func_passtime_goal.h"
 
 #define TF_BOT_TYPE	1337
 
@@ -115,6 +116,7 @@ public:
 
 	CCaptureFlag *GetFlagToFetch( void ) const;						// return flag we want to fetch
 	CCaptureZone *GetFlagCaptureZone( void ) const;					// return capture zone for our flag(s)
+	CFuncPasstimeGoal *GetBallCaptureZone( void ) const;			// return capture zone for our ball
 
 	struct SniperSpotInfo
 	{

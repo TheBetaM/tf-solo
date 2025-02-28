@@ -36,6 +36,7 @@
 #include "bot/behavior/tf_bot_behavior.h"
 #include "bot/map_entities/tf_bot_generator.h"
 #include "bot/map_entities/tf_bot_hint_entity.h"
+#include "func_passtime_goal.h"
 
 ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a class name, all TFBots will respawn as that class" );
 
@@ -2230,6 +2231,22 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 	return NULL;
 }
 
+//-----------------------------------------------------------------------------------------------------
+// Return capture zone for our ball
+CFuncPasstimeGoal* CTFBot::GetBallCaptureZone(void) const
+{
+	const auto& list = CFuncPasstimeGoal::GetAutoList();
+	for (int i = 0; i < list.Count(); ++i)
+	{
+		CFuncPasstimeGoal *zone = list[i];
+		if ( !zone->IsDisabled() && (zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
+		{
+			return zone;
+		}
+	}
+
+	return NULL;
+}
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -2334,7 +2351,7 @@ float CTFBot::GetTimeLeftToCapture( void ) const
 			return TFGameRules()->GetKothTeamTimer( GetEnemyTeam( GetTeamNumber() ) )->GetTimeRemaining();
 		}
 	}
-	else if ( TFGameRules()->IsInArenaMode() )
+	else if ( TFGameRules()->IsInArenaMode() || TFGameRules()->IsPasstimeMode() )
 	{
 		return 0.0f;
 	}
