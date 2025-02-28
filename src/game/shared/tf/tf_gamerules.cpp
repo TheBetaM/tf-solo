@@ -3511,10 +3511,7 @@ void CTFGameRules::Precache( void )
 		CMerasmus::PrecacheMerasmus();
 	}
 
-	if ( StringHasPrefix( STRING( gpGlobals->mapname ), "mvm_" ) )
-	{
-		CTFPlayer::PrecacheMvM();
-	}
+	CTFPlayer::PrecacheMvM();
 
 	CTFPlayer::m_bTFPlayerNeedsPrecache = true;
 }
