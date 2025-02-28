@@ -370,7 +370,39 @@ void CTFStatsSummaryPanel::UpdateMainBackground( void )
 			}
 			else
 			{
-				m_pMainBackground->SetImage( bIsWidescreen ? "../console/background01_widescreen" : "../console/background01" );
+				ConVarRef mp_humans_must_join_team("mp_humans_must_join_team");
+				auto team = mp_humans_must_join_team.GetString();
+				const char* image = bIsWidescreen ? "../console/background01_widescreen" : "../console/background01";
+				int rand = RandomInt(0, 3);
+				if (team == "red")
+				{
+					rand = RandomInt(0, 1);
+					if (rand == 1)
+					{
+						image = bIsWidescreen ? "../console/background02_widescreen" : "../console/background02";
+					}
+				}
+				else if (team == "blue")
+				{
+					image = bIsWidescreen ? "../console/title_blue_widescreen" : "../console/title_blue";
+				}
+				else
+				{
+					if (rand == 1)
+					{
+						image = bIsWidescreen ? "../console/title_blue_widescreen" : "../console/title_blue";
+					}
+					else if (rand == 2)
+					{
+						image = bIsWidescreen ? "../console/background02_widescreen" : "../console/background02";
+					}
+					else if (rand == 3)
+					{
+						image = bIsWidescreen ? "../console/title_team_tough_break_widescreen" : "../console/title_team_tough_break";
+					}
+				}
+				m_pMainBackground->SetImage(image);
+				
 			}
 		}
 	}
