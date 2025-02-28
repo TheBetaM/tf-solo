@@ -48,7 +48,7 @@
 
 using namespace GCSDK;
 
-#define LOCAL_LOADOUT_FILE		"cfg/local_loadout.txt"
+#define LOCAL_LOADOUT_FILE		"cfg/local_loadout"
 #define LOCAL_LOADOUT_RESERVE   65536
 
 ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "0", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
@@ -984,12 +984,15 @@ void CTFPlayerInventory::LoadLocalLoadout()
 		return;
 	}
 
+	CUtlString path;
+	path.Append(LOCAL_LOADOUT_FILE);
+	path.Append(CFmtStr("_%d.txt", steamapicontext->SteamUser()->GetSteamID().GetAccountID()));
 	KeyValues *pLoadoutKV = new KeyValues("local_loadout");
-	if (!pLoadoutKV->LoadFromFile(g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD"))
+	if (!pLoadoutKV->LoadFromFile(g_pFullFileSystem, path, "MOD"))
 	{
 		SaveLocalLoadout( true, true );
 
-		if ( !pLoadoutKV->LoadFromFile( g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD" ) )
+		if ( !pLoadoutKV->LoadFromFile( g_pFullFileSystem, path, "MOD" ) )
 		{
 			Warning( "Unable to parse local_loadout.txt into keyvalues.\n" );
 			return;
@@ -1099,7 +1102,10 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 		}
 	}
 
-	pLoadoutKV->SaveToFile(g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD");
+	CUtlString path;
+	path.Append(LOCAL_LOADOUT_FILE);
+	path.Append(CFmtStr("_%d.txt", steamapicontext->SteamUser()->GetSteamID().GetAccountID()));
+	pLoadoutKV->SaveToFile(g_pFullFileSystem, path, "MOD");
 
 	pLoadoutKV->deleteThis();
 }
