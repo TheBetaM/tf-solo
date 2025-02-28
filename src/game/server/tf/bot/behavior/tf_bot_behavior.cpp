@@ -1329,7 +1329,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 	if ( me->GetIntentionInterface()->ShouldAttack( me, threat ) == ANSWER_NO )
 		return;
 
-	if ( TFGameRules()->InSetup() )
+	if ( TFGameRules()->InSetup() && TFGameRules()->IsAttackDefenseMode() )
 	{
 		// wait until the gates open
 		return;
