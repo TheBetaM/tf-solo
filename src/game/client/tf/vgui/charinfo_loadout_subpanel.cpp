@@ -364,7 +364,7 @@ void CCharInfoLoadoutSubPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/UI/CharInfoLoadoutSubPanel.res" );
+	LoadControlSettings( "Resource/UI/CharInfoLoadoutSubPanelSolo.res" );
 
 	m_pSelectLabel = dynamic_cast<vgui::Label*>( FindChildByName("SelectLabel") );
 	m_pLoadoutChangesLabel = dynamic_cast<vgui::Label*>( FindChildByName("LoadoutChangesLabel") );

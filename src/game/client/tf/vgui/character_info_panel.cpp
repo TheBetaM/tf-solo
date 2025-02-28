@@ -127,7 +127,7 @@ void CCharacterInfoPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/UI/CharInfoPanel.res" );
+	LoadControlSettings( "Resource/UI/CharInfoPanelSolo.res" );
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);

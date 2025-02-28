@@ -116,7 +116,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/UI/CharInfoArmorySubPanel.res" );
+	LoadControlSettings( "Resource/UI/CharInfoArmorySubPanelSolo.res" );
 
 	m_bReapplyItemKVs = true;
 	m_pMouseOverItemPanel->SetBorder( pScheme->GetBorder("LoadoutItemPopupBorder") );
