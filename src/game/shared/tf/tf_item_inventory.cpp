@@ -2332,6 +2332,13 @@ void CTFInventoryManager::LoadSaveData()
 			AddSoloItem(pItemDef->GetDefinitionIndex());
 		}
 	}
+
+#if CLIENT_DLL
+	CTFPlayerInventory* pInventory = TFInventoryManager()->GetInventoryForPlayer(steamID);
+	if (!pInventory)
+		return;
+	pInventory->LoadLocalLoadout();
+#endif
 }
 
 uint64_t CTFInventoryManager::GetCredits()

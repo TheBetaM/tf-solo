@@ -150,7 +150,7 @@ void CGCClientSystem::PostInit()
 
 		// Except when debugging internally, we really should never launch the game
 		// while not logged on!
-		AssertMsg( ClientSteamContext().BLoggedOn(), "No Steam logged on for GC setup!" );
+		//AssertMsg( ClientSteamContext().BLoggedOn(), "No Steam logged on for GC setup!" );
 
 		ThinkConnection();
 	#endif
@@ -278,7 +278,7 @@ void CGCClientSystem::ThinkConnection()
 	#else
 		bool bLoggedOn = steamgameserverapicontext && steamgameserverapicontext->SteamGameServer() && steamgameserverapicontext->SteamGameServer()->BLoggedOn();
 	#endif
-	if ( bLoggedOn )
+	if ( true )
 	{
 
 		// We're logged on.  Is this a rising edge?
