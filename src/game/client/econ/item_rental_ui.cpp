@@ -237,7 +237,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CGCMsg<MsgGCItemPreviewExpireNotification_t> msg( pNetPacket );
-
+		return true;
 		CEconPreviewExpiredNotification *pNotification = new CEconPreviewExpiredNotification( msg.Hdr().m_ulSteamID, msg.Body().m_unItemDefIndex );
 		pNotification->SetText( "#TF_PreviewItem_Expired" );
 		NotificationQueue_Add( pNotification );
@@ -261,7 +261,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CProtoBufMsg<CMsgGCItemPreviewItemBoughtNotification> msg( pNetPacket );
-
+		return true;
 		CEconPreviewItemBoughtNotification *pNotification = new CEconPreviewItemBoughtNotification( msg.Hdr().client_steam_id(), msg.Body().item_def_index() );
 		pNotification->SetText( "#TF_PreviewItem_ItemBought" );
 		NotificationQueue_Add( pNotification );

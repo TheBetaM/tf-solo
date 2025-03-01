@@ -658,13 +658,13 @@ void CAbuseReportManager::CheckCreateReportReadyNotification( float flMinSeconds
 void CAbuseReportManager::CreateReportReadyNotification( bool bInGame, float flLifetime )
 {
 	NotificationQueue_Remove( &CEconNotification_AbuseReportReady::IsNotificationType );
+	m_timeLastReportReadyNotification = Plat_FloatTime();
+	return;
 	CEconNotification_AbuseReportReady *pNotification = new CEconNotification_AbuseReportReady();
 	pNotification->SetText( "AbuseReport_Notification" );
 	pNotification->SetLifetime( flLifetime );
 	pNotification->m_bShowInGame = bInGame;
 	NotificationQueue_Add( pNotification );
-
-	m_timeLastReportReadyNotification = Plat_FloatTime();
 }
 
 CON_COMMAND_F( abuse_report_queue, "Capture data for abuse report and queue for submission.  Use abose_report_submit to activate UI to submit the report", FCVAR_DONTRECORD )

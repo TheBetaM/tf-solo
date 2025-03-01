@@ -278,7 +278,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CProtoBufMsg<CMsgTFThankedBySomeone> msg( pNetPacket );
-		NotificationQueue_Add( new CWasThankedBySomeoneNotification( CSteamID( msg.Body().thanker_steam_id() ) ) );
+		//NotificationQueue_Add( new CWasThankedBySomeoneNotification( CSteamID( msg.Body().thanker_steam_id() ) ) );
 		return true;
 	}
 };
@@ -356,6 +356,7 @@ void NotifyNeedsToChooseMostHelpfulFriend()
 	// remove duplicates
 	NotificationQueue_Remove( &CSelectHelpfulFriendNotification::RemoveOtherNotifications );
 	// add new notification
+	return;
 	CSelectHelpfulFriendNotification *pNotification = new CSelectHelpfulFriendNotification();
 	pNotification->SetText( "#TF_Trial_Alert_SelectFriend" );
 	pNotification->SetLifetime( 120.0f );

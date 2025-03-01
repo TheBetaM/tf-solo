@@ -1544,7 +1544,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CProtoBufMsg<CMsgTFSaxxyBroadcast> msg( pNetPacket );
-
+		return true;
 		CEconNotification *pNotification = new CEconNotification();
 		pNotification->SetText( "#TF_Event_Saxxy_Deleted" );
 		pNotification->SetLifetime( 30.0f );
@@ -1582,7 +1582,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CProtoBufMsg<CMsgGCTFSpecificItemBroadcast> msg( pNetPacket );
-
+		return true;
 		CEconNotification *pNotification = new CEconNotification();
 		pNotification->SetText( msg.Body().was_destruction() ? "#TF_Event_Item_Deleted" : "#TF_Event_Item_Created" );
 		pNotification->SetLifetime( 30.0f );
@@ -1718,7 +1718,7 @@ public:
 		KeyValuesAD keyValues( "System Message" );
 		keyValues->SetWString( "message", pwMessage );
 		keyValues->SetColor( "custom_color", color );
-
+		return true;
 		// print to chat log
 		wchar_t wszLocalizedString[2048] = L"";
 		g_pVGuiLocalize->ConstructString_safe( wszLocalizedString, "#Notification_System_Message", keyValues );

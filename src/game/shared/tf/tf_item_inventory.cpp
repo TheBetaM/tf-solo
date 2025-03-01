@@ -1240,8 +1240,7 @@ void CTFPlayerInventory::OnHasNewItems()
 {
 	BaseClass::OnHasNewItems();
 #ifdef CLIENT_DLL
-	if ( TFGameRules() && TFGameRules()->IsInTraining() )
-		return;
+	return;
 
 	NotificationQueue_Remove( &CEconNotification_HasNewItems::IsNotificationType );
 	CEconNotification_HasNewItems *pNotification = new CEconNotification_HasNewItems();

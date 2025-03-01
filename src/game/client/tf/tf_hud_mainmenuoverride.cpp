@@ -1544,7 +1544,7 @@ bool CHudMainMenuOverride::CheckAndWarnForPREC( void )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::UpdateNotifications()
 {
-	return;
+	//return;
 
 	int iNumNotifications = NotificationQueue_GetNumMainMenuNotifications();
 
@@ -1586,7 +1586,7 @@ void CHudMainMenuOverride::UpdateNotifications()
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetNotificationsButtonVisible( bool bVisible )
 {
-	return;
+	//return;
 
 	if ( bVisible && ( m_pNotificationsPanel && m_pNotificationsPanel->IsVisible() ) )
 		return;
@@ -1609,7 +1609,7 @@ void CHudMainMenuOverride::SetNotificationsButtonVisible( bool bVisible )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetNotificationsPanelVisible( bool bVisible )
 {
-	return;
+	//return;
 
 	if ( m_pNotificationsPanel )
 	{
@@ -1662,7 +1662,7 @@ void CHudMainMenuOverride::SetNotificationsPanelVisible( bool bVisible )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::AdjustNotificationsPanelHeight()
 {
-	return;
+	//return;
 
 	// Fit to our contents, which may change without notifying us.
 	int iNotiTall = m_pNotificationsControl->GetTall();

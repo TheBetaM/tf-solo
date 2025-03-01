@@ -234,7 +234,7 @@ public:
 #ifdef TF_CLIENT_DLL
 		C_CTF_GameStats.Event_Trading( IE_TRADING_REQUEST_RECEIVED, msg.Body().m_ulOtherSteamID, iTradeRequests );
 #endif
-
+		return true;
 		// auto-decline for ignored or blocked peoples
 		if ( steamapicontext == NULL || steamapicontext->SteamFriends() == NULL )
 		{
