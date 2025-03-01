@@ -1,5 +1,6 @@
 #base items_game.txt
 #base items_solo_balancing.txt
+#base items_solo_cosmetics.txt
 #base items_solo_taunts.txt
 #base items_solo_weapons.txt
 

@@ -1,3 +1,118 @@
 "items_game"
 {
+	"items"
+	{
+		"34400"
+		{
+			"name"	"Taunt Thriller"
+			"prefab"	"taunt"
+			"item_name"		"Taunt: Thriller"
+			"item_description"	""
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+			}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"scout"		"scenes\player\scout\low\taunt06_v1.vcd"
+					"sniper"	"scenes\player\sniper\low\taunt06.vcd"
+					"soldier"	"scenes\player\soldier\low\taunt06.vcd"
+					"demoman"	"scenes\player\demoman\low\taunt06.vcd"
+					"medic"		"scenes\player\medic\low\taunt07.vcd"
+					"heavy"		"scenes\player\heavy\low\taunt06.vcd"
+					"spy"		"scenes\player\spy\low\taunt06.vcd"
+					"engineer"	"scenes\player\engineer\low\taunt06.vcd"
+					"pyro"		"scenes\player\pyro\low\taunt06.vcd"
+				}
+			}
+		}
+		"34401"
+		{
+			"name"	"Taunt Robot"
+			"prefab"	"taunt"
+			"item_name"		"Taunt: Robot"
+			"item_description"	""
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"soldier"	"1"
+			}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"soldier"	"scenes\player\soldier\low\taunt09.vcd"
+				}
+			}
+		}
+		"34402"
+		{
+			"name"	"Taunt Werewolf"
+			"prefab"	"taunt"
+			"item_name"		"Taunt: Werewolf"
+			"item_description"	""
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"demoman"	"1"
+			}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"demoman"	"scenes\player\demoman\low\taunt11.vcd"
+				}
+			}
+		}
+		"34403"
+		{
+			"name"	"Taunt Frankenheavy"
+			"prefab"	"taunt"
+			"item_name"		"Taunt: Frankenheavy"
+			"item_description"	""
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"heavy"	"1"
+			}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"heavy"	"scenes\player\heavy\low\taunt07_halloween.vcd"
+				}
+			}
+		}
+	}
 }

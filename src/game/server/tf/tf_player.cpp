@@ -19600,7 +19600,7 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 					float frand = (float) rand() / VALVE_RAND_MAX;
 					if ( frand < 0.4f )
 					{
-						criteriaSet.AppendCriteria( "IsHalloweenTaunt", "1" );
+						//criteriaSet.AppendCriteria( "IsHalloweenTaunt", "1" );
 					}
 				}
 			}
@@ -19621,7 +19621,7 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 				float frand = (float)rand() / VALVE_RAND_MAX;
 				if ( frand < 0.8f )
 				{		
-					criteriaSet.AppendCriteria( "IsAprilFoolsTaunt", "1" );
+					//criteriaSet.AppendCriteria( "IsAprilFoolsTaunt", "1" );
 				}
 			}
 		}
@@ -19639,15 +19639,15 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 		// Halloween costume sets
 		if ( IsRobotCostumeEquipped() )
 		{
-			criteriaSet.AppendCriteria( "IsRobotCostume", "1" );
+			//criteriaSet.AppendCriteria( "IsRobotCostume", "1" );
 		}
 		else if ( IsDemowolf() )
 		{
-			criteriaSet.AppendCriteria( "IsDemowolf", "1" );
+			//criteriaSet.AppendCriteria( "IsDemowolf", "1" );
 		}
 		else if ( IsFrankenHeavy() )
 		{
-			criteriaSet.AppendCriteria( "IsFrankenHeavy", "1" );
+			//criteriaSet.AppendCriteria( "IsFrankenHeavy", "1" );
 		}
 		// Single items with response rules
 		else
