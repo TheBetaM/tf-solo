@@ -59,6 +59,19 @@ static ISteamUGC *GetWorkshopUGC()
 	// The first time we successfully get a steam context we should call the init
 	if ( pUGC && !bInitUGC )
 	{
+		g_pFullFileSystem->CreateDirHierarchy("", UGC_PATHID);
+		char szFullPath[MAX_PATH] = { 0 };
+		g_pFullFileSystem->RelativePathToFullPath("", UGC_PATHID, szFullPath, sizeof(szFullPath));
+		if (*szFullPath)
+		{
+			// NOTE we use our own AppID here as the workshop depot id, but this should match the workshopdepotid in our steam config
+			pUGC->BInitWorkshopForGameServer(440, szFullPath);
+		}
+		else
+		{
+			TFWorkshopWarning("Could not resolve -ugcpath to absolute path\n");
+		}
+
 		// For the dedicated server API, honor -ugcpath
 		int i = CommandLine()->FindParm( "-ugcpath" );
 		if ( engine->IsDedicatedServer() && i )
