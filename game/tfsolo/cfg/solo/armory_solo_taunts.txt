@@ -16,4 +16,12 @@ armory_config
 	{
 		Cost 1000
 	}
+	"Taunt ComeAndGetMe"
+	{
+		Cost 1000
+	}
+	"Taunt HeroPose"
+	{
+		Cost 1000
+	}
 }

@@ -114,5 +114,90 @@
 				}
 			}
 		}
+		"34404"
+		{
+			"name"	"Taunt ComeAndGetMe"
+			"prefab"	"taunt"
+			"item_name"		"Taunt: Come And Get Me"
+			"item_description"	""
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"scout"	"1"
+			}
+			//"attributes"
+			//{
+			//	"taunt force weapon slot"
+			//	{
+			//		"attribute_class"	"taunt_force_weapon_slot"
+			//		"value"				"PRIMARY"
+			//	}
+			//}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"scout"	"scenes\player\scout\low\taunt_come_and_get_me.vcd"
+				}
+			}
+		}
+		"34405"
+		{
+			"name"	"Taunt HeroPose"
+			"prefab"	"taunt"
+			"item_name"		"Taunt: Hero Pose"
+			"item_description"	""
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+			}
+			"attributes"
+			{
+				"taunt is press and hold"
+				{
+					"attribute_class"	"enable_misc2_holdtaunt"
+					"value"				"1"
+				}
+				"taunt force weapon slot"
+				{
+					"attribute_class"		"taunt_force_weapon_slot"
+					"value"		"PRIMARY"
+				}
+			}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"scout"		"scenes\player\scout\low\class_select.vcd"
+					"sniper"	"scenes\player\sniper\low\class_select.vcd"
+					"soldier"	"scenes\player\soldier\low\class_select.vcd"
+					"demoman"	"scenes\player\demoman\low\class_select.vcd"
+					"medic"		"scenes\player\medic\low\class_select.vcd"
+					"heavy"		"scenes\player\heavy\low\class_select.vcd"
+					"spy"		"scenes\player\spy\low\class_select.vcd"
+					"engineer"	"scenes\player\engineer\low\class_select.vcd"
+					"pyro"		"scenes\player\pyro\low\class_select.vcd"
+				}
+			}
+		}
 	}
 }
