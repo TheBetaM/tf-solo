@@ -319,7 +319,7 @@ void CHudMenuTauntSelection::UpdateItemModelPanels()
 
 		CItemModelPanel *pItemModelPanel = m_pItemModelPanels[i];
 
-		CEconItemView *pOwnedItemInSlot = pPlayer->Inventory()->GetCacheServerItemInLoadout( iClass, iTauntSlot );
+		CEconItemView *pOwnedItemInSlot = pPlayer->Inventory()->GetItemInLoadout( iClass, iTauntSlot );
 		pItemModelPanel->SetItem( pOwnedItemInSlot );
 		pItemModelPanel->SetNoItemText( "#Hud_Menu_Taunt_NoItem" );
 
@@ -445,7 +445,7 @@ static void OpenTauntSelectionUI()
 	{
 		for ( int iTauntSlot = LOADOUT_POSITION_TAUNT; iTauntSlot <= LOADOUT_POSITION_TAUNT8; ++iTauntSlot )
 		{
-			CEconItemView *pItem = pInv->GetCacheServerItemInLoadout( iClass, iTauntSlot );
+			CEconItemView *pItem = pInv->GetItemInLoadout( iClass, iTauntSlot );
 			if ( pItem && pItem->IsValid() )
 			{
 				bHasAnyTauntEquipped = true;

@@ -1573,13 +1573,11 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 	if ( iSlot < 0 || iSlot >= CLASS_LOADOUT_POSITION_COUNT )
 		return NULL;
 
-#if GAME_DLL
 	if (!m_bOfflineLoaded)
 	{
 		m_bOfflineLoaded = true;
 		LoadLocalLoadout();
 	}
-#endif
 
 	if ( iClass == GEconItemSchema().GetAccountIndex() )
 	{
