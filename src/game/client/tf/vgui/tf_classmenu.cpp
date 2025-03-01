@@ -1184,6 +1184,8 @@ void CTFClassMenu::SetVisible( bool state )
 		engine->ClientCmd( "_cl_classmenuopen 1" );	// for other panels
 		CBroadcastRecipientFilter filter;
 
+		CBaseEntity::StopSound(SOUND_FROM_UI_PANEL, "music.mvm_class_menu");
+		CBaseEntity::StopSound(SOUND_FROM_UI_PANEL, "music.class_menu");
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 		{
 			CBaseEntity::EmitSound( filter, SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
@@ -1200,14 +1202,8 @@ void CTFClassMenu::SetVisible( bool state )
 		engine->ServerCmd( "menuclosed" );	
 		engine->ClientCmd( "_cl_classmenuopen 0" );
 		
-		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
-		{
-			CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
-		}
-		else
-		{
-			CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.class_menu" );
-		}
+		CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
+		CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.class_menu" );
 	}
 }
 

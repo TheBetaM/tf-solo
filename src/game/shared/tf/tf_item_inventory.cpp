@@ -499,6 +499,8 @@ bool CTFInventoryManager::ShowItemsPickedUp( bool bForce, bool bReturnToGame, bo
 	if ( !bForce && vgui::ipanel()->IsVisible( gameuiPanel ) )
 		return false;
 
+	return false;
+
 	CUtlVector<CEconItemView*> aItemsFound;
 
 	// Go through the root inventory and find any items that are in the "found" position
@@ -624,6 +626,8 @@ void CTFInventoryManager::ShowItemsCrafted( CUtlVector<itemid_t> *vecCraftedIndi
 
 	if ( !aItemsFound.Count() )
 		return;
+
+	return;
 
 	NotificationQueue_Remove( &CEconNotification_HasNewItems::IsNotificationType );
 	CItemPickupPanel *pItemPanel = EconUI()->OpenItemPickupPanel();

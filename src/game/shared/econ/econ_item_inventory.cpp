@@ -811,6 +811,8 @@ bool CInventoryManager::ShowItemsPickedUp( bool bForce, bool bReturnToGame, bool
 	if ( !bForce && vgui::ipanel()->IsVisible( gameuiPanel ) )
 		return false;
 
+	return false;
+
 	CUtlVector<CEconItemView*> aItemsFound;
 
 	// Go through the root inventory and find any items that are in the "found" position
@@ -883,6 +885,8 @@ bool CInventoryManager::CheckForRoomAndForceDiscard( void )
 	CPlayerInventory *pLocalInv = GetLocalInventory();
 	if ( !pLocalInv )
 		return false;
+
+	return false;
 
 	// Go through the inventory and attempt to move any items outside the backpack into valid positions.
 	// Remember the first item that we failed to move, so we can force a discard later.
