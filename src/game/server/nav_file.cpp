@@ -1393,24 +1393,31 @@ NavErrorType CNavMesh::GetNavDataFromFile( CUtlBuffer &outBuffer, bool *pNavData
 {
 	char maptmp[256];
 	const char *pszMapName = GetCleanMapName( STRING( gpGlobals->mapname ), maptmp );
+	char maptmp2[256];
+	const char* pszMapName2 = STRING(gpGlobals->mapname);
 
 	// nav filename is derived from map filename
 	char filename[MAX_PATH] = { 0 };
 	Q_snprintf( filename, sizeof( filename ), FORMAT_NAVFILE, pszMapName );
+	char filename2[MAX_PATH] = { 0 };
+	Q_snprintf( filename2, sizeof(filename2), FORMAT_NAVFILE, pszMapName2);
 
-	if ( !filesystem->ReadFile( filename, "MOD", outBuffer ) )	// this ignores .nav files embedded in the .bsp ...
+	if (!filesystem->ReadFile(filename2, "GAME", outBuffer)) // checks workshop generated nav file first
 	{
-		if ( !filesystem->ReadFile( filename, "BSP", outBuffer ) )	// ... and this looks for one if it's the only one around.
+		if (!filesystem->ReadFile(filename, "MOD", outBuffer))	// this ignores .nav files embedded in the .bsp ...
 		{
-			// Finally, check for the special embed name for in-BSP nav meshes only
-			if ( !filesystem->ReadFile( PATH_NAVFILE_EMBEDDED, "BSP", outBuffer ) )
+			if (!filesystem->ReadFile(filename, "BSP", outBuffer))	// ... and this looks for one if it's the only one around.
 			{
-				return NAV_CANT_ACCESS_FILE;
+				// Finally, check for the special embed name for in-BSP nav meshes only
+				if (!filesystem->ReadFile(PATH_NAVFILE_EMBEDDED, "BSP", outBuffer))
+				{
+					return NAV_CANT_ACCESS_FILE;
+				}
 			}
-		}
-		if ( pNavDataFromBSP )
-		{
-			*pNavDataFromBSP = true;
+			if (pNavDataFromBSP)
+			{
+				*pNavDataFromBSP = true;
+			}
 		}
 	}
 
