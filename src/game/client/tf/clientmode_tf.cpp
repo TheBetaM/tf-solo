@@ -1658,7 +1658,7 @@ void OnAskFavoriteDialogButtonPressed( bool bConfirm, void *pContext )
 	if ( bConfirm )
 	{
 		// add last server to our favorites
-		steamapicontext->SteamMatchmaking()->AddFavoriteGame( steamapicontext->SteamUtils()->GetAppID(),
+		steamapicontext->SteamMatchmaking()->AddFavoriteGame( 243750,
 															  GetClientModeTFNormal()->GetLastConnectedServerIP(),
 															  GetClientModeTFNormal()->GetLastConnectedServerPort(),
 															  GetClientModeTFNormal()->GetLastConnectedServerPort(),
@@ -1731,7 +1731,7 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 			// is this server already a favorite?
 			for( int i=0; i<steamapicontext->SteamMatchmaking()->GetFavoriteGameCount(); ++i )
 			{
-				AppId_t appID = steamapicontext->SteamUtils()->GetAppID();
+				AppId_t appID = 243750;
 				uint32 IP;
 				uint16 connPort;
 				uint16 queryPort;
@@ -1746,7 +1746,7 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 						continue;
 					}
 
-					if ( ( appID == 0 || appID == steamapicontext->SteamUtils()->GetAppID() ) && 
+					if ( ( appID == 0 || appID == 243750 ) &&
 						 IP == GetLastConnectedServerIP() &&
 						 connPort == GetLastConnectedServerPort() )
 					{
