@@ -168,7 +168,9 @@ void CMannVsMachineLogic::InitPopulationManager( void )
 	// about the file of last resort.
 	if ( !bFound )
 	{
-		Q_snprintf( szFileName, sizeof( szFileName ), pszFormat, STRING( gpGlobals->mapname ) );
+		char maptmp[256];
+		const char* pszMapName = GetCleanMapName(STRING(gpGlobals->mapname), maptmp);
+		Q_snprintf( szFileName, sizeof( szFileName ), pszFormat, pszMapName );
 	}
 
 	if ( m_populationManager && V_strcmp( m_populationManager->GetPopulationFilename(), szFileName ) != 0 )
