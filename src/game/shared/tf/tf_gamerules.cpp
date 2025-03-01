@@ -9726,7 +9726,7 @@ void CTFGameRules::RecalculateTruce( void )
 				}
 			}
 
-			if ( bHaveActiveBoss && ( IsValveMap() || tf_halloween_allow_truce_during_boss_event.GetBool() || IsMapForcedTruceDuringBossFight() ) )
+			if ( bHaveActiveBoss && ( tf_halloween_allow_truce_during_boss_event.GetBool() || IsMapForcedTruceDuringBossFight() ) )
 			{
 				bTruceActive = true;
 			}
