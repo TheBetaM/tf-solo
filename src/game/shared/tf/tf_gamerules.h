@@ -176,6 +176,7 @@ public:
 	void	InputSetCustomUpgradesFile( inputdata_t &inputdata );
 	void	InputSetRoundRespawnFreezeEnabled( inputdata_t &inputdata );
 	void	InputSetMapForcedTruceDuringBossFight( inputdata_t &inputdata );
+	void	InputSoloAddCredits( inputdata_t &inputdata );
 
 	void	TeamPlayerCountChanged( CTFTeam *pTeam );
 	void	PowerupTeamImbalance( int nTeam );

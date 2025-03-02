@@ -235,6 +235,7 @@ void CTFInventoryManager::PostInit( void )
 	GenerateBaseItems();
 	InitSaveData();
 	LoadSaveData();
+	ListenForGameEvent("solo_add_credits");
 }
 
 CEconItemView* CTFInventoryManager::AddSoloItem(int id)
@@ -892,6 +893,20 @@ void CTFInventoryManager::AddBaseItemCriteria( baseitemcriteria_t *pCriteria, CI
 {
 	pSelectionCriteria->BAddCondition( "used_by_classes", k_EOperator_Subkey_Contains, ItemSystem()->GetItemSchema()->GetClassUsabilityStrings()[pCriteria->iClass], true );
 	pSelectionCriteria->BAddCondition( "item_slot", k_EOperator_String_EQ, ItemSystem()->GetItemSchema()->GetLoadoutStrings( EEquipType_t::EQUIP_TYPE_CLASS )[pCriteria->iSlot], true );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFInventoryManager::FireGameEvent(IGameEvent* event)
+{
+	const char* pszEventName = event->GetName();
+
+	// when we are changing levels
+	if (FStrEq(pszEventName, "solo_add_credits"))
+	{
+		AddCredits(event->GetInt("amount"));
+	}
 }
 
 

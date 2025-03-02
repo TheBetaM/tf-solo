@@ -1578,6 +1578,7 @@ BEGIN_DATADESC( CTFGameRulesProxy )
 	DEFINE_INPUTFUNC( FIELD_STRING, "SetCustomUpgradesFile", InputSetCustomUpgradesFile ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetRoundRespawnFreezeEnabled", InputSetRoundRespawnFreezeEnabled ),
 	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetMapForcedTruceDuringBossFight", InputSetMapForcedTruceDuringBossFight ),
+	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloAddCredits", InputSoloAddCredits ),
 
 	DEFINE_OUTPUT( m_OnWonByTeam1,	"OnWonByTeam1" ),
 	DEFINE_OUTPUT( m_OnWonByTeam2,	"OnWonByTeam2" ),
@@ -1840,6 +1841,20 @@ void CTFGameRulesProxy::InputSetMapForcedTruceDuringBossFight( inputdata_t &inpu
 		TFGameRules()->SetMapForcedTruceDuringBossFight( inputdata.value.Bool() );
 	}
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFGameRulesProxy::InputSoloAddCredits(inputdata_t& inputdata)
+{
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_add_credits");
+	if (pEvent)
+	{
+		pEvent->SetInt("amount", inputdata.value.Int());
+		gameeventmanager->FireEvent(pEvent);
+	}
+}
+
 
 //-----------------------------------------------------------------------------
 // Purpose: 

@@ -14,6 +14,7 @@
 #include "tf_shareddefs.h"
 #include "econ_item_constants.h"
 #include "tf_item_constants.h"
+#include "GameEventListener.h"
 
 #ifdef CLIENT_DLL
 #include "econ_notifications.h"
@@ -158,7 +159,7 @@ protected:
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-class CTFInventoryManager : public CInventoryManager
+class CTFInventoryManager : public CInventoryManager, public CGameEventListener
 {
 	DECLARE_CLASS( CTFInventoryManager, CInventoryManager );
 public:
@@ -227,6 +228,8 @@ public:
 	void				LoadSaveData();
 	void				AddCredits(long amount);
 	uint64_t			GetCredits();
+
+	virtual void FireGameEvent(IGameEvent* event);
 
 private:
 	// Base items, returned for slots that the player doesn't have anything in
