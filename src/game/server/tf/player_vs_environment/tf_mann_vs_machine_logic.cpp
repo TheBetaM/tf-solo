@@ -13,6 +13,8 @@
 #include "tf_gamerules.h"
 #include "tf_objective_resource.h"
 
+ConVar tf_mvm_popfile_requested("tf_mvm_popfile_requested", "", FCVAR_REPLICATED, "Request a specific default popfile to be loaded first.");
+
 CHandle<CMannVsMachineLogic> g_hMannVsMachineLogic;
 
 //-------------------------------------------------------------------------
@@ -154,7 +156,14 @@ void CMannVsMachineLogic::InitPopulationManager( void )
 		CUtlVector< CUtlString > defaultPopFileList;
 		CUtlString defaultPopFileName;
 		g_pPopulationManager->FindDefaultPopulationFileShortNames( defaultPopFileList );
-		if ( defaultPopFileList.Count() )
+
+		Q_snprintf(szFileName, sizeof(szFileName), pszFormat, tf_mvm_popfile_requested.GetString());
+		if (g_pFullFileSystem->FileExists(szFileName, "GAME"))
+		{
+			bFound = true;
+		}
+
+		if ( !bFound && defaultPopFileList.Count() )
 		{
 			if ( g_pPopulationManager->FindPopulationFileByShortName( defaultPopFileList[0], defaultPopFileName ) && g_pPopulationManager->IsValidPopfile( defaultPopFileName ) )
 			{

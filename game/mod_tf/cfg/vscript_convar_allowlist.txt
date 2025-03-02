@@ -476,6 +476,7 @@ vscript_convar_allowlist
     tf_mvm_min_players_to_start                                       allowed
     tf_mvm_miniboss_scale                                             allowed
     tf_mvm_notice_sapped_squadmates_delay                             allowed
+    tf_mvm_popfile_requested                                          allowed
     tf_mvm_respec_credit_goal                                         allowed
     tf_mvm_respec_enabled                                             allowed
     tf_mvm_respec_limit                                               allowed
