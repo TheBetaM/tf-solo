@@ -17,6 +17,7 @@
 #include "viewport_panel_names.h"
 //#include "terror/TerrorShared.h"
 #include "fmtstr.h"
+#include "player_vs_environment/tf_mann_vs_machine_logic.h"
 
 #ifdef TERROR
 #include "func_simpleladder.h"
@@ -4034,6 +4035,14 @@ bool CNavMesh::UpdateGeneration( float maxTime )
 				else
 				{
 					Load();
+					if (nav_generate_auto.GetBool())
+					{
+						auto* pMVM = dynamic_cast<CMannVsMachineLogic*> (gEntList.FindEntityByClassname(NULL, "tf_logic_mann_vs_machine"));
+						if (pMVM)
+						{
+							pMVM->InitPopulationManager();
+						}
+					}
 				}
 			}
 			else

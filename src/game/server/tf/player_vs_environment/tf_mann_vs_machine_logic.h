@@ -30,10 +30,10 @@ public:
 	{
 		return SetTransmitState( FL_EDICT_ALWAYS );
 	}
+	void InitPopulationManager(void);
 
 private:
 	CHandle< CPopulationManager > m_populationManager;
-	void InitPopulationManager( void );
 
 	float m_flNextAlarmCheck;
 };
