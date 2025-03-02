@@ -436,10 +436,30 @@ void CArmoryPanel::OnCommand( const char *command )
 			const CEconItemSetDefinition *pItemSet = m_SelectedItem.GetStaticData()->GetItemSetDefinition();
 			if ( pItemSet )
 			{
+				bool CustomArmory = false;
+				CUtlVector<int> ArmoryList;
+				if (tf_armory_custom.GetString() != "")
+				{
+					CustomArmory = true;
+					auto key = m_armoryConfig->GetFirstSubKey();
+					while (key)
+					{
+						auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
+						if (item)
+						{
+							ArmoryList.AddToTail(item->GetDefinitionIndex());
+						}
+						key = key->GetNextKey();
+					}
+				}
+
 				m_CustomFilteredList.Purge();
 				FOR_EACH_VEC( pItemSet->m_iItemDefs, i )
 				{
-					m_CustomFilteredList.AddToTail( pItemSet->m_iItemDefs[i] );
+					if (!CustomArmory || ArmoryList.HasElement(pItemSet->m_iItemDefs[i]))
+					{
+						m_CustomFilteredList.AddToTail(pItemSet->m_iItemDefs[i]);
+					}
 				}
 
 				SetupComboBox( pItemSet->m_pszLocalizedName );
