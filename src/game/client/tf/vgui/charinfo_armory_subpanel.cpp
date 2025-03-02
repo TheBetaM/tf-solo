@@ -752,12 +752,14 @@ void CArmoryPanel::UpdateItemList( void )
 		{
 			m_pThumbnailModelPanels[i]->SetItem( NULL );
 			m_pThumbnailModelPanels[i]->SetVisible( false );
+			SetBorderForItem(m_pThumbnailModelPanels[i], false);
 			continue;
 		}
 
 		pItemData->Init( m_FilteredItemList[iItemPos], AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, true );
 		m_pThumbnailModelPanels[i]->SetItem( pItemData );
 		m_pThumbnailModelPanels[i]->SetVisible( true );
+		SetBorderForItem(m_pThumbnailModelPanels[i], false);
 	}
 	delete pItemData;
 
