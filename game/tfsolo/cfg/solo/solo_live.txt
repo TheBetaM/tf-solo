@@ -1,0 +1,4 @@
+solo_config
+{
+	"version" "0"
+}

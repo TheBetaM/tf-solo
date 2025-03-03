@@ -3,6 +3,7 @@
 #base items_solo_cosmetics.txt
 #base items_solo_taunts.txt
 #base items_solo_weapons.txt
+#base items_solo_live.txt
 
 "items_game"
 {

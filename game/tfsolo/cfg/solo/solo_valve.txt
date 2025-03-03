@@ -1,0 +1,472 @@
+solo_config
+{
+	maps
+	{
+		arena_badlands
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_badlands"
+			"photosArt" "maps/menu_photos_arena_badlands"
+		}
+		arena_granary
+		{
+			"enabled" "1"
+			"name" "Granary"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_granary"
+			"photosArt" "maps/menu_photos_arena_granary"
+		}
+		arena_lumberyard
+		{
+			"enabled" "1"
+			"name" "Lumberyard"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_lumberyard"
+			"photosArt" "maps/menu_photos_arena_lumberyard"
+		}
+		arena_nucleus
+		{
+			"enabled" "1"
+			"name" "Nucleus"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_nucleus"
+			"photosArt" "maps/menu_photos_arena_nucleus"
+		}
+		arena_ravine
+		{
+			"enabled" "1"
+			"name" "Ravine"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_ravine"
+			"photosArt" "maps/menu_photos_arena_ravine"
+		}
+		arena_sawmill
+		{
+			"enabled" "1"
+			"name" "Sawmill"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_sawmill"
+			"photosArt" "maps/menu_photos_arena_sawmill"
+		}
+		arena_well
+		{
+			"enabled" "1"
+			"name" "Well"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_well"
+			"photosArt" "maps/menu_photos_arena_well"
+		}
+		cp_5gorge
+		{
+			"enabled" "1"
+			"name" "5Gorge"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_5gorge"
+			"photosArt" "maps/menu_photos_cp_5gorge"
+		}
+		cp_degrootkeep
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_degrootkeep"
+			"photosArt" "maps/menu_photos_cp_degrootkeep"
+		}
+		cp_gravelpit
+		{
+			"enabled" "1"
+			"name" "Gravelpit"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_gravelpit"
+			"photosArt" "maps/menu_photos_cp_gravelpit"
+		}
+		cp_well
+		{
+			"enabled" "1"
+			"name" "Well"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_well"
+			"photosArt" "maps/menu_photos_cp_well"
+		}
+		cp_badlands
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_badlands"
+			"photosArt" "maps/menu_photos_cp_badlands"
+		}
+		cp_dustbowl
+		{
+			"enabled" "1"
+			"name" "Dustbowl"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_dustbowl"
+			"photosArt" "maps/menu_photos_cp_dustbowl"
+		}
+		cp_foundry
+		{
+			"enabled" "1"
+			"name" "Foundry"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_foundry"
+			"photosArt" "maps/menu_photos_cp_foundry"
+		}
+		cp_gorge
+		{
+			"enabled" "1"
+			"name" "Gorge"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_gorge"
+			"photosArt" "maps/menu_photos_cp_gorge"
+		}
+		cp_granary
+		{
+			"enabled" "1"
+			"name" "Granary"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_granary"
+			"photosArt" "maps/menu_photos_cp_granary"
+		}
+		cp_mercenarypark
+		{
+			"enabled" "1"
+			"name" "Mercenary Park"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_mercenarypark"
+			"photosArt" "maps/menu_photos_cp_mercenarypark"
+		}
+		cp_powerhouse
+		{
+			"enabled" "1"
+			"name" "Powerhouse"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_powerhouse"
+			"photosArt" "maps/menu_photos_cp_powerhouse"
+		}
+		ctf_2fort
+		{
+			"enabled" "1"
+			"name" "2Fort"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_2fort"
+			"photosArt" "maps/menu_photos_ctf_2fort"
+		}
+		ctf_doublecross
+		{
+			"enabled" "1"
+			"name" "Doublecross"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_doublecross"
+			"photosArt" "maps/menu_photos_ctf_doublecross"
+		}
+		ctf_sawmill
+		{
+			"enabled" "1"
+			"name" "Sawmill"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_sawmill"
+			"photosArt" "maps/menu_photos_ctf_sawmill"
+		}
+		ctf_well
+		{
+			"enabled" "1"
+			"name" "Well"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_well"
+			"photosArt" "maps/menu_photos_ctf_well"
+		}
+		ctf_hellfire
+		{
+			"enabled" "1"
+			"name" "Hellfire"
+			"modename" "#GameType_Powerup"
+			"thumbArt" "maps/menu_thumb_ctf_hellfire"
+			//"photosArt" ""
+		}
+		ctf_foundry
+		{
+			"enabled" "1"
+			"name" "Foundry"
+			"modename" "#GameType_Powerup"
+			"thumbArt" "maps/menu_thumb_ctf_foundry"
+			//"photosArt" ""
+		}
+		ctf_gorge
+		{
+			"enabled" "1"
+			"name" "Gorge"
+			"modename" "#GameType_Powerup"
+			"thumbArt" "maps/menu_thumb_ctf_gorge"
+			//"photosArt" ""
+		}
+		ctf_thundermountain
+		{
+			"enabled" "1"
+			"name" "Thunder Mountain"
+			"modename" "#Gametype_Powerup"
+			"thumbArt" "maps/menu_thumb_ctf_thundermountain"
+			//"photosArt" ""
+		}
+		koth_badlands
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_badlands"
+			"photosArt" "maps/menu_photos_koth_badlands"
+		}
+		koth_nucleus
+		{
+			"enabled" "1"
+			"name" "Nucleus"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_nucleus"
+			"photosArt" "maps/menu_photos_koth_nucleus"
+		}
+		koth_sawmill
+		{
+			"enabled" "1"
+			"name" "Sawmill"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_sawmill"
+			"photosArt" "maps/menu_photos_koth_sawmill"
+		}
+		koth_viaduct
+		{
+			"enabled" "1"
+			"name" "Viaduct"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_viaduct"
+			"photosArt" "maps/menu_photos_koth_viaduct"
+		}
+		koth_harvest_event
+		{
+			"enabled" "1"
+			"name" "Harvest Event"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_harvest_event"
+			"photosArt" "maps/menu_photos_koth_harvest_event"
+		}
+		koth_viaduct_event
+		{
+			"enabled" "1"
+			"name" "Eyeaduct"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_viaduct_event"
+			"photosArt" "maps/menu_photos_koth_viaduct_event"
+		}
+		koth_lakeside_event
+		{
+			"enabled" "1"
+			"name" "Ghost Fort"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_lakeside_event"
+			"photosArt" "maps/menu_photos_koth_lakeside_event"
+		}
+		pass_brickyard
+		{
+			"enabled" "1"
+			"name" "Brickyard"
+			"modename" "#Gametype_Passtime"
+			"thumbArt" "maps/menu_thumb_pass_brickyard"
+			//"photosArt" ""
+		}
+		pass_district
+		{
+			"enabled" "1"
+			"name" "District"
+			"modename" "#Gametype_Passtime"
+			"thumbArt" "maps/menu_thumb_pass_district"
+			//"photosArt" ""
+		}
+		pass_timbertown
+		{
+			"enabled" "1"
+			"name" "Timbertown"
+			"modename" "#Gametype_Passtime"
+			"thumbArt" "maps/menu_thumb_pass_timbertown"
+			//"photosArt" ""
+		}
+		pl_badwater
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_badwater"
+			"photosArt" "maps/menu_photos_pl_badwater"
+		}
+		pl_barnblitz
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_barnblitz"
+			"photosArt" "maps/menu_photos_pl_barnblitz"
+		}
+		pl_goldrush
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_goldrush"
+			"photosArt" "maps/menu_photos_pl_goldrush"
+		}
+		pl_thundermountain
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_thundermountain"
+			"photosArt" "maps/menu_photos_pl_thundermountain"
+		}
+		pl_upward
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_upward"
+			"photosArt" "maps/menu_photos_pl_upward"
+		}
+		plr_hightower
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_hightower"
+			"photosArt" "maps/menu_photos_plr_hightower"
+		}
+		plr_hightower_event
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_hightower_event"
+			"photosArt" "maps/menu_photos_plr_hightower_event"
+		}
+		plr_pipeline
+		{
+			"enabled" "1"
+			"name" "Badlands"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_pipeline"
+			"photosArt" "maps/menu_photos_plr_pipeline"
+		}
+		sd_doomsday
+		{
+			"enabled" "1"
+			"name" "Doomsday"
+			"modename" "#Gametype_SD"
+			"thumbArt" "maps/menu_thumb_sd_doomsday"
+			"photosArt" "maps/menu_photos_sd_doomsday"
+		}
+		sd_doomsday_event
+		{
+			"enabled" "1"
+			"name" "Carnival of Carnage"
+			"modename" "#Gametype_SD"
+			"thumbArt" "maps/menu_thumb_sd_doomsday_event"
+			"photosArt" "maps/menu_photos_sd_doomsday_event"
+		}
+		tc_hydro
+		{
+			"enabled" "1"
+			"name" "Hydro"
+			"modename" "#Gametype_TerritorialControl"
+			"thumbArt" "maps/menu_thumb_tc_hydro"
+			"photosArt" "maps/menu_photos_tc_hydro"
+		}
+		mvm_bigrock
+		{
+			"enabled" "0"
+			"name" "Bigrock"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_bigrock"
+			"photosArt" "maps/menu_photos_mvm_bigrock"
+		}
+		mvm_coaltown
+		{
+			"enabled" "0"
+			"name" "Coaltown"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_coaltown"
+			"photosArt" "maps/menu_photos_mvm_coaltown"
+		}
+		mvm_decoy
+		{
+			"enabled" "0"
+			"name" "Decoy"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_decoy"
+			"photosArt" "maps/menu_photos_mvm_decoy"
+		}
+		mvm_ghost_town
+		{
+			"enabled" "0"
+			"name" "Ghost Town"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_ghost_town"
+			"photosArt" "maps/menu_photos_mvm_ghost_town"
+		}
+		mvm_mannhattan
+		{
+			"enabled" "0"
+			"name" "Mannhattan"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_mannhattan"
+			"photosArt" "maps/menu_photos_mvm_mannhattan"
+		}
+		mvm_mannworks
+		{
+			"enabled" "0"
+			"name" "Mannworks"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_mannworks"
+			"photosArt" "maps/menu_photos_mvm_mannworks"
+		}
+		mvm_rottenburg
+		{
+			"enabled" "0"
+			"name" "Rottenburg"
+			"modename" "#Gametype_MVM"
+			"thumbArt" "maps/menu_thumb_mvm_rottenburg"
+			"photosArt" "maps/menu_photos_mvm_rottenburg"
+		}
+		rd_asteroid
+		{
+			"enabled" "0"
+			"name" "Asteroid"
+			"modename" "#Gametype_RobotDestruction"
+			"thumbArt" "maps/menu_thumb_rd_asteroid"
+			"photosArt" "maps/menu_photos_rd_asteroid"
+		}
+		pl_cactuscanyon
+		{
+			"enabled" "0"
+			"name" "Cactus Canyon"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_cactuscanyon"
+			"photosArt" "maps/menu_photos_pl_cactuscanyon"
+		}
+		tr_target
+		{
+			"enabled" "0"
+			"name" "Target Practice"
+			"modename" "#Gametype_Training"
+			"thumbArt" "maps/menu_thumb_tr_target"
+			//"photosArt" ""
+		}
+		itemtest
+		{
+			"enabled" "0"
+			"name" "Item Test"
+			"modename" ""
+			//"thumbArt" ""
+			//"photosArt" ""
+		}
+		
+		
+	}
+}

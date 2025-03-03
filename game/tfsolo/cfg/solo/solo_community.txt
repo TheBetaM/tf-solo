@@ -1,0 +1,1166 @@
+solo_config
+{
+	maps
+	{
+		arena_offblast_final
+		{
+			"enabled" "1"
+			"name" "Offblast"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_offblast_final"
+			"photosArt" "maps/menu_photos_arena_offblast_final"
+		}
+		arena_watchtower
+		{
+			"enabled" "1"
+			"name" "Watchtower"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_watchtower"
+			"photosArt" "maps/menu_photos_arena_watchtower"
+		}
+		arena_byre
+		{
+			"enabled" "1"
+			"name" "Byre"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_byre"
+			"photosArt" ""
+		}
+		arena_lumberyard_event
+		{
+			"enabled" "1"
+			"name" "Graveyard"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_lumberyard_event"
+			"photosArt" "maps/menu_photos_arena_lumberyard_event"
+		}
+		arena_perks
+		{
+			"enabled" "1"
+			"name" "Perks"
+			"modename" "#Gametype_Arena"
+			"thumbArt" "maps/menu_thumb_arena_perks"
+			"photosArt" "maps/menu_photos_arena_perks"
+		}
+		cp_egypt_final
+		{
+			"enabled" "1"
+			"name" "Egypt"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_egypt_final"
+			"photosArt" "maps/menu_photos_cp_egypt_final"
+		}
+		cp_fastlane
+		{
+			"enabled" "1"
+			"name" "Fastlane"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_fastlane"
+			"photosArt" "maps/menu_photos_cp_fastlane"
+		}
+		cp_freight_final1
+		{
+			"enabled" "1"
+			"name" "Freight"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_freight_final1"
+			"photosArt" "maps/menu_photos_cp_freight_final1"
+		}
+		cp_junction_final
+		{
+			"enabled" "1"
+			"name" "Junction"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_junction_final"
+			"photosArt" "maps/menu_photos_cp_junction_final"
+		}
+		cp_mountainlab
+		{
+			"enabled" "1"
+			"name" "Mountain Lab"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_mountainlab"
+			"photosArt" "maps/menu_photos_cp_mountainlab"
+		}
+		cp_standin_final
+		{
+			"enabled" "1"
+			"name" "Standin"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_standin_final"
+			"photosArt" "maps/menu_photos_cp_standin_final"
+		}
+		cp_steel
+		{
+			"enabled" "1"
+			"name" "Steel"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_steel"
+			"photosArt" "maps/menu_photos_cp_steel"
+		}
+		cp_yukon_final
+		{
+			"enabled" "1"
+			"name" "Yukon"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_yukon_final"
+			"photosArt" "maps/menu_photos_cp_yukon_final"
+		}
+		cp_brew
+		{
+			"enabled" "1"
+			"name" "Brew"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_brew"
+			"photosArt" "maps/menu_photos_cp_brew"
+		}
+		cp_canaveral_5cp
+		{
+			"enabled" "1"
+			"name" "Canaveral"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_canaveral_5cp"
+			"photosArt" "maps/menu_photos_cp_canaveral_5cp"
+		}
+		cp_gullywash_final1
+		{
+			"enabled" "1"
+			"name" "Gullywash"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_gullywash_final1"
+			"photosArt" "maps/menu_photos_cp_gullywash_final1"
+		}
+		cp_hardwood_final
+		{
+			"enabled" "1"
+			"name" "Hardwood"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_hardwood_final"
+			"photosArt" "maps/menu_photos_cp_hardwood_final"
+		}
+		cp_metalworks
+		{
+			"enabled" "1"
+			"name" "Metalworks"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_metalworks"
+			"photosArt" ""
+		}
+		cp_mossrock
+		{
+			"enabled" "1"
+			"name" "Mossrock"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_mossrock"
+			"photosArt" "maps/menu_photos_cp_mossrock"
+		}
+		cp_overgrown
+		{
+			"enabled" "1"
+			"name" "Overgrown"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_overgrown"
+			"photosArt" "maps/menu_photos_cp_overgrown"
+		}
+		cp_process_final
+		{
+			"enabled" "1"
+			"name" "Process"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_process_final"
+			"photosArt" "maps/menu_photos_cp_process_final"
+		}
+		cp_reckoner
+		{
+			"enabled" "1"
+			"name" "Reckoner"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_reckoner"
+			"photosArt" "maps/menu_photos_cp_reckoner"
+		}
+		cp_sulfur
+		{
+			"enabled" "1"
+			"name" "Sulfur"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_sulfur"
+			"photosArt" "maps/menu_photos_cp_sulfur"
+		}
+		cp_sunshine
+		{
+			"enabled" "1"
+			"name" "Sunshine"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_sunshine"
+			//"photosArt" ""
+		}
+		cp_vanguard
+		{
+			"enabled" "1"
+			"name" "Vanguard"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_vanguard"
+			"photosArt" "maps/menu_photos_cp_vanguard"
+		}
+		cp_burghausen
+		{
+			"enabled" "1"
+			"name" "Burghausen"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_burghausen"
+			"photosArt" "maps/menu_photos_cp_burghausen"
+		}
+		cp_hadal
+		{
+			"enabled" "1"
+			"name" "Hadal"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_hadal"
+			"photosArt" "maps/menu_photos_cp_hadal"
+		}
+		cp_snakewater_final1
+		{
+			"enabled" "1"
+			"name" "Snakewater"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_snakewater_final1"
+			"photosArt" "maps/menu_photos_cp_snakewater_final1"
+		}
+		cp_ambush_event
+		{
+			"enabled" "1"
+			"name" "Erebus"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_ambush_event"
+			"photosArt" "maps/menu_photos_cp_ambush_event"
+		}
+		cp_darkmarsh
+		{
+			"enabled" "1"
+			"name" "Darkmarsh"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_darkmarsh"
+			"photosArt" "maps/menu_photos_cp_darkmarsh"
+		}
+		cp_degrootkeep_rats
+		{
+			"enabled" "1"
+			"name" "Sandcastle"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_degrootkeep_rats"
+			"photosArt" "maps/menu_photos_cp_degrootkeep_rats"
+		}
+		cp_gorge_event
+		{
+			"enabled" "1"
+			"name" "Gorge Event"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_gorge_event"
+			"photosArt" "maps/menu_photos_cp_gorge_event"
+		}
+		cp_lavapit_final
+		{
+			"enabled" "1"
+			"name" "Lava Pit"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_lavapit_final"
+			"photosArt" "maps/menu_photos_cp_lavapit_final"
+		}
+		cp_spookeyridge
+		{
+			"enabled" "1"
+			"name" "Spookeyridge"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_spookeyridge"
+			"photosArt" "maps/menu_photos_cp_spookeyridge"
+		}
+		cp_manor_event
+		{
+			"enabled" "1"
+			"name" "Mann Manor"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_manor_event"
+			"photosArt" "maps/menu_photos_cp_manor_event"
+		}
+		cp_freaky_fair
+		{
+			"enabled" "1"
+			"name" "Freaky Fair"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_freaky_fair"
+			"photosArt" "maps/menu_photos_cp_freaky_fair"
+		}
+		cp_sunshine_event
+		{
+			"enabled" "1"
+			"name" "Sinshine"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_sunshine_event"
+			//"photosArt" ""
+		}
+		cp_carrier
+		{
+			"enabled" "1"
+			"name" "Carrier"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_carrier"
+			"photosArt" "maps/menu_photos_cp_carrier"
+		}
+		cp_coldfront
+		{
+			"enabled" "1"
+			"name" "Coldfront"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_coldfront"
+			"photosArt" "maps/menu_photos_cp_coldfront"
+		}
+		cp_frostwatch
+		{
+			"enabled" "1"
+			"name" "Frostwatch"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_frostwatch"
+			"photosArt" "maps/menu_photos_cp_frostwatch"
+		}
+		cp_snowplow
+		{
+			"enabled" "1"
+			"name" "Snowplow"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_snowplow"
+			//"photosArt" ""
+		}
+		cp_altitude
+		{
+			"enabled" "1"
+			"name" "Altitude"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_altitude"
+			"photosArt" "maps/menu_photos_cp_altitude"
+		}
+		cp_gravelpit_snowy
+		{
+			"enabled" "1"
+			"name" "Coal Pit"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_gravelpit_snowy"
+			"photosArt" "maps/menu_photos_cp_gravelpit_snowy"
+		}
+		cp_fortezza
+		{
+			"enabled" "1"
+			"name" "Fortezza"
+			"modename" "#Gametype_CP"
+			"thumbArt" "maps/menu_thumb_cp_fortezza"
+			"photosArt" "maps/menu_photos_cp_fortezza"
+		}
+		ctf_applejack
+		{
+			"enabled" "1"
+			"name" "Applejack"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_applejack"
+			"photosArt" "maps/menu_photos_ctf_applejack"
+		}
+		ctf_landfall
+		{
+			"enabled" "1"
+			"name" "Landfall"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_landfall"
+			"photosArt" "maps/menu_photos_ctf_landfall"
+		}
+		ctf_pelican_peak
+		{
+			"enabled" "1"
+			"name" "Pelican Peak"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_pelican_peak"
+			"photosArt" "maps/menu_photos_ctf_pelican_peak"
+		}
+		ctf_turbine
+		{
+			"enabled" "1"
+			"name" "Turbine"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_turbine"
+			"photosArt" "maps/menu_photos_ctf_turbine"
+		}
+		ctf_crasher
+		{
+			"enabled" "1"
+			"name" "Crasher"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_crasher"
+			"photosArt" "maps/menu_photos_ctf_crasher"
+		}
+		ctf_helltrain_event
+		{
+			"enabled" "1"
+			"name" "Helltrain"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_helltrain_event"
+			"photosArt" "maps/menu_photos_ctf_helltrain_event"
+		}
+		ctf_2fort_invasion
+		{
+			"enabled" "1"
+			"name" "2Fort Invasion"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_2fort_invasion"
+			"photosArt" "maps/menu_photos_ctf_2fort_invasion"
+		}
+		ctf_turbine_winter
+		{
+			"enabled" "1"
+			"name" "Turbine Center"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_turbine_winter"
+			"photosArt" "maps/menu_photos_ctf_turbine_winter"
+		}
+		ctf_snowfall_final
+		{
+			"enabled" "1"
+			"name" "Snowfall"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_snowfall_final"
+			"photosArt" "maps/menu_photos_ctf_snowfall_final"
+		}
+		ctf_doublecross_snowy
+		{
+			"enabled" "1"
+			"name" "Doublefrost"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_doublecross_snowy"
+			"photosArt" "maps/menu_photos_ctf_doublecross_snowy"
+		}
+		ctf_frosty
+		{
+			"enabled" "1"
+			"name" "Frosty"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_frosty"
+			"photosArt" "maps/menu_photos_ctf_frosty"
+		}
+		ctf_haarp
+		{
+			"enabled" "1"
+			"name" "Haarp"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_haarp"
+			"photosArt" "maps/menu_photos_ctf_haarp"
+		}
+		ctf_penguin_peak
+		{
+			"enabled" "1"
+			"name" "Penguin Peak"
+			"modename" "#Gametype_CTF"
+			"thumbArt" "maps/menu_thumb_ctf_penguin_peak"
+			"photosArt" "maps/menu_photos_ctf_penguin_peak"
+		}
+		koth_harvest_final
+		{
+			"enabled" "1"
+			"name" "Harvest"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_harvest_final"
+			"photosArt" "maps/menu_photos_koth_harvest_final"
+		}
+		koth_highpass
+		{
+			"enabled" "1"
+			"name" "Highpass"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_highpass"
+			"photosArt" "maps/menu_photos_koth_highpass"
+		}
+		koth_suijin
+		{
+			"enabled" "1"
+			"name" "Suijin"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_suijin"
+			//"photosArt" ""
+		}
+		koth_brazil
+		{
+			"enabled" "1"
+			"name" "Brazil"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_brazil"
+			//"photosArt" ""
+		}
+		koth_cachoeira
+		{
+			"enabled" "1"
+			"name" "Cachoeira"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_cachoeira"
+			"photosArt" "maps/menu_photos_koth_cachoeira"
+		}
+		koth_king
+		{
+			"enabled" "1"
+			"name" "Kong King"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_king"
+			"photosArt" "maps/menu_photos_koth_king"
+		}
+		koth_lakeside_final
+		{
+			"enabled" "1"
+			"name" "Lakeside"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_lakeside_final"
+			"photosArt" "maps/menu_photos_koth_lakeside_final"
+		}
+		koth_lazarus
+		{
+			"enabled" "1"
+			"name" "Lazarus"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_lazarus"
+			"photosArt" "maps/menu_photos_koth_lazarus"
+		}
+		koth_megaton
+		{
+			"enabled" "1"
+			"name" "Megaton"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_megaton"
+			"photosArt" "maps/menu_photos_koth_megaton"
+		}
+		koth_rotunda
+		{
+			"enabled" "1"
+			"name" "Rotunda"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_rotunda"
+			"photosArt" "maps/menu_photos_koth_rotunda"
+		}
+		koth_sharkbay
+		{
+			"enabled" "1"
+			"name" "Sharkbay"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_sharkbay"
+			"photosArt" "maps/menu_photos_koth_sharkbay"
+		}
+		koth_bagel_event
+		{
+			"enabled" "1"
+			"name" "Cauldron"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_bagel_event"
+			"photosArt" "maps/menu_photos_koth_bagel_event"
+		}
+		koth_los_muertos
+		{
+			"enabled" "1"
+			"name" "Los Muertos"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_los_muertos"
+			"photosArt" "maps/menu_photos_koth_los_muertos"
+		}
+		koth_moonshine_event
+		{
+			"enabled" "1"
+			"name" "Moonshine"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_moonshine_event"
+			//"photosArt" ""
+		}
+		koth_sawmill_event
+		{
+			"enabled" "1"
+			"name" "Soul-Mill"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_sawmill_event"
+			"photosArt" "maps/menu_photos_koth_sawmill_event"
+		}
+		koth_slasher
+		{
+			"enabled" "1"
+			"name" "Slasher"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_slasher"
+			"photosArt" "maps/menu_photos_koth_slasher"
+		}
+		koth_slaughter_event
+		{
+			"enabled" "1"
+			"name" "Laughter"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_slaughter_event"
+			"photosArt" "maps/menu_photos_koth_slaughter_event"
+		}
+		koth_slime
+		{
+			"enabled" "1"
+			"name" "Slime"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_slime"
+			"photosArt" "maps/menu_photos_koth_slime"
+		}
+		koth_synthetic_event
+		{
+			"enabled" "1"
+			"name" "Sinthetic"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_synthetic_event"
+			"photosArt" "maps/menu_photos_koth_synthetic_event"
+		}
+		koth_toxic
+		{
+			"enabled" "1"
+			"name" "Toxic"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_toxic"
+			"photosArt" "maps/menu_photos_koth_toxic"
+		}
+		koth_undergrove_event
+		{
+			"enabled" "1"
+			"name" "Moldergrove"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_undergrove_event"
+			"photosArt" "maps/menu_photos_koth_undergrove_event"
+		}
+		koth_maple_ridge_event
+		{
+			"enabled" "1"
+			"name" "Maple Ridge Event"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_maple_ridge_event"
+			//"photosArt" ""
+		}
+		koth_megalo
+		{
+			"enabled" "1"
+			"name" "Megalo"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_megalo"
+			"photosArt" "maps/menu_photos_koth_megalo"
+		}
+		koth_probed
+		{
+			"enabled" "1"
+			"name" "Probed"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_probed"
+			//"photosArt" ""
+		}
+		koth_krampus
+		{
+			"enabled" "1"
+			"name" "Krampus"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_krampus"
+			"photosArt" "maps/menu_photos_koth_krampus"
+		}
+		koth_cascade
+		{
+			"enabled" "1"
+			"name" "Cascade"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_cascade"
+			"photosArt" "maps/menu_photos_koth_cascade"
+		}
+		koth_snowtower
+		{
+			"enabled" "1"
+			"name" "Snowtower"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_snowtower"
+			"photosArt" "maps/menu_photos_koth_snowtower"
+		}
+		koth_overcast
+		{
+			"enabled" "1"
+			"name" "Overcast"
+			"modename" "#Gametype_Koth"
+			"thumbArt" "maps/menu_thumb_koth_overcast"
+			"photosArt" "maps/menu_photos_koth_overcast"
+		}
+		pd_atom_smash
+		{
+			"enabled" "1"
+			"name" "Atom Smash"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_atom_smash"
+			"photosArt" "maps/menu_photos_pd_atom_smash"
+		}
+		pd_selbyen
+		{
+			"enabled" "1"
+			"name" "Selbyen"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_selbyen"
+			"photosArt" "maps/menu_photos_pd_selbyen"
+		}
+		pd_farmageddon
+		{
+			"enabled" "1"
+			"name" "Farmageddon"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_farmageddon"
+			"photosArt" "maps/menu_photos_pd_farmageddon"
+		}
+		pd_mannsylvania
+		{
+			"enabled" "1"
+			"name" "Mannsylvania"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_mannsylvania"
+			"photosArt" "maps/menu_photos_pd_mannsylvania"
+		}
+		pd_monster_bash
+		{
+			"enabled" "1"
+			"name" "Monster Bash"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_monster_bash"
+			"photosArt" "maps/menu_photos_pd_monster_bash"
+		}
+		pd_pit_of_death_event
+		{
+			"enabled" "1"
+			"name" "Pit of Death"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_pit_of_death_event"
+			//"photosArt" ""
+		}
+		pd_circus
+		{
+			"enabled" "1"
+			"name" "Circus"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_circus"
+			"photosArt" "maps/menu_photos_pd_circus"
+		}
+		pd_cursed_cove_event
+		{
+			"enabled" "1"
+			"name" "Cursed Cove"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_cursed_cove_event"
+			"photosArt" "maps/menu_photos_pd_cursed_cove_event"
+		}
+		pd_watergate
+		{
+			"enabled" "1"
+			"name" "Watergate"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_watergate"
+			"photosArt" "maps/menu_photos_pd_watergate"
+		}
+		pd_galleria
+		{
+			"enabled" "1"
+			"name" "Galleria"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_galleria"
+			"photosArt" "maps/menu_photos_pd_galleria"
+		}
+		pd_snowville_event
+		{
+			"enabled" "1"
+			"name" "SnowVille"
+			"modename" "#Gametype_PlayerDestruction"
+			"thumbArt" "maps/menu_thumb_pd_snowville_event"
+			"photosArt" "maps/menu_photos_pd_snowville_event"
+		}
+		pl_borneo
+		{
+			"enabled" "1"
+			"name" "Borneo"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_borneo"
+			//"photosArt" ""
+		}
+		pl_frontier_final
+		{
+			"enabled" "1"
+			"name" "Frontier"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_frontier_final"
+			"photosArt" "maps/menu_photos_pl_frontier_final"
+		}
+		pl_breadspace
+		{
+			"enabled" "1"
+			"name" "Breadspace"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_breadspace"
+			"photosArt" "maps/menu_photos_pl_breadspace"
+		}
+		pl_camber
+		{
+			"enabled" "1"
+			"name" "Camber"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_camber"
+			"photosArt" "maps/menu_photos_pl_camber"
+		}
+		pl_cashworks
+		{
+			"enabled" "1"
+			"name" "Cashworks"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_cashworks"
+			"photosArt" "maps/menu_photos_pl_cashworks"
+		}
+		pl_enclosure_final
+		{
+			"enabled" "1"
+			"name" "Enclosure"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_enclosure_final"
+			"photosArt" "maps/menu_photos_pl_enclosure_final"
+		}
+		pl_hoodoo_final
+		{
+			"enabled" "1"
+			"name" "Hoodoo"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_hoodoo_final"
+			"photosArt" "maps/menu_photos_pl_hoodoo_final"
+		}
+		pl_odyssey
+		{
+			"enabled" "1"
+			"name" "Odyssey"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_odyssey"
+			"photosArt" "maps/menu_photos_pl_odyssey"
+		}
+		pl_pier
+		{
+			"enabled" "1"
+			"name" "Pier"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_pier"
+			"photosArt" "maps/menu_photos_pl_pier"
+		}
+		pl_swiftwater_final1
+		{
+			"enabled" "1"
+			"name" "Swiftwater"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_swiftwater_final1"
+			//"photosArt" ""
+		}
+		pl_venice
+		{
+			"enabled" "1"
+			"name" "Venice"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_venice"
+			"photosArt" "maps/menu_photos_pl_venice"
+		}
+		pl_embargo
+		{
+			"enabled" "1"
+			"name" "Embargo"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_embargo"
+			"photosArt" "maps/menu_photos_pl_embargo"
+		}
+		pl_phoenix
+		{
+			"enabled" "1"
+			"name" "Phoenix"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_phoenix"
+			"photosArt" "maps/menu_photos_pl_phoenix"
+		}
+		pl_bloodwater
+		{
+			"enabled" "1"
+			"name" "Bloodwater"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_bloodwater"
+			"photosArt" "maps/menu_photos_pl_bloodwater"
+		}
+		pl_corruption
+		{
+			"enabled" "1"
+			"name" "Corruption"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_corruption"
+			"photosArt" "maps/menu_photos_pl_corruption"
+		}
+		pl_fifthcurve_event
+		{
+			"enabled" "1"
+			"name" "Brimstone"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_fifthcurve_event"
+			//"photosArt" ""
+		}
+		pl_hasslecastle
+		{
+			"enabled" "1"
+			"name" "Hassle Castle"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_hasslecastle"
+			"photosArt" "maps/menu_photos_pl_hasslecastle"
+		}
+		pl_millstone_event
+		{
+			"enabled" "1"
+			"name" "Hellstone"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_millstone_event"
+			"photosArt" "maps/menu_photos_pl_millstone_event"
+		}
+		pl_precipice_event_final
+		{
+			"enabled" "1"
+			"name" "Precipice"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_precipice_event_final"
+			"photosArt" "maps/menu_photos_pl_precipice_event_final"
+		}
+		pl_rumble_event
+		{
+			"enabled" "1"
+			"name" "Gravestone"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_rumble_event"
+			"photosArt" "maps/menu_photos_pl_rumble_event"
+		}
+		pl_sludgepit_event
+		{
+			"enabled" "1"
+			"name" "Ghoulpit"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_sludgepit_event"
+			"photosArt" "maps/menu_photos_pl_sludgepit_event"
+		}
+		pl_spineyard
+		{
+			"enabled" "1"
+			"name" "Spineyard"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_spineyard"
+			"photosArt" "maps/menu_photos_pl_spineyard"
+		}
+		pl_terror_event
+		{
+			"enabled" "1"
+			"name" "Terror"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_terror_event"
+			"photosArt" "maps/menu_photos_pl_terror_event"
+		}
+		pl_snowycoast
+		{
+			"enabled" "1"
+			"name" "Snowycoast"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_snowycoast"
+			"photosArt" "maps/menu_photos_pl_snowycoast"
+		}
+		pl_chilly
+		{
+			"enabled" "1"
+			"name" "Chilly"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_chilly"
+			"photosArt" "maps/menu_photos_pl_chilly"
+		}
+		pl_coal_event
+		{
+			"enabled" "1"
+			"name" "Polar"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_coal_event"
+			"photosArt" "maps/menu_photos_pl_coal_event"
+		}
+		pl_emerge
+		{
+			"enabled" "1"
+			"name" "Emerge"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_emerge"
+			"photosArt" "maps/menu_photos_pl_emerge"
+		}
+		pl_frostcliff
+		{
+			"enabled" "1"
+			"name" "Frostcliff"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_frostcliff"
+			"photosArt" "maps/menu_photos_pl_frostcliff"
+		}
+		pl_rumford_event
+		{
+			"enabled" "1"
+			"name" "Rumford"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_rumford_event"
+			"photosArt" "maps/menu_photos_pl_rumford_event"
+		}
+		pl_wutville_event
+		{
+			"enabled" "1"
+			"name" "Wutville"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_wutville_event"
+			"photosArt" "maps/menu_photos_pl_wutville_event"
+		}
+		pl_patagonia
+		{
+			"enabled" "1"
+			"name" "Patagonia"
+			"modename" "#Gametype_Escort"
+			"thumbArt" "maps/menu_thumb_pl_patagonia"
+			"photosArt" "maps/menu_photos_pl_patagonia"
+		}
+		plr_nightfall_final
+		{
+			"enabled" "1"
+			"name" "Nightfall"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_nightfall_final"
+			"photosArt" "maps/menu_photos_plr_nightfall_final"
+		}
+		plr_bananabay
+		{
+			"enabled" "1"
+			"name" "Banana Bay"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_bananabay"
+			"photosArt" "maps/menu_photos_plr_bananabay"
+		}
+		plr_hacksaw
+		{
+			"enabled" "1"
+			"name" "Hacksaw"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_hacksaw"
+			"photosArt" "maps/menu_photos_plr_hacksaw"
+		}
+		plr_hacksaw_event
+		{
+			"enabled" "1"
+			"name" "Bonesaw"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_hacksaw_event"
+			"photosArt" "maps/menu_photos_plr_hacksaw_event"
+		}
+		plr_cutter
+		{
+			"enabled" "1"
+			"name" "Cutter"
+			"modename" "#Gametype_EscortRace"
+			"thumbArt" "maps/menu_thumb_plr_cutter"
+			"photosArt" "maps/menu_photos_plr_cutter"
+		}
+		tow_dynamite
+		{
+			"enabled" "1"
+			"name" "Dynamite"
+			"modename" "#Gametype_TOW"
+			"thumbArt" "maps/menu_thumb_tow_dynamite"
+			"photosArt" "maps/menu_photos_tow_dynamite"
+		}
+		vsh_distillery
+		{
+			"enabled" "1"
+			"name" "Distillery"
+			"modename" "#Gametype_VSH"
+			"thumbArt" "maps/menu_thumb_vsh_distillery"
+			"photosArt" "maps/menu_photos_vsh_distillery"
+		}
+		vsh_nucleus
+		{
+			"enabled" "1"
+			"name" "Nucleus"
+			"modename" "#Gametype_VSH"
+			"thumbArt" "maps/menu_thumb_vsh_nucleus"
+			"photosArt" "maps/menu_photos_vsh_nucleus"
+		}
+		vsh_skirmish
+		{
+			"enabled" "1"
+			"name" "Skirmish"
+			"modename" "#Gametype_VSH"
+			"thumbArt" "maps/menu_thumb_vsh_skirmish"
+			"photosArt" "maps/menu_photos_vsh_skirmish"
+		}
+		vsh_tinyrock
+		{
+			"enabled" "1"
+			"name" "Tinyrock"
+			"modename" "#Gametype_VSH"
+			"thumbArt" "maps/menu_thumb_vsh_tinyrock"
+			"photosArt" "maps/menu_photos_vsh_tinyrock"
+		}
+		vsh_outburst
+		{
+			"enabled" "1"
+			"name" "Outburst"
+			"modename" "#Gametype_VSH"
+			"thumbArt" "maps/menu_thumb_vsh_outburst"
+			"photosArt" "maps/menu_photos_vsh_outburst"
+		}
+		vsh_maul
+		{
+			"enabled" "1"
+			"name" "Maul"
+			"modename" "#Gametype_VSH"
+			"thumbArt" "maps/menu_thumb_vsh_maul"
+			"photosArt" "maps/menu_photos_vsh_maul"
+		}
+		zi_devastation_final1
+		{
+			"enabled" "1"
+			"name" "Devastation"
+			"modename" "#Gametype_ZI"
+			"thumbArt" "maps/menu_thumb_zi_devastation_final1"
+			"photosArt" "maps/menu_photos_zi_devastation_final1"
+		}
+		zi_murky
+		{
+			"enabled" "1"
+			"name" "Murky"
+			"modename" "#Gametype_ZI"
+			"thumbArt" "maps/menu_thumb_zi_murky"
+			"photosArt" "maps/menu_photos_zi_murky"
+		}
+		zi_sanitarium
+		{
+			"enabled" "1"
+			"name" "Sanitarium"
+			"modename" "#Gametype_ZI"
+			"thumbArt" "maps/menu_thumb_zi_sanitarium"
+			"photosArt" "maps/menu_photos_zi_sanitarium"
+		}
+		zi_atoll
+		{
+			"enabled" "1"
+			"name" "Atoll"
+			"modename" "#Gametype_ZI"
+			"thumbArt" "maps/menu_thumb_zi_atoll"
+			"photosArt" "maps/menu_photos_zi_atoll"
+		}
+		zi_blazehattan
+		{
+			"enabled" "1"
+			"name" "Blazehattan"
+			"modename" "#Gametype_ZI"
+			"thumbArt" "maps/menu_thumb_zi_blazehattan"
+			"photosArt" "maps/menu_photos_zi_blazehattan"
+		}
+		zi_woods
+		{
+			"enabled" "1"
+			"name" "Woods"
+			"modename" "#Gametype_ZI"
+			"thumbArt" "maps/menu_thumb_zi_woods"
+			"photosArt" "maps/menu_photos_zi_woods"
+		}
+	}
+}

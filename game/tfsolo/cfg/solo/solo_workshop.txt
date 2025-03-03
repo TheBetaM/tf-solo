@@ -1,0 +1,24 @@
+solo_config
+{
+	maps
+	{
+		"workshop/3364324332"
+		{
+			"enabled" "1"
+			"name" "Fjord"
+			"modename" "#Gametype_Koth"
+		}
+		"workshop/3363901826"
+		{
+			"enabled" "1"
+			"name" "Snowswept"
+			"modename" "#Gametype_CP"
+		}
+		"workshop/3241769114"
+		{
+			"enabled" "1"
+			"name" "Fragile"
+			"modename" "#Gametype_Koth"
+		}
+	}
+}

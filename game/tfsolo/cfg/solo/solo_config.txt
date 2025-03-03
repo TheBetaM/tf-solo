@@ -1,0 +1,9 @@
+#base solo_valve.txt
+#base solo_community.txt
+#base solo_workshop.txt
+#base solo_live.txt
+
+solo_config
+{
+	
+}
