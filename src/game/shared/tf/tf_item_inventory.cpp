@@ -242,12 +242,15 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 {
 	CEconItemView* pItemView = new CEconItemView;
 	CEconItem* pItem = new CEconItem;
-	pItem->m_ulID = id;
+	pItem->SetItemID(id);
 	pItem->m_unAccountID = 0;
 	pItem->m_unDefIndex = id;
+	pItem->m_unLevel = 1;
 	pItemView->Init(id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
 	pItemView->SetItemID(id);
+#if CLIENT_DLL
 	pItemView->SetNonSOEconItem(pItem);
+#endif
 	m_pSoloLoadoutItems.AddToTail(pItemView);
 	return pItemView;
 }
@@ -1155,7 +1158,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 		for (int i = 0; i < count; i++)
 		{
 			CEconItemView* pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetItemDefIndex() == ulPreviousItem)
+			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulPreviousItem)
 			{
 				pItem->GetSOCData()->UnequipFromClass(unClass);
 			}
@@ -1164,7 +1167,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	else
 	{
 		CEconItemView* pPreviousItem = GetInventoryItemByItemID(ulPreviousItem);
-		if (pPreviousItem) {
+		if (pPreviousItem && pPreviousItem->GetSOCData()) {
 			pPreviousItem->GetSOCData()->UnequipFromClass(unClass);
 		}
 	}
@@ -1177,7 +1180,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 		for (int i = 0; i < count; i++)
 		{
 			pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetItemDefIndex() == ulItemID)
+			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulItemID)
 			{
 				pItem->GetSOCData()->Equip(unClass, unSlot);
 				break;
@@ -1186,7 +1189,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 		if (!pItem)
 		{
 			pItem = TFInventoryManager()->AddSoloItem(ulItemID);
-			if (pItem && pItem->GetItemDefIndex() == ulItemID)
+			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulItemID)
 			{
 				pItem->GetSOCData()->Equip(unClass, unSlot);
 			}
@@ -1204,7 +1207,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	else if (!tf_disable_base_econ_items.GetBool())
 	{
 		CEconItemView* pItem = GetInventoryItemByItemID(ulItemID);
-		if (pItem)
+		if (pItem && pItem->GetSOCData())
 		{
 			pItem->GetSOCData()->Equip(unClass, unSlot);
 		}
