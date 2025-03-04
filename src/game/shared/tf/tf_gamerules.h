@@ -177,6 +177,9 @@ public:
 	void	InputSetRoundRespawnFreezeEnabled( inputdata_t &inputdata );
 	void	InputSetMapForcedTruceDuringBossFight( inputdata_t &inputdata );
 	void	InputSoloAddCredits( inputdata_t &inputdata );
+	void	InputSoloSaveData( inputdata_t &inputdata );
+	void	InputSoloUnlockItem( inputdata_t &inputdata );
+	void	InputSoloUnlockItemID( inputdata_t &inputdata );
 
 	void	TeamPlayerCountChanged( CTFTeam *pTeam );
 	void	PowerupTeamImbalance( int nTeam );

@@ -1579,6 +1579,9 @@ BEGIN_DATADESC( CTFGameRulesProxy )
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetRoundRespawnFreezeEnabled", InputSetRoundRespawnFreezeEnabled ),
 	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetMapForcedTruceDuringBossFight", InputSetMapForcedTruceDuringBossFight ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloAddCredits", InputSoloAddCredits ),
+	DEFINE_INPUTFUNC( FIELD_VOID, "SoloSaveDAta", InputSoloSaveData ),
+	DEFINE_INPUTFUNC( FIELD_STRING, "SoloUnlockItem", InputSoloUnlockItem ),
+	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloUnlockItemID", InputSoloUnlockItemID ),
 
 	DEFINE_OUTPUT( m_OnWonByTeam1,	"OnWonByTeam1" ),
 	DEFINE_OUTPUT( m_OnWonByTeam2,	"OnWonByTeam2" ),
@@ -1851,6 +1854,45 @@ void CTFGameRulesProxy::InputSoloAddCredits(inputdata_t& inputdata)
 	if (pEvent)
 	{
 		pEvent->SetInt("amount", inputdata.value.Int());
+		gameeventmanager->FireEvent(pEvent);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFGameRulesProxy::InputSoloSaveData(inputdata_t& inputdata)
+{
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_save_data");
+	if (pEvent)
+	{
+		gameeventmanager->FireEvent(pEvent);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFGameRulesProxy::InputSoloUnlockItem(inputdata_t& inputdata)
+{
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_unlock_item");
+	if (pEvent)
+	{
+		const char* pszItem = inputdata.value.String();
+		pEvent->SetString("item", pszItem);
+		gameeventmanager->FireEvent(pEvent);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFGameRulesProxy::InputSoloUnlockItemID(inputdata_t& inputdata)
+{
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_unlock_itemid");
+	if (pEvent)
+	{
+		pEvent->SetInt("item", inputdata.value.Int());
 		gameeventmanager->FireEvent(pEvent);
 	}
 }
@@ -22398,9 +22440,6 @@ void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUp
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
 
 void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
-void	ScriptSoloSaveData()										{ TFInventoryManager()->WriteSaveData(); }
-uint64_t	ScriptSoloGetCredits( )									{ return TFInventoryManager()->GetCredits(); }
-void	ScriptSoloAddCredits( int amount )							{ TFInventoryManager()->AddCredits(amount); }
 
 void CTFGameRules::RegisterScriptFunctions()
 {
@@ -22460,9 +22499,6 @@ void CTFGameRules::RegisterScriptFunctions()
 	TF_GAMERULES_SCRIPT_FUNC( ForceEscortPushLogic,						"Forces payload pushing logic. 0 -> default, 1 -> force off, 2 -> force on" );
 
 	TF_GAMERULES_SCRIPT_FUNC( SetBotPresetsFile,						"Reload bot presets file from this path" );
-	TF_GAMERULES_SCRIPT_FUNC( SoloSaveData,								"Save solo progress" );
-	TF_GAMERULES_SCRIPT_FUNC( SoloGetCredits,							"Get credits in solo save data" );
-	TF_GAMERULES_SCRIPT_FUNC( SoloAddCredits,							"Add or remove credits in solo save data" );
 
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }

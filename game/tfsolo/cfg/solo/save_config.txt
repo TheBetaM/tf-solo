@@ -3,17 +3,32 @@ save_config
 	Credits 10000
 	UnlockedItems
 	{
+		TestItem
+		{
+		}
 	}
 	Armory
 	{
+		TestItem
+		{
+		}
 	}
 	BotPresets
 	{
+		TestBot
+		{
+		}
 	}
 	Campaigns
 	{
+		TestCampaign
+		{
+		}
 	}
 	Generic
 	{
+		TestFlags
+		{
+		}
 	}
 }

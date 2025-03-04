@@ -224,10 +224,12 @@ public:
 
 	KeyValues*			GetSaveData()				{ return m_SoloSaveData; }
 	void				InitSaveData();
-	void				WriteSaveData();
 	void				LoadSaveData();
+#ifdef CLIENT_DLL
+	void				WriteSaveData();
 	void				AddCredits(long amount);
 	uint64_t			GetCredits();
+#endif
 
 	virtual void FireGameEvent(IGameEvent* event);
 

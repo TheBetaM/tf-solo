@@ -4042,6 +4042,11 @@ bool CNavMesh::UpdateGeneration( float maxTime )
 						{
 							pMVM->InitPopulationManager();
 						}
+						IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_nav_complete");
+						if (pEvent)
+						{
+							gameeventmanager->FireEvent(pEvent);
+						}
 					}
 				}
 			}

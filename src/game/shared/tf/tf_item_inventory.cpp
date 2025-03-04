@@ -236,6 +236,9 @@ void CTFInventoryManager::PostInit( void )
 	InitSaveData();
 	LoadSaveData();
 	ListenForGameEvent("solo_add_credits");
+	ListenForGameEvent("solo_save_data");
+	ListenForGameEvent("solo_unlock_item");
+	ListenForGameEvent("solo_unlock_itemid");
 }
 
 CEconItemView* CTFInventoryManager::AddSoloItem(int id)
@@ -906,10 +909,38 @@ void CTFInventoryManager::FireGameEvent(IGameEvent* event)
 	const char* pszEventName = event->GetName();
 
 	// when we are changing levels
+#ifdef CLIENT_DLL
 	if (FStrEq(pszEventName, "solo_add_credits"))
 	{
 		AddCredits(event->GetInt("amount"));
 	}
+	else if (FStrEq(pszEventName, "solo_save_data"))
+	{
+		WriteSaveData();
+	}
+	else if (FStrEq(pszEventName, "solo_unlock_item"))
+	{
+		auto def = GetItemSchema()->GetItemDefinitionByName(event->GetString("item"));
+		if (def)
+		{
+			AddSoloItem(def->GetDefinitionIndex());
+			auto kvSave = TFInventoryManager()->GetSaveData();
+			auto itemsKey = kvSave->FindKey("UnlockedItems",true);
+			itemsKey->SetInt(event->GetString("item"), 1);
+		}
+	}
+	else if (FStrEq(pszEventName, "solo_unlock_itemid"))
+	{
+		auto def = GetItemSchema()->GetItemDefinition(event->GetInt("item"));
+		if (def)
+		{
+			AddSoloItem(event->GetInt("item"));
+			auto kvSave = TFInventoryManager()->GetSaveData();
+			auto itemsKey = kvSave->FindKey("UnlockedItems",true);
+			itemsKey->SetInt(def->GetDefinitionName(), 1);
+		}
+	}
+#endif
 }
 
 
@@ -2325,8 +2356,17 @@ void CTFInventoryManager::InitSaveData()
 	m_SoloSaveData->SetUint64("Credits", m_SoloSaveConfigData->GetUint64("Credits"));
 	auto itemsKey = m_SoloSaveConfigData->FindKey("UnlockedItems")->MakeCopy();
 	m_SoloSaveData->AddSubKey(itemsKey);
+	auto armoryKey = m_SoloSaveConfigData->FindKey("Armory")->MakeCopy();
+	m_SoloSaveData->AddSubKey(armoryKey);
+	auto botpresetsKey = m_SoloSaveConfigData->FindKey("BotPresets")->MakeCopy();
+	m_SoloSaveData->AddSubKey(botpresetsKey);
+	auto campaignsKey = m_SoloSaveConfigData->FindKey("Campaigns")->MakeCopy();
+	m_SoloSaveData->AddSubKey(campaignsKey);
+	auto genericKey = m_SoloSaveConfigData->FindKey("Generic")->MakeCopy();
+	m_SoloSaveData->AddSubKey(genericKey);
 }
 
+#ifdef CLIENT_DLL
 void CTFInventoryManager::WriteSaveData()
 {
 	if (!m_SoloSaveData)
@@ -2341,6 +2381,7 @@ void CTFInventoryManager::WriteSaveData()
 	path.Append(CFmtStr("save_%d.txt", steamID.GetAccountID()));
 	m_SoloSaveData->SaveToFile(g_pFullFileSystem, path, "GAME");
 }
+#endif
 
 void CTFInventoryManager::LoadSaveData()
 {
@@ -2356,14 +2397,14 @@ void CTFInventoryManager::LoadSaveData()
 	m_SoloSaveData = new KeyValues("solo_data");
 	if (!m_SoloSaveData->LoadFromFile(g_pFullFileSystem, path, "GAME"))
 	{
-		Msg("Unable to parse solo data into keyvalues.\n");
 		InitSaveData();
 #if CLIENT_DLL
+		Msg("Unable to parse solo save data into keyvalues.\n");
 		engine->ClientCmd_Unrestricted("clear_loadout\n");
 #endif
 	}
 
-	auto itemsKey = m_SoloSaveData->FindKey("UnlockedItems");
+	auto itemsKey = m_SoloSaveData->FindKey("UnlockedItems",true);
 	FOR_EACH_SUBKEY(itemsKey, key)
 	{
 		const CEconItemDefinition* pItemDef = GetItemSchema()->GetItemDefinitionByName(key->GetName());
@@ -2381,6 +2422,7 @@ void CTFInventoryManager::LoadSaveData()
 #endif
 }
 
+#ifdef CLIENT_DLL
 uint64_t CTFInventoryManager::GetCredits()
 {
 	return m_SoloSaveData->GetUint64("Credits");
@@ -2390,7 +2432,6 @@ void CTFInventoryManager::AddCredits(long amount)
 	m_SoloSaveData->SetUint64("Credits", m_SoloSaveData->GetUint64("Credits") + amount);
 }
 
-#ifdef CLIENT_DLL
 CON_COMMAND(tfsolo_save, "Save mod progress.", FCVAR_GAME)
 {
 	TFInventoryManager()->WriteSaveData();
