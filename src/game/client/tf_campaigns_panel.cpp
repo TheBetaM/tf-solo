@@ -67,9 +67,11 @@ public:
 			{
 				auto saveKV = TFInventoryManager()->GetSaveData();
 				int progVal = 0;
-				if (saveKV->GetInt(cProgressKey) != 0)
+				auto campaignsKV = saveKV->FindKey("Campaigns", true);
+				auto campKV = campaignsKV->FindKey(m_Config->GetName(), true);
+				if (campKV->GetInt(cProgressKey) != 0)
 				{
-					progVal = saveKV->GetInt(cProgressKey);
+					progVal = campKV->GetInt(cProgressKey);
 				}
 				cProgress.Append(CFmtStr("%d", progVal));
 				cProgress.Append("%");

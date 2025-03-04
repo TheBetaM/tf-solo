@@ -147,6 +147,7 @@ private:
 	Color						m_colThumbnailBGMouseover;
 	Color						m_colThumbnailBGSelected;
 	Color						m_colThumbnailBGUnlocked;
+	Color						m_colThumbnailBGLocked;
 
 	Color						m_colSetName;
 

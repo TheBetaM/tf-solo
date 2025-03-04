@@ -85,6 +85,7 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGMouseover, "thumbnail_bgcolor_mouseover" );
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGSelected, "thumbnail_bgcolor_selected" );
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGUnlocked, "thumbnail_bgcolor_unlocked" );
+	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGLocked, "thumbnail_bgcolor_locked" );
 
 	m_bEventLogging = false;
 
@@ -437,6 +438,7 @@ void CArmoryPanel::OnCommand( const char *command )
 			if ( pItemSet )
 			{
 				bool CustomArmory = false;
+				auto kvSave = TFInventoryManager()->GetSaveData();
 				CUtlVector<int> ArmoryList;
 				if (tf_armory_custom.GetString() != "")
 				{
@@ -447,7 +449,22 @@ void CArmoryPanel::OnCommand( const char *command )
 						auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
 						if (item)
 						{
-							ArmoryList.AddToTail(item->GetDefinitionIndex());
+							bool pass = true;
+							if (key->FindKey("AppearFlag"))
+							{
+								uint64_t flagrequire = key->GetInt("AppearValue", 1);
+								auto armoryKV = kvSave->FindKey("Armory", true);
+								auto flagKV = armoryKV->FindKey(key->GetString("AppearFlag"));
+								if (!flagKV || armoryKV->GetInt(key->GetString("AppearFlag")) < flagrequire)
+								{
+									pass = false;
+								}
+							}
+
+							if (pass)
+							{
+								ArmoryList.AddToTail(item->GetDefinitionIndex());
+							}
 						}
 						key = key->GetNextKey();
 					}
@@ -564,6 +581,7 @@ void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 	else
 	{
 		bool CustomArmory = false;
+		auto kvSave = TFInventoryManager()->GetSaveData();
 		CUtlVector<int> ArmoryList;
 		if (tf_armory_custom.GetString() != "")
 		{
@@ -574,7 +592,22 @@ void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 				auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
 				if (item)
 				{
-					ArmoryList.AddToTail(item->GetDefinitionIndex());
+					bool pass = true;
+					if (key->FindKey("AppearFlag"))
+					{
+						uint64_t flagrequire = key->GetInt("AppearValue", 1);
+						auto armoryKV = kvSave->FindKey("Armory", true);
+						auto flagKV = armoryKV->FindKey(key->GetString("AppearFlag"));
+						if (!flagKV || armoryKV->GetInt(key->GetString("AppearFlag")) < flagrequire)
+						{
+							pass = false;
+						}
+					}
+
+					if (pass)
+					{
+						ArmoryList.AddToTail(item->GetDefinitionIndex());
+					}
 				}
 				key = key->GetNextKey();
 			}
@@ -910,6 +943,23 @@ void CArmoryPanel::UpdateSelectedItem( void )
 			}
 		}
 
+		// are we allowed to unlock it?
+		if (m_armoryConfig->FindKey(name))
+		{
+			auto key = m_armoryConfig->FindKey(name);
+			if (key->FindKey("UnlockFlag"))
+			{
+				uint64_t flagrequire = key->GetInt("UnlockValue", 1);
+				auto armoryKV = kvSave->FindKey("Armory", true);
+				auto flagKV = armoryKV->FindKey(key->GetString("UnlockFlag"));
+				if (!flagKV || armoryKV->GetInt(key->GetString("UnlockFlag")) < flagrequire)
+				{
+					m_pWikiButton->SetEnabled(false);
+					return;
+				}
+			}
+		}
+
 		// can we unlock it?
 		if (credits < price)
 		{
@@ -1049,6 +1099,7 @@ void CArmoryPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOve
 		auto item = pItemPanel->GetItem();
 		if (item)
 		{
+			// check if unlocked
 			int count = TFInventoryManager()->GetSoloItemCount();
 			for (int i = 0; i < count; i++)
 			{
@@ -1057,6 +1108,24 @@ void CArmoryPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOve
 				{
 					pItemPanel->SetBgColor(m_colThumbnailBGUnlocked);
 					break;
+				}
+			}
+
+			// check if locked
+			auto kvSave = TFInventoryManager()->GetSaveData();
+			auto name = item->GetItemDefinition()->GetDefinitionName();
+			if (m_armoryConfig->FindKey(name))
+			{
+				auto key = m_armoryConfig->FindKey(name);
+				if (key->FindKey("UnlockFlag"))
+				{
+					uint64_t flagrequire = key->GetInt("UnlockValue", 1);
+					auto armoryKV = kvSave->FindKey("Armory", true);
+					auto flagKV = armoryKV->FindKey(key->GetString("UnlockFlag"));
+					if (!flagKV || armoryKV->GetInt(key->GetString("UnlockFlag")) < flagrequire)
+					{
+						pItemPanel->SetBgColor(m_colThumbnailBGLocked);
+					}
 				}
 			}
 		}

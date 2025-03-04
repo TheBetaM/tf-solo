@@ -21,6 +21,7 @@
 		"thumbnail_bgcolor_mouseover"	"156 146 128 255"
 		"thumbnail_bgcolor_selected"	"176 166 148 255"
 		"thumbnail_bgcolor_unlocked"	"CreditsGreen"
+		"thumbnail_bgcolor_locked"	"RedSolid"
 		
 		"thumbnails_rows"		"4"
 		"thumbnails_columns"	"4"
