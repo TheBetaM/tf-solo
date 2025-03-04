@@ -469,31 +469,20 @@ void CTFBotManager::MaintainBotQuota()
 			if (tf_bot_quota_use_presets.GetInt() != 0)
 			{
 				int count = 0;
+				CUtlVector<KeyValues*> chosen;
 				auto key = m_presetsKV->GetFirstSubKey();
 				while (key)
 				{
-					key = key->GetNextKey();
-					count++;
-				}
-				int rand = RandomInt(0, count - 1);
-				count = 0;
-				const char* preset = "";
-				auto presetKey = m_presetsKV->GetFirstSubKey();
-				key = m_presetsKV->GetFirstSubKey();
-				while (key)
-				{
-					if (count == rand)
+					if (V_strcmp(key->GetName(), "version"))
 					{
-						preset = key->GetName();
-						presetKey = key;
-						break;
-					}
-					else
-					{
-						key = key->GetNextKey();
+						chosen.AddToTail(key);
 						count++;
 					}
+					key = key->GetNextKey();
 				}
+				int rand = RandomInt(0, count - 1);
+				const char* preset = chosen[rand]->GetName();
+				KeyValues* presetKey = chosen[rand];
 
 				CTFBot* pBot = GetAvailableBotFromPool();
 				if (pBot == NULL)

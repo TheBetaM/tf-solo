@@ -267,12 +267,15 @@ void CTFCampaignsPanel::RegenerateCampaignsPanels()
 	// Category items.
 	FOR_EACH_SUBKEY(m_CampaignsConfig, camKey)
 	{
-		CTFCampaignsPanelSingle* pListEntry = NULL;
-		pListEntry = new CTFCampaignsPanelSingle(pScrollableList, "CampaignSinglePanel", camKey->GetName(), this, camKey);
-		pListEntry->AddActionSignalTarget(this);
-		pListEntry->MakeReadyForUse();
-		pScrollableList->AddPanel(pListEntry, 5);
-		pListEntry->InvalidateLayout();
+		if (V_strcmp(camKey->GetName(), "version"))
+		{
+			CTFCampaignsPanelSingle* pListEntry = NULL;
+			pListEntry = new CTFCampaignsPanelSingle(pScrollableList, "CampaignSinglePanel", camKey->GetName(), this, camKey);
+			pListEntry->AddActionSignalTarget(this);
+			pListEntry->MakeReadyForUse();
+			pScrollableList->AddPanel(pListEntry, 5);
+			pListEntry->InvalidateLayout();
+		}
 	}
 
 	InvalidateLayout();
