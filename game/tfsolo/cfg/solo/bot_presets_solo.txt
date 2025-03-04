@@ -1,0 +1,37 @@
+bot_presets
+{
+	TestBot
+	{
+		Name "Test Bot S"
+		Class Soldier
+		Scale 1.25
+		Robot 1
+		Skill 2
+		Health 2000
+		Team 3
+		Conds
+		{
+			30
+			16
+		}
+		Items
+		{
+			"The Black Box"
+			{
+				"fire rate bonus" "0.001"
+				"faster reload rate" "1.6"
+			}
+			"The Concheror"
+			{
+			}
+			"The Escape Plan"
+			{
+			}
+		}
+		Attributes
+		{
+			"move speed bonus" "1.5"
+			"override footstep sound set" "3"
+		}
+	}
+}

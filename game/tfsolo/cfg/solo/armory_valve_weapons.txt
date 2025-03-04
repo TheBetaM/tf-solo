@@ -19,10 +19,16 @@ armory_config
 	"The Axtinguisher"
 	{
 		Cost 1000
+		UnlockFlag TestArmoryUnlock
+		UnlockValue 2
 	}
 	"The Backburner"
 	{
 		Cost 1000
+		AppearFlag TestArmoryAppear
+		AppearValue 3
+		UnlockFlag TestArmoryUnlock
+		UnlockValue 3
 	}
 	"TTG Sam Revolver"
 	{
@@ -107,6 +113,8 @@ armory_config
 	"The Flare Gun"
 	{
 		Cost 1000
+		AppearFlag TestArmoryAppear
+		AppearValue 1
 	}
 	"The Force-a-Nature"
 	{
