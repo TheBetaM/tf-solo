@@ -239,6 +239,10 @@ void CTFInventoryManager::PostInit( void )
 	ListenForGameEvent("solo_save_data");
 	ListenForGameEvent("solo_unlock_item");
 	ListenForGameEvent("solo_unlock_itemid");
+	ListenForGameEvent("solo_armory_flag");
+	ListenForGameEvent("solo_campaign_flag");
+	ListenForGameEvent("solo_botpreset_flag");
+	ListenForGameEvent("solo_generic_flag");
 }
 
 CEconItemView* CTFInventoryManager::AddSoloItem(int id)
@@ -938,6 +942,64 @@ void CTFInventoryManager::FireGameEvent(IGameEvent* event)
 			auto kvSave = TFInventoryManager()->GetSaveData();
 			auto itemsKey = kvSave->FindKey("UnlockedItems",true);
 			itemsKey->SetInt(def->GetDefinitionName(), 1);
+		}
+	}
+	else if (FStrEq(pszEventName, "solo_armory_flag"))
+	{
+		auto kvSave = TFInventoryManager()->GetSaveData();
+		auto targetKey = kvSave->FindKey("Armory", true);
+		if (event->GetBool("setflag"))
+		{
+			targetKey->SetInt(event->GetString("flag"), event->GetInt("count"));
+		}
+		else
+		{
+			auto target = targetKey->GetInt(event->GetString("flag"));
+			targetKey->SetInt(event->GetString("flag"), target + event->GetInt("count"));
+		}
+	}
+	else if (FStrEq(pszEventName, "solo_campaign_flag"))
+	{
+		auto kvSave = TFInventoryManager()->GetSaveData();
+		auto holderKey = kvSave->FindKey("Campaigns", true);
+		auto targetKey = holderKey->FindKey(event->GetString("campaign"), true);
+		if (event->GetBool("setflag"))
+		{
+			targetKey->SetInt(event->GetString("flag"), event->GetInt("count"));
+		}
+		else
+		{
+			auto target = targetKey->GetInt(event->GetString("flag"));
+			targetKey->SetInt(event->GetString("flag"), target + event->GetInt("count"));
+		}
+	}
+	else if (FStrEq(pszEventName, "solo_botpreset_flag"))
+	{
+		auto kvSave = TFInventoryManager()->GetSaveData();
+		auto holderKey = kvSave->FindKey("BotPresets", true);
+		auto targetKey = holderKey->FindKey(event->GetString("preset"), true);
+		if (event->GetBool("setflag"))
+		{
+			targetKey->SetInt(event->GetString("flag"), event->GetInt("count"));
+		}
+		else
+		{
+			auto target = targetKey->GetInt(event->GetString("flag"));
+			targetKey->SetInt(event->GetString("flag"), target + event->GetInt("count"));
+		}
+	}
+	else if (FStrEq(pszEventName, "solo_generic_flag"))
+	{
+		auto kvSave = TFInventoryManager()->GetSaveData();
+		auto targetKey = kvSave->FindKey("Generic", true);
+		if (event->GetBool("setflag"))
+		{
+			targetKey->SetInt(event->GetString("flag"), event->GetInt("count"));
+		}
+		else
+		{
+			auto target = targetKey->GetInt(event->GetString("flag"));
+			targetKey->SetInt(event->GetString("flag"), target + event->GetInt("count"));
 		}
 	}
 #endif
@@ -2429,7 +2491,14 @@ uint64_t CTFInventoryManager::GetCredits()
 }
 void CTFInventoryManager::AddCredits(long amount)
 {
-	m_SoloSaveData->SetUint64("Credits", m_SoloSaveData->GetUint64("Credits") + amount);
+	if (amount < 0 && m_SoloSaveData->GetUint64("Credits") < abs(amount))
+	{
+		m_SoloSaveData->SetUint64("Credits", 0);
+	}
+	else
+	{
+		m_SoloSaveData->SetUint64("Credits", m_SoloSaveData->GetUint64("Credits") + amount);
+	}
 }
 
 CON_COMMAND(tfsolo_save, "Save mod progress.", FCVAR_GAME)
