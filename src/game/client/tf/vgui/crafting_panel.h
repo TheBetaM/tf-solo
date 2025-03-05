@@ -60,6 +60,11 @@ public:
 		SetEnabled( m_iRecipeDefIndex != "" );
 	}
 
+	const char* GetDefIndex()
+	{
+		return m_iRecipeDefIndex;
+	}
+
 	void OnCursorEntered( void )
 	{
 		PostActionSignal( new KeyValues("RecipePanelEntered") );
@@ -134,6 +139,7 @@ public:
 	KeyValues* m_presetsKV;
 
 	void		UpdatePlayerModelPanel( void );
+	void		JumpToArmory( void );
 
 private:
 	// Items in the input model panels

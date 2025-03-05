@@ -292,12 +292,6 @@ void CCraftingPanel::PerformLayout( void )
 	// Now that the container has been sized, tell the scroller to re-evaluate
 	m_pRecipeListContainerScroller->InvalidateLayout();
 	m_pRecipeListContainerScroller->GetScrollbar()->InvalidateLayout();
-
-	// Then position all our item panels
-	//for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
-	//{
-	//	PositionItemPanel( m_pItemModelPanels[i], i );
-	//}
 }
 
 //-----------------------------------------------------------------------------
@@ -550,6 +544,21 @@ void CCraftingPanel::UpdatePlayerModelPanel(void)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
+void CCraftingPanel::JumpToArmory(void)
+{
+	if (m_iCurrentlySelectedRecipe == "")
+		return;
+	auto key = m_presetsKV->FindKey(m_iCurrentlySelectedRecipe);
+	auto kItems = key->FindKey("Items");
+	if (!kItems)
+		return;
+	EconUI()->OpenEconUI(ECONUI_ARMORY);
+	EconUI()->GetArmoryPanel()->ShowCustomList(key->GetString("Name","Bot"), kItems);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
 const char *CCraftingPanel::GetItemTextForCriteria( const CItemSelectionCriteria *pCriteria )
 {
 	return NULL;
@@ -599,8 +608,8 @@ void CCraftingPanel::SetButtonToRecipe( int iButton, const char* iDefIndex, cons
 		m_pRecipeButtons.AddToTail( pRecipeButton );
 	}
 
-	const char *pszCommand = CFmtStr("selectrecipe%s", iDefIndex );
-	pRecipeButton->SetCommand( pszCommand );
+	const char* pszCommand = VarArgs("selectrecipe%d", iButton);
+	pRecipeButton->SetCommand(pszCommand);
 	pRecipeButton->SetText( pszText );
 	pRecipeButton->SetDefIndex( iDefIndex );
 }
@@ -639,13 +648,14 @@ void CCraftingPanel::OnCommand( const char *command )
 {
 	if ( !Q_strnicmp( command, "selectrecipe", 12 ) )
 	{
-		const char *pszNum = command+12;
-		if ( pszNum && pszNum[0] )
+		const char* pszNum = command + 12;
+		if (pszNum && pszNum[0])
 		{
-			m_iCurrentlySelectedRecipe = pszNum;
-			UpdateSelectedRecipe( true );
+			int buttonid = atoi(pszNum);
+			auto button = m_pRecipeButtons[buttonid];
+			m_iCurrentlySelectedRecipe = button->GetDefIndex();
+			UpdateSelectedRecipe(true);
 		}
-
 		return;
 	}
 	if ( !Q_strnicmp( command, "selectfilter", 12 ) )
@@ -666,7 +676,7 @@ void CCraftingPanel::OnCommand( const char *command )
 	}
 	else if ( !Q_strnicmp( command, "craft", 5 ) )
 	{
-		
+		JumpToArmory();
 		return;
 	}
 	else if ( !Q_stricmp( command, "upgrade" ) )

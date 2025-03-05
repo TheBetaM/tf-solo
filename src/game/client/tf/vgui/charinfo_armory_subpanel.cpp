@@ -145,7 +145,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CArmoryPanel::SetupComboBox( const char *pszCustomAddition )
+void CArmoryPanel::SetupComboBox( const char *pszCustomAddition, bool loc )
 {
 	m_pFilterComboBox->RemoveAll();
 
@@ -163,7 +163,14 @@ void CArmoryPanel::SetupComboBox( const char *pszCustomAddition )
 	if ( pszCustomAddition )
 	{
 		pKeyValues->SetInt( "setfilter", ARMFILT_CUSTOM );
-		m_pFilterComboBox->AddItem( g_pVGuiLocalize->Find( pszCustomAddition ), pKeyValues );
+		if (loc)
+		{
+			m_pFilterComboBox->AddItem(g_pVGuiLocalize->Find(pszCustomAddition), pKeyValues);
+		}
+		else
+		{
+			m_pFilterComboBox->AddItem(pszCustomAddition, pKeyValues);
+		}
 
 		// Start with the custom filter selected
 		m_pFilterComboBox->SetNumberOfEditLines( ARMFILT_NUM_IN_DROPDOWN + 1 );
@@ -410,25 +417,6 @@ void CArmoryPanel::OnCommand( const char *command )
 
 			UpdateSelectedItem();
 		}
-		/*
-		if ( steamapicontext && steamapicontext->SteamFriends() )
-		{
-			if ( IsVisible() && m_SelectedItem.IsValid() )
-			{
-				// Determine which language we should use
-				char uilanguage[ 64 ];
-				uilanguage[0] = 0;
-				engine->GetUILanguage( uilanguage, sizeof( uilanguage ) );
-				ELanguage iLang = PchLanguageToELanguage( uilanguage );
-
-				char szURL[512];
-				Q_snprintf( szURL, sizeof(szURL), "http://wiki.teamfortress.com/scripts/itemredirect.php?id=%d&lang=%s", m_SelectedItem.GetItemDefIndex(), GetLanguageICUName( iLang ) );
-				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( szURL );
-
-				C_CTF_GameStats.Event_Catalog( IE_ARMORY_BROWSE_WIKI, NULL, &m_SelectedItem );
-			}
-		}
-		*/
 	}
 	else if ( !Q_stricmp( command, "viewset" ) )
 	{
@@ -486,6 +474,62 @@ void CArmoryPanel::OnCommand( const char *command )
 	}
 
 	BaseClass::OnCommand( command );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CArmoryPanel::ShowCustomList(const char* listname, KeyValues* kvItems)
+{
+	bool CustomArmory = false;
+	auto kvSave = TFInventoryManager()->GetSaveData();
+	CUtlVector<int> ArmoryList;
+	if (tf_armory_custom.GetString() != "")
+	{
+		CustomArmory = true;
+		auto key = m_armoryConfig->GetFirstSubKey();
+		while (key)
+		{
+			auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
+			if (item)
+			{
+				bool pass = true;
+				if (key->FindKey("AppearFlag"))
+				{
+					uint64_t flagrequire = key->GetInt("AppearValue", 1);
+					auto armoryKV = kvSave->FindKey("Armory", true);
+					auto flagKV = armoryKV->FindKey(key->GetString("AppearFlag"));
+					if (!flagKV || armoryKV->GetInt(key->GetString("AppearFlag")) < flagrequire)
+					{
+						pass = false;
+					}
+				}
+
+				if (pass)
+				{
+					ArmoryList.AddToTail(item->GetDefinitionIndex());
+				}
+			}
+			key = key->GetNextKey();
+		}
+	}
+
+	m_CustomFilteredList.Purge();
+	FOR_EACH_SUBKEY(kvItems, kvItem)
+	{
+		auto itemName = kvItem->GetName();
+		auto def = GetItemSchema()->GetItemDefinitionByName(itemName);
+		if (def)
+		{
+			if (!CustomArmory || ArmoryList.HasElement(def->GetDefinitionIndex()))
+			{
+				m_CustomFilteredList.AddToTail(def->GetDefinitionIndex());
+			}
+		}
+	}
+
+	SetupComboBox(listname, false);
+	SetFilterTo(0, ARMFILT_CUSTOM);
 }
 
 //-----------------------------------------------------------------------------

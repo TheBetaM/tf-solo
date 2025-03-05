@@ -77,8 +77,6 @@ public:
 	void		 SetCheckForRoomOnExit( bool bCheck ) { m_bCheckForRoomOnExit = bCheck; }
 
 	void		 FireGameEvent( IGameEvent *event );
-	
-	CArmoryPanel   *GetArmoryPanel( void );
 
 	MESSAGE_FUNC_PARAMS( OnOpenArmoryDirect, "OpenArmoryDirect", data );
 
@@ -93,6 +91,7 @@ public:
 	// These are panels that are parented to the root EconUI.
 	virtual CBackpackPanel *GetBackpackPanel( void );
 	virtual CCraftingPanel *GetCraftingPanel( void );
+	virtual CArmoryPanel   *GetArmoryPanel( void );
 
 	// Gamestats access
 	virtual void		Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason = NULL, int iQuality = 0 );

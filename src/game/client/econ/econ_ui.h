@@ -26,6 +26,7 @@ enum EconBaseUIPanels_t
 
 class CBackpackPanel;
 class CCraftingPanel;
+class CArmoryPanel;
 class CItemPickupPanel;
 class CItemDiscardPanel;
 class CStorePanel;
@@ -58,6 +59,7 @@ public:
 	// These are panels that are parented to the root EconUI.
 	virtual CBackpackPanel *GetBackpackPanel( void ) = 0;
 	virtual CCraftingPanel *GetCraftingPanel( void ) = 0;
+	virtual CArmoryPanel *GetArmoryPanel( void ) = 0;
 
 	// Gamestats access (We should replace these with an Econ Gamestats)
 	virtual void		Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason = NULL, int iQuality = 0 ) = 0;

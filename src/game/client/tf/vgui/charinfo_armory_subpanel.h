@@ -76,6 +76,8 @@ public:
 	void		 UpdateSelectedItem( void );
 	void		 AllowGotoStore( void ) { m_bAllowGotoStore = true; }
 
+	void		ShowCustomList(const char* listname, KeyValues* kvItems);
+
 	MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
 	MESSAGE_FUNC_PTR( OnItemPanelExited, "ItemPanelExited", panel );
 	MESSAGE_FUNC_PTR( OnItemPanelMouseReleased, "ItemPanelMouseReleased", panel );
@@ -94,7 +96,7 @@ private:
 	void		 SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver );
 	bool		 DefPassesFilter( const CTFItemDefinition *pDef, armory_filters_t iFilter );
 
-	void		 SetupComboBox( const char *pszCustomAddition );
+	void		 SetupComboBox( const char *pszCustomAddition, bool loc = true );
 
 	void		 SetSelectedItem( CEconItemView* newItem );
 	void		 SetSelectedItem( int newIndex );
