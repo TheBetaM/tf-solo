@@ -5128,6 +5128,26 @@ void CTFBot::SpawnCustom()
 			SetBloodColor(DONT_BLEED);
 		}
 	}
+	else if (preset->FindKey("Model"))
+	{
+		int mIndex = PrecacheModel(preset->GetString("Model"));
+		if (mIndex != -1)
+		{
+			GetPlayerClass()->SetCustomModel(preset->GetString("Model"), USE_CLASS_ANIMATIONS);
+			UpdateModel();
+			SetBloodColor(BLOOD_COLOR_RED);
+		}
+	}
+	else if (preset->FindKey("ModelStatic"))
+	{
+		int mIndex = PrecacheModel(preset->GetString("ModelStatic"));
+		if (mIndex != -1)
+		{
+			GetPlayerClass()->SetCustomModel(preset->GetString("ModelStatic"));
+			UpdateModel();
+			SetBloodColor(BLOOD_COLOR_RED);
+		}
+	}
 
 	if (preset->FindKey("Skill"))
 	{

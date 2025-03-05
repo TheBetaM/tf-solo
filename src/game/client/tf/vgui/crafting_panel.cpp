@@ -500,8 +500,15 @@ void CCraftingPanel::UpdatePlayerModelPanel(void)
 		int iClassIndex = GetClassIndexFromString(key->GetString("Class"));
 		if (key->FindKey("Robot") && g_pFullFileSystem->FileExists(g_szBotModels[iClassIndex]))
 		{
-			//m_pPlayerModelPanel->SetToPlayerClass(iClassIndex, true, g_szBotModels[iClassIndex]);
-			m_pPlayerModelPanel->SetToPlayerClass(iClassIndex, true);
+			m_pPlayerModelPanel->SetToPlayerClass(iClassIndex, true, g_szBotModels[iClassIndex]);
+		}
+		else if (key->FindKey("Model") && g_pFullFileSystem->FileExists(key->GetString("Model")))
+		{
+			m_pPlayerModelPanel->SetToPlayerClass(iClassIndex, true, key->GetString("Model"));
+		}
+		else if (key->FindKey("ModelStatic") && g_pFullFileSystem->FileExists(key->GetString("ModelStatic")))
+		{
+			m_pPlayerModelPanel->SetToPlayerClass(iClassIndex, true, key->GetString("ModelStatic"));
 		}
 		else
 		{
