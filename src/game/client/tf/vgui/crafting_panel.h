@@ -18,6 +18,9 @@
 #include "tf_imagepanel.h"
 #include "tf_controls.h"
 #include "item_selection_panel.h"
+#include "tf_playermodelpanel.h"
+#include "KeyValues.h"
+#include "filesystem.h"
 
 class CImageButton;
 
@@ -48,13 +51,13 @@ public:
 	virtual void ApplySettings( KeyValues *inResourceData )
 	{
 		BaseClass::ApplySettings( inResourceData );
-		SetEnabled( m_iRecipeDefIndex != -1 );
+		SetEnabled( m_iRecipeDefIndex != "" );
 	}
 
-	void SetDefIndex( int iIndex )
+	void SetDefIndex( const char* iIndex )
 	{
 		m_iRecipeDefIndex = iIndex;
-		SetEnabled( m_iRecipeDefIndex != -1 );
+		SetEnabled( m_iRecipeDefIndex != "" );
 	}
 
 	void OnCursorEntered( void )
@@ -71,7 +74,7 @@ public:
 
 
 public:
-	int		m_iRecipeDefIndex;
+	const char*		m_iRecipeDefIndex;
 };
 
 //-----------------------------------------------------------------------------
@@ -84,7 +87,7 @@ public:
 	CCraftingPanel( vgui::Panel *parent, const char *panelName );
 	~CCraftingPanel( void );
 
-	virtual const char *GetResFile( void ) { return "Resource/UI/CraftingPanel.res"; }
+	virtual const char *GetResFile( void ) { return "Resource/UI/CraftingPanelSolo.res"; }
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void ApplySettings( KeyValues *inResourceData );
 	virtual void PerformLayout( void );
@@ -108,7 +111,7 @@ public:
 	CEconItemDefinition *GetItemDefFromCriteria( const CItemSelectionCriteria *pCriteria );
 	virtual void AddNewItemPanel( int iPanelIndex );
 	virtual void UpdateModelPanels( void );
-	void		 SetButtonToRecipe( int iButton, int iDefIndex, wchar_t *pszText );
+	void		 SetButtonToRecipe( int iButton, const char* iDefIndex, const char *pszText );
 
 	bool		 CheckForUntradableItems( void );
 	void		 Craft( void );
@@ -127,14 +130,17 @@ public:
 
 	virtual ConVar	*GetExplanationConVar( void );
 
+	CTFPlayerModelPanel* m_pPlayerModelPanel;
+	KeyValues* m_presetsKV;
+
+	void		UpdatePlayerModelPanel( void );
+
 private:
 	// Items in the input model panels
 	itemid_t						m_InputItems[CRAFTING_SLOTS_INPUTPANELS];
 	const CItemSelectionCriteria	*m_ItemPanelCriteria[CRAFTING_SLOTS_INPUTPANELS];
 
 	CExButton						*m_pCraftButton;
-	CExButton						*m_pUpgradeButton;
-	CExLabel						*m_pFreeAccountLabel;
 	vgui::EditablePanel				*m_pRecipeListContainer;
 	vgui::ScrollableEditablePanel	*m_pRecipeListContainerScroller;
 	vgui::EditablePanel				*m_pSelectedRecipeContainer;
@@ -144,7 +150,7 @@ private:
 	KeyValues						*m_pRecipeFilterButtonsKV;
 	CUtlVector<CImageButton*>		m_pRecipeFilterButtons;
 
-	int								m_iCurrentlySelectedRecipe;
+	const char*						m_iCurrentlySelectedRecipe;
 	int								m_iCurrentRecipeTotalInputs;
 	int								m_iCurrentRecipeTotalOutputs;
 	recipecategories_t				m_iRecipeCategoryFilter;

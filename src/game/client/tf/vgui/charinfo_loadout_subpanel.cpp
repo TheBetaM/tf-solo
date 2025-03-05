@@ -979,7 +979,7 @@ void CCharInfoLoadoutSubPanel::UpdateLabelFromSubButton( int nButton )
 		}
 		break;
 	case CHSB_CRAFTING:
-		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "Loadout_OpenCraftingDesc" ) );
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenBestiaryDesc" ) );
 		break;
 	case CHSB_ARMORY:
 		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenArmoryDesc" ) );

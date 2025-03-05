@@ -34,4 +34,62 @@ bot_presets
 			"override footstep sound set" "3"
 		}
 	}
+	TestBot2
+	{
+		Name "Test Bot 2"
+		Class Soldier
+		Scale 1.25
+		Skill 2
+		Health 2000
+		Team 2
+		Conds
+		{
+			30
+			16
+		}
+		Items
+		{
+			"The Concheror"
+			{
+			}
+			"The Escape Plan"
+			{
+			}
+		}
+		Attributes
+		{
+			"move speed bonus" "1.5"
+			"override footstep sound set" "3"
+		}
+	}
+	TestBot3
+	{
+		Name "Test Bot 3"
+		Rarity 2
+		Class Soldier
+		Scale 1.25
+		Robot 1
+		Skill 2
+		Health 2000
+		Team 2
+		Conds
+		{
+			30
+			16
+		}
+		Items
+		{
+			"The Concheror"
+			{
+			}
+			"The Escape Plan"
+			{
+			}
+		}
+		Attributes
+		{
+			"move speed bonus" "1.5"
+			"override footstep sound set" "3"
+		}
+	}
 }
