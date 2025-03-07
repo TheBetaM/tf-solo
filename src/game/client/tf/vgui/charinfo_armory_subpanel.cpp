@@ -234,7 +234,7 @@ void CArmoryPanel::OnShowPanel( void )
 	SetVisible( true );
 
 	auto kvSave = TFInventoryManager()->GetSaveData();
-	uint64_t credits = kvSave->GetUint64("Credits");
+	int credits = kvSave->GetInt("Credits");
 	CUtlString creditsText;
 	creditsText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Credits"));
 	creditsText.Append(CFmtStr1024("\n%d", credits));
@@ -397,17 +397,17 @@ void CArmoryPanel::OnCommand( const char *command )
 		{
 			auto kvSave = TFInventoryManager()->GetSaveData();
 			auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
-			uint64_t credits = kvSave->GetUint64("Credits");
-			uint64_t price = 0;
+			int credits = kvSave->GetInt("Credits");
+			int price = 0;
 			if (m_armoryConfig->FindKey(name))
 			{
 				auto key = m_armoryConfig->FindKey(name);
-				if (key->GetUint64("Cost"))
+				if (key->GetInt("Cost"))
 				{
-					price = key->GetUint64("Cost");
+					price = key->GetInt("Cost");
 				}
 			}
-			kvSave->SetUint64("Credits", credits - price);
+			kvSave->SetInt("Credits", credits - price);
 			TFInventoryManager()->AddSoloItem(m_SelectedItem.GetItemDefIndex());
 			auto itemsKey = kvSave->FindKey("UnlockedItems");
 			itemsKey->SetInt(name, 1);
@@ -956,14 +956,14 @@ void CArmoryPanel::UpdateSelectedItem( void )
 
 		auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
 		auto kvSave = TFInventoryManager()->GetSaveData();
-		uint64_t credits = kvSave->GetUint64("Credits");
-		uint64_t price = 0;
+		int credits = kvSave->GetInt("Credits");
+		int price = 0;
 		if (m_armoryConfig->FindKey(name))
 		{
 			auto key = m_armoryConfig->FindKey(name);
-			if (key->GetUint64("Cost"))
+			if (key->GetInt("Cost"))
 			{
-				price = key->GetUint64("Cost");
+				price = key->GetInt("Cost");
 			}
 		}
 		CUtlString costText;

@@ -222,13 +222,17 @@ public:
 	int					GetSoloItemCount()			{ return m_pSoloLoadoutItems.Count(); }
 	CEconItemView*		GetSoloItem(int iIndex)		{ return m_pSoloLoadoutItems[iIndex]; }
 
-	KeyValues*			GetSaveData()				{ return m_SoloSaveData; }
+#ifdef CLIENT_DLL
+	KeyValues* GetSaveData() {
+		if (!m_SoloSaveData)
+			InitSaveData();
+		return m_SoloSaveData;
+	}
+
 	void				InitSaveData();
 	void				LoadSaveData();
-#ifdef CLIENT_DLL
 	void				WriteSaveData();
-	void				AddCredits(long amount);
-	uint64_t			GetCredits();
+	void				ResetSaveData();
 #endif
 
 	virtual void FireGameEvent(IGameEvent* event);
@@ -239,10 +243,8 @@ private:
 	CUtlVector<CEconItemView*>	m_pBaseLoadoutItems;
 	CUtlVector<CEconItemView*>	m_pSoloLoadoutItems;
 
-	KeyValues*					m_SoloSaveData;
-	KeyValues*					m_SoloSaveConfigData;
-
 #ifdef CLIENT_DLL
+	KeyValues* m_SoloSaveData;
 	// On the client, we have a single inventory for the local player. Stored here, instead of in the
 	// local player entity, because players need to access it while not being connected to a server.
 public:

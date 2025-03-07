@@ -2568,6 +2568,7 @@ public:
 	virtual bool BInit( const char *fileName, const char *pathID, CUtlVector<CUtlString> *pVecErrors = NULL );
 	bool		BInitBinaryBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString> *pVecErrors = NULL );
 	bool		BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString> *pVecErrors = NULL );
+	bool		BInitFromKV( KeyValues* kv );
 
 	uint32		GetVersion() const { return m_unVersion; }
 	CSHA		GetSchemaSHA() const { return m_schemaSHA; }

@@ -59,15 +59,23 @@ public:
 	CScriptKeyValues( KeyValues *pKeyValues = NULL );
 	~CScriptKeyValues( );
 
-	HSCRIPT ScriptFindKey( const char *pszName );
-	HSCRIPT ScriptGetFirstSubKey( void );
-	HSCRIPT ScriptGetNextKey( void );
-	int ScriptGetKeyValueInt( const char *pszName );
-	float ScriptGetKeyValueFloat( const char *pszName );
-	const char *ScriptGetKeyValueString( const char *pszName );
-	bool ScriptIsKeyValueEmpty( const char *pszName );
-	bool ScriptGetKeyValueBool( const char *pszName );
-	void ScriptReleaseKeyValues( );
+	HSCRIPT ScriptFindKey(const char* pszName);
+	HSCRIPT ScriptGetKey(const char* pszName, bool bCreate);
+	HSCRIPT ScriptGetFirstSubKey(void);
+	HSCRIPT ScriptGetNextKey(void);
+	int ScriptGetKeyValueInt(const char* pszName);
+	float ScriptGetKeyValueFloat(const char* pszName);
+	const char* ScriptGetKeyValueString(const char* pszName);
+	bool ScriptIsKeyValueEmpty(const char* pszName);
+	bool ScriptGetKeyValueBool(const char* pszName);
+	void ScriptReleaseKeyValues();
+	const char* ScriptGetKeyValueName(const char* pszName);
+	void ScriptSetKeyValueInt(const char* pszName, int i);
+	void ScriptSetKeyValueFloat(const char* pszName, float i);
+	void ScriptSetKeyValueString(const char* pszName, const char* i);
+	void ScriptSetKeyValueBool(const char* pszName, bool i);
+	void ScriptSetKeyValueName(const char* pszName, const char* i);
+	void ScriptRemoveSubKey(const char* pszName);
 
 	KeyValues *m_pKeyValues;	// actual KeyValue entity
 };

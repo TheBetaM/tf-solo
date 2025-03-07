@@ -4435,6 +4435,14 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString
 	return false;
 }
 
+bool CEconItemSchema::BInitFromKV(KeyValues* kv)
+{
+	CUtlVector<CUtlString> pVecErrors;
+	Reset();
+	m_pKVRawDefinition = kv;
+	return BInitSchema(m_pKVRawDefinition, &pVecErrors) && BPostSchemaInit(&pVecErrors);
+}
+
 bool CEconItemSchema::DumpItems ( const char *fileName, const char *pathID )
 {
 	// create a write file

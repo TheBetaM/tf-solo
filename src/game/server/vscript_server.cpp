@@ -893,6 +893,7 @@ END_SCRIPTDESC();
 BEGIN_SCRIPTDESC_ROOT( CScriptKeyValues, "Wrapper class over KeyValues instance" )
 	DEFINE_SCRIPT_CONSTRUCTOR()	
 	DEFINE_SCRIPTFUNC_NAMED( ScriptFindKey, "FindKey", "Given a KeyValues object and a key name, find a KeyValues object associated with the key name" );
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKey, "GetKey", "Given a KeyValues object and a key name, find a KeyValues object associated with the key name (optional bool to create it)" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetFirstSubKey, "GetFirstSubKey", "Given a KeyValues object, return the first sub key object" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetNextKey, "GetNextKey", "Given a KeyValues object, return the next key object in a sub key group" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKeyValueInt, "GetKeyInt", "Given a KeyValues object and a key name, return associated integer value" );
@@ -901,6 +902,23 @@ BEGIN_SCRIPTDESC_ROOT( CScriptKeyValues, "Wrapper class over KeyValues instance"
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKeyValueString, "GetKeyString", "Given a KeyValues object and a key name, return associated string value" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptIsKeyValueEmpty, "IsKeyEmpty", "Given a KeyValues object and a key name, return true if key name has no value" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptReleaseKeyValues, "ReleaseKeyValues", "Given a root KeyValues object, release its contents" );
+	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueName, "GetKeyName", "Given a KeyValues object, return key name");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueName, "GetName", "Given a KeyValues object, return key name");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueInt, "GetInt", "Given a KeyValues object and a key name, return associated integer value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueFloat, "GetFloat", "Given a KeyValues object and a key name, return associated float value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueBool, "GetBool", "Given a KeyValues object and a key name, return associated bool value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueString, "GetString", "Given a KeyValues object and a key name, return associated string value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueInt, "SetInt", "Given a KeyValues object and a key name, set associated integer value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueFloat, "SetFloat", "Given a KeyValues object and a key name, set associated float value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueBool, "SetBool", "Given a KeyValues object and a key name, set associated bool value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueString, "SetString", "Given a KeyValues object and a key name, set associated string value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueInt, "SetKeyInt", "Given a KeyValues object and a key name, set associated integer value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueFloat, "SetKeyFloat", "Given a KeyValues object and a key name, set associated float value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueBool, "SetKeyBool", "Given a KeyValues object and a key name, set associated bool value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueString, "SetKeyString", "Given a KeyValues object and a key name, set associated string value");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueName, "SetName", "Given a KeyValues object and a key name, set associated key name");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueName, "SetKeyName", "Given a KeyValues object and a key name, set associated key name");
+	DEFINE_SCRIPTFUNC_NAMED(ScriptRemoveSubKey, "RemoveSubKey", "Given a KeyValues object and a key name, remove sub key");
 END_SCRIPTDESC();
 
 HSCRIPT CScriptKeyValues::ScriptFindKey( const char *pszName )
@@ -913,6 +931,19 @@ HSCRIPT CScriptKeyValues::ScriptFindKey( const char *pszName )
 
 	// UNDONE: who calls ReleaseInstance on this??
 	HSCRIPT hScriptInstance = g_pScriptVM->RegisterInstance( pScriptKey );
+	return hScriptInstance;
+}
+
+HSCRIPT CScriptKeyValues::ScriptGetKey(const char* pszName, bool bCreate)
+{
+	KeyValues* pKeyValues = m_pKeyValues->FindKey(pszName, bCreate);
+	if (pKeyValues == NULL)
+		return NULL;
+
+	CScriptKeyValues* pScriptKey = new CScriptKeyValues(pKeyValues);
+
+	// UNDONE: who calls ReleaseInstance on this??
+	HSCRIPT hScriptInstance = g_pScriptVM->RegisterInstance(pScriptKey);
 	return hScriptInstance;
 }
 
@@ -978,6 +1009,47 @@ void CScriptKeyValues::ScriptReleaseKeyValues( )
 	m_pKeyValues = NULL;
 }
 
+void CScriptKeyValues::ScriptRemoveSubKey(const char* pszName)
+{
+	auto key = m_pKeyValues->FindKey(pszName);
+	if (key)
+	{
+		m_pKeyValues->RemoveSubKey(key);
+		key->deleteThis();
+	}
+}
+
+const char* CScriptKeyValues::ScriptGetKeyValueName(const char* pszName)
+{
+	const char* psz = m_pKeyValues->GetName();
+	return psz;
+}
+
+void CScriptKeyValues::ScriptSetKeyValueName(const char* pszName, const char* i)
+{
+	m_pKeyValues->SetName(i);
+}
+
+void CScriptKeyValues::ScriptSetKeyValueInt(const char* pszName, int i)
+{
+	m_pKeyValues->SetInt(pszName, i);
+}
+
+void CScriptKeyValues::ScriptSetKeyValueFloat(const char* pszName, float i)
+{
+	m_pKeyValues->SetFloat(pszName, i);
+}
+
+void CScriptKeyValues::ScriptSetKeyValueString(const char* pszName, const char* i)
+{
+	m_pKeyValues->SetString(pszName, i);
+}
+
+void CScriptKeyValues::ScriptSetKeyValueBool(const char* pszName, bool i)
+{
+	m_pKeyValues->SetBool(pszName, i);
+}
+
 
 // constructors
 CScriptKeyValues::CScriptKeyValues( KeyValues *pKeyValues )
@@ -988,10 +1060,10 @@ CScriptKeyValues::CScriptKeyValues( KeyValues *pKeyValues )
 // destructor
 CScriptKeyValues::~CScriptKeyValues( )
 {
-	if (m_pKeyValues)
-	{
-		m_pKeyValues->deleteThis();
-	}
+	//if (m_pKeyValues)
+	//{
+	//	m_pKeyValues->deleteThis();
+	//}
 	m_pKeyValues = NULL;
 }
 
@@ -2454,6 +2526,80 @@ int SetMapAsPlayed( void )
 }
 #endif // PORTAL2_PUZZLEMAKER
 
+static HSCRIPT Script_FileToKeyValues(const char* pszFileName)
+{
+	if (!pszFileName || !*pszFileName)
+	{
+		Log_Warning(LOG_VScript, "Script_FileToKeyValues: NULL/empty file name\n");
+		return NULL;
+	}
+
+	KeyValues* pKeyValues = new KeyValues("scriptkv");
+	if (pKeyValues->LoadFromFile(g_pFullFileSystem, pszFileName, "GAME"))
+	{
+		CScriptKeyValues* pScriptKey = new CScriptKeyValues(pKeyValues);
+		HSCRIPT hScriptInstance = g_pScriptVM->RegisterInstance(pScriptKey);
+		return hScriptInstance;
+	}
+	return NULL;
+}
+
+bool Script_FileExists(const char* file, const char* pathID = "GAME")
+{
+	return g_pFullFileSystem->FileExists(file, pathID);
+}
+
+#ifdef TF_DLL
+// ----------------------------------------------------------------------------
+// Solo access
+// ----------------------------------------------------------------------------
+class CSoloAccess
+{
+public:
+	CSoloAccess() { };
+	~CSoloAccess() { };
+
+	bool ItemDefExists(const char* name)
+	{
+		return GetItemSchema()->GetItemDefinitionByName(name) != NULL;
+	}
+	bool ItemDefIDExists(int id)
+	{
+		return GetItemSchema()->GetItemDefinition(id) != NULL;
+	}
+	const char* ItemDefName(int id)
+	{
+		if (GetItemSchema()->GetItemDefinition(id) != NULL)
+		{
+			return GetItemSchema()->GetItemDefinition(id)->GetDefinitionName();
+		}
+		return NULL;
+	}
+	HSCRIPT ItemSchemaGetKV()
+	{
+		return Script_FileToKeyValues("scripts/items/items_custom.txt");
+	}
+	void ItemSchemaReload(HSCRIPT kv)
+	{
+		auto kvs = (CScriptKeyValues*)g_pScriptVM->GetInstanceValue(kv, GetScriptDescForClass(CScriptKeyValues));
+		GetItemSchema()->BInitFromKV(kvs->m_pKeyValues);
+	}
+};
+
+CSoloAccess g_SoloAccess;
+
+BEGIN_SCRIPTDESC_ROOT_NAMED(CSoloAccess, "CSolo", SCRIPT_SINGLETON "Solo access")
+
+DEFINE_SCRIPTFUNC(ItemSchemaGetKV, "")
+DEFINE_SCRIPTFUNC(ItemSchemaReload, "")
+DEFINE_SCRIPTFUNC(ItemDefExists, "")
+DEFINE_SCRIPTFUNC(ItemDefIDExists, "")
+DEFINE_SCRIPTFUNC(ItemDefName, "")
+
+END_SCRIPTDESC();
+#endif // TF_CLIENT_DLL
+
+
 bool VScriptServerInit()
 {
 	VMPROF_START
@@ -2610,12 +2756,18 @@ bool VScriptServerInit()
 #endif	// PORTAL2_PUZZLEMAKER
 #endif
 
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileToKeyValues, "FileToKeyValues", "Reads KeyValues from a file to send to script");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
+
 				g_pScriptVM->RegisterAllClasses();
 				
 				if ( GameRules() )
 				{
 					GameRules()->RegisterScriptFunctions();
 				}
+#ifdef TF_DLL
+				g_pScriptVM->RegisterInstance(&g_SoloAccess, "Solo");
+#endif // TF_DLL
 
 #ifdef TF_DLL
 				g_pScriptVM->RegisterInstance( TheNavMesh, "NavMesh" );
