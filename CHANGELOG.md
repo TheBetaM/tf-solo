@@ -5,20 +5,20 @@
 - Added Armory - a way to unlock items using credits earned in the game
 - Added Bestiary - browse enemies encountered in the game
 - Added Campaigns
-- Added weapons:
--- The Bottled Sorrow
+- Added weapons:  
+-- The Bottled Sorrow  
 -- The Shocking Truth
-- Added taunts:
--- Thriller (All-Class)
--- Robot (Soldier)
--- Werewolf (Demoman)
--- Frankenheavy (Heavy)
--- Come And Get Me (Scout)
+- Added taunts:  
+-- Thriller (All-Class)  
+-- Robot (Soldier)  
+-- Werewolf (Demoman)  
+-- Frankenheavy (Heavy)  
+-- Come And Get Me (Scout)  
 -- Hero Pose (All-Class)
 - Added ConVars: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>,
 nav_generate_auto, tf_mvm_popfile_requested
-- New inputs for tf_gamerules:
+- New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
 - Disabled halloween taunts, holiday restrictions by default
@@ -37,7 +37,7 @@ nav_generate_auto, tf_mvm_popfile_requested
 ItemDefIDExists(int), ItemDefName(int)
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string)
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,
-SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,SetName/SetKeyName,RemoveSubKey
+SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,SetName/SetKeyName,RemoveSubKey  
 -- KeyValues are no longer deleted after automatically disposing the script
 - TFBot: Added GetPreset(), SetPreset(string)
 - Moved TFBot.GenerateAndWearItem to TFPlayer
