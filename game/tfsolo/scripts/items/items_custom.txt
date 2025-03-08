@@ -17,6 +17,15 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		"3501"
+		{
+			"name"				"taunt force signature weapon"
+			"attribute_class"	"taunt_force_signature_weapon"
+			"attribute_type"	"string"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+		}
 	}
 	"armory_data"
 	{

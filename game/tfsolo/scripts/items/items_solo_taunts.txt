@@ -177,10 +177,10 @@
 					"attribute_class"	"enable_misc2_holdtaunt"
 					"value"				"1"
 				}
-				"taunt force weapon slot"
+				"taunt force signature weapon"
 				{
-					"attribute_class"		"taunt_force_weapon_slot"
-					"value"		"PRIMARY"
+					"attribute_class"	"taunt_force_signature_weapon"
+					"value"				"1"
 				}
 			}
 			"taunt"

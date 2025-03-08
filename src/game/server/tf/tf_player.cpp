@@ -17623,6 +17623,21 @@ bool CTFPlayer::PlayTauntSceneFromItem( const CEconItemView *pEconItemView )
 			Weapon_Switch( Weapon_GetSlot( iForceWeaponSlot ) );
 		}
 
+		static CSchemaAttributeDefHandle pAttrDef_TauntForceWeaponSlotAlt( "taunt force signature weapon" );
+		if ( FindAttribute_UnsafeBitwiseCast<CAttribute_String>(pItemDef, pAttrDef_TauntForceWeaponSlotAlt, &pszTauntForceWeaponSlotName) )
+		{
+			int iForceSignatureSlot = 0;
+			if (iClass == TF_CLASS_MEDIC)
+			{
+				iForceSignatureSlot = 1;
+			}
+			else if (iClass == TF_CLASS_SPY || iClass == TF_CLASS_ENGINEER)
+			{
+				iForceSignatureSlot = 2;
+			}
+			Weapon_Switch( Weapon_GetSlot( iForceSignatureSlot ) );
+		}
+
 		m_bInitTaunt = true;
 
 		// Allow voice commands, etc to be interrupted.
