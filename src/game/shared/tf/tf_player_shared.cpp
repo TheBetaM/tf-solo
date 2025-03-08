@@ -6668,6 +6668,9 @@ void CTFPlayerShared::Burn( CTFPlayer *pAttacker, CTFWeaponBase *pWeapon, float 
 		flFlameLife = flBurningTime;
 	}
 	
+	float flFlameAdd = 1.0f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flFlameAdd, afterburn_duration_time );
+	flFlameLife += flFlameAdd;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flFlameLife, mult_wpn_burntime );
 
 	// flame immunity will always have a fixed duration

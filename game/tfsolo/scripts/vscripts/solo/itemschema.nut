@@ -1,25 +1,30 @@
+::TFSOLO.BalancingFuncs <- []
+IncludeScript("solo/balancing/shortstop.nut")
+IncludeScript("solo/balancing/bfb.nut")
+IncludeScript("solo/balancing/backscatter.nut")
+IncludeScript("solo/balancing/lugermorph.nut")
+IncludeScript("solo/balancing/capper.nut")
+IncludeScript("solo/balancing/winger.nut")
+IncludeScript("solo/balancing/pocketpistol.nut")
+IncludeScript("solo/balancing/mutatedmilk.nut")
+IncludeScript("solo/balancing/holymackerel.nut")
+IncludeScript("solo/balancing/unarmedcombat.nut")
+IncludeScript("solo/balancing/batsaber.nut")
+IncludeScript("solo/balancing/sandman.nut")
+IncludeScript("solo/balancing/threeruneblade.nut")
+IncludeScript("solo/balancing/sunonastick.nut")
+
 ::TFSOLO.SetupItemSchema <- function()
 {
 	local kv = Solo.ItemSchemaGetKV()
-	local key1 = kv.FindKey("prefabs")
-	local key2 = key1.FindKey("weapon_kritzkrieg")
-	key2.SetString("item_name","#TF_Weapon_Medigun")
-	local key3 = kv.FindKey("items")
-	local key4 = key3.FindKey("294")
-	key4.SetString("prefab","")
-	key4.SetInt("baseitem",0)
-	key4.SetInt("enabled",1)
-	key4.SetString("base_item_name","TF_WEAPON_PISTOL")
-	key4.SetInt("inspect_panel_dist",31)
-	key4.SetString("particle_suffix","pistol")
-	local key6 = key4.GetKey("static_attrs", true)
-	key6.SetFloat("weapon_stattrak_module_scale",0.723)
-	key6.SetString("min_viewmodel_offset","10 0 -10")
-	local key5 = key4.FindKey("used_by_classes")
-	key5.RemoveSubKey("scout")
+	foreach (func in TFSOLO.BalancingFuncs)
+	{
+		func(kv)
+	}
 	
 	Solo.ItemSchemaReload(kv)
 	printl("[TFSOLO] Item schema setup")
 }
 
 TFSOLO.SetupItemSchema()
+TFSOLO.BalancingFuncs.clear()

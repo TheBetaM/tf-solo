@@ -7,6 +7,17 @@
 
 "items_game"
 {
+	"attributes"
+	{
+		"3500"
+		{
+			"name"				"afterburn duration time"
+			"attribute_class"	"afterburn_duration_time"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+	}
 	"armory_data"
 	{
 		"armory_items"
