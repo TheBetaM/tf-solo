@@ -26,6 +26,86 @@
 			"hidden"	"1"
 			"effect_type"	"neutral"
 		}
+		"3502"
+		{
+			"name"				"melee cleave attack"
+			"attribute_class"	"melee_cleave_attack"
+			"description_string"	"#Attrib_MeleeCleaveAttack"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"1"
+		}
+		"3503"
+		{
+			"name"				"mult dmg vs same class"
+			"attribute_class"	"mult_dmg_vs_same_class"
+			"description_string"	"#Attrib_DamageSameClass"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3504"
+		{
+			"name"				"mult crit when health is below percent"
+			"attribute_class"	"mult_crit_when_health_is_below_percent"
+			"description_string"	"#Attrib_CritBelowHealthPercent"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3505"
+		{
+			"name"				"wet immunity"
+			"attribute_class"	"wet_immunity"
+			"description_string"	"#Attrib_WetImmunity"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3506"
+		{
+			"name"				"can breathe under water"
+			"attribute_class"	"can_breathe_under_water"
+			"description_string"	"#Attrib_BreatheUnderWater"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3507"
+		{
+			"name"				"add give health to teammate on hit"
+			"attribute_class"	"add_give_health_to_teammate_on_hit"
+			"description_string"	"#Attrib_GiveHealthToTeamOnHit"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3508"
+		{
+			"name"				"last shot crits"
+			"attribute_class"	"last_shot_crits"
+			"description_string"	"#Attrib_LastShotCrits"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3509"
+		{
+			"name"				"kill combo fire rate boost"
+			"attribute_class"	"kill_combo_fire_rate_boost"
+			"description_string"	"#Attrib_KillComboFireRateBoost"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 	}
 	"armory_data"
 	{
