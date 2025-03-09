@@ -28,7 +28,7 @@
 		}
 		"3502"
 		{
-			"name"				"melee cleave attack"
+			"name"				"melee_cleave_attack"
 			"attribute_class"	"melee_cleave_attack"
 			"description_string"	"#Attrib_MeleeCleaveAttack"
 			"description_format"	"value_is_additive"
@@ -38,7 +38,7 @@
 		}
 		"3503"
 		{
-			"name"				"mult dmg vs same class"
+			"name"				"mult_dmg_vs_same_class"
 			"attribute_class"	"mult_dmg_vs_same_class"
 			"description_string"	"#Attrib_DamageSameClass"
 			"description_format"	"value_is_percentage"
@@ -48,7 +48,7 @@
 		}
 		"3504"
 		{
-			"name"				"mult crit when health is below percent"
+			"name"				"mult_crit_when_health_is_below_percen"
 			"attribute_class"	"mult_crit_when_health_is_below_percent"
 			"description_string"	"#Attrib_CritBelowHealthPercent"
 			"description_format"	"value_is_percentage"
@@ -58,7 +58,7 @@
 		}
 		"3505"
 		{
-			"name"				"wet immunity"
+			"name"				"wet_immunity"
 			"attribute_class"	"wet_immunity"
 			"description_string"	"#Attrib_WetImmunity"
 			"description_format"	"value_is_additive"
@@ -68,7 +68,7 @@
 		}
 		"3506"
 		{
-			"name"				"can breathe under water"
+			"name"				"can_breathe_under_water"
 			"attribute_class"	"can_breathe_under_water"
 			"description_string"	"#Attrib_BreatheUnderWater"
 			"description_format"	"value_is_additive"
@@ -78,7 +78,7 @@
 		}
 		"3507"
 		{
-			"name"				"add give health to teammate on hit"
+			"name"				"add_give_health_to_teammate_on_hit"
 			"attribute_class"	"add_give_health_to_teammate_on_hit"
 			"description_string"	"#Attrib_GiveHealthToTeamOnHit"
 			"description_format"	"value_is_additive"
@@ -88,7 +88,7 @@
 		}
 		"3508"
 		{
-			"name"				"last shot crits"
+			"name"				"last_shot_crits"
 			"attribute_class"	"last_shot_crits"
 			"description_string"	"#Attrib_LastShotCrits"
 			"description_format"	"value_is_additive"
@@ -98,7 +98,7 @@
 		}
 		"3509"
 		{
-			"name"				"kill combo fire rate boost"
+			"name"				"kill_combo_fire_rate_boost"
 			"attribute_class"	"kill_combo_fire_rate_boost"
 			"description_string"	"#Attrib_KillComboFireRateBoost"
 			"description_format"	"value_is_percentage"
@@ -106,6 +106,237 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		"3510"
+		{
+			"name"				"extra_damage_on_hit"
+			"attribute_class"	"extra_damage_on_hit"
+			"description_string"	"#Attrib_ExtraDamageOnHit"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3511"
+		{
+			"name"				"mod_teleporter_speed_boost"
+			"attribute_class"	"mod_teleporter_speed_boost"
+			"description_string"	"#Attrib_TeleporterSpeedBoost"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3512"
+		{
+			"name"				"force_distribute_currency_on_death"
+			"attribute_class"	"force_distribute_currency_on_death"
+			"description_string"	"#Attrib_ForceCurrencyOnDeath"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3513"
+		{
+			"name"				"cannot_swim"
+			"attribute_class"	"cannot_swim"
+			"description_string"	"#Attrib_CannotSwim"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"negative"
+			"stored_as_integer"	"1"
+		}
+		"3514"
+		{
+			"name"				"swimming_mastery"
+			"attribute_class"	"swimming_mastery"
+			"description_string"	"#Attrib_SwimmingMastery"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3515"
+		{
+			"name"				"keep_disguise_on_attack"
+			"attribute_class"	"keep_disguise_on_attack"
+			"description_string"	"#Attrib_KeepDisguiseOnAttack"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3516"
+		{
+			"name"				"ability_master_sniper"
+			"attribute_class"	"ability_master_sniper"
+			"description_string"	"#Attrib_MasterSniper"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		//"3517"
+		//{
+		//	"name"				"flame_waterfall"
+		//	"attribute_class"	"flame_waterfall"
+		//	//"description_string"	"#Attrib_FlameWaterfall"
+		//	"description_format"	"value_is_additive"
+		//	"hidden"			"1"
+		//	"effect_type"	"positive"
+		//	"stored_as_integer"	"1"
+		//}
+		"3518"
+		{
+			"name"				"airblast_dashes"
+			"attribute_class"	"airblast_dashes"
+			"description_string"	"#Attrib_AirblastDashe"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"1"
+		}
+		"3519"
+		{
+			"name"				"reverse_airblast"
+			"attribute_class"	"reverse_airblast"
+			"description_string"	"#Attrib_ReverseAirblast"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"1"
+		}
+		"3520"
+		{
+			"name"				"mod_minigun_can_holster_while_spinning"
+			"attribute_class"	"mod_minigun_can_holster_while_spinning"
+			"description_string"	"#Attrib_MinigunHolsterSpinning"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3521"
+		{
+			"name"				"fires_milk_bolt"
+			"attribute_class"	"fires_milk_bolt"
+			"description_string"	"#Attrib_FiresMilkBolt"
+			"description_format"	"value_is_additive"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3522"
+		{
+			"name"				"sapper_deploy_time"
+			"attribute_class"	"sapper_deploy_time"
+			"description_string"	"#Attrib_SapperDeployTime_Negative"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3523"
+		{
+			"name"				"disguise_as_dispenser_on_crouch"
+			"attribute_class"	"disguise_as_dispenser_on_crouch"
+			"description_string"	"#Attrib_CrouchDisguiseAsDispenser"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		"3524"
+		{
+			"name"				"teleport_instead_of_die"
+			"attribute_class"	"teleport_instead_of_die"
+			"description_string"	"#Attrib_TeleportInsteadOfDie"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3525"
+		{
+			"name"				"uber_on_damage_taken"
+			"attribute_class"	"uber_on_damage_taken"
+			"description_string"	"#Attrib_UberOnDamageTaken"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3526"
+		{
+			"name"				"firing_forward_pull"
+			"attribute_class"	"firing_forward_pull"
+			"description_string"	"#Attrib_FiringForwardPull"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		"3527"
+		{
+			"name"				"ubercharge_ammo"
+			"attribute_class"	"ubercharge_ammo"
+			"description_string"	"#Attrib_UberchargeAmmo"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		"3528"
+		{
+			"name"				"mul_nonrocketjump_attackrate"
+			"attribute_class"	"mul_nonrocketjump_attackrate"
+			"description_string"	"#Attrib_NonRocketJumpAttackRate"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3529"
+		{
+			"name"				"mult_airblast_primary_refire_time"
+			"attribute_class"	"mult_airblast_primary_refire_time"
+			"description_string"	"#Attrib_AirblastPrimaryRefireTime"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3530"
+		{
+			"name"				"mod_flamethrower_spinup_time"
+			"attribute_class"	"mod_flamethrower_spinup_time"
+			"description_string"	"#Attrib_FlamethrowerSpinupTime"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3531"
+		{
+			"name"				"sniper_beep_with_enemy_under_crosshair"
+			"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
+			"description_string"	"#Attrib_SniperBeepEnemyCrosshair"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		"3532"
+		{
+			"name"				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+			"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+			"description_string"	"#Attrib_SniperChargeEnemyCrosshair"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
 	}
 	"armory_data"
 	{
