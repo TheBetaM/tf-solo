@@ -23,8 +23,8 @@
 
 extern ConVar tf_respawn_on_loadoutchanges;
 
-ConVar tf_show_preset_explanation_in_class_loadout( "tf_show_preset_explanation_in_class_loadout", "0", FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
-ConVar tf_show_taunt_explanation_in_class_loadout( "tf_show_taunt_explanation_in_class_loadout", "0", FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
+ConVar tf_show_preset_explanation_in_class_loadout( "tf_show_preset_explanation_in_class_loadout", "1", FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
+ConVar tf_show_taunt_explanation_in_class_loadout( "tf_show_taunt_explanation_in_class_loadout", "1", FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
 
 void ParticleSlider_UpdateRequest( int iLoadoutPosition, float value )
 {
@@ -747,12 +747,12 @@ void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 
 		m_bLoadoutHasChanged = false;
 
-		if ( tf_show_preset_explanation_in_class_loadout.GetBool() && m_pPresetsExplanationPopup )
+		if ( false )
 		{
 			m_pPresetsExplanationPopup->Popup();
 			tf_show_preset_explanation_in_class_loadout.SetValue( 0 );
 		}
-		else if ( tf_show_taunt_explanation_in_class_loadout.GetBool() && m_pTauntsExplanationPopup )
+		else if ( false )
 		{
 			m_pTauntsExplanationPopup->Popup();
 			tf_show_taunt_explanation_in_class_loadout.SetValue( 0 );

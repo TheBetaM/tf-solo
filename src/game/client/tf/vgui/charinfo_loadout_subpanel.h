@@ -116,7 +116,7 @@ public:
 	void	OnKeyCodeTyped( vgui::KeyCode code );
 	void	OnKeyCodePressed( vgui::KeyCode code );
 
-	bool		 ShouldShowExplanations( void ) { return (m_iShowingPanel == CHAP_LOADOUT && m_iCurrentClassIndex == TF_CLASS_UNDEFINED); }
+	bool		 ShouldShowExplanations( void ) { return false; }
 
 	charinfo_activepanels_t	GetShowingPanel() const { return m_iShowingPanel; }
 	int GetCurrentClassIndex() const	{ return m_iCurrentClassIndex; }

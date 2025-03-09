@@ -156,7 +156,7 @@ protected:
 	void		SetShowBaseItems( bool bShow );
 
 	virtual ConVar		*GetExplanationConVar( void );
-	bool				ShouldShowExplanations( void ) { return (!m_bItemsOnly && !InToolSelectionMode()); }
+	bool				ShouldShowExplanations( void ) { return false; }
 
 	bool 		InToolSelectionMode() const { return m_eSelectionMode != StandardSelection; }
 	void		SetupToolSelectionItem();

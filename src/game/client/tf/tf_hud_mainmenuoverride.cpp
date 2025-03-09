@@ -95,12 +95,12 @@ void cc_tf_mainmenu_match_panel_type( IConVar *pConVar, const char *pOldString, 
 
 
 ConVar tf_recent_achievements( "tf_recent_achievements", "0", FCVAR_ARCHIVE );
-ConVar tf_find_a_match_hint_viewed( "tf_find_a_match_hint_viewed", "1", FCVAR_ARCHIVE );
-ConVar tf_training_has_prompted_for_training( "tf_training_has_prompted_for_training", "1", FCVAR_ARCHIVE, "Whether the user has been prompted for training" );
-ConVar tf_training_has_prompted_for_offline_practice( "tf_training_has_prompted_for_offline_practice", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to try offline practice." );
-ConVar tf_training_has_prompted_for_forums( "tf_training_has_prompted_for_forums", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to view the new user forums." );
-ConVar tf_training_has_prompted_for_options( "tf_training_has_prompted_for_options", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to view the TF2 advanced options." );
-ConVar tf_training_has_prompted_for_loadout( "tf_training_has_prompted_for_loadout", "1", FCVAR_ARCHIVE, "Whether the user has been prompted to equip something in their loadout." );
+ConVar tf_find_a_match_hint_viewed( "tf_find_a_match_hint_viewed", "0", FCVAR_ARCHIVE );
+ConVar tf_training_has_prompted_for_training( "tf_training_has_prompted_for_training", "0", FCVAR_ARCHIVE, "Whether the user has been prompted for training" );
+ConVar tf_training_has_prompted_for_offline_practice( "tf_training_has_prompted_for_offline_practice", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to try offline practice." );
+ConVar tf_training_has_prompted_for_forums( "tf_training_has_prompted_for_forums", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to view the new user forums." );
+ConVar tf_training_has_prompted_for_options( "tf_training_has_prompted_for_options", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to view the TF2 advanced options." );
+ConVar tf_training_has_prompted_for_loadout( "tf_training_has_prompted_for_loadout", "0", FCVAR_ARCHIVE, "Whether the user has been prompted to equip something in their loadout." );
 ConVar cl_ask_bigpicture_controller_opt_out( "cl_ask_bigpicture_controller_opt_out", "0", FCVAR_ARCHIVE, "Whether the user has opted out of being prompted for controller support in Big Picture." );
 ConVar cl_mainmenu_operation_motd_start( "cl_mainmenu_operation_motd_start", "0", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 ConVar cl_mainmenu_operation_motd_reset( "cl_mainmenu_operation_motd_reset", "0", FCVAR_ARCHIVE | FCVAR_HIDDEN );
@@ -2145,17 +2145,17 @@ void CHudMainMenuOverride::CheckTrainingStatus( void )
 		}
 	}
 
-	if ( !tf_find_a_match_hint_viewed.GetBool() )
+	if ( false )
 	{
 		tf_find_a_match_hint_viewed.SetValue( true );
 		ShowDashboardExplanation( "FindAMatch" );
 	}
-	else if ( !bDashboardSidePanels && bShowLoadout )
+	else if ( false )
 	{
 		tf_training_has_prompted_for_loadout.SetValue( 1 );
 		StartHighlightAnimation( MMHA_LOADOUT );
 	}
-	else if ( bDashboardSidePanels && bNeedsTraining)
+	else if ( false )
 	{
 		tf_training_has_prompted_for_training.SetValue( 1 );
 
@@ -2176,7 +2176,7 @@ void CHudMainMenuOverride::CheckTrainingStatus( void )
 
 		
 	}
-	else if ( bDashboardSidePanels && bWasInTraining && Training_IsComplete() == false && tf_training_has_prompted_for_training.GetInt() < 2 )
+	else if ( false )
 	{
 		tf_training_has_prompted_for_training.SetValue( 2 );
 
@@ -2186,17 +2186,17 @@ void CHudMainMenuOverride::CheckTrainingStatus( void )
 			pExplanation->SetDialogVariable( "highlighttext", g_pVGuiLocalize->Find( "#MMenu_TutorialHighlight_Title3" ) );
 		}
 	}
-	else if ( bDashboardSidePanels && bNeedsPractice )
+	else if ( false )
 	{
 		tf_training_has_prompted_for_offline_practice.SetValue( 1 );
 		StartHighlightAnimation( MMHA_PRACTICE );
 	}
-	else if ( bShowForum )
+	else if ( false )
 	{
 		tf_training_has_prompted_for_forums.SetValue( 1 );
 		StartHighlightAnimation( MMHA_NEWUSERFORUM );
 	}
-	else if ( bShowOptions )
+	else if ( false )
 	{
 		tf_training_has_prompted_for_options.SetValue( 1 );
 		StartHighlightAnimation( MMHA_OPTIONS );

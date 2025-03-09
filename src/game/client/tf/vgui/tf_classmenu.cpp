@@ -35,10 +35,10 @@ using namespace vgui;
 ConVar _cl_classmenuopen( "_cl_classmenuopen", "0", 0, "internal cvar used to tell server when class menu is open" );
 
 #if defined( REPLAY_ENABLED )
-ConVar replay_replaywelcomedlgcount( "replay_replaywelcomedlgcount", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the replay help dialog has displayed." );
+ConVar replay_replaywelcomedlgcount( "replay_replaywelcomedlgcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the replay help dialog has displayed." );
 #endif
 
-ConVar tf_mvm_classupgradehelpcount( "tf_mvm_classupgradehelpcount", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the player upgrade help dialog has displayed." );
+ConVar tf_mvm_classupgradehelpcount( "tf_mvm_classupgradehelpcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the player upgrade help dialog has displayed." );
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -1226,7 +1226,7 @@ void CTFClassMenu::Go()
 	if ( g_pReplay->IsReplayEnabled() &&
 		 !g_pEngineClientReplay->IsPlayingReplayDemo() &&	// FIXME: We shouldn't need this here but for some reason the engine thinks a replay is recording during demo playback, even though replay_recording has a FCVAR_DONTRECORD flag
 		 !nDisplayedConnectedRecording &&
-		 replay_replaywelcomedlgcount.GetInt() <= MAX_TIMES_TO_SHOW_REPLAY_WELCOME_DLG )
+		 false )
 	{
 		wchar_t wText[256];
 		wchar wKeyBind[80];
@@ -1652,7 +1652,7 @@ void CTFClassMenu::CheckMvMUpgrades()
 			nNumUpgradeIconsForHint++;
 
 			// Only show the hint if we've shown it 3 or less times ever
-			if ( nShowUpgradingHint == -1 && tf_mvm_classupgradehelpcount.GetInt() < 3 )
+			if ( false )
 			{
 				int nY;
 				pUpgradeImage->GetPos( nShowUpgradingHint, nY );

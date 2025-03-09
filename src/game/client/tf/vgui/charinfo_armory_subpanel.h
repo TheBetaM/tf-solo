@@ -71,7 +71,7 @@ public:
 	virtual void OnCommand( const char *command );
 	virtual void PerformLayout( void );
 
-	bool		 ShouldShowExplanations( void ) { return true; }
+	bool		 ShouldShowExplanations( void ) { return false; }
 	void		 UpdateItemList( void );
 	void		 UpdateSelectedItem( void );
 	void		 AllowGotoStore( void ) { m_bAllowGotoStore = true; }

@@ -24,7 +24,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-ConVar tf_explanations_charinfo_armory_panel( "tf_explanations_charinfo_armory_panel", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
+ConVar tf_explanations_charinfo_armory_panel( "tf_explanations_charinfo_armory_panel", "1", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
 ConVar tf_armory_custom( "tf_armory_config", "cfg/solo/armory_config.txt", FCVAR_ARCHIVE, "" );
 
 const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
