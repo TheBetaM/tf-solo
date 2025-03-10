@@ -336,6 +336,16 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		"3533"
+		{
+			"name"	"auto fires full clip hidden"
+			"attribute_class"	"auto_fires_full_clip"
+			"description_string"	"#Attrib_AutoFiresFullClip"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
 		
 	}
 	"armory_data"

@@ -2549,6 +2549,15 @@ bool Script_FileExists(const char* file, const char* pathID = "GAME")
 	return g_pFullFileSystem->FileExists(file, pathID);
 }
 
+bool Script_IsServer()
+{
+	return true;
+}
+bool Script_IsClient()
+{
+	return false;
+}
+
 #ifdef TF_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -2758,6 +2767,8 @@ bool VScriptServerInit()
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileToKeyValues, "FileToKeyValues", "Reads KeyValues from a file to send to script");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsServer, "IsServer", "Returns true if script is running on the server.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
 
 				g_pScriptVM->RegisterAllClasses();
 				

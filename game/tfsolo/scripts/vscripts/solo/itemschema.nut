@@ -13,6 +13,16 @@ IncludeScript("solo/balancing/batsaber.nut")
 IncludeScript("solo/balancing/sandman.nut")
 IncludeScript("solo/balancing/threeruneblade.nut")
 IncludeScript("solo/balancing/sunonastick.nut")
+IncludeScript("solo/balancing/blackbox.nut")
+IncludeScript("solo/balancing/libertylauncher.nut")
+IncludeScript("solo/balancing/airstrike.nut")
+IncludeScript("solo/balancing/reserveshooter.nut")
+IncludeScript("solo/balancing/bison.nut")
+IncludeScript("solo/balancing/basejumper.nut")
+IncludeScript("solo/balancing/panicattack.nut")
+IncludeScript("solo/balancing/paintrain.nut")
+IncludeScript("solo/balancing/halfzatoichi.nut")
+
 
 ::TFSOLO.SetupItemSchema <- function()
 {

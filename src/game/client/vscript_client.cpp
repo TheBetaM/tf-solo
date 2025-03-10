@@ -732,6 +732,15 @@ void Script_VGUI_PlaySound(const char* file)
 	vgui::surface()->PlaySound(file);
 }
 
+bool Script_IsServer()
+{
+	return false;
+}
+bool Script_IsClient()
+{
+	return true;
+}
+
 static void SendToConsole(const char* pszCommand)
 {
 	if (!pszCommand)
@@ -941,6 +950,8 @@ bool VScriptClientInit()
 				ScriptRegisterFunction(g_pScriptVM, MaxClients, "Get the current number of max clients set by the maxplayers command.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetLocalTime, "LocalTime", "Fills out a table with the local time (second, minute, hour, day, month, year, dayofweek, dayofyear, daylightsavings)");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsInGame, "IsInGame", "Returns true if client is in a server.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsServer, "IsServer", "Returns true if script is running on the server.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySound, "VGUI_PlaySound", "");
