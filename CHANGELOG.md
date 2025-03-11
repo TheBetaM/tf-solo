@@ -42,8 +42,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 - TFBot: Added GetPreset(), SetPreset(string)
 - Moved TFBot.GenerateAndWearItem to TFPlayer
 ## Item changes
-- Shortstop
--- Removed 50% reload speed penalty
+- Shortstop  
+-- Removed 50% reload speed penalty  
 - Baby Face's Blaster  
 -- Boost no longer reduced on taking damage  
 -- Lowered Boost loss with air jumps from 75% to 10%  
@@ -86,3 +86,35 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Now only usable by Soldier  
 - Half-Zatoichi  
 -- Now only usable by Demoman  
+- Rainblower  
+-- Removed Pyrovision requirement  
+- Nostromo Napalmer  
+-- Added: Airblast dashes  
+- Backburner  
+-- Removed airblast cost penalty  
+-- Added: No random critial hits  
+- Degreaser  
+-- Added: Reverse airblast  
+- Dragon's Fury  
+-- Removed airblast cost increase  
+-- Pressure reduced to 50% instead of 0% on airblast  
+- Detonator  
+-- Removed damage penalty  
+-- Added: +50% self damage push force  
+- Manmelter  
+-- Removed flaming particle effect  
+- Gas Passer  
+-- Gas meter now starts full and resupplies  
+-- Recharge time reduced from 60 seconds to 20 seconds  
+-- Damage needed to charge reduced from 750 to 400  
+- Lollichop  
+-- Removed Pyrovision requirement  
+- Homewrecker  
+-- Added: Knockback immunity while active  
+- Sharpened Volcano Fragment  
+-- Added: Passive +100% afterburn damage  
+- Third Degree  
+-- Added: +30% damage resistance from ranged sources while active  
+-- Added: -50% weapon switch speed  
+- Hot Hand  
+-- Added: +40% damage to burning players  

@@ -2868,6 +2868,10 @@ void CTFPlayerShared::ConditionGameRulesThink( void )
 				float flBurnDamage = TF_BURNING_DMG;
 				int nKillType = TF_DMG_CUSTOM_BURNING;
 
+				if ( m_hBurnAttacker )
+				{
+					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hBurnAttacker, flBurnDamage, mult_player_burndmg );
+				}
 				if ( m_hBurnWeapon )
 				{
 					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hBurnWeapon, flBurnDamage, mult_wpn_burndmg );
@@ -8102,6 +8106,14 @@ bool CTFPlayerShared::IsImmuneToPushback( void ) const
 
 	if ( InCond( TF_COND_IMMUNE_TO_PUSHBACK ) )
 		return true;
+
+	if ( m_pOuter )
+	{
+		int iImmune = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(m_pOuter, iImmune, knockback_immunity);
+		if (iImmune)
+			return true;
+	}
 
 	if ( m_pOuter->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) && InCond( TF_COND_AIMING ) )
 	{

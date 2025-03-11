@@ -1737,6 +1737,11 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 
 			ComputeCrayAirBlastForce( pTarget, pOwner, vecPushDirection, /* out */ vecForce );
 
+			if ( iReverseBlast != 0 )
+			{
+				vecForce = -vecForce;
+			}
+
 			// This is bypassing ApplyGenericPushbackImpulse because it implements its own pushback logic.
 			pTarget->RemoveFlag( FL_ONGROUND );
 			pTarget->SetGroundEntity( NULL ); // We'll restick if necessary, but we want to bypass the gamemovement

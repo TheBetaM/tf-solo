@@ -623,10 +623,10 @@ void CTFFlareGun_Revenge::DoAbsorbEffect( void )
 {
 	WeaponSound( SPECIAL1 );
 
-	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
-	if ( pPlayer )
-	{
-		DispatchParticleEffect( "drg_manmelter_vacuum_flames", PATTACH_POINT_FOLLOW, GetAppropriateWorldOrViewModel(), "muzzle", GetParticleColor( 1 ), GetParticleColor( 2 ) );
-	}
+	//CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
+	//if ( pPlayer )
+	//{
+	//	DispatchParticleEffect( "drg_manmelter_vacuum_flames", PATTACH_POINT_FOLLOW, GetAppropriateWorldOrViewModel(), "muzzle", GetParticleColor( 1 ), GetParticleColor( 2 ) );
+	//}
 }
 #endif
