@@ -36,6 +36,12 @@ IncludeScript("solo/balancing/maul.nut")
 IncludeScript("solo/balancing/volcanofragment.nut")
 IncludeScript("solo/balancing/thirddegree.nut")
 IncludeScript("solo/balancing/hothand.nut")
+IncludeScript("solo/balancing/lochnload.nut")
+IncludeScript("solo/balancing/bootlegger.nut")
+IncludeScript("solo/balancing/scottishhandshake.nut")
+IncludeScript("solo/balancing/headtaker.nut")
+IncludeScript("solo/balancing/nineiron.nut")
+IncludeScript("solo/balancing/claymore.nut")
 
 
 ::TFSOLO.SetupItemSchema <- function()

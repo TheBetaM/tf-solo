@@ -28,6 +28,7 @@ public:
 	virtual void		Smack( void ) OVERRIDE;
 	virtual void		WeaponReset( void ) OVERRIDE;
 	virtual bool		DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt ) OVERRIDE;
+	virtual void		PrimaryAttack();
 
 	virtual void		SwitchBodyGroups( void );
 

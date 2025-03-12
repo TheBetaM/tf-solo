@@ -72,7 +72,7 @@ void CTFWearableDemoShield::DoSpecialAction( CTFPlayer *pPlayer )
 void CTFWearableDemoShield::EndSpecialAction( CTFPlayer *pPlayer )
 {
 	int nAttackNotCancelCharge = 0;
-	CALL_ATTRIB_HOOK_INT( nAttackNotCancelCharge, attack_not_cancel_charge );
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer, nAttackNotCancelCharge, attack_not_cancel_charge );
 	if ( nAttackNotCancelCharge > 0 )
 	{
 		return;

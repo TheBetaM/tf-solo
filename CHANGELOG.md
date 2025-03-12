@@ -118,3 +118,18 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: -50% weapon switch speed  
 - Hot Hand  
 -- Added: +40% damage to burning players  
+- Loch-n-Load  
+-- Replaced +20% damage to buildings with +20% damage bonus  
+- Bootlegger  
+-- New design:  
+-- Allows wearer to stick to walls by jumping into them  
+-- No fall damage  
+-- +30 max health  
+- Scottish Handshake  
+-- Added: Air jump on attack while in mid-air  
+-- Added: -30% damage penalty  
+- Ullapool Caber  
+-- Increased base explosion damage from 75 to 100  
+- Claidheamh Mor  
+-- Raised charge duration increase from 0.5 seconds to 0.8 seconds  
+-- Added: Attack does not cancel charge  

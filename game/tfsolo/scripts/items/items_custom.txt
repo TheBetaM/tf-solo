@@ -48,7 +48,7 @@
 		}
 		"3504"
 		{
-			"name"				"mult_crit_when_health_is_below_percen"
+			"name"				"mult_crit_when_health_is_below_percent"
 			"attribute_class"	"mult_crit_when_health_is_below_percent"
 			"description_string"	"#Attrib_CritBelowHealthPercent"
 			"description_format"	"value_is_percentage"
@@ -363,6 +363,16 @@
 			//"description_string"	"#Attrib_"
 			"description_format"	"value_is_additive"
 			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3536"
+		{
+			"name"	"stick_to_walls"
+			"attribute_class"	"stick_to_walls"
+			"description_string"	"#Attrib_StickToWalls"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
 			"effect_type"	"positive"
 			"stored_as_integer"	"1"
 		}

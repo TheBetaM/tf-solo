@@ -202,6 +202,50 @@ void CTFBreakableMelee::SetBroken( bool bBroken )
 }
 #endif // CLIENT_DLL
 
+// -----------------------------------------------------------------------------
+void CTFBreakableMelee::PrimaryAttack()
+{
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (pPlayer && !(pPlayer->GetFlags() & FL_ONGROUND))
+	{
+		int iFlappy = 0;
+		CALL_ATTRIB_HOOK_INT(iFlappy, air_jump_on_attack);
+		if (iFlappy)
+		{
+#ifdef GAME_DLL
+			EmitSound_t params;
+			params.m_pSoundName = "General.banana_slip";
+			params.m_flSoundTime = 0;
+			params.m_pflSoundDuration = 0;
+			//params.m_bWarnOnDirectWaveReference = true;
+			CPASFilter filter(pPlayer->GetAbsOrigin());
+			params.m_flVolume = 0.1f;
+			params.m_SoundLevel = SNDLVL_25dB;
+			params.m_nPitch = 100.0f;
+			params.m_nFlags |= (SND_CHANGE_PITCH | SND_CHANGE_VOL);
+			pPlayer->StopSound("General.banana_slip");
+			pPlayer->EmitSound(filter, pPlayer->entindex(), params);
+#endif
+			Vector vForce = Vector(0, 0, 0);
+			if (pPlayer->GetAbsVelocity().z > 0)
+			{
+				vForce.z = 275.0f;
+			}
+			else if (pPlayer->m_Shared.InCond( TF_COND_BLASTJUMPING ))
+			{
+				vForce.z = 500.0f;
+			}
+			else
+			{
+				vForce.z = 350.0f;
+			}
+			pPlayer->ApplyAbsVelocityImpulse(vForce);
+		}
+	}
+
+	BaseClass::PrimaryAttack();
+}
+
 CTFStickBomb::CTFStickBomb()
 : CTFBreakableMelee()
 {
@@ -258,7 +302,7 @@ void CTFStickBomb::Smack( void )
 			if ( IsCurrentAttackACrit() )
 				dmgType |= DMG_CRITICAL;
 
-			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 75.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
+			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 100.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
 			CTFRadiusDamageInfo radiusinfo( &info, explosion, 100.f );
 			TFGameRules()->RadiusDamage( radiusinfo );
 		}

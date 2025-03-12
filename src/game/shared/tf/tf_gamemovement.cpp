@@ -1196,6 +1196,35 @@ bool CTFGameMovement::CheckJumpButton()
 		return true;
 	}
 
+	if ( m_pTFPlayer->m_Shared.InCond(TF_COND_PARACHUTE_DEPLOYED) )
+	{
+		int iStick = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(m_pTFPlayer, iStick, stick_to_walls);
+		if (iStick != 0)
+		{
+			m_pTFPlayer->m_Shared.RemoveCond( TF_COND_PARACHUTE_DEPLOYED );
+
+			Vector vAim = m_pTFPlayer->GetLocalVelocity();
+			vAim.z = 0;
+			vAim.NormalizeInPlace();
+
+			trace_t pWallTrace;
+			UTIL_TraceLine(m_pTFPlayer->GetAbsOrigin(), m_pTFPlayer->GetAbsOrigin() + vAim * 64, MASK_SOLID, m_pTFPlayer, COLLISION_GROUP_DEBRIS, &pWallTrace);
+
+			// if we collide with a wall that is 90degrees or higher, stick to it
+			if (pWallTrace.fraction < 1.0 && !(pWallTrace.surface.flags & SURF_SKY) && pWallTrace.m_pEnt && !pWallTrace.m_pEnt->IsPlayer() && pWallTrace.plane.normal.z <= 0)
+			{
+				// Bounce off the wall, deflect in the direction of the normal of the surface that we collided with
+				Vector vOld = m_pTFPlayer->GetLocalVelocity();
+				Vector vNew = (-2.0f * pWallTrace.plane.normal.Dot(vOld) * pWallTrace.plane.normal + vOld);
+				vNew.NormalizeInPlace();
+				m_pTFPlayer->SetAbsVelocity(vNew);
+			}
+
+			return true;
+		}
+	}
+
 	// holding jump key will make ghost fly
 	if ( m_pTFPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
 	{
@@ -2118,6 +2147,17 @@ void CTFGameMovement::AirMove( void )
 			return;
 		}
 	}
+	if ( m_pTFPlayer->m_Shared.InCond( TF_COND_PARACHUTE_DEPLOYED ) )
+	{
+		int iStick = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(m_pTFPlayer, iStick, stick_to_walls);
+		if ( iStick != 0 )
+		{
+			mv->m_vecVelocity *= 0.01f;
+			mv->m_outWishVel *= 0.01f;
+			return;
+		}
+	}
 
 	int			i;
 	Vector		wishvel;
@@ -2196,6 +2236,26 @@ void CTFGameMovement::AirMove( void )
 	if ( iBlocked & 2 )
 	{
 		CheckKartWallBumping();
+		if ( !m_pTFPlayer->m_Shared.InCond( TF_COND_PARACHUTE_DEPLOYED ) && m_pTFPlayer->GetWaterLevel() < 1 )
+		{
+			int iStick = 0;
+			CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pTFPlayer, iStick, stick_to_walls );
+			if ( iStick != 0 )
+			{
+				Vector vAim = m_pTFPlayer->GetLocalVelocity();
+				vAim.z = 0;
+				vAim.NormalizeInPlace();
+
+				trace_t pWallTrace;
+				UTIL_TraceLine(m_pTFPlayer->GetAbsOrigin(), m_pTFPlayer->GetAbsOrigin() + vAim * 64, MASK_SOLID, m_pTFPlayer, COLLISION_GROUP_DEBRIS, &pWallTrace);
+
+				// if we collide with a wall that is 90degrees or higher, stick to it
+				if (pWallTrace.fraction < 1.0 && !(pWallTrace.surface.flags & SURF_SKY) && pWallTrace.m_pEnt && !pWallTrace.m_pEnt->IsPlayer() && pWallTrace.plane.normal.z <= 0)
+				{
+					m_pTFPlayer->m_Shared.AddCond( TF_COND_PARACHUTE_DEPLOYED );			
+				}
+			}
+		}
 	}
 
 	// Now pull the base velocity back out.   Base velocity is set if you are on a moving object, like a conveyor (or maybe another monster?)
