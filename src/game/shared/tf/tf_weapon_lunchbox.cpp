@@ -357,6 +357,7 @@ void CTFLunchBox::Detach( void )
 			// Prevents use-then-switch-class exploit (heavy->scout)
 			// Not a big deal in pubs, but it can mess with competitive
 			pOwner->RemoveCustomAttribute( "hidden maxhealth non buffed" );
+			pOwner->RemoveCustomAttribute( "knockback_immunity_hidden" );
 		}
 	}
 #endif
@@ -386,10 +387,15 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 
 	const float DALOKOHS_MAXHEALTH_BUFF = 50.f;
 
-	if ( nLunchBoxType == LUNCHBOX_CHOCOLATE_BAR || nLunchBoxType == LUNCHBOX_FISHCAKE )
+	if ( nLunchBoxType == LUNCHBOX_CHOCOLATE_BAR )
 	{
 		// add 50 health to player for 30 seconds
 		pPlayer->AddCustomAttribute( "hidden maxhealth non buffed", DALOKOHS_MAXHEALTH_BUFF, 30.f );
+	}
+	else if ( nLunchBoxType == LUNCHBOX_FISHCAKE )
+	{
+		// Add knockback immunity for 20 seconds
+		pPlayer->AddCustomAttribute( "knockback_immunity_hidden", 1.0f, 20.f );
 	}
 	else if ( nLunchBoxType == LUNCHBOX_ADDS_MINICRITS )
 	{
@@ -415,6 +421,11 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 	float flHealScale = 1.0f;
 	CALL_ATTRIB_HOOK_FLOAT( flHealScale, lunchbox_healing_scale );
 	iHeal = iHeal * flHealScale;
+
+	if ( nLunchBoxType == LUNCHBOX_FISHCAKE )
+	{
+		iHeal = 0;
+	}
 
 	int iHealed = pPlayer->TakeHealth( iHeal, iHealType );
 

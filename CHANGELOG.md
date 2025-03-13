@@ -92,7 +92,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: Airblast dashes  
 - Backburner  
 -- Removed airblast cost penalty  
--- Added: No random critial hits  
+-- Added: No random critical hits  
 - Degreaser  
 -- Added: Reverse airblast  
 - Dragon's Fury  
@@ -126,10 +126,38 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- No fall damage  
 -- +30 max health  
 - Scottish Handshake  
--- Added: Air jump on attack while in mid-air  
--- Added: -30% damage penalty  
+-- New design:  
+-- Air jump on attack while in mid-air  
+-- -30% damage penalty  
 - Ullapool Caber  
 -- Increased base explosion damage from 75 to 100  
 - Claidheamh Mor  
 -- Raised charge duration increase from 0.5 seconds to 0.8 seconds  
 -- Added: Attack does not cancel charge  
+- Natascha  
+-- Removed slow on hit  
+-- Added: 3 seconds of bleed on hit  
+- Brass Beast  
+-- Added the ability to holster it while spun up  
+- Robo-Sandvich  
+-- Now only usable by Spy as a Sapper  
+- Dalokohs Bar  
+-- Added: +50% eating speed  
+- Fishcake  
+-- New design:  
+-- Eat to gain knockback immunity for 20 seconds  
+-- Alt-Fire drops a small health kit for teammates  
+-- Eating does not heal user  
+-- Takes 25 seconds to regenerate  
+- Buffalo Steak Sandvich  
+-- Removed +20% damage vulnerability  
+- Gloves of Running Urgently  
+-- Removed maximum health drain  
+-- Added: Marked For Death while active  
+-- Added: -25% damage penalty  
+- Warrior's Spirit  
+-- Removed +30% damage vulnerability  
+-- Removed heal on kill  
+-- Added: +15% movement speed penalty while active  
+- Eviction Notice  
+-- Removed maximum health drain  
