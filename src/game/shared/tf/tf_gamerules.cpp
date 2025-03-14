@@ -7492,6 +7492,48 @@ float CTFGameRules::ApplyOnDamageAliveModifyRules( const CTakeDamageInfo &info, 
 
 				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( info.GetWeapon(), flRealDamage, blast_dmg_to_self );
 			}
+			int iNoSelfDamage = 0;
+			CALL_ATTRIB_HOOK_INT_ON_OTHER( pVictimBaseEntity, iNoSelfDamage, no_self_dmg );
+			if ( iNoSelfDamage != 0 )
+			{
+				flRealDamage = 0;
+			}
+		}
+
+		if ( pAttacker != pVictimBaseEntity )
+		{
+			if ( info.GetInflictor() )
+			{
+				if ( info.GetInflictor()->IsBaseObject() )
+				{
+					CObjectSentrygun* pSentry = dynamic_cast<CObjectSentrygun*>( info.GetInflictor() );
+					if ( pSentry )
+					{
+						if ( pSentry->GetOwner() )
+						{
+							int iNoSelfDamage = 0;
+							CALL_ATTRIB_HOOK_INT_ON_OTHER( pSentry->GetOwner(), iNoSelfDamage, sentry_no_dmg );
+							if ( iNoSelfDamage != 0 )
+							{
+								flRealDamage = 0;
+							}
+						}
+					}
+				}
+				else
+				{
+					CTFProjectile_SentryRocket* pProjectile = dynamic_cast<CTFProjectile_SentryRocket*>( info.GetInflictor() );
+					if ( pProjectile && pProjectile->GetScorer() )
+					{
+						int iNoSelfDamage = 0;
+						CALL_ATTRIB_HOOK_INT_ON_OTHER( pProjectile->GetScorer(), iNoSelfDamage, sentry_no_dmg );
+						if ( iNoSelfDamage != 0 )
+						{
+							flRealDamage = 0;
+						}
+					}
+				}
+			}
 		}
 
 		// Precision Powerup removes self damage

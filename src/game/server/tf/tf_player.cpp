@@ -5170,6 +5170,16 @@ void CTFPlayer::ValidateWeapons( TFPlayerClassData_t *pData, bool bResetWeapons 
 		// See if gamerules says this item isn't allowed right now
 		bool bForceRemoved = bOverrideRemoval || !ItemIsAllowed( pItem );
 
+		if ( pWeapon->GetWeaponID() == TF_WEAPON_PDA_ENGINEER_DESTROY )
+		{
+			int iBlockDetonate = 0;
+			CALL_ATTRIB_HOOK_INT( iBlockDetonate, no_manual_building_destroy );
+			if ( iBlockDetonate != 0 )
+			{
+				bForceRemoved = true;
+			}
+		}
+
 		if ( bForceRemoved || !ItemsMatch( pData, pWeapon->GetAttributeContainer()->GetItem(), pItem, pWeapon ) )
 		{
 			// we can't hold this weapon anymore, switch to the next best weapon before removing it
@@ -8202,6 +8212,11 @@ void CTFPlayer::DetonateObjectOfType( int iType, int iMode, bool bIgnoreSapperSt
 		return;
 
 	if( !bIgnoreSapperState && ( pObj->HasSapper() || pObj->IsPlasmaDisabled() ) )
+		return;
+
+	int iBlockDetonate = 0;
+	CALL_ATTRIB_HOOK_INT(iBlockDetonate, no_manual_building_destroy);
+	if (iBlockDetonate != 0)
 		return;
 
 	IGameEvent *event = gameeventmanager->CreateEvent( "object_removed" );	

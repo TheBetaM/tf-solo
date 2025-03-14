@@ -5055,6 +5055,14 @@ void CTFWeaponBase::ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPla
 		pAttacker->m_Shared.AddCond( TF_COND_SPEED_BOOST, iSpeedBoostOnHit );
 	}
 
+	// Metal on hit
+	int iMetalOnHit = 0;
+	CALL_ATTRIB_HOOK_INT( iMetalOnHit, metal_on_hit );
+	if ( iMetalOnHit )
+	{
+		pAttacker->GiveAmmo( iMetalOnHit, TF_AMMO_METAL, true );
+	}
+
 	if ( pVictim )
 	{
 		if ( pVictim->m_Shared.InCond( TF_COND_MAD_MILK ) )

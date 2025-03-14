@@ -321,7 +321,7 @@ void CTFProjectile_EnergyRing::PlayImpactEffects( const Vector& vecPos, bool bHi
 	{
 		DispatchParticleEffect( g_pszEnergyProjectileImpactParticle, vecPos, GetAbsAngles(), pTFGun->GetParticleColor( 1 ), pTFGun->GetParticleColor( 2 ), true, NULL, 0 );
 		const char* pszSoundString = NULL;
-		if ( ShouldPenetrate() )
+		if ( pTFGun->GetWeaponID() != TF_WEAPON_DRG_POMSON )
 		{
 			pszSoundString = bHitFlesh ? g_pszBisonImpactFleshSound : g_pszBisonImpactWorldSound;
 		}
@@ -369,9 +369,10 @@ bool CTFProjectile_EnergyRing::ShouldPenetrate() const
 	return iPenetrate != 0;
 }
 
-const char*	CTFProjectile_EnergyRing::GetTrailParticleName() const
+const char*	CTFProjectile_EnergyRing::GetTrailParticleName()
 {
-	if ( ShouldPenetrate() )	// Righteous Bison
+	CTFWeaponBaseGun* pTFGun = dynamic_cast<CTFWeaponBaseGun*>( GetLauncher() );
+	if ( pTFGun && pTFGun->GetWeaponID() != TF_WEAPON_DRG_POMSON )	// Righteous Bison
 	{
 		return IsCritical() ? g_pszBisonTrailParticleCrit : g_pszBisonTrailParticle;
 	}

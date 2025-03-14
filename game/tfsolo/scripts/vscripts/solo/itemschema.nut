@@ -54,6 +54,8 @@ IncludeScript("solo/balancing/gru.nut")
 IncludeScript("solo/balancing/breadbite.nut")
 IncludeScript("solo/balancing/warriorsspirit.nut")
 IncludeScript("solo/balancing/evictionnotice.nut")
+IncludeScript("solo/balancing/pomson.nut")
+IncludeScript("solo/balancing/gigercounter.nut")
 
 ::TFSOLO.SetupItemSchema <- function()
 {

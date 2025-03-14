@@ -76,16 +76,9 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Allow the projectile to deal damage every tick, instead of every 2 ticks  
 - B.A.S.E. Jumper  
 -- Restored re-deploy in mid-air  
--- Restored air control to before the 50% decrease  
-- Panic Attack  
--- Now only usable by Pyro  
--- Reverted the weapon to its original functionality  
--- +50% reload speed  
--- +30% firing speed  
+-- Restored air control to before the 50% decrease   
 - Pain Train  
 -- Now only usable by Soldier  
-- Half-Zatoichi  
--- Now only usable by Demoman  
 - Rainblower  
 -- Removed Pyrovision requirement  
 - Nostromo Napalmer  
@@ -103,6 +96,11 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: +50% self damage push force  
 - Manmelter  
 -- Removed flaming particle effect  
+- Panic Attack  
+-- Now only usable by Pyro  
+-- Reverted the weapon to its original functionality  
+-- +50% reload speed  
+-- +30% firing speed  
 - Gas Passer  
 -- Gas meter now starts full and resupplies  
 -- Recharge time reduced from 60 seconds to 20 seconds  
@@ -134,6 +132,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 - Claidheamh Mor  
 -- Raised charge duration increase from 0.5 seconds to 0.8 seconds  
 -- Added: Attack does not cancel charge  
+- Half-Zatoichi  
+-- Now only usable by Demoman  
 - Natascha  
 -- Removed slow on hit  
 -- Added: 3 seconds of bleed on hit  
@@ -161,3 +161,24 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: +15% movement speed penalty while active  
 - Eviction Notice  
 -- Removed maximum health drain  
+- Pomson 6000  
+-- Added projectile penetration  
+- Lugermorph  
+-- Now only usable by Engineer  
+-- New design:  
+-- On Hit: Gain 10 metal  
+-- -75% firing speed  
+-- -50% clip size  
+- C.A.P.P.E.R.  
+-- Now only usable by Engineer  
+-- New design:  
+-- Projectiles penetrate enemies  
+-- Requires reloading to fire  
+-- Fires whole clip at once  
+-- +10% damage bonus  
+-- -70% clip size  
+- Giger Counter  
+-- New design:  
+-- No self damage taken  
+-- -75% Sentry Gun build/upgrade metal cost  
+-- Sentry Gun deals no damage, only knockback  

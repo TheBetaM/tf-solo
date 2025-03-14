@@ -852,8 +852,10 @@ public:
 	}
 	void ItemSchemaReload(HSCRIPT kv)
 	{
+		g_VScriptGameSystem.m_bLockSchema = true;
 		auto kvs = (CScriptKeyValues*)g_pScriptVM->GetInstanceValue(kv, GetScriptDescForClass(CScriptKeyValues));
 		GetItemSchema()->BInitFromKV(kvs->m_pKeyValues);
+		g_VScriptGameSystem.m_bLockSchema = false;
 	}
 };
 
@@ -1958,7 +1960,9 @@ static CVScriptPanoramaHelper g_VScriptPanoramaHelper;
 bool CVScriptGameSystem::Init()
 {
 	m_bAllowEntityCreationInScripts = false;
+	m_bLockSchema = true;
 	VScriptClientInit();
+	m_bLockSchema = false;
 	return true;
 }
 

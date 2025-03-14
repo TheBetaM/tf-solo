@@ -516,11 +516,11 @@ void CQuestMapPanel::SetVisible( bool bVisible )
 			pButton->SetSelected( false );
 		}
 
-		if ( true )
+		if ( tf_quest_map_intro_viewed.GetBool() )
 		{
 			m_pIntroPanel->SetVisible( false );
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "QuestMap_Start", false );	
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_bMapLoaded && true ? "QuestMap_MapLoaded" : "QuestMap_LoadingLoop", false );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_bMapLoaded && GTFGCClientSystem()->BHealthyGCConnection() ? "QuestMap_MapLoaded" : "QuestMap_LoadingLoop", false );
 		}
 		else 
 		{
@@ -1009,8 +1009,8 @@ void CQuestMapPanel::UpdateControls( bool bIgnoreInvalidLayout )
 		m_pMapAreaPanel->SetControlVisible( "StaticOverlay", false );
 	}
 
-	//if ( !GTFGCClientSystem()->BConnectedtoGC() )
-	//	return;
+	if ( !GTFGCClientSystem()->BConnectedtoGC() )
+		return;
 
 	// Maybe they activated a pass?
 	UpdatePassAdPanel();

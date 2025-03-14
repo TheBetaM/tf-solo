@@ -2319,6 +2319,13 @@ int CObjectSentrygun::GetUpgradeMetalRequired()
 	{
 		iMetal *= 0.75f;
 	}
+
+	float flCostMod = 1.f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetBuilder(), flCostMod, mod_sentry_cost );
+	if ( flCostMod != 1.f )
+	{
+		iMetal *= flCostMod;
+	}
 	
 	return iMetal;
 }

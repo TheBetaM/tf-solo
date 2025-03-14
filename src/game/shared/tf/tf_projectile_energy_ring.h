@@ -63,7 +63,7 @@ public:
 private:
 
 	bool			ShouldPenetrate() const;
-	const char*		GetTrailParticleName() const;
+	const char*		GetTrailParticleName();
 
 	Vector			m_vColor1;
 	Vector			m_vColor2;

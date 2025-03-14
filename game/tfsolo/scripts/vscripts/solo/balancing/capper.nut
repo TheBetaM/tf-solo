@@ -34,6 +34,21 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local classuse = prefab.GetKey("used_by_classes", true)
 	classuse.SetInt("engineer", 1)
 	
-	// TODO: New design
-	
+	// Add projectile penetration
+	local attrib = prefab.GetKey("attributes", true)
+	local a1 = attrib.GetKey("projectile penetration", true)
+	a1.SetString("attribute_class","projectile_penetration")
+	a1.SetInt("value", 16)
+	// Add requiring reload to fire
+	local a2 = attrib.GetKey("auto fires full clip hidden", true)
+	a2.SetString("attribute_class","auto_fires_full_clip")
+	a2.SetInt("value",1)
+	// Add +10% damage bonus
+	local a3 = attrib.GetKey("damage bonus", true)
+	a3.SetString("attribute_class","mult_dmg")
+	a3.SetFloat("value",1.1)
+	// Add -70% clip size
+	local a4 = attrib.GetKey("clip size penalty", true)
+	a4.SetString("attribute_class","mult_clipsize")
+	a4.SetFloat("value",0.3)
 })

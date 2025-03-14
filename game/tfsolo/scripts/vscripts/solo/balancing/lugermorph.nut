@@ -16,7 +16,19 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local classuse = prefab.FindKey("used_by_classes")
 	classuse.RemoveSubKey("scout")
 	
-	// TODO: New design
+	// Add 10 metal per hit
+	local attrib = prefab.GetKey("attributes", true)
+	local a1 = attrib.GetKey("metal_on_hit", true)
+	a1.SetString("attribute_class","metal_on_hit")
+	a1.SetInt("value", 10)
+	// Add -75% firing speed
+	local a2 = attrib.GetKey("fire rate penalty", true)
+	a2.SetString("attribute_class","mult_postfiredelay")
+	a2.SetFloat("value", 1.75)
+	// Add -50% clip size
+	local a3 = attrib.GetKey("clip size penalty", true)
+	a3.SetString("attribute_class","mult_clipsize")
+	a3.SetFloat("value", 0.5)
 	
 	// Repeat for other item ID
 	prefab = key1.FindKey("294")
@@ -31,4 +43,15 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	statattrib.SetString("min_viewmodel_offset","10 0 -10")
 	classuse = prefab.FindKey("used_by_classes")
 	classuse.RemoveSubKey("scout")
+	
+	attrib = prefab.GetKey("attributes", true)
+	a1 = attrib.GetKey("metal_on_hit", true)
+	a1.SetString("attribute_class","metal_on_hit")
+	a1.SetInt("value", 10)
+	a2 = attrib.GetKey("fire rate penalty", true)
+	a2.SetString("attribute_class","mult_postfiredelay")
+	a2.SetFloat("value", 1.75)
+	a3 = attrib.GetKey("clip size penalty", true)
+	a3.SetString("attribute_class","mult_clipsize")
+	a3.SetFloat("value", 0.5)
 })

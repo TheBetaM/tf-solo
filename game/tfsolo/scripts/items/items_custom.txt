@@ -376,6 +376,68 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"1"
 		}
+		"3537"
+		{
+			"name"	"no_manual_building_destroy"
+			"attribute_class"	"no_manual_building_destroy"
+			"description_string"	"#Attrib_NoManualBuildingDestroy"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"1"
+		}
+		"3538"
+		{
+			"name"	"metal_on_hit"
+			"attribute_class"	"metal_on_hit"
+			"description_string"	"#Attrib_MetalOnHit"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+			"armory_desc"	"on_hit"
+		}
+		"3539"
+		{
+			"name"	"engy sentry damage penalty"
+			"attribute_class"	"mult_engy_sentry_damage"
+			"description_string"	"#Attrib_EngySentryDamagePenalty"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3540"
+		{
+			"name"	"no_self_dmg"
+			"attribute_class"	"no_self_dmg"
+			"description_string"	"#Attrib_NoSelfDmg"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3541"
+		{
+			"name"	"sentry_no_dmg"
+			"attribute_class"	"sentry_no_dmg"
+			"description_string"	"#Attrib_SentryNoDmg"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3542"
+		{
+			"name"	"mod sentry cost"
+			"attribute_class"	"mod_sentry_cost"
+			"description_string"	"#Attrib_SentryBuildCost"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
 		
 	}
 	"armory_data"

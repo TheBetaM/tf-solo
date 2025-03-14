@@ -44,6 +44,7 @@
 #include "filesystem.h"
 #include "steam/isteamuser.h"
 #include "mini_sha256.h"
+#include "vscript_client.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -89,6 +90,7 @@ CTFPartyClient* GTFPartyClient() { return g_pTFPartyClient; }
 // Dialog Prompt Asking users if they want to rejoin a MvM Game
 static CTFRejoinConfirmDialog *s_pRejoinLobbyDialog;
 
+extern CVScriptGameSystem g_VScriptGameSystem;
 
 void SubscribeToLocalPlayerSOCache( ISharedObjectListener* pListener )
 {
@@ -716,6 +718,12 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 	if ( !pInfo->m_bRequestSuccessful || pInfo->m_eStatusCode != k_EHTTPStatusCode200OK )
 	{
 		SteamHTTP()->ReleaseHTTPRequest( pInfo->m_hRequest );
+		return;
+	}
+
+	if ( g_VScriptGameSystem.m_bLockSchema )
+	{
+		Warning("Too fast, too quick\n");
 		return;
 	}
 

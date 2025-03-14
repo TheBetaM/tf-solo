@@ -109,6 +109,7 @@ struct QuestConditionEntry_t
 void IsValidServerForQuests( CSteamID steamIDQuestOwner, InvalidReasonsContainer_t& invalidReasons )
 {
 	// Check if we're on beta.  If so, allow it.
+	invalidReasons.m_bits.Set( INVALID_QUEST_REASON_VALVE_SERVERS_ONLY );
 	return;
 
 	if ( TFGameRules() )

@@ -11460,6 +11460,15 @@ int CTFPlayerShared::CalculateObjectCost( CTFPlayer* pBuilder, int iObjectType )
 			nCost *= flCostMod;
 		}
 	}
+	else if ( iObjectType == OBJ_SENTRYGUN )
+	{
+		float flCostMod = 1.f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flCostMod, mod_sentry_cost );
+		if ( flCostMod != 1.f )
+		{
+			nCost *= flCostMod;
+		}
+	}
 
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pBuilder, nCost, building_cost_reduction );
 	

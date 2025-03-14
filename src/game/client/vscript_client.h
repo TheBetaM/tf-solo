@@ -116,6 +116,7 @@ public:
 	virtual void Reload();
 
 	bool m_bAllowEntityCreationInScripts;
+	bool m_bLockSchema;
 };
 
 #endif // VSCRIPT_SERVER_H
