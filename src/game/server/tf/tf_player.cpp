@@ -11829,6 +11829,11 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 		float flChargeLevel = pMedigun ? pMedigun->GetChargeLevel() : 0.f;
 		float flMinChargeLevel = pMedigun ? pMedigun->GetMinChargeAmount() : 1.f;
 
+		if ( pMedigun )
+		{
+			pMedigun->SetChargeLevelToPreserve( pMedigun->GetChargeLevel() );
+		}
+
 		bool bCharged = flChargeLevel >= flMinChargeLevel;
 
 		if ( bCharged )
@@ -20510,6 +20515,12 @@ medigun_charge_types CTFPlayer::GetChargeEffectBeingProvided( void )
 		// which causes their think functions to shut down
 		if ( GetTimeSinceLastThink() > flUberDuration )
 			return MEDIGUN_CHARGE_INVALID;
+	}
+
+	CWeaponMedigun* pAnyMedigun = dynamic_cast<CWeaponMedigun*>( Weapon_OwnsThisID(TF_WEAPON_MEDIGUN) );
+	if ( pAnyMedigun && pAnyMedigun->IsReleasingCharge() && pAnyMedigun->GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		return pAnyMedigun->GetChargeType();
 	}
 
 	CTFWeaponBase *pWpn = GetActiveTFWeapon();

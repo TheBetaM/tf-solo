@@ -26,6 +26,8 @@ enum medigun_weapontypes_t
 	MEDIGUN_UBER,
 	MEDIGUN_QUICKFIX,
 	MEDIGUN_RESIST,
+
+	MEDIGUN_EMERALD = 10,
 };
 
 enum medigun_resist_types_t
@@ -144,6 +146,12 @@ public:
 	float			GetOverHealDecayMult( CTFPlayer *pTFTarget );
 	virtual void	HookAttributes( void ) OVERRIDE;
 
+	virtual bool	CanDeploy(void) OVERRIDE;
+	virtual bool	CanBeSelected(void) OVERRIDE;
+	virtual bool	VisibleInWeaponSelection(void) OVERRIDE;
+	virtual void	WeaponRegenerate(void) OVERRIDE;
+	virtual void	Equip(CBaseCombatCharacter* pOwner) OVERRIDE;
+
 private:
 	void					SubtractChargeAndUpdateDeployState( float flSubtractAmount, bool bForceDrain );
 	bool					FindAndHealTargets( void );
@@ -165,6 +173,8 @@ private:
 
 	void					CreateMedigunShield( void );
 	void					RemoveMedigunShield( void );
+	void					CreateMedigunDispenser(void);
+	void					RemoveMedigunDispenser( void );
 
 public:
 

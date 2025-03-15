@@ -182,3 +182,22 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- No self damage taken  
 -- -75% Sentry Gun build/upgrade metal cost  
 -- Sentry Gun deals no damage, only knockback  
+- Blutsauger  
+-- Added: Gain 0.5% charge per hit  
+- Overdose  
+-- Raised potential movement speed increase from 20% to 50%    
+- Vita-Saw  
+-- Removed organ harvesting  
+-- Now up to 50% charge retained upon death  
+- Solemn Vow  
+-- New design:  
+-- While active:  
+-- -90% damage taken from ranged sources  
+-- -90% movement speed  
+-- -75% deploy speed  
+- Emerald Jarate  
+-- Now equippable as a Medic Secondary  
+-- New design:  
+-- Automatically heals multiple nearby players  
+-- Charge activates instantly when full  
+-- Reduced heal rate  

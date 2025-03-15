@@ -13,6 +13,7 @@
 #include "tf_gamerules.h"
 #include "tf_item.h"
 #include "entity_capture_flag.h"
+#include "tf_logic_player_destruction.h"
 
 #if defined( CLIENT_DLL )
 #include <vgui_controls/Panel.h>
@@ -275,6 +276,20 @@ void CWeaponMedigun::WeaponReset( void )
 		m_bWasHealingBeforeDeath = false;
 	}
 
+#if defined( GAME_DLL )
+	if ( GetMedigunType() == MEDIGUN_EMERALD && pOwner )
+	{
+		if ( (pOwner->m_Shared.InState( TF_STATE_DYING ) || pOwner->m_Shared.InState( TF_STATE_OBSERVER ) ) )
+		{
+			RemoveMedigunDispenser();
+		}
+		else
+		{
+			CreateMedigunDispenser();
+		}
+	}
+#endif
+
 	m_flHealEffectLifetime = 0;
 
 	m_bHealing = false;
@@ -308,7 +323,10 @@ void CWeaponMedigun::WeaponReset( void )
 
 #if defined( GAME_DLL )
 	StopHealingOwner();
-	m_hLastHealingTarget = NULL;
+	if ( GetMedigunType() != MEDIGUN_EMERALD )
+	{
+		m_hLastHealingTarget = NULL;
+	}
 	RecalcEffectOnTarget( ToTFPlayer( GetOwnerEntity() ), true );
 	m_nHealTargetClass = 0;
 	m_nChargesReleased = 0;
@@ -389,6 +407,11 @@ void CWeaponMedigun::Precache()
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::Deploy( void )
 {
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		return false;
+	}
+
 	if ( BaseClass::Deploy() )
 	{
 		m_bHolstered = false;
@@ -458,6 +481,7 @@ bool CWeaponMedigun::Holster( CBaseCombatWeapon *pSwitchingTo )
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::UpdateOnRemove( void )
 {
+	RemoveMedigunDispenser();
 	RemoveHealingTarget( true );
 	m_bAttacking = false;
 	m_bChargeRelease = false;
@@ -755,8 +779,11 @@ void CWeaponMedigun::FindNewTargetForSlot()
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::IsReleasingCharge( void ) const
-{ 
-	return (m_bChargeRelease && !m_bHolstered);
+{
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+		return m_bChargeRelease;
+	else
+		return (m_bChargeRelease && !m_bHolstered);
 }
 
 //-----------------------------------------------------------------------------
@@ -778,6 +805,7 @@ void CWeaponMedigun::SetChargeLevelToPreserve( float flAmount )
 
 	float flPreserveUber = 0.f;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, flPreserveUber, ubercharge_preserved_on_spawn_max );
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, flPreserveUber, preserve_ubercharge );
 	m_flChargeLevelToPreserve = Min( flAmount, flPreserveUber );
 }
 
@@ -923,6 +951,99 @@ bool CWeaponMedigun::IsAttachedToBuilding( void )
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::HealTargetThink( void )
 {	
+
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		CTFPlayer* pOwner = ToTFPlayer(GetOwnerEntity());
+		if ( !pOwner )
+		{
+			SetContextThink(NULL, 0, s_pszMedigunHealTargetThink);
+			return;
+		}
+		if ( pOwner->m_Shared.InState(TF_STATE_DYING) || pOwner->m_Shared.InState(TF_STATE_OBSERVER) )
+		{
+			RemoveMedigunDispenser();
+			SetNextThink(gpGlobals->curtime + 0.2f, s_pszMedigunHealTargetThink);
+			return;
+		}
+		CBaseEntity* pTarget = m_hLastHealingTarget;
+		if ( !pTarget )
+		{
+			CreateMedigunDispenser();
+			SetNextThink(gpGlobals->curtime + 0.2f, s_pszMedigunHealTargetThink);
+			return;
+		}
+		CPlayerDestructionDispenser* pDispenser = dynamic_cast<CPlayerDestructionDispenser*>(pTarget);
+		if ( !pDispenser )
+		{
+			CreateMedigunDispenser();
+			SetNextThink(gpGlobals->curtime + 0.2f, s_pszMedigunHealTargetThink);
+			return;
+		}
+
+		// Adds charge based on dispenser healing
+		if ( !m_bChargeRelease && pDispenser->m_hHealingTargets.Count() != 0 )
+		{
+			m_bHealingSelf = false;
+			float HealAmount = pDispenser->m_hHealingTargets.Count() * 10.0f;
+			AddCharge((HealAmount / 24.0f) * gpGlobals->frametime * 0.33f);
+		}
+
+		// Instantly release charge when full
+		if ( !m_bChargeRelease && GetChargeLevel() >= 1.0f )
+		{
+			m_bChargeRelease = true;
+			m_bHealingSelf = true;
+			m_flReleaseStartedAt = gpGlobals->curtime;
+
+			StartHealingTarget(pOwner);
+			RecalcEffectOnTarget(pOwner);
+
+			pOwner->SpeakConceptIfAllowed(MP_CONCEPT_MEDIC_CHARGEDEPLOYED);
+
+			FOR_EACH_VEC(pDispenser->m_hHealingTargets, patient)
+			{
+				CBaseEntity* pOther = pDispenser->m_hHealingTargets[patient].Get();
+				if (pOther)
+				{
+					CTFPlayer* pTFPlayerPatient = ToTFPlayer(pOther);
+					StartHealingTarget(pTFPlayerPatient);
+					RecalcEffectOnTarget(pTFPlayerPatient);
+					pTFPlayerPatient->SpeakConceptIfAllowed(MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED);
+				}
+			}
+
+			IGameEvent* event = gameeventmanager->CreateEvent("player_chargedeployed");
+			if (event)
+			{
+				event->SetInt("userid", pOwner->GetUserID());
+				if (m_hHealingTarget && m_hHealingTarget->IsPlayer())
+				{
+					event->SetInt("targetid", 0);
+				}
+				gameeventmanager->FireEvent(event);
+			}
+		}
+		else if ( m_bChargeRelease )
+		{
+			// Update charged players?
+			/*
+			FOR_EACH_VEC(pDispenser->m_hHealingTargets, patient)
+			{
+				CBaseEntity* pOther = pDispenser->m_hHealingTargets[patient].Get();
+				if (pOther)
+				{
+					CTFPlayer* pTFPlayerPatient = ToTFPlayer(pOther);
+					RecalcEffectOnTarget(pTFPlayerPatient);
+				}
+			}
+			*/
+		}
+
+		SetNextThink( gpGlobals->curtime + 0.2f, s_pszMedigunHealTargetThink );
+		return;
+	}
+
 	// Verify that we still have a valid heal target.
 	CBaseEntity *pTarget = m_hHealingTarget;
 	if ( !pTarget || !pTarget->IsAlive() )
@@ -1190,6 +1311,92 @@ void CWeaponMedigun::RemoveMedigunShield( void )
 }
 
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CWeaponMedigun::CreateMedigunDispenser(void)
+{
+#ifdef GAME_DLL
+	if ( GetMedigunType() != MEDIGUN_EMERALD )
+		return;
+
+	if ( m_hLastHealingTarget )
+		return;
+
+	CTFPlayer* pOwner = ToTFPlayer( GetOwnerEntity() );
+	if ( !pOwner )
+		return;
+
+	CPlayerDestructionDispenser* pDispenser = static_cast<CPlayerDestructionDispenser*>(CBaseEntity::CreateNoSpawn("pd_dispenser", vec3_origin, vec3_angle, NULL));
+	pDispenser->ChangeTeam( pOwner->GetTeamNumber() );
+	pDispenser->SetObjectFlags( pDispenser->GetObjectFlags() | OF_DOESNT_HAVE_A_MODEL | OF_PLAYER_DESTRUCTION );
+	pDispenser->m_iUpgradeLevel = 1;
+	DispatchSpawn( pDispenser );
+	pDispenser->FinishedBuilding();
+	pDispenser->AddEffects( EF_NODRAW );
+	pDispenser->DisableAmmoPickupSound();
+	pDispenser->DisableGenerateMetalSound();
+	pDispenser->m_takedamage = DAMAGE_NO;
+
+	CBaseEntity* pTouchTrigger = pDispenser->GetTouchTrigger();
+	if ( pTouchTrigger )
+	{
+		pTouchTrigger->FollowEntity( pDispenser );
+	}
+
+	if ( pDispenser )
+	{
+		pDispenser->SetOwnerEntity( pOwner );
+		pDispenser->FollowEntity( pOwner );
+		pDispenser->SetBuilder( pOwner );
+		m_hLastHealingTarget = pDispenser;
+
+		SetContextThink( &CWeaponMedigun::HealTargetThink, gpGlobals->curtime + 0.2f, s_pszMedigunHealTargetThink );
+	}
+#endif // GAME_DLL
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CWeaponMedigun::RemoveMedigunDispenser(void)
+{
+#ifdef GAME_DLL
+	if ( GetMedigunType() != MEDIGUN_EMERALD )
+		return;
+
+	if ( m_hLastHealingTarget )
+	{
+		CTFPlayer* pOwner = ToTFPlayer(GetOwnerEntity());
+		if (!pOwner)
+		{
+			UTIL_Remove(m_hLastHealingTarget);
+			m_hLastHealingTarget.Set(NULL);
+			return;
+		}
+		CBaseEntity* pTarget = m_hLastHealingTarget;
+		if (!pTarget)
+			return;
+		CPlayerDestructionDispenser* pDispenser = dynamic_cast<CPlayerDestructionDispenser*>(pTarget);
+		if (!pDispenser)
+			return;
+
+		FOR_EACH_VEC(pDispenser->m_hHealingTargets, patient)
+		{
+			CBaseEntity* pOther = pDispenser->m_hHealingTargets[patient].Get();
+			if (pOther)
+			{
+				CTFPlayer* pTFPlayerPatient = ToTFPlayer(pOther);
+				pTFPlayerPatient->m_Shared.StopHealing(pOwner);
+				RecalcEffectOnTarget(pTFPlayerPatient);
+			}
+		}
+
+		UTIL_Remove( m_hLastHealingTarget );
+		m_hLastHealingTarget.Set(NULL);
+	}
+#endif // GAME_DLL
+}
 
 
 //-----------------------------------------------------------------------------
@@ -1504,6 +1711,27 @@ void CWeaponMedigun::SubtractChargeAndUpdateDeployState( float flSubtractAmount,
 		pOwner->ClearPunchVictims();
 		RecalcEffectOnTarget( pOwner );
 		StopHealingOwner(); // QuickFix uber heals the target and medic
+
+		if ( GetMedigunType() == MEDIGUN_EMERALD )
+		{
+			CBaseEntity* pTarget = m_hLastHealingTarget;
+			if (!pTarget)
+				return;
+			CPlayerDestructionDispenser* pDispenser = dynamic_cast<CPlayerDestructionDispenser*>(pTarget);
+			if (!pDispenser)
+				return;
+
+			FOR_EACH_VEC(pDispenser->m_hHealingTargets, patient)
+			{
+				CBaseEntity* pOther = pDispenser->m_hHealingTargets[patient].Get();
+				if (pOther)
+				{
+					CTFPlayer* pTFPlayerPatient = ToTFPlayer(pOther);
+					pTFPlayerPatient->m_Shared.StopHealing(pOwner);
+					RecalcEffectOnTarget(pTFPlayerPatient);
+				}
+			}
+		}
 #endif
 	}
 }
@@ -1704,10 +1932,16 @@ void CWeaponMedigun::RemoveHealingTarget( bool bStopHealingSelf )
 	}
 
 	// Stop thinking - we no longer have a heal target.
-	SetContextThink( NULL, 0, s_pszMedigunHealTargetThink );
+	if ( GetMedigunType() != MEDIGUN_EMERALD )
+	{
+		SetContextThink(NULL, 0, s_pszMedigunHealTargetThink);
+	}
 #endif
 
-	m_hLastHealingTarget.Set( m_hHealingTarget );
+	if  ( GetMedigunType() != MEDIGUN_EMERALD )
+	{
+		m_hLastHealingTarget.Set( m_hHealingTarget );
+	}
 	m_hHealingTarget.Set( NULL );
 
 #ifdef GAME_DLL
@@ -2708,6 +2942,77 @@ void CWeaponMedigun::HookAttributes( void )
 
 	m_flOverHealExpert = 0.f;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, m_flOverHealExpert, overheal_expert );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CWeaponMedigun::CanBeSelected()
+{
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		return false;
+	}
+	else
+	{
+		return BaseClass::CanBeSelected();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CWeaponMedigun::CanDeploy()
+{
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		return false;
+	}
+	else
+	{
+		return BaseClass::CanDeploy();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CWeaponMedigun::VisibleInWeaponSelection()
+{
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		return false;
+	}
+	else
+	{
+		return BaseClass::VisibleInWeaponSelection();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CWeaponMedigun::WeaponRegenerate()
+{
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		CreateMedigunDispenser();
+	}
+
+	BaseClass::WeaponRegenerate();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CWeaponMedigun::Equip(CBaseCombatCharacter* pOwner)
+{
+	BaseClass::Equip( pOwner );
+
+	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		CreateMedigunDispenser();
+	}
 }
 
 
