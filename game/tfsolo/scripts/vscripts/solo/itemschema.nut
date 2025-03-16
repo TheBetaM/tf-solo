@@ -61,6 +61,11 @@ IncludeScript("solo/balancing/overdose.nut")
 IncludeScript("solo/balancing/vitasaw.nut")
 IncludeScript("solo/balancing/solemnvow.nut")
 IncludeScript("solo/balancing/emeraldjarate.nut")
+IncludeScript("solo/balancing/awperhand.nut")
+IncludeScript("solo/balancing/fortifiedcompound.nut")
+IncludeScript("solo/balancing/sydneysleeper.nut")
+IncludeScript("solo/balancing/shootingstar.nut")
+IncludeScript("solo/balancing/beautymark.nut")
 
 ::TFSOLO.SetupItemSchema <- function()
 {

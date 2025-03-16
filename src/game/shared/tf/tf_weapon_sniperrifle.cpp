@@ -765,6 +765,11 @@ ETFDmgCustom CTFSniperRifle::GetPenetrateType() const
 			return TF_DMG_CUSTOM_PENETRATE_ALL_PLAYERS;
 	}
 
+	int iPenetrateAny = 0;
+	CALL_ATTRIB_HOOK_INT( iPenetrateAny, rifle_projectile_penetration );
+	if ( iPenetrateAny > 0 )
+		return TF_DMG_CUSTOM_PENETRATE_ALL_PLAYERS;
+
 	return BaseClass::GetPenetrateType();
 }
 
@@ -1214,6 +1219,13 @@ bool CTFSniperRifle::IsJarateRifle( void ) const
 //-----------------------------------------------------------------------------
 float CTFSniperRifle::GetJarateTime( void ) const
 {
+	float flMaxJarateTimeOnHit = 0.0f;
+	CALL_ATTRIB_HOOK_FLOAT( flMaxJarateTimeOnHit, rifle_jarate_on_hit );
+	if ( flMaxJarateTimeOnHit > 0 )
+	{
+		return flMaxJarateTimeOnHit;
+	}
+
 	if ( m_flChargedDamage > 0.f )
 	{
 		return GetJarateTimeInternal();
@@ -1234,6 +1246,13 @@ float CTFSniperRifle::GetJarateTimeInternal( void ) const
 		const float flMinJarateTime = 2.f;
 		float flDuration = RemapValClamped( m_flChargedDamage, TF_WEAPON_SNIPERRIFLE_DAMAGE_MIN, TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX, flMinJarateTime, flMaxJarateTime );
 		return flDuration;
+	}
+
+	float flMaxJarateTimeOnHit = 0.0f;
+	CALL_ATTRIB_HOOK_FLOAT( flMaxJarateTimeOnHit, rifle_jarate_on_hit );
+	if ( flMaxJarateTimeOnHit > 0 )
+	{
+		return flMaxJarateTimeOnHit;
 	}
 
 	return 0.f;

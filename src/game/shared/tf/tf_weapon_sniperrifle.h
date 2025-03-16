@@ -26,6 +26,8 @@ enum RifleTypes_t
 	RIFLE_JARATE,
 	RIFLE_MACHINA,
 	RIFLE_CLASSIC,
+
+	RIFLE_SHOOTINGSTAR = 10,
 };
 
 //=============================================================================
@@ -186,6 +188,8 @@ protected:
 	void ZoomOutIn( void );
 
 	void HandleNoScopeFireDeny( void );
+
+	virtual bool		IsEnergyWeapon(void) const { return GetRifleType() == RIFLE_SHOOTINGSTAR; }
 
 	CNetworkVar( float,	m_flChargedDamage );
 

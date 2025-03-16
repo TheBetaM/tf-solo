@@ -193,7 +193,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- New design:  
 -- While active:  
 -- -90% damage taken from ranged sources  
--- -90% movement speed  
+-- -75% movement speed  
 -- -75% deploy speed  
 - Emerald Jarate  
 -- Now equippable as a Medic Secondary  
@@ -201,3 +201,20 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Automatically heals multiple nearby players  
 -- Charge activates instantly when full  
 -- Reduced heal rate  
+- AWPer Hand  
+-- New design:  
+-- +50% headshot damage  
+-- -80% primary ammo capacity  
+- Sydney Sleeper  
+-- Removed Scoped Hit requirement and variable Jarate time  
+-- Added On Hit: 8 seconds of Jarate on target  
+- Shooting Star  
+-- New design:  
+-- Does not require ammo  
+-- Projectiles penetrate players  
+-- Fires tracer rounds  
+-- -50% firing speed  
+- Fortified Compound  
+-- New design:  
+-- Arrows explode 3 seconds after impact  
+-- -20% damage penalty  

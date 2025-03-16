@@ -1027,6 +1027,25 @@ void CTFProjectile_Arrow::FadeOut( int iTime )
 //-----------------------------------------------------------------------------
 void CTFProjectile_Arrow::RemoveThink( void )
 {
+	CTFPlayer* pTFAttacker = ToTFPlayer( GetScorer() );
+	if ( pTFAttacker )
+	{
+		int iExplodeTime = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( pTFAttacker, iExplodeTime, arrows_explode_time );
+		if ( iExplodeTime != 0 )
+		{
+			Vector explosion = GetAbsOrigin();
+			CPVSFilter filter(explosion);
+			TE_TFExplosion(filter, 0.0f, explosion, Vector(0, 0, 1), TF_WEAPON_GRENADELAUNCHER, pTFAttacker->entindex(), -1, SPECIAL1, INVALID_STRING_INDEX);
+
+			int dmgType = DMG_BLAST;
+
+			CTakeDamageInfo info(pTFAttacker, pTFAttacker, this, explosion, explosion, 75.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion);
+			CTFRadiusDamageInfo radiusinfo(&info, explosion, 100.f);
+			TFGameRules()->RadiusDamage(radiusinfo);
+		}
+	}
+
 	UTIL_Remove( this );
 }
 

@@ -10707,7 +10707,10 @@ int CTFPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	if ( pTFWeapon && WeaponID_IsSniperRifle( pTFWeapon->GetWeaponID() ) )
 	{
 		CTFSniperRifle *pSniper = dynamic_cast<CTFSniperRifle*>( pTFWeapon );
-		if ( pSniper && ( pSniper->IsZoomed() || ( pSniper->GetWeaponID() == TF_WEAPON_SNIPERRIFLE_CLASSIC ) ) )
+		float flMaxJarateTimeOnHit = 0.0f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pSniper, flMaxJarateTimeOnHit, rifle_jarate_on_hit );
+
+		if ( pSniper && ( flMaxJarateTimeOnHit > 0 || pSniper->IsZoomed() || ( pSniper->GetWeaponID() == TF_WEAPON_SNIPERRIFLE_CLASSIC ) ) )
 		{
 			float flJarateTime = pSniper->GetJarateTime();
 			if ( flJarateTime >= 1.f )

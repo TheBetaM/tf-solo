@@ -437,6 +437,37 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		"3543"
+		{
+			"name"	"rifle_jarate_on_hit"
+			"attribute_class"	"rifle_jarate_on_hit"
+			"description_string"	"#Attrib_JarateOnHit"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+			"armory_desc"	"on_hit"
+		}
+		"3544"
+		{
+			"name"	"arrows_explode_time"
+			"attribute_class"	"arrows_explode_time"
+			"description_string"	"#Attrib_ArrowsExplodeTime"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3545"
+		{
+			"name"	"rifle_projectile_penetration"
+			"attribute_class"	"rifle_projectile_penetration"
+			"description_string"	"#Attrib_RiflePenetratePlayers"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 		
 		
 	}
