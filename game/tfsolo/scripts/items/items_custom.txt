@@ -468,6 +468,117 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		"3546"
+		{
+			"name"	"sapper_no_buildings"
+			"attribute_class"	"sapper_no_buildings"
+			"description_string"	"#Attrib_SapperNoBuildings"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3547"
+		{
+			"name"	"sapper_on_objectives"
+			"attribute_class"	"sapper_on_objectives"
+			"description_string"	"#Attrib_SapperOnObjectives"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		//"3548"
+		//{
+		//	"name"	"sapper_on_doors"
+		//	"attribute_class"	"sapper_on_doors"
+		//	"description_string"	"#Attrib_SapperOnDoors"
+		//	"description_format"	"value_is_additive"
+		//	"hidden"	"0"
+		//	"effect_type"	"positive"
+		//	"stored_as_integer"	"0"
+		//}
+		"3549"
+		{
+			"name"	"sapper_on_players"
+			"attribute_class"	"sapper_on_players"
+			"description_string"	"#Attrib_SapperOnPlayers"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3550"
+		{
+			"name"	"sapper_destructible"
+			"attribute_class"	"sapper_destructible"
+			"description_string"	"#Attrib_SapperDestructible"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3551"
+		{
+			"name"	"invis_allow_deploy_firing"
+			"attribute_class"	"invis_allow_deploy_firing"
+			"description_string"	"#Attrib_InvisAllowDeployFiring"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3552"
+		{
+			"name"	"invis_reset_meter_holster"
+			"attribute_class"	"invis_reset_meter_holster"
+			"description_string"	"#Attrib_InvisResetMeterHolster"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3553"
+		{
+			"name"	"invis_cloak_type_bounce"
+			"attribute_class"	"set_weapon_mode"
+			"description_string"	"#Attrib_CloakIsBounce"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"armory_desc"	"cloak_type"
+			"stored_as_integer"	"0"
+		}
+		"3554"
+		{
+			"name"	"knockback_immunity"
+			"attribute_class"	"knockback_immunity"
+			"description_string"	"#Attrib_KnockbackImmune"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"3555"
+		{
+			"name"	"sapper_on_pickups"
+			"attribute_class"	"sapper_on_pickups"
+			"description_string"	"#Attrib_SapperOnPickups"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3556"
+		{
+			"name"	"sapper_recharge_time"
+			"attribute_class"	"sapper_recharge_time"
+			"description_string"	"#Attrib_SapperRechargeTime"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
 		
 		
 	}

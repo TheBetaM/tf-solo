@@ -1212,10 +1212,25 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 			CTFTeam *pTeam = ( CTFTeam * )GetGlobalTeam( iTeam );
 			if ( !pTeam )
 				continue;
+
+			bool bPlayerSapper = TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() &&
+				GetType() == OBJ_ATTACHMENT_SAPPER && !pPlayer->IsBot();
+			if ( !bPlayerSapper )
+			{
+				CTFPlayer* pTFBuilder = GetBuilder();
+				if ( pTFBuilder )
+				{
+					int iBuildOnPlayers = 0;
+					CALL_ATTRIB_HOOK_INT_ON_OTHER( pTFBuilder, iBuildOnPlayers, sapper_on_players );
+					if ( iBuildOnPlayers )
+					{
+						bPlayerSapper = true;
+					}
+				}
+			}
 			
 			// See if we're allowed to build on Robots
-			if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() && 
-				 GetType() == OBJ_ATTACHMENT_SAPPER && !pPlayer->IsBot() )
+			if ( bPlayerSapper )
 			{
 				CUtlVector< CTFPlayer * > playerVector;
 				CollectPlayers( &playerVector, pPlayer->GetOpposingTFTeam()->GetTeamNumber(), COLLECT_ONLY_LIVING_PLAYERS );
@@ -1232,17 +1247,32 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 				}
 			}
 
-			// look for nearby buildpoints on other objects
-			for ( i = 0; i < pTeam->GetNumObjects(); i++ )
+			bool bObjectSapper = true;
+			CTFPlayer* pTFBuilder = GetBuilder();
+			if ( pTFBuilder )
 			{
-				CBaseObject *pObject = pTeam->GetObject(i);
-				Assert( pObject );
-				if ( pObject && !pObject->IsPlacing() )
+				int iNoBuildOnObjects = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( pTFBuilder, iNoBuildOnObjects, sapper_no_buildings );
+				if ( iNoBuildOnObjects )
 				{
-					if ( FindNearestBuildPoint( pObject, pPlayer, flNearestPoint, vecNearestBuildPoint ) )
+					bObjectSapper = false;
+				}
+			}
+
+			if ( bObjectSapper )
+			{
+				// look for nearby buildpoints on other objects
+				for ( i = 0; i < pTeam->GetNumObjects(); i++ )
+				{
+					CBaseObject *pObject = pTeam->GetObject(i);
+					Assert( pObject );
+					if ( pObject && !pObject->IsPlacing() )
 					{
-						bSnappedToPoint = true;
-						bShouldAttachToParent = true;
+						if ( FindNearestBuildPoint( pObject, pPlayer, flNearestPoint, vecNearestBuildPoint ) )
+						{
+							bSnappedToPoint = true;
+							bShouldAttachToParent = true;
+						}
 					}
 				}
 			}

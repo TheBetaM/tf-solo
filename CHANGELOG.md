@@ -61,6 +61,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 - Sun-on-a-Stick  
 -- Added: On Hit: Ignite enemy for 2 seconds  
 -- Added: No random critical hits  
+  
 - Black Box  
 -- New design:  
 -- +30% damage  
@@ -79,6 +80,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Restored air control to before the 50% decrease   
 - Pain Train  
 -- Now only usable by Soldier  
+  
 - Rainblower  
 -- Removed Pyrovision requirement  
 - Nostromo Napalmer  
@@ -116,6 +118,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: -50% weapon switch speed  
 - Hot Hand  
 -- Added: +40% damage to burning players  
+  
 - Loch-n-Load  
 -- Replaced +20% damage to buildings with +20% damage bonus  
 - Bootlegger  
@@ -134,13 +137,12 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: Attack does not cancel charge  
 - Half-Zatoichi  
 -- Now only usable by Demoman  
+  
 - Natascha  
 -- Removed slow on hit  
 -- Added: 3 seconds of bleed on hit  
 - Brass Beast  
 -- Added the ability to holster it while spun up  
-- Robo-Sandvich  
--- Now only usable by Spy as a Sapper  
 - Dalokohs Bar  
 -- Added: +50% eating speed  
 - Fishcake  
@@ -161,6 +163,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: +15% movement speed penalty while active  
 - Eviction Notice  
 -- Removed maximum health drain  
+  
 - Pomson 6000  
 -- Added projectile penetration  
 - Lugermorph  
@@ -182,6 +185,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- No self damage taken  
 -- -75% Sentry Gun build/upgrade metal cost  
 -- Sentry Gun deals no damage, only knockback  
+  
 - Blutsauger  
 -- Added: Gain 0.5% charge per hit  
 - Overdose  
@@ -201,6 +205,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Automatically heals multiple nearby players  
 -- Charge activates instantly when full  
 -- Reduced heal rate  
+  
 - AWPer Hand  
 -- New design:  
 -- +50% headshot damage  
@@ -218,3 +223,26 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- New design:  
 -- Arrows explode 3 seconds after impact  
 -- -20% damage penalty  
+  
+- Big Kill  
+-- New design:  
+-- Last shot in the clip deals critical damage  
+-- -50% clip size  
+-- No random critical hits  
+- Ambassador  
+-- Removed critical damage falloff  
+- Enthusiast's Timepiece  
+-- New design:  
+-- Cloak type: Bounce  
+-- Requires full cloak meter to activate  
+-- Allows firing weapons while deployed  
+-- Empties cloak meter on holster  
+- Snack Attack  
+-- New design:  
+-- Can sap enemy players  
+-- Cannot sap buildings  
+-- Takes 15 seconds to recharge after use  
+- Robo-Sandvich  
+-- Now only usable by Spy as a Sapper  
+- Memory Maker  
+-- Now only usable by Spy as a Sapper  

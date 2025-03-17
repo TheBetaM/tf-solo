@@ -1299,8 +1299,17 @@ bool CHudItemEffectMeter_Weapon<C_TFWeaponBuilder>::IsEnabled( void )
 {
 	if ( !m_pPlayer )
 		return false;
+	
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+		return true;
 
-	return ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() );
+	int iChargedSapper = 0;
+	if ( m_pPlayer )
+	{
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pPlayer, iChargedSapper, sapper_recharge_time );
+	}
+
+	return ( iChargedSapper > 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -1314,6 +1323,12 @@ bool CHudItemEffectMeter_Weapon<C_TFWeaponBuilder>::ShouldBeep( void )
 
 	int iRoboSapper = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pPlayer, iRoboSapper, robo_sapper );
+	if ( iRoboSapper > 0 )
+	{
+		return true;
+	}
+
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pPlayer, iRoboSapper, sapper_recharge_time );
 
 	return ( iRoboSapper > 0 );
 }

@@ -9676,8 +9676,13 @@ bool CTFPlayerShared::AddToSpyCloakMeter( float val, bool bForce )
 	}
 
 	bool bResult = ( val > 0 && m_flCloakMeter < 100.0f );
+	bool bFull = (m_flCloakMeter + val) >= 100.0f;
 
 	m_flCloakMeter = clamp( m_flCloakMeter + val, 0.0f, 100.0f );
+	if ( bFull )
+	{
+		pWpn->OnCloakMeterFull();
+	}
 
 	return bResult;
 }
@@ -11249,6 +11254,18 @@ int CTFPlayer::CanBuild( int iObjectType, int iObjectMode )
 				return ( ( GetAmmoCount( TF_AMMO_GRENADES2 ) > 0 ) ? CB_CAN_BUILD : CB_CANNOT_BUILD );
 			}
 		}
+		else if ( iObjectType == OBJ_ATTACHMENT_SAPPER )
+		{
+			int iChargedSapper = 0;
+			CALL_ATTRIB_HOOK_INT( iChargedSapper, sapper_recharge_time );
+			if ( iChargedSapper != 0 )
+			{
+				if ( GetNumObjects( iObjectType, BUILDING_MODE_ANY ) )
+					return CB_LIMIT_REACHED;
+
+				return ( ( GetAmmoCount( TF_AMMO_GRENADES2 ) > 0 ) ? CB_CAN_BUILD : CB_CANNOT_BUILD );
+			}
+		}
 	}
 
 #ifndef CLIENT_DLL
@@ -12149,7 +12166,10 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 
 	if ( ( m_Shared.GetStealthNoAttackExpireTime() > gpGlobals->curtime && !m_Shared.InCond( TF_COND_STEALTHED_USER_BUFF ) ) || m_Shared.InCond( TF_COND_STEALTHED ) )
 	{
-		if ( !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
+		int iCloakCheck = 0;
+		CALL_ATTRIB_HOOK_INT( iCloakCheck, invis_allow_deploy_firing );
+
+		if ( iCloakCheck == 0 && !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
 		{
 #ifdef CLIENT_DLL
 			HintMessage( HINT_CANNOT_ATTACK_WHILE_CLOAKED, true, true );
@@ -14135,11 +14155,21 @@ void CTFPlayerShared::UpdateCloakMeter( void )
 	} 
 	else
 	{
+		bool bFull = ( ( m_flCloakMeter < 100.0f ) && ( ( m_flCloakMeter + gpGlobals->frametime * m_fCloakRegenRate) >= 100.0f ) );
 		m_flCloakMeter += gpGlobals->frametime * m_fCloakRegenRate;
 
 		if ( m_flCloakMeter >= 100.0f )
 		{
 			m_flCloakMeter = 100.0f;
+		}
+
+		if ( bFull )
+		{
+			CTFWeaponInvis* pWpn = (CTFWeaponInvis*)m_pOuter->Weapon_OwnsThisID(TF_WEAPON_INVIS);
+			if ( pWpn )
+			{
+				pWpn->OnCloakMeterFull();
+			}
 		}
 	}
 }

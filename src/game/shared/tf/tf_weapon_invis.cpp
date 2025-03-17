@@ -146,6 +146,17 @@ bool CTFWeaponInvis::Holster( CBaseCombatWeapon *pSwitchingTo )
 	// far in the future
 	SetWeaponIdleTime( gpGlobals->curtime + 10 );
 
+	int iResetCloak = 0;
+	CALL_ATTRIB_HOOK_INT( iResetCloak, invis_reset_meter_holster );
+	if ( iResetCloak != 0 )
+	{
+		CTFPlayer* pOwner = ToTFPlayer(GetOwner());
+		if ( pOwner )
+		{
+			pOwner->m_Shared.SetSpyCloakMeter(0.0f);
+		}
+	}
+
 	return bHolster;
 }
 
@@ -165,6 +176,19 @@ void CTFWeaponInvis::SecondaryAttack( void )
 void CTFWeaponInvis::ItemBusyFrame( void )
 {
 	// do nothing
+}
+
+//-----------------------------------------------------------------------------
+void CTFWeaponInvis::OnCloakMeterFull(void)
+{
+	CTFPlayer* pOwner = ToTFPlayer(GetOwner());
+	if (!pOwner)
+		return;
+
+	if ( GetInvisType() == INVIS_BOUNCE && IsWeaponVisible() && !pOwner->m_Shared.InCond( TF_COND_STEALTHED ) )
+	{
+		ActivateInvisibilityWatch();
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -206,6 +230,37 @@ bool CTFWeaponInvis::ActivateInvisibilityWatch( void )
 			{
 				// Turn it on...
 				SetFeignDeathState( true );
+			}
+		}
+		else if ( GetInvisType() == INVIS_BOUNCE )
+		{
+			if ( pOwner->m_Shared.GetSpyCloakMeter() == 100.0f && pOwner->CanGoInvisible() )
+			{
+				pOwner->m_Shared.AddCond(TF_COND_STEALTHED, -1.f, pOwner);
+
+				Vector vForce = Vector(0, 0, 0);
+				if (pOwner->GetAbsVelocity().z > 0)
+				{
+					vForce.z = 550.0f;
+				}
+				else
+				{
+					vForce.z = 700.0f;
+				}
+				pOwner->ApplyAbsVelocityImpulse(vForce);
+
+				bDoSkill = true;
+			}
+			else
+			{
+				if ( !IsWeaponVisible() )
+				{
+					pOwner->SetOffHandWeapon(this);
+				}
+				else
+				{
+					pOwner->HolsterOffHandWeapon();
+				}
 			}
 		}
 		else if ( pOwner->CanGoInvisible() && ( pOwner->m_Shared.GetSpyCloakMeter() > 8.0f ) )	// must have over 10% cloak to start

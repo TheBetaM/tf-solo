@@ -1132,6 +1132,19 @@ void CTFWeaponBuilder::StartBuilding( void )
 				}
 			}
 		}
+		else
+		{
+			if ( pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
+			{
+				int iChargedSapper = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iChargedSapper, sapper_recharge_time );
+				if ( iChargedSapper != 0 )
+				{
+					pOwner->RemoveAmmo( 1, TF_AMMO_GRENADES2 );
+					StartEffectBarRegen();
+				}
+			}
+		}
 	}
 }
 

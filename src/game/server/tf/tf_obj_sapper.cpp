@@ -571,6 +571,14 @@ int CObjectSapper::OnTakeDamage( const CTakeDamageInfo &info )
 			CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iDmgSappers, set_dmg_apply_to_sapper );
 		}
 		if ( iDmgSappers == 0 )
+		{
+			CTFPlayer* pBuilder = ToTFPlayer( GetBuilder() );
+			if ( pBuilder )
+			{
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( pBuilder, iDmgSappers, sapper_destructible );
+			}
+		}
+		if ( iDmgSappers == 0 )
 			return 0;
 	}
 

@@ -440,6 +440,10 @@ bool C_TFWeaponBuilder::EffectMeterShouldFlash( void )
 
 	int iRoboSapper = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOwner(), iRoboSapper, robo_sapper );
+	//if ( iRoboSapper == 0 )
+	//{
+	//	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOwner(), iRoboSapper, sapper_recharge_time );
+	//}
 
 	return ( iRoboSapper && GetEffectBarProgress() >= 1.f );
 }
