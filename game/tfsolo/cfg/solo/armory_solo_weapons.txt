@@ -8,4 +8,17 @@ armory_config
 	{
 		Cost 1000
 	}
+	
+	"Emerald Jarate"
+	{
+		Cost 1000
+	}
+	"Steel-Toed Stompers"
+	{
+		Cost 1000
+	}
+	"The Infernal Orchestrina"
+	{
+		Cost 1000
+	}
 }

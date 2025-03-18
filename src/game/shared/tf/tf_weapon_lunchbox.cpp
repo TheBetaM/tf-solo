@@ -357,7 +357,7 @@ void CTFLunchBox::Detach( void )
 			// Prevents use-then-switch-class exploit (heavy->scout)
 			// Not a big deal in pubs, but it can mess with competitive
 			pOwner->RemoveCustomAttribute( "hidden maxhealth non buffed" );
-			pOwner->RemoveCustomAttribute( "knockback_immunity_hidden" );
+			pOwner->RemoveCustomAttribute( "health regen" );
 		}
 	}
 #endif
@@ -394,8 +394,8 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 	}
 	else if ( nLunchBoxType == LUNCHBOX_FISHCAKE )
 	{
-		// Add knockback immunity for 20 seconds
-		pPlayer->AddCustomAttribute( "knockback_immunity_hidden", 1.0f, 20.f );
+		// Add +10 health regenerataion for 20 seconds
+		pPlayer->AddCustomAttribute( "health regen", 10.0f, 20.f );
 	}
 	else if ( nLunchBoxType == LUNCHBOX_ADDS_MINICRITS )
 	{

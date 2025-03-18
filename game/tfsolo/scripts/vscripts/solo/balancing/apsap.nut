@@ -5,4 +5,5 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local prefab = key1.FindKey("933")
 	local attrib = prefab.FindKey("attributes")
 	
+	// TODO: New design
 })

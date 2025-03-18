@@ -80,6 +80,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Restored air control to before the 50% decrease   
 - Pain Train  
 -- Now only usable by Soldier  
+- Freedom Staff  
+-- Now only usable by Soldier  
   
 - Rainblower  
 -- Removed Pyrovision requirement  
@@ -118,6 +120,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: -50% weapon switch speed  
 - Hot Hand  
 -- Added: +40% damage to burning players  
+- Infernal Orchestrina
+-- Now equippable in the Secondary slot  
   
 - Loch-n-Load  
 -- Replaced +20% damage to buildings with +20% damage bonus  
@@ -147,9 +151,9 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: +50% eating speed  
 - Fishcake  
 -- New design:  
--- Eat to gain knockback immunity for 20 seconds  
+-- Eat to gain +10 health regeneration for 20 seconds  
 -- Alt-Fire drops a small health kit for teammates  
--- Eating does not heal user  
+-- Eating does not heal user immediately  
 -- Takes 25 seconds to regenerate  
 - Buffalo Steak Sandvich  
 -- Removed +20% damage vulnerability  
@@ -163,6 +167,13 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Added: +15% movement speed penalty while active  
 - Eviction Notice  
 -- Removed maximum health drain  
+- Crossing Guard  
+-- Now only usable by Heavy  
+- Steel-Toed Stompers  
+-- Now equippable in the Secondary slot  
+-- New design:  
+-- Immune to knockback  
+-- Cannot swim  
   
 - Pomson 6000  
 -- Added projectile penetration  
@@ -185,6 +196,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- No self damage taken  
 -- -75% Sentry Gun build/upgrade metal cost  
 -- Sentry Gun deals no damage, only knockback  
+- Necro Smasher  
+-- Now only usable by Engineer  
   
 - Blutsauger  
 -- Added: Gain 0.5% charge per hit  
@@ -199,6 +212,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- -90% damage taken from ranged sources  
 -- -75% movement speed  
 -- -75% deploy speed  
+- Bat Outta Hell  
+-- Now only usable by Medic  
 - Emerald Jarate  
 -- Now equippable as a Medic Secondary  
 -- New design:  
@@ -223,6 +238,13 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- New design:  
 -- Arrows explode 3 seconds after impact  
 -- -20% damage penalty  
+- Ham Shank  
+-- Now only usable by Sniper  
+- Prinny Machete  
+-- Now only usable by Sniper  
+-- New design:  
+-- Cleave attack  
+-- -20% firing speed  
   
 - Big Kill  
 -- New design:  
@@ -231,6 +253,12 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- No random critical hits  
 - Ambassador  
 -- Removed critical damage falloff  
+- Saxxy  
+-- Now only usable by Spy  
+-- New design:  
+-- +200% damage bonus  
+-- Cannot backstab  
+-- -10% movement speed while active  
 - Enthusiast's Timepiece  
 -- New design:  
 -- Cloak type: Bounce  
@@ -246,3 +274,8 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 -- Now only usable by Spy as a Sapper  
 - Memory Maker  
 -- Now only usable by Spy as a Sapper  
+
+- Frying Pan / Golden Frying Pan  
+-- New design:  
+-- +25% damage against the same class  
+-- -50% critical hit damage vulnerability on wearer  

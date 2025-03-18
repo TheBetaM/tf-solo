@@ -213,6 +213,14 @@ void CTFKnife::PrimaryAttack( void )
 			}
 		} 
 	}
+
+	int iNoBackstab = 0;
+	CALL_ATTRIB_HOOK_INT( iNoBackstab, knife_no_backstab );
+	if ( iNoBackstab > 0 )
+	{
+		m_hBackstabVictim = NULL;
+	}
+
 #ifdef GAME_DLL
 	if ( TFGameRules() && TFGameRules()->IsPowerupMode() && m_hBackstabVictim )
 	{

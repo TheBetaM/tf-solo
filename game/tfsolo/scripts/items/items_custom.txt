@@ -579,6 +579,16 @@
 			"effect_type"	"negative"
 			"stored_as_integer"	"0"
 		}
+		"3557"
+		{
+			"name"	"knife_no_backstab"
+			"attribute_class"	"knife_no_backstab"
+			"description_string"	"#Attrib_KnifeNoBackstab"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
 		
 		
 	}
