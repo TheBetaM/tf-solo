@@ -9676,7 +9676,7 @@ bool CTFPlayerShared::AddToSpyCloakMeter( float val, bool bForce )
 	}
 
 	bool bResult = ( val > 0 && m_flCloakMeter < 100.0f );
-	bool bFull = (m_flCloakMeter + val) >= 100.0f;
+	bool bFull = ( ( m_flCloakMeter < 100.0f ) && ( ( m_flCloakMeter + val ) >= 100.0f ) );
 
 	m_flCloakMeter = clamp( m_flCloakMeter + val, 0.0f, 100.0f );
 	if ( bFull )
