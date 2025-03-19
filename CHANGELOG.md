@@ -6,15 +6,15 @@
 - Added Bestiary - browse enemies encountered in the game
 - Added Campaigns
 - Added weapon items:  
--- The Bottled Sorrow  
--- The Shocking Truth
+-- The Bottled Sorrow (Demoman)  
+-- The Shocking Truth (Medic)  
 - Added taunt items:  
--- Thriller (All-Class)  
--- Robot (Soldier)  
--- Werewolf (Demoman)  
--- Frankenheavy (Heavy)  
--- Come And Get Me (Scout)  
--- Hero Pose (All-Class)
+-- The Thriller (All-Class)  
+-- Robotic Threat (Soldier)  
+-- Beast From Within (Demoman)  
+-- Primal Roar (Heavy)  
+-- Center Of Attention (Scout)  
+-- Signature Stance (All-Class)  
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>,
 nav_generate_auto, tf_mvm_popfile_requested
