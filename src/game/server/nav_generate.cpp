@@ -46,7 +46,8 @@ ConVar nav_generate_jump_connections( "nav_generate_jump_connections", "1", FCVA
 ConVar nav_generate_incremental_range( "nav_generate_incremental_range", "2000", FCVAR_CHEAT );
 ConVar nav_generate_incremental_tolerance( "nav_generate_incremental_tolerance", "0", FCVAR_CHEAT, "Z tolerance for adding new nav areas." );
 ConVar nav_generate_noreload( "nav_generate_noreload", "1", FCVAR_CHEAT, "Reload only the navmesh after generation/analysis instead of the entire map." );
-ConVar nav_generate_auto("nav_generate_auto", "0", FCVAR_CHEAT, "Automatically generate a nav mesh when there isn't any.");
+ConVar nav_generate_auto( "nav_generate_auto", "0", FCVAR_CHEAT, "Automatically generate a nav mesh when there isn't any." );
+ConVar nav_generate_auto_view_distance( "nav_generate_auto_view_distance", "2500", FCVAR_CHEAT, "Set the auto generation view distance to optimize generation time." );
 ConVar nav_area_max_size( "nav_area_max_size", "50", FCVAR_CHEAT, "Max area size created in nav generation" );
 
 // Common bounding box for traces

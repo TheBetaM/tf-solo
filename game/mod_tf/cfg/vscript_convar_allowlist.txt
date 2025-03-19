@@ -69,6 +69,7 @@ vscript_convar_allowlist
     mp_windifference_min                                              allowed
     mp_winlimit                                                       allowed
     nav_generate_auto                                                 allowed
+    nav_generate_auto_view_distance                                   allowed			
     obj_damage_factor                                                 allowed
     obj_sapper_amount                                                 allowed
     old_radiusdamage                                                  allowed

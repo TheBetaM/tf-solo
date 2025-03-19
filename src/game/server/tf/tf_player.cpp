@@ -13650,6 +13650,9 @@ void CTFPlayer::StateEnterWELCOME( void )
 		else if (TheNavMesh->GetNavAreaCount() == 0)
 		{
 			m_bSeenRoundInfo = true;
+			ConVarRef nav_max_view_distance("nav_max_view_distance");
+			ConVarRef nav_generate_auto_view_distance("nav_generate_auto_view_distance");
+			nav_max_view_distance.SetValue(nav_generate_auto_view_distance.GetFloat());
 			engine->ServerCommand("nav_generate\n");
 			ChangeTeam(TEAM_SPECTATOR, false, true);
 			ClientPrint(this, HUD_PRINTCENTER, "#TFSOLO_NavGenerateAuto");

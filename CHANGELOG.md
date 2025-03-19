@@ -17,7 +17,7 @@
 -- Signature Stance (All-Class)  
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>,
-nav_generate_auto, tf_mvm_popfile_requested
+nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested  
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
