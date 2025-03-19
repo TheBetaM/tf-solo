@@ -24,6 +24,7 @@ nav_generate_auto, tf_mvm_popfile_requested
 - Disabled halloween taunts, holiday restrictions by default
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed some cases of MvM workshop maps not being able to find any popfile
+- Fixed nav mesh generation not taking into account multiple spawn areas and stages
 ## TFBot improvements
 - Fixed bots not working correctly in PLR
 - Fixed bots ignoring SD, PD, RD and neutral flags

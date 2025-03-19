@@ -258,7 +258,7 @@ void CNavMesh::Update( void )
 
 	if (IsGenerating())
 	{
-		UpdateGeneration( 0.03 );
+		UpdateGeneration( 0.015 );
 		return; // don't bother trying to draw stuff while we're generating
 	}
 

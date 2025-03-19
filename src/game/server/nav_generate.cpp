@@ -17,7 +17,9 @@
 #include "viewport_panel_names.h"
 //#include "terror/TerrorShared.h"
 #include "fmtstr.h"
+#ifdef TF_DLL
 #include "player_vs_environment/tf_mann_vs_machine_logic.h"
+#endif
 
 #ifdef TERROR
 #include "func_simpleladder.h"
@@ -3396,6 +3398,38 @@ void CNavMesh::CreateNavAreasFromNodes( void )
 // adds walkable positions for any/all positions a mod specifies
 void CNavMesh::AddWalkableSeeds( void )
 {
+#ifdef TF_DLL
+	int iFoundSpawns = 0;
+	int iFoundSpawnsNoGround = 0;
+	// Get as many spawns as possible, across all stages
+	for ( int iTFTeamSpawn = 0; iTFTeamSpawn < ITFTeamSpawnAutoList::AutoList().Count(); ++iTFTeamSpawn )
+	{
+		CTFTeamSpawn* spawnSpot = static_cast<CTFTeamSpawn*>( ITFTeamSpawnAutoList::AutoList()[iTFTeamSpawn] );
+
+		if ( spawnSpot )
+		{
+			// snap it to the sampling grid
+			Vector pos = spawnSpot->GetAbsOrigin();
+			pos.x = TheNavMesh->SnapToGrid( pos.x );
+			pos.y = TheNavMesh->SnapToGrid( pos.y );
+
+			Vector normal;
+			if ( FindGroundForNode( &pos, &normal ) )
+			{
+				AddWalkableSeed( pos, normal );
+				iFoundSpawns++;
+			}
+			else
+			{
+				iFoundSpawnsNoGround++;
+			}
+		}
+	}
+	Msg("Found %d team spawns. %d without ground. \n", iFoundSpawns, iFoundSpawnsNoGround);
+
+	return;
+#endif // TF_DLL
+
 	CBaseEntity *spawn = gEntList.FindEntityByClassname( NULL, GetPlayerSpawnName() );
 
 	if (spawn )
@@ -4037,11 +4071,13 @@ bool CNavMesh::UpdateGeneration( float maxTime )
 					Load();
 					if (nav_generate_auto.GetBool())
 					{
+#ifdef TF_DLL
 						auto* pMVM = dynamic_cast<CMannVsMachineLogic*> (gEntList.FindEntityByClassname(NULL, "tf_logic_mann_vs_machine"));
 						if (pMVM)
 						{
 							pMVM->InitPopulationManager();
 						}
+#endif
 						IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_nav_complete");
 						if (pEvent)
 						{
@@ -4685,15 +4721,20 @@ CNavNode *CNavMesh::GetNextWalkableSeedNode( void )
 	if ( m_seedIdx >= m_walkableSeeds.Count() )
 		return NULL;
 
-	WalkableSeedSpot spot = m_walkableSeeds[ m_seedIdx ];
-	++m_seedIdx;
+	while ( true )
+	{
+		WalkableSeedSpot spot = m_walkableSeeds[m_seedIdx];
+		++m_seedIdx;
 
-	// check if a node exists at this location
-	CNavNode *node = CNavNode::GetNode( spot.pos );
-	if ( node )
-		return NULL;
-
-	return new CNavNode( spot.pos, spot.normal, NULL, false );
+		// check if a node exists at this location
+		CNavNode* node = CNavNode::GetNode(spot.pos);
+		if ( !node )
+		{
+			return new CNavNode(spot.pos, spot.normal, NULL, false);
+		}
+		if ( m_seedIdx >= m_walkableSeeds.Count() )
+			return NULL;
+	}
 }
 
 
