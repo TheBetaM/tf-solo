@@ -846,6 +846,14 @@ public:
 		}
 		return NULL;
 	}
+	int ItemDefID(const char* name)
+	{
+		if (GetItemSchema()->GetItemDefinitionByName(name) != NULL)
+		{
+			return GetItemSchema()->GetItemDefinitionByName(name)->GetDefinitionIndex();
+		}
+		return -1;
+	}
 	HSCRIPT ItemSchemaGetKV()
 	{
 		return Script_FileToKeyValues("scripts/items/items_custom.txt");
@@ -871,6 +879,7 @@ BEGIN_SCRIPTDESC_ROOT_NAMED(CSoloAccess, "CSolo", SCRIPT_SINGLETON "Solo access"
 	DEFINE_SCRIPTFUNC(ItemDefExists, "")
 	DEFINE_SCRIPTFUNC(ItemDefIDExists, "")
 	DEFINE_SCRIPTFUNC(ItemDefName, "")
+	DEFINE_SCRIPTFUNC(ItemDefID, "")
 
 	DEFINE_SCRIPTFUNC(UnlockItem, "Unlock an item by schema name.")
 	DEFINE_SCRIPTFUNC(UnlockItemID, "Unlock an item by schema ID.")

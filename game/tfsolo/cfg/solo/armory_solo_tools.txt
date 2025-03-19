@@ -1,0 +1,19 @@
+armory_config
+{
+	"Solo BaseGameUnlock Weapons"
+	{
+		Cost 1000
+	}
+	"Solo BaseGameUnlock Taunts"
+	{
+		Cost 1000
+	}
+	"Solo BaseGameUnlock Cosmetics"
+	{
+		Cost 1000
+	}
+	//"Solo BaseGameUnlock All"
+	//{
+	//	Cost 1000
+	//}
+}

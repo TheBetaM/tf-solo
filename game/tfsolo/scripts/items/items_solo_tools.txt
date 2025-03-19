@@ -1,0 +1,118 @@
+"items_game"
+{
+	"items"
+	{
+		"18100"
+		{
+			"name"	"Solo BaseGameUnlock Weapons"
+			"prefab"	""
+			"item_class"	"tool"
+			"tool"
+			{
+				"type"	"account_upgrade_to_premium"
+			}
+			"static_attrs"
+			{
+			}
+			"capabilities"
+			{
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_T"
+			"item_name"			"TF2 Base Game Weapons Unlock"
+			"item_description"	"Unlock the ability to equip all weapon items from your base Team Fortress 2 inventory."
+			"image_inventory"	"backpack/crafting/gift_premium"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"50"
+			"max_ilevel"	"59"
+			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
+			"drop_sound"		"ui/item_bag_drop.wav"
+		}
+		"18101"
+		{
+			"name"	"Solo BaseGameUnlock Taunts"
+			"prefab"	""
+			"item_class"	"tool"
+			"tool"
+			{
+				"type"	"account_upgrade_to_premium"
+			}
+			"static_attrs"
+			{
+			}
+			"capabilities"
+			{
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_T"
+			"item_name"			"TF2 Base Game Taunts Unlock"
+			"item_description"	"Unlock the ability to equip all taunt items from your base Team Fortress 2 inventory."
+			"image_inventory"	"backpack/crafting/gift_premium"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"50"
+			"max_ilevel"	"59"
+			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
+			"drop_sound"		"ui/item_bag_drop.wav"
+		}
+		"18102"
+		{
+			"name"	"Solo BaseGameUnlock Cosmetics"
+			"prefab"	""
+			"item_class"	"tool"
+			"tool"
+			{
+				"type"	"account_upgrade_to_premium"
+			}
+			"static_attrs"
+			{
+			}
+			"capabilities"
+			{
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_T"
+			"item_name"			"TF2 Base Game Cosmetics Unlock"
+			"item_description"	"Unlock the ability to equip all cosmetic items from your base Team Fortress 2 inventory."
+			"image_inventory"	"backpack/crafting/gift_premium"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"50"
+			"max_ilevel"	"59"
+			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
+			"drop_sound"		"ui/item_bag_drop.wav"
+		}
+		"18103"
+		{
+			"name"	"Solo BaseGameUnlock All"
+			"prefab"	""
+			"item_class"	"tool"
+			"tool"
+			{
+				"type"	"account_upgrade_to_premium"
+			}
+			"static_attrs"
+			{
+			}
+			"capabilities"
+			{
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_T"
+			"item_name"			"TF2 Base Game All Unlock"
+			"item_description"	"Unlock the ability to equip all items from your base Team Fortress 2 inventory."
+			"image_inventory"	"backpack/crafting/gift_premium"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"item_quality"		"unique"
+			"min_ilevel"	"50"
+			"max_ilevel"	"59"
+			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
+			"drop_sound"		"ui/item_bag_drop.wav"
+		}
+	}
+}

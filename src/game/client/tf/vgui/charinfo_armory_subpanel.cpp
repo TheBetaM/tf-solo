@@ -408,12 +408,16 @@ void CArmoryPanel::OnCommand( const char *command )
 				}
 			}
 			kvSave->SetInt("Credits", credits - price);
-			TFInventoryManager()->AddSoloItem(m_SelectedItem.GetItemDefIndex());
-			auto itemsKey = kvSave->FindKey("UnlockedItems");
-			itemsKey->SetInt(name, 1);
 
-			TFInventoryManager()->WriteSaveData();
 			m_pWikiButton->SetEnabled(false);
+
+			IGameEvent* event = gameeventmanager->CreateEvent( "solo_client_armory_unlocked" );
+			if ( event )
+			{
+				event->SetString ( "item", name );
+				event->SetInt( "itemid", m_SelectedItem.GetItemDefIndex() );
+				gameeventmanager->FireEventClientSide( event );
+			}
 
 			UpdateSelectedItem();
 		}

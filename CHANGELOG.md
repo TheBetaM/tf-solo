@@ -34,7 +34,7 @@ nav_generate_auto, tf_mvm_popfile_requested
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
-ItemDefIDExists(int), ItemDefName(int)
+ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string)
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,
 SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,SetName/SetKeyName,RemoveSubKey  

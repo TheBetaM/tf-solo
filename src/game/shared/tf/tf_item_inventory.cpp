@@ -249,6 +249,7 @@ void CTFInventoryManager::PostInit( void )
 	ListenForGameEvent("solo_campaign_flag");
 	ListenForGameEvent("solo_botpreset_flag");
 	ListenForGameEvent("solo_generic_flag");
+	ListenForGameEvent("solo_client_armory_unlocked");
 }
 
 CEconItemView* CTFInventoryManager::AddSoloItem(int id)
@@ -266,6 +267,57 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 #endif
 	m_pSoloLoadoutItems.AddToTail(pItemView);
 	return pItemView;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CTFInventoryManager::CheckAllowItemEquip( int iClass, int iSlot )
+{
+#ifdef CLIENT_DLL
+	auto kvSave = TFInventoryManager()->GetSaveData();
+	auto genericKV = kvSave->FindKey("Generic", true);
+	switch (iSlot)
+	{
+		case LOADOUT_POSITION_PRIMARY:
+		case LOADOUT_POSITION_SECONDARY:
+		case LOADOUT_POSITION_MELEE:
+		case LOADOUT_POSITION_UTILITY:
+		case LOADOUT_POSITION_BUILDING:
+		case LOADOUT_POSITION_PDA:
+		case LOADOUT_POSITION_PDA2:
+		case LOADOUT_POSITION_ACTION:
+			if ( genericKV->GetInt("BaseGameWeapons") == 0 )
+			{
+				return false;
+			}
+			break;
+		case LOADOUT_POSITION_HEAD:
+		case LOADOUT_POSITION_MISC:
+		case LOADOUT_POSITION_MISC2:
+			if ( genericKV->GetInt("BaseGameCosmetics") == 0 )
+			{
+				return false;
+			}
+			break;
+		case LOADOUT_POSITION_TAUNT:
+		case LOADOUT_POSITION_TAUNT2:
+		case LOADOUT_POSITION_TAUNT3:
+		case LOADOUT_POSITION_TAUNT4:
+		case LOADOUT_POSITION_TAUNT5:
+		case LOADOUT_POSITION_TAUNT6:
+		case LOADOUT_POSITION_TAUNT7:
+		case LOADOUT_POSITION_TAUNT8:
+			if ( genericKV->GetInt("BaseGameTaunts") == 0 )
+			{
+				return false;
+			}
+			break;
+		default:
+			break;
+	}
+#endif // CLIENT_DLL
+	return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -328,9 +380,13 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 			}
 		}
 	}
-	else if (tf_disable_base_econ_items.GetBool())
+	else
 	{
-		return false;
+		if ( tf_disable_base_econ_items.GetBool() )
+			return false;
+
+		if ( !CheckAllowItemEquip(iClass, iSlot) )
+			return false;
 	}
 
 	if (!pItem)
@@ -393,7 +449,13 @@ int	CTFInventoryManager::GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVe
 		if ( IsUnacknowledged( pItem->GetInventoryPosition() ) )
 			continue;
 
-		if (tf_disable_base_econ_items.GetBool())
+		if ( tf_disable_base_econ_items.GetBool() )
+			continue;
+
+		if ( iSlot >= 0 && !CheckAllowItemEquip( iClass, iSlot ) )
+			continue;
+
+		if ( iSlot < 0 && !CheckAllowItemEquip( iClass, pItemData->GetLoadoutSlot( iClass ) ) )
 			continue;
 
 		pList->AddToTail( m_LocalInventory.GetItem(i) );
@@ -1137,6 +1199,11 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 					uItemId = ( bDefaultToGC && iPreset == 0 ) ? m_RealTFLoadoutItems[iClass][iSlot] : 0;
 				}
 
+				if ( uItemId >= LOCAL_LOADOUT_RESERVE && !TFInventoryManager()->CheckAllowItemEquip(iClass, iSlot) )
+				{
+					uItemId = 0;
+				}
+
 				pClassKV->SetUint64(szSlot, uItemId);
 			}
 		}
@@ -1218,6 +1285,10 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	else if (!tf_disable_base_econ_items.GetBool())
 	{
 		CEconItemView* pItem = GetInventoryItemByItemID(ulItemID);
+		if ( pItem && !TFInventoryManager()->CheckAllowItemEquip( unClass, unSlot ) )
+		{
+			return;
+		}
 		if (pItem && pItem->GetSOCData())
 		{
 			pItem->GetSOCData()->Equip(unClass, unSlot);
@@ -1630,7 +1701,7 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 			// we need to validate their position on the server when we retrieve them.
 			if (pItem && AreSlotsConsideredIdentical(pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot(iClass), iSlot))
 			{
-				if (!tf_disable_base_econ_items.GetBool())
+				if ( !tf_disable_base_econ_items.GetBool() && TFInventoryManager()->CheckAllowItemEquip( iClass, iSlot ) )
 				{
 					return pItem;
 				}

@@ -2584,6 +2584,14 @@ public:
 		}
 		return NULL;
 	}
+	int ItemDefID(const char* name)
+	{
+		if (GetItemSchema()->GetItemDefinitionByName(name) != NULL)
+		{
+			return GetItemSchema()->GetItemDefinitionByName(name)->GetDefinitionIndex();
+		}
+		return -1;
+	}
 	HSCRIPT ItemSchemaGetKV()
 	{
 		return Script_FileToKeyValues("scripts/items/items_custom.txt");
@@ -2604,6 +2612,7 @@ DEFINE_SCRIPTFUNC(ItemSchemaReload, "")
 DEFINE_SCRIPTFUNC(ItemDefExists, "")
 DEFINE_SCRIPTFUNC(ItemDefIDExists, "")
 DEFINE_SCRIPTFUNC(ItemDefName, "")
+DEFINE_SCRIPTFUNC(ItemDefID, "")
 
 END_SCRIPTDESC();
 #endif // TF_CLIENT_DLL

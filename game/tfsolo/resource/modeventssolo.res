@@ -12,6 +12,11 @@
 	{
 		"item"	"long"
 	}
+	"solo_client_armory_item_unlocked"
+	{
+		"item"	"string"
+		"itemid"	"long"
+	}
 	"solo_save_data"
 	{
 	}

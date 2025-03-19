@@ -216,6 +216,7 @@ public:
 	virtual void		AddBaseItemCriteria( baseitemcriteria_t *pCriteria, CItemSelectionCriteria *pSelectionCriteria );
 	
 	bool				SlotContainsBaseItems( EEquipType_t eType, int iSlot );
+	bool				CheckAllowItemEquip( int iClass, int iSlot );
 
 	int					GetBaseItemCount( )			{ return m_pBaseLoadoutItems.Count(); }
 	CEconItemView*		GetBaseItem( int iIndex )	{ return m_pBaseLoadoutItems[iIndex]; }
