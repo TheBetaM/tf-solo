@@ -265,41 +265,104 @@ PublishedFileId_t MapIDFromName(CUtlString localMapName)
 	return nMapID;
 }
 
+inline bool IsValidOriginalFileNameForMap(const CUtlString& originalName)
+{
+	// Matching: ([a-z0-9]+_)*[a-z0-9]\.bsp
+
+	int len = originalName.Length();
+	const unsigned int nMaxFileName = MAX_DISPLAY_MAP_NAME + 4; // Map minus extension must be within MAX_DISPLAY_MAP_NAME
+	if (len < 6 || len > nMaxFileName || originalName.Slice(len - 4) != ".bsp")
+	{
+		Warning("Map filename must be at least 6 characters and not more than %u characters ending in .bsp\n", nMaxFileName);
+		return false;
+	}
+
+	CUtlString baseName = originalName.Slice(0, len - 4);
+	return IsValidDisplayNameForMap(baseName);
+}
+
+bool CanonicalNameForMap(PublishedFileId_t fileID, const CUtlString& originalFileName, /* out */ CUtlString& strCanonName)
+{
+	if (!IsValidOriginalFileNameForMap(originalFileName))
+	{
+		Warning("Invalid workshop map name %llu [ %s ]\n", fileID, originalFileName.Get());
+		return false;
+	}
+
+	// cp_mymap.bsp -> workshop/cp_mymap.ugc12345
+	char szBase[MAX_PATH];
+	V_FileBase(originalFileName.Get(), szBase, sizeof(szBase));
+
+	int len = strCanonName.Format("workshop/%s.ugc%llu", szBase, fileID);
+	if (len >= MAX_PATH)
+	{
+		Assert(len < MAX_PATH);
+		// This should be caught by the name validator but
+		return false;
+	}
+
+	return true;
+}
+
 bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 {
 	PublishedFileId_t nMapID = k_PublishedFileIdInvalid;
 	CUtlString localName(pszInputMapFile);
 	localName.ToLower();
 	nMapID = MapIDFromName(localName);
+	m_nFileID = nMapID;
 
-	// Check workshop map status (currently only already downloaded maps)
-	if (nMapID != k_PublishedFileIdInvalid)
+	if (nMapID == k_PublishedFileIdInvalid)
 	{
+		// Local map, continue
+		m_MapReadyStatus = MapReadyStatus_Ready;
+	}
+	else
+	{
+		// Workshop map
 		uint64 nUGCSize = 0;
 		uint32 nTimestamp = 0;
 		char szFolder[MAX_PATH * 2] = { 0 };
-		if (!GetSteamUGC()->GetItemInstallInfo(nMapID, &nUGCSize, szFolder, sizeof(szFolder), &nTimestamp))
+
+		m_MapReadyStatus = MapReadyStatus_FetchingUGC;
+
+		auto steamUGC = GetSteamUGC();
+		UGCQueryHandle_t ugcQuery = steamUGC->CreateQueryUGCDetailsRequest(&nMapID, 1);
+		bool setMeta = steamUGC->SetReturnMetadata(ugcQuery, true);
+		bool setCache = steamUGC->SetAllowCachedResponse(ugcQuery, 0);
+		if (ugcQuery == k_UGCQueryHandleInvalid || !setMeta || !setCache)
 		{
-			Msg("BSP cache failed: GetItemInstallInfo failed for item, map not usable [ %s ]\n", pszInputMapFile);
+			Warning("Failed to create UGC details request for map [ %llu ]\n", nMapID);
+			return false;
+		}
+		SteamAPICall_t hSteamAPICall = steamUGC->SendQueryUGCRequest(ugcQuery);
+		m_callbackQueryUGCDetails.Set(hSteamAPICall, this, &BackgroundBSPCacheThread::Steam_OnQueryUGCDetails);
+
+		while (m_MapReadyStatus == MapReadyStatus_FetchingUGC)
+		{
+			Sleep(100);
+		}
+		while (m_MapReadyStatus == MapReadyStatus_Downloading)
+		{
+			// TODO
+			//Sleep(100);
+			Warning("Download callback not yet implemeted\n");
+			return false;
+		}
+		if (m_MapReadyStatus == MapReadyStatus_Error)
+		{
 			return false;
 		}
 
-		//Msg("Workshop map folder: %s\n", szFolder);
-		// TODO: Has folder path, but still needs map file name
-		/*
-		char szMeta[k_cchDeveloperMetadataMax] = { 0 };
-		if (!GetSteamUGC()->GetQueryUGCMetadata(pResult->m_handle, 0, szMeta, sizeof(szMeta)))
+		if (!GetSteamUGC()->GetItemInstallInfo(nMapID, &nUGCSize, szFolder, sizeof(szFolder), &nTimestamp))
 		{
-			Msg("BSP cache failed: Failed to get metadata for UGC file %llu\n", nMapID);
+			Msg("BSP cache failed: GetItemInstallInfo failed for item, map not usable [ %s ]\n", m_strCanonicalName);
 			return false;
 		}
-		CUtlString baseName = CUtlString(szMeta);
-		CUtlString m_strMapName = baseName;
 
 		char szFullPath[MAX_PATH * 2] = { 0 };
 		V_MakeAbsolutePath(szFullPath, sizeof(szFullPath), m_strMapName, szFolder);
 		pszInputMapFile = szFullPath;
-		*/
 	}
 
 	if (!g_pFullFileSystem->FileExists(pszInputMapFile))
@@ -403,6 +466,77 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	IZip::ReleaseZip(zip);
 	Msg("Successfully cached %s\n", pszInputMapFile);
 	return true;
+}
+
+void BackgroundBSPCacheThread::Steam_OnQueryUGCDetails(SteamUGCQueryCompleted_t* pResult, bool bError)
+{
+	if (pResult->m_eResult != k_EResultOK)
+	{
+		bError = true;
+	}
+
+	ISteamUGC* steamUGC = GetSteamUGC();
+
+	SteamUGCDetails_t details = { 0 };
+	if (!bError && !(steamUGC->GetQueryUGCResult(pResult->m_handle, 0, &details) && details.m_eResult == k_EResultOK))
+	{
+		Warning("Error fetching updated information for map\n");
+		bError = true;
+	}
+
+	char szMeta[k_cchDeveloperMetadataMax] = { 0 };
+	if (!bError && !steamUGC->GetQueryUGCMetadata(pResult->m_handle, 0, szMeta, sizeof(szMeta)))
+	{
+		bError = true;
+		Warning("Failed to get metadata for UGC file\n");
+	}
+
+	if (bError)
+	{
+		Warning("Info lookup failed for workshop file\n");
+		m_MapReadyStatus = MapReadyStatus_Error;
+		return;
+	}
+
+	// Succeeded, re-evalute
+	m_MapReadyStatus = MapReadyStatus_Error;
+
+	// Our workshop maps use the metadata field for the canonical map filename
+	CUtlString baseName = CUtlString(szMeta);
+	m_strMapName = baseName;
+
+	if (!baseName.Length())
+	{
+		Warning("Tracked map has no filename and will not sync\n");
+		return;
+	}
+
+	if (!CanonicalNameForMap(m_nFileID, baseName, m_strCanonicalName))
+	{
+		Warning("Failed to make filename for tracked map, map will not be usuable [ baseName: %s ]\n", baseName.Get());
+		return;
+	}
+
+	uint32 state = steamUGC->GetItemState(m_nFileID);
+	if ((state & k_EItemStateNeedsUpdate) ||
+		!(state & (k_EItemStateDownloading | k_EItemStateDownloadPending | k_EItemStateInstalled)))
+	{
+		m_MapReadyStatus = MapReadyStatus_Downloading;
+		// Either out of date or not installed, downloading, or queued to download, ask UGC to do so. The latter happens
+		// for maps added not from subscriptions that have no reason for UGC to initiate downloads on its own.
+		if (!steamUGC->DownloadItem(m_nFileID, true))
+		{
+			Warning("DownloadItem failed for file, map will not be usable [ %s ]\n", m_strCanonicalName.Get());
+			return;
+		}
+
+		Msg("New version available for map, download queued [ %s ]\n", m_strCanonicalName.Get());
+	}
+	else
+	{
+		Msg("Got updated information for map [ %s ]\n", m_strCanonicalName.Get());
+		m_MapReadyStatus = MapReadyStatus_Ready;
+	}
 }
 
 void BSP_RemoveAssetFromCache(const char* pszAsset)

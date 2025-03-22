@@ -31,10 +31,15 @@ public:
 	BackgroundBSPCacheThread(const char* pszInputFile)
 		: m_strInput(pszInputFile)
 	{
+		m_MapReadyStatus = MapReadyStatus_Start;
+		m_nFileID = 0;
+		m_strMapName = NULL;
+		m_strCanonicalName = NULL;
 		g_bspCacheJobsRunning++;
 	}
 
 	bool BSP_CacheAssets(const char* pszInputMapFile);
+	void Steam_OnQueryUGCDetails(SteamUGCQueryCompleted_t* pResult, bool bError);
 
 	// CThread job - returns 0 for success
 	virtual int Run() OVERRIDE
@@ -75,7 +80,22 @@ public:
 
 	CUtlHashtable<const char*, const char*> m_FileTable;
 private:
+
+	enum eMapReadyStatus
+	{
+		MapReadyStatus_Start = 0,
+		MapReadyStatus_FetchingUGC,
+		MapReadyStatus_Downloading,
+		MapReadyStatus_Error,
+		MapReadyStatus_Ready,
+	};
+
 	const char* m_strInput;
+	eMapReadyStatus m_MapReadyStatus = MapReadyStatus_Start;
+	CCallResult<BackgroundBSPCacheThread, SteamUGCQueryCompleted_t> m_callbackQueryUGCDetails;
+	CUtlString m_strCanonicalName;
+	CUtlString m_strMapName;
+	PublishedFileId_t m_nFileID;
 };
 
 // Remove an asset from BSP cache.
