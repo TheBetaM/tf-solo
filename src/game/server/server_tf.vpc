@@ -109,6 +109,8 @@ $Project "Server (TF)"
 			$File	"$SRCDIR\game\shared\workshop\ugc_utils.cpp"
 			$File	"$SRCDIR\game\server\tf\workshop\maps_workshop.h"
 			$File	"$SRCDIR\game\server\tf\workshop\maps_workshop.cpp"
+			$File	"$SRCDIR\game\shared\bsp_utils.cpp"
+			$File	"$SRCDIR\game\shared\bsp_utils.h"
 		}
 
 		$Folder	"TF"

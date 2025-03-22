@@ -102,13 +102,13 @@ public:
 		m_bAllowEntityCreationInScripts = false;
 	}
 
-	virtual void FrameUpdatePostEntityThink()
+	virtual void Update(float frametime)
 	{
 		if (g_pScriptVM)
-			g_pScriptVM->Frame(gpGlobals->frametime);
+			g_pScriptVM->Frame(frametime);
 	}
 
-	virtual void Run(const char* code)
+	virtual void RunCode(const char* code)
 	{
 		g_pScriptVM->Run(code);
 	}

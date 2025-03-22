@@ -18,6 +18,8 @@
 #include "vscript_utils.h"
 #include "in_buttons.h"
 #include "vgui/ISurface.h"
+#include <tier1/utlhashtable.h>
+#include "bsp_utils.h"
 
 
 #ifdef PANORAMA_ENABLE
@@ -42,6 +44,7 @@
 extern IScriptManager *scriptmanager;
 extern ScriptClassDesc_t * GetScriptDesc( CBaseEntity * );
 CVScriptGameSystem g_VScriptGameSystem;
+extern int g_bspCacheJobsRunning;
 
 // #define VMPROFILE 1
 
@@ -757,6 +760,204 @@ static void SendToServerConsole(const char* pszCommand)
 	engine->ServerCmd(pszCommand);
 }
 
+void Script_BSP_CacheStartSingle( HSCRIPT hTable )
+{
+	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
+	if (nEntryCount == 0)
+	{
+		Warning("No valid entries found in table.\n");
+		return;
+	}
+
+	int nIter = 0;
+	int nMaps = 0;
+	int nFiles = 0;
+	for (int i = 0; i < nEntryCount; i++)
+	{
+		ScriptVariant_t vKey, vValue;
+		nIter = g_pScriptVM->GetKeyValue(hTable, nIter, &vKey, &vValue);
+		nMaps++;
+		const char* pszKeyName = (const char*)vKey;
+		BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread(pszKeyName);
+
+		switch (vValue.GetType())
+		{
+			case FIELD_CSTRING:
+			{
+				// Just one asset. Example: ["maps/pd_selbyen.bsp"] = "models/props_selbyen/seal.mdl"
+				thread->AddFile((const char*)vValue, (const char*)vValue);
+				nFiles++;
+				break;
+			}
+			default:
+			{
+				//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for key %s.\n", pszKeyName);
+				break;
+			}
+		}
+
+		thread->Start();
+	}
+
+	Msg("Started cache jobs for %d files in %d maps.\n", nFiles, nMaps);
+}
+void Script_BSP_CacheStartArray(HSCRIPT hTable)
+{
+	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
+	if (nEntryCount == 0)
+	{
+		Warning("No valid entries found in table.\n");
+		return;
+	}
+
+	int nIter = 0;
+	int nMaps = 0;
+	int nFiles = 0;
+	for (int i = 0; i < nEntryCount; i++)
+	{
+		ScriptVariant_t vKey, vValue;
+		nIter = g_pScriptVM->GetKeyValue(hTable, nIter, &vKey, &vValue);
+		nMaps++;
+		const char* pszKeyName = (const char*)vKey;
+		BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread(pszKeyName);
+
+		switch (vValue.GetType())
+		{
+			case FIELD_HSCRIPT:
+			{
+				// Array - no remapping. Example: ["maps/pd_selbyen.bsp"] = [
+				// "models/props_selbyen/seal.mdl", "models/props_selbyen/seal.vvd", "models/props_selbyen/seal.dx80.vtx" ]
+				
+				int nArrayIter = 0;
+				while (true)
+				{
+					ScriptVariant_t vItemKey, vItemValue;
+					nArrayIter = g_pScriptVM->GetKeyValue(vValue, nArrayIter, &vItemKey, &vItemValue);
+					if (nArrayIter >= 0)
+					{
+						thread->AddFile((const char*)vItemValue, (const char*)vItemValue);
+						nFiles++;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+			default:
+			{
+				//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for key %s.\n", pszKeyName);
+				break;
+			}
+		}
+
+		thread->Start();
+	}
+
+	Msg("Started cache jobs for %d files in %d maps.\n", nFiles, nMaps);
+}
+void Script_BSP_CacheStartRemap(HSCRIPT hTable)
+{
+	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
+	if (nEntryCount == 0)
+	{
+		Warning("No valid entries found in table.\n");
+		return;
+	}
+
+	int nIter = 0;
+	int nMaps = 0;
+	int nFiles = 0;
+	for (int i = 0; i < nEntryCount; i++)
+	{
+		ScriptVariant_t vKey, vValue;
+		nIter = g_pScriptVM->GetKeyValue(hTable, nIter, &vKey, &vValue);
+		nMaps++;
+		const char* pszKeyName = (const char*)vKey;
+		BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread(pszKeyName);
+
+		switch (vValue.GetType())
+		{
+			case FIELD_HSCRIPT:
+			{
+				// Table - file remapping. Example: ["maps/pd_selbyen.bsp"] = {
+				// ["models/props_selbyen/seal.mdl"] = "models/props_selbyen/sealremap.mdl",
+				// ["models/props_selbyen/seal.vvd"] = "models/props_selbyen/sealremap.vvd",
+				// ["models/props_selbyen/seal.dx80.vtx"] = "models/props_selbyen/sealremap.dx80.vtx" }
+
+				int nMapEntryCount = g_pScriptVM->GetNumTableEntries(vValue);
+				int nMapIter = 0;
+				if (nMapEntryCount == 0)
+				{
+					Warning("No valid entries found in map table.\n");
+					continue;
+				}
+				for (int a = 0; a < nMapEntryCount; a++)
+				{
+					ScriptVariant_t vItemKey, vItemValue;
+					nMapIter = g_pScriptVM->GetKeyValue(vValue, nMapIter, &vItemKey, &vItemValue);
+					switch (vItemValue.GetType())
+					{
+						case FIELD_CSTRING:
+						{
+							thread->AddFile((const char*)vItemKey, (const char*)vItemValue);
+							nFiles++;
+							break;
+						}
+						default:
+						{
+							//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for map key %s.\n", pszKeyName);
+							break;
+						}
+					}
+				}
+			}
+			default:
+			{
+				//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for key %s.\n", pszKeyName);
+				break;
+			}
+		}
+
+		thread->Start();
+	}
+
+	Msg("Started cache jobs for %d files in %d maps.\n", nFiles, nMaps);
+}
+
+int Script_BSP_GetCacheJobsRunning()
+{
+	return g_bspCacheJobsRunning;
+}
+
+void Script_BSP_CacheRemove(const char* pszAsset)
+{
+	BSP_RemoveAssetFromCache(pszAsset);
+}
+
+void Script_BSP_CacheRemoveArray(HSCRIPT hTable)
+{
+	int nArrayIter = 0;
+	while (true)
+	{
+		ScriptVariant_t vItemKey, vItemValue;
+		nArrayIter = g_pScriptVM->GetKeyValue(hTable, nArrayIter, &vItemKey, &vItemValue);
+		if (nArrayIter >= 0)
+		{
+			BSP_RemoveAssetFromCache((const char*)vItemValue);
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+void Script_BSP_CacheClear()
+{
+	BSP_ClearCache();
+}
+
 #ifdef TF_CLIENT_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -966,6 +1167,14 @@ bool VScriptClientInit()
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySound, "VGUI_PlaySound", "");
+
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartRemap, "BSP_CacheStartRemap", "Request assets to be loaded from map files with filename remapping. Example table: [maps/pd_selbyen.bsp] = { [models/props_selbyen/seal.mdl] = models/props_selbyen/sealremap.mdl }");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_GetCacheJobsRunning, "BSP_GetCacheJobsRunning", "Get the number of currently running BSP cache jobs.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheRemove, "BSP_CacheRemove", "Remove an asset from the BSP cache.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheRemoveArray, "BSP_CacheRemoveArray", "Remove multiple assets from the BSP cache.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheClear, "BSP_CacheClear", "Clear out the BSP cache.");
 
 #if defined( PORTAL2_PUZZLEMAKER )
 				ScriptRegisterFunction( g_pScriptVM, RequestMapRating, "Pops up the map rating dialog for user input" );

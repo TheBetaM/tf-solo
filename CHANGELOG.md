@@ -37,6 +37,8 @@ nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
 ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string)
+- Clientside/Singleplayer dynamic asset loading from map files: BSP_CacheStartSingle, BSP_CacheStartArray, 
+BSP_CacheStartRemap, BSP_GetCacheJobsRunning, BSP_CacheRemove, BSP_CacheRemoveArray, BSP_CacheClear  
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,
 SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,SetName/SetKeyName,RemoveSubKey  
 -- KeyValues are no longer deleted after automatically disposing the script

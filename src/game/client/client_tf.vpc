@@ -688,8 +688,8 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\client\tf\workshop\published_files.cpp"
 				$File	"$SRCDIR\game\client\tf\workshop\item_import.h"           [$WORKSHOP_IMPORT_ENABLE]
 				$File	"$SRCDIR\game\client\tf\workshop\item_import.cpp"         [$WORKSHOP_IMPORT_ENABLE]
-				$File	"$SRCDIR\game\client\bsp_utils.cpp"
-				$File	"$SRCDIR\game\client\bsp_utils.h"
+				$File	"$SRCDIR\game\shared\bsp_utils.cpp"
+				$File	"$SRCDIR\game\shared\bsp_utils.h"
 			}
 
 			$Folder	"vgui"
