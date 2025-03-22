@@ -7876,11 +7876,6 @@ void C_TFPlayer::ClientPlayerRespawn( void )
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "CompetitiveGame_RestoreChatWindow", false );
 	}
 
-	if (&m_Inventory)
-	{
-		m_Inventory.InvalidateOffline();
-	}
-
 	UpdateVisibility();
 
 	DestroyBoneAttachments();
@@ -10924,11 +10919,6 @@ void C_TFPlayer::FireGameEvent( IGameEvent *event )
 		{
 			pPlayer->SetBodygroupsDirty();
 		}
-
-		if (&m_Inventory)
-		{
-			m_Inventory.InvalidateOffline();
-		}
 	}
 	else if ( FStrEq( event->GetName(), "rocket_jump" ) 
 			  || FStrEq( event->GetName(), "sticky_jump" )
@@ -10952,11 +10942,6 @@ void C_TFPlayer::FireGameEvent( IGameEvent *event )
 	else if ( FStrEq( event->GetName(), "player_spawn" ) )
 	{
 		StopBlastJumpLoopSound( event->GetInt( "userid" ) );
-
-		if (&m_Inventory)
-		{
-			m_Inventory.InvalidateOffline();
-		}
 
 		const int iUserID = event->GetInt( "userid" );
 		if ( pLocalPlayer && GetUserID() == pLocalPlayer->GetUserID() && iUserID == pLocalPlayer->GetUserID() )

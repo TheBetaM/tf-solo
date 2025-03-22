@@ -943,6 +943,11 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 		if ( ulIndex != 0 )
 		{
 			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
+			C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
+			if (pPlayer)
+			{
+				pPlayer->Inventory()->InvalidateOffline();
+			}
 
 			m_bLoadoutHasChanged = true;
 
