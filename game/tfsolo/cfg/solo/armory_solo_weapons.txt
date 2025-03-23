@@ -8,6 +8,10 @@ armory_config
 	{
 		Cost 1000
 	}
+	"Spineyard Tommygun"
+	{
+		Cost 1000
+	}
 	
 	"Emerald Jarate"
 	{
