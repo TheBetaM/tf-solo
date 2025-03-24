@@ -398,7 +398,6 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	void* pakData;
 	int pakSize;
 	libBSPPack->GetPakFileLump(g_pFullFileSystem, pszInputMapFile, &pakData, &pakSize);
-	g_BspPackLock = false;
 
 	// Get file from lump
 	auto zip = IZip::CreateZip();
@@ -473,6 +472,7 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 
 	IZip::ReleaseZip(zip);
 	Msg("Successfully cached %s\n", pszInputMapFile);
+	g_BspPackLock = false;
 	return true;
 }
 
