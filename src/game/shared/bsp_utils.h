@@ -24,6 +24,7 @@ void BSP_BackgroundRepack( const char *pszInputMapFile,
 #endif // CLIENT_DLL
 
 int g_bspCacheJobsRunning = 0;
+static bool g_BspPackLock;
 
 class BackgroundBSPCacheThread : public CThread, public CAutoGameSystemPerFrame
 {

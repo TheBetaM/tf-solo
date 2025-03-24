@@ -20,7 +20,7 @@
 			"item_type_name"	"Bottle"
 			"item_name"	"Bottled Sorrow"
 			"item_slot"	"melee"
-			"image_inventory"	"backpack/weapons/w_models/w_bottle"
+			"image_inventory"	"backpack/workshop/player/items/demo/taunt_scotsmans_stagger/taunt_scotsmans_stagger"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"model_player"	"models/workshop/player/items/demo/taunt_scotsmans_stagger/taunt_scotsmans_stagger.mdl"
@@ -42,6 +42,8 @@
 				"move speed bonus" "1.05"
 				"single wep holster time increased" "1.5"
 				"fire rate penalty" "1.25"
+				//"weapon_allow_inspect" "1"
+				//"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
@@ -79,7 +81,7 @@
 			"item_type_name"	"Defibrillator"
 			"item_name"	"Shocking Truth"
 			"item_slot"	"melee"
-			"image_inventory"	"backpack/weapons/c_models/c_bat"
+			"image_inventory"	"backpack/workshop/player/items/medic/tauntdoctors_defibrillators/tauntdoctors_defibrillators"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"model_player"	"models/workshop/player/items/medic/tauntdoctors_defibrillators/tauntdoctors_defibrillators.mdl"
@@ -103,6 +105,8 @@
 				"move speed bonus" "1.05"
 				"hit self on miss" "1"
 				"single wep deploy time increased" "1.5"
+				//"weapon_allow_inspect" "1"
+				//"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
@@ -160,6 +164,8 @@
 			{
 				"weapon_stattrak_module_scale"			"0.505"
 				"min_viewmodel_offset"					"10 0 -7"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
 			"xifier_class_remap"	"weapon_smg"
 			"particle_suffix"		"smg"

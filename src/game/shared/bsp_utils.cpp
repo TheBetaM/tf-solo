@@ -371,6 +371,13 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 		return false;
 	}
 
+	while (g_BspPackLock)
+	{
+		// Too fast, too quick
+		Sleep(100);
+	}
+	g_BspPackLock = true;
+
 	// load the bsppack dll
 	IBSPPack* libBSPPack = NULL;
 	CSysModule* pModule = g_pFullFileSystem->LoadModule("bsppack");
@@ -391,6 +398,7 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	void* pakData;
 	int pakSize;
 	libBSPPack->GetPakFileLump(g_pFullFileSystem, pszInputMapFile, &pakData, &pakSize);
+	g_BspPackLock = false;
 
 	// Get file from lump
 	auto zip = IZip::CreateZip();

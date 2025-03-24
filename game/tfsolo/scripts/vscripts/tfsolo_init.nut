@@ -1,9 +1,13 @@
-printl("[TFSOLO] Init")
+printl("[TFSOLO] Server Init")
 ::TFSOLO <- {}
 ::TFMOD <- 1
 
 IncludeScript("solo/util.nut")
 IncludeScript("solo/itemschema.nut")
+if (IsDedicatedServer())
+{
+	IncludeScript("client/solo/preload_items.nut")
+}
 
 TFSOLO.CoreEventTag <- UniqueString()
 getroottable()[TFSOLO.CoreEventTag] <- {
