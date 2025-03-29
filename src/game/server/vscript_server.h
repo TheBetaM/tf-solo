@@ -69,7 +69,7 @@ public:
 	bool ScriptIsKeyValueEmpty(const char* pszName);
 	bool ScriptGetKeyValueBool(const char* pszName);
 	void ScriptReleaseKeyValues();
-	const char* ScriptGetKeyValueName(const char* pszName);
+	const char* ScriptGetKeyValueName();
 	void ScriptSetKeyValueInt(const char* pszName, int i);
 	void ScriptSetKeyValueFloat(const char* pszName, float i);
 	void ScriptSetKeyValueString(const char* pszName, const char* i);

@@ -35,6 +35,7 @@
 #endif // PORTAL2_PUZZLEMAKER
 
 #ifdef TF_CLIENT_DLL
+#include "tf_gc_client.h"
 #include "c_tf_player.h"
 #include "character_info_panel.h"
 #include "ienginevgui.h"
@@ -432,7 +433,7 @@ void CScriptKeyValues::ScriptRemoveSubKey(const char* pszName)
 	}
 }
 
-const char* CScriptKeyValues::ScriptGetKeyValueName(const char* pszName)
+const char* CScriptKeyValues::ScriptGetKeyValueName()
 {
 	const char* psz = m_pKeyValues->GetName();
 	return psz;
@@ -734,6 +735,14 @@ void Script_VGUI_PlaySound(const char* file)
 {
 	vgui::surface()->PlaySound(file);
 }
+void Script_VGUI_PlaySoundEntry(const char* file)
+{
+	const char* pszSoundName = UTIL_GetRandomSoundFromEntry(file);
+	if (pszSoundName && pszSoundName[0])
+	{
+		vgui::surface()->PlaySound(pszSoundName);
+	}
+}
 
 bool Script_IsServer()
 {
@@ -742,6 +751,15 @@ bool Script_IsServer()
 bool Script_IsClient()
 {
 	return true;
+}
+
+bool Script_ConnectedOnline()
+{
+	return steamapicontext != NULL && steamapicontext->SteamUser() != NULL && steamapicontext->SteamUser()->BLoggedOn();
+}
+int Script_GetAppID()
+{
+	return engine->GetAppID();
 }
 
 static void SendToConsole(const char* pszCommand)
@@ -1166,7 +1184,10 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ConnectedOnline, "ConnectedOnline", "Returns true if client is connected to the internet.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySound, "VGUI_PlaySound", "");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySoundEntry, "VGUI_PlaySoundEntry", "");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");

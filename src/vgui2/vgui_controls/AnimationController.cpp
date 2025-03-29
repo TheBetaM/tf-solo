@@ -693,6 +693,369 @@ bool AnimationController::ParseScriptFile(char *pMem, int length)
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: parses a script into sequences
+//-----------------------------------------------------------------------------
+bool AnimationController::RunScript(const char* pMem, Panel* pWithinParent, bool bCanBeCancelled)
+{
+	// get the scheme (for looking up color names)
+	IScheme* scheme = vgui::scheme()->GetIScheme(GetScheme());
+
+	// get our screen size (for left/right/center alignment)
+	int screenWide = m_nScreenBounds[2];
+	int screenTall = m_nScreenBounds[3];
+
+	bool bAccepted = true;
+	
+	// Create a new sequence
+	UtlSymId_t nameIndex = g_ScriptSymbols.AddString("ScriptAnim");
+	//seqIndex = m_Sequences.AddToTail();
+	AnimSequence_t seq; //m_Sequences[seqIndex];
+	seq.name = nameIndex;
+	seq.duration = 0.0f;
+
+	// start by getting the first token
+	char token[512];
+	pMem = ParseFile(pMem, token, NULL);
+
+	// walk the commands
+	while (token[0])
+	{
+		// get the command type
+		//pMem = ParseFile(pMem, token, NULL);
+
+		// skip out when we hit the end of the sequence
+		if (token[0] == '}')
+			break;
+
+		// create a new command
+		int cmdIndex = seq.cmdList.AddToTail();
+		AnimCommand_t& animCmd = seq.cmdList[cmdIndex];
+		memset(&animCmd, 0, sizeof(animCmd));
+		if (!stricmp(token, "animate"))
+		{
+			animCmd.commandType = CMD_ANIMATE;
+			// parse out the animation commands
+			AnimCmdAnimate_t& cmdAnimate = animCmd.cmdData.animate;
+			// panel to manipulate
+			pMem = ParseFile(pMem, token, NULL);
+			cmdAnimate.panel = g_ScriptSymbols.AddString(token);
+			// variable to change
+			pMem = ParseFile(pMem, token, NULL);
+			cmdAnimate.variable = g_ScriptSymbols.AddString(token);
+			// target value
+			pMem = ParseFile(pMem, token, NULL);
+			if (cmdAnimate.variable == m_sPosition)
+			{
+				// Get first token
+				SetupPosition(cmdAnimate, &cmdAnimate.target.a, token, screenWide);
+
+				// Get second token from "token"
+				char token2[32];
+				char* psz = ParseFile(token, token2, NULL);
+				psz = ParseFile(psz, token2, NULL);
+				psz = token2;
+
+				// Position Y goes into ".b"
+				SetupPosition(cmdAnimate, &cmdAnimate.target.b, psz, screenTall);
+			}
+			else if (cmdAnimate.variable == m_sXPos)
+			{
+				// XPos and YPos both use target ".a"
+				SetupPosition(cmdAnimate, &cmdAnimate.target.a, token, screenWide);
+			}
+			else if (cmdAnimate.variable == m_sYPos)
+			{
+				// XPos and YPos both use target ".a"
+				SetupPosition(cmdAnimate, &cmdAnimate.target.a, token, screenTall);
+			}
+			else
+			{
+				// parse the floating point values right out
+				if (0 == sscanf(token, "%f %f %f %f", &cmdAnimate.target.a, &cmdAnimate.target.b, &cmdAnimate.target.c, &cmdAnimate.target.d))
+				{
+					//=============================================================================
+					// HPE_BEGIN:
+					// [pfreese] Improved handling colors not defined in scheme 
+					//=============================================================================
+
+					// could be referencing a value in the scheme file, lookup
+					Color default_invisible_black(0, 0, 0, 0);
+					Color col = scheme->GetColor(token, default_invisible_black);
+
+					// we don't have a way of seeing if the color is not declared in the scheme, so we use this
+					// silly method of trying again with a different default to see if we get the fallback again
+					if (col == default_invisible_black)
+					{
+						Color error_pink(255, 0, 255, 255);	// make it extremely obvious if a scheme lookup fails
+						col = scheme->GetColor(token, error_pink);
+
+						// commented out for Soldier/Demo release...(getting spammed in console)
+						// we'll try to figure this out after the update is out
+// 							if (col == error_pink)
+// 							{
+// 								Warning("Missing color in scheme: %s\n", token);
+// 							}
+					}
+
+					//=============================================================================
+					// HPE_END
+					//=============================================================================
+
+					cmdAnimate.target.a = col[0];
+					cmdAnimate.target.b = col[1];
+					cmdAnimate.target.c = col[2];
+					cmdAnimate.target.d = col[3];
+				}
+			}
+
+			// fix up scale
+			if (cmdAnimate.variable == m_sSize)
+			{
+				if (IsProportional())
+				{
+					cmdAnimate.target.a = static_cast<float>(vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.a));
+					cmdAnimate.target.b = static_cast<float>(vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.b));
+				}
+			}
+			else if (cmdAnimate.variable == m_sWide ||
+				cmdAnimate.variable == m_sTall)
+			{
+				if (IsProportional())
+				{
+					// Wide and tall both use.a
+					cmdAnimate.target.a = static_cast<float>(vgui::scheme()->GetProportionalScaledValueEx(GetScheme(), cmdAnimate.target.a));
+				}
+			}
+
+			// interpolation function
+			pMem = ParseFile(pMem, token, NULL);
+			if (!stricmp(token, "Accel"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_ACCEL;
+			}
+			else if (!stricmp(token, "Deaccel"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_DEACCEL;
+			}
+			else if (!stricmp(token, "Spline"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_SIMPLESPLINE;
+			}
+			else if (!stricmp(token, "Pulse"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_PULSE;
+				// frequencey
+				pMem = ParseFile(pMem, token, NULL);
+				cmdAnimate.interpolationParameter = (float)atof(token);
+			}
+			else if (!stricmp(token, "Bias"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_BIAS;
+				// bias
+				pMem = ParseFile(pMem, token, NULL);
+				cmdAnimate.interpolationParameter = (float)atof(token);
+			}
+			else if (!stricmp(token, "Gain"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_GAIN;
+				// bias
+				pMem = ParseFile(pMem, token, NULL);
+				cmdAnimate.interpolationParameter = (float)atof(token);
+			}
+			else if (!stricmp(token, "Flicker"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_FLICKER;
+				// noiseamount
+				pMem = ParseFile(pMem, token, NULL);
+				cmdAnimate.interpolationParameter = (float)atof(token);
+			}
+			else if (!stricmp(token, "Bounce"))
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_BOUNCE;
+			}
+			else
+			{
+				cmdAnimate.interpolationFunction = INTERPOLATOR_LINEAR;
+			}
+			// start time
+			pMem = ParseFile(pMem, token, NULL);
+			cmdAnimate.startTime = (float)atof(token);
+			// duration
+			pMem = ParseFile(pMem, token, NULL);
+			cmdAnimate.duration = (float)atof(token);
+			// check max duration
+			if (cmdAnimate.startTime + cmdAnimate.duration > seq.duration)
+			{
+				seq.duration = cmdAnimate.startTime + cmdAnimate.duration;
+			}
+		}
+		else if (!stricmp(token, "runevent"))
+		{
+			animCmd.commandType = CMD_RUNEVENT;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "runeventchild"))
+		{
+			animCmd.commandType = CMD_RUNEVENTCHILD;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "firecommand"))
+		{
+			animCmd.commandType = CMD_FIRECOMMAND;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+		}
+		else if (!stricmp(token, "playsound"))
+		{
+			animCmd.commandType = CMD_PLAYSOUND;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+		}
+		else if (!stricmp(token, "setvisible"))
+		{
+			animCmd.commandType = CMD_SETVISIBLE;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable2 = atoi(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "setinputenabled"))
+		{
+			animCmd.commandType = CMD_SETINPUTENABLED;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable2 = atoi(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "stopevent"))
+		{
+			animCmd.commandType = CMD_STOPEVENT;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "StopPanelAnimations"))
+		{
+			animCmd.commandType = CMD_STOPPANELANIMATIONS;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "stopanimation"))
+		{
+			animCmd.commandType = CMD_STOPANIMATION;
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "SetFont"))
+		{
+			animCmd.commandType = CMD_SETFONT;
+			// Panel name
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			// Font parameter
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			// Font name from scheme
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable2 = g_ScriptSymbols.AddString(token);
+
+			// Set time
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "SetTexture"))
+		{
+			animCmd.commandType = CMD_SETTEXTURE;
+			// Panel name
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			// Texture Id
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			// material name
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable2 = g_ScriptSymbols.AddString(token);
+
+			// Set time
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else if (!stricmp(token, "SetString"))
+		{
+			animCmd.commandType = CMD_SETSTRING;
+			// Panel name
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.event = g_ScriptSymbols.AddString(token);
+			// String variable name
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable = g_ScriptSymbols.AddString(token);
+			// String value to set
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.variable2 = g_ScriptSymbols.AddString(token);
+
+			// Set time
+			pMem = ParseFile(pMem, token, NULL);
+			animCmd.cmdData.runEvent.timeDelay = (float)atof(token);
+		}
+		else
+		{
+			Warning("Couldn't parse script sequence '%s': expected <anim command>, found '%s'\n", g_ScriptSymbols.String(seq.name), token);
+			return false;
+		}
+
+		// Look ahead one token for a conditional
+		pMem = ParseFile(pMem, token, NULL);
+		/*char* peek = ParseFile(pMem, token, NULL);
+		if (Q_stristr(token, "[$") || Q_stristr(token, "[!$"))
+		{
+			if (!EvaluateConditional(token))
+			{
+				seq.cmdList.Remove(cmdIndex);
+			}
+			pMem = peek;
+		}*/
+	}
+
+	if (bAccepted)
+	{
+		// execute the sequence
+		for (int cmdIndex = 0; cmdIndex < seq.cmdList.Count(); cmdIndex++)
+		{
+			ExecAnimationCommand(seq.name, seq.cmdList[cmdIndex], pWithinParent, bCanBeCancelled);
+		}
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: checks all posted animation events, firing if time
 //-----------------------------------------------------------------------------
 void AnimationController::UpdatePostedMessages(bool bRunToCompletion)

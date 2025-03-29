@@ -123,6 +123,9 @@ public:
 	vgui::Menu* ClearAndGetDashboardContextMenu();
 	void Reload();
 
+	void UpdateDimmer();
+	void HideDimmer();
+
 	bool BAnySidePanelsShowing() const;
 	bool BIsSidePanelShowing( const CMatchMakingDashboardSidePanel* pSidePanel ) const;
 
@@ -165,8 +168,6 @@ private:
 
 	void UpdateFindAGameButton();
 	void UpdateDisconnectAndResume();
-	void UpdateDimmer();
-	void HideDimmer();
 
 	// Party invites
 	void UpdatePartyInvites();

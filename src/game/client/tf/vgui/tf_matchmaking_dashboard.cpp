@@ -29,6 +29,7 @@
 #include "tf_matchmaking_dashboard_explanations.h"
 #include "tf_matchmaking_dashboard_mvm_criteria.h"
 #include "tf_statsummary.h"
+#include "vscript_client.h"
 
 using namespace vgui;
 using namespace GCSDK;
@@ -389,7 +390,7 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	}
 	else if (FStrEq("open_solo", command))
 	{
-		OnCreateServer();
+		OnPlayTraining();
 		return;
 	}
 	else if (FStrEq("restart_round", command))
@@ -925,6 +926,8 @@ void CTFMatchmakingDashboard::OnPlayTraining()
 {
 	ClearAllStacks();
 
+	engine->ClientCmd_Unrestricted("tfsolo_show_menu");
+	/*
 	if ( engine->IsInGame() )
 	{
 		const char *pText = "#TF_Training_Prompt";
@@ -945,6 +948,7 @@ void CTFMatchmakingDashboard::OnPlayTraining()
 	{
 		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand( "engine training_showdlg" );
 	}
+	*/
 }
 
 
@@ -960,10 +964,6 @@ void CTFMatchmakingDashboard::OnCreateServer()
 	ClearAllStacks();
 	// Just call the command directly
 	engine->ClientCmd_Unrestricted( "gamemenucommand OpenCreateMultiplayerGameDialog" );
-	if (!engine->IsInGame())
-	{
-		engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
-	}
 }
 
 void CTFMatchmakingDashboard::OnPlayEvent()
@@ -1511,3 +1511,7 @@ void CTFMatchmakingDashboard::UpdateJoinPartyLobbyPanel()
 		g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( m_pJoinPartyLobbyPanel, "ypos", -YRES(50), 0.0f, tf_dashboard_slide_time.GetFloat(), vgui::AnimationController::INTERPOLATOR_GAIN, 0.8f, true, false );
 	}
 }
+
+BEGIN_SCRIPTDESC_ROOT(CTFMatchmakingDashboard, SCRIPT_SINGLETON "Used to access the dashboard interface")
+	DEFINE_SCRIPTFUNC(HideDimmer, "")
+END_SCRIPTDESC();

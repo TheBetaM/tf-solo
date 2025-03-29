@@ -79,6 +79,8 @@ public:
 	void RunAnimationCommand(vgui::Panel *panel, const char *variable, float targetValue, float startDelaySeconds, float durationSeconds, Interpolators_e interpolator, float animParameter = 0, bool bClearValueQueue = true, bool bCanBeCancelled = true );
 	void RunAnimationCommand(vgui::Panel *panel, const char *variable, Color targetValue, float startDelaySeconds, float durationSeconds, Interpolators_e interpolator, float animParameter = 0, bool bClearValueQueue = true, bool bCanBeCancelled = true );
 
+	bool RunScript(const char* pMem, Panel* pWithinParent, bool canBeCancelled);
+
 private:
 	bool UpdateScreenSize();
 	

@@ -143,6 +143,7 @@ public:
 	virtual void SetCommand( const char *command );
 	// Set the message to send when the button is pressed
 	virtual void SetCommand( KeyValues *message );
+	void SetCommandConst(const char* command) { SetCommand(command); };
 
 	// sound handling
 	void SetArmedSound(const char *sound);

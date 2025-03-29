@@ -78,6 +78,9 @@ public:
 	virtual void SetDialogVariable(const char *varName, const wchar_t *value);
 	virtual void SetDialogVariable(const char *varName, int value);
 	virtual void SetDialogVariable(const char *varName, float value);
+	void SetDialogVariableConst(const char* varName, const char* value) { SetDialogVariable(varName, value); }
+	void SetDialogVariableInt(const char* varName, int value) { SetDialogVariable(varName, value); }
+	void SetDialogVariableFloat(const char* varName, float value) { SetDialogVariable(varName, value); }
 
 	// Focus handling
 	// Delegate focus to a sub panel

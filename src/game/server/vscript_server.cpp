@@ -33,6 +33,7 @@
 #include "bsp_utils.h"
 
 #ifdef TF_DLL
+#include "tf_gc_server.h"
 #include "tf/tf_gamerules.h"
 #include "nav_mesh/tf_nav_mesh.h"
 #include "nav_mesh/tf_nav_area.h"
@@ -1022,7 +1023,7 @@ void CScriptKeyValues::ScriptRemoveSubKey(const char* pszName)
 	}
 }
 
-const char* CScriptKeyValues::ScriptGetKeyValueName(const char* pszName)
+const char* CScriptKeyValues::ScriptGetKeyValueName()
 {
 	const char* psz = m_pKeyValues->GetName();
 	return psz;
@@ -2561,6 +2562,15 @@ bool Script_IsClient()
 	return false;
 }
 
+bool Script_ConnectedOnline()
+{
+	return steamapicontext != NULL && steamapicontext->SteamUser() != NULL && steamapicontext->SteamUser()->BLoggedOn();
+}
+int Script_GetAppID()
+{
+	return engine->GetAppID();
+}
+
 void Script_BSP_CacheStartSingle(HSCRIPT hTable)
 {
 	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
@@ -2979,6 +2989,8 @@ bool VScriptServerInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsServer, "IsServer", "Returns true if script is running on the server.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ConnectedOnline, "ConnectedOnline", "Returns true if server is connected to the internet.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");
