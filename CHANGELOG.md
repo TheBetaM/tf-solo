@@ -1,5 +1,6 @@
 # 1.0.0
 ## General
+- Added a new main menu interface
 - Loadouts now work offline; live TF2 items still require a connection
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added Armory - a way to unlock items using credits earned in the game
