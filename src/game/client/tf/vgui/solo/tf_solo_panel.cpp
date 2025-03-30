@@ -248,6 +248,9 @@ void CSoloPanel::PrepareForLevelLoad()
 {
 	g_pCVar->RevertFlaggedConVars(FCVAR_REPLICATED);
 	g_pCVar->RevertFlaggedConVars(FCVAR_CHEAT);
+
+	ConVarRef tf_gamemode_solo("tf_gamemode_solo");
+	tf_gamemode_solo.SetValue(1);
 }
 
 void CSoloPanel::RunAnimationScript(const char* pszScript, bool bCanBeCancelled)

@@ -244,6 +244,7 @@ ConVar mp_showroundtransitions( "mp_showroundtransitions", "0", FCVAR_CHEAT | FC
 ConVar mp_enableroundwaittime( "mp_enableroundwaittime", "1", FCVAR_REPLICATED, "Enable timers to wait between rounds." );
 ConVar mp_showcleanedupents( "mp_showcleanedupents", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Show entities that are removed on round respawn." );
 ConVar mp_restartround( "mp_restartround", "0", FCVAR_GAMEDLL, "If non-zero, the current round will restart in the specified number of seconds" );	
+ConVar mp_restartblock( "mp_restartblock", "0", FCVAR_GAMEDLL, "If non-zero, prevent the round from being restarted. If more than 1, also prevent restarting on round end." );	
 
 ConVar mp_stalemate_timelimit( "mp_stalemate_timelimit", "240", FCVAR_REPLICATED, "Timelimit (in seconds) of the stalemate round." );
 ConVar mp_autoteambalance( "mp_autoteambalance", "0", FCVAR_NOTIFY, "Automatically balance the teams based on mp_teams_unbalance_limit. 0 = off, 1 = forcibly switch, 2 = ask volunteers", true, 0, true, 2 );
@@ -1067,6 +1068,20 @@ void CTeamplayRoundBasedRules::CheckRestartRound( void )
 	if ( iRestartDelay == 0 && !bRestartGameNow )
 	{
 		iRestartDelay = mp_restartgame.GetInt();
+	}
+	if ( mp_restartblock.GetBool() )
+	{
+		mp_restartround.SetValue( 0 );
+		mp_restartgame.SetValue( 0 );
+		mp_restartgame_immediate.SetValue( 0 );
+		iRestartDelay = 0;
+		bRestartGameNow = false;
+		m_bAwaitingReadyRestart = false;
+		m_flRestartRoundTime.Set( -1.f );
+		if ( mp_restartblock.GetInt() > 1 && m_flStateTransitionTime > gpGlobals->curtime )
+		{
+			m_flStateTransitionTime = gpGlobals->curtime + 5.0f;
+		}
 	}
 
 	if ( iRestartDelay > 0 || bRestartGameNow )

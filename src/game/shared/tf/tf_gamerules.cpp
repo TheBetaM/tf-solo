@@ -897,6 +897,8 @@ extern ConVar tf_flag_return_on_touch;
 extern ConVar tf_flag_return_time_credit_factor;
 ConVar tf_grapplinghook_enable( "tf_grapplinghook_enable", "0", FCVAR_REPLICATED );
 
+ConVar tf_roundstarttalk_disable("tf_roundstarttalk_disable", "0", FCVAR_REPLICATED, "Disable forced talking at the start of a round.\n");
+
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;
 CON_COMMAND_F( tf_mvm_popfile, "Change to a target popfile for MvM", FCVAR_GAMEDLL )
@@ -1067,6 +1069,9 @@ ConVar tf_gamemode_payload ( "tf_gamemode_payload", "0", FCVAR_REPLICATED | FCVA
 ConVar tf_gamemode_mvm ( "tf_gamemode_mvm", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
+ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
+ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
@@ -5380,7 +5385,11 @@ void CTFGameRules::SetupOnRoundRunning( void )
 			continue;
 
 		pPlayer->TeamFortress_SetSpeed();
-		if ( IsHalloweenScenario( HALLOWEEN_SCENARIO_HIGHTOWER ) )
+		if ( tf_roundstarttalk_disable.GetBool() )
+		{
+
+		}
+		else if ( IsHalloweenScenario( HALLOWEEN_SCENARIO_HIGHTOWER ) )
 		{
 			if ( !IsInWaitingForPlayers() )
 			{

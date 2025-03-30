@@ -1123,7 +1123,6 @@ private:
 	CPlayerStateInfo	*StateLookupInfo( int nState );
 	void				StateEnter( int nState );
 	void				StateLeave( void );
-	void				StateTransition( int nState );
 	void				StateEnterWELCOME( void );
 	void				StateThinkWELCOME( void );
 	void				StateEnterPICKINGTEAM( void );
@@ -1141,6 +1140,7 @@ private:
 	bool				GetResponseSceneFromConcept( int iConcept, char *chSceneBuffer, int numSceneBufferBytes );
 
 public:
+	void				StateTransition(int nState);
 	const QAngle& GetNetworkEyeAngles() const { return m_angEyeAngles; }
 
 	// Achievement data storage

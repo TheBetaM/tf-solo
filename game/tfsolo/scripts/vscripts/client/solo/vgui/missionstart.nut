@@ -1,10 +1,18 @@
 TFSOLO.StartMission <- function()
 {
+	local data = TFSOLO.PlayerData
+	local mapData = TFSOLO.GetMapEntry(data.Map)
+	if (mapData == null)
+	{
+		printl("[TFSOLO] MAP ENTRY NOT FOUND IN CONFIG: " + data.Map)
+	}
+	
 	// Reset server enforced cvars
 	SoloPanel.PrepareForLevelLoad()
 	
-	// Prepare server settings
-	if (TFSOLO.PlayerData.TeamSelected == 1)
+	// Prepare server settings 
+	// Preferably only ones that need to be setup before level load, the rest should be in server scripts
+	if (data.TeamSelected == 1)
 	{
 		SendToConsole("mp_humans_must_join_team blue")
 	}
@@ -12,17 +20,23 @@ TFSOLO.StartMission <- function()
 	{
 		SendToConsole("mp_humans_must_join_team red")
 	}
-	if (TFSOLO.PlayerData.PlayerClass == "any")
+	SendToConsole("mp_humans_must_join_class " + data.PlayerClass)
+	SendToConsole("nav_generate_auto 1")
+	if (mapData != null)
 	{
-		SendToConsole("mp_humans_must_join_class any")
+		if (mapData.GetInt("navViewDistance") != 0)
+		{
+			SendToConsole("nav_generate_auto_view_distance " + mapData.GetInt("navViewDistance"))
+		}
+		else
+		{
+			SendToConsole("nav_generate_auto_view_distance 2500")
+		}
 	}
-	else
-	{
-		SendToConsole("mp_humans_must_join_class " + TFSOLO.PlayerData.PlayerClass)
-	}
+	SendToConsole("tf_mvm_popfile_requested " + data.PopFile)
 	
 	// GO!
-	SendToConsole("disconnect;wait;wait;maxplayers 32;progress_enable;map " + TFSOLO.PlayerData.Map)
+	SendToConsole("disconnect;wait;wait;maxplayers 32;progress_enable;map " + data.Map)
 	
 	SoloPanel.ForceClose()
 }

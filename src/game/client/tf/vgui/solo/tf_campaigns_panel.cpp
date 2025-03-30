@@ -152,8 +152,10 @@ public:
 			g_pCVar->RevertFlaggedConVars(FCVAR_REPLICATED);
 			g_pCVar->RevertFlaggedConVars(FCVAR_CHEAT);
 
-			//ConVarRef sv_use_steam_netorwking("sv_use_steam_netorwking");
-			//sv_use_steam_netorwking.SetValue(0);
+			ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
+			tf_gamemode_campaign.SetValue(1);
+			engine->ClientCmd_Unrestricted("nav_generate_auto 1\n");
+			engine->ClientCmd_Unrestricted("nav_generate_auto_view_distance 2500\n");
 
 			// create the command to execute
 			CFmtStr1024 fmtMapCommand(

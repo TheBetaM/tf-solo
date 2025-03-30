@@ -4,6 +4,7 @@ TFSOLO.PlayerData <- {
 	TeamSelected = 0
 	Map = ""
 	PlayerClass = "any"
+	PopFile = "mvm_decoy"
 	
 	// Persistent
 	Seed = 0
@@ -13,15 +14,15 @@ TFSOLO.PlayerData <- {
 TFSOLO.LoadPersistentData <- function()
 {
 	local kv = Solo.GetSaveData()
-	local genericKV = kv.GetKey("Generic", true)
-	TFSOLO.PlayerData.Seed = genericKV.GetInt("Solo.Seed")
+	local genericKV = kv.GetKey("Solo", true)
+	TFSOLO.PlayerData.Seed = genericKV.GetInt("Seed")
 }
 
 TFSOLO.SavePersistentData <- function()
 {
 	local kv = Solo.GetSaveData()
-	local genericKV = kv.GetKey("Generic", true)
-	genericKV.SetInt("Solo.Seed", TFSOLO.PlayerData.Seed)
+	local genericKV = kv.GetKey("Solo", true)
+	genericKV.SetInt("Seed", TFSOLO.PlayerData.Seed)
 	
 	Solo.WriteSaveData()
 }

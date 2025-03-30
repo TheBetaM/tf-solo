@@ -43,11 +43,11 @@ ConVar nav_displacement_test( "nav_displacement_test", "10000", FCVAR_CHEAT, "Ch
 ConVar nav_generate_fencetops( "nav_generate_fencetops", "1", FCVAR_CHEAT, "Autogenerate nav areas on fence and obstacle tops" );
 ConVar nav_generate_fixup_jump_areas( "nav_generate_fixup_jump_areas", "1", FCVAR_CHEAT, "Convert obsolete jump areas into 2-way connections" );
 ConVar nav_generate_jump_connections( "nav_generate_jump_connections", "1", FCVAR_CHEAT, "If disabled, don't generate jump connections from jump areas" );
-ConVar nav_generate_incremental_range( "nav_generate_incremental_range", "2000", FCVAR_CHEAT );
+ConVar nav_generate_incremental_range( "nav_generate_incremental_range", "2000", FCVAR_NONE );
 ConVar nav_generate_incremental_tolerance( "nav_generate_incremental_tolerance", "0", FCVAR_CHEAT, "Z tolerance for adding new nav areas." );
-ConVar nav_generate_noreload( "nav_generate_noreload", "1", FCVAR_CHEAT, "Reload only the navmesh after generation/analysis instead of the entire map." );
-ConVar nav_generate_auto( "nav_generate_auto", "0", FCVAR_CHEAT, "Automatically generate a nav mesh when there isn't any." );
-ConVar nav_generate_auto_view_distance( "nav_generate_auto_view_distance", "2500", FCVAR_CHEAT, "Set the auto generation view distance to optimize generation time." );
+ConVar nav_generate_noreload( "nav_generate_noreload", "1", FCVAR_NONE, "Reload only the navmesh after generation/analysis instead of the entire map." );
+ConVar nav_generate_auto( "nav_generate_auto", "0", FCVAR_NONE, "Automatically generate a nav mesh when there isn't any." );
+ConVar nav_generate_auto_view_distance( "nav_generate_auto_view_distance", "2500", FCVAR_NONE, "Set the auto generation view distance to optimize generation time." );
 ConVar nav_area_max_size( "nav_area_max_size", "50", FCVAR_CHEAT, "Max area size created in nav generation" );
 
 // Common bounding box for traces
@@ -4077,6 +4077,28 @@ bool CNavMesh::UpdateGeneration( float maxTime )
 						if (pMVM)
 						{
 							pMVM->InitPopulationManager();
+						}
+
+						CUtlVector< CTFPlayer* > playerVector;
+						CollectPlayers(&playerVector);
+						FOR_EACH_VEC(playerVector, i)
+						{
+							if (!playerVector[i])
+								continue;
+
+							if (playerVector[i]->IsFakeClient())
+								continue;
+
+							if (playerVector[i]->IsBot())
+								continue;
+
+							if (playerVector[i]->IsHLTV())
+								continue;
+
+							if (playerVector[i]->IsReplay())
+								continue;
+
+							playerVector[i]->StateTransition( TF_STATE_WELCOME );
 						}
 #endif
 						IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_nav_complete");

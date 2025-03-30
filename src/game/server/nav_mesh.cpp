@@ -2606,7 +2606,7 @@ void CommandNavGenerate( void )
 
 	TheNavMesh->BeginGeneration();
 }
-static ConCommand nav_generate( "nav_generate", CommandNavGenerate, "Generate a Navigation Mesh for the current map and save it to disk.", FCVAR_GAMEDLL | FCVAR_CHEAT );
+static ConCommand nav_generate( "nav_generate", CommandNavGenerate, "Generate a Navigation Mesh for the current map and save it to disk.", FCVAR_GAMEDLL );
 
 
 //--------------------------------------------------------------------------------------------------------------
@@ -2617,7 +2617,7 @@ void CommandNavGenerateIncremental( void )
 
 	TheNavMesh->BeginGeneration( INCREMENTAL_GENERATION );
 }
-static ConCommand nav_generate_incremental( "nav_generate_incremental", CommandNavGenerateIncremental, "Generate a Navigation Mesh for the current map and save it to disk.", FCVAR_GAMEDLL | FCVAR_CHEAT );
+static ConCommand nav_generate_incremental( "nav_generate_incremental", CommandNavGenerateIncremental, "Generate a Navigation Mesh for the current map and save it to disk.", FCVAR_GAMEDLL );
 
 
 //--------------------------------------------------------------------------------------------------------------
@@ -2631,7 +2631,7 @@ void CommandNavAnalyze( void )
 		TheNavMesh->BeginAnalysis();
 	}
 }
-static ConCommand nav_analyze( "nav_analyze", CommandNavAnalyze, "Re-analyze the current Navigation Mesh and save it to disk.", FCVAR_GAMEDLL | FCVAR_CHEAT );
+static ConCommand nav_analyze( "nav_analyze", CommandNavAnalyze, "Re-analyze the current Navigation Mesh and save it to disk.", FCVAR_GAMEDLL );
 
 
 //--------------------------------------------------------------------------------------------------------------

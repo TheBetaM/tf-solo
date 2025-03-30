@@ -43,6 +43,7 @@ vscript_convar_allowlist
     mp_match_end_at_timelimit                                         allowed
     mp_maxrounds                                                      allowed
     mp_respawnwavetime                                                allowed
+    mp_restartblock                                                   allowed
     mp_restartgame                                                    allowed
     mp_restartgame_immediate                                          allowed
     mp_scrambleteams_auto                                             allowed
@@ -599,6 +600,7 @@ vscript_convar_allowlist
     tf_rocketpack_launch_push                                         allowed
     tf_rocketpack_refire_delay                                        allowed
     tf_rocketpack_toggle_duration                                     allowed
+    tf_roundstarttalk_disable                                         allowed
     tf_scout_air_dash_count                                           allowed
     tf_scout_bat_launch_delay                                         allowed
     tf_scout_energydrink_activation                                   allowed
