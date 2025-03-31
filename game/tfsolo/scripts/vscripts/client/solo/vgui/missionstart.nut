@@ -33,6 +33,7 @@ TFSOLO.StartMission <- function()
 			SendToConsole("nav_generate_auto_view_distance 2500")
 		}
 	}
+	SendToConsole("tf_gamemode_override " + data.CvarGamemodeOverride)
 	SendToConsole("tf_mvm_popfile_requested " + data.PopFile)
 	
 	// GO!

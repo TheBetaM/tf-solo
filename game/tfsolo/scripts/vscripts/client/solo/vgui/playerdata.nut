@@ -5,6 +5,7 @@ TFSOLO.PlayerData <- {
 	Map = ""
 	PlayerClass = "any"
 	PopFile = "mvm_decoy"
+	CvarGamemodeOverride = 0
 	
 	// Persistent
 	Seed = 0

@@ -1071,7 +1071,7 @@ ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FC
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "Prevent map gamemode logic from being automatically set up." );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
@@ -4284,9 +4284,11 @@ void CTFGameRules::Activate()
 
 	m_nMapHolidayType.Set( kHoliday_None );
 
+	bool isOverriden = tf_gamemode_override.GetBool();
+
 	CArenaLogic *pArenaLogic = dynamic_cast< CArenaLogic * > (gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
 
-	if ( pArenaLogic != NULL )
+	if ( pArenaLogic != NULL && !isOverriden )
 	{
 		m_hArenaEntity = pArenaLogic;
 
@@ -4300,7 +4302,7 @@ void CTFGameRules::Activate()
 
 #ifdef TF_RAID_MODE
 	CRaidLogic *pRaidLogic = dynamic_cast< CRaidLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_raid" ) );
-	if ( pRaidLogic )
+	if ( pRaidLogic && !isOverriden )
 	{
 		m_hRaidLogic = pRaidLogic;
 
@@ -4311,7 +4313,7 @@ void CTFGameRules::Activate()
 	}
 
 	CBossBattleLogic *pBossBattleLogic = dynamic_cast< CBossBattleLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_boss_battle" ) );
-	if ( pBossBattleLogic )
+	if ( pBossBattleLogic && !isOverriden )
 	{
 		m_hBossBattleLogic = pBossBattleLogic;
 
@@ -4336,7 +4338,10 @@ void CTFGameRules::Activate()
 	CMannVsMachineLogic *pMannVsMachineLogic = dynamic_cast< CMannVsMachineLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_mann_vs_machine" ) );
 	CTeamTrainWatcher *pTrainWatch = dynamic_cast<CTeamTrainWatcher*> ( gEntList.FindEntityByClassname( NULL, "team_train_watcher" ) );
 	bool bFlag = ICaptureFlagAutoList::AutoList().Count() > 0;
-	if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
+	if ( isOverriden )
+	{
+	}
+	else if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
 	{
 		m_bPlayingRobotDestructionMode.Set( true );
 		if ( CTFRobotDestructionLogic::GetRobotDestructionLogic()->GetType() == CTFRobotDestructionLogic::TYPE_ROBOT_DESTRUCTION )
@@ -4382,7 +4387,7 @@ void CTFGameRules::Activate()
 	}
 	
 	auto *pPasstime = dynamic_cast<CTFPasstimeLogic*> ( gEntList.FindEntityByClassname( NULL, "passtime_logic" ) );
-	if ( pPasstime )
+	if ( pPasstime && !isOverriden )
 	{
 		m_nGameType.Set( TF_GAMETYPE_PASSTIME );
 		tf_gamemode_passtime.SetValue( 1 );
@@ -4390,7 +4395,7 @@ void CTFGameRules::Activate()
 
 	// the game is in training mode if this entity is found
 	m_hTrainingModeLogic = dynamic_cast< CTrainingModeLogic * > ( gEntList.FindEntityByClassname( NULL, "tf_logic_training_mode" ) );
-	if ( NULL != m_hTrainingModeLogic )
+	if ( NULL != m_hTrainingModeLogic && !isOverriden )
 	{
 		m_bIsInTraining.Set( true );
 		m_bAllowTrainingAchievements.Set( false );
@@ -4402,13 +4407,13 @@ void CTFGameRules::Activate()
 	m_bIsInItemTestingMode.Set( false );
 
 	CKothLogic *pKoth = dynamic_cast<CKothLogic*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_koth" ) );
-	if ( pKoth )
+	if ( pKoth && !isOverriden )
 	{
 		m_bPlayingKoth.Set( true );
 	}
 
 	CMedievalLogic *pMedieval = dynamic_cast<CMedievalLogic*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_medieval" ) );
-	if ( pMedieval || tf_medieval.GetBool() )
+	if ( (pMedieval || tf_medieval.GetBool()) && !isOverriden )
 	{
 		m_bPlayingMedieval.Set( true );
 	}
@@ -4420,7 +4425,7 @@ void CTFGameRules::Activate()
 	}
 
 	CHybridMap_CTF_CP *pHybridMap_CTF_CP = dynamic_cast<CHybridMap_CTF_CP*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_hybrid_ctf_cp" ) );
-	if ( pHybridMap_CTF_CP )
+	if ( pHybridMap_CTF_CP && !isOverriden )
 	{
 		m_bPlayingHybrid_CTF_CP.Set( true );
 	}

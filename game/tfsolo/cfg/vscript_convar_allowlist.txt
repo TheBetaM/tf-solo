@@ -328,6 +328,7 @@ vscript_convar_allowlist
     tf_flamethrower_velocityfadestart                                 allowed
     tf_force_holidays_off                                             allowed
     tf_forced_holiday                                                 allowed
+    tf_gamemode_override                                              allowed
     tf_ghost_up_speed                                                 allowed
     tf_ghost_xy_speed                                                 allowed
     tf_grapplinghook_acceleration                                     allowed
