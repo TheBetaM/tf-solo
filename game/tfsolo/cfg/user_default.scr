@@ -872,4 +872,12 @@ DESCRIPTION INFO_OPTIONS
 		{ "0" }
 	}
 
+	"cl_default_networking_off"
+	{
+		"Disable Steam Networking By Default"
+		"Start the game with Steam Networking disabled."
+		{ BOOL }
+		{ "0" }
+	}
+
 }

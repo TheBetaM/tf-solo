@@ -109,6 +109,7 @@ ConVar cl_mainmenu_operation_motd_reset( "cl_mainmenu_operation_motd_reset", "0"
 ConVar cl_mainmenu_safemode( "cl_mainmenu_safemode", "0", FCVAR_NONE, "Enable safe mode", cc_tf_safemode_toggle );
 ConVar cl_mainmenu_updateglow( "cl_mainmenu_updateglow", "1", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 ConVar tf_mainmenu_match_panel_type( "tf_mainmenu_match_panel_type", "7", FCVAR_ARCHIVE | FCVAR_HIDDEN, "The match group data to show on the main menu", cc_tf_mainmenu_match_panel_type );
+ConVar cl_default_networking_off("cl_default_networking_off", "0", FCVAR_ARCHIVE, "Disable Steam Networking on boot by default." );
 
 void cc_promotional_codes_button_changed( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -1167,7 +1168,10 @@ void CHudMainMenuOverride::OnMainMenuStabilized()
 	{
 		gameeventmanager->FireEventClientSide( event );
 	}
-	engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
+	if ( cl_default_networking_off.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
+	}
 }
 
 //-----------------------------------------------------------------------------
