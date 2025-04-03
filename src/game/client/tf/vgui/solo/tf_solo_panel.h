@@ -107,3 +107,5 @@ private:
 };
 
 CSoloPanel* GetSoloPanel();
+
+HSCRIPT PanelToScriptHandle(Panel* pPanel);

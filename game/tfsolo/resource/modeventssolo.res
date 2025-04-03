@@ -49,4 +49,28 @@
 		"count"	"long"
 		"setflag"	"bool" // if false, increment flag by count
 	}
+	"solohud_file_changed"
+	{
+		"path"	"string"
+	}
+	"solohud_int"
+	{
+		"key"	"string"
+		"value"	"long"
+	}
+	"solohud_float"
+	{
+		"key"	"string"
+		"value"	"float"
+	}
+	"solohud_string"
+	{
+		"key"	"string"
+		"value"	"string"
+	}
+	"solohud_event"
+	{
+		"key"	"string"
+		"value"	"string"
+	}
 }

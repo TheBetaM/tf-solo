@@ -489,6 +489,8 @@ public:
 
 	void			SetCustomUpgradesFile( inputdata_t &inputdata );
 
+	void			SetSoloObjectivesResFile( const char* path );
+
 	virtual bool	ShouldWaitToStartRecording( void );
 
 	void			SetGravityMultiplier( float flValue ){ m_flGravityMultiplier.Set( flValue ); }
@@ -676,6 +678,7 @@ bool IsCreepWaveMode( void ) const;
 	bool IsPVEModeActive( void ) const;						// return true if we are playing a PvE mode
 	bool IsPVEModeControlled( CBaseEntity *who ) const;		// return true for PvE opponents (ie: enemy bot team)
 	const char*		GetCustomUpgradesFile() { return m_pszCustomUpgradesFile.Get(); }
+	const char*		GetSoloObjectivesResFile() { return m_pszSoloObjectivesResFile.Get(); }
 
 //=============================================================================
 // HPE_BEGIN:
@@ -1224,6 +1227,7 @@ private:
 	CNetworkVar( int, m_nMapHolidayType ); // Used by map authors to indicate this is a holiday map
 
 	CNetworkString( m_pszCustomUpgradesFile, MAX_PATH );
+	CNetworkString( m_pszSoloObjectivesResFile, MAX_PATH );
 
 	CNetworkVar( bool, m_bShowMatchSummary );
 	CNetworkVar( bool, m_bMapHasMatchSummaryStage );

@@ -101,9 +101,9 @@ void CHudNotificationPanel::MsgFunc_HudNotify( bf_read &msg )
 	// Ignore notifications in minmode
 	if ( !bForceShow )
 	{
-		ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
-		if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
-			return;
+		//ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
+		//if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
+		//	return;
 	}
 
 	float flDuration = tf_hud_notification_duration.GetFloat();
@@ -140,9 +140,9 @@ void CHudNotificationPanel::MsgFunc_HudNotify( bf_read &msg )
 void CHudNotificationPanel::MsgFunc_HudNotifyCustom( bf_read &msg )
 {
 	// Ignore notifications in minmode
-	ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
-	if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
-		return;
+	//ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
+	//if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
+	//	return;
 
 	// Reload the base
 	LoadControlSettings( "resource/UI/notifications/base_notification.res" );

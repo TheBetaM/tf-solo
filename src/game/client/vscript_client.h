@@ -89,17 +89,20 @@ public:
 	virtual void LevelInitPreEntity(void)
 	{
 		m_bAllowEntityCreationInScripts = true;
+		RunScriptHook("LevelInitPreEntity", NULL);
 	}
 
 	virtual void LevelInitPostEntity(void)
 	{
 		m_bAllowEntityCreationInScripts = false;
+		RunScriptHook("LevelInitPostEntity", NULL);
 	}
 
 	virtual void LevelShutdownPostEntity(void)
 	{
 		//VScriptClientTerm();
 		m_bAllowEntityCreationInScripts = false;
+		RunScriptHook("LevelShutdownPostEntity", NULL);
 	}
 
 	virtual void Update(float frametime)

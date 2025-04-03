@@ -1432,6 +1432,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CTFGameRules, DT_TFGameRules )
 	RecvPropBool( RECVINFO( m_bMatchEnded ) ),
 	RecvPropBool( RECVINFO( m_bPowerupMode ) ),
 	RecvPropString( RECVINFO( m_pszCustomUpgradesFile ) ),
+	RecvPropString( RECVINFO( m_pszSoloObjectivesResFile ) ),
 	RecvPropBool( RECVINFO( m_bTruceActive ) ),
 	RecvPropBool( RECVINFO( m_bShowMatchSummary ), 0, RecvProxy_MatchSummary ),
 	RecvPropBool( RECVINFO_NAME( m_bShowMatchSummary, "m_bShowCompetitiveMatchSummary" ), 0, RecvProxy_MatchSummary ),     // Renamed
@@ -1502,6 +1503,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CTFGameRules, DT_TFGameRules )
 	SendPropInt( SENDINFO( m_nMatchGroupType ) ),
 	SendPropBool( SENDINFO( m_bMatchEnded ) ),
 	SendPropString( SENDINFO( m_pszCustomUpgradesFile ) ),
+	SendPropString( SENDINFO( m_pszSoloObjectivesResFile ) ),
 	SendPropBool( SENDINFO( m_bTruceActive ) ),
 	SendPropBool( SENDINFO( m_bShowMatchSummary ) ),
 	SendPropBool( SENDINFO( m_bTeamsSwitched ) ),
@@ -3473,6 +3475,7 @@ CTFGameRules::CTFGameRules()
 	m_flGravityMultiplier.Set( 1.0 );
 
 	m_pszCustomUpgradesFile.GetForModify()[0] = '\0';
+	m_pszSoloObjectivesResFile.GetForModify()[0] = '\0';
 
 	m_bShowMatchSummary.Set( false );
 	m_bMapHasMatchSummaryStage.Set( false );
@@ -15783,6 +15786,25 @@ void CTFGameRules::SetCustomUpgradesFile( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+void CTFGameRules::SetSoloObjectivesResFile(const char* path)
+{
+	//const char* pszPath = inputdata.value.String();
+
+	// Tell future clients to load from this path
+	V_strncpy( m_pszSoloObjectivesResFile.GetForModify(), path, MAX_PATH );
+
+	// Tell connected clients to reload
+	IGameEvent* pEvent = gameeventmanager->CreateEvent( "solohud_file_changed" );
+	if ( pEvent )
+	{
+		pEvent->SetString( "path", path );
+		gameeventmanager->FireEvent( pEvent );
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 bool CTFGameRules::ShouldWaitToStartRecording( void )
 {
 	if ( IsMannVsMachineMode() )
@@ -22496,6 +22518,7 @@ void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUp
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
 
 void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
+void	ScriptSetSoloObjectivesResFile( const char* path )			{ TFGameRules()->SetSoloObjectivesResFile(path); }
 
 void CTFGameRules::RegisterScriptFunctions()
 {
@@ -22555,6 +22578,7 @@ void CTFGameRules::RegisterScriptFunctions()
 	TF_GAMERULES_SCRIPT_FUNC( ForceEscortPushLogic,						"Forces payload pushing logic. 0 -> default, 1 -> force off, 2 -> force on" );
 
 	TF_GAMERULES_SCRIPT_FUNC( SetBotPresetsFile,						"Reload bot presets file from this path" );
+	TF_GAMERULES_SCRIPT_FUNC( SetSoloObjectivesResFile,					"Reload solo HUD file from this path" );
 
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }

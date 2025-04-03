@@ -873,6 +873,8 @@ $Project "Client (TF)"
 				$File	"tf\vgui\solo\tf_solo_node_view_panel.h"
 				$File	"tf\vgui\solo\tf_solo_region_panel.cpp"
 				$File	"tf\vgui\solo\tf_solo_region_panel.h"
+				$File	"tf\vgui\solo\tf_hud_solo_objectives.cpp"
+				$File	"tf\vgui\solo\tf_hud_solo_objectives.h"
 			}
 
 			$Folder	"halloween"

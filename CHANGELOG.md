@@ -38,7 +38,8 @@ mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
 ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
-- Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string)
+- Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string), 
+SetSoloObjectivesResFile(string)
 - Clientside/Singleplayer dynamic asset loading from map files: BSP_CacheStartSingle, BSP_CacheStartArray, 
 BSP_CacheStartRemap, BSP_GetCacheJobsRunning, BSP_CacheRemove, BSP_CacheRemoveArray, BSP_CacheClear  
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,

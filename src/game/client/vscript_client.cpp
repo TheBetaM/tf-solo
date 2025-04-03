@@ -752,6 +752,50 @@ bool Script_IsClient()
 {
 	return true;
 }
+bool Script_IsHosting()
+{
+	C_BasePlayer* pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return false;
+
+	// TODO
+
+	return true;
+}
+bool Script_UserIsClient(int userID)
+{
+	C_BasePlayer* pPlayer = UTIL_PlayerByUserId(userID);
+	if (!pPlayer)
+		return false;
+
+	if (pPlayer->IsHLTV())
+		return false;
+
+	if (pPlayer->IsLocalPlayer())
+		return true;
+
+	return false;
+}
+bool Script_UserIsHost(int userID)
+{
+	// TODO return false if connected to dedicated server
+
+	C_BasePlayer* pPlayer = UTIL_PlayerByUserId(userID);
+	if (!pPlayer)
+		return false;
+
+	if (pPlayer->IsHLTV())
+		return false;
+
+	auto host = UTIL_PlayerByIndex(1);
+	if (!host)
+		return false;
+
+	if (pPlayer->index == host->index)
+		return true;
+
+	return false;
+}
 
 bool Script_ConnectedOnline()
 {
@@ -1182,6 +1226,9 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsInGame, "IsInGame", "Returns true if client is in a server.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsServer, "IsServer", "Returns true if script is running on the server.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
+				//ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsHosting, "IsHosting", "Returns true if local player is hosting the server.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_UserIsClient, "UserIsClient", "Returns true if given user id is the local client.");
+				//ScriptRegisterFunctionNamed(g_pScriptVM, Script_UserIsHost, "UserIsHost", "Returns true if given user id is the host of the server.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ConnectedOnline, "ConnectedOnline", "Returns true if client is connected to the internet.");

@@ -65,6 +65,7 @@ private:
 	CTFHudEscort			*m_pEscortPanel;
 	CTFHudMultipleEscort	*m_pMultipleEscortPanel;
 	class CTFHUDRobotDestruction	*m_pRobotDestructionPanel;
+	class CTFHUDSoloObjectives* m_pSoloObjectivesPanel;
 	CTFHudPasstime			*m_pHudPasstime;
 	
 	//=============================================================================
