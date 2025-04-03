@@ -12,7 +12,7 @@
 	{
 		"item"	"long"
 	}
-	"solo_client_armory_item_unlocked"
+	"solo_client_armory_unlocked"
 	{
 		"item"	"string"
 		"itemid"	"long"

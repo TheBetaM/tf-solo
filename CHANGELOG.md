@@ -27,6 +27,7 @@ mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed some cases of MvM workshop maps not being able to find any popfile
 - Fixed nav mesh generation not taking into account multiple spawn areas and stages
+- Minimal HUD no longer prevents game_text_tf from appearing
 ## TFBot improvements
 - Fixed bots not working correctly in PLR
 - Fixed bots ignoring SD, PD, RD and neutral flags
