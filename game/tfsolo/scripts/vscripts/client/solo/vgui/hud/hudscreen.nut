@@ -32,8 +32,13 @@ TFSOLO.HudScreen <- class
 	{
 		
 	}
+	function OnString(key, value)
+	{
+		
+	}
 	function _tostring() return this.Name
 }
 
 IncludeScript("client/solo/vgui/hud/test.nut")
 IncludeScript("client/solo/vgui/hud/mission_basic.nut")
+IncludeScript("client/solo/vgui/hud/mission_twolines.nut")

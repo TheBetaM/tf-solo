@@ -1,0 +1,226 @@
+bot_presets
+{
+	TestBot
+	{
+		Name "Test Bot S"
+		Class Soldier
+		Scale 1.25
+		Robot 1
+		Skill 2
+		Health 2000
+		Team 3
+		Conds
+		{
+			30
+			16
+		}
+		Items
+		{
+			"The Black Box"
+			{
+				"fire rate bonus" "0.001"
+				"faster reload rate" "1.6"
+			}
+			"The Concheror"
+			{
+			}
+			"The Escape Plan"
+			{
+			}
+		}
+		Attributes
+		{
+			"move speed bonus" "1.5"
+			"override footstep sound set" "3"
+		}
+	}
+	TestBot2
+	{
+		Name "Test Bot 2"
+		Class Soldier
+		Scale 1.25
+		Skill 2
+		Health 2000
+		Team 2
+		Conds
+		{
+			30
+			16
+		}
+		Items
+		{
+			"The Concheror"
+			{
+			}
+			"The Escape Plan"
+			{
+			}
+		}
+		Attributes
+		{
+			"move speed bonus" "1.5"
+			"override footstep sound set" "3"
+		}
+	}
+	TestBot3
+	{
+		Name "Test Bot 3"
+		Rarity 2
+		Class Soldier
+		Scale 1.25
+		Robot 1
+		Skill 3
+		Health 2000
+		Conds
+		{
+			30
+			16
+		}
+		Items
+		{
+			"The Escape Plan"
+			{
+			}
+		}
+		Attributes
+		{
+			"move speed bonus" "1.5"
+			"override footstep sound set" "3"
+		}
+	}
+	SaxtonHale
+	{
+		Name "Saxton Hale"
+		Rarity 3
+		Class HeavyWeapons
+		Scale 1.25
+		Skill 3
+		Health 2000
+		Model "models/vsh/player/saxton_hale.mdl"
+		WeaponRestrictions 1
+		Conds
+		{
+		}
+		Items
+		{
+			"TF_WEAPON_FISTS"
+			{
+			}
+		}
+		Attributes
+		{
+		}
+	}
+	SantaHale
+	{
+		Name "Santa Hale"
+		Rarity 3
+		Class HeavyWeapons
+		Scale 1.25
+		Skill 3
+		Health 2000
+		Model "models/vsh/player/santa_hale.mdl"
+		WeaponRestrictions 1
+		Conds
+		{
+		}
+		Items
+		{
+			"TF_WEAPON_FISTS"
+			{
+			}
+		}
+		Attributes
+		{
+		}
+	}
+	SaxtonHell
+	{
+		Name "Saxton Hell"
+		Rarity 3
+		Class HeavyWeapons
+		Scale 1.25
+		Skill 3
+		Health 2000
+		Model "models/vsh/player/hell_hale.mdl"
+		WeaponRestrictions 1
+		Conds
+		{
+		}
+		Items
+		{
+			"TF_WEAPON_FISTS"
+			{
+			}
+		}
+		Attributes
+		{
+		}
+	}
+	Seal
+	{
+		Name "Seal"
+		Rarity 3
+		Class HeavyWeapons
+		Scale 1.25
+		Skill 3
+		Health 2000
+		ModelStatic "models/props_selbyen/seal.mdl"
+		WeaponRestrictions 1
+		Conds
+		{
+		}
+		Items
+		{
+			"TF_WEAPON_FISTS"
+			{
+			}
+		}
+		Attributes
+		{
+		}
+	}
+	FarmageddonScarecrow
+	{
+		Name "Scarecrow"
+		Rarity 3
+		Class Sniper
+		Scale 1.25
+		Skill 3
+		Health 2000
+		Model "models/bots/farmageddon/scarecrow.mdl"
+		WeaponRestrictions 1
+		Conds
+		{
+		}
+		Items
+		{
+		}
+		Attributes
+		{
+		}
+	}
+	SpineyardMobsterSkeleton
+	{
+		Name "Mobster Skeleton"
+		Rarity 3
+		Class Sniper
+		Scale 1.25
+		Skill 3
+		Health 2000
+		Model "models/bots/vineyard_event/skeleton_sniper_mafia.mdl"
+		WeaponRestrictions 4
+		Conds
+		{
+		}
+		Items
+		{
+			"Spineyard Tommygun"
+			{
+			}
+		}
+		Attributes
+		{
+		}
+	}
+}

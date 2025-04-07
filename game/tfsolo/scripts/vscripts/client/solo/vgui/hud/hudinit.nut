@@ -52,18 +52,25 @@ getroottable()[TFSOLO.Hud.EventTag] <- {
 	{
 		if (!TFSOLO.Hud.IsSetup()) return;
 		SoloHUD.SetDialogVariableInt(params.key, params.value)
+		SoloHUD.InvalidateLayout(true, false)
 	}
 	
 	OnGameEvent_solohud_float = function(params)
 	{
 		if (!TFSOLO.Hud.IsSetup()) return;
 		SoloHUD.SetDialogVariableFloat(params.key, params.value)
+		SoloHUD.InvalidateLayout(true, false)
 	}
 	
 	OnGameEvent_solohud_string = function(params)
 	{
 		if (!TFSOLO.Hud.IsSetup()) return;
 		SoloHUD.SetDialogVariable(params.key, params.value)
+		if (TFSOLO.HudScreens.Active != null)
+		{
+			TFSOLO.HudScreens.Active.OnString(params.key, params.value)
+		}
+		//SoloHUD.InvalidateLayout(true, false)
 	}
 	
 	OnGameEvent_solohud_event = function(params)

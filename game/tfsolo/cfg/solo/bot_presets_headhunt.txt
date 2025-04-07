@@ -1,0 +1,93 @@
+bot_presets
+{
+	Headhunt_HandlerRED
+	{
+		Name "Ed"
+		Class Engineer
+		Skill 2
+		Team 2
+		Rarity 3
+		Items
+		{
+			"The Widowmaker" {}
+			"The Jag" {}
+			
+			"Trucker's Topper" {}
+			"El Patron" {}
+			"Desk Engineer" {}
+			"Support Spurs" {}
+		}
+	}
+	Headhunt_HandlerBLU
+	{
+		Name "Lou"
+		Class Scout
+		Skill 2
+		Team 3
+		Rarity 3
+		Items
+		{
+			"The Back Scatter" {}
+			"The Winger" {}
+			
+			"Millennial Mercenary" {}
+			"The Ticket Boy" {}
+			"The Breakneck Baggies" {}
+			"Hot Heels" {}
+		}
+	}
+	Headhunt_RecruitRED
+	{
+		Name "Old Pete"
+		Class Soldier
+		Skill 1
+		Team 2
+		Rarity 2
+		Items
+		{
+			"The Liberty Launcher" {}
+			"The Concheror" {}
+			
+			"The Teufort Tooth Kicker" {}
+			"The Cuban Bristle Crisis" {}
+			"The Killer's Kit" {}
+			"The Shellmet" {}
+			"Veterans Attire" {}
+		}
+	}
+	Headhunt_RecruitBLU
+	{
+		Name "Weird Sal"
+		Class Sniper
+		Skill 2
+		Team 3
+		Rarity 2
+		Items
+		{
+			"The Sydney Sleeper" {}
+			"Jarate" {}
+			"The Bushwacka" {}
+			
+			"The Macho Mann" {}
+			"Your Worst Nightmare" {}
+			"The Jarmaments" {}
+			"The Triggerman's Tacticals" {}
+		}
+	}
+	Headhunt_FriendlyHeavy
+	{
+		Name "Friendly Heavy"
+		Class HeavyWeapons
+		Rarity 2
+		Items
+		{
+			"The Sandvich" {}
+			
+			"Tough Guy's Toque" {}
+			"Siberian Sweater" {}
+			"Bear Walker" {}
+		}
+	}
+	
+	
+}

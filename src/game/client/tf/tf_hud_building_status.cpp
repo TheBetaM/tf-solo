@@ -1465,7 +1465,7 @@ void CHudBuildingStatusContainer::ApplySchemeSettings( vgui::IScheme *scheme )
 void CHudBuildingStatusContainer::RepositionObjectPanels( void )
 {
 	float flXPos = XRES(9);
-	float flYPos = YRES(9);
+	float flYPos = YRES(59);
 
 	float flTeleEntranceY = YRES(9);
 	float flTeleExitY = YRES(9);

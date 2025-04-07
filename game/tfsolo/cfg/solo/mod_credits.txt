@@ -8,10 +8,54 @@ DESCRIPTION INFO_OPTIONS
 		{ CATEGORY }
 	}
 
-	"credit1"
+	"credit1_1"
 	{
 		"Mod by BetaM"
 		"https://www.youtube.com/BetaM"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"category2"
+	{
+		"Campaign - Headhunt"
+		{ CATEGORY }
+	}
+	
+	"credit2_1"
+	{
+		"Campaign by BetaM"
+		"BetaM"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_2"
+	{
+		"Ed voiced by bwab"
+		"bwab"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"category3"
+	{
+		"Campaign - Bloodrhirst"
+		{ CATEGORY }
+	}
+	
+	"credit3_1"
+	{
+		"Campaign by BetaM"
+		"BetaM"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit3_2"
+	{
+		"Ed voiced by bwab"
+		"bwab"
 		{ BOOL }
 		{ "1" }
 	}

@@ -99,7 +99,16 @@ void CTFWinPanel::SetVisible( bool state )
 
 	if ( state )
 	{
-		HideLowerPriorityHudElementsInGroup( "mid" );
+		ConVarRef tf_gamemode_solo("tf_gamemode_solo");
+		ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
+		if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
+		{
+			
+		}
+		else
+		{
+			HideLowerPriorityHudElementsInGroup("mid");
+		}
 	}
 	else
 	{
@@ -481,7 +490,16 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 				}
 			}
 			// only show team scores if round is complete
-			m_pTeamScorePanel->SetVisible( bRoundComplete );
+			ConVarRef tf_gamemode_solo("tf_gamemode_solo");
+			ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
+			if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
+			{
+				m_pTeamScorePanel->SetVisible( false );
+			}
+			else
+			{
+				m_pTeamScorePanel->SetVisible( bRoundComplete );
+			}
 		}
 
 		if ( !g_TF_PR )

@@ -48,6 +48,8 @@ public:
 
 	virtual HSCRIPT GetMatchStatusPanel();
 	virtual HSCRIPT GetKothTimersPanel();
+	virtual HSCRIPT GetBuildingStatusSpyPanel();
+	virtual HSCRIPT GetBuildingStatusEngineerPanel();
 
 	CUtlString m_pszResFile;
 	bool m_bHideRealTimer;

@@ -23,174 +23,178 @@
 
 #define TFSOLO_CAMPAIGNS_CONFIG "cfg/solo/campaigns.txt"
 
-
-
-class CTFCampaignsPanelSingle : public CExpandablePanel
+void CTFCampaignsPanelSingle::ApplySchemeSettings(IScheme* pScheme)
 {
-	DECLARE_CLASS_SIMPLE(CTFCampaignsPanelSingle, CExpandablePanel);
+	BaseClass::ApplySchemeSettings(pScheme);
 
-public:
-	CTFCampaignsPanelSingle(Panel* parent, const char* panelName, const char* eCategory, Panel* pSignalHandler, KeyValues* config)
-		: BaseClass(parent, panelName)
-		, m_eCategory(eCategory)
-		, pToggleButton(NULL)
-		, m_pSignalHandler(pSignalHandler)
-		, m_Config(config)
-	{}
+	LoadControlSettings("resource/ui/MatchMakingCampaignsPanelSingle.res");
 
-	~CTFCampaignsPanelSingle()
+	const char* cName = "";
+	const char* cDesc;
+	CUtlString cProgress;
+	const char* cMap = "";
+	bool cShowProgress = false;
+	const char* cProgressKey = "";
+	const char* cBGArt = "";
+	if (m_Config)
 	{
+		cName = m_Config->GetString("Name");
+		cDesc = m_Config->GetString("Desc");
+		cMap = m_Config->GetString("Map");
+		cShowProgress = m_Config->GetBool("ShowProgress");
+		cProgressKey = m_Config->GetString("ProgressKey");
+		cBGArt = m_Config->GetString("BGArt");
+		if (cShowProgress)
+		{
+			auto saveKV = TFInventoryManager()->GetSaveData();
+			int progVal = 0;
+			auto campaignsKV = saveKV->FindKey("Campaigns", true);
+			auto campKV = campaignsKV->FindKey(m_Config->GetName(), true);
+			if (campKV->GetInt(cProgressKey) != 0)
+			{
+				progVal = campKV->GetInt(cProgressKey);
+			}
+			cProgress.Append(CFmtStr("%d", progVal));
+			cProgress.Append("%");
+		}
 	}
 
-	virtual void ApplySchemeSettings(IScheme* pScheme) OVERRIDE
+	EditablePanel* pTopContainer = FindControl< EditablePanel >("TopContainer", true);
+	if (pTopContainer)
 	{
-		BaseClass::ApplySchemeSettings(pScheme);
-
-		LoadControlSettings("resource/ui/MatchMakingCampaignsPanelSingle.res");
-
-		const char* cName = "";
-		const char* cDesc;
-		CUtlString cProgress;
-		const char* cMap = "";
-		bool cShowProgress = false;
-		const char* cProgressKey = "";
-		const char* cBGArt = "";
-		if (m_Config)
+		// Set our dialog variables
+		auto tCheck = g_pVGuiLocalize->FindIndex(cName);
+		if (tCheck == INVALID_STRING_INDEX)
 		{
-			cName = m_Config->GetString("Name");
-			cDesc = m_Config->GetString("Desc");
-			cMap = m_Config->GetString("Map");
-			cShowProgress = m_Config->GetBool("ShowProgress");
-			cProgressKey = m_Config->GetString("ProgressKey");
-			cBGArt = m_Config->GetString("BGArt");
-			if (cShowProgress)
-			{
-				auto saveKV = TFInventoryManager()->GetSaveData();
-				int progVal = 0;
-				auto campaignsKV = saveKV->FindKey("Campaigns", true);
-				auto campKV = campaignsKV->FindKey(m_Config->GetName(), true);
-				if (campKV->GetInt(cProgressKey) != 0)
-				{
-					progVal = campKV->GetInt(cProgressKey);
-				}
-				cProgress.Append(CFmtStr("%d", progVal));
-				cProgress.Append("%");
-			}
+			pTopContainer->SetDialogVariable("title_token", cName);
 		}
-
-		EditablePanel* pTopContainer = FindControl< EditablePanel >("TopContainer", true);
-		if (pTopContainer)
+		else
 		{
-			// Set our dialog variables
-			auto tCheck = g_pVGuiLocalize->FindIndex(cName);
-			if (tCheck == INVALID_STRING_INDEX)
-			{
-				pTopContainer->SetDialogVariable("title_token", cName);
-			}
-			else
-			{
-				pTopContainer->SetDialogVariable("title_token", cName);
-				//pTopContainer->SetDialogVariable("title_token", g_pVGuiLocalize->Find(cName));
-			}
-			tCheck = g_pVGuiLocalize->FindIndex(cDesc);
-			if (tCheck == INVALID_STRING_INDEX)
-			{
-				pTopContainer->SetDialogVariable("desc_token", cDesc);
-			}
-			else
-			{
-				pTopContainer->SetDialogVariable("desc_token", cDesc);
-				//pTopContainer->SetDialogVariable("desc_token", g_pVGuiLocalize->Find(cDesc));
-			}
-			pTopContainer->SetDialogVariable("prog_token", cProgress);
+			pTopContainer->SetDialogVariable("title_token", cName);
+			//pTopContainer->SetDialogVariable("title_token", g_pVGuiLocalize->Find(cName));
 		}
-
-		ImagePanel* pImagePanel = FindControl< ImagePanel >("BGImage", true);
-		if (pImagePanel && cBGArt != "")
+		tCheck = g_pVGuiLocalize->FindIndex(cDesc);
+		if (tCheck == INVALID_STRING_INDEX)
 		{
-			pImagePanel->SetImage(cBGArt);
+			pTopContainer->SetDialogVariable("desc_token", cDesc);
 		}
-
-		EditablePanel* pMapsContainer = FindControl< EditablePanel >("MapsContainer", true);
-
-		if (pMapsContainer)
+		else
 		{
-			int nYPos = 16;
-
-			pMapsContainer->SetTall(nYPos + 10);
-			pMapsContainer->SetAutoResize(PIN_BOTTOMRIGHT, Panel::AUTORESIZE_NO, 0, 0, 0, 0);
-
-			// We want to be able to expand to this height
-			m_nExpandedHeight = nYPos + m_nCollapsedHeight;
+			pTopContainer->SetDialogVariable("desc_token", cDesc);
+			//pTopContainer->SetDialogVariable("desc_token", g_pVGuiLocalize->Find(cDesc));
 		}
-
-		// Snag the button for later
-		pToggleButton = FindControl< CExImageButton >("PlayButton", true);
+		pTopContainer->SetDialogVariable("prog_token", cProgress);
 	}
 
-	virtual void OnToggleCollapse(bool bIsExpanded) OVERRIDE
+	ImagePanel* pImagePanel = FindControl< ImagePanel >("BGImage", true);
+	if (pImagePanel && cBGArt != "")
 	{
-		if (bIsExpanded)
-		{
-			PostActionSignal(new KeyValues("CategoryExpanded", "category", m_eCategory));
-		}
-
-		BaseClass::OnToggleCollapse(bIsExpanded);
+		pImagePanel->SetImage(cBGArt);
 	}
 
-	virtual void OnCommand(const char* command) OVERRIDE
+	EditablePanel* pMapsContainer = FindControl< EditablePanel >("MapsContainer", true);
+
+	if (pMapsContainer)
 	{
-		if (FStrEq(command, "playcampaign"))
+		int nYPos = 16;
+
+		pMapsContainer->SetTall(nYPos + 10);
+		pMapsContainer->SetAutoResize(PIN_BOTTOMRIGHT, Panel::AUTORESIZE_NO, 0, 0, 0, 0);
+
+		// We want to be able to expand to this height
+		m_nExpandedHeight = nYPos + m_nCollapsedHeight;
+	}
+
+	// Snag the button for later
+	pToggleButton = FindControl< CExImageButton >("PlayButton", true);
+}
+
+void CTFCampaignsPanelSingle::OnToggleCollapse(bool bIsExpanded)
+{
+	if (bIsExpanded)
+	{
+		PostActionSignal(new KeyValues("CategoryExpanded", "category", m_eCategory));
+	}
+
+	BaseClass::OnToggleCollapse(bIsExpanded);
+}
+
+void CTFCampaignsPanelSingle::OnCommand(const char* command)
+{
+	if (FStrEq(command, "playcampaign"))
+	{
+		if (!m_Config)
 		{
-			if (!m_Config)
-			{
-				return;
-			}
-			const char* cMap = m_Config->GetString("Map");
-
-			// reset server enforced cvars
-			g_pCVar->RevertFlaggedConVars(FCVAR_REPLICATED);
-			g_pCVar->RevertFlaggedConVars(FCVAR_CHEAT);
-
-			ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
-			tf_gamemode_campaign.SetValue(1);
-			engine->ClientCmd_Unrestricted("nav_generate_auto 1\n");
-			engine->ClientCmd_Unrestricted("nav_generate_auto_view_distance 2500\n");
-
-			// create the command to execute
-			CFmtStr1024 fmtMapCommand(
-				"disconnect\nwait\nwait\nmaxplayers 32\n\nprogress_enable\nmap %s\n", cMap
-			);
-			engine->ClientCmd_Unrestricted(fmtMapCommand.Access());
-			GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >(k_eCampaigns)->SetVisible(false);
-			GetMMDashboard()->OnCommand("dimmer_hide");
-
 			return;
 		}
+		const char* cMap = m_Config->GetString("Map");
 
-		BaseClass::OnCommand(command);
+		// reset server enforced cvars
+		g_pCVar->RevertFlaggedConVars(FCVAR_REPLICATED);
+		g_pCVar->RevertFlaggedConVars(FCVAR_CHEAT);
+
+		ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
+		tf_gamemode_campaign.SetValue(1);
+		engine->ClientCmd_Unrestricted("nav_generate_auto 1\n");
+		engine->ClientCmd_Unrestricted("nav_generate_auto_view_distance 2500\n");
+
+		// create the command to execute
+		CFmtStr1024 fmtMapCommand(
+			"disconnect\nwait\nwait\nmaxplayers 32\n\nprogress_enable\nmap %s\n", cMap
+		);
+		engine->ClientCmd_Unrestricted(fmtMapCommand.Access());
+		GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >(k_eCampaigns)->SetVisible(false);
+		GetMMDashboard()->OnCommand("dimmer_hide");
+
+		return;
 	}
 
-	virtual void PerformLayout() OVERRIDE
+	BaseClass::OnCommand(command);
+}
+
+void CTFCampaignsPanelSingle::PerformLayout()
+{
+	BaseClass::PerformLayout();
+
+	SetControlVisible("EntryToggleButtonCollapsed", !BIsExpanded(), true);
+	SetControlVisible("EntryToggleButtonExpanded", BIsExpanded(), true);
+}
+
+void CTFCampaignsPanelSingle::SetCheckButtonState(uint32 nMapDefIndex, bool bSelected, bool bClickable)
+{
+
+}
+
+void CTFCampaignsPanelSingle::UpdateProgress()
+{
+	if (m_Config)
 	{
-		BaseClass::PerformLayout();
+		CUtlString cProgress;
+		bool cShowProgress = false;
+		const char* cProgressKey = "";
+		cShowProgress = m_Config->GetBool("ShowProgress");
+		cProgressKey = m_Config->GetString("ProgressKey");
+		if (cShowProgress)
+		{
+			auto saveKV = TFInventoryManager()->GetSaveData();
+			int progVal = 0;
+			auto campaignsKV = saveKV->FindKey("Campaigns", true);
+			auto campKV = campaignsKV->FindKey(m_Config->GetName(), true);
+			if (campKV->GetInt(cProgressKey) != 0)
+			{
+				progVal = campKV->GetInt(cProgressKey);
+			}
+			cProgress.Append(CFmtStr("%d", progVal));
+			cProgress.Append("%");
 
-		SetControlVisible("EntryToggleButtonCollapsed", !BIsExpanded(), true);
-		SetControlVisible("EntryToggleButtonExpanded", BIsExpanded(), true);
+			EditablePanel* pTopContainer = FindControl< EditablePanel >("TopContainer", true);
+			if (pTopContainer)
+			{
+				pTopContainer->SetDialogVariable("prog_token", cProgress);
+			}
+		}
 	}
-
-	void SetCheckButtonState(uint32 nMapDefIndex, bool bSelected, bool bClickable)
-	{
-
-	}
-
-private:
-	const char* m_eCategory;
-	CExImageButton* pToggleButton;
-	Panel* m_pSignalHandler;
-	KeyValues* m_Config;
-};
-
+}
 
 
 Panel* GetDashboardCampaignsPanel()
@@ -279,6 +283,7 @@ void CTFCampaignsPanel::RegenerateCampaignsPanels()
 			pListEntry->MakeReadyForUse();
 			pScrollableList->AddPanel(pListEntry, 5);
 			pListEntry->InvalidateLayout();
+			m_vecCampaignPanels.AddToTail(pListEntry);
 		}
 	}
 
@@ -292,26 +297,6 @@ void CTFCampaignsPanel::RegenerateCampaignsPanels()
 void CTFCampaignsPanel::PerformLayout()
 {
 	BaseClass::PerformLayout();
-
-	FOR_EACH_VEC(m_vecDataCenterPingPanels, i)
-	{
-		const PingPanelInfo& info = m_vecDataCenterPingPanels[i];
-		int iTall = info.m_pPanel->GetTall();
-		int iYGap = i > 0 ? m_iDataCenterYSpace : 0;
-		int iXPos = info.m_pPanel->GetXPos();
-		info.m_pPanel->SetPos(iXPos, m_iDataCenterY + iYGap + i * iTall);
-
-		// Update bars with latest health data
-		ProgressBar* pProgress = info.m_pPanel->FindControl< ProgressBar >("HealthProgressBar", true);
-		if (pProgress)
-		{
-			auto healthData = GTFGCClientSystem()->GetHealthBracketForRatio(info.m_flPopulationRatio);
-
-			pProgress->MakeReadyForUse();
-			pProgress->SetProgress(healthData.m_flRatio);
-			pProgress->SetFgColor(healthData.m_colorBar);
-		}
-	}
 
 	UpdateCurrentCampaigns();
 }
@@ -355,12 +340,12 @@ void CTFCampaignsPanel::FireGameEvent(IGameEvent* event)
 //-----------------------------------------------------------------------------
 void CTFCampaignsPanel::CleanupCampaignsPanels()
 {
-	FOR_EACH_VEC(m_vecDataCenterPingPanels, i)
+	FOR_EACH_VEC(m_vecCampaignPanels, i)
 	{
-		m_vecDataCenterPingPanels[i].m_pPanel->MarkForDeletion();
+		m_vecCampaignPanels[i]->MarkForDeletion();
 	}
 
-	m_vecDataCenterPingPanels.Purge();
+	m_vecCampaignPanels.Purge();
 }
 
 //-----------------------------------------------------------------------------
@@ -401,5 +386,9 @@ void CTFCampaignsPanel::OnSliderMoved()
 //-----------------------------------------------------------------------------
 void CTFCampaignsPanel::UpdateCurrentCampaigns()
 {
-	
+	FOR_EACH_VEC(m_vecCampaignPanels, i)
+	{
+		auto pPanel = m_vecCampaignPanels[i];
+		pPanel->UpdateProgress();
+	}
 }
