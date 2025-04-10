@@ -483,6 +483,7 @@ public:
 	void OnEventChangeAttributes( const CTFBot::EventChangeAttributes_t* pEvent );
 
 	void AddItem( const char* pszItemName );
+	void AddItemBulk( const char* pszItemName );
 
 	int GetUberHealthThreshold();
 	float GetUberDeployDelayDuration();

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "signs/titlecard_lou"
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"%keywords" "tf"
+}

@@ -5,7 +5,9 @@
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added Armory - a way to unlock items using credits earned in the game
 - Added Bestiary - browse enemies encountered in the game
-- Added Campaigns
+- Added Campaigns:
+-- Headhunt, enhanced from the original Workshop release!  
+-- Bloodthirst, a new campaign featuring Dracula!  
 - Added weapon items:  
 -- The Bottled Sorrow (Demoman)  
 -- The Shocking Truth (Medic)  
@@ -41,14 +43,15 @@ cl_default_networking_off
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
 ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string), 
-SetSoloObjectivesResFile(string)
+SetSoloObjectivesResFile(string), SetRoundToPlayNext(string)
 - Clientside/Singleplayer dynamic asset loading from map files: BSP_CacheStartSingle, BSP_CacheStartArray, 
 BSP_CacheStartRemap, BSP_GetCacheJobsRunning, BSP_CacheRemove, BSP_CacheRemoveArray, BSP_CacheClear  
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,
 SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,SetName/SetKeyName,RemoveSubKey  
 -- KeyValues are no longer deleted after automatically disposing the script
 - TFBot: Added GetPreset(), SetPreset(string)
-- Moved TFBot.GenerateAndWearItem to TFPlayer
+- TFPlayer: Added PostInventoryApplication()
+- Moved TFBot.GenerateAndWearItem to TFPlayer and optimized execution time
 ## Item changes
 - Shortstop  
 -- Removed 50% reload speed penalty  

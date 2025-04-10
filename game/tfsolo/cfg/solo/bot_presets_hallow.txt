@@ -1,0 +1,1763 @@
+bot_presets
+{
+	CurseANature
+	{
+		Name "CurseANature"
+		Class Scout
+		Items
+		{
+			"Wrap Battler" {}
+			"B-ankh!" {}
+			"Futankhamun" {}
+		}
+	}
+	BostonBulldog
+	{
+		Name "BostonBulldog"
+		Class Scout
+		Items
+		{
+			"The Terrier Trousers" {}
+			"The Hound's Hood" {}
+		}
+	}
+	Isolationist
+	{
+		Name "Isolationist"
+		Class Scout
+		Items
+		{
+			"The Alien Cranium" {}
+			"The Biomech Backpack" {}
+			"The Xeno Suit" {}
+		}
+	}
+	DeepFried
+	{
+		Name "DeepFried"
+		Class Scout
+		Items
+		{
+			"Nugget Noggin" {}
+			"Talon Trotters" {}
+			"Fowl Fists" {}
+		}
+	}
+	RooftopRebel
+	{
+		Name "RooftopRebel"
+		Class Scout
+		Items
+		{
+			"Head Hunter" {}
+			"Claws And Infect" {}
+			"Crazy Legs" {}
+		}
+	}
+	ZombieScout
+	{
+		Name "ZombieScout"
+		Class Scout
+		Items
+		{
+			"Zombie Scout" {}
+		}
+	}
+	SpookyScout
+	{
+		Name "SpookyScout"
+		Class Scout
+		Items
+		{
+			"The Spooky Shoes" {}
+			"The Spooky Sleeves" {}
+		}
+	}
+	FacePlante
+	{
+		Name "FacePlante"
+		Class Scout
+		Items
+		{
+			"The Face Plante" {}
+		}
+	}
+	Halloweiner
+	{
+		Name "Halloweiner"
+		Class Scout
+		Items
+		{
+			"The Halloweiner" {}
+		}
+	}
+	Raptor
+	{
+		Name "Raptor"
+		Class Scout
+		Items
+		{
+			"Remorseless Raptor" {}
+			"Wild Whip" {}
+		}
+	}
+	CorpseCarrier
+	{
+		Name "CorpseCarrier"
+		Class Scout
+		Items
+		{
+			"The Corpse Carrier" {}
+		}
+	}
+	BattersBeak
+	{
+		Name "BattersBeak"
+		Class Scout
+		Items
+		{
+			"Batter's Beak" {}
+			"Faun Feet" {}
+		}
+	}
+	Fiend
+	{
+		Name "Fiend"
+		Class Scout
+		Items
+		{
+			"The Imp's Imprint" {}
+			"The Masked Fiend" {}
+		}
+	}
+	Hare
+	{
+		Name "Hare"
+		Class Scout
+		Items
+		{
+			"The Horrific Head of Hare" {}
+			"The Baphomet Trotters" {}
+		}
+	}
+	
+	TinSoldier
+	{
+		Name "TinSoldier"
+		Class Soldier
+		Items
+		{
+			"Idiot Box" {}
+			"Steel Pipes" {}
+			"Shoestring Budget" {}
+		}
+	}
+	RocketRanger
+	{
+		Name "RocketRanger"
+		Class Soldier
+		Items
+		{
+			"The Hardium Helm" {}
+			"The Jupiter Jumpers" {}
+			"The Space Bracers" {}
+		}
+	}
+	TerracotaTrooper
+	{
+		Name "TerracotaTrooper"
+		Class Soldier
+		Items
+		{
+			"The Hidden Dragon" {}
+			"The Faux Manchu" {}
+			"The Shaolin Sash" {}
+		}
+	}
+	SgtHelsing
+	{
+		Name "SgtHelsing"
+		Class Soldier
+		Items
+		{
+			"Hellhunter's Headpiece" {}
+			"Supernatural Stalker" {}
+			"Ghoul Gibbin' Gear" {}
+		}
+	}
+	ZombieSoldier
+	{
+		Name "ZombieSoldier"
+		Class Soldier
+		Items
+		{
+			"Zombie Soldier" {}
+		}
+	}
+	BrainBucket
+	{
+		Name "BrainBucket"
+		Class Soldier
+		Items
+		{
+			"Bucket Hat" {}
+		}
+	}
+	Impaler
+	{
+		Name "Impaler"
+		Class Soldier
+		Items
+		{
+			"The Infernal Impaler" {}
+		}
+	}
+	Zipperface
+	{
+		Name "Zipperface"
+		Class Soldier
+		Items
+		{
+			"The Zipperface" {}
+		}
+	}
+	FauxManchu
+	{
+		Name "FauxManchu"
+		Class Soldier
+		Items
+		{
+			"The Faux Manchu" {}
+			"The Hidden Dragon" {}
+		}
+	}
+	FreedomFeathers
+	{
+		Name "FreedomFeathers"
+		Class Soldier
+		Items
+		{
+			"The Direct Hit" {}
+		
+			"The Freedom Feathers" {}
+			"The Compatriot" {}
+		}
+	}
+	Spellbinder
+	{
+		Name "Spellbinder"
+		Class Soldier
+		Items
+		{
+			"The Spellbinder's Bonnet" {}
+		}
+	}
+	Larval
+	{
+		Name "Larval"
+		Class Soldier
+		Items
+		{
+			"Grub Grenades" {}
+			"The Larval Lid" {}
+		}
+	}
+	Hellmet
+	{
+		Name "Hellmet"
+		Class Soldier
+		Items
+		{
+			"The Hellmet" {}
+		}
+	}
+	VampireVanquisher
+	{
+		Name "VampireVanquisher"
+		Class Soldier
+		Items
+		{
+			"Vampire Vanquisher" {}
+		}
+	}
+	Cauldron
+	{
+		Name "Cauldron"
+		Class Soldier
+		Items
+		{
+			"Calamitous Cauldron" {}
+		}
+	}
+	RaccAttack
+	{
+		Name "RaccAttack"
+		Class Soldier
+		Items
+		{
+			"Semi-tame Trapper's Hat" {}
+		}
+	}
+	PoopyDoe
+	{
+		Name "PoopyDoe"
+		Class Soldier
+		Items
+		{
+			"Poopy Doe" {}
+		}
+	}
+	WarDog
+	{
+		Name "WarDog"
+		Class Soldier
+		Items
+		{
+			"War Dog" {}
+		}
+	}
+	CranialCowl
+	{
+		Name "CranialCowl"
+		Class Soldier
+		Items
+		{
+			"Cranial Cowl" {}
+		}
+	}
+	
+	InfernalImp
+	{
+		Name "InfernalImp"
+		Class Pyro
+		Items
+		{
+			"Blazing Bull" {}
+			"Fallen Angel" {}
+			"Tail From the Crypt" {}
+		}
+	}
+	BurnyThePyrosaur
+	{
+		Name "BurnyThePyrosaur"
+		Class Pyro
+		Items
+		{
+			"Burny's Boney Bonnet" {}
+			"The Cauterizer's Caudal Appendage" {}
+			"The Monster's Stompers" {}
+		}
+	}
+	MaliceInPyroland
+	{
+		Name "MaliceInPyroland"
+		Class Pyro
+		Items
+		{
+			"The Crispy Golden Locks" {}
+			"The Scorched Skirt" {}
+		}
+	}
+	MurkyLurker
+	{
+		Name "MurkyLurker"
+		Class Pyro
+		Items
+		{
+			"The Abhorrent Appendages" {}
+			"The Vicious Visage" {}
+		}
+	}
+	AutomatedAbnormality
+	{
+		Name "AutomatedAbnormality"
+		Class Pyro
+		Items
+		{
+			"Moccasin Machinery" {}
+			"Arsonist Apparatus" {}
+		}
+	}
+	ZombiePyro
+	{
+		Name "ZombiePyro"
+		Class Pyro
+		Items
+		{
+			"Zombie Pyro" {}
+		}
+	}
+	BrainSucker
+	{
+		Name "BrainSucker"
+		Class Pyro
+		Items
+		{
+			"Pyro Brain Sucker" {}
+		}
+	}
+	PyromancerMask
+	{
+		Name "PyromancerMask"
+		Class Pyro
+		Items
+		{
+			"Pyromancer's Mask" {}
+		}
+	}
+	DeadCone
+	{
+		Name "DeadCone"
+		Class Pyro
+		Items
+		{
+			"Traffic Cone" {}
+		}
+	}
+	LastBreath
+	{
+		Name "LastBreath"
+		Class Pyro
+		Items
+		{
+			"The Last Breath" {}
+		}
+	}
+	Apparition
+	{
+		Name "Apparition"
+		Class Pyro
+		Items
+		{
+			"Apparition's Aspect" {}
+		}
+	}
+	Waxy
+	{
+		Name "Waxy"
+		Class Pyro
+		Items
+		{
+			"The Waxy Wayfinder" {}
+		}
+	}
+	Triclops
+	{
+		Name "Triclops"
+		Class Pyro
+		Items
+		{
+			"The Triclops" {}
+		}
+	}
+	Area451
+	{
+		Name "Area451"
+		Class Pyro
+		Items
+		{
+			"Area 451" {}
+		}
+	}
+	Plutonidome
+	{
+		Name "Plutonidome"
+		Class Pyro
+		Items
+		{
+			"The Plutonidome" {}
+		}
+	}
+	Wraith
+	{
+		Name "Wraith"
+		Class Pyro
+		Items
+		{
+			"The Wraith Wrap" {}
+			"The Coffin Kit" {}
+		}
+	}
+	Necronomicrown
+	{
+		Name "Necronomicrown"
+		Class Pyro
+		Items
+		{
+			"The Necronomicrown" {}
+		}
+	}
+	MairMask
+	{
+		Name "MairMask"
+		Class Pyro
+		Items
+		{
+			"The Mair Mask" {}
+		}
+	}
+	PopEyes
+	{
+		Name "PopEyes"
+		Class Pyro
+		Items
+		{
+			"Pop-eyes" {}
+		}
+	}
+	BeastFromBelow
+	{
+		Name "BeastFromBelow"
+		Class Pyro
+		Items
+		{
+			"The Beast From Below" {}
+		}
+	}
+	HardHeaded
+	{
+		Name "HardHeaded"
+		Class Pyro
+		Items
+		{
+			"Hard-Headed Hardware" {}
+			"The Maniac's Manacles" {}
+		}
+	}
+	Spectralnaut
+	{
+		Name "Spectralnaut"
+		Class Pyro
+		Items
+		{
+			"The Spectralnaut" {}
+		}
+	}
+	Goldilocks
+	{
+		Name "Goldilocks"
+		Class Pyro
+		Items
+		{
+			"The Crispy Golden Locks" {}
+			"The Scorched Skirt" {}
+		}
+	}
+	Pyroscopes
+	{
+		Name "Pyroscopes"
+		Class Pyro
+		Items
+		{
+			"Up Pyroscopes" {}
+		}
+	}
+	RuggedRespirator
+	{
+		Name "RuggedRespirator"
+		Class Pyro
+		Items
+		{
+			"The Rugged Respirator" {}
+		}
+	}
+	Hollowhead
+	{
+		Name "Hollowhead"
+		Class Pyro
+		Items
+		{
+			"The Hollowhead" {}
+		}
+	}
+	Gothic
+	{
+		Name "Gothic"
+		Class Pyro
+		Items
+		{
+			"The Gothic Guise" {}
+		}
+	}
+	Membrain
+	{
+		Name "Membrain"
+		Class Pyro
+		Items
+		{
+			"The Mucous Membrain" {}
+		}
+	}
+	Bouffant
+	{
+		Name "Bouffant"
+		Class Pyro
+		Items
+		{
+			"Bozo's Bouffant" {}
+		}
+	}
+	MarabreMask
+	{
+		Name "MarabreMask"
+		Class Pyro
+		Items
+		{
+			"The Macabre Mask" {}
+		}
+	}
+	Vicious
+	{
+		Name "Vicious"
+		Class Pyro
+		Items
+		{
+			"The Vicious Visage" {}
+			"The Grisly Gumbo" {}
+			"The Abhorrent Appendages" {}
+		}
+	}
+	DrinkHead
+	{
+		Name "DrinkHead"
+		Class Pyro
+		Items
+		{
+			"The Corpsemopolitan" {}
+		}
+	}
+	Glob
+	{
+		Name "Glob"
+		Class Pyro
+		Items
+		{
+			"The Glob" {}
+		}
+	}
+	RavensVisage
+	{
+		Name "RavensVisage"
+		Class Pyro
+		Items
+		{
+			"The Raven's Visage" {}
+		}
+	}
+	TeethHead
+	{
+		Name "TeethHead"
+		Class Pyro
+		Items
+		{
+			"Creature's Grin" {}
+		}
+	}
+	Licker
+	{
+		Name "Licker"
+		Class Pyro
+		Items
+		{
+			"Lollichop Licker" {}
+		}
+	}
+	MrJuice
+	{
+		Name "MrJuice"
+		Class Pyro
+		Items
+		{
+			"Mr. Juice" {}
+		}
+	}
+	Vampyro
+	{
+		Name "Vampyro"
+		Class Pyro
+		Items
+		{
+			"Vampyro" {}
+		}
+	}
+	FaceOfMercy
+	{
+		Name "FaceOfMercy"
+		Class Pyro
+		Items
+		{
+			"The Face of Mercy" {}
+		}
+	}
+	NeptunesNightmare
+	{
+		Name "NeptunesNightmare"
+		Class Pyro
+		Items
+		{
+			"Neptune's Nightmare" {}
+		}
+	}
+	Arthropod
+	{
+		Name "Arthropod"
+		Class Pyro
+		Items
+		{
+			"Arthropod's Aspect" {}
+		}
+	}
+	SharkHat
+	{
+		Name "SharkHat"
+		Class Pyro
+		Items
+		{
+			"The Cranial Carcharodon" {}
+		}
+	}
+	HeadDead
+	{
+		Name "HeadDead"
+		Class Pyro
+		Items
+		{
+			"Head of the Dead" {}
+		}
+	}
+	PyroShark
+	{
+		Name "PyroShark"
+		Class Pyro
+		Items
+		{
+			"Pyro Shark" {}
+		}
+	}
+	PyroLantern
+	{
+		Name "PyroLantern"
+		Class Pyro
+		Items
+		{
+			"Pyr'o Lantern" {}
+		}
+	}
+	Treehugger
+	{
+		Name "Treehugger"
+		Class Pyro
+		Items
+		{
+			"The Treehugger" {}
+		}
+	}
+	PyroSorcerer
+	{
+		Name "PyroSorcerer"
+		Class Pyro
+		Items
+		{
+			"The Seared Sorcerer" {}
+		}
+	}
+	WanderingWraith
+	{
+		Name "WanderingWraith"
+		Class Pyro
+		Items
+		{
+			"Wandering Wraith" {}
+		}
+	}
+	Somen
+	{
+		Name "Somen"
+		Class Pyro
+		Items
+		{
+			"Smiling Somen" {}
+		}
+	}
+	Rooster
+	{
+		Name "Rooster"
+		Class Pyro
+		Items
+		{
+			"The Miami Rooster" {}
+		}
+	}
+	Propaniac
+	{
+		Name "Propaniac"
+		Class Pyro
+		Items
+		{
+			"Propaniac" {}
+		}
+	}
+	FireBreather
+	{
+		Name "FireBreather"
+		Class Pyro
+		Items
+		{
+			"The Fire Breather" {}
+		}
+	}
+	FlameWarrior
+	{
+		Name "FlameWarrior"
+		Class Pyro
+		Items
+		{
+			"The Flame Warrior" {}
+		}
+	}
+	DeadHeat
+	{
+		Name "SplitHead"
+		Class Pyro
+		Items
+		{
+			"Dead Heat" {}
+		}
+	}
+	SplitHead
+	{
+		Name "SplitHead"
+		Class Pyro
+		Items
+		{
+			"Splitting Headache" {}
+		}
+	}
+	FishHead
+	{
+		Name "FishHead"
+		Class Pyro
+		Items
+		{
+			"Fiercesome Fluorescence" {}
+		}
+	}
+	Chiromancer
+	{
+		Name "Chiromancer"
+		Class Pyro
+		Items
+		{
+			"Sear Seer" {}
+			"Chiromancer's Kit" {}
+		}
+	}
+	MantleEvil
+	{
+		Name "MantleEvil"
+		Class Pyro
+		Items
+		{
+			"Duality of Mantle" {}
+		}
+	}
+	
+	HighlandHound
+	{
+		Name "HighlandHound"
+		Class Demoman
+		Items
+		{
+			"Hair of the Dog" {}
+			"Scottish Snarl" {}
+			"Pickled Paws" {}
+		}
+	}
+	CountTavish
+	{
+		Name "CountTavish"
+		Class Demoman
+		Items
+		{
+			"The Transylvania Top" {}
+			"The Lordly Lapels" {}
+		}
+	}
+	CursedCaptain
+	{
+		Name "CursedCaptain"
+		Class Demoman
+		Items
+		{
+			"The Squid's Lid" {}
+			"Cap'n Calamari" {}
+		}
+	}
+	ForgottenKing
+	{
+		Name "ForgottenKing"
+		Class Demoman
+		Items
+		{
+			"Forgotten King's Restless Head" {}
+			"Forgotten King's Pauldrons" {}
+		}
+	}
+	ZombieDemo
+	{
+		Name "ZombieDemo"
+		Class Demoman
+		Items
+		{
+			"Zombie Demo" {}
+		}
+	}
+	Conjurer
+	{
+		Name "Conjurer"
+		Class Demoman
+		Items
+		{
+			"Conjurer's Cowl" {}
+		}
+	}
+	VoodooJujuDemo
+	{
+		Name "VoodooJujuDemo"
+		Class Demoman
+		Items
+		{
+			"The Voodoo Juju (Slight Return)" {}
+		}
+	}
+	Calamari
+	{
+		Name "Calamari"
+		Class Demoman
+		Items
+		{
+			"Cap'n Calamari" {}
+			"The Squid's Lid" {}
+		}
+	}
+	Headtaker
+	{
+		Name "Headtaker"
+		Class Demoman
+		Items
+		{
+			"The Headtaker's Hood" {}
+		}
+	}
+	Transylvania
+	{
+		Name "Transylvania"
+		Class Demoman
+		Items
+		{
+			"The Transylvania Top" {}
+			"The Horsemann's Hand-Me-Down" {}
+		}
+	}
+	MannBird
+	{
+		Name "MannBird"
+		Class Demoman
+		Items
+		{
+			"The Mann-Bird of Aberdeen" {}
+		}
+	}
+	Parasight
+	{
+		Name "Parasight"
+		Class Demoman
+		Items
+		{
+			"The Parasight" {}
+		}
+	}
+	NightbaneBrim
+	{
+		Name "NightbaneBrim"
+		Class Demoman
+		Items
+		{
+			"Nightbane Brim" {}
+		}
+	}
+	NightbaneBrim
+	{
+		Name "NightbaneBrim"
+		Class Demoman
+		Items
+		{
+			"Nightbane Brim" {}
+		}
+	}
+	Blastphomet
+	{
+		Name "Blastphomet"
+		Class Demoman
+		Items
+		{
+			"Blastphomet" {}
+		}
+	}
+	Vaudeville
+	{
+		Name "Vaudeville"
+		Class Demoman
+		Items
+		{
+			"The Vaudeville Visor" {}
+		}
+	}
+	Bandido
+	{
+		Name "Bandido"
+		Class Demoman
+		Items
+		{
+			"Badlands Bandido" {}
+		}
+	}
+	Defaced
+	{
+		Name "Defaced"
+		Class Demoman
+		Items
+		{
+			"Defaced Detonator" {}
+		}
+	}
+	
+	FrankenHeavy
+	{
+		Name "FrankenHeavy"
+		Class HeavyWeapons
+		Items
+		{
+			"Can Opener" {}
+			"Soviet Stitch-Up" {}
+			"Steel-Toed Stompers" {}
+		}
+	}
+	GrandDuchess
+	{
+		Name "GrandDuchess"
+		Class HeavyWeapons
+		Items
+		{
+			"The Grand Duchess Tutu" {}
+			"The Grand Duchess Fairy Wings" {}
+			"The Grand Duchess Tiara" {}
+		}
+	}
+	MinskBeast
+	{
+		Name "MinskBeast"
+		Class HeavyWeapons
+		Items
+		{
+			"Minsk Beef" {}
+			"Bull Locks" {}
+			"Bone-Cut Belt" {}
+		}
+	}
+	ZombieHeavy
+	{
+		Name "ZombieHeavy"
+		Class HeavyWeapons
+		Items
+		{
+			"Zombie Heavy" {}
+		}
+	}
+	Cranium
+	{
+		Name "Cranium"
+		Class HeavyWeapons
+		Items
+		{
+			"Cadaver's Cranium" {}
+		}
+	}
+	Chicken
+	{
+		Name "Chicken"
+		Class HeavyWeapons
+		Items
+		{
+			"The Chicken Kiev" {}
+		}
+	}
+	Horned
+	{
+		Name "Horned"
+		Class HeavyWeapons
+		Items
+		{
+			"The Horned Honcho" {}
+		}
+	}
+	MonsterJaw
+	{
+		Name "MonsterJaw"
+		Class HeavyWeapons
+		Items
+		{
+			"The Monstrous Mandible" {}
+		}
+	}
+	MadMask
+	{
+		Name "MadMask"
+		Class HeavyWeapons
+		Items
+		{
+			"Mad Mask" {}
+		}
+	}
+	HorrorShawl
+	{
+		Name "HorrorShawl"
+		Class HeavyWeapons
+		Items
+		{
+			"Horror Shawl" {}
+		}
+	}
+	BearHead
+	{
+		Name "BearHead"
+		Class HeavyWeapons
+		Items
+		{
+			"Misha's Maw" {}
+		}
+	}
+	SkullHead
+	{
+		Name "SkullHead"
+		Class HeavyWeapons
+		Items
+		{
+			"Bare Bear Bones" {}
+		}
+	}
+	OgreHead
+	{
+		Name "OgreHead"
+		Class HeavyWeapons
+		Items
+		{
+			"The Make Ogre" {}
+		}
+	}
+	DuskDuster
+	{
+		Name "DuskDuster"
+		Class HeavyWeapons
+		Items
+		{
+			"Dusk Duster" {}
+			"Strigoi Stare" {}
+		}
+	}
+	Overlord
+	{
+		Name "Overlord"
+		Class HeavyWeapons
+		Items
+		{
+			"Hellish Overlord" {}
+		}
+	}
+	
+	BrundleBundle
+	{
+		Name "BrundleBundle"
+		Class Engineer
+		Items
+		{
+			"Buzz Killer" {}
+			"Frontier Flyboy" {}
+			"Legend of Bugfoot" {}
+		}
+	}
+	ZombieEngineer
+	{
+		Name "ZombieEngineer"
+		Class Engineer
+		Items
+		{
+			"Zombie Engineer" {}
+		}
+	}
+	Gazer
+	{
+		Name "Gazer"
+		Class Engineer
+		Items
+		{
+			"Googly Gazer" {}
+		}
+	}
+	MasterMind
+	{
+		Name "MasterMind"
+		Class Engineer
+		Items
+		{
+			"The Master Mind" {}
+		}
+	}
+	GhoulGoblin
+	{
+		Name "GhoulGoblin"
+		Class Engineer
+		Items
+		{
+			"Vox Diabolus" {}
+			"The Ghoul Box" {}
+		}
+	}
+	SnagStetson
+	{
+		Name "SnagStetson"
+		Class Engineer
+		Items
+		{
+			"The Snaggletoothed Stetson" {}
+		}
+	}
+	GreaseMonkey
+	{
+		Name "GreaseMonkey"
+		Class Engineer
+		Items
+		{
+			"The Grease Monkey" {}
+		}
+	}
+	TinyTexan
+	{
+		Name "TinyTexan"
+		Class Engineer
+		Items
+		{
+			"Tiny Texan" {}
+		}
+	}
+	CorpusCranium
+	{
+		Name "CorpusCranium"
+		Class Engineer
+		Items
+		{
+			"The Corpus Christi Cranium" {}
+		}
+	}
+	Turtle
+	{
+		Name "Turtle"
+		Class Engineer
+		Items
+		{
+			"A Shell of a Mann" {}
+			"Dell in the Shell" {}
+		}
+	}
+	EngiBird
+	{
+		Name "EngiBird"
+		Class Engineer
+		Items
+		{
+			"Eingineer" {}
+		}
+	}
+	EngiDog
+	{
+		Name "EngiDog"
+		Class Engineer
+		Items
+		{
+			"The Pug Mug" {}
+		}
+	}
+	EngiGoblin
+	{
+		Name "EngiGoblin"
+		Class Engineer
+		Items
+		{
+			"Goblineer" {}
+		}
+	}
+	HookLine
+	{
+		Name "HookLine"
+		Class Engineer
+		Items
+		{
+			"The Hook, Line, and Thinker" {}
+		}
+	}
+	
+	MadDoktor
+	{
+		Name "MadDoktor"
+		Class Medic
+		Items
+		{
+			"Einstein" {}
+			"Dr. Gogglestache" {}
+			"Emerald Jarate" {}
+		}
+	}
+	DoctorGalactic
+	{
+		Name "DoctorGalactic"
+		Class Medic
+		Items
+		{
+			"The Lo-Grav Loafers" {}
+			"The Surgeon's Space Suit" {}
+		}
+	}
+	SunKing
+	{
+		Name "SunKing"
+		Class Medic
+		Items
+		{
+			"Teutonkahmun" {}
+			"Ramses' Regalia" {}
+		}
+	}
+	CanisExMachina
+	{
+		Name "CanisExMachina"
+		Class Medic
+		Items
+		{
+			"Hundekopf" {}
+			"Herzensbrecher" {}
+			"Kriegsmaschine-9000" {}
+		}
+	}
+	DocAcula
+	{
+		Name "DocAcula"
+		Class Medic
+		Items
+		{
+			"Transylvanian Toupe" {}
+			"Vampiric Vesture" {}
+		}
+	}
+	Templar
+	{
+		Name "Templar"
+		Class Medic
+		Items
+		{
+			"Templar's Spirit" {}
+			"Wings of Purity" {}
+		}
+	}
+	ZombieMedic
+	{
+		Name "ZombieMedic"
+		Class Medic
+		Items
+		{
+			"Zombie Medic" {}
+		}
+	}
+	GrimmHatte
+	{
+		Name "GrimmHatte"
+		Class Medic
+		Items
+		{
+			"Grimm Hatte" {}
+			"The Exorcizor" {}
+		}
+	}
+	SecondOpinion
+	{
+		Name "SecondOpinion"
+		Class Medic
+		Items
+		{
+			"The Second Opinion" {}
+			"Herzensbrecher" {}
+		}
+	}
+	AltMedicine
+	{
+		Name "AltMedicine"
+		Class Medic
+		Items
+		{
+			"The Alternative Medicine Mann" {}
+		}
+	}
+	Vicar
+	{
+		Name "Vicar"
+		Class Medic
+		Items
+		{
+			"Das Blutliebhaber" {}
+			"The Vicar's Vestments" {}
+		}
+	}
+	ElecHead
+	{
+		Name "ElecHead"
+		Class Medic
+		Items
+		{
+			"The Trepanabotomizer" {}
+		}
+	}
+	Medimedes
+	{
+		Name "Medimedes"
+		Class Medic
+		Items
+		{
+			"Medimedes" {}
+		}
+	}
+	Shaman
+	{
+		Name "Shaman"
+		Class Medic
+		Items
+		{
+			"The Shaman's Skull" {}
+		}
+	}
+	ColossalCranium
+	{
+		Name "ColossalCranium"
+		Class Medic
+		Items
+		{
+			"Colossal Cranium" {}
+			"The Surgeon's Sidearms" {}
+		}
+	}
+	OpticNerve
+	{
+		Name "OpticNerve"
+		Class Medic
+		Items
+		{
+			"Optic Nerve" {}
+		}
+	}
+	MedicMummy
+	{
+		Name "MedicMummy"
+		Class Medic
+		Items
+		{
+			"Medical Mummy" {}
+			"The Main Cast" {}
+		}
+	}
+	PowerSpike
+	{
+		Name "PowerSpike"
+		Class Medic
+		Items
+		{
+			"Power Spike" {}
+		}
+	}
+	MantleGood
+	{
+		Name "MantleGood"
+		Class Medic
+		Items
+		{
+			"Duality of Mantle" {}
+		}
+	}
+	WitchDoctor
+	{
+		Name "WitchDoctor"
+		Class Medic
+		Items
+		{
+			"The Witch Doctor" {}
+		}
+	}
+	
+	CamperVanHelsing
+	{
+		Name "CamperVanHelsing"
+		Class Sniper
+		Items
+		{
+			"Holy Hunter" {}
+			"Silver Bullets" {}
+			"Garlic Flank Stake" {}
+		}
+	}
+	Manngaroo
+	{
+		Name "Manngaroo"
+		Class Sniper
+		Items
+		{
+			"Marsupial Muzzle" {}
+			"Kanga Kickers" {}
+			"Roo Rippers" {}
+		}
+	}
+	Reptiloid
+	{
+		Name "Reptiloid"
+		Class Sniper
+		Items
+		{
+			"Skinless Slashers" {}
+			"Conspiratorial Cut" {}
+		}
+	}
+	ZombieSniper
+	{
+		Name "ZombieSniper"
+		Class Sniper
+		Items
+		{
+			"Zombie Sniper" {}
+		}
+	}
+	Hootsalot
+	{
+		Name "Hootsalot"
+		Class Sniper
+		Items
+		{
+			"Sir Hootsalot" {}
+		}
+	}
+	Headcase
+	{
+		Name "Headcase"
+		Class Sniper
+		Items
+		{
+			"The Hallowed Headcase" {}
+		}
+	}
+	Marsupial
+	{
+		Name "Marsupial"
+		Class Sniper
+		Items
+		{
+			"Marsupial Man" {}
+		}
+	}
+	Crocodile
+	{
+		Name "Crocodile"
+		Class Sniper
+		Items
+		{
+			"Crocodile Mun-Dee" {}
+			"Scopers Scales" {}
+		}
+	}
+	GlowFish
+	{
+		Name "GlowFish"
+		Class Sniper
+		Items
+		{
+			"Glow from Below" {}
+		}
+	}
+	CrocodileWear
+	{
+		Name "CrocodileWear"
+		Class Sniper
+		Items
+		{
+			"Wild Brim Slouch" {}
+			"Crocodile Dandy" {}
+			"Rocko" {}
+		}
+	}
+	
+	InvisibleRogue
+	{
+		Name "InvisibleRogue"
+		Class Spy
+		Items
+		{
+			"Under Cover" {}
+			"Griffin's Gog" {}
+			"Intangible Ascot" {}
+		}
+	}
+	GravelpitEmperor
+	{
+		Name "GravelpitEmperor"
+		Class Spy
+		Items
+		{
+			"The Candyman's Cap" {}
+			"The Bountiful Bow" {}
+			"Bozo's Brogues" {}
+		}
+	}
+	ZombieSpy
+	{
+		Name "ZombieSpy"
+		Class Spy
+		Items
+		{
+			"Zombie Spy" {}
+		}
+	}
+	OniCowl
+	{
+		Name "OniCowl"
+		Class Spy
+		Items
+		{
+			"Spy Oni Mask" {}
+			"The Foul Cowl" {}
+		}
+	}
+	MoralFiber
+	{
+		Name "MoralFiber"
+		Class Spy
+		Items
+		{
+			"The Lacking Moral Fiber Mask" {}
+		}
+	}
+	ScarecrowSpy
+	{
+		Name "ScarecrowSpy"
+		Class Spy
+		Items
+		{
+			"The Scarecrow" {}
+		}
+	}
+	Ethereal
+	{
+		Name "Ethereal"
+		Class Spy
+		Items
+		{
+			"Ethereal Hood" {}
+		}
+	}
+	Hyperbaric
+	{
+		Name "Hyperbaric"
+		Class Spy
+		Items
+		{
+			"The Hyperbaric Bowler" {}
+		}
+	}
+	Shadowman
+	{
+		Name "Shadowman"
+		Class Spy
+		Items
+		{
+			"Shadowman's Shade" {}
+		}
+	}
+	NightmareHunter
+	{
+		Name "NightmareHunter"
+		Class Spy
+		Items
+		{
+			"Nightmare Hunter" {}
+		}
+	}
+	RabbitHat
+	{
+		Name "RabbitHat"
+		Class Spy
+		Items
+		{
+			"Rogue's Rabbit" {}
+		}
+	}
+	Facepeeler
+	{
+		Name "Facepeeler"
+		Class Spy
+		Items
+		{
+			"Facepeeler" {}
+		}
+	}
+	DeadHead
+	{
+		Name "DeadHead"
+		Class Spy
+		Items
+		{
+			"The Dead Head" {}
+		}
+	}
+	VoodooVizier
+	{
+		Name "VoodooVizier"
+		Class Spy
+		Items
+		{
+			"Voodoo Vizier" {}
+		}
+	}
+	RavenHead
+	{
+		Name "RavenHead"
+		Class Spy
+		Items
+		{
+			"Avian Amante" {}
+		}
+	}
+	SpyGourd
+	{
+		Name "SpyGourd"
+		Class Spy
+		Items
+		{
+			"Gruesome Gourd" {}
+		}
+	}
+	Spyder
+	{
+		Name "Spyder"
+		Class Spy
+		Items
+		{
+			"Six-Eyed Specs" {}
+			"Spyder" {}
+		}
+	}
+	
+	
+}

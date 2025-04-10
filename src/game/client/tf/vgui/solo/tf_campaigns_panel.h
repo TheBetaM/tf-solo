@@ -10,6 +10,38 @@
 
 using namespace vgui;
 
+class CTFCampaignsPanelSingle : public CExpandablePanel
+{
+	DECLARE_CLASS_SIMPLE(CTFCampaignsPanelSingle, CExpandablePanel);
+
+public:
+	CTFCampaignsPanelSingle(Panel* parent, const char* panelName, const char* eCategory, Panel* pSignalHandler, KeyValues* config)
+		: BaseClass(parent, panelName)
+		, m_eCategory(eCategory)
+		, pToggleButton(NULL)
+		, m_pSignalHandler(pSignalHandler)
+		, m_Config(config)
+	{}
+
+	~CTFCampaignsPanelSingle()
+	{
+	}
+
+	virtual void ApplySchemeSettings(IScheme* pScheme) OVERRIDE;
+	virtual void OnToggleCollapse(bool bIsExpanded) OVERRIDE;
+	virtual void OnCommand(const char* command) OVERRIDE;
+	virtual void PerformLayout() OVERRIDE;
+	void SetCheckButtonState(uint32 nMapDefIndex, bool bSelected, bool bClickable);
+	void UpdateProgress();
+
+private:
+	const char* m_eCategory;
+	CExImageButton* pToggleButton;
+	Panel* m_pSignalHandler;
+	KeyValues* m_Config;
+};
+
+
 class CTFCampaignsPanel : public CMatchMakingDashboardSidePanel, public CGameEventListener
 {
 	DECLARE_CLASS_SIMPLE(CTFCampaignsPanel, CMatchMakingDashboardSidePanel)
@@ -43,13 +75,7 @@ private:
 	KeyValues* m_CampaignsConfig;
 	CUtlMap< int, Panel* > m_mapCategoryPanels;
 
-	struct PingPanelInfo
-	{
-		EditablePanel* m_pPanel;
-		float m_flPopulationRatio;
-		int m_nPing;
-	};
-	CUtlVector< PingPanelInfo > m_vecDataCenterPingPanels;
+	CUtlVector< CTFCampaignsPanelSingle* > m_vecCampaignPanels;
 
 	ETFMatchGroup m_eMatchGroup;
 };

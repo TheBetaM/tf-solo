@@ -1388,31 +1388,56 @@ void BotGenerateAndWearItem( CTFPlayer *pBot, const char *itemName )
 	if ( !pBot )
 		return;
 
-	CItemSelectionCriteria criteria;
-	criteria.SetItemLevel( AE_USE_SCRIPT_VALUE );
-	criteria.SetQuality( AE_USE_SCRIPT_VALUE );
-	criteria.BAddCondition( "name", k_EOperator_String_EQ, itemName, true );
+	//CItemSelectionCriteria criteria;
+	//criteria.SetItemLevel( AE_USE_SCRIPT_VALUE );
+	//criteria.SetQuality( AE_USE_SCRIPT_VALUE );
+	//criteria.BAddCondition( "name", k_EOperator_String_EQ, itemName, true );
+	//CBaseEntity *pItem = ItemGeneration()->GenerateRandomItem( &criteria, pBot->GetAbsOrigin(), vec3_angle );
 
-	CBaseEntity *pItem = ItemGeneration()->GenerateRandomItem( &criteria, pBot->GetAbsOrigin(), vec3_angle );
+	auto def = GetItemSchema()->GetItemDefinitionByName(itemName);
+	CBaseEntity* pItem = ItemGeneration()->GenerateItemFromDefIndex(def->GetDefinitionIndex(), pBot->WorldSpaceCenter(), vec3_angle);
 	if ( pItem )
 	{
-		// If it's a weapon, remove the current one, and give us this one.
-		CBaseEntity	*pExisting = pBot->Weapon_OwnsThisType(pItem->GetClassname());
-		if ( pExisting )
+		CEconItemView* pScriptItem = static_cast<CBaseCombatWeapon*>(pItem)->GetAttributeContainer()->GetItem();
+		int iClass = pBot->GetPlayerClass()->GetClassIndex();
+		int iSlot = pScriptItem->GetStaticData()->GetLoadoutSlot(iClass);
+
+		if (IsWearableSlot(iSlot))
 		{
-			CBaseCombatWeapon *pWpn = dynamic_cast<CBaseCombatWeapon *>(pExisting);
-			pBot->Weapon_Detach( pWpn );
-			UTIL_Remove( pExisting );
+		}
+		else
+		{
+			// If it's a weapon, remove the current one, and give us this one.
+			CBaseEntity* pEntity = pBot->GetEntityForLoadoutSlot(iSlot);
+			if (pEntity)
+			{
+				CBaseCombatWeapon* pWpn = dynamic_cast<CBaseCombatWeapon*>(pEntity);
+				pBot->Weapon_Detach(pWpn);
+				UTIL_Remove(pEntity);
+			}
+			/*
+			CBaseEntity	*pExisting = pBot->Weapon_OwnsThisType(pItem->GetClassname());
+			if ( pExisting )
+			{
+				CBaseCombatWeapon *pWpn = dynamic_cast<CBaseCombatWeapon *>(pExisting);
+				pBot->Weapon_Detach( pWpn );
+				UTIL_Remove( pExisting );
+			}
+			*/
 		}
 
 		// Fake global id
-		static int s_nFakeID = 1;
-		static_cast<CEconEntity*>(pItem)->GetAttributeContainer()->GetItem()->SetItemID( s_nFakeID++ );
+		pScriptItem->SetItemID(1);
 
-		DispatchSpawn( pItem );
-		static_cast<CEconEntity*>(pItem)->GiveTo( pBot );
+		DispatchSpawn(pItem);
 
-		pBot->PostInventoryApplication();
+		CEconEntity* pNewItem = assert_cast<CEconEntity*>(pItem);
+		if (pNewItem)
+		{
+			pNewItem->GiveTo(pBot);
+		}
+
+		//pBot->PostInventoryApplication();
 	}
 	else
 	{

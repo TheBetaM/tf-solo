@@ -384,6 +384,8 @@ DEFINE_SCRIPTFUNC(SetAutoDelete, "")
 DEFINE_SCRIPTFUNC(IsAutoDeleteSet, "")
 DEFINE_SCRIPTFUNC(DeletePanel, "")
 
+DEFINE_SCRIPTFUNC(InvalidateLayout, "")
+
 
 END_SCRIPTDESC();
 

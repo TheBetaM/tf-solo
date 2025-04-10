@@ -712,7 +712,8 @@ BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer , "Team Fortress 2 Playe
 
 	DEFINE_SCRIPTFUNC_WRAPPED( StunPlayer, "" )
 
-	DEFINE_SCRIPTFUNC_WRAPPED(GenerateAndWearItem, "Give me an item!")
+	DEFINE_SCRIPTFUNC_WRAPPED( GenerateAndWearItem, "Give me an item!" )
+	DEFINE_SCRIPTFUNC( PostInventoryApplication, "" )
 END_SCRIPTDESC();
 
 

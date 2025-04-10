@@ -35,7 +35,7 @@ getroottable()[TFSOLO.CoreEventTag] <- {
 	{
 	}
 }
-__CollectGameEventCallbacks(TFSOLO.CoreEventTag)
+__CollectGameEventCallbacks(getroottable()[TFSOLO.CoreEventTag])
 
 ::SoloTestArmoryFlag <- function()
 {
@@ -74,4 +74,18 @@ __CollectGameEventCallbacks(TFSOLO.CoreEventTag)
 ::SoloTestSave <- function()
 {
 	Entities.FindByClassname(null,"tf_gamerules").AcceptInput("SoloSaveData","",null,null)
+}
+::SoloTestHudText <- function()
+{
+	SendGlobalGameEvent("solohud_string", {
+		key = "objective1",
+		value = "This is a test objective 0/100"
+	})
+}
+::SoloTestHudText2 <- function()
+{
+	SendGlobalGameEvent("solohud_string", {
+		key = "objective1",
+		value = "This is a test objective 5/100"
+	})
 }

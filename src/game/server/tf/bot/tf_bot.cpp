@@ -410,6 +410,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			if (presetKey->FindKey("Class"))
 			{
 				iClassIndex = GetClassIndexFromString(presetKey->GetString("Class"));
+				classname = presetKey->GetString("Class");
 			}
 			if (presetKey->FindKey("Team"))
 			{
@@ -5038,6 +5039,71 @@ void CTFBot::AddItem( const char* pszItemName )
 	}
 }
 
+void CTFBot::AddItemBulk(const char* pszItemName)
+{
+	auto def = GetItemSchema()->GetItemDefinitionByName(pszItemName);
+	CBaseEntity* pItem = ItemGeneration()->GenerateItemFromDefIndex(def->GetDefinitionIndex(), WorldSpaceCenter(), vec3_angle);
+	if (pItem)
+	{
+		CEconItemView* pScriptItem = static_cast<CBaseCombatWeapon*>(pItem)->GetAttributeContainer()->GetItem();
+
+		// If we already have an item in that slot, remove it
+		int iClass = GetPlayerClass()->GetClassIndex();
+		int iSlot = pScriptItem->GetStaticData()->GetLoadoutSlot(iClass);
+		equip_region_mask_t unNewItemRegionMask = pScriptItem->GetItemDefinition() ? pScriptItem->GetItemDefinition()->GetEquipRegionConflictMask() : 0;
+
+		if (IsWearableSlot(iSlot))
+		{
+			// Remove any wearable that has a conflicting equip_region
+			for (int wbl = 0; wbl < GetNumWearables(); wbl++)
+			{
+				CEconWearable* pWearable = GetWearable(wbl);
+				if (!pWearable)
+					continue;
+
+				equip_region_mask_t unWearableRegionMask = 0;
+				if (pWearable->GetAttributeContainer()->GetItem())
+				{
+					unWearableRegionMask = pWearable->GetAttributeContainer()->GetItem()->GetItemDefinition()->GetEquipRegionConflictMask();
+				}
+
+				if (unWearableRegionMask & unNewItemRegionMask)
+				{
+					RemoveWearable(pWearable);
+				}
+			}
+		}
+		else
+		{
+			CBaseEntity* pEntity = GetEntityForLoadoutSlot(iSlot);
+			if (pEntity)
+			{
+				CBaseCombatWeapon* pWpn = dynamic_cast<CBaseCombatWeapon*>(pEntity);
+				Weapon_Detach(pWpn);
+				UTIL_Remove(pEntity);
+			}
+		}
+
+		// Fake global id
+		pScriptItem->SetItemID(1);
+
+		DispatchSpawn(pItem);
+
+		CEconEntity* pNewItem = assert_cast<CEconEntity*>(pItem);
+		if (pNewItem)
+		{
+			pNewItem->GiveTo(this);
+		}
+	}
+	else
+	{
+		if (pszItemName && pszItemName[0])
+		{
+			Msg("CTFBotSpawner::AddItemToBot: Invalid item %s.\n", pszItemName);
+		}
+	}
+}
+
 
 int CTFBot::GetUberHealthThreshold()
 {
@@ -5200,13 +5266,23 @@ void CTFBot::SpawnCustom()
 		SetHealth(preset->GetInt("Health"));
 	}
 
+	ClearTags();
+	auto kTags = preset->FindKey("Tags");
+	if (kTags)
+	{
+		FOR_EACH_SUBKEY(kTags, kTag)
+		{
+			AddTag(kTag->GetName());
+		}
+	}
+
 	auto kItems = preset->FindKey("Items");
 	if (kItems)
 	{
 		FOR_EACH_SUBKEY(kItems, kItem)
 		{
 			auto itemName = kItem->GetName();
-			AddItem(itemName);
+			AddItemBulk(itemName);
 			if (kItem->GetFirstSubKey())
 			{
 				CSchemaItemDefHandle itemDef(itemName);
@@ -5236,15 +5312,7 @@ void CTFBot::SpawnCustom()
 				}
 			}
 		}
+		PostInventoryApplication();
 	}
 
-	ClearTags();
-	auto kTags = preset->FindKey("Tags");
-	if (kTags)
-	{
-		FOR_EACH_SUBKEY(kTags, kTag)
-		{
-			AddTag(kTag->GetName());
-		}
-	}
 }

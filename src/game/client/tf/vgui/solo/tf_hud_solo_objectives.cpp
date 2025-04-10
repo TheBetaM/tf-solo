@@ -9,6 +9,7 @@
 #include "tf_vgui_video.h"
 #include "tf_solo_panel.h"
 #include "tf_hud_match_status.h"
+#include "tf_hud_building_status.h"
 
 using namespace vgui;
 
@@ -185,6 +186,8 @@ DEFINE_SCRIPTFUNC(AddActionSignalTargetForPanel, "")
 DEFINE_SCRIPTFUNC(ReinitializeEverything, "")
 DEFINE_SCRIPTFUNC(GetMatchStatusPanel, "")
 DEFINE_SCRIPTFUNC(GetKothTimersPanel, "")
+DEFINE_SCRIPTFUNC(GetBuildingStatusSpyPanel, "Only exists after spawning as Spy!")
+DEFINE_SCRIPTFUNC(GetBuildingStatusEngineerPanel, "Only exists after spawning as Engineer!")
 
 END_SCRIPTDESC();
 
@@ -453,3 +456,16 @@ HSCRIPT CTFHUDSoloObjectives::GetKothTimersPanel()
 	CTFHudKothTimeStatus* pKothHUD = GET_HUDELEMENT(CTFHudKothTimeStatus);
 	return PanelToScriptHandle(pKothHUD);
 }
+
+HSCRIPT CTFHUDSoloObjectives::GetBuildingStatusSpyPanel()
+{
+	CHudBuildingStatusContainer_Spy* pSpyHUD = GET_HUDELEMENT(CHudBuildingStatusContainer_Spy);
+	return PanelToScriptHandle(pSpyHUD);
+}
+
+HSCRIPT CTFHUDSoloObjectives::GetBuildingStatusEngineerPanel()
+{
+	CHudBuildingStatusContainer_Engineer* pEngineerHUD = GET_HUDELEMENT(CHudBuildingStatusContainer_Engineer);
+	return PanelToScriptHandle(pEngineerHUD);
+}
+

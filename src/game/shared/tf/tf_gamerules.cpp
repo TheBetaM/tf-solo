@@ -22519,6 +22519,20 @@ void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPu
 
 void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
 void	ScriptSetSoloObjectivesResFile( const char* path )			{ TFGameRules()->SetSoloObjectivesResFile(path); }
+void	ScriptSetRoundToPlayNext( const char* name )
+{ 
+	CTeamControlPointRound* pRound = dynamic_cast<CTeamControlPointRound*>(gEntList.FindEntityByName(NULL, name));
+	if (pRound)
+	{
+		string_t rname = AllocPooledString(name);
+		TFGameRules()->SetRoundToPlayNext(rname);
+	}
+	else
+	{
+		Msg("Round not found in this map\n");
+		return;
+	}
+}
 
 void CTFGameRules::RegisterScriptFunctions()
 {
@@ -22579,6 +22593,7 @@ void CTFGameRules::RegisterScriptFunctions()
 
 	TF_GAMERULES_SCRIPT_FUNC( SetBotPresetsFile,						"Reload bot presets file from this path" );
 	TF_GAMERULES_SCRIPT_FUNC( SetSoloObjectivesResFile,					"Reload solo HUD file from this path" );
+	TF_GAMERULES_SCRIPT_FUNC( SetRoundToPlayNext,						"Set the next round to be selected." );
 
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }

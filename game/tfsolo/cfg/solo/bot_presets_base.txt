@@ -1,0 +1,3684 @@
+bot_presets
+{
+	Milkman
+	{
+		Name "Milkman"
+		Class Scout
+		Items
+		{
+			"The Shortstop" {}
+			"Mad Milk" {}
+			"The Holy Mackerel" {}
+			
+			"The Milkman" {}
+		}
+	}
+	BonkBoy
+	{
+		Name "Bonk Boy"
+		Class Scout
+		Items
+		{
+			"The Soda Popper" {}
+			"The Winger" {}
+			"The Atomizer" {} 
+			
+			"Bonk Boy" {}
+		}
+	}
+	PublicEnemy
+	{
+		Name "Public Enemy"
+		Class Scout
+		Items
+		{
+			"Baby Face's Blaster" {}
+			"Pretty Boy's Pocket Pistol" {}
+			
+			"The Fed-Fightin' Fedora" {}
+			"Dillinger's Duffel" {}
+		}
+	}
+	RetroRebel
+	{
+		Name "Retro Rebel"
+		Class Scout
+		Items
+		{
+			"The Force-a-Nature" {}
+			
+			"The Pomade Prince" {}
+			"The Paisley Pro" {}
+			"The Argyle Ace" {}
+		}
+	}
+	Ninja
+	{
+		Name "Swift Ninja"
+		Class Scout
+		Items
+		{
+			"The Back Scatter" {}
+			
+			"The Frickin' Sweet Ninja Hood" {}
+			"The Southie Shinobi" {}
+			"The Red Socks" {}
+		}
+	}
+	Sidekick
+	{
+		Name "Sidekick"
+		Class Scout
+		Items
+		{
+			"The Shortstop" {}
+			"Pretty Boy's Pocket Pistol" {}
+			
+			"Sidekick's Side Slick" {}
+			"The Bat Backup" {}
+			"Crook Combatant" {}
+		}
+	}
+	TTG_Max
+	{
+		Name "Maximus"
+		Class Scout
+		Items
+		{
+			"TTG Max Pistol" {}
+			
+			"TTG Max Hat" {}
+			"TTG Badge" {}
+		}
+	}
+	Football
+	{
+		Name "Football"
+		Class Scout
+		Items
+		{
+			"Ball-Kicking Boots" {}
+			"Merc's Pride Scarf" {}
+		}
+	}
+	Raider
+	{
+		Name "Raider"
+		Class Scout
+		Items
+		{
+			"The Bootenkhamuns" {}
+			"Orion's Belt" {}
+			"The Tomb Readers" {}
+		}
+	}
+	Cheetah
+	{
+		Name "Cheetah"
+		Class Scout
+		Items
+		{
+			"The Soda Popper" {}
+			
+			"The Beastly Bonnet" {}
+			"The Cheet Sheet" {}
+		}
+	}
+	Witcher
+	{
+		Name "Warrior In Training"
+		Class Scout
+		Items
+		{
+			"Mad Milk" {}
+			"Three-Rune Blade" {}
+			
+			"Hero's Tail" {}
+			"Sign of the Wolf's School" {}
+		}
+	}
+	Batter
+	{
+		Name "Chucklenut"
+		Class Scout
+		Items
+		{
+			"Batter's Helmet" {}
+		}
+	}
+	Bonk
+	{
+		Name "Bonk! Enjoyer"
+		Class Scout
+		Items
+		{
+			"Bonk! Atomic Punch" {}
+			
+			"Bonk Helm" {}
+			"The Caffeine Cooler" {}
+		}
+	}
+	Troublemaker
+	{
+		Name "Troublemaker"
+		Class Scout
+		Items
+		{
+			"Scout Beanie" {}
+		}
+	}
+	Campus
+	{
+		Name "Wingman"
+		Class Scout
+		Items
+		{
+			"The Brotherhood of Arms" {}
+			"The Bigg Mann on Campus" {}
+			"The Breakneck Baggies" {}
+		}
+	}
+	Skateboarder
+	{
+		Name "Pro Skater"
+		Class Scout
+		Items
+		{
+			"The Cool Cat Cardigan" {}
+			"Greased Lightning" {}
+			"The Half-Pipe Hurdler" {}
+		}
+	}
+	Delinquent
+	{
+		Name "Delinquent"
+		Class Scout
+		Items
+		{
+			"The Delinquent's Down Vest" {}
+			"The Brotherhood of Arms" {}
+			"The Breakneck Baggies" {}
+		}
+	}
+	Warmup
+	{
+		Name "Warmup Runner"
+		Class Scout
+		Items
+		{
+			"Weight Room Warmer" {}
+			"Runner's Warm-Up" {}
+		}
+	}
+	Fool
+	{
+		Name "Fool"
+		Class Scout
+		Items
+		{
+			"dec2014 Marauders Mask" {}
+			"dec2014 Truands Tunic" {}
+			"dec2014 Fools Footwear" {}
+		}
+	}
+	Flak
+	{
+		Name "Frontman"
+		Class Scout
+		Items
+		{
+			"Fortunate Son" {}
+			"Flak Jack" {}
+		}
+	}
+	Racer
+	{
+		Name "Racer"
+		Class Scout
+		Items
+		{
+			"Thrilling Tracksuit" {}
+			"Death Racer's Helmet" {}
+		}
+	}
+	Squire
+	{
+		Name "Squire"
+		Class Scout
+		Items
+		{
+			"Herald's Helm" {}
+			"Courtly Cuirass" {}
+			"Squire's Sabatons" {}
+		}
+	}
+	Speedster
+	{
+		Name "Rocketboy"
+		Class Scout
+		Items
+		{
+			"Speedster's Spandex" {}
+			"The Lightning Lid" {}
+		}
+	}
+	Forester
+	{
+		Name "Forester"
+		Class Scout
+		Items
+		{
+			"Jungle Jersey" {}
+			"Transparent Trousers" {}
+			"Forest Footwear" {}
+		}
+	}
+	Snowboarder
+	{
+		Name "Snowboarder"
+		Class Scout
+		Items
+		{
+			"Antarctic Eyewear" {}
+			"Wipe Out Wraps" {}
+			"Blizzard Britches" {}
+			"The Tundra Top" {}
+		}
+	}
+	Olympic
+	{
+		Name "Olympic Wannabe"
+		Class Scout
+		Items
+		{
+			"Olympic Leapers" {}
+			"Hephaistos' Handcraft" {}
+			"Athenian Attire" {}
+		}
+	}
+	Tourist
+	{
+		Name "Tourist"
+		Class Scout
+		Items
+		{
+			"California Cap" {}
+			"Poolside Polo" {}
+			"Tools of the Tourist" {}
+		}
+	}
+	FastFood
+	{
+		Name "Fast Food"
+		Class Scout
+		Items
+		{
+			"Fast Food" {}
+			"Meal Dealer" {}
+			"Fried Batter" {}
+		}
+	}
+	Rider
+	{
+		Name "Rider"
+		Class Scout
+		Items
+		{
+			"The Ripped Rider" {}
+			"The Throttlehead" {}
+		}
+	}
+	Jester
+	{
+		Name "Jester"
+		Class Scout
+		Items
+		{
+			"The Last Laugh" {}
+			"Jumping Jester" {}
+		}
+	}
+	SnowScout
+	{
+		Name "SnowScout"
+		Class Scout
+		Items
+		{
+			"Isotopic Insulator" {}
+			"Bonk Beanie" {}
+		}
+	}
+	Commando
+	{
+		Name "Commando"
+		Class Scout
+		Items
+		{
+			"Commonwealth Commando" {}
+			"Tanker's Top" {}
+		}
+	}
+	Scoundrel
+	{
+		Name "Scoundrel"
+		Class Scout
+		Items
+		{
+			"Speedy Scoundrel" {}
+			"The Cool Cat Cardigan" {}
+			"The Digit Divulger" {}
+		}
+	}
+	Track
+	{
+		Name "Track"
+		Class Scout
+		Items
+		{
+			"The Track Terrorizer" {}
+			"Greased Lightning" {}
+		}
+	}
+	Punk
+	{
+		Name "The Boss"
+		Class Scout
+		Items
+		{
+			"The Macho Mann" {}
+			"Punk's Pomp" {}
+		}
+	}
+	Nuisance
+	{
+		Name "Nuisance"
+		Class Scout
+		Items
+		{
+			"School Nuisance" {}
+			"The Strikeout" {}
+		}
+	}
+	Jumper
+	{
+		Name "Jumper"
+		Class Scout
+		Items
+		{
+			"The Triple Jumper" {}
+			"The Battle Music" {}
+		}
+	}
+	
+	TankBuster
+	{
+		Name "Tank Buster"
+		Class Soldier
+		Items
+		{
+			"The Black Box" {}
+			"The Battalion's Backup" {}
+			
+			"The Grenadier's Softcap" {}
+		}
+	}
+	General
+	{
+		Name "General"
+		Class Soldier
+		Items
+		{
+			"The Direct Hit" {}
+			"The Mantreads" {}
+			"The Disciplinary Action" {}
+			
+			"Armored Authority" {}
+			"Fancy Dress Uniform" {}
+		}
+	}
+	Airborne
+	{
+		Name "Grounded Jumper"
+		Class Soldier
+		Items
+		{
+			"The Liberty Launcher" {}
+			"The Market Gardener" {}
+			
+			"Jumper's Jeepcap" {}
+		}
+	}
+	LordCockswain
+	{
+		Name "Space Marine"
+		Class Soldier
+		Items
+		{
+			"The Cow Mangler 5000" {}
+			"The Righteous Bison" {}
+			
+			"Dr. Grordbort's Crest" {}
+			"Lord Cockswain's Pith Helmet" {}
+			"Lord Cockswain's Novelty Mutton Chops and Pipe" {}
+		}
+	}
+	DumpsterDiver
+	{
+		Name "Dumpster Diver"
+		Class Soldier
+		Items
+		{
+			"The Black Box" {}
+			"The Buff Banner" {} 
+			
+			"The Helmet Without a Home" {}
+			"The Captain's Cocktails" {}
+		}
+	}
+	FederalExpress
+	{
+		Name "Government Supervisor"
+		Class Soldier
+		Items
+		{
+			"The Original" {}
+			"The Spook Specs" {}
+			"The Classified Coif" {}
+			"The Man in Slacks" {}
+		}
+	}
+	CountHydrogen
+	{
+		Name "Count Hydrogen"
+		Class Soldier
+		Items
+		{
+			"The Nuke" {}
+		}
+	}
+	Caped
+	{
+		Name "Caped Crusader"
+		Class Soldier
+		Items
+		{
+			"The B.A.S.E. Jumper" {}
+			
+			"Arkham Cowl" {}
+			"The Caped Crusader" {}
+			"Batbelt" {}
+			"Batter's Bracers" {}
+		}
+	}
+	Racc
+	{
+		Name "Raccoon"
+		Class Soldier
+		Items
+		{
+			"Racc Mann" {}
+		}
+	}
+	Hawk
+	{
+		Name "Hawk"
+		Class Soldier
+		Items
+		{
+			"Hawk Warrior" {}
+		}
+	}
+	Tyrant
+	{
+		Name "Rookie Tyrant"
+		Class Soldier
+		Items
+		{
+			"Tyrant's Helm" {}
+		}
+	}
+	Veteran
+	{
+		Name "Veteran"
+		Class Soldier
+		Items
+		{
+			"L4D Hat" {}
+			"Flakcatcher" {}
+		}
+	}
+	Kabuto
+	{
+		Name "Kabuto"
+		Class Soldier
+		Items
+		{
+			"Soldier Samurai Hat" {}
+		}
+	}
+	Guard
+	{
+		Name "Royal Guard"
+		Class Soldier
+		Items
+		{
+			"Stout Shako" {}
+		}
+	}
+	Spartan
+	{
+		Name "Spartan"
+		Class Soldier
+		Items
+		{
+			"Defiant Spartan" {}
+		}
+	}
+	Captain
+	{
+		Name "Team Captain"
+		Class Soldier
+		Items
+		{
+			"The Team Captain" {}
+		}
+	}
+	Captain2
+	{
+		Name "Salty Dog"
+		Class Soldier
+		Items
+		{
+			"The Salty Dog" {}
+			"The All-Father" {}
+		}
+	}
+	Haircut
+	{
+		Name "Boot Camper"
+		Class Soldier
+		Items
+		{
+			"The Crafty Hair" {}
+		}
+	}
+	Conqueror
+	{
+		Name "Conqueror"
+		Class Soldier
+		Items
+		{
+			"The Caribbean Conqueror" {}
+			"The Colonial Clogs" {}
+		}
+	}
+	Colonial
+	{
+		Name "Colonial"
+		Class Soldier
+		Items
+		{
+			"The Valley Forge" {}
+			"The Hornblower" {}
+		}
+	}
+	Founding
+	{
+		Name "Founding"
+		Class Soldier
+		Items
+		{
+			"The Founding Father" {}
+			"The Powdered Practitioner" {}
+		}
+	}
+	Polar
+	{
+		Name "Polar Ace"
+		Class Soldier
+		Items
+		{
+			"Antarctic Parka" {}
+			"The Polar Pullover" {}
+		}
+	}
+	Agent
+	{
+		Name "Agent S."
+		Class Soldier
+		Items
+		{
+			"The Classified Coif" {}
+			"The Spook Specs" {}
+			"The Man in Slacks" {}
+		}
+	}
+	Stomper
+	{
+		Name "Snow Stomper"
+		Class Soldier
+		Items
+		{
+			"EOTL_soldierhat" {}
+			"EOTL_beard" {}
+			"EOTL_Coldfront Curbstompers" {}
+		}
+	}
+	Diplomat
+	{
+		Name "Diplomat"
+		Class Soldier
+		Items
+		{
+			"The Patriot Peak" {}
+			"The Diplomat" {}
+		}
+	}
+	Camo
+	{
+		Name "Camo Crockett"
+		Class Soldier
+		Items
+		{
+			"The Shellmet" {}
+			"Attack Packs" {}
+		}
+	}
+	Guard2
+	{
+		Name "Point Guard"
+		Class Soldier
+		Items
+		{
+			"Bobby Bonnet" {}
+		}
+	}
+	Poncho
+	{
+		Name "Poncho"
+		Class Soldier
+		Items
+		{
+			"El Zapateador" {}
+			"Party Poncho" {}
+		}
+	}
+	Smoker
+	{
+		Name "Smoker"
+		Class Soldier
+		Items
+		{
+			"The Soldier's Stogie" {}
+			"Sophisticated Smoker" {}
+			"Veterans Attire" {}
+		}
+	}
+	Roman
+	{
+		Name "Roaming Roman"
+		Class Soldier
+		Items
+		{
+			"Roaming Roman" {}
+		}
+	}
+	Detective
+	{
+		Name "Private Investigator"
+		Class Soldier
+		Items
+		{
+			"The Chaser" {}
+			"The Detective" {}
+		}
+	}
+	Bruised
+	{
+		Name "Bruised"
+		Class Soldier
+		Items
+		{
+			"Beaten and Bruised" {}
+		}
+	}
+	Firefighter
+	{
+		Name "Firefighter"
+		Class Soldier
+		Items
+		{
+			"Firearm Protector" {}
+			"Safety Stripes" {}
+		}
+	}
+	Pathfinder
+	{
+		Name "Pathfinder"
+		Class Soldier
+		Items
+		{
+			"Close Quarters Cover" {}
+			"Pathfinder" {}
+			"Justice Johns" {}
+		}
+	}
+	Control
+	{
+		Name "Ground Control"
+		Class Soldier
+		Items
+		{
+			"Ground Control" {}
+			"Trench Warefarer" {}
+		}
+	}
+	Patriot
+	{
+		Name "Patriot"
+		Class Soldier
+		Items
+		{
+			"The Macho Mann" {}
+			"The Patriot's Pouches" {}
+			"Full Metal Helmet" {}
+		}
+	}
+	Charger
+	{
+		Name "Charger"
+		Class Soldier
+		Items
+		{
+			"Polar Charger" {}
+			"Field Fatigues" {}
+		}
+	}
+	
+	GasJockey
+	{
+		Name "Gas Jockey"
+		Class Pyro
+		Items
+		{
+			"The Degreaser" {}
+			"The Gas Passer" {}
+			"The Powerjack" {}
+			
+			"The Attendant" {}
+		}
+	}
+	Moonman
+	{
+		Name "Moonman"
+		Class Pyro
+		Items
+		{
+			"The Phlogistinator" {}
+			"The Manmelter" {}
+			"The Third Degree" {}
+			
+			"Dr. Grordbort's Silver Crest" {}
+			"The Bubble Pipe" {}
+			"The Moonman Backpack" {}
+		}
+	}
+	RoninRoaster
+	{
+		Name "Ronin Roaster"
+		Class Pyro
+		Items
+		{
+			"The Dragon's Fury" {}
+			"The Flare Gun" {}
+			
+			"The Combustible Kabuto" {}
+			"The Sengoku Scorcher" {}
+		}
+	}
+	Frymaster
+	{
+		Name "Frymaster"
+		Class Pyro
+		Items
+		{
+			"The Backburner" {}
+			"The Scorch Shot" {}
+			
+			"Employee of the Mmmph" {}
+			"The Frymaster" {}
+		}
+	}
+	SonOfArsonry
+	{
+		Name "SonOfArsonry"
+		Class Pyro
+		Items
+		{
+			"The Detonator" {}
+			
+			"The Gas Guzzler" {}
+			"The Smoking Skid Lid" {}
+			"The Lunatic's Leathers" {}
+		}
+	}
+	Napalmer
+	{
+		Name "Napalmer"
+		Class Pyro
+		Items
+		{
+			"The Nostromo Napalmer" {}
+			"The Gas Passer" {}
+			
+			"The MK 50" {}
+		}
+	}
+	Firefly
+	{
+		Name "Firefly"
+		Class Pyro
+		Items
+		{
+			"The Degreaser" {}
+			"The Gas Passer" {}
+			
+			"The Firefly" {}
+		}
+	}
+	Scarecrow
+	{
+		Name "Scarecrow"
+		Class Pyro
+		Items
+		{
+			"The Backburner" {}
+			
+			"Fear Monger" {}
+		}
+	}
+	Fireman
+	{
+		Name "Fireman"
+		Class Pyro
+		Items
+		{
+			"The Dragon's Fury" {}
+			
+			"The Person in the Iron Mask" {}
+		}
+	}
+	Foster
+	{
+		Name "Deepfry"
+		Class Pyro
+		Items
+		{
+			"The Thermal Thruster" {}
+			"The Axtinguisher" {}
+			
+			"KF Pyro Mask" {}
+			"KF Pyro Tie" {}
+		}
+	}
+	Octo
+	{
+		Name "Ordinary Human"
+		Class Pyro
+		WeaponRestrictions 1
+		Items
+		{
+			"The Hot Hand" {}
+			
+			"The Dadliest Catch" {}
+		}
+	}
+	Centurion
+	{
+		Name "Centurion"
+		Class Pyro
+		Items
+		{
+			"The Steel Sixpack" {}
+			"The Centurion" {}
+		}
+	}
+	Spider
+	{
+		Name "Spider"
+		Class Pyro
+		Items
+		{
+			"The Arachno-Arsonist" {}
+		}
+	}
+	Fox
+	{
+		Name "Fox"
+		Class Pyro
+		Items
+		{
+			"The Head Prize" {}
+		}
+	}
+	Beanie
+	{
+		Name "Naive One"
+		Class Pyro
+		Items
+		{
+			"Pyro's Beanie" {}
+		}
+	}
+	Brigade
+	{
+		Name "Fire Brigade"
+		Class Pyro
+		Items
+		{
+			"Brigade Helm" {}
+		}
+	}
+	Silly
+	{
+		Name "Clueless Pyro"
+		Class Pyro
+		Items
+		{
+			"Dr's Dapper Topper" {}
+			"Sight for Sore Eyes" {}
+		}
+	}
+	Chef
+	{
+		Name "Chef"
+		Class Pyro
+		Items
+		{
+			"Connoisseur's Cap" {}
+		}
+	}
+	Muchacho
+	{
+		Name "El Muchacho"
+		Class Pyro
+		Items
+		{
+			"Old Guadalajara" {}
+			"El Muchacho" {}
+		}
+	}
+	AirRaider
+	{
+		Name "Air Raider"
+		Class Pyro
+		Items
+		{
+			"The Bone Dome" {}
+			"The Air Raider" {}
+		}
+	}
+	SubZero
+	{
+		Name "Sub-Zero Ignition"
+		Class Pyro
+		Items
+		{
+			"The Blizzard Breather" {}
+			"The Sub Zero Suit" {}
+		}
+	}
+	Shy
+	{
+		Name "Shy"
+		Class Pyro
+		Items
+		{
+			"The Special Eyes" {}
+			"The Cute Suit" {}
+		}
+	}
+	Guzzler
+	{
+		Name "Gas Guzzler"
+		Class Pyro
+		Items
+		{
+			"The Gas Guzzler" {}
+			"The Smoking Skid Lid" {}
+			"The Lunatic's Leathers" {}
+		}
+	}
+	Sengoku
+	{
+		Name "Sengoku"
+		Class Pyro
+		Items
+		{
+			"The Sengoku Scorcher" {}
+			"The Combustible Kabuto" {}
+		}
+	}
+	Skier
+	{
+		Name "Skier"
+		Class Pyro
+		Items
+		{
+			"EOTL_Skier" {}
+			"EOTL_Brisk-weather Beanie" {}
+			"EOTL_pyro_sweater" {}
+			"EOTL_hiphunter_boots" {}
+		}
+	}
+	Pyromancer
+	{
+		Name "Pyromancer"
+		Class Pyro
+		Items
+		{
+			"dec2014 2014_pyromancer_hood" {}
+			"dec2014 Pyromancer's Raiments" {}
+		}
+	}
+	BlackKnight
+	{
+		Name "Black Knight"
+		Class Pyro
+		Items
+		{
+			"dec2014 Black Knights Bascinet" {}
+			"dec2014 Torchers Tabard" {}
+			"dec2014 Armoured Appendages" {}
+		}
+	}
+	Diver
+	{
+		Name "Puddle Diver"
+		Class Pyro
+		Items
+		{
+			"A Head Full of Hot Air" {}
+			"Jupiter Jetpack" {}
+			"The Space Diver" {}
+		}
+	}
+	Pyroland
+	{
+		Name "Pyroland Inhabitant"
+		Class Pyro
+		Items
+		{
+			"The Rainblower" {}
+			"The Lollichop" {}
+			
+			"Combustible Cutie" {}
+			"Pet Balloonicorn" {}
+			"The Infernal Orchestrina" {}
+		}
+	}
+	Tundra
+	{
+		Name "Tundra"
+		Class Pyro
+		Items
+		{
+			"The Tundra Top" {}
+			"The Hot Case" {}
+		}
+	}
+	Quackers
+	{
+		Name "Mr. Quackers"
+		Class Pyro
+		Items
+		{
+			"Mr. Quackers" {}
+			"Trickster's Turnout Gear" {}
+		}
+	}
+	Wanderer
+	{
+		Name "Wanderer"
+		Class Pyro
+		Items
+		{
+			"Spawn Camper" {}
+			"Wanderer's Wear" {}
+		}
+	}
+	Clown
+	{
+		Name "Clown"
+		Class Pyro
+		Items
+		{
+			"The Fire Tooth" {}
+			"Flavorful Baggies" {}
+		}
+	}
+	Fisherman
+	{
+		Name "Fisherman"
+		Class Pyro
+		Items
+		{
+			"Reel Fly Hat" {}
+			"Hook Line and Cinder" {}
+			"Water Waders" {}
+		}
+	}
+	Partizan
+	{
+		Name "Firebrand"
+		Class Pyro
+		Items
+		{
+			"Partizan" {}
+			"Firebrand" {}
+		}
+	}
+	Sleuth
+	{
+		Name "Sleuth"
+		Class Pyro
+		Items
+		{
+			"The Soho Sleuth" {}
+			"The Firestalker" {}
+		}
+	}
+	Torcher
+	{
+		Name "Torcher"
+		Class Pyro
+		Items
+		{
+			"Masked Loyalty" {}
+			"Impact Impaler" {}
+			"Torcher's Trench Coat" {}
+		}
+	}
+	Marshal
+	{
+		Name "Marshal"
+		Class Pyro
+		Items
+		{
+			"Fire Marshal" {}
+			"Invisible Flame" {}
+			"Scorched Earth Stompers" {}
+		}
+	}
+	Fighter
+	{
+		Name "Fire Fighter"
+		Class Pyro
+		Items
+		{
+			"Fire Fighter" {}
+			"Kazan Karategi" {}
+		}
+	}
+	Barbecue
+	{
+		Name "Barbecue"
+		Class Pyro
+		Items
+		{
+			"The Backpack Broiler" {}
+			"Crusader's Getup" {}
+			"Brim of Fire" {}
+		}
+	}
+	Nightsuit
+	{
+		Name "Nightsuit"
+		Class Pyro
+		Items
+		{
+			"Dead of Night" {}
+			"Arthropod's Aspect" {}
+		}
+	}
+	FederalSuit
+	{
+		Name "Agent P."
+		Class Pyro
+		Items
+		{
+			"The Federal Casemaker" {}
+			"The Soot Suit" {}
+		}
+	}
+	Spaniel
+	{
+		Name "Spaniel"
+		Class Pyro
+		Items
+		{
+			"Hot Spaniel" {}
+			"Frostbite Fit" {}
+		}
+	}
+	
+	ExpertOrdinance
+	{
+		Name "Lousy Shot"
+		Class Demoman
+		Items
+		{
+			"The Loch-n-Load" {}
+			"The Ullapool Caber" {}
+			
+			"Scotch Bonnet" {}
+		}
+	}
+	Sultan
+	{
+		Name "Sultan"
+		Class Demoman
+		Items
+		{
+			"Ali Baba's Wee Booties" {}
+			"The Splendid Screen" {}
+			"The Persian Persuader" {} 
+			
+			"Sultan's Ceremonial" {}
+		}
+	}
+	Swashbuckler
+	{
+		Name "Swashbuckler"
+		Class Demoman
+		Items
+		{
+			"The Scottish Handshake" {}
+			"The Bootlegger" {}
+			"The Tide Turner" {}
+			
+			"The Buccaneer's Bicorne" {}
+			"A Whiff of the Old Brimstone" {}
+		}
+	}
+	Vacationeer
+	{
+		Name "El Mariachi"
+		Class Demoman
+		Items
+		{
+			"The Loose Cannon" {}
+			"The Quickiebomb Launcher" {}
+			
+			"The Allbrero" {}
+			"Seeing Double" {}
+			"Six Pack Abs" {}
+		}
+	}
+	Sorrows
+	{
+		Name "Sorrows"
+		Class Demoman
+		Items
+		{
+			"The B.A.S.E. Jumper" {}
+			"The Scottish Resistance" {}
+			
+			"The Hood of Sorrows" {}
+			"Buttler" {}
+		}
+	}
+	Knight
+	{
+		Name "Rookie Knight"
+		Class Demoman
+		Items
+		{
+			"The Chargin' Targe" {}
+			"The Eyelander" {}
+			
+			"Spiral Sallet" {}
+		}
+	}
+	Tartan
+	{
+		Name "Tartan Warrior"
+		Class Demoman
+		Items
+		{
+			"The Iron Bomber" {}
+			"The Pain Train" {}
+			
+			"The Tartan Shade" {}
+			"The Tartantaloons" {}
+		}
+	}
+	Samurai
+	{
+		Name "Samurai"
+		Class Demoman
+		Items
+		{
+			"Ali Baba's Wee Booties" {}
+			"The Splendid Screen" {}
+			"The Half-Zatoichi" {}
+			
+			"Demo Kabuto" {}
+		}
+	}
+	Canine
+	{
+		Name "Canine"
+		Class Demoman
+		Items
+		{
+			"The Ullapool Caber" {}
+			
+			"The K-9 Mane" {}
+		}
+	}
+	Afro
+	{
+		Name "Demo Mann"
+		Class Demoman
+		Items
+		{
+			"Demoman's Fro" {}
+		}
+	}
+	Tricorne
+	{
+		Name "Kablooie"
+		Class Demoman
+		Items
+		{
+			"Demoman Tricorne" {}
+		}
+	}
+	Stuntman
+	{
+		Name "Sober Stuntman"
+		Class Demoman
+		Items
+		{
+			"Sober Stuntman" {}
+		}
+	}
+	Prince
+	{
+		Name "The Prince"
+		Class Demoman
+		Items
+		{
+			"Prince Tavish's Crown" {}
+			"The King of Scotland Cape" {}
+		}
+	}
+	Reggae
+	{
+		Name "Reggaelator"
+		Class Demoman
+		Items
+		{
+			"Reggaelator" {}
+		}
+	}
+	Bearded
+	{
+		Name "Bearded Bombardier"
+		Class Demoman
+		Items
+		{
+			"The Salty Dog" {}
+			"The Liquor Locker" {}
+			"The Bearded Bombardier" {}
+		}
+	}
+	Breeze
+	{
+		Name "Cool Breeze"
+		Class Demoman
+		Items
+		{
+			"The Cool Breeze" {}
+			"Tough Stuff Muffs" {}
+		}
+	}
+	DarkAge
+	{
+		Name "DarkAge"
+		Class Demoman
+		Items
+		{
+			"The Dark Age Defender" {}
+			"The Glasgow Great Helm" {}
+		}
+	}
+	Spartan2
+	{
+		Name "Spartan2"
+		Class Demoman
+		Items
+		{
+			"The Tartan Spartan" {}
+		}
+	}
+	Golfer
+	{
+		Name "Golfer"
+		Class Demoman
+		Items
+		{
+			"Nessie's Nine Iron" {}
+			
+			"Tam O'Shanter" {}
+			"The Gaelic Golf Bag" {}
+		}
+	}
+	Armored
+	{
+		Name "Armored"
+		Class Demoman
+		Items
+		{
+			"Bushi-Dou" {}
+			"The Dark Falkirk Helm" {}
+			"The Sole Saviors" {}
+		}
+	}
+	Pirate
+	{
+		Name "Pirate"
+		Class Demoman
+		Items
+		{
+			"The Bootlegger" {}
+			
+			"Pirate Bandana" {}
+			"Mann of the Seven Sees" {}
+		}
+	}
+	Fitness
+	{
+		Name "Prancin' Aboot"
+		Class Demoman
+		Items
+		{
+			"Outta' Sight" {}
+		}
+	}
+	Jogger
+	{
+		Name "Special Agent"
+		Class Demoman
+		Items
+		{
+			"The Dayjogger" {}
+		}
+	}
+	King
+	{
+		Name "The King"
+		Class Demoman
+		Items
+		{
+			"Class Crown" {}
+			"The King of Scotland Cape" {}
+		}
+	}
+	Blast
+	{
+		Name "Blast Defense"
+		Class Demoman
+		Items
+		{
+			"Blast Defense" {}
+			"Blast Blocker" {}
+		}
+	}
+	Hero
+	{
+		Name "Hungover Hero"
+		Class Demoman
+		Items
+		{
+			"Hungover Hero" {}
+		}
+	}
+	Backbreaker
+	{
+		Name "Backbreaker"
+		Class Demoman
+		Items
+		{
+			"Backbreaker's Skullcracker" {}
+			"Backbreaker's Guards" {}
+		}
+	}
+	Hazard
+	{
+		Name "Counter-Nuke"
+		Class Demoman
+		Items
+		{
+			"Hazard Headgear" {}
+		}
+	}
+	Hawaii
+	{
+		Name "Hangover"
+		Class Demoman
+		Items
+		{
+			"The Hawaiian Hangover" {}
+			"Barefoot Brawler" {}
+		}
+	}
+	Plaid
+	{
+		Name "Plaid Lad"
+		Class Demoman
+		Items
+		{
+			"Plaid Lad" {}
+			"Glasgow Bankroll" {}
+		}
+	}
+	Spiky
+	{
+		Name "Sticky Trapper"
+		Class Demoman
+		Items
+		{
+			"The Blast Bowl" {}
+			"The Shrapnel Shell" {}
+		}
+	}
+	Stuntman2
+	{
+		Name "Stuntman"
+		Class Demoman
+		Items
+		{
+			"Thunder Dome" {}
+			"Stunt Suit" {}
+			"Mad Lad" {}
+		}
+	}
+	Sleepy
+	{
+		Name "Sleepy"
+		Class Demoman
+		Items
+		{
+			"Nightcap" {}
+			"Lazy Lounger" {}
+			"Slumber Slacks" {}
+		}
+	}
+	Explosive
+	{
+		Name "Short Fuse"
+		Class Demoman
+		Items
+		{
+			"The Bomber Knight" {}
+			"EOTL_demo_dynamite" {}
+		}
+	}
+	Scot
+	{
+		Name "Scottish Cyclops"
+		Class Demoman
+		Items
+		{
+			"The Black Watch" {}
+			"The Gaelic Garb" {}
+			"Melody Of Misery" {}
+			"Unforgiven Glory" {}
+		}
+	}
+	Juggernaut
+	{
+		Name "Juggernaut"
+		Class Demoman
+		Items
+		{
+			"Head Banger" {}
+			"The Juggernaut Jacket" {}
+			"The Hurt Locher" {}
+		}
+	}
+	Kilt
+	{
+		Name "Fancy Scotsman"
+		Class Demoman
+		Items
+		{
+			"The Cool Breeze" {}
+			"The Whiskey Bib" {}
+		}
+	}
+	Winter
+	{
+		Name "Winter Blowout"
+		Class Demoman
+		Items
+		{
+			"EOTL_hiphunter_jacket" {}
+			"EOTL_demopants" {}
+			"Boarder's Beanie" {}
+		}
+	}
+	Sweepers
+	{
+		Name "Sweepers"
+		Class Demoman
+		Items
+		{
+			"The Top Brass" {}
+			"Mine Sweepers" {}
+			"Commanding Presence" {}
+		}
+	}
+	
+	BigChief
+	{
+		Name "Big Chief"
+		Class HeavyWeapons
+		Items
+		{
+			"The Brass Beast" {}
+			"The Buffalo Steak Sandvich" {}
+			"Warrior's Spirit" {}
+			
+			"Big Chief" {}
+		}
+	}
+	BlackMarket
+	{
+		Name "Bodyguard"
+		Class HeavyWeapons
+		Items
+		{
+			"Tomislav" {}
+			"The Eviction Notice" {}
+			
+			"Capone's Capper" {}
+		}
+	}
+	Yeti
+	{
+		Name "Yeti"
+		Class HeavyWeapons
+		Items
+		{
+			"Yeti_Head" {}
+			"Yeti_Legs" {}
+			"Yeti_Arms" {}
+		}
+	}
+	Judge
+	{
+		Name "Judge"
+		Class HeavyWeapons
+		Items
+		{
+			"Natascha" {}
+			
+			"The Pounding Father" {}
+		}
+	}
+	Rugby
+	{
+		Name "Rugby"
+		Class HeavyWeapons
+		Items
+		{
+			"The Bolt Action Blitzer" {}
+			"The Toss-Proof Towel" {}
+		}
+	}
+	Luchador
+	{
+		Name "Luchador"
+		Class HeavyWeapons
+		Items
+		{
+			"Apoco-Fists" {}
+			
+			"Cold War Luchador" {}
+		}
+	}
+	WarHead
+	{
+		Name "War Head"
+		Class HeavyWeapons
+		Items
+		{
+			"The Huo Long Heatmaker" {}
+			
+			"War Head" {}
+		}
+	}
+	Fortified
+	{
+		Name "Fortified"
+		Class HeavyWeapons
+		Items
+		{
+			"The Brass Beast" {}
+			
+			"Der Maschinensoldaten-Helm" {}
+			"Die Regime-Panzerung" {}
+		}
+	}
+	Bear
+	{
+		Name "Bear"
+		Class HeavyWeapons
+		Items
+		{
+			"The Buffalo Steak Sandvich" {}
+			"Warrior's Spirit" {}
+			
+			"The Bear Necessities" {}
+		}
+	}
+	Convict
+	{
+		Name "Convict"
+		Class HeavyWeapons
+		WeaponRestrictions 4
+		Items
+		{
+			"The Unshaved Bear" {}
+			"Convict Cap" {}
+			"Soviet Strongmann" {}
+		}
+	}
+	Ushanka
+	{
+		Name "Cold Warrior"
+		Class HeavyWeapons
+		Items
+		{
+			"Officer's Ushanka" {}
+		}
+	}
+	Boxer
+	{
+		Name "Boxer"
+		Class HeavyWeapons
+		Items
+		{
+			"Pugilist's Protector" {}
+			"The Heavy-Weight Champ" {}
+		}
+	}
+	Security
+	{
+		Name "Agent H."
+		Class HeavyWeapons
+		Items
+		{
+			"Copper's Hard Top" {}
+			"Security Shades" {}
+		}
+	}
+	Gym
+	{
+		Name "Gym"
+		Class HeavyWeapons
+		Items
+		{
+			"The Gym Rat" {}
+		}
+	}
+	Carl
+	{
+		Name "Casual But Deadly"
+		Class HeavyWeapons
+		Items
+		{
+			"The Carl" {}
+			"Aqua Flops" {}
+			"The Hunger Force" {}
+		}
+	}
+	Lifter
+	{
+		Name "Commando"
+		Class HeavyWeapons
+		Items
+		{
+			"The Heavy Lifter" {}
+			"Gone Commando" {}
+			"Bullet Buzz" {}
+		}
+	}
+	Hunter
+	{
+		Name "Deep Cover Defense"
+		Class HeavyWeapons
+		Items
+		{
+			"EOTL_sheavyshirt" {}
+			"Jungle Booty" {}
+		}
+	}
+	Tourist2
+	{
+		Name "Tourist2"
+		Class HeavyWeapons
+		Items
+		{
+			"Heavy Tourism" {}
+		}
+	}
+	Elite
+	{
+		Name "Elite"
+		Class HeavyWeapons
+		Items
+		{
+			"Commando Elite" {}
+			"Siberian Tigerstripe" {}
+		}
+	}
+	Tsar
+	{
+		Name "Soviet Star"
+		Class HeavyWeapons
+		Items
+		{
+			"Tsar Platinum" {}
+			"Starboard Crusader" {}
+		}
+	}
+	Mediterranean
+	{
+		Name "Mediterranean"
+		Class HeavyWeapons
+		Items
+		{
+			"Mediterranean Mercenary" {}
+			"Kapitan's Kaftan" {}
+		}
+	}
+	Sleepy2
+	{
+		Name "Exhausted"
+		Class HeavyWeapons
+		Items
+		{
+			"SandMann's Brush" {}
+			"BedBug Protection" {}
+			"Bear Walker" {}
+		}
+	}
+	Casual
+	{
+		Name "Casual"
+		Class HeavyWeapons
+		Items
+		{
+			"Squatter's Right" {}
+			"Combat Casual" {}
+		}
+	}
+	Block
+	{
+		Name "Road Block"
+		Class HeavyWeapons
+		Items
+		{
+			"Road Rage" {}
+			"Road Block" {}
+		}
+	}
+	Heating
+	{
+		Name "Blizzard Survivor"
+		Class HeavyWeapons
+		Items
+		{
+			"Ol' Reliable" {}
+			"Heavy Heating" {}
+		}
+	}
+	Metal
+	{
+		Name "Heavy Metal"
+		Class HeavyWeapons
+		Items
+		{
+			"Brother Mann" {}
+			"Heavy Metal" {}
+			"Hog Heels" {}
+		}
+	}
+	Brute
+	{
+		Name "Brute"
+		Class HeavyWeapons
+		WeaponRestrictions 4
+		Items
+		{
+			"Crook's Cap" {}
+			"Brute's Braces" {}
+		}
+	}
+	Biker
+	{
+		Name "Biker"
+		Class HeavyWeapons
+		Items
+		{
+			"The Soviet Gentleman" {}
+			"The Bolshevik Biker" {}
+			"The Mann of the House" {}
+		}
+	}
+	Rough
+	{
+		Name "Commander"
+		Class HeavyWeapons
+		Items
+		{
+			"The One-Man Army" {}
+			"The Tyurtlenek" {}
+			"The Rat Stompers" {}
+		}
+	}
+	Trashman
+	{
+		Name "Trashman"
+		Class HeavyWeapons
+		Items
+		{
+			"The Trash Man" {}
+			"The Borscht Belt" {}
+		}
+	}
+	Safeguard
+	{
+		Name "Security Guard"
+		Class HeavyWeapons
+		Items
+		{
+			"Big Steel Jaw of Summer Fun" {}
+			"The Eliminators Safeguard" {}
+			"Combat Slacks" {}
+			"Heavy Harness" {}
+		}
+	}
+	CampusHeavy
+	{
+		Name "CampusHeavy"
+		Class HeavyWeapons
+		Items
+		{
+			"Minnesota Slick" {}
+			"Bigger Mann on Campus" {}
+		}
+	}
+	Hound
+	{
+		Name "Big Mann"
+		Class HeavyWeapons
+		Items
+		{
+			"Heavy Hair" {}
+			"The Apparatchik's Apparel" {}
+		}
+	}
+	Cossack
+	{
+		Name "Hound"
+		Class HeavyWeapons
+		Items
+		{
+			"Cossack Camo" {}
+			"Battle Balaclava" {}
+		}
+	}
+	
+	Brainiac
+	{
+		Name "Brainiac"
+		Class Engineer
+		Items
+		{
+			"The Pomson 6000" {}
+			"The Eureka Effect" {} 
+			
+			"Dr. Grordbort's Copper Crest" {}
+			"The Brainiac Hairpiece" {}
+			"The Brainiac Goggles" {}
+		}
+	}
+	Techhand
+	{
+		Name "Handyman"
+		Class Engineer
+		Items
+		{
+			"The Frontier Justice" {}
+			"The Gunslinger" {}
+			
+			"The Level Three Chin" {}
+			"The Egghead's Overalls" {}
+			"The Lonesome Loafers" {}
+		}
+	}
+	Builder
+	{
+		Name "Builder"
+		Class Engineer
+		Items
+		{
+			"The Rescue Ranger" {}
+			"The Southern Hospitality" {}
+			
+			"The Tools of the Trade" {}
+			"The Joe-on-the-Go" {}
+		}
+	}
+	Roadie
+	{
+		Name "Roadie"
+		Class Engineer
+		Items
+		{
+			"The Gunslinger" {}
+			
+			"The Brutal Bouffant" {}
+		}
+	}
+	Caveman
+	{
+		Name "Caveman"
+		Class Engineer
+		Items
+		{
+			"The Grizzled Growth" {}
+			"The Last Straw" {}
+			"The Prize Plushy" {}
+		}
+	}
+	Miner
+	{
+		Name "Miner"
+		Class Engineer
+		Items
+		{
+			"Mining Light" {}
+		}
+	}
+	Texan
+	{
+		Name "Texan"
+		Class Engineer
+		Items
+		{
+			"Texas Ten Gallon" {}
+		}
+	}
+	Prof
+	{
+		Name "Professor"
+		Class Engineer
+		Items
+		{
+			"Professor's Peculiarity" {}
+		}
+	}
+	Builder2
+	{
+		Name "Pencil Pusher"
+		Class Engineer
+		Items
+		{
+			"The Pencil Pusher" {}
+			"The Builder's Blueprints" {}
+		}
+	}
+	Barnstormer
+	{
+		Name "Barnstormer"
+		Class Engineer
+		Items
+		{
+			"The Barnstormer" {}
+			"The Dogfighter" {}
+		}
+	}
+	Pardner
+	{
+		Name "Frontiersman"
+		Class Engineer
+		Items
+		{
+			"The Pardner's Pompadour" {}
+			"The Flared Frontiersman" {}
+		}
+	}
+	Trencher
+	{
+		Name "Trencher"
+		Class Engineer
+		Items
+		{
+			"The Trencher's Topper" {}
+			"The Trencher's Tunic" {}
+		}
+	}
+	Tools
+	{
+		Name "Tools"
+		Class Engineer
+		Items
+		{
+			"The Tools of the Trade" {}
+			"The Joe-on-the-Go" {}
+		}
+	}
+	Egghead
+	{
+		Name "Egghead"
+		Class Engineer
+		Items
+		{
+			"The Level Three Chin" {}
+			"The Egghead's Overalls" {}
+			"The Lonesome Loafers" {}
+			"Texas Slim's Dome Shine" {}
+		}
+	}
+	Insulated
+	{
+		Name "Insulated Innovator"
+		Class Engineer
+		Items
+		{
+			"EOTL_Insulated_innovator" {}
+			"EOTL_winter_pants" {}
+			"EOTL_FURCAP" {}
+		}
+	}
+	Officer
+	{
+		Name "Officer"
+		Class Engineer
+		Items
+		{
+			"dec2014 engineer_detectiveholster" {}
+			"dec2014 engineer_detectiveradio" {}
+			"dec2014 engineer_detectiveglasses" {}
+		}
+	}
+	Sheriff
+	{
+		Name "Sheriff"
+		Class Engineer
+		Items
+		{
+			"Sheriff's Stetson" {}
+			"Wild West Waistcoat" {}
+		}
+	}
+	Operator
+	{
+		Name "Operator"
+		Class Engineer
+		Items
+		{
+			"Phononaut" {}
+			"Life Support System" {}
+			"Rocket Operator" {}
+		}
+	}
+	Patron
+	{
+		Name "Patron"
+		Class Engineer
+		Items
+		{
+			"El Caballero" {}
+			"El Patron" {}
+			"Smokey Sombrero" {}
+		}
+	}
+	Bandit
+	{
+		Name "Bandit"
+		Class Engineer
+		Items
+		{
+			"The El Paso Poncho" {}
+			"The Wide-Brimmed Bandito" {}
+		}
+	}
+	Inspired
+	{
+		Name "Awakened"
+		Class Engineer
+		Items
+		{
+			"Head Mounted Double Observatory" {}
+			"Flash of Inspiration" {}
+		}
+	}
+	Sentry
+	{
+		Name "Sentry"
+		Class Engineer
+		Items
+		{
+			"The Sightliner" {}
+			"Head Of Defense" {}
+			"Aim Assistant" {}
+		}
+	}
+	Marshal
+	{
+		Name "Marshal"
+		Class Engineer
+		Items
+		{
+			"More Gun Marshal" {}
+		}
+	}
+	Underminer
+	{
+		Name "Underminer"
+		Class Engineer
+		Items
+		{
+			"Arctic Mole" {}
+			"Underminer's Overcoat" {}
+		}
+	}
+	Cargo
+	{
+		Name "Cargo"
+		Class Engineer
+		Items
+		{
+			"Cargo Constructor" {}
+			"Hazard Handler" {}
+		}
+	}
+	Dynamic
+	{
+		Name "Dynamic Dell"
+		Class Engineer
+		Items
+		{
+			"Dell Dynamic" {}
+			"Constructor's Cover" {}
+		}
+	}
+	Clue
+	{
+		Name "Detective"
+		Class Engineer
+		Items
+		{
+			"Clue Hairdo" {}
+			"Sleuth Suit" {}
+		}
+	}
+	Daring
+	{
+		Name "Stunt Double"
+		Class Engineer
+		Items
+		{
+			"Daring Dell" {}
+			"The Big Star" {}
+		}
+	}
+	Disp
+	{
+		Name "Disp"
+		Class Engineer
+		Items
+		{
+			"Packable Provisions" {}
+			"Provisions Cap" {}
+		}
+	}
+	Trucker
+	{
+		Name "Trucker"
+		Class Engineer
+		Items
+		{
+			"Dad Duds" {}
+			"Trucker's Topper" {}
+		}
+	}
+	Western
+	{
+		Name "Western"
+		Class Engineer
+		Items
+		{
+			"The Texas Half-Pants" {}
+			"The Western Wraps" {}
+			"El Mostacho" {}
+		}
+	}
+	Robotic
+	{
+		Name "Robotics"
+		Class Engineer
+		Items
+		{
+			"The Gunslinger" {}
+			
+			"Roboot" {}
+			"Iron Lung" {}
+		}
+	}
+	Miner2
+	{
+		Name "Miner2"
+		Class Engineer
+		Items
+		{
+			"The Scotch Saver" {}
+			"dec2014 Thermal Insulation Layer" {}
+			"Winter Backup" {}
+		}
+	}
+	Lawnmaker
+	{
+		Name "Antarctic Researcher"
+		Class Engineer
+		Items
+		{
+			"The Gold Digger" {}
+			"The Lawnmaker" {}
+			"The Antarctic Researcher" {}
+		}
+	}
+	Country
+	{
+		Name "Country"
+		Class Engineer
+		Items
+		{
+			"Big Country" {}
+		}
+	}
+	NuclearProtect
+	{
+		Name "NuclearProtect"
+		Class Engineer
+		Items
+		{
+			"Mannhattan Protect" {}
+			"Nuclear Necessity" {}
+			"Contaminated Carryall" {}
+		}
+	}
+	Westcoat
+	{
+		Name "Westcoat"
+		Class Engineer
+		Items
+		{
+			"The Westcoat" {}
+			"Buck's Brim" {}
+		}
+	}
+	
+	Medieval
+	{
+		Name "Clinicus"
+		Class Medic
+		Items
+		{
+			"The Amputator" {}
+			"The Crusader's Crossbow" {}
+			
+			"Berliner's Bucket Helm" {}
+		}
+	}
+	Clinical
+	{
+		Name "Clinical"
+		Class Medic
+		Items
+		{
+			"The Quick-Fix" {}
+			"The Overdose" {}
+			"The Solemn Vow" {}
+		}
+	}
+	PrivateEye
+	{
+		Name "PrivateEye"
+		Class Medic
+		Items
+		{
+			"The Kritzkrieg" {}
+			
+			"Private Eye" {}
+			"The Nine-Pipe Problem" {}
+			"The Medical Mystery" {}
+		}
+	}
+	Combat
+	{
+		Name "War Medic"
+		Class Medic
+		Items
+		{
+			"The Blutsauger" {}
+			"The Kritzkrieg" {}
+			
+			"The Combat Medic's Crusher Cap" {}
+			"The Heroic Companion Badge" {}
+		}
+	}
+	Scientist
+	{
+		Name "Scientist"
+		Class Medic
+		Items
+		{
+			"The Vaccinator" {}
+			
+			"The Wilson Weave" {}
+			"The Quadwrangler" {}
+			"The Surgeon's Side Satchel" {}
+		}
+	}
+	Fancy
+	{
+		Name "Clerk"
+		Class Medic
+		Items
+		{
+			"The Foppish Physician" {}
+			
+			"The Hardy Laurel" {}
+		}
+	}
+	Mirror
+	{
+		Name "Prognosis"
+		Class Medic
+		Items
+		{
+			"Otolaryngologist's Mirror" {}
+		}
+	}
+	Goggles
+	{
+		Name "Licensed To Heal"
+		Class Medic
+		Items
+		{
+			"Medic Goggles" {}
+		}
+	}
+	Mantel
+	{
+		Name "Shivering Aid"
+		Class Medic
+		Items
+		{
+			"Der Wintermantel" {}
+			"Tough Stuff Muffs" {}
+			"The Merc's Muffler" {}
+		}
+	}
+	Hazmat
+	{
+		Name "Hazmat Protection"
+		Class Medic
+		Items
+		{
+			"Das Hazmattenhatten" {}
+			"Das Feelinbeterbager" {}
+		}
+	}
+	MetalCase
+	{
+		Name "MetalCase"
+		Class Medic
+		Items
+		{
+			"Das Ubersternmann" {}
+			"Das Metalmeatencasen" {}
+		}
+	}
+	Baron
+	{
+		Name "Baron"
+		Class Medic
+		Items
+		{
+			"Baron von Havenaplane" {}
+			"Das Fantzipantzen" {}
+		}
+	}
+	Hooded
+	{
+		Name "Hooded Healer"
+		Class Medic
+		Items
+		{
+			"The Nunhood" {}
+			"The Angel of Death" {}
+		}
+	}
+	Chef2
+	{
+		Name "Chef2"
+		Class Medic
+		Items
+		{
+			"The Fashionable Megalomaniac" {}
+			"The Dough Puncher" {}
+			"The Teutonic Toque" {}
+		}
+	}
+	Colonel
+	{
+		Name "Colonel"
+		Class Medic
+		Items
+		{
+			"The Colonel's Coat" {}
+			"The Law" {}
+		}
+	}
+	Surgeon
+	{
+		Name "Surgeon"
+		Class Medic
+		Items
+		{
+			"The Smock Surgeon" {}
+			"Heer's Helmet" {}
+			"The Gaiter Guards" {}
+		}
+	}
+	Protector
+	{
+		Name "Protector"
+		Class Medic
+		Items
+		{
+			"The Physician's Protector" {}
+			"The Vascular Vestment" {}
+		}
+	}
+	Classic
+	{
+		Name "Practiced Medicine"
+		Class Medic
+		Items
+		{
+			"Berlin Brain Bowl" {}
+			"Bunnyhopper's Ballistics Vest" {}
+		}
+	}
+	Vitals
+	{
+		Name "Vital To Survival"
+		Class Medic
+		Items
+		{
+			"Vitals Vest" {}
+			"Battle Boonie" {}
+		}
+	}
+	Coldfront
+	{
+		Name "Coldfront Commander"
+		Class Medic
+		Items
+		{
+			"Coldfront Commander" {}
+			"Coldfront Carapace" {}
+		}
+	}
+	Madman
+	{
+		Name "Madman"
+		Class Medic
+		Items
+		{
+			"Madmann's Muzzle" {}
+			"Derangement Garment" {}
+		}
+	}
+	Flatliner
+	{
+		Name "Fancy Flatliner"
+		Class Medic
+		Items
+		{
+			"Flatliner" {}
+		}
+	}
+	Fizzy
+	{
+		Name "Fizzy Pharmacist"
+		Class Medic
+		Items
+		{
+			"Soda Cap" {}
+			"Fizzy Pharmacist" {}
+		}
+	}
+	Victorian
+	{
+		Name "Victorian"
+		Class Medic
+		Items
+		{
+			"The Lavish Labwear" {}
+			"Victorian Villainy" {}
+		}
+	}
+	Blues
+	{
+		Name "Agent M."
+		Class Medic
+		Items
+		{
+			"Brothers in Blues" {}
+			"Uber-Wear" {}
+		}
+	}
+	Puffed
+	{
+		Name "Puffed"
+		Class Medic
+		Items
+		{
+			"The Puffed Practitioner" {}
+			"The Frigid Fashion" {}
+		}
+	}
+	Freeman
+	{
+		Name "Free Mann"
+		Class Medic
+		Items
+		{
+			"Free Mann's Fashion" {}
+			"Hazardous Environment Vest" {}
+		}
+	}
+	Wetsuit
+	{
+		Name "Lifeguard"
+		Class Medic
+		Items
+		{
+			"The Tropical Brim" {}
+			"Watchmann's Wetsuit" {}
+		}
+	}
+	Damaged
+	{
+		Name "Damaged"
+		Class Medic
+		Items
+		{
+			"dec2014 medic_unknown_mann" {}
+			"Self-Care" {}
+			"Beaten and Bruised" {}
+			"The Main Cast" {}
+		}
+	}
+	Monarch
+	{
+		Name "Monarch"
+		Class Medic
+		Items
+		{
+			"Medical Monarch" {}
+			"Ze Ubermensch" {}
+			"dec2014 Surgeon's Shako" {}
+		}
+	}
+	Burly
+	{
+		Name "Burly"
+		Class Medic
+		Items
+		{
+			"A Brush with Death" {}
+			"The Surgical Survivalist" {}
+			"Burly Beast" {}
+		}
+	}
+	Plague
+	{
+		Name "Plague Doctor"
+		Class Medic
+		Items
+		{
+			"Blighted Beak" {}
+			"Scourge of the Sky" {}
+		}
+	}
+	Fester
+	{
+		Name "Oktoberfester"
+		Class Medic
+		Items
+		{
+			"Oktoberfester" {}
+			"The Heat of Winter" {}
+		}
+	}
+	Emergency
+	{
+		Name "Emergency Health"
+		Class Medic
+		Items
+		{
+			"The Surgeon's Stethoscope" {}
+			"The Gauzed Gaze" {}
+			"Medical Emergency" {}
+		}
+	}
+	Sleepy3
+	{
+		Name "Tired"
+		Class Medic
+		Items
+		{
+			"Doctor's Sack" {}
+			"Miser's Muttonchops" {}
+			"Night Ward" {}
+		}
+	}
+	Ward
+	{
+		Name "Ward"
+		Class Medic
+		Items
+		{
+			"Das Naggenvatcher" {}
+			"The Ward" {}
+		}
+	}
+	MadDoc
+	{
+		Name "Man of Science"
+		Class Medic
+		Items
+		{
+			"Das Maddendoktor" {}
+			"Bowtie" {}
+		}
+	}
+	Scarf
+	{
+		Name "Scarf"
+		Class Medic
+		Items
+		{
+			"The Gentleman's Ushanka" {}
+			"The Chronoscarf" {}
+		}
+	}
+	SurgeonGeneral
+	{
+		Name "Surgeon General"
+		Class Medic
+		Items
+		{
+			"The Surgeon General" {}
+		}
+	}
+	Consigliere
+	{
+		Name "Consigliere"
+		Class Medic
+		Items
+		{
+			"The Checkered Past" {}
+			"Consigliere's Coverup" {}
+		}
+	}
+	
+	Snaggletooth
+	{
+		Name "Snaggletooth"
+		Class Sniper
+		Items
+		{
+			"The Sydney Sleeper" {}
+			"Darwin's Danger Shield" {}
+			"The Bushwacka" {}
+			
+			"Ol' Snaggletooth" {}
+		}
+	}
+	Marauder
+	{
+		Name "Desert Marauder"
+		Class Sniper
+		Items
+		{
+			"The Bazaar Bargain" {}
+			"The Shahanshah" {}
+			
+			"Desert Marauder" {}
+		}
+	}
+	Fruit
+	{
+		Name "Fruit"
+		Class Sniper
+		Items
+		{
+			"The Huntsman" {}
+			"Jarate" {}
+			
+			"The Fruit Shoot" {}
+		}
+	}
+	Liquidator
+	{
+		Name "Liquidator"
+		Class Sniper
+		Items
+		{
+			"The Hitman's Heatmaker" {}
+			"The Cleaner's Carbine" {}
+			
+			"Liquidator's Lid" {}
+		}
+	}
+	Scoper
+	{
+		Name "Scoper"
+		Class Sniper
+		Items
+		{
+			"Shooting Star" {}
+			"The Razorback" {}
+			"The Scoper's Smoke" {}
+			
+			"The Triggerman's Tacticals" {}
+		}
+	}
+	Lonestar
+	{
+		Name "Lonestar"
+		Class Sniper
+		Items
+		{
+			"The Classic" {}
+			"The Cozy Camper" {}
+			
+			"The Lone Star" {}
+			"Awesomenauts Badge" {}
+		}
+	}
+	Boater
+	{
+		Name "Boatman"
+		Class Sniper
+		Items
+		{
+			"The Sydney Sleeper" {}
+			"The Cozy Camper" {}
+			
+			"The Sydney Straw Boat" {}
+		}
+	}
+	Angry
+	{
+		Name "Anger Management"
+		Class Sniper
+		Items
+		{
+			"The AWPer Hand" {}
+			"The Cleaner's Carbine" {}
+			
+			"The Anger" {}
+		}
+	}
+	Bushman
+	{
+		Name "Bushman"
+		Class Sniper
+		Items
+		{
+			"The Huntsman" {}
+			"Darwin's Danger Shield" {}
+			
+			"The Bushman's Boonie" {}
+			"The Merc Medal" {}
+		}
+	}
+	Bowman
+	{
+		Name "Bowman"
+		Class Sniper
+		Items
+		{
+			"The Fortified Compound" {}
+			"The Cleaner's Carbine" {}
+			
+			"The Criminal Cloak" {}
+			"The Dread Hiding Hood" {}
+		}
+	}
+	Crocodile
+	{
+		Name "Crocodile"
+		Class Sniper
+		Items
+		{
+			"Darwin's Danger Shield" {}
+			
+			"Ol' Snaggletooth" {}
+		}
+	}
+	Master
+	{
+		Name "Rookie Hunter"
+		Class Sniper
+		Items
+		{
+			"Master's Yellow Belt" {}
+		}
+	}
+	Pith
+	{
+		Name "Pith"
+		Class Sniper
+		Items
+		{
+			"Sniper Pith Helmet" {}
+		}
+	}
+	Robin
+	{
+		Name "Robin"
+		Class Sniper
+		Items
+		{
+			"The Huntsman" {}
+			
+			"Larrikin Robin" {}
+			"The Huntsman's Essentials" {}
+			"The Archers Groundings" {}
+		}
+	}
+	Chronomancer
+	{
+		Name "Chronomancer"
+		Class Sniper
+		Items
+		{
+			"Brim-Full Of Bullets" {}
+			"The Chronomancer" {}
+		}
+	}
+	Cover
+	{
+		Name "Cover"
+		Class Sniper
+		Items
+		{
+			"The Deep Cover Operator" {}
+			"The Toowoomba Tunic" {}
+		}
+	}
+	Woodsman
+	{
+		Name "Woodsman"
+		Class Sniper
+		Items
+		{
+			"EOTL_hiphunter_hat" {}
+			"EOTL_hiphunter_jacket" {}
+			"EOTL_hiphunter_boots" {}
+		}
+	}
+	Marksman
+	{
+		Name "Marksman"
+		Class Sniper
+		Items
+		{
+			"dec2014 hunter_ushanka" {}
+			"dec2014 hunter_vest" {}
+		}
+	}
+	Frontiersman
+	{
+		Name "Frontiersman"
+		Class Sniper
+		Items
+		{
+			"Final Frontiersman" {}
+			"Starduster" {}
+		}
+	}
+	Camouflage
+	{
+		Name "Camo Man"
+		Class Sniper
+		Items
+		{
+			"The Cammy Jammies" {}
+			"The Conspicuous Camouflage" {}
+			"The Classy Capper" {}
+		}
+	}
+	Rifleman
+	{
+		Name "Rifleman"
+		Class Sniper
+		Items
+		{
+			"The Most Dangerous Mane" {}
+			"Rifleman's Regalia" {}
+		}
+	}
+	Tundra
+	{
+		Name "Tundra Camper"
+		Class Sniper
+		Items
+		{
+			"Puffy Polar Cap" {}
+			"Down Tundra Coat" {}
+		}
+	}
+	Wear
+	{
+		Name "Wear"
+		Class Sniper
+		Items
+		{
+			"The Bare Necessities" {}
+			"Wagga Wagga Wear" {}
+		}
+	}
+	Tropical
+	{
+		Name "Tropical"
+		Class Sniper
+		Items
+		{
+			"Tropical Camo" {}
+			"Hawaiian Hunter" {}
+		}
+	}
+	Headhunter
+	{
+		Name "Headhunter"
+		Class Sniper
+		Items
+		{
+			"Headhunter's Brim" {}
+			"Hunting Cloak" {}
+		}
+	}
+	Cardigan
+	{
+		Name "Cardigan"
+		Class Sniper
+		Items
+		{
+			"Lumbercap" {}
+			"Crosshair Cardigan" {}
+		}
+	}
+	Cover2
+	{
+		Name "Cover2"
+		Class Sniper
+		Items
+		{
+			"Cranium Cover" {}
+			"Preventative Measure" {}
+		}
+	}
+	Sharpshooter
+	{
+		Name "Sharpshooter"
+		Class Sniper
+		Items
+		{
+			 "Sightseer" {}
+			 "Sharpshooter's Shroud" {}
+		}
+	}
+	Rugged
+	{
+		Name "Rugged"
+		Class Sniper
+		Items
+		{
+			"Scruffed 'n Stitched" {}
+			"Rugged Rags" {}
+		}
+	}
+	Bushman
+	{
+		Name "Bushman"
+		Class Sniper
+		Items
+		{
+			"Highway Star" {}
+			"The Bushman" {}
+		}
+	}
+	Archer
+	{
+		Name "Archer"
+		Class Sniper
+		Items
+		{
+			"The Huntsman" {}
+			
+			"Archer's Sterling" {}
+			"The Glorious Gambeson" {}
+		}
+	}
+	Archer2
+	{
+		Name "Short Ranger"
+		Class Sniper
+		Items
+		{
+			"The Huntsman" {}
+			
+			"Guilden Guardian" {}
+		}
+	}
+	Hitman
+	{
+		Name "Hitman"
+		Class Sniper
+		Items
+		{
+			"Down Under Duster" {}
+			"The Handsome Hitman" {}
+		}
+	}
+	Tacticals
+	{
+		Name "Tactical Camper"
+		Class Sniper
+		Items
+		{
+			"The Flamingo Kid" {}
+			"The Scoper's Smoke" {}
+			"The Triggerman's Tacticals" {}
+		}
+	}
+	Poacher
+	{
+		Name "Poacher"
+		Class Sniper
+		Items
+		{
+			"The Bushman's Boonie" {}
+			"Poacher's Safari Jacket" {}
+		}
+	}
+	Birdman
+	{
+		Name "Birdman"
+		Class Sniper
+		Items
+		{
+			"The Swagman's Swatter" {}
+			"The Birdman of Australiacatraz" {}
+		}
+	}
+	Birdman2
+	{
+		Name "Birdman2"
+		Class Sniper
+		Items
+		{
+			"The Falconer" {}
+			"Wet Works" {}
+		}
+	}
+	Cold
+	{
+		Name "Cold Blooded"
+		Class Sniper
+		Items
+		{
+			"The Cold Killer" {}
+			"The Snow Scoper" {}
+		}
+	}
+	Outback
+	{
+		Name "Outback Intellectual"
+		Class Sniper
+		Items
+		{
+			"The Outback Intellectual" {}
+			"The Sydney Straw Boat" {}
+		}
+	}
+	Garment
+	{
+		Name "Garment"
+		Class Sniper
+		Items
+		{
+			"The Golden Garment" {}
+			"The Five-Month Shadow" {}
+		}
+	}
+	Snug
+	{
+		Name "Snug"
+		Class Sniper
+		Items
+		{
+			"Snug Sharpshooter" {}
+		}
+	}
+	
+	Saharan
+	{
+		Name "Saharan Spy"
+		Class Spy
+		Items
+		{
+			"L'Etranger" {}
+			"Your Eternal Reward" {}
+			"The Cloak and Dagger" {}
+			
+			"The Familiar Fez" {}
+		}
+	}
+	MadeMan
+	{
+		Name "MadeMan"
+		Class Spy
+		Items
+		{
+			"The Enforcer" {}
+			"The Big Earner" {}
+			"The Dead Ringer" {}
+			
+			"Cosa Nostra Cap" {}
+			"The Made Man" {}
+		}
+	}
+	Pilot
+	{
+		Name "Pilot"
+		Class Spy
+		Items
+		{
+			"The Spy-cicle" {}
+			
+			"The Aviator Assassin" {}
+			"The Sky Captain" {}
+		}
+	}
+	TTG_Sam
+	{
+		Name "Sameth"
+		Class Spy
+		Items
+		{
+			"TTG Sam Revolver" {}
+			"TTG Watch" {}
+			"The Cloak and Dagger" {}
+			
+			"TTG Badge" {}
+			"The Bloodhound" {}
+		}
+	}
+	Assassin
+	{
+		Name "Assassin"
+		Class Spy
+		Items
+		{
+			"The Ambassador" {}
+			"The Sharp Dresser" {}
+			
+			"The Dashin' Hashshashin" {}
+		}
+	}
+	Upgraded
+	{
+		Name "Augmented Agent"
+		Class Spy
+		Items
+		{
+			"The Diamondback" {}
+			
+			"The Deus Specs" {}
+			"Belltower Spec Ops" {}
+		}
+	}
+	Disguised
+	{
+		Name "Disguised"
+		Class Spy
+		Items
+		{
+			"Conniver's Kunai" {}
+			"The Dead Ringer" {}
+			
+			"The Marxman" {}
+		}
+	}
+	Fedora
+	{
+		Name "FYI Not A Spy"
+		Class Spy
+		Items
+		{
+			"Fancy Fedora" {}
+		}
+	}
+	Beret
+	{
+		Name "Beret"
+		Class Spy
+		Items
+		{
+			"Spy Beret" {}
+		}
+	}
+	Rogue
+	{
+		Name "Rogue"
+		Class Spy
+		Items
+		{
+			"Cosa Nostra Cap" {}
+			"Rogue's Col Roule" {}
+		}
+	}
+	Escapist
+	{
+		Name "Escapist"
+		Class Spy
+		Items
+		{
+			"L'homme Burglerre" {}
+			"Escapist" {}
+		}
+	}
+	Puffy
+	{
+		Name "Puffy"
+		Class Spy
+		Items
+		{
+			"dec2014 The Puffy Provocateur" {}
+			"dec2014 Stealthy Scarf" {}
+		}
+	}
+	Lurker
+	{
+		Name "Lurker"
+		Class Spy
+		Items
+		{
+			"Lurker's Leathers" {}
+		}
+	}
+	Overcoat
+	{
+		Name "Overcoat"
+		Class Spy
+		Items
+		{
+			"Chicago Overcoat" {}
+			"A Hat to Kill For" {}
+		}
+	}
+	Showstopper
+	{
+		Name "Showstopper"
+		Class Spy
+		Items
+		{
+			"Showstopper" {}
+			"Big Topper" {}
+		}
+	}
+	Bandit2
+	{
+		Name "Bandit2"
+		Class Spy
+		Items
+		{
+			"Dressperado" {}
+			"Bandit's Boots" {}
+			"Murderer's Motif" {}
+		}
+	}
+	Tactical
+	{
+		Name "Tactical"
+		Class Spy
+		Items
+		{
+			"Tactical Turtleneck" {}
+			"Night Vision Gawkers" {}
+		}
+	}
+	Turncoat
+	{
+		Name "Turncoat"
+		Class Spy
+		Items
+		{
+			"The Turncoat" {}
+		}
+	}
+	Frostbite
+	{
+		Name "Frostbite"
+		Class Spy
+		Items
+		{
+			"The Spy-cicle" {}
+			
+			"Cold Blooded Coat" {}
+			"Frostbite Bonnet" {}
+		}
+	}
+	Cleaner
+	{
+		Name "Cleaner"
+		Class Spy
+		Items
+		{
+			"Cleaner's Cap" {}
+			"Le Professionnel" {}
+		}
+	}
+	Criminal
+	{
+		Name "Escaped Criminal"
+		Class Spy
+		Items
+		{
+			"Classic Criminal" {}
+			"Concealed Convict" {}
+		}
+	}
+	Dapper
+	{
+		Name "Dapper"
+		Class Spy
+		Items
+		{
+			"The Dapper Dickens" {}
+			"Strasbourg Scholar" {}
+		}
+	}
+	Tuxedo
+	{
+		Name "Tuxedo"
+		Class Spy
+		Items
+		{
+			"Sneaky Blinder" {}
+			"Tuxedo Royale" {}
+		}
+	}
+	Frenchman
+	{
+		Name "Frenchman"
+		Class Spy
+		Items
+		{
+			"The Frenchman's Formals" {}
+			"Vive La France" {}
+		}
+	}
+	Inspector
+	{
+		Name "Inspector"
+		Class Spy
+		Items
+		{
+			"L'Inspecteur" {}
+			"The Spectre's Spectacles" {}
+			"The After Dark" {}
+		}
+	}
+	Cards
+	{
+		Name "Cards"
+		Class Spy
+		Items
+		{
+			"The Sneaky Spats of Sneaking" {}
+			"The Business Casual" {}
+			"Hat of Cards" {}
+		}
+	}
+	Charmer
+	{
+		Name "Charming Mann"
+		Class Spy
+		Items
+		{
+			"Charmer's Chapeau" {}
+			"The Lady Killer" {}
+		}
+	}
+	Rogue2
+	{
+		Name "Rogue2"
+		Class Spy
+		Items
+		{
+			"The Rogue's Brogues" {}
+			"The Belgian Detective" {}
+			"The Rogue's Robe" {}
+		}
+	}
+	Phantom
+	{
+		Name "Phantom"
+		Class Spy
+		Items
+		{
+			"Le Party Phantom" {}
+			"The Blood Banker" {}
+		}
+	}
+	Cameraman
+	{
+		Name "Cameraman"
+		Class Spy
+		Items
+		{
+			"Camera Beard" {}
+			"Shutterbug" {}
+			"Smoking Jacket" {}
+		}
+	}
+	Noir
+	{
+		Name "Noir"
+		Class Spy
+		Items
+		{
+			"Detective Noir" {}
+			"The Au Courant Assassin" {}
+		}
+	}
+	Legion
+	{
+		Name "Legionnaire"
+		Class Spy
+		Items
+		{
+			"The Lurking Legionnaire" {}
+		}
+	}
+	Ninja2
+	{
+		Name "Ninja2"
+		Class Spy
+		Items
+		{
+			"The Ninja Cowl" {}
+			"Assassin's Attire" {}
+		}
+	}
+	Covert
+	{
+		Name "Covert Ops"
+		Class Spy
+		Items
+		{
+			"The Covert Covers" {}
+		}
+	}
+	Nightfall
+	{
+		Name "Nightfall"
+		Class Spy
+		Items
+		{
+			"Shadow Shroud" {}
+			"Nightfall Veil" {}
+		}
+	}
+	Poleur
+	{
+		Name "Poleur"
+		Class Spy
+		Items
+		{
+			"L'aire Filteure" {}
+			"Le Frosteaux" {}
+			"Poleur Voyeur" {}
+		}
+	}
+	
+	
+}

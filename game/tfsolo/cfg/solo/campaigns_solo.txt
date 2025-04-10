@@ -1,39 +1,39 @@
 "campaigns"
 {
-	"campaign1"
+	"headhunt"
 	{
-		"Name" "Campaign One"
-		"Desc" ""
-		"Map" "koth_viaduct"
+		"Name" "Headhunt"
+		"Desc" "Your own personal origin story!"
+		"Map" "merc_headhunt_solo"
 		"ShowProgress" "1"
-		"ProgressKey" "campaign1progress"
+		"ProgressKey" "headhunt_progress"
 		"BGArt" "casual/gametype_cp"
 	}
-	"campaign2"
+	"bloodthirst"
 	{
-		"Name" "Campaign Two"
-		"Desc" "This is the second campaign."
-		"Map" "koth_badlands"
+		"Name" "Bloodthirst"
+		"Desc" "Dracula is waiting!"
+		"Map" "merc_bloodthirst_solo"
 		"ShowProgress" "1"
-		"ProgressKey" "campaign2progress"
+		"ProgressKey" "bloodthirst_progress"
 		"BGArt" "casual/gametype_koth"
 	}
-	"campaign3"
-	{
-		"Name" "Campaign Three"
-		"Desc" ""
-		"Map" "cp_foundry"
-		"ShowProgress" "0"
-		"ProgressKey" "campaign3progress"
-		"BGArt" "casual/gametype_plr"
-	}
-	"campaign4"
-	{
-		"Name" "Campaign Four"
-		"Desc" ""
-		"Map" "pl_badwater"
-		"ShowProgress" "1"
-		"ProgressKey" "campaign4progress"
-		"BGArt" "casual/gametype_payload"
-	}
+	//"xmas"
+	//{
+	//	"Name" "Xmas"
+	//	"Desc" ""
+	//	"Map" "merc_xmas_solo"
+	//	"ShowProgress" "1"
+	//	"ProgressKey" "xmas_progress"
+	//	"BGArt" "casual/gametype_plr"
+	//}
+	//"deathmetal"
+	//{
+	//	"Name" "Death Metal"
+	//	"Desc" ""
+	//	"Map" "merc_deathmetal_solo"
+	//	"ShowProgress" "1"
+	//	"ProgressKey" "deathmetal_progress"
+	//	"BGArt" "casual/gametype_payload"
+	//}
 }

@@ -33,3 +33,5 @@ TFSOLO.HudScreens.MissionBasic <- class extends TFSOLO.HudScreen
 	}
 }
 TFSOLO.HudScreens["resource/ui/solo/mission_basic.res"] <- TFSOLO.HudScreens.MissionBasic()
+TFSOLO.HudScreens["resource/ui/solo/mission_basic_red.res"] <- TFSOLO.HudScreens.MissionBasic()
+TFSOLO.HudScreens["resource/ui/solo/mission_basic_blue.res"] <- TFSOLO.HudScreens.MissionBasic()

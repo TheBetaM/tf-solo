@@ -1,0 +1,86 @@
+bot_presets
+{
+	Bloodthirst_HandlerRED
+	{
+		Name "Ed"
+		Class Engineer
+		Skill 2
+		Team 2
+		Rarity 3
+		Items
+		{
+			"The Widowmaker" {}
+			"The Jag" {}
+			
+			"Trucker's Topper" {}
+			"El Patron" {}
+			"Desk Engineer" {}
+			"Support Spurs" {}
+		}
+	}
+	Bloodthirst_HandlerBLU
+	{
+		Name "DRACULA"
+		Class Medic
+		Skill 2
+		Team 3
+		Rarity 3
+		Items
+		{
+			"The Blutsauger" {}
+			
+			"Transylvanian Toupe" {}
+			"Power Spike" {}
+		}
+	}
+	Bloodthirst_Merasmus
+	{
+		Name "MERASMUS"
+		Class Sniper
+		Rarity 3
+		Items
+		{
+			"Upgradeable TF_WEAPON_CLUB" {}
+		}
+	}
+	Bloodthirst_RecruitRED
+	{
+		Name "Captain Calamari"
+		Class Demoman
+		Skill 1
+		Team 2
+		Rarity 2
+		Items
+		{
+			"The Iron Bomber" {}
+			"The Scottish Handshake" {}
+			
+			"The Tartantaloons" {}
+			"Cap'n Calamari" {}
+			"Fleet Commander" {}
+			"Polly Putrid" {}
+			"Dynamite Abs" {}
+		}
+	}
+	Bloodthirst_RecruitBLU
+	{
+		Name "Deadly Dragon"
+		Class Pyro
+		Skill 2
+		Team 3
+		Rarity 2
+		Items
+		{
+			"Upgradeable TF_WEAPON_FLAMETHROWER" {}
+			"Sharpened Volcano Fragment" {}
+			
+			"Fallen Angel" {}
+			"The Monster's Stompers" {}
+			"The Fire Breather" {}
+			"Kazan Karategi" {}
+			"The Cauterizer's Caudal Appendage" {}
+		}
+	}
+	
+	
+}

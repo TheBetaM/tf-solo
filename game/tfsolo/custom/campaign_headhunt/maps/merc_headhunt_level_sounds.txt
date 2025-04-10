@@ -1,0 +1,914 @@
+"Merc.TestVoice"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/engineer_ActivateCharge01.mp3"
+}
+
+"Merc.HandlerRED.M00"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M01.mp3"
+}
+
+"Merc.HandlerRED.M01"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M02.mp3"
+}
+
+"Merc.HandlerRED.M02"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M03.mp3"
+}
+
+"Merc.HandlerRED.M03"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M04.mp3"
+}
+
+"Merc.HandlerRED.M04"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M05.mp3"
+}
+
+"Merc.HandlerRED.M05"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M06.mp3"
+}
+
+"Merc.HandlerRED.M06"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M07.mp3"
+}
+
+"Merc.HandlerRED.M07"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M08.mp3"
+}
+
+"Merc.HandlerRED.M08"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M09.mp3"
+}
+
+"Merc.HandlerRED.M09"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M10.mp3"
+}
+
+"Merc.HandlerRED.M10"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M11.mp3"
+}
+
+"Merc.HandlerRED.M11"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M12.mp3"
+}
+
+"Merc.HandlerBLU.M12"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M01.mp3"
+}
+
+"Merc.HandlerBLU.M13"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M02.mp3"
+}
+
+"Merc.HandlerBLU.M14"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M03.mp3"
+}
+
+"Merc.HandlerBLU.M15"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M04.mp3"
+}
+
+"Merc.HandlerBLU.M16"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M05.mp3"
+}
+
+"Merc.HandlerBLU.M17"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M06.mp3"
+}
+
+"Merc.HandlerBLU.M18"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M07.mp3"
+}
+
+"Merc.HandlerBLU.M19"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M08.mp3"
+}
+
+"Merc.HandlerBLU.M20"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M09.mp3"
+}
+
+"Merc.HandlerBLU.M21"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M10.mp3"
+}
+
+"Merc.HandlerBLU.M22"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M11.mp3"
+}
+
+"Merc.HandlerBLU.M23"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M12.mp3"
+}
+
+"Merc.HandlerRED.PCorner"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_PCorner.mp3"
+}
+
+"Merc.HandlerRED.Weapon1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Weapon1.mp3"
+}
+
+"Merc.HandlerRED.Weapon2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Weapon2.mp3"
+}
+
+"Merc.HandlerBLU.Weapon1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Weapon1.mp3"
+}
+
+"Merc.HandlerBLU.Weapon2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Weapon2.mp3"
+}
+
+
+"Merc.HandlerRED.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Intro.mp3"
+}
+
+
+"Merc.HandlerBLU.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Intro.mp3"
+}
+
+
+"Merc.HandlerRED.Ending"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Ending.mp3"
+}
+
+
+"Merc.HandlerBLU.Ending"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Ending.mp3"
+}
+
+
+"Merc.HandlerRED.FinalMissionOpen"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_FinalMissionOpen.mp3"
+}
+
+"Merc.HandlerBLU.FinalMissionOpen"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_FinalMissionOpen.mp3"
+}
+
+"Merc.HandlerRED.Choice1.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_Intro.mp3"
+}
+
+"Merc.HandlerRED.Choice1.Idle"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_Idle.mp3"
+}
+
+"Merc.HandlerRED.Choice1.Chosen1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_Chosen1.mp3"
+}
+
+"Merc.HandlerRED.Choice1.Chosen2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_Chosen2.mp3"
+}
+
+"Merc.HandlerRED.Choice1.NoAnswer"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_NoAnswer.mp3"
+}
+
+"Merc.HandlerRED.Choice1.BadAnswer1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_BadAnswer1.mp3"
+}
+
+"Merc.HandlerRED.Choice1.BadAnswer2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_BadAnswer2.mp3"
+}
+
+"Merc.HandlerRED.Choice1.BadAnswer3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_BadAnswer3.mp3"
+}
+
+"Merc.HandlerRED.Choice1.Chosen3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice1_Chosen3.mp3"
+}
+
+"Merc.HandlerRED.Choice2.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice2_Intro.mp3"
+}
+
+"Merc.HandlerRED.Choice2.Chosen1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice2_Chosen1.mp3"
+}
+
+"Merc.HandlerRED.Choice2.Chosen2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice2_Chosen2.mp3"
+}
+
+"Merc.HandlerRED.Choice2.NoAnswer"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice2_NoAnswer.mp3"
+}
+
+"Merc.HandlerRED.Choice2.BadAnswer1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice2_BadAnswer1.mp3"
+}
+
+"Merc.HandlerRED.Choice2.Chosen3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice2_Chosen3.mp3"
+}
+
+"Merc.HandlerRED.Choice3.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice3_Intro.mp3"
+}
+
+"Merc.HandlerRED.Choice3.Chosen1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice3_Chosen1.mp3"
+}
+
+"Merc.HandlerRED.Choice3.Chosen2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice3_Chosen2.mp3"
+}
+
+"Merc.HandlerRED.Choice3.NoAnswer"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice3_NoAnswer.mp3"
+}
+
+"Merc.HandlerRED.Choice3.BadAnswer1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice3_BadAnswer1.mp3"
+}
+
+"Merc.HandlerRED.Choice3.Chosen3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_Choice3_Chosen3.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_Intro.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.Idle"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_Idle.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.Chosen1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_Chosen1.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.Chosen2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_Chosen2.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.NoAnswer"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_NoAnswer.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.BadAnswer1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_BadAnswer1.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.BadAnswer2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_BadAnswer2.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.BadAnswer3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_BadAnswer3.mp3"
+}
+
+"Merc.HandlerBLU.Choice1.Chosen3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice1_Chosen3.mp3"
+}
+
+"Merc.HandlerBLU.Choice2.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice2_Intro.mp3"
+}
+
+"Merc.HandlerBLU.Choice2.Chosen1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice2_Chosen1.mp3"
+}
+
+"Merc.HandlerBLU.Choice2.Chosen2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice2_Chosen2.mp3"
+}
+
+"Merc.HandlerBLU.Choice2.NoAnswer"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice2_NoAnswer.mp3"
+}
+
+"Merc.HandlerBLU.Choice2.BadAnswer1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice2_BadAnswer1.mp3"
+}
+
+"Merc.HandlerBLU.Choice2.Chosen3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice2_Chosen3.mp3"
+}
+
+"Merc.HandlerBLU.Choice3.Intro"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice3_Intro.mp3"
+}
+
+"Merc.HandlerBLU.Choice3.Chosen1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice3_Chosen1.mp3"
+}
+
+"Merc.HandlerBLU.Choice3.Chosen2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice3_Chosen2.mp3"
+}
+
+"Merc.HandlerBLU.Choice3.NoAnswer"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice3_NoAnswer.mp3"
+}
+
+"Merc.HandlerBLU.Choice3.BadAnswer1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice3_BadAnswer1.mp3"
+}
+
+"Merc.HandlerBLU.Choice3.Chosen3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_Choice3_Chosen3.mp3"
+}
+
+"Merc.HandlerRED.M24.1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_1.mp3"
+}
+
+"Merc.HandlerBLU.M24.2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_2.mp3"
+}
+
+"Merc.HandlerRED.M24.3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_3.mp3"
+}
+
+"Merc.HandlerBLU.M24.4"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_4.mp3"
+}
+
+"Merc.HandlerRED.M24.5"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_5.mp3"
+}
+
+"Merc.HandlerBLU.M24.6"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_6.mp3"
+}
+
+"Merc.HandlerRED.M24.7"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_7.mp3"
+}
+
+"Merc.HandlerBLU.M24.8"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_8.mp3"
+}
+
+"Merc.HandlerRED.M24.9"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/RED_M13_9.mp3"
+}
+
+"Merc.HandlerBLU.M25.1"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_1.mp3"
+}
+
+"Merc.HandlerRED.M25.2"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_2.mp3"
+}
+
+"Merc.HandlerBLU.M25.3"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_3.mp3"
+}
+
+"Merc.HandlerRED.M25.4"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_4.mp3"
+}
+
+"Merc.HandlerBLU.M25.5"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_5.mp3"
+}
+
+"Merc.HandlerRED.M25.6"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_6.mp3"
+}
+
+"Merc.HandlerBLU.M25.7"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_7.mp3"
+}
+
+"Merc.HandlerRED.M25.8"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_8.mp3"
+}
+
+"Merc.HandlerBLU.M25.9"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NONE"
+	"wave"			"vo/merc/merc_headhunt/BLU_M13_9.mp3"
+}
+
+"Merc.RED.IntroMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#*music/merc/merc_headhunt/intro_ed.mp3"
+}
+
+"Merc.BLU.IntroMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#*music/merc/merc_headhunt/intro_lou.mp3"
+}
+
+"Merc.RED.HubMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#music/merc/merc_headhunt/hub_red.mp3"
+}
+
+"Merc.BLU.HubMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#music/merc/merc_headhunt/hub_blu.mp3"
+}
+
+"Game.YourTeamWon"
+{
+	"channel"	"CHAN_AUTO"
+	"volume"	"1"
+	"soundlevel"	"SNDLVL_140dB"
+	"pitch"		"PITCH_NORM"
+
+	"wave"		"#music/merc/merc_headhunt/ending_jingle.mp3"
+}

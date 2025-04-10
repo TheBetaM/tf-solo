@@ -108,12 +108,12 @@ getroottable()[TFSOLO.SaveEventTag] <- {
 	
 	OnGameEvent_solo_unlock_item = function(params)
 	{
-		TFSOLO.OnItemUnlock(item, Solo.ItemDefID(item))
+		TFSOLO.OnItemUnlock(params.item, Solo.ItemDefID(params.item))
 	}
 	
 	OnGameEvent_solo_unlock_itemid = function(params)
 	{
-		TFSOLO.OnItemUnlock(Solo.ItemDefName(item), item)
+		TFSOLO.OnItemUnlock(Solo.ItemDefName(params.item), params.item)
 	}
 	
 	OnGameEvent_solo_armory_flag = function(params)
