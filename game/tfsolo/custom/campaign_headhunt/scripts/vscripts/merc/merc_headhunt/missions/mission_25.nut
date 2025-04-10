@@ -41,26 +41,6 @@ Merc.ObjectiveExtraMax <- 50
 Merc.Bots[0].Conds = [ TF_COND_REGENONDAMAGEBUFF ]
 Merc.Bots[1].Conds = [ TF_COND_REGENONDAMAGEBUFF ]
 
-MercBots[2].Items = BI_Snowboarder
-MercBots[3].Items = BI_Polar
-MercBots[4].Items = BI_Skier
-MercBots[5].Items = BI_Winter
-MercBots[6].Items = BI_Ushanka
-MercBots[7].Items = BI_Insulated
-MercBots[8].Items = BI_Coldfront
-MercBots[9].Items = BI_Tundra
-MercBots[10].Items = BI_Covert
-
-MercBots[11].Items = BI_Warmup
-MercBots[12].Items = BI_Stomper
-MercBots[13].Items = BI_SubZero
-MercBots[14].Items = BI_Breeze
-MercBots[15].Items = BI_Heating
-MercBots[16].Items = BI_Lawnmaker
-MercBots[17].Items = BI_Mantel
-MercBots[18].Items = BI_Cold
-MercBots[19].Items = BI_Frostbite
-
 ::M25SentrySpots <- [
 	[-1753,-2330,84, 0,270,0, 0],
 	[-1883,-2959,84, 0,90,0, 0],

@@ -473,8 +473,8 @@ Merc.StartPressed <- function(isBLU)
 
 Merc.StartBonusPressed <- function()
 {
-	MercCutsceneActive = true
-	MercBriefingActive = true
+	Merc.CutsceneActive = true
+	Merc.BriefingActive = true
 	SendGlobalGameEvent("hide_annotation", {
 		id = 10,
 	})
@@ -484,9 +484,9 @@ Merc.StartBonusPressed <- function()
 	SendGlobalGameEvent("hide_annotation", {
 		id = 15,
 	})
-	if (MercMissionStarting) return
+	if (Merc.MissionStarting) return
 	Convars.SetValue("mp_restartblock", 2)
-	MercMissionStarting = true
+	Merc.MissionStarting = true
 	foreach (a in GetClients()) 
 	{
 		a.AddHudHideFlags(HIDEHUD_ALL)
@@ -1916,7 +1916,7 @@ Merc.CS_Choice2_BLU <- function()
 	} )
 	
 	Merc.Delay(100.0 + 1.0, function() {
-		if (MercLastChoiceResult != -1) return
+		if (Merc.LastChoiceResult != -1) return
 		SetPropString(self, "m_iszScriptThinkFunction", "")
 		SendGlobalGameEvent("hide_annotation", { id = 10, })
 		SendGlobalGameEvent("hide_annotation", { id = 11, })
@@ -2077,7 +2077,7 @@ Merc.ChoiceComplete <- function()
 						Merc.CS_Choice1_RED_Start()
 					} )
 				}
-				else if (MercBadAnswerCount == 1)
+				else if (Merc.BadAnswerCount == 1)
 				{
 					Merc.BadAnswerCount = 2
 					Merc.StartAudioRED("Merc.HandlerRED.Choice1.BadAnswer2", 3.7, 0.0)
@@ -2124,7 +2124,7 @@ Merc.ChoiceComplete <- function()
 					Merc.ChoiceProp2.Destroy()
 				} )
 			}
-			else if (MercLastChoiceResult == 4)
+			else if (Merc.LastChoiceResult == 4)
 			{
 				Merc.RSVFlags[5] = 2
 				Merc.StartAudioRED("Merc.HandlerRED.Choice2.Chosen2", 2.9, 0.0)
@@ -2248,7 +2248,7 @@ Merc.ChoiceComplete <- function()
 						Merc.CS_Choice1_BLU_Start()
 					} )
 				}
-				else if (MercBadAnswerCount == 1)
+				else if (Merc.BadAnswerCount == 1)
 				{
 					Merc.BadAnswerCount = 2
 					Merc.StartAudioBLU("Merc.HandlerBLU.Choice1.BadAnswer2", 4.1, 0.0)
@@ -2257,7 +2257,7 @@ Merc.ChoiceComplete <- function()
 						Merc.CS_Choice1_BLU_Start()
 					} )
 				}
-				else if (MercBadAnswerCount == 2)
+				else if (Merc.BadAnswerCount == 2)
 				{
 					Merc.BadAnswerCount = 3
 					Merc.StartAudioBLU("Merc.HandlerBLU.Choice1.BadAnswer3", 3.4, 0.0)

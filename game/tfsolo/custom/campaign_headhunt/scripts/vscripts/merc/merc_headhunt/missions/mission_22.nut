@@ -20,7 +20,7 @@ Merc.Bots <- [
 	
 	Merc.Bot(TF_TEAM_BLUE, 2, "Sleuth"),
 	Merc.Bot(TF_TEAM_BLUE, 2, "Detective"),
-	Merc.Bot(TF_TEAM_BLUE, 2, "Special Agent"),
+	Merc.Bot(TF_TEAM_BLUE, 2, "Jogger"),
 	Merc.Bot(TF_TEAM_BLUE, 2, "BlackMarket"),
 	Merc.Bot(TF_TEAM_BLUE, 2, "Clue"),
 	Merc.Bot(TF_TEAM_BLUE, 2, "Hitman"),

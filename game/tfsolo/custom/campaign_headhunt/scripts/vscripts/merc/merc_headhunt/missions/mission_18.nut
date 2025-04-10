@@ -34,7 +34,7 @@ getroottable()[Merc.EventTag] <- {
 	OnGameEvent_player_hurt = function(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if (params.userid == 0 || !IsPlayerABot(player) return
+		if (params.userid == 0 || !IsPlayerABot(player)) return
 		local aplayer = GetPlayerFromUserID(params.attacker)
 		if (aplayer != null && !IsPlayerABot(aplayer))
 		{

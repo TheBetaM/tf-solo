@@ -27,6 +27,8 @@ Merc.ObjectiveExtraText <- "Get exactly 1 kill only"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 1
 
+SetRoundToPlayNext("round_b")
+
 ::M15Props <- [
 	"models/props_mining/track_straight_256.mdl",
 	"models/props_mining/track_straight_64.mdl",
@@ -84,7 +86,7 @@ foreach (i in M15Props)
 	[4, -463,2376,259, 0,270,0],
 	[2, -82,2339,259, 0,270,0],
 	[2, -6,2215,259, 0,90,0],
-];
+]
 ::M15Tracks <- [
 	["001",0, -4581,2532,504],
 	["002",0, -4704,2067,504],
@@ -129,7 +131,7 @@ foreach (i in M15Props)
 	["83",0, -74,2345,312],
 	["88",0, -44,2252,312],
 	["89",0, 43,2176,312],
-];
+]
 
 function M15_SpawnProp(modelname, x, y, z, rotx, roty, rotz, ptype)
 {
@@ -178,22 +180,22 @@ Merc.BeforeRoundWin <- function(params)
 	}
 }
 
+
 Merc.EventTag <- UniqueString()
 getroottable()[Merc.EventTag] <- {
 	OnGameEvent_teamplay_round_selected = function(params)
 	{
-		if (params.round != "round_b")
-		{
-			ToConsole("sv_cheats 1;tf_playround round_b;sv_cheats 0")
-			Convars.SetValue("mp_enableroundwaittime", 0)
-			Convars.SetValue("tf_player_movement_restart_freeze", 0)
-			Convars.SetValue("mp_restartgame_immediate", 1)
-		}
-		Merc.SetupConvars()
+		SetRoundToPlayNext("round_b")
+	}
+	
+	OnGameEvent_teamplay_restart_round = function(params)
+	{
+		SetRoundToPlayNext("round_b")
 	}
 	
 	OnGameEvent_teamplay_round_start = function(params)
 	{
+		SetRoundToPlayNext("round_b")
 		foreach (a in M15PropSpots)
 		{
 			M15_SpawnProp(M15Props[a[0]],a[1],a[2],a[3], a[4],a[5],a[6], 0)
@@ -219,6 +221,7 @@ getroottable()[Merc.EventTag] <- {
 		if (IsPlayerABot(aplayer)) return
 		
 		Merc.ObjectiveExtraCount = Merc.ObjectiveExtraCount + 1
+		Merc.UpdateHUD()
 		if (Merc.ObjectiveExtraCount > Merc.ObjectiveExtraMax)
 		{
 			Merc.ExtraFail()

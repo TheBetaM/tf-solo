@@ -2,6 +2,7 @@
 ::TF_TEAM_SPECTATOR <- 1
 ::TF_CLASS_HEAVY <- 6
 ::MAX_PLAYERS <- MaxClients().tointeger()
+::tf_player_manager <- Entities.FindByClassname(null, "tf_player_manager")
 ::tf_gamerules <- Entities.FindByClassname(null, "tf_gamerules")
 tf_gamerules.ValidateScriptScope()
 

@@ -410,6 +410,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			if (presetKey->FindKey("Class"))
 			{
 				iClassIndex = GetClassIndexFromString(presetKey->GetString("Class"));
+				classname = presetKey->GetString("Class");
 			}
 			if (presetKey->FindKey("Team"))
 			{

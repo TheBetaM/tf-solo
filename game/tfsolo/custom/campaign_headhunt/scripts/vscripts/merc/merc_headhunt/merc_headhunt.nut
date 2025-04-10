@@ -9,7 +9,6 @@ IncludeScript(Merc.ProjectDir + "/const.nut")
 IncludeScript(Merc.ProjectDir + "/hubconst.nut")
 IncludeScript(Merc.ProjectDir + "/mission.nut")
 IncludeScript(Merc.ProjectDir + "/progress.nut")
-IncludeScript(Merc.ProjectDir + "/weapons.nut")
 IncludeScript(Merc.ProjectDir + "/cutscenes.nut")
 
 Convars.SetValue("mp_tournament", 0)
@@ -32,11 +31,25 @@ Convars.SetValue("tf_roundstarttalk_disable", 1)
 
 PrecacheSound("player/recharged.wav")
 PrecacheSound("items/ammo_pickup.wav")
+PrecacheSound("ui/trade_success.wav")
 
 Merc.MissionID <- -1
 Merc.MissionStarted <- false
 Merc.ProgressLoaded <- false
 Merc.InHub <- true
+
+Merc.WeaponUnlocks <- [
+	"Steel-Toed Stompers",
+	"Bottled Sorrow",
+	"The Force-a-Nature",
+	"Shocking Truth",
+]
+Merc.WeaponUnlockClass <- [
+	"Heavy",
+	"Demoman",
+	"Scout",
+	"Medic",
+]
 
 // Change level, wait for VScript table to reset, execute mission script
 // Dedicated server needs "sv_allow_point_servercommand always"
@@ -265,38 +278,27 @@ Merc.ResetMonitors <- function()
 
 Merc.UpdateWeaponDisplays <- function()
 {
-	for (local i = 0; i < Merc.Weapons.len(); i++)
+	for (local i = 0; i < Merc.WeaponUnlocks.len(); i++)
 	{
 		local wep = null
 		local wunlock = Merc.GetWeaponUnlock(i)
 		local wperks = Merc.GetWeaponPerks(i)
-		local wtext = Merc.Weapons[i].Name + "\n"
+		local wtext = Merc.WeaponUnlocks[i] + "\n"
+		wtext += "FOR THE " + Merc.WeaponUnlockClass[i] + "\n"
 		local wcolor = "255 255 255 255"
-		local wflag = 0
-		if (i > 1) wflag = 2
-		if (wperks == 1)
-		{
-			//wtext = "STRANGE\n" + wtext
-		}
-		else if (wperks == 2)
-		{
-			//wtext = "STRANGE KILLSTREAK\n" + wtext
-			wtext = "KILLSTREAK\n" + wtext
-		}
+		local wflag = i
 		if (!wunlock)
 		{
 			wcolor = "255 0 0 255"
 			wtext += "COMPLETE MORE\nBONUS OBJECTIVES\nTO UNLOCK!"
 		}
-		else if (Merc.RSVFlags[wflag] != i + 1)
+		else if (Merc.RSVFlags[wflag] != 0)
 		{
-			wtext += "(HIT THIS TO EQUIP!)\n"
-			wtext += Merc.Weapons[i].Desc
+			wtext += "(UNLOCKED IN LOADOUT)\n"
 		}
 		else
 		{
-			wtext += "(EQUIPPED)\n"
-			wtext += Merc.Weapons[i].Desc
+			wtext += "(HIT THIS TO UNLOCK!)\n"
 		}
 		
 		while (wep = Entities.FindByName(wep, "wtext_weapon_" + i))
@@ -353,51 +355,28 @@ Merc.ApplyEntProgress <- function()
 
 Merc.WeaponSelect <- function(id)
 {
-	//if (Merc.MissionStarted || Merc.CutsceneActive || Merc.BriefingActive) return
-	local flagID = 0
+	local flagID = id
 	local csflagID = id + 8
-	if (id > 1) flagID = 2
 	printl("[MERC] Selected weapon " + id)
-	if (Merc.RSVFlags[flagID] == id + 1)
+	if (Merc.RSVFlags[flagID] != 0)
 	{
-		Merc.RSVFlags[flagID] = 0
-		Merc.RSVFlags[flagID + 1] = 0
-		foreach (a in GetClients()) 
-		{	
-			if (!IsPlayerABot(a)) a.Regenerate(true)
-		}
-		Merc.UpdateWeaponDisplays()
-		EmitSoundEx({ sound_name = "items/ammo_pickup.wav", })
 		return
 	}
 	local unlock = Merc.GetWeaponUnlock(id)
 	if (!unlock) return
-	foreach (a in GetClients()) 
-	{	
-		if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, id)
-	}
-	Merc.RSVFlags[flagID] = id + 1
-	Merc.RSVFlags[flagID + 1] = Merc.GetWeaponPerks(id)
+	Merc.RSVFlags[flagID] = 1
 	Merc.CSFlags[csflagID] = 1
 	Merc.UpdateWeaponDisplays()
 	
-	EmitSoundEx({ sound_name = "items/ammo_pickup.wav", })
+	SendGlobalGameEvent("solo_unlock_item", {
+		item = Merc.WeaponUnlocks[id],
+	})
 	
-	if (Merc.MissionStarted || Merc.CutsceneActive || Merc.BriefingActive) return
-	local team = "red"
-	if (id > 1) team = "blu"
-	local wunlock = Merc.GetWeaponUnlock(id)
-	local wperks = Merc.GetWeaponPerks(id)
-	local wtext = Merc.Weapons[id].Name + "\n"
-	if (wperks == 2)
-	{
-		wtext = "KILLSTREAK\n" + wtext
-	}
-	wtext += Merc.Weapons[id].Desc
-	local mtext = Entities.FindByName(null, "wtext_monitor_" + team)
-	mtext.AcceptInput("SetText",wtext,null,null)
-	EntFire("monitor_red", "SetCamera", "cam_mission_red")
-	EntFire("monitor_blu", "SetCamera", "cam_mission_blu")
+	ClientPrint(null, HUD_PRINTTALK, "New weapon unlocked: " + Merc.WeaponUnlocks[id] + " for the " + Merc.WeaponUnlockClass[id])
+	ClientPrint(null, HUD_PRINTTALK, "You can equip the new weapon in your item loadout menu.")
+	EmitSoundEx({ sound_name = "ui/trade_success.wav", })
+	
+	Merc.SaveProgress()
 }
 
 Merc.SpawnMsg <- function()
@@ -507,34 +486,6 @@ Merc.HubEvents <- {
 			{
 				EntFire("door_bonus", "Open")
 			}
-			if (msg == "wep1")
-			{
-				foreach (a in GetClients()) 
-				{	
-					if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 0)
-				}
-			}
-			if (msg == "wep2")
-			{
-				foreach (a in GetClients()) 
-				{	
-					if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 1)
-				}
-			}
-			if (msg == "wep3")
-			{
-				foreach (a in GetClients()) 
-				{	
-					if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 2)
-				}
-			}
-			if (msg == "wep4")
-			{
-				foreach (a in GetClients()) 
-				{	
-					if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 3)
-				}
-			}
 			if (msg == "mtest1")
 			{
 				SetPropString(Entities.FindByName(null, "subtitles_grey"), "m_iszMessage", "test1")
@@ -620,21 +571,6 @@ Merc.HubEvents <- {
 				}
 			}
 			return
-		}
-		
-		if (player.GetTeam() == TF_TEAM_RED)
-		{
-			if (Merc.RSVFlags[0] != 0)
-			{
-				Merc.EquipWeapon(player, Merc.RSVFlags[0] - 1, Merc.RSVFlags[1])
-			}
-		}
-		else if (player.GetTeam() == TF_TEAM_BLUE)
-		{
-			if (Merc.RSVFlags[2] != 0)
-			{
-				Merc.EquipWeapon(player, Merc.RSVFlags[2] - 1, Merc.RSVFlags[3])
-			}
 		}
 		
 		if (!Merc.HubEnteredRED && !Merc.HubEnteredBLU)

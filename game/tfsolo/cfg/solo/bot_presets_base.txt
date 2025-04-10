@@ -12,7 +12,7 @@ bot_presets
 			
 			"The Milkman" {}
 		}
-		}
+	}
 	BonkBoy
 	{
 		Name "Bonk Boy"
@@ -2047,7 +2047,7 @@ bot_presets
 	Brainiac
 	{
 		Name "Brainiac"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Pomson 6000" {}
@@ -2061,7 +2061,7 @@ bot_presets
 	Techhand
 	{
 		Name "Handyman"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Frontier Justice" {}
@@ -2075,7 +2075,7 @@ bot_presets
 	Builder
 	{
 		Name "Builder"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Rescue Ranger" {}
@@ -2088,7 +2088,7 @@ bot_presets
 	Roadie
 	{
 		Name "Roadie"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Gunslinger" {}
@@ -2099,7 +2099,7 @@ bot_presets
 	Caveman
 	{
 		Name "Caveman"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Grizzled Growth" {}
@@ -2110,7 +2110,7 @@ bot_presets
 	Miner
 	{
 		Name "Miner"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Mining Light" {}
@@ -2119,7 +2119,7 @@ bot_presets
 	Texan
 	{
 		Name "Texan"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Texas Ten Gallon" {}
@@ -2128,7 +2128,7 @@ bot_presets
 	Prof
 	{
 		Name "Professor"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Professor's Peculiarity" {}
@@ -2137,7 +2137,7 @@ bot_presets
 	Builder2
 	{
 		Name "Pencil Pusher"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Pencil Pusher" {}
@@ -2147,7 +2147,7 @@ bot_presets
 	Barnstormer
 	{
 		Name "Barnstormer"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Barnstormer" {}
@@ -2157,7 +2157,7 @@ bot_presets
 	Pardner
 	{
 		Name "Frontiersman"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Pardner's Pompadour" {}
@@ -2167,7 +2167,7 @@ bot_presets
 	Trencher
 	{
 		Name "Trencher"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Trencher's Topper" {}
@@ -2177,7 +2177,7 @@ bot_presets
 	Tools
 	{
 		Name "Tools"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Tools of the Trade" {}
@@ -2187,7 +2187,7 @@ bot_presets
 	Egghead
 	{
 		Name "Egghead"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Level Three Chin" {}
@@ -2199,7 +2199,7 @@ bot_presets
 	Insulated
 	{
 		Name "Insulated Innovator"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"EOTL_Insulated_innovator" {}
@@ -2210,7 +2210,7 @@ bot_presets
 	Officer
 	{
 		Name "Officer"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"dec2014 engineer_detectiveholster" {}
@@ -2221,7 +2221,7 @@ bot_presets
 	Sheriff
 	{
 		Name "Sheriff"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Sheriff's Stetson" {}
@@ -2231,7 +2231,7 @@ bot_presets
 	Operator
 	{
 		Name "Operator"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Phononaut" {}
@@ -2242,7 +2242,7 @@ bot_presets
 	Patron
 	{
 		Name "Patron"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"El Caballero" {}
@@ -2253,7 +2253,7 @@ bot_presets
 	Bandit
 	{
 		Name "Bandit"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The El Paso Poncho" {}
@@ -2263,17 +2263,17 @@ bot_presets
 	Inspired
 	{
 		Name "Awakened"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
-			"Flash of Inspiration" {}
 			"Head Mounted Double Observatory" {}
+			"Flash of Inspiration" {}
 		}
 	}
 	Sentry
 	{
 		Name "Sentry"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Sightliner" {}
@@ -2284,7 +2284,7 @@ bot_presets
 	Marshal
 	{
 		Name "Marshal"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"More Gun Marshal" {}
@@ -2293,7 +2293,7 @@ bot_presets
 	Underminer
 	{
 		Name "Underminer"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Arctic Mole" {}
@@ -2303,7 +2303,7 @@ bot_presets
 	Cargo
 	{
 		Name "Cargo"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Cargo Constructor" {}
@@ -2313,7 +2313,7 @@ bot_presets
 	Dynamic
 	{
 		Name "Dynamic Dell"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Dell Dynamic" {}
@@ -2323,7 +2323,7 @@ bot_presets
 	Clue
 	{
 		Name "Detective"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Clue Hairdo" {}
@@ -2333,7 +2333,7 @@ bot_presets
 	Daring
 	{
 		Name "Stunt Double"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Daring Dell" {}
@@ -2343,7 +2343,7 @@ bot_presets
 	Disp
 	{
 		Name "Disp"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Packable Provisions" {}
@@ -2353,7 +2353,7 @@ bot_presets
 	Trucker
 	{
 		Name "Trucker"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Dad Duds" {}
@@ -2363,7 +2363,7 @@ bot_presets
 	Western
 	{
 		Name "Western"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Texas Half-Pants" {}
@@ -2374,7 +2374,7 @@ bot_presets
 	Robotic
 	{
 		Name "Robotics"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Gunslinger" {}
@@ -2386,7 +2386,7 @@ bot_presets
 	Miner2
 	{
 		Name "Miner2"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Scotch Saver" {}
@@ -2397,7 +2397,7 @@ bot_presets
 	Lawnmaker
 	{
 		Name "Antarctic Researcher"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Gold Digger" {}
@@ -2408,7 +2408,7 @@ bot_presets
 	Country
 	{
 		Name "Country"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Big Country" {}
@@ -2417,7 +2417,7 @@ bot_presets
 	NuclearProtect
 	{
 		Name "NuclearProtect"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"Mannhattan Protect" {}
@@ -2428,7 +2428,7 @@ bot_presets
 	Westcoat
 	{
 		Name "Westcoat"
-		Class Enigneer
+		Class Engineer
 		Items
 		{
 			"The Westcoat" {}

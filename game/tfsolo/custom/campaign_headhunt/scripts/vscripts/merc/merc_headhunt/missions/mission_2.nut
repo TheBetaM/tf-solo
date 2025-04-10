@@ -1,4 +1,4 @@
-// KOTH Trainwreck
+// KOTH Cachoeira
 ::Merc <- {}
 Merc.MissionID <- 2
 IncludeScript("merc/merc_headhunt/missions/mission_init.nut")
@@ -16,7 +16,7 @@ Merc.Bots <- [
 	Merc.Bot(TF_TEAM_BLUE, 1, "Rifleman"),
 	
 	Merc.Bot(TF_TEAM_RED, 1, "Raider"),
-	Merc.Bot(TF_TEAM_RED, 0, "Clueless Pyro"),
+	Merc.Bot(TF_TEAM_RED, 0, "Silly"),
 	Merc.Bot(TF_TEAM_RED, 1, "Stuntman"),
 	Merc.Bot(TF_TEAM_RED, 1, "Haircut"),
 	Merc.Bot(TF_TEAM_RED, 1, "Archer2"),
@@ -24,9 +24,9 @@ Merc.Bots <- [
 Merc.ObjectiveText <- LOCM_OBJECTIVE_GENERIC
 Merc.ObjectiveMainCount <- 0
 Merc.ObjectiveMainMax <- 2
-Merc.ObjectiveExtraText <- "Get bomb-train assists"
+Merc.ObjectiveExtraText <- "Get environmental kills"
 Merc.ObjectiveExtraCount <- 0
-Merc.ObjectiveExtraMax <- 7
+Merc.ObjectiveExtraMax <- 2
 Merc.ResetMainOnRestart <- 0
 Merc.ResetExtraOnRestart <- 0
 
@@ -35,30 +35,17 @@ getroottable()[Merc.EventTag] <- {
 	OnGameEvent_player_death = function(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if (params.userid == 0) return
-		if (!IsPlayerABot(player)) return
+		if (params.userid == 0 || !IsPlayerABot(player)) return
 		if (player.GetTeam() == Merc.ForcedTeam) return
-		
-		
 		local atplayer = GetPlayerFromUserID(params.attacker)
 		local aplayer = GetPlayerFromUserID(params.assister)
 		local inflict = EntIndexToHScript(params.inflictor_entindex)
-		if (atplayer != null && !IsPlayerABot(atplayer) && params.weapon == "world")
+		if (atplayer != null && !IsPlayerABot(atplayer))
 		{
-			Merc.ExtraGet(1, 1, 1)
-		}
-		else if ((aplayer != null && !IsPlayerABot(aplayer)) || (atplayer != null && !IsPlayerABot(atplayer)))
-		{
-			if (inflict.GetName() == "BombHurt_A")
+			if (params.weapon == "world" || params.weapon == "helicopter" || params.weapon == "piranha")
+			{
 				Merc.ExtraGet(1, 1, 1)
-			else if (inflict.GetName() == "BombHurt_B")
-				Merc.ExtraGet(1, 1, 1)
-			else if (inflict.GetName() == "BombHurt_C")
-				Merc.ExtraGet(1, 1, 1)
-			else if (inflict.GetName() == "BombHurt_D")
-				Merc.ExtraGet(1, 1, 1)
-			else if (inflict.GetName() == "BombHurt_E")
-				Merc.ExtraGet(1, 1, 1)
+			}
 		}
 	}
 }

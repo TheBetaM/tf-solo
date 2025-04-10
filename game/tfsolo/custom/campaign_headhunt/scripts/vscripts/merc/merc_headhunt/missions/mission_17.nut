@@ -1,4 +1,4 @@
-// CP Caper
+// CP Standin
 ::Merc <- {}
 Merc.MissionID <- 17
 IncludeScript("merc/merc_headhunt/missions/mission_init.nut")
@@ -25,10 +25,10 @@ Merc.Bots <- [
 ]
 Merc.ObjectiveText <- "Win rounds in a row"
 Merc.ObjectiveMainCount <- 0
-Merc.ObjectiveMainMax <- 3
-Merc.ObjectiveExtraText <- "Get kills while underwater"
+Merc.ObjectiveMainMax <- 2
+Merc.ObjectiveExtraText <- "Get kills" //while underwater"
 Merc.ObjectiveExtraCount <- 0
-Merc.ObjectiveExtraMax <- 1
+Merc.ObjectiveExtraMax <- 20
 Merc.ResetMainOnRestart <- 0
 Merc.ResetExtraOnRestart <- 0
 
@@ -51,7 +51,7 @@ getroottable()[Merc.EventTag] <- {
 		if (player.GetTeam() == Merc.ForcedTeam) return
 		
 		local aplayer = GetPlayerFromUserID(params.attacker)
-		if (aplayer != null && !IsPlayerABot(aplayer) && aplayer.GetWaterLevel() >= 3)
+		if (aplayer != null && !IsPlayerABot(aplayer))// && aplayer.GetWaterLevel() >= 3)
 		{
 			Merc.ExtraGet(1, 1, 1)
 		}

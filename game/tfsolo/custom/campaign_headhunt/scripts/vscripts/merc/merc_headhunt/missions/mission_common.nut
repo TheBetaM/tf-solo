@@ -493,24 +493,6 @@ Merc.OnPlayerSpawn <- function(player)
 		} )
 	}
 	
-	if (Merc.AllowCustomWeapons != 0)
-	{
-		if (Merc.ForcedTeam == TF_TEAM_RED)
-		{
-			if (Merc.RSVFlags[0] != 0)
-			{
-				Merc.EquipWeapon(player, Merc.RSVFlags[0] - 1, Merc.RSVFlags[1])
-			}
-		}
-		else if (Merc.ForcedTeam == TF_TEAM_BLUE)
-		{
-			if (Merc.RSVFlags[2] != 0)
-			{
-				Merc.EquipWeapon(player, Merc.RSVFlags[2] - 1, Merc.RSVFlags[3])
-			}
-		}
-	}
-	
 	if (Merc.ForcedTeam == TF_TEAM_RED)
 	{
 		if (Merc.RSVFlags[5] == 1)

@@ -291,7 +291,7 @@ Merc.BeforeRoundStart <- function(params)
 		M11SpawnPoints[id] = a
 		id++
 	}
-	for (local i = 0;i < Merc.ObjectiveMainMax; i++)
+	for (local i = 0; i < Merc.ObjectiveMainMax; i++)
 	{
 		local p = M11SpawnPoints[i]
 		Merc.Bots[i].Class = p[4]
@@ -307,12 +307,16 @@ Merc.AfterPlayerSpawn <- function(params)
 		return
 	}
 	if (!IsPlayerABot(player)) return
+	local name = GetPropString(player, "m_szNetname")
 	for (local i = 0; i < Merc.ObjectiveMainMax; i++)
 	{
-		if (Merc.Bots[i].Handle.entindex() == player.entindex())
+		if (Merc.Bots[i].Name == name || name == Merc.Bots[i].Name + "(1)" || name == Merc.Bots[i].Name + "(2)")
 		{
 			local p = M11SpawnPoints[i]
 			player.Teleport(true, Vector(p[0],p[1],p[2] + 0), true, QAngle(0, p[3], 0), true, Vector(0, 0, 0))
+			Merc.Delay(0.5, function() {
+				Merc.Bots[i].UpdateResupply(player)
+			} )
 			return
 		}
 	}

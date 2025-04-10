@@ -57,9 +57,8 @@ if (M23ClientCount < 20)
 
 foreach (i, a in Merc.Bots)
 {
-	Merc.Bots[i].Attribs = [ ["move speed penalty", 0.001, -1], ["cannot disguise", 1, -1], 
+	Merc.Bots[i].Attribs = [ ["cannot disguise", 1, -1], 
 	["set cloak is movement based", 2, -1], ["mult cloak meter regen rate", 1000.0, -1] ]
-	//Merc.Bots[i].RConds = [ TF_COND_DISGUISING, TF_COND_DISGUISED ]
 	Merc.Bots[i].BotAttribs = [ IGNORE_ENEMIES | REMOVE_ON_DEATH ]
 	M23SpawnPoints.push([0,0,0,0])
 }
@@ -292,16 +291,22 @@ Merc.AfterPlayerSpawn <- function(params)
 		return
 	}
 	if (!IsPlayerABot(player)) return
+	player.AddFlag(FL_FROZEN)
+	local name = GetPropString(player, "m_szNetname")
 	for (local i = 0; i < Merc.ObjectiveMainMax; i++)
 	{
-		if (Merc.Bots[i].Handle.entindex() == player.entindex())
+		if (Merc.Bots[i].Name == name || name == Merc.Bots[i].Name + "(1)" || name == Merc.Bots[i].Name + "(2)")
 		{
 			local p = M23SpawnPoints[i]
 			player.Teleport(true, Vector(p[0],p[1],p[2] + 0), true, QAngle(0, p[3], 0), true, Vector(0, 0, 0))
 			Merc.Delay(1.5, function() {
+				Merc.Bots[i].UpdateResupply(player)
 				player.AddCond(TF_COND_STEALTHED)
+				player.AddCond(TF_COND_STEALTHED_USER_BUFF)
+				player.RemoveCond(TF_COND_DISGUISING)
+				player.RemoveCond(TF_COND_DISGUISED)
 			} )
-			return;
+			return
 		}
 	}
 }

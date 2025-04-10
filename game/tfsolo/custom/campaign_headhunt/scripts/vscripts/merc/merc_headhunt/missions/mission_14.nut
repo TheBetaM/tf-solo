@@ -1,4 +1,4 @@
-// CTF Monkeynaut
+// CTF Landfall
 ::Merc <- {}
 Merc.MissionID <- 14
 IncludeScript("merc/merc_headhunt/missions/mission_init.nut")
@@ -24,9 +24,17 @@ Merc.Bots <- [
 Merc.ObjectiveText <- LOCM_OBJECTIVE_GENERIC
 Merc.ObjectiveMainCount <- 0
 Merc.ObjectiveMainMax <- 1
-Merc.ObjectiveExtraText <- "Don't let RED capture any monkeynauts"
+Merc.ObjectiveExtraText <- "Don't let RED capture any flags"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 1
+
+Merc.BeforeRoundWin <- function(params) 
+{
+	if (params.team == Merc.ForcedTeam && !Merc.ExtraFailed)
+	{
+		Merc.ExtraGet(1,0,0)
+	}
+}
 
 Merc.EventTag <- UniqueString()
 getroottable()[Merc.EventTag] <- {
@@ -35,15 +43,7 @@ getroottable()[Merc.EventTag] <- {
 		if (params.capping_team != Merc.ForcedTeam && !Merc.ExtraFailed)
 		{
 			Merc.ExtraFail()
-			Merc.ChatPrint("Bonus objective failed! RED captured a monkeynaut.");
-		}
-	}
-	
-	OnGameEvent_teamplay_round_win = function(params)
-	{
-		if (params.team == Merc.ForcedTeam && !Merc.ExtraFailed)
-		{
-			Merc.ExtraGet(1,0,0)
+			Merc.ChatPrint("Bonus objective failed! RED captured a flag.");
 		}
 	}
 }

@@ -1,4 +1,4 @@
-// PL Neglect
+// PL Phoenix
 ::Merc <- {}
 Merc.MissionID <- 5
 IncludeScript("merc/merc_headhunt/missions/mission_init.nut")
@@ -30,11 +30,10 @@ Merc.ObjectiveExtraCount <- 0
 ::M05PropCount <- 5
 Merc.ObjectiveExtraMax <- M05PropCount
 Merc.ForceWinOnMainDone <- 1
-Merc.ObjectiveTextAdd <- "\n"
 
 ::M05Props <- [
 	"models/props_lakeside_event/bomb_temp.mdl",
-	"models/tedrock/bomb/bomb_cart.mdl",
+	"models/props_trainyard/bomb_cart.mdl",
 ]
 PrecacheEntityFromTable({ classname = "info_particle_system", effect_name = "taunt_headbutt_impact_stars" })
 PrecacheEntityFromTable({ classname = "info_particle_system", effect_name = "asplode_hoodoo" })
@@ -45,21 +44,16 @@ foreach (i in M05Props)
 }
 
 ::M05PropSpots <- [
-	[0, -600,-5672,26, 0,0,0],
-	[0, -1683,844,301, 0,0,0],
-	[0, -1173,-2613,-232, 0,0,0],
-	[0, -538,-1588,318, 0,0,0],
-	[0, 666,-909,184, 0,0,0],
-	[0, -1173,-3314,424, 0,0,0],
-	[0, -884,146,440, 0,0,0],
-	[0, -354,819,440, 0,0,0],
-	[0, -1408,840,24 0,0,0],
-	[0, -388,1773,200, 0,0,0],
-	[0, 802,914,344, 0,0,0],
-	[0, -1200,-66,320, 0,0,0],
-	[0, 375,-1872,308, 0,0,0],
-	[0, 620,120,129, 0,0,0],
-	[0, -1612,-4134,101, 0,0,0],
+	[0, 4891,1311,-42, 0,0,0],
+	[0, 1766,2857,-63, 0,0,0],
+	[0, 686,-72,159, 0,0,0],
+	[0, 1171,-168,277, 0,0,0],
+	[0, 1121,-1895,163, 0,0,0],
+	[0, -576,-1300,-107, 0,0,0],
+	[0, -1089,-1012,149, 0,0,0],
+	[0, -1378,-2587,-299, 0,0,0],
+	[0, -3569,1074,-107, 0,0,0],
+	[0, -1973,230,-235, 0,0,0],
 ]
 
 ::M05SetupDone <- false
@@ -114,10 +108,10 @@ foreach (i in M05Props)
 {
 	if (Merc.RoundEnded) return
 	local victim = params.const_entity
-	if (victim.GetName() != "mcartprop") return;
+	if (victim.GetName() != "mcartprop") return
 	local inf = params.attacker
-	if (inf == null) return;
-	if (inf.GetTeam() != Merc.ForcedTeam) return;
+	if (inf == null) return
+	if (inf.GetTeam() != Merc.ForcedTeam) return
 	if (inf.GetClassname() == "player" && inf.GetPlayerClass() == TF_CLASS_HEAVY)
 	{
 		M05_CartHealth = M05_CartHealth - (params.damage * 0.8);
@@ -136,6 +130,8 @@ foreach (i in M05Props)
 			origin = victim.GetOrigin(),
 		})
 		M05_Cart.Kill()
+		M05_UpdateHealthBar()
+		return
 	}
 	M05_UpdateHealthBar()
 	local userid = inf.GetUserID()
@@ -174,7 +170,7 @@ function M05_SpawnProp(modelname, x, y, z, rotx, roty, rotz, ptype)
 	}
 	else
 	{
-		local prop = SpawnEntityFromTable("prop_physics_override", {
+		local prop = SpawnEntityFromTable("prop_dynamic_override", {
 			origin       = Vector(-1107,-5121,24),
 			angles       = QAngle(0, 90, 0),
 			model 		 = modelname,
@@ -182,7 +178,7 @@ function M05_SpawnProp(modelname, x, y, z, rotx, roty, rotz, ptype)
 			max_health   = 1000,
 			health 		 = 1000,
 			solid		 = 6,
-			spawnflags = 1024,
+			spawnflags 	 = 1024,
 		})
 		SetPropInt(prop, "m_nRenderMode", Constants.ERenderMode.kRenderTransColor)
 		SetPropInt(prop, "m_clrRender", 0)
@@ -191,14 +187,19 @@ function M05_SpawnProp(modelname, x, y, z, rotx, roty, rotz, ptype)
 		prop.GetScriptScope()["OnScriptHook_OnTakeDamage"] <- function(params){
 			M05_CartDamage(params)
 		}
-		local phys = SpawnEntityFromTable("phys_constraint", {
-			attach1 = "minecart_physprop",
-			attach2 = "mcartprop",
-			spawnflags = 0,
-		})
 		__CollectGameEventCallbacks(prop.GetScriptScope())
 		M05_Cart = prop
 	}
+}
+
+::M05_TrainThink <- function()
+{
+	if (Merc.RoundEnded) return -1
+	local pos = M05_RealCart.GetOrigin()
+	local ang = M05_RealCart.GetAbsAngles()
+	M05_Cart.SetAbsOrigin(pos)
+	M05_Cart.SetAbsAngles(ang)
+	return -1
 }
 
 Merc.EventTag <- UniqueString()
@@ -221,15 +222,11 @@ getroottable()[Merc.EventTag] <- {
 		M05_UpdateHealthBar()
 		
 		local ent = null
-		while (ent = Entities.FindByName(ent, "train2_hurt"))
-		{
-			ent.Kill()
-		}
-		while (ent = Entities.FindByName(ent, "minecart_tracktrain"))
+		while (ent = Entities.FindByName(ent, "sspl_train"))
 		{
 			ent.SetSolid(0)
 		}
-		while (ent = Entities.FindByName(ent, "minecart_physprop"))
+		while (ent = Entities.FindByName(ent, "sspl_cart"))
 		{
 			local pos = ent.GetCenter()
 			local rot = ent.GetAbsAngles()
@@ -243,6 +240,9 @@ getroottable()[Merc.EventTag] <- {
 			ent.ConnectOutput("OnSetupFinished", "M05_SetupEnd")
 			ent.ConnectOutput("On1SecRemain", "M05_TimerEnd")
 		}
+		local thinker = SpawnEntityFromTable("logic_script", {})
+		thinker.ValidateScriptScope()
+		AddThinkToEnt(thinker,"M05_TrainThink")
 		
 		local places = M05_GetPropPlacement(M05PropSpots)
 		foreach (a in places)

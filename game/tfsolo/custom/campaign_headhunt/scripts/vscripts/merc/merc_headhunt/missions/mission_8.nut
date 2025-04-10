@@ -19,7 +19,7 @@ Merc.Bots <- [
 	
 	Merc.Bot(TF_TEAM_RED, 1, "Inspired"),
 	Merc.Bot(TF_TEAM_RED, 1, "Sleepy3"),
-	Merc.Bot(TF_TEAM_RED, 1, "Sleepy",
+	Merc.Bot(TF_TEAM_RED, 1, "Sleepy"),
 	Merc.Bot(TF_TEAM_RED, 1, "Sleepy2"),
 	Merc.Bot(TF_TEAM_RED, 1, "Bruised"),
 	Merc.Bot(TF_TEAM_RED, 1, "Rugged"),

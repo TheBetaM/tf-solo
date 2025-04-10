@@ -33,7 +33,6 @@ Merc.LoadB <- function(t)
 IncludeScript(Merc.ProjectDir+"/util.nut")
 IncludeScript(Merc.ProjectDir+"/const.nut")
 IncludeScript(Merc.ProjectDir+"/missions/mission_common.nut")
-IncludeScript(Merc.ProjectDir+"/weapons.nut")
 Merc.LoadB(Merc.ProjectDir+"/savedata.nut")
 
 Convars.SetValue("mp_tournament", 0)
@@ -125,6 +124,9 @@ getroottable()[Merc.CoreEventTag] <- {
 		
 		Merc.Delay(0.1, function() { 
 			foreach (b in Merc.Bots) b.Start()
+		} )
+		Merc.Delay(0.5, function() { 
+			Merc.UpdateHUD()
 		} )
 		Merc.Delay(5.0, function() { 
 			//Merc.ChatPrint(LOCM_CHATHELP)
@@ -220,6 +222,7 @@ getroottable()[Merc.CoreEventTag] <- {
 			}
 			if (hasperks) Merc.ChatPrint(tperks)
 			if (hashands) Merc.ChatPrint(thands)
+			Merc.UpdateHUD()
 		} )
 		Merc.InitDone = true
 		
@@ -457,37 +460,6 @@ getroottable()[Merc.CoreEventTag] <- {
 			if (msg == "lose")
 			{
 				Merc.ForceFail()
-			}
-			if (Merc.AllowCustomWeapons == 1)
-			{
-				if (msg == "wep1")
-				{
-					foreach (a in GetClients()) 
-					{	
-						if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 0)
-					}
-				}
-				if (msg == "wep2")
-				{
-					foreach (a in GetClients()) 
-					{	
-						if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 1)
-					}
-				}
-				if (msg == "wep3")
-				{
-					foreach (a in GetClients()) 
-					{	
-						if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 2)
-					}
-				}
-				if (msg == "wep4")
-				{
-					foreach (a in GetClients()) 
-					{	
-						if (!IsPlayerABot(a)) Merc.EquipWeaponAndSwitch(a, 3)
-					}
-				}
 			}
 		}
 	}

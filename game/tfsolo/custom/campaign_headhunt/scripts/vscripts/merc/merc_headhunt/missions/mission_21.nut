@@ -29,19 +29,6 @@ Merc.ObjectiveExtraCount <- 0
 M21_DispCount <- 16
 Merc.ObjectiveExtraMax <- M21_DispCount
 
-MercBots[0].Items = BI_Fool
-MercBots[1].Items = BI_Jester
-MercBots[2].Items = BI_Control
-MercBots[3].Items = BI_Guard2
-MercBots[4].Items = BI_Prince
-MercBots[5].Items = BI_King
-MercBots[6].Items = BI_Lifter
-MercBots[7].Items = BI_Rough
-MercBots[8].Items = BI_Baron
-MercBots[9].Items = BI_Monarch
-MercBots[10].Items = BI_Woodsman
-MercBots[11].Items = BI_Camouflage
-
 foreach (i, a in Merc.Bots)
 {
 	Merc.Bots[i].BotAttribs = [ REMOVE_ON_DEATH ]

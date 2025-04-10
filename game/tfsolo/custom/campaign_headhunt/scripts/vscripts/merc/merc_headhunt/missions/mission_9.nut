@@ -20,15 +20,15 @@ Merc.AllowRecruits <- 0
 
 PrecacheSound("ui/quest_status_tick_novice.wav")
 
-MercBots[0].BotAttribs = [ IGNORE_ENEMIES ]
+Merc.Bots[0].BotAttribs = [ IGNORE_ENEMIES ]
 
 ::M09SetupDone <- false
 ::M09DuckCount <- 70
 ::M09BuildCount <- 20
 ::M09DuckScore <- 5
 ::M09MissionTime <- 211
-::MercObjectiveMainMax <- 40
-::MercObjectiveExtraMax <- M09BuildCount
+Merc.ObjectiveMainMax <- 40
+Merc.ObjectiveExtraMax <- M09BuildCount
 ::M09Time <- M09MissionTime
 ::M09DuckSpots <- [
 	[1365,-169,326],
@@ -311,6 +311,7 @@ function MercSpawnBuild(x,y,z,rot,lev)
 {
 	Merc.ObjectiveMainCount = Merc.ObjectiveMainCount + 1
 	EmitSoundEx({ sound_name = "ui/quest_status_tick_novice.wav", volume = 0.3 })
+	Merc.UpdateHUD()
 }
 
 function M09_SpawnDuck(x, y, z)
@@ -361,9 +362,9 @@ getroottable()[Merc.EventTag] <- {
 		::UnlockControlPoint <- function() {} // VSH / VSH 2024
 		::GetAliveMercCount <- function() { return 20; } // VSH
 		local haleHP = 5000
-		if (MercRSVFlags[4] == 2) haleHP -= 500
-		if (MercRSVFlags[5] == 3) haleHP -= 500
-		if (MercRSVFlags[6] == 3) haleHP -= 1000
+		if (Merc.RSVFlags[4] == 2) haleHP -= 500
+		if (Merc.RSVFlags[5] == 3) haleHP -= 500
+		if (Merc.RSVFlags[6] == 3) haleHP -= 1000
 		::CalcBossMaxHealth <- function(a) { return haleHP; } // VSH
 		if ("SetPersistentVar" in getroottable())
 		{

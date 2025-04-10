@@ -67,7 +67,7 @@ Merc.BeforeRoundStart <- function(params)
 {
 	M16Time = M16MissionTime
 	M16_Lives <- 3
-	Merc.ObjectiveTextAdd = " Lives left: "+M16_Lives
+	Merc.ObjectiveTextAdd = " - Lives left: "+M16_Lives
 	Merc.ObjectiveExtraAdd = ""
 	Merc.Timer(1.0, 0, M16_Clock)
 	local minutes = M16Time / 60
@@ -91,7 +91,7 @@ getroottable()[Merc.EventTag] <- {
 		{
 			Merc.ForceFail()
 		}
-		Merc.ObjectiveTextAdd = " Lives left: "+M16_Lives
+		Merc.ObjectiveTextAdd = " - Lives left: "+M16_Lives
 		Merc.UpdateHUD()
 	}
 }

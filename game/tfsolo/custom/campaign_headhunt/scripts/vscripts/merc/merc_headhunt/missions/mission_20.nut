@@ -48,7 +48,7 @@ Merc.AfterPlayerSpawn <- function(params)
 {
 	local player = GetPlayerFromUserID(params.userid)
 	if (!IsPlayerABot(player)) return
-	if (player.entindex() == Merc.Bots[0].Handle.entindex())
+	if (Merc.RSVFlags[10] == 0 && player.entindex() == Merc.Bots[0].Handle.entindex())
 	{
 		player.Teleport(true, Vector(340,828,143), true, QAngle(0, 45, 0), true, Vector(0, 0, 0))
 		return
@@ -65,7 +65,7 @@ getroottable()[Merc.EventTag] <- {
 		local aplayer = GetPlayerFromUserID(params.attacker)
 		if (aplayer == null || IsPlayerABot(aplayer)) return
 		local name = GetPropString(player, "m_szNetname")
-		if (player.entindex() == Merc.Bots[0].Handle.entindex())
+		if (Merc.RSVFlags[10] == 0 && player.entindex() == Merc.Bots[0].Handle.entindex())
 		{
 			Merc.RSVFlags[10] = 1
 			Merc.Bots[0].Flags = 1

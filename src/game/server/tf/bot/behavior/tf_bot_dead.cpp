@@ -9,6 +9,7 @@
 #include "bot/tf_bot.h"
 #include "bot/behavior/tf_bot_dead.h"
 #include "bot/behavior/tf_bot_behavior.h"
+#include "bot/tf_bot_manager.h"
 
 #include "nav_mesh.h"
 
@@ -37,6 +38,10 @@ ActionResult< CTFBot >	CTFBotDead::Update( CTFBot *me, float interval )
 		{
 			// remove dead bots
 			engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", me->GetUserID() ) );
+			if ( me->HasAttribute( CTFBot::QUOTA_MANANGED ) )
+			{
+				TheTFBots().OnForceKickedBots(1);
+			}
 		}
 		else if ( me->HasAttribute( CTFBot::BECOME_SPECTATOR_ON_DEATH ) )
 		{

@@ -1,4 +1,4 @@
-#base bot_presets_basic.txt
+#base bot_presets_base.txt
 #base bot_presets_headhunt.txt
 #base bot_presets_hallow.txt
 #base bot_presets_bloodthirst.txt
