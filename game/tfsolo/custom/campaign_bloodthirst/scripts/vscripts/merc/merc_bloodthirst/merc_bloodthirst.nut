@@ -1,5 +1,5 @@
 ::Merc <- {}
-Merc.ProjectName <- "merc_headhunt"
+Merc.ProjectName <- "merc_bloodthirst"
 Merc.MapFile <- GetMapName()
 Merc.DebugMode <- 0
 Merc.ProjectDir <- "merc/" + Merc.ProjectName
@@ -28,31 +28,31 @@ Convars.SetValue("mp_allowspectators", 0)
 Convars.SetValue("tf_spawn_glows_duration", 0)
 Convars.SetValue("tf_dropped_weapon_lifetime", 0)
 Convars.SetValue("tf_roundstarttalk_disable", 1)
+Convars.SetValue("tf_forced_holiday", 2)
+Convars.SetValue("tf_spells_enabled", 1)
 
 PrecacheSound("player/recharged.wav")
 PrecacheSound("items/ammo_pickup.wav")
-PrecacheSound("ui/trade_success.wav")
+PrecacheEntityFromTable({ classname = "info_particle_system", effect_name = "spell_pumpkin_mirv_bits_red" })
+PrecacheEntityFromTable({ classname = "info_particle_system", effect_name = "spell_pumpkin_mirv_bits_blue" })
 
 Merc.MissionID <- -1
 Merc.MissionStarted <- false
 Merc.ProgressLoaded <- false
-Merc.InHub <- true
+Merc.SpellCosts <- [1,1,1,1,1,1,1,2,1,2,2,2,1,1,1,1]
+Merc.SpellShop_RED <- [MSpells.Heal, MSpells.Pumpkins, MSpells.Jump, MSpells.Mouse, MSpells.Lightning, MSpells.Meteor]
+Merc.SpellShop_BLU <- [MSpells.Fire, MSpells.Bats, MSpells.Teleport, MSpells.Invis, MSpells.Skeletons, MSpells.Monoculus]
+Merc.Spell_RED <- 0
+Merc.Spell_BLU <- 0
 
-Merc.WeaponUnlocks <- [
-	"Steel-Toed Stompers",
-	"Bottled Sorrow",
-	"The Force-a-Nature",
-	"Shocking Truth",
-]
-Merc.WeaponUnlockClass <- [
-	"Heavy",
-	"Demoman",
-	"Scout",
-	"Medic",
-]
+::MercSendToConsole <- function(t)
+{
+	if (IsDedicatedServer())
+		SendToServerConsole(t);
+	else
+		SendToConsole(t);
+}
 
-// Change level, wait for VScript table to reset, execute mission script
-// Dedicated server needs "sv_allow_point_servercommand always"
 Merc.ChangeLevelWithBuffer <- function(targetmap)
 {
 	Merc.SaveProgress()
@@ -83,7 +83,6 @@ Merc.ChangeLevelWithBuffer <- function(targetmap)
 		ToConsole("changelevel "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
 	else
 		ToConsole("map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
-	//ToConsole("disconnect;wait;maxplayers 32;map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
 }
 
 // Map file name is different in workshop downloads, so the name is passed through the boot buffer
@@ -122,6 +121,20 @@ Merc.StartMission <- function()
 	}
 }
 
+::MercBellButtonMoveThink <- function()
+{
+	local o = self.GetOrigin()
+	if (o.z < 122)
+	{
+		o.z += FrameTime() * 60.0
+		self.SetAbsOrigin(o)
+	}
+	else
+	{
+		SetPropString(self, "m_iszScriptThinkFunction", "")
+	}
+}
+
 Merc.MissionSelect <- function(id)
 {
 	if (Merc.MissionStarted || Merc.CutsceneActive || Merc.BriefingActive) return
@@ -139,6 +152,32 @@ Merc.MissionSelect <- function(id)
 	wtext += Merc.Missions[Merc.MissionID].MapName + "\n"
 	wtext += Merc.Missions[Merc.MissionID].ModeName + "\n\n"
 	wtext += "As " + Merc.Missions[Merc.MissionID].PlayerClassName + "\n"
+	if (Merc.MissionID == 24)
+	{
+		wtext = Merc.Missions[Merc.MissionID].Title + "\n"
+		wtext += "As " + MercMissions[Merc.MissionID].PlayerClassName + "\n"
+		if (Merc.MissionStatus[10] >= 2)
+		{
+			wtext += "+1000 HP headstart\n"
+		}
+		if (Merc.MissionStatus[11] >= 2)
+		{
+			wtext += "+DRACULA Marked For Death\n"
+		}
+	}
+	else if (Merc.MissionID == 25)
+	{
+		wtext = Merc.Missions[Merc.MissionID].Title + "\n"
+		wtext += "As " + Merc.Missions[Merc.MissionID].PlayerClassName + "\n"
+		if (Merc.MissionStatus[22] >= 2)
+		{
+			wtext += "+300 HP headstart\n"
+		}
+		if (Merc.MissionStatus[23] >= 2)
+		{
+			wtext += "+On Hit: Mark For Death\n"
+		}
+	}
 	local wtextbox = Entities.FindByName(null, "wtext_monitor_red")
 	wtextbox.AcceptInput("SetText",wtext,null,null)
 	wtextbox = Entities.FindByName(null, "wtext_monitor_blu")
@@ -146,15 +185,19 @@ Merc.MissionSelect <- function(id)
 	if (Merc.CSFlags[17] == 0)
 	{
 		Merc.CSFlags[17] = 1
+		local xpos = 728
 		local ypos = 564
+		local zpos = 126
 		if (Merc.Missions[Merc.MissionID].ForcedTeam == TF_TEAM_BLUE)
 		{
-			ypos = -564
+			xpos = 750
+			ypos = -507
+			zpos = 150
 		}
 		SendGlobalGameEvent("show_annotation", {
-			worldPosX = 920,
+			worldPosX = xpos,
 			worldPosY = ypos,
-			worldPosZ = 130,
+			worldPosZ = zpos,
 			id = 11,
 			text = "HIT THIS TO START THE MISSION!",
 			lifetime = -1,
@@ -168,13 +211,29 @@ Merc.MissionSelect <- function(id)
 	else
 	{
 		EntFire("button_start_glow_blu","Enable")
+		EntFire("button_start_glow_blu","Start")
+		local button = Entities.FindByName(null, "button_start_blu")
+		AddThinkToEnt(button, "MercBellButtonMoveThink")
+	}
+	
+	local team = "blu"
+	if (Merc.Missions[Merc.MissionID].ForcedTeam == TF_TEAM_RED)
+	{
+		team = "red"
+	}
+	local spell = Merc.Missions[Merc.MissionID].Spell + 1
+	Merc.ClearMonitorIcons()
+	local ent = null
+	while (ent = Entities.FindByName(ent,"missionspell_team_" + spell))
+	{
+		ent.AcceptInput("Enable","",null,null)
 	}
 }
 
 Merc.BonusSelect <- function()
 {
 	if (Merc.MissionStarted || Merc.CutsceneActive || Merc.BriefingActive) return
-	Merc.MissionID = 26
+	Merc.MissionID = 30
 	printl("[MERC] Selected mission " + Merc.MissionID)
 	EmitSoundEx({ sound_name = "player/recharged.wav", })
 	EntFire("button_start_glow_bonus","Enable")
@@ -207,63 +266,64 @@ Merc.RequestStart <- function(isBLU)
 	EntFire("button_start_glow_red","Disable")
 }
 
-Merc.BonusStart <- function()
+Merc.ClearMonitorIcons <- function()
 {
-	Merc.MissionStarted = true
-	Merc.Delay(1.0, function() { Merc.StartBonusPressed() } )
-	EntFire("button_start_sfx_bonus","PlaySound")
-	EntFire("button_start_glow_bonus","Disable")
+	local ent = null;
+	while (ent = Entities.FindByName(ent,"missionspell_*"))
+	{
+		ent.AcceptInput("Disable","",null,null)
+	}
 }
-
 Merc.UpdateMonitors <- function()
 {
-	local text_red = LOCM_MISSION_SELECT + "\n" + Merc.GetProgress(TF_TEAM_RED) + "%"
+	local text_red = LOCM_MISSION_SELECT_RED + "\n" + Merc.GetProgress(TF_TEAM_RED) + "%";
 	if (Merc.RSVFlags[4] == 1)
-		text_red += "\n+Recruit"
+		text_red += "\n+Recruit";
 	else if (Merc.RSVFlags[4] == 2)
-		text_red += "\n-No Lockers"
+		text_red += "\n-Darkness";
 		
 	if (Merc.RSVFlags[5] == 1)
-		text_red += "\n+Headshot resist."
+		text_red += "\n+25% Clip Size";
 	else if (Merc.RSVFlags[5] == 2)
-		text_red += "\n+Backstab immune"
+		text_red += "\n+50% Ammo";
 	else if (Merc.RSVFlags[5] == 3)
-		text_red += "\n-No Random Crits"
+		text_red += "\n-Marked For Death";
 		
 	if (Merc.RSVFlags[6] == 1)
-		text_red += "\n+Speed Boost"
+		text_red += "\n+Bullet Res. Taunt";
 	else if (Merc.RSVFlags[6] == 2)
-		text_red += "\n+See Teammates"
+		text_red += "\n+Overheal Taunt";
 	else if (Merc.RSVFlags[6] == 3)
-		text_red += "\n-No Ammopacks"
+		text_red += "\n-Fatigue";
 		
-	local text_blu = LOCM_MISSION_SELECT + "\n" + Merc.GetProgress(TF_TEAM_BLUE) + "%"
+	local text_blu = LOCM_MISSION_SELECT_BLU + "\n" + Merc.GetProgress(TF_TEAM_BLUE) + "%";
 	if (Merc.RSVFlags[7] == 1)
-		text_blu += "\n+Recruit"
+		text_blu += "\n+Recruit";
 	else if (Merc.RSVFlags[7] == 2)
-		text_blu += "\n-No Lockers"
+		text_blu += "\n-Darkness";
 		
 	if (Merc.RSVFlags[8] == 1)
-		text_blu += "\n+No Fall Damage"
+		text_blu += "\n+25% Max Health";
 	else if (Merc.RSVFlags[8] == 2)
-		text_blu += "\n+Afterburn immune"
+		text_blu += "\n+100% Max Overheal";
 	else if (Merc.RSVFlags[8] == 3)
-		text_blu += "\n-Crits Become Mini"
+		text_blu += "\n-Mad Milked";
 		
 	if (Merc.RSVFlags[9] == 1)
-		text_blu += "\n+Uber Boost"
+		text_blu += "\n+Blast Res. Taunt";
 	else if (Merc.RSVFlags[9] == 2)
-		text_blu += "\n+Fatal Dmg. Resist"
+		text_blu += "\n+Fright Taunt";
 	else if (Merc.RSVFlags[9] == 3)
-		text_blu += "\n-No Healthkits"
+		text_blu += "\n-Bad Luck";
 	local wtext = Entities.FindByName(null, "wtext_monitor_red")
 	wtext.AcceptInput("SetText",text_red,null,null)
 	wtext = Entities.FindByName(null, "wtext_monitor_blu")
 	wtext.AcceptInput("SetText",text_blu,null,null)
+	Merc.ClearMonitorIcons()
 	
 	SendGlobalGameEvent("solo_campaign_flag", {
-		campaign = "headhunt",
-		flag = "headhunt_progress",
+		campaign = "bloodthirst",
+		flag = "bloodthirst_progress",
 		count = Merc.GetProgressAll(),
 		setflag = true,
 	})
@@ -276,46 +336,29 @@ Merc.ResetMonitors <- function()
 	EntFire("monitor_blu", "SetCamera", "cam_mission_blu")
 }
 
-Merc.UpdateWeaponDisplays <- function()
-{
-	for (local i = 0; i < Merc.WeaponUnlocks.len(); i++)
-	{
-		local wep = null
-		local wunlock = Merc.GetWeaponUnlock(i)
-		local wperks = Merc.GetWeaponPerks(i)
-		local wtext = Merc.WeaponUnlocks[i] + "\n"
-		wtext += "FOR THE " + Merc.WeaponUnlockClass[i] + "\n"
-		local wcolor = "255 255 255 255"
-		local wflag = i
-		if (!wunlock)
-		{
-			wcolor = "255 0 0 255"
-			wtext += "COMPLETE MORE\nBONUS OBJECTIVES\nTO UNLOCK!"
-		}
-		else if (Merc.RSVFlags[wflag] != 0)
-		{
-			wtext += "(UNLOCKED IN LOADOUT)\n"
-		}
-		else
-		{
-			wtext += "(HIT THIS TO UNLOCK!)\n"
-		}
-		
-		while (wep = Entities.FindByName(wep, "wtext_weapon_" + i))
-		{
-			wep.AcceptInput("SetText",wtext,null,null)
-			wep.AcceptInput("SetColor",wcolor,null,null)
-		}
-	}
-}
-
 Merc.ApplyEntProgress <- function()
 {
 	for (local i = 0; i < Merc.Missions.len(); i++)
 	{
 		local text = Merc.Missions[i].Title + "\n"
 		local color = ""
-		if (Merc.MissionStatus[i] == 0 && i < Merc.Missions.len() - 2)
+		if (Merc.MissionStatus[i] == 0 && i > 25)
+		{
+			if (i == 26 || i == 28)
+			{
+				text += LOCM_MISSION_LOCKED_BONUS
+			}
+			else if (i == 27)
+			{
+				text += LOCM_MISSION_SECRET_RED
+			}
+			else
+			{
+				text += LOCM_MISSION_SECRET_BLU
+			}
+			color = "255 0 0 255"
+		}
+		else if (Merc.MissionStatus[i] == 0 && i < 24)
 		{
 			text += LOCM_MISSION_LOCKED
 			color = "255 0 0 255"
@@ -349,46 +392,148 @@ Merc.ApplyEntProgress <- function()
 		}
 	}
 	Merc.ResetMonitors()
-	Merc.UpdateWeaponDisplays()
 	Merc.ApplyCutsceneProgress()
 }
 
-Merc.WeaponSelect <- function(id)
+Merc.UpdateShopDisplays <- function()
 {
-	local flagID = id
-	local csflagID = id + 8
-	printl("[MERC] Selected weapon " + id)
-	if (Merc.RSVFlags[flagID] != 0)
+	local ent = null
+	while (ent = Entities.FindByName(ent,"shopspell_*"))
 	{
-		return
+		ent.AcceptInput("Disable","",null,null)
 	}
-	local unlock = Merc.GetWeaponUnlock(id)
-	if (!unlock) return
-	Merc.RSVFlags[flagID] = 1
-	Merc.CSFlags[csflagID] = 1
-	Merc.UpdateWeaponDisplays()
+	ent = null
+	local spell_red = Merc.Spell_RED + 1
+	local spell_blu = Merc.Spell_BLU + 1
+	while (ent = Entities.FindByName(ent,"shopspell_red_"+spell_red))
+	{
+		ent.AcceptInput("Enable","",null,null)
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent,"shopspell_blu_"+spell_blu))
+	{
+		ent.AcceptInput("Enable","",null,null)
+	}
 	
-	SendGlobalGameEvent("solo_unlock_item", {
-		item = Merc.WeaponUnlocks[id],
-	})
+	local basetext = "UPGRADE SPELLS\nHIT THIS TO SELECT\nHIT THE BOOK TO BUY\n"
+	local wtext = null
+	local count_red = Merc.RSVFlags[Merc.Spell_RED+13] + 1
+	local count_blu = Merc.RSVFlags[Merc.Spell_BLU+13] + 1
+	local text_red = basetext + "CREDITS: "+ Merc.RSVFlags[0] +"\nCOST: " + Merc.SpellCosts[Merc.Spell_RED]
+	local text_red2 = "x " + count_red
+	local text_blu = basetext + "CREDITS: "+ Merc.RSVFlags[1] +"\nCOST: " + Merc.SpellCosts[Merc.Spell_BLU]
+	local text_blu2 = "x " + count_blu
+	while (wtext = Entities.FindByName(wtext,"wtext_shop_red"))
+	{
+		wtext.AcceptInput("SetText",text_red,null,null)
+	}
+	wtext = null
+	while (wtext = Entities.FindByName(wtext,"wtext_shop_blu"))
+	{
+		wtext.AcceptInput("SetText",text_blu,null,null)
+	}
+	wtext = null
+	while (wtext = Entities.FindByName(wtext,"wtext_shop_red_amount"))
+	{
+		wtext.AcceptInput("SetText",text_red2,null,null)
+	}
+	wtext = null
+	while (wtext = Entities.FindByName(wtext,"wtext_shop_blu_amount"))
+	{
+		wtext.AcceptInput("SetText",text_blu2,null,null)
+	}
+}
+
+Merc.ShopSelect <- function(id)
+{
+	if (Merc.MissionStarted || Merc.CutsceneActive || Merc.BriefingActive) return
 	
-	ClientPrint(null, HUD_PRINTTALK, "New weapon unlocked: " + Merc.WeaponUnlocks[id] + " for the " + Merc.WeaponUnlockClass[id])
-	ClientPrint(null, HUD_PRINTTALK, "You can equip the new weapon in your item loadout menu.")
-	EmitSoundEx({ sound_name = "ui/trade_success.wav", })
+	if (id == 0)
+	{
+		foreach (i,v in Merc.SpellShop_RED)
+		{
+			if (Merc.Spell_RED == v)
+			{
+				if (i < Merc.SpellShop_RED.len() - 1)
+				{
+					Merc.Spell_RED = Merc.SpellShop_RED[i + 1]
+				}
+				else
+				{
+					Merc.Spell_RED = Merc.SpellShop_RED[0]
+				}
+				break
+			}
+		}
+	}
+	else
+	{
+		foreach (i,v in Merc.SpellShop_BLU)
+		{
+			if (Merc.Spell_BLU == v)
+			{
+				if (i < Merc.SpellShop_BLU.len() - 1)
+				{
+					Merc.Spell_BLU = Merc.SpellShop_BLU[i + 1]
+				}
+				else
+				{
+					Merc.Spell_BLU = Merc.SpellShop_BLU[0]
+				}
+				break
+			}
+		}
+	}
 	
-	Merc.SaveProgress()
+	Merc.UpdateShopDisplays()
+}
+
+Merc.ShopBuy <- function(id)
+{
+	if (Merc.MissionStarted || Merc.CutsceneActive || Merc.BriefingActive) return
+	
+	local cost = Merc.SpellCosts[Merc.Spell_RED]
+	local credits = Merc.RSVFlags[0]
+	if (id == 0)
+	{
+		if (cost > credits) return
+		Merc.RSVFlags[0] -= cost
+		Merc.RSVFlags[Merc.Spell_RED+13]++
+		DispatchParticleEffect("spell_pumpkin_mirv_bits_red", Vector(470,914,115), Vector(0,0,0))
+	}
+	else
+	{
+		cost = Merc.SpellCosts[Merc.Spell_BLU]
+		credits = Merc.RSVFlags[1]
+		if (cost > credits) return
+		Merc.RSVFlags[1] -= cost
+		Merc.RSVFlags[Merc.Spell_BLU+13]++
+		DispatchParticleEffect("spell_pumpkin_mirv_bits_blue", Vector(336,-736,115), Vector(0,0,0))
+	}
+	EmitSoundEx({ sound_name = "player/recharged.wav", })
+	local max = 0
+	for (local i = 13; i < 25; i++)
+	{
+		if (Merc.RSVFlags[i] > max)
+		{
+			max = Merc.RSVFlags[i]
+		}
+	}
+	Merc.RSVFlags[25] = max
+	
+	Merc.UpdateShopDisplays()
 }
 
 Merc.SpawnMsg <- function()
 {
 	if (Merc.DebugMode >= 1)
 	{
-		ClientPrint(null, HUD_PRINTTALK, "["+LOCM_MODENAME+"] v" + Merc.Version + " Debug: " + Merc.DebugMode)
+		ClientPrint(null, HUD_PRINTTALK, "["+LOCM_MODENAME+"] v" + Merc.Version + " Debug: " + Merc.DebugMode);
 	}
-	//ClientPrint(null, HUD_PRINTTALK, "["+LOCM_MODENAME+"] Type 'reset' in chat if you want to reset progress.")
+	//ClientPrint(null, HUD_PRINTTALK, "["+LOCM_MODENAME+"] Type 'reset' in chat if you want to reset progress.");
 	if (MaxClients().tointeger() < 5)
 	{
-		ClientPrint(null, HUD_PRINTTALK, "WARNING: Max players is less than 24. There may be issues or imbalance.")
+		ClientPrint(null, HUD_PRINTTALK, "WARNING: Max players is less than 24. There may be issues or imbalance.");
 	}
 	if (!Merc.MissionStarted)
 	{
@@ -594,6 +739,11 @@ Merc.HubEvents <- {
 		Merc.SubsActive = false
 		Merc.HandlerRED <- null
 		Merc.HandlerBLU <- null
+		Merc.Spell_RED = Merc.SpellShop_RED[0]
+		Merc.Spell_BLU = Merc.SpellShop_BLU[0]
+		
+		local button = Entities.FindByName(null, "button_start_blu")
+		button.SetAbsOrigin(Vector(761,-514,74.5))
 		
 		Convars.SetValue("mp_waitingforplayers_cancel", 1)
 		Convars.SetValue("tf_player_movement_restart_freeze", 0)
@@ -612,6 +762,7 @@ Merc.HubEvents <- {
 		} )
 		
 		Merc.ApplyEntProgress()
+		Merc.UpdateShopDisplays()
 		
 		Merc.SpawnActorRED()
 		Merc.SpawnActorBLU()

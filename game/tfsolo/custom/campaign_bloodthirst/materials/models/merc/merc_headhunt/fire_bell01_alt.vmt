@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "\merc\merc_headhunt\firebellalt"
+	"$phong" "1"
+	"$phongexponent" "21"
+	"$phongboost" "1"	
+	"$phongfresnelranges"	"[2 1 .8]"
+	"$halflambert" "0"
+	"$bumpmap" "Models/effects/flat_normal"
+}

@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "merc\merc_bloodthirst\spellbook_any"
+	$additive 1
+	$vertexalpha 1
+	$vertexcolor 1
+	$nocull 1
+}
+
