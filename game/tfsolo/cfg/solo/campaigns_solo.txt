@@ -7,7 +7,7 @@
 		"Map" "merc_headhunt"
 		"ShowProgress" "1"
 		"ProgressKey" "headhunt_progress"
-		"BGArt" "casual/gametype_cp"
+		"BGArt" "campaigns/campaign_headhunt"
 	}
 	"bloodthirst"
 	{
@@ -16,7 +16,7 @@
 		"Map" "merc_bloodthirst"
 		"ShowProgress" "1"
 		"ProgressKey" "bloodthirst_progress"
-		"BGArt" "casual/gametype_koth"
+		"BGArt" "campaigns/campaign_bloodthirst"
 	}
 	//"xmas"
 	//{

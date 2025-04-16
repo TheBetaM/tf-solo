@@ -7,7 +7,7 @@ Merc.ForcedTeam <- TF_TEAM_BLUE
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_blue.res"
 
-MercBots <- [
+Merc.Bots <- [
 	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_ENGINEER, "Bot 01"),
 	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 02"),
 	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_PYRO, "Bot 03"),
@@ -51,12 +51,12 @@ PrecacheScriptSound("BumperCar.HitGhost")
 
 Merc.BeforeRoundStart <- function(params) 
 {
-	M18_CarTeam <- TF_TEAM_RED
+	M18_CarTeam = TF_TEAM_RED
 }
 
 Merc.AfterRoundStart <- function(params) 
 {
-	M18_CarTeam <- TF_TEAM_RED
+	M18_CarTeam = TF_TEAM_RED
 	
 	local ent = null
 	while (ent = Entities.FindByClassname(ent, "tf_logic_koth"))
@@ -103,7 +103,7 @@ getroottable()[Merc.EventTag] <- {
 		local player = GetPlayerFromUserID(params.userid)
 		if (params.userid == 0) return
 		if (!IsPlayerABot(player)) return
-		if (player.GetTeam() == MercForcedTeam) return
+		if (player.GetTeam() == Merc.ForcedTeam) return
 		local aplayer = GetPlayerFromUserID(params.attacker)
 		if (aplayer == null || IsPlayerABot(aplayer)) return
 		if (aplayer.InCond(TF_COND_HALLOWEEN_KART))
@@ -123,7 +123,7 @@ getroottable()[Merc.EventTag] <- {
 		}
 		else
 		{
-			M18_CarTeam <- params.team
+			M18_CarTeam = params.team
 			foreach (a in GetClients()) 
 			{	
 				if (a.GetTeam() == M18_CarTeam)

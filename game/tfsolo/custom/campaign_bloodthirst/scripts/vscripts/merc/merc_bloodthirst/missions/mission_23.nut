@@ -67,9 +67,9 @@ PrecacheModel(M19_Tommygun)
 
 Merc.BeforeRoundWin <- function(params)
 {
-	if (params.team == MercForcedTeam)
+	if (params.team == Merc.ForcedTeam)
 	{
-		Merc_MainGet(1,1,1)
+		Merc.MainGet(1,1,1)
 	}
 }
 

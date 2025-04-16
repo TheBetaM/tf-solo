@@ -147,6 +147,10 @@ Merc.Bot <- class {
 		{
 			player.AddCond(i)
 		}
+		if (Flags & 2)
+		{
+			player.Teleport(true, SpawnPos, true, QAngle(0, SpawnRot, 0), true, Vector(0, 0, 0))
+		}
 	}
 	function OnItems(player)
 	{
@@ -381,6 +385,13 @@ Merc.Bot <- class {
 			}
 			if (wbook != null)
 			{
+				if (wbook != Handle.GetActiveWeapon())
+				{
+					Handle.Weapon_Switch(wbook)
+					SetPropEntity(Handle,"m_hActiveWeapon",wbook)
+					Handle.AddCustomAttribute("disable weapon switch", 1.0, -1)
+					SetPropEntity(Handle,"m_hActiveWeapon",wbook)
+				}
 				local charges = GetPropInt(wbook,"m_iSpellCharges")
 				if (charges != 0 && charges != 9)
 				{
@@ -422,7 +433,23 @@ Merc.BotGeneric <- class extends Merc.Bot
 	
 	function Start()
 	{
-		if (Flags == 1) return
+		BotAdded = 0
+		if (OrigName == "notset")
+		{
+			OrigName = Name
+		}
+		AddBot()
+	}
+	
+	function AddBot()
+	{
+		if (Flags & 1) return
+		if (Flags & 4)
+		{
+			Name = OrigName + " (" + Lives + "x)"
+		}
+		if (BotAdded != 0) return
+		BotAdded = 1
 		if (Team == TF_TEAM_RED)
 			ToConsole("tf_bot_add 1 "+Merc.BotClassNames[Class]+" red "+TFBOT_SKILLS[Skill]+" \""+Name+"\" noquota")
 		else
@@ -512,12 +539,12 @@ Merc.ReturnTuHub <- function()
 	
 	ToConsole("mp_humans_must_join_team any")
 	ToConsole("mp_humans_must_join_class any")
+	ToConsole("tf_gamemode_override 0")
 	
 	if (IsDedicatedServer())
 		ToConsole("changelevel " + Merc.MapFile)
 	else
 		ToConsole("map " + Merc.MapFile)
-	//ToConsole("disconnect;wait;maxplayers 32;map " + Merc.MapFile)
 }
 
 Merc.GetObjText <- function()
@@ -794,10 +821,10 @@ Merc.ForceTaunt <- function(a, taunt)
 	SetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", taunt)
 	SetPropBool(weapon, "m_AttributeManager.m_Item.m_bInitialized", true)
 	SetPropBool(weapon, "m_bForcePurgeFixedupStrings", true)
-	SetPropEntity(player, "m_hActiveWeapon", weapon)
-	SetPropInt(player, "m_iFOV", 0)
-	player.HandleTauntCommand(0)
-	SetPropEntity(player, "m_hActiveWeapon", active_weapon)
+	SetPropEntity(a, "m_hActiveWeapon", weapon)
+	SetPropInt(a, "m_iFOV", 0)
+	a.HandleTauntCommand(0)
+	SetPropEntity(a, "m_hActiveWeapon", active_weapon)
 	weapon.Kill()
 }
 Merc.PlayerForceTaunt <- function(taunt)

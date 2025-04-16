@@ -1,4 +1,4 @@
-// KOTH Hollow
+// KOTH Maple Ridge Event
 ::Merc <- {}
 Merc.MissionID <- 17
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
@@ -70,7 +70,7 @@ function BooAction()
 			{
 				local bot = a
 				M15_HauntArray[a.entindex()] <- 1
-				MercDelay(1.0, function() {
+				Merc.Delay(1.0, function() {
 					local player = EntIndexToHScript(1)
 					bot.TakeDamage(1000.0, 0, player)
 					if (bot.GetTeam() != Merc.ForcedTeam)
@@ -122,6 +122,7 @@ Merc.AfterPlayerSpawn <- function(params)
 		return
 	}
 	
+	player.Teleport(true, Vector(-1724,2344,560), true, QAngle(0, 270, 0), true, Vector(0, 0, 0))
 	player.AddCond(TF_COND_HALLOWEEN_GHOST_MODE)
 	AddThinkToEnt(player, "M17_PlayerThink")
 }

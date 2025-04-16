@@ -126,16 +126,17 @@ PrecacheScriptSound("AmmoPack.Touch")
 		})
 	}
 	M10_HoldingBeer++
-	MercObjectiveExtraAdd = "\nBeer: " + M10_HoldingBeer
+	Merc.ObjectiveExtraAdd = " Beer: " + M10_HoldingBeer
 	if (M10_HoldingBeer >= M10_MaxBeer)
 	{
-		MercObjectiveExtraAdd = "\nBeer: " + M10_HoldingBeer + " (MAX)"
+		Merc.ObjectiveExtraAdd = " Beer: " + M10_HoldingBeer + " (MAX)"
 		local ent = null
 		while (ent = Entities.FindByName(ent, "mercb*"))
 		{
 			ent.SetSolid(0)
 		}
 	}
+	Merc.UpdateHUD()
 	EntFireByHandle(M10_GoalGlow, "Enable", "", -1, M10_GoalGlow, M10_GoalGlow)
 	activator.GetScriptScope()["mercglow"].Destroy()
 }
@@ -152,7 +153,7 @@ function M10_SpawnBeer(x, y, z, id)
 		automaterialize = false,
 		TeamNum = Merc.ForcedTeam,
 		teamnumber = Merc.ForcedTeam,
-	});
+	})
 	prop.SetTeam(Merc.ForcedTeam)
 	prop.ValidateScriptScope()
 	prop.ConnectOutput("OnRedPickup", "M10_BeerPickup")
@@ -178,6 +179,7 @@ function M10_SpawnBeer(x, y, z, id)
 	SendGlobalGameEvent("hide_annotation", {
 		id = 11,
 	})
+	Merc.UpdateHUD()
 	
 	local ent = null
 	while (ent = Entities.FindByName(ent, "mercb*"))
@@ -218,32 +220,32 @@ function M10_SpawnBeer(x, y, z, id)
 // ZI Override
 ::GetRandomPlayers <- function(count = 1)
 {
-    local players = [];
+    local players = []
     foreach (a in GetClients())
     {
         if (a == null) continue;
 		local name = GetPropString(a, "m_szNetname")
-        if (IsPlayerABot(a) && name != Merc_RecruitRED_Name && name != Merc_RecruitBLU_Name)
+        if (IsPlayerABot(a) && name != Merc.RecruitRED_Name && name != Merc.RecruitBLU_Name)
 		{
 			players.append(a)
 		}
     }
-    count = M10_ZombieStartCount;
-    local list = [];
+    count = M10_ZombieStartCount
+    local list = []
     for (local i = 0; i < count;i++)
     {
-        local rnd = RandomInt(0, players.len() - 1);
-        list.append(players[rnd]);
-        players.remove(rnd);
+        local rnd = RandomInt(0, players.len() - 1)
+        list.append(players[rnd])
+        players.remove(rnd)
     }
-    return list;
+    return list
 }
 
 Merc.BeforeRoundStart <- function(params) 
 {
 	M10_HoldingBeer <- 0
 	M10_DepositCount <- 0
-	MercObjectiveExtraAdd = ""
+	Merc.ObjectiveExtraAdd = ""
 	
 	M04_BotHint1 = SpawnEntityFromTable("item_teamflag", 
 	{

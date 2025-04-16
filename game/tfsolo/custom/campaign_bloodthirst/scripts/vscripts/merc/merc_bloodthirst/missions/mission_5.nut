@@ -103,12 +103,13 @@ function M09_Clock()
 		}
 		else
 		{
-			Merc.ChatPrint("Main objective failed! Not enough carnival points.");
+			Merc.ChatPrint("Main objective failed! Not enough carnival points.")
 			Merc.ForceFail()
 		}
 		M09TimeAdd = " (0:00)"
 	}
-	Merc.ObjectiveTextAdd = M09TimeAdd + M09ScoreAdd
+	Merc.ObjectiveTextAdd = M09TimeAdd
+	Merc.UpdateHUD()
 }
 
 function M09Score(name,count)
@@ -122,7 +123,8 @@ function M09Score(name,count)
 		M09ScoreAdd = "" + name + " +" + count
 	else
 		M09ScoreAdd = "" + name + " " + count
-	Merc.ObjectiveTextAdd = M09TimeAdd + M09ScoreAdd
+	Merc.ChatPrint(M09ScoreAdd)
+	Merc.UpdateHUD()
 }
 
 ::M09_GetPlacement <- function(list, maxpick)
@@ -165,8 +167,8 @@ getroottable()[Merc.EventTag] <- {
 		{
 			if ((params.damagebits & 128) != 0)
 			{
-				M09Score("Feign Death",50)
-				return
+				//M09Score("Feign Death",50)
+				//return
 			}
 			M09Score("Death",-50)
 			return
@@ -206,15 +208,15 @@ getroottable()[Merc.EventTag] <- {
 		M09_WeaponArray <- []
 	
 		M09Time = M09MissionTime
-		MercTimer(1.0, 0, M09_Clock)
+		Merc.Timer(1.0, 0, M09_Clock)
 		local minutes = M09Time / 60
-		local seconds = M09Time - (minutes * 60);
+		local seconds = M09Time - (minutes * 60)
 		if (seconds > 9)
 			M09TimeAdd = " ("+minutes+":"+seconds+")"
 		else
 			M09TimeAdd = " ("+minutes+":0"+seconds+")"
 		M09ScoreAdd = ""
-		Merc.ObjectiveTextAdd = M09TimeAdd + M09ScoreAdd
+		Merc.ObjectiveTextAdd = M09TimeAdd
 		
 		local ent = null
 		while (ent = Entities.FindByClassname(ent, "func_capturezone"))

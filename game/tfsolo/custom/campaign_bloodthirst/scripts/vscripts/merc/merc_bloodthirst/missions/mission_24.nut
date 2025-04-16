@@ -1,11 +1,13 @@
-// CP HolyHell RED
+// PD Mannsylvania
 ::Merc <- {}
 Merc.MissionID <- 24
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- 0
 Merc.ForcedTeam <- TF_TEAM_RED
+Merc.WaitTimeConvar <- 1
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
+//ToConsole("tf_gamemode_override 1")
 
 Merc.Bots <- [
 	Merc.Bot(TF_TEAM_BLUE, 3, "Bloodthirst_HandlerBLU"),
@@ -34,7 +36,7 @@ Merc.Bots <- [
 Merc.ObjectiveText <- "Defeat DRACULA!"
 Merc.ObjectiveMainCount <- 0
 Merc.ObjectiveMainMax <- 1
-Merc.ObjectiveExtraText <- "Capture the enemy's spire point"
+Merc.ObjectiveExtraText <- "TBD"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 1
 Merc.ForceWinOnMainDone <- 1
@@ -48,12 +50,12 @@ Merc.Bots[0].BotAttribs = [ AGGRESSIVE ]
 
 ::M24_UpdateHealthBar <- function()
 {
-	if (MercRoundEnded) return;
-	if (MercBots[0].Handle != null)
+	if (Merc.RoundEnded) return
+	if (Merc.Bots[0].Handle != null)
 	{
-		M24_KingHealth = MercBots[0].Handle.GetHealth()
+		M24_KingHealth = Merc.Bots[0].Handle.GetHealth()
 	}
-	local hp = (M24_KingHealth / M24_KingMaxHealth.tofloat()) * 255.0;
+	local hp = (M24_KingHealth / M24_KingMaxHealth.tofloat()) * 255.0
 	if (hp < 1.0)
 	{
 		hp = 1.0
@@ -63,30 +65,11 @@ Merc.Bots[0].BotAttribs = [ AGGRESSIVE ]
 		hp = 255.0
 	}
 	local hpbar = hp.tointeger()
-	SetPropInt(M24_HealthBar, "m_iBossHealthPercentageByte", hpbar);
+	SetPropInt(M24_HealthBar, "m_iBossHealthPercentageByte", hpbar)
 }
 
 Merc.BeforeRoundStart <- function(params)
 {
-	if (params.full_reset)
-	{
-		local area = null
-		while (area = Entities.FindByClassname(area, "trigger_capture_area"))
-		{
-			local capName = GetPropString(area, "m_iszCapPointName")
-			if (capName == "cap_center")
-			{
-				SetPropFloat(area, "m_flCapTime", 30)
-				area.AcceptInput("SetControlPoint", capName, null, null)
-			}
-			else if (capName == "cap_blue_2")
-			{
-				SetPropFloat(area, "m_flCapTime", 30)
-				area.AcceptInput("SetControlPoint", capName, null, null)
-			}
-		}
-	}
-	
 	M24_KingHealth = M24_KingMaxHealth
 	if (Merc.MissionStatus[10] >= 2)
 	{
@@ -108,16 +91,6 @@ Merc.BeforeRoundStart <- function(params)
 	Merc.Timer(0.25, 0, function() {
 		M24_UpdateHealthBar()
 	} )
-	
-	local area1 = null
-	while (area1 = Entities.FindByClassname(area1, "trigger_capture_area"))
-	{
-		local capName = GetPropString(area1, "m_iszCapPointName")
-		if (capName == "cap_blue_1")
-		{
-			area1.Destroy()
-		}
-	}
 	
 	local ent = null
 	while (ent = Entities.FindByClassname(ent, "item_healthkit_full"))
@@ -143,11 +116,6 @@ Merc.BeforeRoundStart <- function(params)
 			ent.SetAbsOrigin(Vector(0,0,-8000))
 			ent.SetSize(Vector(-0.1,-0.1,-0.1),Vector(0.1,0.1,0.1))
 		}
-	}
-	ent = null
-	while (ent = Entities.FindByClassname(ent, "team_round_timer"))
-	{
-		EntFireByHandle(ent, "Pause", "", -1, ent, ent)
 	}
 	
 	Merc.Delay(2.5, function() { 
@@ -192,9 +160,10 @@ Merc.AfterPlayerInv <- function(params)
 			player.AddCustomAttribute("cancel falling damage", 1.0, -1)
 			player.AddCustomAttribute("cannot be backstabbed", 1.0, -1)
 			player.AddCustomAttribute("gesture speed increase", 50.0, -1)
-			player.Teleport(true, Vector(0,192,330), true, QAngle(0, 0, 0), true, Vector(0, 0, 0))
+			player.Teleport(true, Vector(0,2576,230), true, QAngle(0, 0, 0), true, Vector(0, 0, 0))
 			M24_UpdateHealthBar()
 		} )
+		player.Teleport(true, Vector(0,2576,230), true, QAngle(0, 0, 0), true, Vector(0, 0, 0))
 	}
 }
 
@@ -209,24 +178,6 @@ getroottable()[Merc.EventTag] <- {
 		if (preset == Merc.Bots[0].Preset)
 		{
 			Merc.MainGet(1,1,1)
-		}
-	}
-	
-	OnGameEvent_teamplay_point_captured = function(params)
-	{
-		if (params.cpname == "#Badlands_cap_blue_cp2")
-		{
-			Merc.ExtraGet(1,1,1)
-		}
-		if (params.team == Merc.ForcedTeam)
-		{
-			foreach (a in GetClients()) 
-			{	
-				if (!IsPlayerABot(a))
-				{
-					a.RollRareSpell()
-				}
-			}
 		}
 	}
 }

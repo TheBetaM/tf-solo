@@ -1,4 +1,4 @@
-// CP HolyHell BLU
+// PL Bloodwater
 ::Merc <- {}
 Merc.MissionID <- 25
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
@@ -33,17 +33,24 @@ Merc.Bots <- [
 Merc.ObjectiveText <- "Reach full health"
 Merc.ObjectiveMainCount <- 0
 Merc.ObjectiveMainMax <- 10000
-Merc.ObjectiveExtraText <- "Capture the enemy's spire point"
+Merc.ObjectiveExtraText <- "Capture points"
 Merc.ObjectiveExtraCount <- 0
-Merc.ObjectiveExtraMax <- 1
+Merc.ObjectiveExtraMax <- 3
 Merc.ForceWinOnMainDone <- 1
 Merc.AllowBuffs <- 0
+
+Convars.SetValue("mp_disable_respawn_times", 1)
 
 ::M25_DraculaItem1 <- "models/workshop/player/items/medic/sf14_vampiric_vesture/sf14_vampiric_vesture.mdl"
 ::M25_DraculaItem2 <- "models/workshop/player/items/medic/hwn2023_power_spike/hwn2023_power_spike.mdl"
 PrecacheModel(M25_DraculaItem1)
 PrecacheModel(M25_DraculaItem2)
 ::M25_HealthBonus <- 0
+
+::MRemOutput <- function(a,b,c,d,e)
+{
+	EntityOutputs.RemoveOutput(a,b,c,d,e)
+}
 
 ::M25_UpdateHealth <- function()
 {
@@ -57,6 +64,7 @@ PrecacheModel(M25_DraculaItem2)
 			{
 				Merc.MainGet(0,1,1)
 			}
+			Merc.UpdateHUD()
 			return
 		}
 	}
@@ -110,7 +118,7 @@ PrecacheModel(M25_DraculaItem2)
 	//waxe.AddAttribute("paintkit_proto_def_index", 102.0, -1)
 	
 	SetPropEntityArray(player, "m_hMyWeapons", waxe, waxe.GetSlot())
-	player.Weapon_Equip(waxe);
+	player.Weapon_Equip(waxe)
 	
 	if (waxe != null)
 	{
@@ -129,8 +137,6 @@ PrecacheModel(M25_DraculaItem2)
 		{
 			player.AddCustomAttribute("mark for death", 1.0, -1)
 		}
-		
-		player.Teleport(true, Vector(0,192,330), true, QAngle(0, 0, 0), true, Vector(0, 0, 0))
 	} )
 	Merc.Delay(1.5, function() {
 		player.Taunt(0,0)
@@ -164,17 +170,8 @@ PrecacheModel(M25_DraculaItem2)
 		hat2.SetModel(M25_DraculaItem2)
 		hat2.SetOwner(player)
 		hat2.AcceptInput("SetParent", "!activator", player, player)
-		
-		local sent = null
-		while (sent = Entities.FindByClassname(ent, "tf_weapon_spellbook"))
-		{
-			if (sent.GetOwner() == player)
-			{
-				SetPropInt(sent, "m_iSelectedSpellIndex", 1)
-				SetPropInt(sent, "m_iSpellCharges", 99)
-			}
-		}
 	} )
+	player.Teleport(true, Vector(-885,-1518,7020), true, QAngle(0, 90, 0), true, Vector(0, 0, 0))
 }
 
 Merc.AfterPlayerInv <- function(params) 
@@ -185,7 +182,8 @@ Merc.AfterPlayerInv <- function(params)
 	if (Merc.RoundEnded) return
 	
 	player.SetHealth(150 + M25_HealthBonus)
-	M25_SpawnAsDracula(player)
+	//M25_SpawnAsDracula(player)
+	player.Teleport(true, Vector(-885,-1518,7020), true, QAngle(0, 90, 0), true, Vector(0, 0, 0))
 }
 
 Merc.BeforeRoundStart <- function(params) 
@@ -193,34 +191,6 @@ Merc.BeforeRoundStart <- function(params)
 	if (Merc.MissionStatus[22] >= 2)
 	{
 		M25_HealthBonus <- 300
-	}
-	if (params.full_reset)
-	{
-		local area = null
-		while (area = Entities.FindByClassname(area, "trigger_capture_area"))
-		{
-			local capName = GetPropString(area, "m_iszCapPointName")
-			if (capName == "cap_center")
-			{
-				SetPropFloat(area, "m_flCapTime", 30)
-				area.AcceptInput("SetControlPoint", capName, null, null)
-			}
-			else if (capName == "cap_red_2")
-			{
-				SetPropFloat(area, "m_flCapTime", 30)
-				area.AcceptInput("SetControlPoint", capName, null, null)
-			}
-		}
-	}
-	
-	local area1 = null
-	while (area1 = Entities.FindByClassname(area1, "trigger_capture_area"))
-	{
-		local capName = GetPropString(area1, "m_iszCapPointName")
-		if (capName == "cap_red_1")
-		{
-			area1.Destroy()
-		}
 	}
 	
 	local ent = null
@@ -239,6 +209,34 @@ Merc.BeforeRoundStart <- function(params)
 		ent.SetTeam(TF_TEAM_RED)
 	}
 	ent = null
+	while (ent = Entities.FindByClassname(ent, "mapobj_cart_dispenser"))
+	{
+		ent.Kill()
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent, "dispenser_touch_trigger"))
+	{
+		ent.Kill()
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent, "door1_door_close_trigger"))
+	{
+		ent.Kill()
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent, "cap_2_relay"))
+	{
+		MRemOutput(ent,"OnTrigger","door1_trigger","Kill","")
+		MRemOutput(ent,"OnTrigger","door2_door","Close","")
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent, "both_doors_closed_killbrush"))
+	{
+		ent.Kill()
+	}
+	
+	
+	ent = null
 	while (ent = Entities.FindByClassname(ent, "func_regenerate"))
 	{
 		local team = ent.GetTeam()
@@ -251,7 +249,7 @@ Merc.BeforeRoundStart <- function(params)
 	ent = null
 	while (ent = Entities.FindByClassname(ent, "team_round_timer"))
 	{
-		EntFireByHandle(ent, "Pause", "", -1, ent, ent)
+		EntFireByHandle(ent, "SetSetupTime", "1", -1, ent, ent)
 	}
 	
 	foreach (a in GetClients()) 
@@ -261,6 +259,7 @@ Merc.BeforeRoundStart <- function(params)
 			a.SetHealth(150 + M25_HealthBonus)
 		}
 	}
+	
 	Merc.Delay(0.5, function() { 
 		foreach (a in GetClients()) 
 		{	
@@ -314,9 +313,23 @@ getroottable()[Merc.EventTag] <- {
 	
 	OnGameEvent_teamplay_point_captured = function(params)
 	{
-		if (params.cpname == "#Badlands_cap_red_cp2")
+		Merc.ExtraGet(1,1,1)
+		if (Merc.ObjectiveExtraCount >= 3)
 		{
-			Merc.ExtraGet(1,1,1)
+			local ent = null
+			while (ent = Entities.FindByClassname(ent, "trigger_capture_area"))
+			{
+				ent.Kill()
+			}
+		}
+	}
+	
+	OnGameEvent_teamplay_setup_finished = function(params)
+	{
+		local ent = null
+		while (ent = Entities.FindByClassname(ent, "team_round_timer"))
+		{
+			ent.Kill()
 		}
 	}
 }

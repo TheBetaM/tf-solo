@@ -1,8 +1,8 @@
 // 0 - locked, 1 - unlocked, 2 - cleared, 3 - bonus cleared, 4 - reverse cleared, 5 - reverse bonus cleared
 Merc.MissionStatus <- [
-	1,1,0,0,0,0,0,0,0,0,0,0,
-	1,1,0,0,0,0,0,0,0,0,0,0,
-	0,0,  0,1,0,1]
+	1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,  1,1,1,1]
 /* Cutscene flags (30)
 [0] - RED Intro (M00)
 [1] - BLU Intro (M00)
@@ -71,10 +71,9 @@ Merc.NGP <- 0
 Merc.ResetProgress <- function()
 {
 	Merc.MissionStatus <- [
-		1,1,0,0,0,0,0,0,0,0,0,0,
-		1,1,0,0,0,0,0,0,0,0,0,0,
-		0,0,
-		0,1,0,1]
+		1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,  1,1,1,1]
 	Merc.CSFlags <- [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	Merc.RSVFlags <- [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	Merc.LastMissionID <- -1

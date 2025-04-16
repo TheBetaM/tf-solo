@@ -42,6 +42,7 @@ foreach (i in M01Props)
 	if (!Merc.RoundEnded)
 	{
 		Merc.ForceFail()
+		M01SetupDone = false
 	}
 }
 ::M01_SetupEnd <- function()
@@ -181,7 +182,7 @@ function M01_SpawnHazard(htype, x, y, z, rotx, roty, rotz)
 			TeamNum = TF_TEAM_BLUE,
 			teamnumber = TF_TEAM_BLUE,
 		})
-		prop.SetOwner(MercBots[0].Handle)
+		prop.SetOwner(Merc.Bots[0].Handle)
 	}
 	else
 	{
@@ -192,7 +193,56 @@ function M01_SpawnHazard(htype, x, y, z, rotx, roty, rotz)
 			TeamNum = TF_TEAM_BLUE,
 			teamnumber = TF_TEAM_BLUE,
 		})
-		prop.SetOwner(MercBots[0].Handle)
+		prop.SetOwner(Merc.Bots[0].Handle)
+	}
+}
+
+Merc.BeforeRoundStart <- function(params) 
+{
+	M01SetupDone <- false
+	
+	foreach (a in M01PropSpots)
+	{
+		M01_SpawnProp(M01Props[a[0]], a[1], a[2], a[3], a[4], a[5], a[6], 0)
+	}
+	foreach (a in M01TargetSpots)
+	{
+		M01_SpawnProp(M01Props[a[0]], a[1], a[2], a[3], a[4], a[5], a[6], 1)
+	}
+	foreach (a in M01SkeletonSpots)
+	{
+		M01_SpawnHazard(0, a[0], a[1], a[2], 0, 0, 0)
+	}
+	Merc.Timer(25.0, 0, function() {
+		foreach (a in M01MeteorSpots)
+		{
+			M01_SpawnHazard(1, a[0], a[1], a[2], 90, 0, 0)
+		}
+	} )
+	Merc.Timer(15.0, 0, function() {
+		foreach (a in M01FireballSpots)
+		{
+			M01_SpawnHazard(2, a[0], a[1], a[2], a[3], a[4], a[5])
+		}
+	} )
+	
+	local ent = null
+	while (ent = Entities.FindByClassname(ent, "team_round_timer"))
+	{
+		ent.ValidateScriptScope()
+		ent.AcceptInput("SetSetupTime", "1", null, null)
+		ent.ConnectOutput("OnSetupFinished", "M01_SetupEnd")
+		ent.ConnectOutput("On1SecRemain", "M01_TimerEnd")
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent, "portti_x_oikea"))
+	{
+		ent.Destroy()
+	}
+	ent = null
+	while (ent = Entities.FindByName(ent, "portti_x_vasen"))
+	{
+		ent.Destroy()
 	}
 }
 
@@ -239,55 +289,7 @@ getroottable()[Merc.EventTag] <- {
 		if (IsPlayerABot(player)) return
 		if (Merc.RoundEnded) return
 		Merc.ForceFail()
-	}
-	
-	OnGameEvent_teamplay_round_start = function(params)
-	{
-		M01SetupDone <- false
-	
-		foreach (a in M01PropSpots)
-		{
-			M01_SpawnProp(M01Props[a[0]], a[1], a[2], a[3], a[4], a[5], a[6], 0)
-		}
-		foreach (a in M01TargetSpots)
-		{
-			M01_SpawnProp(M01Props[a[0]], a[1], a[2], a[3], a[4], a[5], a[6], 1)
-		}
-		foreach (a in M01SkeletonSpots)
-		{
-			M01_SpawnHazard(0, a[0], a[1], a[2], 0, 0, 0)
-		}
-		Merc.Timer(25.0, 0, function() {
-			foreach (a in M01MeteorSpots)
-			{
-				M01_SpawnHazard(1, a[0], a[1], a[2], 90, 0, 0)
-			}
-		} )
-		Merc.Timer(15.0, 0, function() {
-			foreach (a in M01FireballSpots)
-			{
-				M01_SpawnHazard(2, a[0], a[1], a[2], a[3], a[4], a[5])
-			}
-		} )
-		
-		local ent = null
-		while (ent = Entities.FindByClassname(ent, "team_round_timer"))
-		{
-			ent.ValidateScriptScope()
-			ent.AcceptInput("SetSetupTime", "1", null, null)
-			ent.ConnectOutput("OnSetupFinished", "M01_SetupEnd")
-			ent.ConnectOutput("On1SecRemain", "M01_TimerEnd")
-		}
-		ent = null
-		while (ent = Entities.FindByName(ent, "portti_x_oikea"))
-		{
-			ent.Destroy()
-		}
-		ent = null
-		while (ent = Entities.FindByName(ent, "portti_x_vasen"))
-		{
-			ent.Destroy()
-		}
+		M01SetupDone = false
 	}
 }
 __CollectGameEventCallbacks(getroottable()[Merc.EventTag])

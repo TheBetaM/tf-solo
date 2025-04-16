@@ -43,8 +43,14 @@ function CalculateClassCurrencyLevel(player)
 {
 	if (M08_FreakScope == null)
 	{
+		local ent = null
+		while (ent = Entities.FindByName(ent, "scripto"))
+		{
+			M08_FreakScope <- ent.GetScriptScope()
+		}
 		return -1
 	}
+	local before = Merc.ObjectiveMainCount
 	foreach (a in GetClients()) 
 	{	
 		if (!IsPlayerABot(a)) 
@@ -52,9 +58,13 @@ function CalculateClassCurrencyLevel(player)
 			local b = M08_FreakScope.CalculateClassCurrencyLevel(a)
 			local c = M08_FreakScope.GetClassEntry(a)
 			Merc.ObjectiveMainCount = (b + c["nonRefundableAmountSpent"] + c["refundableAmountSpent"])
-			if (MercO.bjectiveMainCount >= Merc.ObjectiveMainMax && !Merc.RoundEnded)
+			if (Merc.ObjectiveMainCount >= Merc.ObjectiveMainMax && !Merc.RoundEnded)
 			{
 				Merc.MainGet(0,1,1)
+			}
+			if (Merc.ObjectiveMainCount != before)
+			{
+				Merc.UpdateHUD()
 			}
 			return -1
 		}
@@ -102,6 +112,4 @@ getroottable()[Merc.EventTag] <- {
 	}
 }
 __CollectGameEventCallbacks(getroottable()[Merc.EventTag])
-
-//EntFire("scripto","RunScriptFile","freakscript.nut")
 

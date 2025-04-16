@@ -4,6 +4,7 @@ Merc.MissionID <- 1
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- 0
 Merc.ForcedTeam <- TF_TEAM_RED
+Merc.WaitTimeConvar <- 1
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
 
@@ -38,7 +39,6 @@ Merc.ResetMainOnRestart <- 0
 Merc.ResetMainOnFail <- 0
 Merc.ResetExtraOnRestart <- 0
 Merc.ResetExtraOnFail <- 0
-Merc.WaitTimeConvar <- 1
 
 Merc.Bots[0].Items = ["The Horrible Horns"]
 Merc.Bots[0].BotWpnFlags = 1
@@ -119,8 +119,15 @@ PrecacheModel("models/props_graveyard/ghost_healing.mdl")
 
 ::M15_BonePickup <- function()
 {
+	if (Merc.RoundEnded && Merc.ObjectiveMainCount < Merc.ObjectiveMainMax && Merc.ObjectiveMainCount + M15_PickupBonus >= Merc.ObjectiveMainMax) 
+	{
+		Merc.ObjectiveMainCount = Merc.ObjectiveMainMax - 1
+		Merc.UpdateHUD()
+		return
+	}
 	Merc.MainGet(M15_PickupBonus,1,1)
-	Merc.ObjectiveTextAdd = " (+" + M15_PickupBonus + ")" + " (Round " + M15_Rounds + ")";
+	Merc.ObjectiveTextAdd = " (+" + M15_PickupBonus + ")" + " (Round " + M15_Rounds + ")"
+	Merc.UpdateHUD()
 }
 
 ::M15_GetPlacement <- function(list, maxpick)
@@ -206,9 +213,15 @@ Merc.BeforeRoundStart <- function(params)
 		Merc.ObjectiveExtraCount <- 0
 		M15_Rounds = 1
 	}
-	Merc.ObjectiveTextAdd <- " (Round " + M15_Rounds + ")";
+	Merc.ObjectiveTextAdd <- " (Round " + M15_Rounds + ")"
 	
-	local ent = Entities.FindByClassname(null, "logic_script")
+	local places = M15_GetPlacement(M15PropSpots,M15_PickupCount)
+	foreach (a in places)
+	{
+		M15_SpawnPickup(a[0],a[1],a[2])
+	}
+	
+	local ent = Entities.FindByName(null, "script")
 	M15_Scope = ent.GetScriptScope()
 	foreach (a in GetClients())
 	{	
@@ -221,12 +234,6 @@ Merc.BeforeRoundStart <- function(params)
 		M15_Scope["unBecomeGhost"](a)
 		a.GetScriptScope().dispenser_range <- { IsValid = @() false }
 		a.GetScriptScope().dispenser <- { IsValid = @() false }
-	}
-	
-	local places = M15_GetPlacement(M15PropSpots,M15_PickupCount)
-	foreach (a in places)
-	{
-		M15_SpawnPickup(a[0],a[1],a[2])
 	}
 }
 
@@ -254,13 +261,12 @@ Merc.BeforeRoundWin <- function(params)
 	}
 }
 
-Merc.BeforePlayerSpawn <- function(params) 
+Merc.AfterPlayerSpawn <- function(params) 
 {
 	local player = GetPlayerFromUserID(params.userid)
 	player.ValidateScriptScope()
 	player.GetScriptScope().dispenser_range <- { IsValid = @() false }
 	player.GetScriptScope().dispenser <- { IsValid = @() false }
-	M15_Scope["OnGameEvent_player_spawn"](params)
 	
 	if (player.GetTeam() != Merc.ForcedTeam)
 	{
@@ -280,12 +286,9 @@ getroottable()[Merc.EventTag] <- {
 	OnGameEvent_player_death = function(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		player.SetCustomModel("")
-		SetPropInt(player, "m_nRenderFX", 0)
-		player.EnableDraw()
-		player.AddCond(TF_COND_STEALTHED_USER_BUFF_FADING)
-		M15_Scope["OnGameEvent_player_death"](params)
-		player.AddCond(TF_COND_STEALTHED_USER_BUFF_FADING)
+		//player.SetCustomModel("")
+		//SetPropInt(player, "m_nRenderFX", 0)
+		//player.EnableDraw()
 		
 		if (params.userid == 0 || !IsPlayerABot(player)) return
 		if (player.GetTeam() == Merc.ForcedTeam) return
@@ -301,11 +304,6 @@ getroottable()[Merc.EventTag] <- {
 				SetPropInt(ent, "m_iSpellCharges", 1)
 			}
 		}
-	}
-	
-	OnGameEvent_teamplay_setup_finished = function(params)
-	{
-		M15_Scope["OnGameEvent_teamplay_setup_finished"](params)
 	}
 	
 	OnGameEvent_player_hurt = function(params)
@@ -329,8 +327,14 @@ getroottable()[Merc.EventTag] <- {
 			{
 				dmg = 0
 			}
-			Merc.MainGet(dmg,0,1)
 			Merc.ObjectiveTextAdd = " (+" + dmg + ")" + " (Round " + M15_Rounds + ")"
+			if (Merc.RoundEnded && Merc.ObjectiveMainCount < Merc.ObjectiveMainMax && Merc.ObjectiveMainCount + dmg >= Merc.ObjectiveMainMax) 
+			{
+				Merc.ObjectiveMainCount = Merc.ObjectiveMainMax - 1
+				Merc.UpdateHUD()
+				return
+			}
+			Merc.MainGet(dmg,0,1)
 		}
 	}
 }

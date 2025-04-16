@@ -364,7 +364,7 @@ function M08_SpawnDuck(x, y, z)
 		automaterialize = false,
 		TeamNum = Merc.ForcedTeam,
 		teamnumber = Merc.ForcedTeam,
-	});
+	})
 	prop.SetTeam(Merc.ForcedTeam)
 	prop.ValidateScriptScope()
 	prop.ConnectOutput("OnRedPickup", "M08_DuckPickup")
@@ -390,13 +390,14 @@ function M08_Clock()
 		Merc.ForceFail()
 		Merc.ObjectiveTextAdd = " (0:00)"
 	}
+	Merc.UpdateHUD()
 }
 
 Merc.AfterPlayerSpawn <- function(params) 
 {
-	local player = GetPlayerFromUserID(params.userid);
-	if (IsPlayerABot(player)) return;
-	if (player.GetTeam() != MercForcedTeam) return;
+	local player = GetPlayerFromUserID(params.userid)
+	if (IsPlayerABot(player)) return
+	if (player.GetTeam() != Merc.ForcedTeam) return
 	player.Teleport(true, Vector(-3585,-256,210), true, QAngle(0, 0, 0), true, Vector(0, 0, 0))
 	player.AddCond(TF_COND_HALLOWEEN_KART)
 	player.AddCond(TF_COND_FREEZE_INPUT)

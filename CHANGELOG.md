@@ -31,6 +31,7 @@ cl_default_networking_off
 - Fixed some cases of MvM workshop maps not being able to find any popfile
 - Fixed nav mesh generation not taking into account multiple spawn areas and stages
 - Minimal HUD no longer prevents game_text_tf from appearing
+- Fixed round restart commands not working in Arena mode
 ## TFBot improvements
 - Fixed bots not working correctly in PLR
 - Fixed bots ignoring SD, PD, RD and neutral flags

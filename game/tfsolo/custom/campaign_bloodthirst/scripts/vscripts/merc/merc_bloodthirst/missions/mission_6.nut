@@ -1,4 +1,4 @@
-// PD Infestation
+// KOTH Slime
 ::Merc <- {}
 Merc.MissionID <- 6
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
@@ -8,48 +8,42 @@ Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
 
 Merc.Bots <- [
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_DEMOMAN, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_ENGINEER, "Bot 02"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 03"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "Bot 01"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SOLDIER, "Bot 02"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 03"),
 	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_PYRO, "Bot 04"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 05"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 05"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SPY, "Bot 06"),
 	
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "Bot 06"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SOLDIER, "Bot 07"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Bot 08"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_PYRO, "Bot 09"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SNIPER, "Bot 10"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SPY, "Bot 11"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_ENGINEER, "Bot 12"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "Bot 07"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SOLDIER, "Bot 08"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Bot 09"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_PYRO, "Bot 10"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SNIPER, "Bot 11"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SPY, "Bot 12"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_ENGINEER, "Bot 13"),
 ]
 Merc.ObjectiveText <- LOCM_OBJECTIVE_GENERIC
 Merc.ObjectiveMainCount <- 0
 Merc.ObjectiveMainMax <- 1
-Merc.ObjectiveExtraText <- "Get kills using The Rodent Whisperer"
+Merc.ObjectiveExtraText <- "Get kills using The Salmann Creator"
 Merc.ObjectiveExtraCount <- 0
-Merc.ObjectiveExtraMax <- 16
-Merc.WaitTimeConvar <- 1
+Merc.ObjectiveExtraMax <- 6
 Merc.ForceWinOnMainDone <- 1
 
 ::M05_Weapon <- "models/passtime/ball/passtime_ball.mdl"
 PrecacheModel(M05_Weapon)
 
 ::M05_RatCooldown <- 0.0
+::M06_SlimeScope <- null
+::M06_SalmannRange <- 600.0 //32768.0
 
 ::M05_RatThink <- function()
 {
 	if (M05_RatCooldown > 0.0)
 	{
 		M05_RatCooldown -= FrameTime()
-	}
-	
-	local arat = null
-	while (arat = Entities.FindByClassname(arat, "prop_dynamic"))
-	{
-		if (GetPropString(arat,"m_iszScriptThinkFunction") == "RatThink")
-		{
-			arat.GetScriptScope()["ratMSpeed"] <- 4
-		}
+		return -1
 	}
 	
 	foreach (a in GetClients()) 
@@ -62,10 +56,16 @@ PrecacheModel(M05_Weapon)
 			local isAttacking = buttons & IN_ATTACK
 			local rat = null
 			
+			if (!isAttacking)
+			{
+				continue
+			}
+			M05_RatCooldown = 10.0
+			
 			local trace =
 			{
 				start = a.EyePosition(),
-				end = a.EyePosition() + (a.EyeAngles().Forward() * 32768.0),
+				end = a.EyePosition() + (a.EyeAngles().Forward() * M06_SalmannRange),
 				ignore = a
 			}
 			if (!TraceLineEx(trace))
@@ -73,78 +73,17 @@ PrecacheModel(M05_Weapon)
 				continue
 			}
 			
-			while (rat = Entities.FindByClassnameWithin(rat, "prop_dynamic", trace.pos, 600.0))
-			{
-				if (GetPropString(rat,"m_iszScriptThinkFunction") == "RatThink")
-				{
-					local target = trace.pos + Vector(RandomFloat(-10.0, 10.0),RandomFloat(-10.0, 10.0),0)
-					rat.GetScriptScope()["viewTarget"] = target
-					rat.GetScriptScope()["desitedTarget"] = target
-					rat.GetScriptScope()["ratMSpeed"] <- 25
-					rat.GetScriptScope()["MoveRat"] <- function() { M05_MoveRat() }
-					if (M05_RatCooldown <= 0.0)
-					{
-						local enemy = null
-						while (enemy = Entities.FindByClassnameWithin(enemy, "player", rat.GetOrigin(), 100.0))
-						{
-							if (enemy != a)
-							{
-								enemy.TakeDamageEx(rat,a,w,Vector(0,0,0),a.EyePosition(),10.0,DMG_SLASH)
-							}
-						}
-					}
-				}
-			}
-			if (M05_RatCooldown <= 0.0)
-			{
-				M05_RatCooldown = 0.25
-			}
-			
+			local prop = SpawnEntityFromTable("info_target", {
+				origin = trace.pos,
+				angles = QAngle(0, RandomInt(0,360), 0),
+			})
+			local salmann = M06_SlimeScope.SpawnSalmann(prop)
+			salmann.ValidateScriptScope()
+			salmann.GetScriptScope()["MercMinion"] <- 1
+			prop.Kill()
 		}
 	}
 	return -1
-}
-
-// override map script
-::M05_MoveRat <- function()
-{
-    local myPos = self.GetOrigin()
-    local delta = viewTarget - myPos
-    delta.z = 0
-    local distance = delta.Norm()
-
-    if (distance < 4)
-	{
-        return
-	}
-
-    local newPos = myPos + delta * ratMSpeed
-    local trace = {
-        start = newPos + Vector(0, 0, 32),
-        end = newPos - Vector(0, 0, 32),
-        mask = Constants.FContents.CONTENTS_SOLID|Constants.FContents.CONTENTS_PLAYERCLIP|Constants.FContents.CONTENTS_WINDOW|Constants.FContents.CONTENTS_GRATE,
-        ignore = self
-    }
-    TraceLineEx(trace)
-
-    if (trace.fraction > 0.99)
-    {
-		wait = Time() + RandomInt(2, 4)
-        isWaiting = true
-        self.ResetSequence(self.LookupSequence("rat_idle"))
-        lastTimeMoved = wait
-        desitedTarget = null
-        viewTarget = myPos
-        path = []
-        direction = RandomInt(0, 3)
-        self.SetAbsOrigin(myPos - delta * 8)
-        return
-    }
-    local frame = NetProps.GetPropInt(self, "m_ubInterpolationFrame")
-    self.SetOrigin(trace.pos)
-    NetProps.SetPropInt(self, "m_ubInterpolationFrame", frame)
-    self.SetForwardVector(delta)
-    lastTimeMoved = Time()
 }
 
 Merc.AfterPlayerInv <- function(params) 
@@ -197,7 +136,7 @@ Merc.AfterPlayerInv <- function(params)
     }
 	
 	local waxe = Entities.CreateByClassname("tf_weapon_laser_pointer")
-    SetPropInt(waxe, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", 30668)
+    SetPropInt(waxe, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", 140)
     SetPropBool(waxe, "m_AttributeManager.m_Item.m_bInitialized", true)
     SetPropBool(waxe, "m_bValidatedAttachedEntity", true)
 	SetPropEntity(waxe, "m_hOwner", player)
@@ -237,50 +176,49 @@ Merc.AfterPlayerInv <- function(params)
 	player.EquipWearableViewModel(vm)
 	
 	player.Weapon_Switch(waxe)
-	player.SnapEyeAngles(QAngle(15,0,0))
+}
+
+Merc.BeforeRoundStart <- function(params) 
+{
+	foreach (a in Merc.Bots)
+	{
+		a.Flags = 2
+		a.SpawnPos = Vector(2390,-905,-124)
+		if (a.Team == TF_TEAM_BLUE)
+		{
+			a.SpawnPos = Vector(-2390,-905,-124)
+		}
+	}
+	
+	local slimescript = Entities.FindByName(null, "logic_script_slime")
+	M06_SlimeScope = slimescript.GetScriptScope()
+	M05_RatCooldown = 0.0
+	
+	local prop = SpawnEntityFromTable("logic_script", {})
+	AddThinkToEnt(prop,"M05_RatThink")
+	
+	Merc.Delay(0.5, function() { 
+		local line = "+Creates Salmanns\n-50℅ Sentry Gun damage";
+		Merc.DisplayTrMsg("The Salmann Creator",line,10.0)
+	} )
 }
 
 Merc.EventTag <- UniqueString()
 getroottable()[Merc.EventTag] <- {
-	OnGameEvent_teamplay_round_start = function(params)
-	{
-		//local pd = Entities.FindByName(null, "logic_pd")
-		//SetPropInt(pd, "m_nMaxPoints", 100)
-		
-		local prop = SpawnEntityFromTable("logic_script", {});
-		AddThinkToEnt(prop,"M05_RatThink")
-		
-		local ent = null
-		while (ent = Entities.FindByClassname(ent, "tf_logic_player_destruction"))
-		{
-			ent.ValidateScriptScope();
-			ent.GetScriptScope()["ScoreChange"] <- function(){
-				M05_ScoreChange(activator,caller)
-			}
-			ent.ConnectOutput("OnRedScoreChanged","ScoreChange")
-		}
-		ent = null
-		while (ent = Entities.FindByName(ent, "relay_countdown_pre_finished"))
-		{
-			EntityOutputs.AddOutput(ent,"OnTrigger","!self","RunScriptCode","M05_CountdownDone()",0,-1)
-		}
-		
-		Merc.Delay(0.5, function() { 
-			local line = "+Controls rats\n-50℅ Sentry Gun damage";
-			Merc.DisplayTrMsg("The Rodent Whisperer",line,10.0)
-		} )
-	}
-	
 	OnGameEvent_player_death = function(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (params.userid == 0 || !IsPlayerABot(player)) return
-		local aplayer = GetPlayerFromUserID(params.attacker)
-		if (aplayer == null || IsPlayerABot(aplayer)) return
+		if (player.GetTeam() == Merc.ForcedTeam) return
+		
 		local inf = EntIndexToHScript(params.inflictor_entindex)
-		if (inf.GetClassname() == "prop_dynamic")
+		if (inf.GetClassname() == "tf_zombie")
 		{
-			Merc.ExtraGet(1,1,1)
+			inf.ValidateScriptScope()
+			if ("MercMinion" in inf.GetScriptScope())
+			{
+				Merc.ExtraGet(1,1,1)
+			}
 		}
 	}
 	

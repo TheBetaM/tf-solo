@@ -4,6 +4,7 @@ Merc.MissionID <- 18
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- 0
 Merc.ForcedTeam <- TF_TEAM_BLUE
+Merc.WaitTimeConvar <- 1
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_blue.res"
 
@@ -28,7 +29,6 @@ Merc.ObjectiveMainMax <- 1
 Merc.ObjectiveExtraText <- "Get kills while airborne"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 6
-Merc.WaitTimeConvar <- 1
 
 ::M04_BotHint1 <- null
 ::M04_BotHint2 <- null
@@ -107,6 +107,7 @@ PrecacheScriptSound("AmmoPack.Touch")
 		M06Heat = 0
 	}
 	Merc.ObjectiveTextAdd = " (HEAT: " + M06Heat + "%)"
+	Merc.UpdateHUD()
 }
 
 ::M06_GetPlacement <- function(list, maxpick)
@@ -141,6 +142,7 @@ function M06_Clock()
 		Merc.ForceFail()
 		Merc.ObjectiveTextAdd = " (HEAT: 100%)"
 	}
+	Merc.UpdateHUD()
 }
 
 function M06_SpawnProp(x, y, z)
@@ -238,16 +240,16 @@ Merc.EventTag <- UniqueString()
 getroottable()[Merc.EventTag] <- {
 	OnGameEvent_player_death = function(params)
 	{
-		local player = GetPlayerFromUserID(params.userid);
-		if (params.userid == 0) return;
-		if (!IsPlayerABot(player)) return;
-		if (player.GetTeam() == MercForcedTeam) return;
-		local aplayer = GetPlayerFromUserID(params.attacker);
-		if (aplayer == null || IsPlayerABot(aplayer)) return;
-		local check = aplayer.GetFlags() & FL_ONGROUND;
+		local player = GetPlayerFromUserID(params.userid)
+		if (params.userid == 0) return
+		if (!IsPlayerABot(player)) return
+		if (player.GetTeam() == Merc.ForcedTeam) return
+		local aplayer = GetPlayerFromUserID(params.attacker)
+		if (aplayer == null || IsPlayerABot(aplayer)) return
+		local check = aplayer.GetFlags() & FL_ONGROUND
 		if (check == 0)
 		{
-			Merc_ExtraGet(1,1,1)
+			Merc.ExtraGet(1,1,1)
 		}
 	}
 	
@@ -270,11 +272,6 @@ getroottable()[Merc.EventTag] <- {
 	OnGameEvent_teamplay_point_captured = function(params)
 	{
 		M06CartTeam = params.team
-	}
-	
-	OnGameEvent_player_death = function(params)
-	{
-		
 	}
 }
 __CollectGameEventCallbacks(getroottable()[Merc.EventTag])

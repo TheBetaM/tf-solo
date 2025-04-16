@@ -1,4 +1,4 @@
-// CP Demesne Event
+// KOTH Los Muertos
 ::Merc <- {}
 Merc.MissionID <- 2
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
@@ -46,16 +46,16 @@ PrecacheEntityFromTable({ classname = "info_particle_system", effect_name = "gho
 PrecacheModel(M12_Weapon)
 
 ::M23GhostSpots <- [
-	[1559,1437,143],
-	[981,474,267],
-	[-242,0,271],
-	[2339,-898,93],
-	[-2374,1023,271],
-	[-1617,-843,143],
-	[1858,0,288],
-	[3004,1097,246],
-	[-746,2206,136],
-	[-653,-856,271],
+	[-2676,400,4],
+	[-4421,1721,-20],
+	[-4389,2426,44],
+	[-4421,3133,-20],
+	[-3685,2415,44],
+	[-5070,2425,108],
+	[-5033,1082,12],
+	[-3875,3601,-52],
+	[-2671,3252,108],
+	[-2671,1618,108],
 ]
 
 function M23_PlayerThink()
@@ -156,7 +156,7 @@ function M23_SpawnGhost(x, y, z)
 	{	
 		if (!IsPlayerABot(a))
 		{
-			if (a.IsSnared() && !MercRoundEnded)
+			if (a.IsSnared() && !Merc.RoundEnded)
 			{
 				Merc.ForceFail()
 				Merc.ChatPrint("Main objective failed! Got scared.")
@@ -179,8 +179,8 @@ Merc.BeforeRoundWin <- function(params)
 Merc.AfterPlayerInv <- function(params)
 {
 	local player = GetPlayerFromUserID(params.userid)
-	if (player.GetTeam() != MercForcedTeam) return
-	if (IsPlayerABot(player)) return;
+	if (player.GetTeam() != Merc.ForcedTeam) return
+	if (IsPlayerABot(player)) return
 	
 	PrecacheModel(M12_Weapon)
 	
@@ -279,16 +279,6 @@ getroottable()[Merc.EventTag] <- {
 			M23_SpawnGhosts()
 		} )
 		
-		local ent = null
-		while (ent = Entities.FindByClassname(ent, "wheel_of_doom"))
-		{
-			ent.Kill()
-		}
-		while (ent = Entities.FindByClassname(ent, "tf_logic_holiday"))
-		{
-			SetPropInt(ent,"m_nAllowHaunting",0)
-		}
-		
 		Merc.Delay(0.5, function() { 
 			foreach (a in GetClients()) 
 			{	
@@ -299,14 +289,14 @@ getroottable()[Merc.EventTag] <- {
 					{
 						if (ent.GetOwner() == a)
 						{
-							SetPropInt(ent, "m_iSelectedSpellIndex", 4);
-							SetPropInt(ent, "m_iSpellCharges", 3);
+							SetPropInt(ent, "m_iSelectedSpellIndex", 4)
+							SetPropInt(ent, "m_iSpellCharges", 3)
 						}
 					}
 				}
 			}
 			
-			local line = "+Splash damage hits ghosts\n+25℅ explosion radius\n-10℅ damage";
+			local line = "+Splash damage hits ghosts\n+25℅ explosion radius\n-10℅ damage"
 			Merc.DisplayTrMsg("The Ghost Buster",line,10.0)
 		} )
 	}

@@ -1,28 +1,29 @@
-// Arena Pharoah
+// KOTH Harvest Event
 ::Merc <- {}
 Merc.MissionID <- 12
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- TF_CLASS_SCOUT
-Merc.ForcedTeam <- TF_TEAM_RED
+Merc.ForcedTeam <- TF_TEAM_BLUE
 Merc.SetupConvars()
-Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
+Merc.PathHUD <- "resource/ui/solo/mission_twolines_blue.res"
+ToConsole("tf_gamemode_override 1")
 
 Merc.Bots <- [
 	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 01"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "RED Bot 02"),
+	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 03"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "RED Bot 04"),
+	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 05"),
+	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 06"),
+	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 07"),
+	Merc.BotGeneric(TF_TEAM_RED, 0, TF_CLASS_SCOUT, "RED Bot 08"),
 	
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "BLU Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "BLU Bot 02"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "BLU Bot 03"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "BLU Bot 04"),
-	Merc.BotGeneric(TF_TEAM_RED, 2, TF_CLASS_SCOUT, "BLU Bot 05"),
-	Merc.BotGeneric(TF_TEAM_RED, 2, TF_CLASS_SCOUT, "BLU Bot 06"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "BLU Bot 01"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "BLU Bot 02"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "BLU Bot 03"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "BLU Bot 04"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 2, TF_CLASS_SCOUT, "BLU Bot 05"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 2, TF_CLASS_SCOUT, "BLU Bot 06"),
 ]
 Merc.ObjectiveText <- "Keep playing rounds until all enemies are demoted"
 Merc.ObjectiveMainCount <- 0
@@ -37,6 +38,8 @@ Merc.ResetMainOnRestart <- 0
 Merc.ResetMainOnFail <- 0
 Merc.ResetExtraOnRestart <- 0
 Merc.ResetExtraOnFail <- 0
+
+Convars.SetValue("tf_arena_override_cap_enable_time", 30)
 
 ::M04_SpellWeapons <- [
 	"spellbook_athletic",
@@ -177,27 +180,18 @@ getroottable()[Merc.EventTag] <- {
 	
 	OnGameEvent_teamplay_round_start = function(params)
 	{
-		local trigger1 = SpawnEntityFromTable("func_respawnroom", 
-		{
-			model = "*2",
-			origin = Vector(-1577, -1820, -556),
-			TeamNum = 2
-		})
-		trigger1.SetSize(Vector(-1024, -1024, 0), Vector(1024, 1024, 1024))
-		local trigger2 = SpawnEntityFromTable("func_respawnroom", 
-		{
-			model = "*2",
-			origin = Vector(1577, 1820, -556),
-			TeamNum = 3
-		})
-		trigger2.SetSize(Vector(-1024, -1024, 0), Vector(1024, 1024, 1024))
+		local arenalogic = SpawnEntityFromTable("tf_logic_arena", {})
+		SetPropEntity(tf_gamerules, "m_hArenaEntity", arenalogic)
+		SetPropInt(tf_gamerules, "m_nGameType", 4)
 		
-		// holiday 0 somehow forces bday??
-		local ent = Entities.FindByClassname(null, "tf_logic_holiday")
-		SetPropInt(ent,"m_nHolidayType",2)
-		ent = Entities.FindByClassname(null, "tf_gamerules")
-		SetPropInt(ent, "m_nMapHolidayType", 2)
-	
+		local ent = null
+		while (ent = Entities.FindByClassname(ent, "func_regenerate"))
+		{
+			ent.SetAbsOrigin(Vector(0,0,-8000))
+			ent.SetSize(Vector(-0.1,-0.1,-0.1),Vector(0.1,0.1,0.1))
+		}
+		
+		
 		if (Merc.ResetMainOnRestart == 1)
 		{
 			M10_ResetRanks()
@@ -271,7 +265,7 @@ getroottable()[Merc.EventTag] <- {
 			if (M10_PlayerRank > 1)
 			{
 				M10_PlayerRank--
-				MercForcedClass = M10_ClassOrder[M10_PlayerRank]
+				Merc.ForcedClass = M10_ClassOrder[M10_PlayerRank]
 				ToConsole("mp_humans_must_join_class " + Merc.BotClassNames[Merc.ForcedClass])
 				Merc.ChatPrint("Demoted to " + M10_ClassNames[M10_PlayerRank] + " in the next round!")
 			}

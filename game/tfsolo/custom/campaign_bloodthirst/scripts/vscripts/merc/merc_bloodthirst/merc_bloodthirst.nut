@@ -78,6 +78,14 @@ Merc.ChangeLevelWithBuffer <- function(targetmap)
 	{
 		ToConsole("mp_humans_must_join_class " + TF_CLASS_NAMES[Merc.Missions[Merc.MissionID].ForcedClass])
 	}
+	if (Merc.Missions[Merc.MissionID].MOverride == 0)
+	{
+		ToConsole("tf_gamemode_override 0")
+	}
+	else
+	{
+		ToConsole("tf_gamemode_override 1")
+	}
 	
 	if (IsDedicatedServer())
 		ToConsole("changelevel "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
@@ -155,14 +163,14 @@ Merc.MissionSelect <- function(id)
 	if (Merc.MissionID == 24)
 	{
 		wtext = Merc.Missions[Merc.MissionID].Title + "\n"
-		wtext += "As " + MercMissions[Merc.MissionID].PlayerClassName + "\n"
+		wtext += "As " + Merc.Missions[Merc.MissionID].PlayerClassName + "\n"
 		if (Merc.MissionStatus[10] >= 2)
 		{
-			wtext += "+1000 HP headstart\n"
+			wtext += "-1000 HP start\n"
 		}
 		if (Merc.MissionStatus[11] >= 2)
 		{
-			wtext += "+DRACULA Marked For Death\n"
+			wtext += "+DRACULA Marked\n"
 		}
 	}
 	else if (Merc.MissionID == 25)
@@ -774,6 +782,7 @@ Merc.HubEvents <- {
 	{
 		Merc.Delays <- {}
 		Merc.Timers <- []
+		ToConsole("tf_bot_kick all")
 	}
 }
 CollectEventsInScope(Merc.HubEvents)

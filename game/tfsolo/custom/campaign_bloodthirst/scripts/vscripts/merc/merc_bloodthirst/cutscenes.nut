@@ -187,7 +187,7 @@ Merc.HandlerBLU_SetAnim <- function(a,reset = 0)
 
 Merc.ApplyCutsceneProgress <- function()
 {
-	if (Merc.CSFlags[16] == 0)
+	if (Merc.RSVFlags[11] == 0)
 	{
 		local ent = null
 		while (ent = Entities.FindByName(ent, "notice_secretpickup_1"))
@@ -195,6 +195,10 @@ Merc.ApplyCutsceneProgress <- function()
 			SetPropInt(ent, "m_iTextureFrameIndex", 1)
 			SetPropInt(ent, "texframeindex", 1)
 		}
+	}
+	if (Merc.RSVFlags[12] == 0)
+	{
+		local ent = null
 		while (ent = Entities.FindByName(ent, "notice_secretpickup_2"))
 		{
 			SetPropInt(ent, "m_iTextureFrameIndex", 1)

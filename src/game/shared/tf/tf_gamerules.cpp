@@ -5581,12 +5581,18 @@ void CTFGameRules::SetupOnStalemateStart( void )
 
 		if ( IsInArenaMode() == true )
 		{
-			pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_ROUND_START );
+			if ( !tf_roundstarttalk_disable.GetBool() )
+			{
+				pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_ROUND_START );
+			}
 			pPlayer->TeamFortress_SetSpeed();
 		}
 		else
 		{
-			pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_SUDDENDEATH_START );
+			if ( !tf_roundstarttalk_disable.GetBool() )
+			{
+				pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_SUDDENDEATH_START );
+			}
 		}
 	}
 

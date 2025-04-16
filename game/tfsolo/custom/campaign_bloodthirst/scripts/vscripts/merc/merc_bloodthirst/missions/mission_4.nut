@@ -1,4 +1,4 @@
-// PL Abaddon
+// PL Corruption
 ::Merc <- {}
 Merc.MissionID <- 4
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
@@ -31,46 +31,46 @@ PrecacheEntityFromTable({ classname = "info_particle_system", effect_name = "tau
 PrecacheScriptSound("AmmoPack.Touch")
 
 ::M06CrumpkinSpots <- [
-	[2758,-976,-578],
-	[-277,1796,-978],
-	[1085,1113,-1074],
-	[2072,1593,-994],
-	[991,2139,-1061],
-	[-35,1566,-1063],
-	[-922,1866,-1074],
-	[-863,806,-1072],
-	[-2076,-2382,-1034],
-	[-1442,998,-954],
-	[-1375,-471,-1165],
-	[-1771,-9,-930],
-	[-1614,-1514,-1355],
-	[-2101,-1411,-1154],
-	[-1335,-2263,-1272],
-	[-382,-2583,-1202],
-	[-862,-2311,-1314],
-	[26,-2881,-1074],
-	[1000,-2074,-994],
-	[452,-1366,-1055],
-	[1892,-1002,-754],
-	[2688,-2824,-706],
-	[664,-2276,-498],
-	[984,-154,-491],
-	[1649,-1352,-990],
-	[1236,-770,-818],
-	[2081,-1482,-610],
-	[3270,-2026,-706],
-	[2246,-2160,-834],
-	[2142,-3151,-610],
-	[1571,-3296,-704],
-	[244,-3786,-546],
-	[353,-2934,-474],
-	[39,-1922,-418],
-	[642,-988,-499],
-	[1478,-1581,-498],
-	[1194,-457,-498],
-	[199,-649,-498],
-	[-31,407,-486],
-	[1462,98,-370],
+	[-4953,790,-431],
+	[-4293,806,-370],
+	[-3276,381,-82],
+	[-3229,-745,-114],
+	[-2135,-202,-178],
+	[-1886,622,-374],
+	[-1270,-189,-163],
+	[-2398,12,-302],
+	[-672,440,-562],
+	[-831,1221,-548],
+	[-1203,1502,-434],
+	[-558,1497,-370],
+	[-44,14,-242],
+	[-259,722,-406],
+	[48,619,-306],
+	[100,-1024,-276],
+	[516,-2190,-84],
+	[-1300,-2369,-222],
+	[-2470,-2239,-154],
+	[796,-1055,-30],
+	[822,-1965,78],
+	[260,-2633,14],
+	[-212,-2168,-26],
+	[812,-2119,-114],
+	[154,-3213,-226],
+	[-432,-2016,22],
+	[-1621,-2158,142],
+	[-1592,-2113,-158],
+	[-2624,-2700,-148],
+	[-2261,-2771,100],
+	[-2271,-2016,14],
+	[-2365,-2032,-154],
+	[-3127,-2654,90],
+	[-454,62,-406],
+	[-420,985,-154],
+	[-726,214,-270],
+	[-4593,-633,-202],
+	[-4370,1440,-450],
+	[898,-2833,-206],
+	[-1125,-3419,164],
 ]
 ::M06_CrumpkinCount <- 25
 
@@ -120,7 +120,7 @@ function M06_SpawnCrumpkin(x, y, z)
 		pickup_sound = "Halloween.PumpkinPickup",
 		automaterialize = true,
 	})
-	prop.ValidateScriptScope();
+	prop.ValidateScriptScope()
 	prop.ConnectOutput("OnRedPickup", "M06_CrumpkinPickupPlayer")
 	prop.ConnectOutput("OnBluePickup", "M06_CrumpkinPickupEnemy")
 }
@@ -171,6 +171,7 @@ getroottable()[Merc.EventTag] <- {
 			Merc.ExtraFail()
 			Merc.ChatPrint("Bonus objective failed! Took too much damage.")
 		}
+		Merc.UpdateHUD()
 	}
 	
 	OnGameEvent_teamplay_setup_finished = function(params)
@@ -188,6 +189,17 @@ getroottable()[Merc.EventTag] <- {
 		foreach (i in places)
 		{
 			M06_SpawnCrumpkin(i[0],i[1],i[2])
+		}
+		
+		local ent = null
+		while (ent = Entities.FindByName(ent, "cart_pause_relay"))
+		{
+			ent.Kill()
+		}
+		ent = null
+		while (ent = Entities.FindByName(ent, "cart_resume_relay"))
+		{
+			ent.Kill()
 		}
 	}
 }

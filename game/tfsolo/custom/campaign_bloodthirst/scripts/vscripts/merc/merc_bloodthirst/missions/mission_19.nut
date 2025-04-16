@@ -4,6 +4,7 @@ Merc.MissionID <- 19
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- TF_CLASS_SPY
 Merc.ForcedTeam <- TF_TEAM_BLUE
+Merc.WaitTimeConvar <- 1
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_blue.res"
 
@@ -28,7 +29,6 @@ Merc.ObjectiveMainMax <- 50
 Merc.ObjectiveExtraText <- "Kill enemies with pumpkin bombs"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 9
-Merc.WaitTimeConvar <- 1
 Merc.ForceWinOnMainDone <- 1
 
 Convars.SetValue("tf_allow_taunt_switch", 2)
@@ -198,6 +198,24 @@ PrecacheModel(M17_Pumpkin)
 	
 	player.Weapon_Switch(waxe)
 	SetPropEntity(player, "m_hActiveWeapon", waxe)
+	
+	Merc.Delay(1.0, function() { 
+		if (player.entindex() in M17_Holograms)
+		{
+			M17_Holograms[player.entindex()].Destroy()
+		}
+		local prop = SpawnEntityFromTable("prop_dynamic_override", {
+			origin = Vector(0,0,-4000),
+			angles = QAngle(0,RandomInt(0,360),0),
+			model = M17_Pumpkin,
+			targetname = "mercprop",
+			solid = 0,
+		})
+		SetPropInt(prop, "m_nRenderMode", Constants.ERenderMode.kRenderTransColor)
+		SetPropInt(prop, "m_clrRender", (128 << 24))
+		M17_Holograms[player.entindex()] <- prop
+		prop.DisableDraw()
+	} )
 }
 
 ::M17_SpawnAsSkeleton <- function(player)
@@ -222,22 +240,6 @@ PrecacheModel(M17_Pumpkin)
 		body.SetBodygroup(group, groupent)
 		player.SetForcedTauntCam(1)
 		player.Taunt(0,0)
-		
-		if (player.entindex() in M17_Holograms)
-		{
-			M17_Holograms[player.entindex()].Destroy()
-		}
-		local prop = SpawnEntityFromTable("prop_dynamic_override", {
-			origin = Vector(0,0,-4000),
-			angles = QAngle(0,RandomInt(0,360),0),
-			model = M17_Pumpkin,
-			targetname = "mercprop",
-			solid = 0,
-		})
-		SetPropInt(prop, "m_nRenderMode", Constants.ERenderMode.kRenderTransColor)
-		SetPropInt(prop, "m_clrRender", (128 << 24))
-		M17_Holograms[player.entindex()] <- prop
-		prop.DisableDraw()
 	} )
 	Merc.Delay(2.0, function() { 
 		player.SetForcedTauntCam(0)
@@ -260,6 +262,32 @@ Merc.AfterPlayerInv <- function(params)
 	M17_GivePumpkin(player)
 }
 
+Merc.BeforeRoundStart <- function(params) 
+{
+	M17_Holograms = {}
+	M17_Lives <- 5
+	Merc.ObjectiveTextAdd = " - Lives left: "+M17_Lives
+	
+	local prop = SpawnEntityFromTable("logic_script", {})
+	AddThinkToEnt(prop,"M17_Think")
+	
+	local ent = null
+	while (ent = Entities.FindByClassname(ent, "tf_logic_player_destruction"))
+	{
+		ent.ValidateScriptScope()
+		ent.GetScriptScope()["ScoreChange"] <- function(){
+			M17_ScoreChange(activator,caller)
+		}
+		ent.ConnectOutput("OnBlueScoreChanged","ScoreChange")
+		SetPropInt(ent, "m_nMaxPoints", 100)
+	}
+	
+	Merc.Delay(3.0, function() { 
+		local line = "+Places pumpkin bombs\n-Removes disguise on use";
+		Merc.DisplayTrMsg("The Nasty Surprise",line,10.0)
+	} )
+}
+
 Merc.EventTag <- UniqueString()
 getroottable()[Merc.EventTag] <- {
 	OnGameEvent_player_death = function(params)
@@ -278,6 +306,7 @@ getroottable()[Merc.EventTag] <- {
 				Merc.ForceFail()
 			}
 			Merc.ObjectiveTextAdd = " - Lives left: "+M17_Lives
+			Merc.UpdateHUD()
 			return
 		}
 		if (player.GetTeam() == Merc.ForcedTeam) return
@@ -288,42 +317,6 @@ getroottable()[Merc.EventTag] <- {
 		{
 			Merc.ExtraGet(1,1,1)
 		}
-	}
-	
-	OnGameEvent_teamplay_round_start = function(params)
-	{
-		M17_Holograms <- {}
-		M17_Lives <- 5
-		Merc.ObjectiveTextAdd = " - Lives left: "+M17_Lives
-		
-		local prop = SpawnEntityFromTable("logic_script", {})
-		AddThinkToEnt(prop,"M17_Think")
-		
-		local ent = null
-		while (ent = Entities.FindByClassname(ent, "tf_logic_player_destruction"))
-		{
-			ent.ValidateScriptScope()
-			ent.GetScriptScope()["ScoreChange"] <- function(){
-				M17_ScoreChange(activator,caller)
-			}
-			ent.ConnectOutput("OnBlueScoreChanged","ScoreChange")
-			SetPropInt(ent, "m_nMaxPoints", 100)
-		}
-		
-		Merc.Delay(0.5, function() { 
-			foreach (a in GetClients()) 
-			{	
-				if (!IsPlayerABot(a))
-				{
-					M17_SpawnAsSkeleton(a)
-				}
-			}
-		} )
-		
-		Merc.Delay(3.0, function() { 
-			local line = "+Places pumpkin bombs\n-Removes disguise on use";
-			Merc.DisplayTrMsg("The Nasty Surprise",line,10.0)
-		} )
 	}
 }
 __CollectGameEventCallbacks(getroottable()[Merc.EventTag])

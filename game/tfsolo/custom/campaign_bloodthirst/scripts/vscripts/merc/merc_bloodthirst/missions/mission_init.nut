@@ -332,16 +332,32 @@ getroottable()[Merc.CoreEventTag] <- {
 	{
 		Merc.BeforePlayerInv(params)
 		local player = GetPlayerFromUserID(params.userid)
+		local name = GetPropString(player, "m_szNetname")
 		if (IsPlayerABot(player)) 
 		{
 			local preset = player.GetPreset()
-			foreach (i in Merc.Bots)
+			if (preset == "")
 			{
-				if (preset == i.Preset)
+				foreach (i in Merc.Bots)
 				{
-					i.UpdateResupply(player)
-					Merc.AfterPlayerInv(params)
-					return
+					if (name == i.Name || name == i.Name + "(1)" || name == i.Name + "(2)")
+					{
+						i.UpdateResupply(player)
+						Merc.AfterPlayerInv(params)
+						return
+					}
+				}
+			}
+			else
+			{
+				foreach (i in Merc.Bots)
+				{
+					if (preset == i.Preset)
+					{
+						i.UpdateResupply(player)
+						Merc.AfterPlayerInv(params)
+						return
+					}
 				}
 			}
 			return
@@ -355,19 +371,38 @@ getroottable()[Merc.CoreEventTag] <- {
 	{
 		Merc.BeforePlayerSpawn(params)
 		local player = GetPlayerFromUserID(params.userid)
+		local name = GetPropString(player, "m_szNetname")
 		if (IsPlayerABot(player)) 
 		{
 			local preset = player.GetPreset()
-			foreach (i in Merc.Bots)
+			if (preset == "")
 			{
-				if (preset == i.Preset)
+				foreach (i in Merc.Bots)
 				{
-					i.OnSpawn(player)
-					Merc.Delay(RandomFloat(0.01,0.49), function() {
-						i.OnItems(player)
-					} )
-					Merc.AfterPlayerSpawn(params)
-					return
+					if (name == i.Name || name == i.Name + "(1)" || name == i.Name + "(2)")
+					{
+						i.OnSpawn(player)
+						Merc.Delay(RandomFloat(0.01,0.49), function() {
+							i.OnItems(player)
+						} )
+						Merc.AfterPlayerSpawn(params)
+						return
+					}
+				}
+			}
+			else
+			{
+				foreach (i in Merc.Bots)
+				{
+					if (preset == i.Preset)
+					{
+						i.OnSpawn(player)
+						Merc.Delay(RandomFloat(0.01,0.49), function() {
+							i.OnItems(player)
+						} )
+						Merc.AfterPlayerSpawn(params)
+						return
+					}
 				}
 			}
 			return
@@ -446,17 +481,33 @@ getroottable()[Merc.CoreEventTag] <- {
 	OnGameEvent_player_death = function(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
+		local name = GetPropString(player, "m_szNetname")
 		if (IsPlayerABot(player)) 
 		{
 			local preset = player.GetPreset()
-			foreach (i in Merc.Bots)
+			if (preset == "")
 			{
-				if (preset == i.Preset)
+				foreach (i in Merc.Bots)
 				{
-					i.OnDeath(player)
-					return
+					if (name == i.Name || name == i.Name + "(1)" || name == i.Name + "(2)")
+					{
+						i.OnDeath(player)
+						return
+					}
 				}
 			}
+			else
+			{
+				foreach (i in Merc.Bots)
+				{
+					if (preset == i.Preset)
+					{
+						i.OnDeath(player)
+						return
+					}
+				}
+			}
+			
 			return
 		}
 		local ent = null
@@ -474,6 +525,7 @@ getroottable()[Merc.CoreEventTag] <- {
 		// Cleans up timers at the end because the script will never be reloaded
 		Merc.Delays <- {}
 		Merc.Timers <- []
+		ToConsole("tf_bot_kick all")
 	}
 }
 __CollectGameEventCallbacks(getroottable()[Merc.CoreEventTag])

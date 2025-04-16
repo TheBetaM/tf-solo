@@ -9,17 +9,17 @@ Merc.PathHUD <- "resource/ui/solo/mission_twolines_blue.res"
 
 Merc.Bots <- [
 	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SOLDIER, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SOLDIER, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_DEMOMAN, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_DEMOMAN, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_HEAVY, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_HEAVY, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 01"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "Bot 02"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SOLDIER, "Bot 03"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SOLDIER, "Bot 04"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_DEMOMAN, "Bot 05"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_DEMOMAN, "Bot 06"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_HEAVY, "Bot 07"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_HEAVY, "Bot 08"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 09"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 10"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 11"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 12"),
 ]
 Merc.ObjectiveText <- "Defeat all enemies"
 Merc.ObjectiveMainCount <- 0
@@ -114,7 +114,7 @@ function SpawnSecretPickup(x, y, z)
 		automaterialize = false,
 		TeamNum = Merc.ForcedTeam,
 		teamnumber = Merc.ForcedTeam,
-	});
+	})
 	prop.SetTeam(Merc.ForcedTeam)
 	prop.ValidateScriptScope()
 	prop.ConnectOutput("OnBluePickup", "SecretPickupGet")
@@ -152,23 +152,13 @@ Merc.BeforeRoundStart <- function(params)
 	Merc.Bots[11].Flags = 4
 	Merc.Bots[11].Lives = 1
 	
-	Merc.Delay(0.5, function() { 
-		foreach (a in GetClients()) 
-		{	
-			if (!IsPlayerABot(a))
-			{
-				M21_SpawnAsHHH(a)
-			}
-		}
-	} )
-	
 	if (Merc.RSVFlags[12] == 0)
 	{
 		SpawnSecretPickup(-3402,2058,-590)
 	}
 	
 	Merc.Delay(1.0, function() { 
-		local line = "+2000 Max Health\n+Knockback immunity\n-100% soul";
+		local line = "+2000 Max Health\n+Knockback immunity\n-100℅ soul"
 		Merc.DisplayTrMsg("H.H.H.'s Headtaker",line,10.0)
 	} )
 }
@@ -198,12 +188,6 @@ Merc.AfterPlayerInv <- function(params)
 	SetPropInt(waxe, "m_iWorldModelIndex", index)
 	SetPropIntArray(waxe, "m_nModelIndexOverrides", index, 0)
 	
-	SetPropEntity(vm, "m_hWeaponAssociatedWith", waxe)
-	SetPropEntity(armvm, "m_hWeaponAssociatedWith", waxe)
-	SetPropEntity(wm, "m_hWeaponAssociatedWith", waxe)
-	SetPropEntity(waxe, "m_hExtraWearableViewModel", vm)
-	SetPropEntity(waxe, "m_hExtraWearable", wm)
-	
 	waxe.SetTeam(player.GetTeam())
 	waxe.SetOwner(player)
 	
@@ -220,14 +204,12 @@ Merc.AfterPlayerInv <- function(params)
 	waxe.AddAttribute("damage force reduction", 0, -1)
 	
 	SetPropEntityArray(player, "m_hMyWeapons", waxe, waxe.GetSlot())
-	player.Weapon_Equip(waxe);
+	player.Weapon_Equip(waxe)
 	
 	if (waxe != null)
 	{
 		player.Weapon_Switch(waxe)
 	}
-	player.EquipWearableViewModel(armvm)
-	player.EquipWearableViewModel(vm)
 	
 	player.AddCustomAttribute("hidden maxhealth non buffed", 2000.0, -1)
 	player.AddCustomAttribute("damage force reduction", 0, -1)

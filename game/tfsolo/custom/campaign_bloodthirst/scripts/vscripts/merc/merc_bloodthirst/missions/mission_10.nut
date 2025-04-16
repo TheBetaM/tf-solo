@@ -4,23 +4,23 @@ Merc.MissionID <- 10
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- 0
 Merc.ForcedTeam <- TF_TEAM_RED
+Merc.WaitTimeConvar <- 1
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
 
 Merc.Bots <- [
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SOLDIER, "Rat King"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Rat Medic 1"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Rat Medic 2"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Rat Medic 3"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Rat Medic 4"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SOLDIER, "King"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Medic 1"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Medic 2"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Medic 3"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Medic 4"),
 ]
-MercObjectiveText <- "Win before The Rat King reaches full health"
-MercObjectiveMainCount <- 0
-MercObjectiveMainMax <- 1
-MercObjectiveExtraText <- "TBD"
-MercObjectiveExtraCount <- 0
-MercObjectiveExtraMax <- 1
-MercWaitTimeConvar <- 1
+Merc.ObjectiveText <- "Win before The King reaches full health"
+Merc.ObjectiveMainCount <- 0
+Merc.ObjectiveMainMax <- 1
+Merc.ObjectiveExtraText <- "TBD"
+Merc.ObjectiveExtraCount <- 0
+Merc.ObjectiveExtraMax <- 1
 
 ::M11_HealthBar <- null
 ::M11_KingMaxHealth <- 10000
@@ -36,22 +36,22 @@ Merc.Bots[4].Items = ["The Kritzkrieg"]
 
 ::M11_UpdateHealthBar <- function()
 {
-	if (MercRoundEnded) return;
-	if (MercBots[0].Handle != null)
+	if (Merc.RoundEnded) return
+	if (Merc.Bots[0].Handle != null)
 	{
-		M11_KingHealth = MercBots[0].Handle.GetHealth()
+		M11_KingHealth = Merc.Bots[0].Handle.GetHealth()
 	}
-	local hp = (M11_KingHealth / M11_KingMaxHealth.tofloat()) * 255.0;
+	local hp = (M11_KingHealth / M11_KingMaxHealth.tofloat()) * 255.0
 	if (hp < 1.0)
 	{
-		hp = 1.0;
+		hp = 1.0
 	}
 	local hpbar = hp.tointeger()
-	SetPropInt(M11_HealthBar, "m_iBossHealthPercentageByte", hpbar);
+	SetPropInt(M11_HealthBar, "m_iBossHealthPercentageByte", hpbar)
 	if (M11_KingHealth >= M11_KingMaxHealth - 1)
 	{
-		Merc_ForceFail()
-		ClientPrint(null, HUD_PRINTTALK, "["+LOCM_MODENAME+"] Main objective failed! The Rat King reached full health.");
+		Merc.ForceFail()
+		Merc.ChatPrint("Main objective failed! The King reached full health.")
 	}
 }
 
@@ -140,9 +140,9 @@ getroottable()[Merc.EventTag] <- {
 		}
 		SetPropInt(M11_HealthBar, "m_iBossState", 0)
 		SetPropInt(M11_HealthBar, "m_iBossHealthPercentageByte", 1)
-		M11_UpdateHealthBar()
+		//M11_UpdateHealthBar()
 		
-		Merc.Timer(0.25, 0, function() {
+		Merc.Timer(0.5, 0, function() {
 			M11_UpdateHealthBar()
 		} )
 		

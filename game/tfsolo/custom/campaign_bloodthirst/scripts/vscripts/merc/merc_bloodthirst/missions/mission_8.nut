@@ -1,40 +1,38 @@
-// KOTH Sewer
+// PD Farmageddon
 ::Merc <- {}
 Merc.MissionID <- 8
 IncludeScript("merc/merc_bloodthirst/missions/mission_init.nut")
 Merc.ForcedClass <- TF_CLASS_HEAVY
 Merc.ForcedTeam <- TF_TEAM_RED
+Merc.WaitTimeConvar <- 1
 Merc.SetupConvars()
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
 
 Merc.Bots <- [
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "Bot 01"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "Bot 02"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_PYRO, "Bot 03"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_HEAVY, "Bot 04"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_DEMOMAN, "Bot 01"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_ENGINEER, "Bot 02"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SNIPER, "Bot 03"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_PYRO, "Bot 04"),
+	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_MEDIC, "Bot 05"),
 	
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "Bot 05"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_SCOUT, "Bot 06"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_PYRO, "Bot 07"),
-	Merc.BotGeneric(TF_TEAM_RED, 1, TF_CLASS_HEAVY, "Bot 08"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SCOUT, "Bot 06"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SOLDIER, "Bot 07"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Bot 08"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_PYRO, "Bot 09"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SNIPER, "Bot 10"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SPY, "Bot 11"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_ENGINEER, "Bot 12"),
 ]
-Merc.ObjectiveText <- "Win without touching the point"
+Merc.ObjectiveText <- LOCM_OBJECTIVE_GENERIC
 Merc.ObjectiveMainCount <- 0
 Merc.ObjectiveMainMax <- 1
-Merc.ObjectiveExtraText <- "Kill Rat Bastards using Ratkiller X"
+Merc.ObjectiveExtraText <- "Kill Scarecrows using Repellant X"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 7
 
 ::M07_Weapon <- "models/weapons/c_models/c_dex_shotgun/c_dex_shotgun.mdl"
 PrecacheModel(M07_Weapon)
 
-Merc.BeforeRoundWin <- function(params)
-{
-	if (params.team == Merc.ForcedTeam)
-	{
-		Merc.MainGet(1,1,1)
-	}
-}
 Merc.AfterPlayerInv <- function(params) 
 {
 	local player = GetPlayerFromUserID(params.userid)
@@ -131,18 +129,44 @@ Merc.AfterPlayerInv <- function(params)
 
 Merc.EventTag <- UniqueString()
 getroottable()[Merc.EventTag] <- {
-	OnGameEvent_controlpoint_starttouch = function(params)
-	{
-		local player = EntIndexToHScript(params.player)
-		if (player.GetTeam() != Merc.ForcedTeam) return
-		if (IsPlayerABot(player)) return
-		if (Merc.RoundEnded) return
-		Merc.ForceFail()
-		Merc.ChatPrint("Main objective failed! Touched the point.")
-	}
-	
 	OnGameEvent_teamplay_round_start = function(params)
 	{
+		local ent = null
+		while (ent = Entities.FindByName(ent, "cap_teleport_trigger_red"))
+		{
+			ent.Kill()
+		}
+		ent = null
+		while (ent = Entities.FindByName(ent, "cap_teleport_heal"))
+		{
+			ent.Kill()
+		}
+		ent = null
+		while (ent = Entities.FindByName(ent, "cap_teleport_trigger_blu"))
+		{
+			ent.Kill()
+		}
+		ent = null
+		while (ent = Entities.FindByName(ent, "cap_teleport"))
+		{
+			ent.Kill()
+		}
+		ent = null
+		while (ent = Entities.FindByClassname(ent, "func_capturezone"))
+		{
+			ent.Kill()
+		}
+		
+		local trigger = SpawnEntityFromTable("func_capturezone", 
+		{
+			origin = Vector(480,2084,24),
+			spawnflags = 1,
+		})
+		trigger.SetSize(Vector(-100,-100,-300), Vector(100,100,50))
+		trigger.SetSolid(2)
+		EntityOutputs.AddOutput(trigger, "OnCapTeam1_PD", "pd_logic", "ScoreRedPoints", "", 0, -1)
+		EntityOutputs.AddOutput(trigger, "OnCapTeam2_PD", "pd_logic", "ScoreBluePoints", "", 0, -1)
+	
 		Merc.Delay(0.5, function() { 
 			foreach (a in GetClients()) 
 			{	
@@ -160,49 +184,27 @@ getroottable()[Merc.EventTag] <- {
 				}
 			}
 			
-			local line = "+300℅ damage vs rats\n-10℅ damage";
-			Merc.DisplayTrMsg("Ratkiller X",line,10.0)
+			local line = "+400℅ damage vs Scarecrows\n-10℅ damage";
+			Merc.DisplayTrMsg("Repellant X",line,10.0)
 		} )
-		
-		// map script stuff because it overrides root table
-		::OnScriptHook_OnTakeDamage <- function(params)
+	}
+	
+	OnScriptHook_OnTakeDamage = function(params)
+	{
+		local victim = params.const_entity
+		local attacker = params.attacker
+		if (victim.GetClassname() != "tf_zombie") return
+		if (attacker == null) return
+		if (IsPlayerABot(attacker)) return
+		if (params.weapon != null && params.weapon.GetClassname() == "tf_weapon_shotgun_hwg")
 		{
-			local victim = params.const_entity
-
-			if (!(victim in TheNextBots))
-				return
-			
-			if (victim != null && victim in TheNextBots)
-				DispatchParticleEffect("blood_impact_red_01", params.damage_position, victim.GetAbsAngles() + Vector())
-			
-			if (params.weapon != null && params.weapon.GetClassname() == "tf_weapon_shotgun_hwg" && !IsPlayerABot(params.attacker))
-				params.damage *= 3.0
-		}
-		
-		::OnGameEvent_npc_hurt <- function(params)
-		{
-			local entity = EntIndexToHScript(params.entindex)
-
-			if (!(entity in TheNextBots))
-				return
-
-			if (params.health - params.damageamount <= 0)
+			params.damage *= 4.0
+			if (victim.GetHealth() - params.damage <= 0)
 			{
-				NetProps.SetPropInt(entity, "m_takedamage", DAMAGE_EVENTS_ONLY)
-
-				local npc = TheNextBots[entity]
-				npc.OnKilled(params)
-
-				delete TheNextBots[entity]
-				entity.Kill()
-				
-				local player = GetPlayerFromUserID(params.attacker_player)
-				if (!IsPlayerABot(player) && params.weaponid == 14)
-				{
-					Merc.ExtraGet(1,1,1)
-				}
+				Merc.ExtraGet(1,1,1)
 			}
 		}
+		
 	}
 }
 __CollectGameEventCallbacks(getroottable()[Merc.EventTag])

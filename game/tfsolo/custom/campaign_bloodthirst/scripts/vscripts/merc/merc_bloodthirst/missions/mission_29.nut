@@ -17,14 +17,14 @@ Merc.ObjectiveMainMax <- 20
 Merc.ObjectiveExtraText <- "Get kills using Stomp or Mighty Slam"
 Merc.ObjectiveExtraCount <- 0
 Merc.ObjectiveExtraMax <- 3
-Merc.ObjectiveTextAdd <- "\n\n"
+Merc.ObjectiveTextAdd <- ""
 Merc.CustomSpawn <- 2
 Merc.AllowCustomWeapons <- 0
 Merc.AllowRecruits <- 0
 Merc.ForceWinOnMainDone <- 1
 
 Merc.Bots[0].BotAttribs = [IGNORE_ENEMIES]
-Merc.Bots[1].Items = ["Duck Billed Hatypus"]
+//Merc.Bots[1].Items = ["Duck Billed Hatypus"]
 
 ::M29BuildSpots <- [
 	[1479,-810,1565, 90, 4],
@@ -163,7 +163,7 @@ Merc.Bots[1].Items = ["Duck Billed Hatypus"]
 	local p = M29CheckSpots[M29_LastCheck]
 	Merc.Bots[1].Handle.SetPlayerClass(M29_LastClass)
 	SetPropInt(Merc.Bots[1].Handle, "m_Shared.m_iDesiredPlayerClass", M29_LastClass)
-	Merc.Bots[1].Handle.ForceRegenerateAndRespawn()
+	Merc.Bots[1].Handle.ForceRespawn()
 	Merc.Bots[1].Handle.Teleport(true, Vector(p[0],p[1],p[2]), true, QAngle(0, RandomInt(0,180), 0), true, Vector(0, 0, 0))
 	::IsRoundSetup <- function() { return false; } // VSH
 	Merc.Delay(0.4, function() {
@@ -203,7 +203,7 @@ Merc.Bots[1].Items = ["Duck Billed Hatypus"]
 		show_distance = true,
 		//follow_entindex = Merc.Bots[1].Handle.entindex(),
 	})
-	SetPropEntity(M29_CheckGlow, "m_hTarget", MercBots[1].Handle)
+	SetPropEntity(M29_CheckGlow, "m_hTarget", Merc.Bots[1].Handle)
 }
 ::M29_PassCheck <- function()
 {
@@ -275,26 +275,26 @@ function MercSpawnBuild(x,y,z,rot,lev)
 
 Merc.BeforeRoundStart <- function(params) 
 {
-	::VSH_TEAM_MERCS <- MercForcedTeam; // VSH 2024
-	::VSH_TEAM_BOSS <- MercGetEnemyTeam(); // VSH 2024
-	::TF_TEAM_MERCS <- MercForcedTeam; // VSH
-	::TF_TEAM_BOSS <- MercGetEnemyTeam(); // VSH
+	::VSH_TEAM_MERCS <- Merc.GetEnemyTeam() // VSH 2024
+	::VSH_TEAM_BOSS <- Merc.ForcedTeam // VSH 2024
+	::TF_TEAM_MERCS <- Merc.GetEnemyTeam() // VSH
+	::TF_TEAM_BOSS <- Merc.ForcedTeam // VSH
 	::UnlockControlPoint <- function() {} // VSH / VSH 2024
 	::GetAliveMercCount <- function() { return 20; } // VSH
 	::CalcBossMaxHealth <- function(a) { return M29_StartHP; } // VSH
 	::IsRoundSetup <- function() { return true; } // VSH
 	if ("SetPersistentVar" in getroottable())
 	{
-		SetPersistentVar("next_boss", 1); // VSH
+		SetPersistentVar("next_boss", 1) // VSH
 	}
 	
-	::M29_LastCheck <- -1;
-	local prop = SpawnEntityFromTable("logic_script", {});
+	::M29_LastCheck <- -1
+	local prop = SpawnEntityFromTable("logic_script", {})
 	AddThinkToEnt(prop,"M29_HaleThink")
-	::M29_CheckWait <- 0;
-	MercBots[1].SpellType = [-1,1.0]
+	M29_CheckWait = 1
+	Merc.Bots[1].SpellType = [-1,1.0]
 	
-	local fullc = [];
+	local fullc = []
 	foreach (i,a in [1,2,3,4,5,6,7])
 	{
 		if (a != M29_LastClass)
@@ -309,13 +309,13 @@ Merc.BeforeRoundStart <- function(params)
 		MercSpawnBuild(a[0],a[1],a[2],a[3],a[4])
 	}
 	
-	local glow = Entities.CreateByClassname("tf_glow");
-	glow.KeyValueFromString("GlowColor", "255 255 255 255");
+	local glow = Entities.CreateByClassname("tf_glow")
+	glow.KeyValueFromString("GlowColor", "255 255 255 255")
 	SetPropInt(glow, "m_iMode", 0)
-	SetPropEntity(glow, "m_hTarget", null);
-	M29_CheckGlow <- glow;
+	SetPropEntity(glow, "m_hTarget", null)
+	M29_CheckGlow <- glow
 	
-	MercDelay(0.5, function() {
+	Merc.Delay(0.5, function() {
 		foreach (a in GetClients()) 
 		{
 			if (IsPlayerABot(a))
@@ -325,25 +325,15 @@ Merc.BeforeRoundStart <- function(params)
 				a.Teleport(true, Vector(1976,-421,1592), true, QAngle(0, 180, 0), true, Vector(0, 0, 0))
 			}
 		}
-		
-		local ent = null
-		while (ent = Entities.FindByClassname(ent, "game_text"))
-		{
-			ent.Kill()
-		}
-	} )
-	MercDelay(1.0, function() {
-		Merc_CreateHUD()
-		Merc_LoopHUD()
 	} )
 }
 
 Merc.AfterPlayerSpawn <- function(params) 
 {
-	::VSH_TEAM_MERCS <- MercForcedTeam // VSH 2024
-	::VSH_TEAM_BOSS <- MercGetEnemyTeam() // VSH 2024
-	::TF_TEAM_MERCS <- MercForcedTeam // VSH
-	::TF_TEAM_BOSS <- MercGetEnemyTeam() // VSH
+	::VSH_TEAM_MERCS <- Merc.GetEnemyTeam() // VSH 2024
+	::VSH_TEAM_BOSS <- Merc.ForcedTeam // VSH 2024
+	::TF_TEAM_MERCS <- Merc.GetEnemyTeam() // VSH
+	::TF_TEAM_BOSS <- Merc.ForcedTeam // VSH
 	local player = GetPlayerFromUserID(params.userid)
 	if (IsPlayerABot(player))
 	{
@@ -387,6 +377,7 @@ getroottable()[Merc.EventTag] <- {
 			}
 		} )
 		
+		M29_CheckWait = 0
 		M29_StartCheck()
 	}
 	
@@ -394,7 +385,7 @@ getroottable()[Merc.EventTag] <- {
 	{
 		if ("SetPersistentVar" in getroottable())
 		{
-			SetPersistentVar("next_boss", 1); // VSH
+			SetPersistentVar("next_boss", 1) // VSH
 		}
 	}
 	

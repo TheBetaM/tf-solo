@@ -20,7 +20,7 @@ Merc.Bots <- [
 	
 	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SOLDIER, "Bot 01"),
 	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_MEDIC, "Bot 02"),
-	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SNIPE, "Bot 03"),
+	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_SNIPER, "Bot 03"),
 	Merc.BotGeneric(TF_TEAM_BLUE, 1, TF_CLASS_DEMOMAN, "Bot 04"),
 ]
 Merc.ObjectiveText <- "Win without letting the cart recede"
@@ -117,6 +117,7 @@ Merc.AfterPlayerSpawn <- function(params)
 	
 	GotKill <- false
 	Merc.ObjectiveExtraAdd = " (WAITING)"
+	Merc.UpdateHUD()
 }
 Merc.BeforeRoundWin <- function(params)
 {
@@ -145,21 +146,22 @@ getroottable()[Merc.EventTag] <- {
 			{
 				if (!GotKill)
 				{
-					Merc.ExtraFail()
 					Merc.ChatPrint("Bonus objective failed! Failed to get a kill.")
 					Merc.ObjectiveExtraAdd = ""
+					Merc.ExtraFail()
 				}
 			}
 			
 			return
 		}
-		if (player.GetTeam() == Mer.cForcedTeam) return
+		if (player.GetTeam() == Merc.ForcedTeam) return
 		local aplayer = GetPlayerFromUserID(params.attacker)
 		if (aplayer == null || IsPlayerABot(aplayer)) return
 		if (Merc.RoundEnded || Merc.ExtraFailed) return
 		
 		GotKill <- true
 		Merc.ObjectiveExtraAdd = " (OK)"
+		Merc.UpdateHUD()
 	}
 	
 	OnGameEvent_teamplay_point_captured = function(params)
