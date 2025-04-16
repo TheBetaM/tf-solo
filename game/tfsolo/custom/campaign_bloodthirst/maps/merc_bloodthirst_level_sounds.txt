@@ -1,0 +1,54 @@
+"Merc.TestVoice"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"vo/engineer_ActivateCharge01.mp3"
+}
+
+"Merc.RED.HubMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#music/merc/merc_bloodthirst/hub_red.mp3"
+}
+
+"Merc.BLU.HubMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#music/merc/merc_bloodthirst/hub_blu.mp3"
+}
+
+"Merc.RED.IntroMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#*music/merc/merc_bloodthirst/intro_ed.mp3"
+}
+
+"Merc.BLU.IntroMusic"
+{
+	"channel"		"CHAN_VOICE2"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"		"SNDLVL_NONE"
+	"wave"			"#*music/merc/merc_bloodthirst/intro_dracula.mp3"
+}
+
+"Game.YourTeamWon"
+{
+	"channel"	"CHAN_AUTO"
+	"volume"	"1"
+	"soundlevel"	"SNDLVL_140dB"
+	"pitch"		"PITCH_NORM"
+
+	"wave"		"#music/merc/merc_bloodthirst/ending_jingle.mp3"
+}

@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "vgui\spellbook_stealth"
+	$additive 1
+	$vertexalpha 1
+	$vertexcolor 1
+	$nocull 1
+}
+

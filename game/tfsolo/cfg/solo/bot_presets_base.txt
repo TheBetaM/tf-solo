@@ -624,10 +624,13 @@ bot_presets
 	}
 	Founding
 	{
-		Name "Founding"
+		Name "Patriotic Commander"
 		Class Soldier
 		Items
 		{
+			"The Liberty Launcher" {}
+			"The Buff Banner" {}
+			
 			"The Founding Father" {}
 			"The Powdered Practitioner" {}
 		}
@@ -876,12 +879,13 @@ bot_presets
 	}
 	Firefly
 	{
-		Name "Firefly"
+		Name "Fire Flier"
 		Class Pyro
 		Items
 		{
 			"The Degreaser" {}
-			"The Gas Passer" {}
+			"The Thermal Thruster" {}
+			"The Powerjack" {}
 			
 			"The Firefly" {}
 		}
@@ -1456,10 +1460,13 @@ bot_presets
 	}
 	Spartan2
 	{
-		Name "Spartan2"
+		Name "Tartan Spartan"
 		Class Demoman
 		Items
 		{
+			"Upgradeable TF_WEAPON_GRENADELAUNCHER" {}
+			"The Quickiebomb Launcher" {}
+			
 			"The Tartan Spartan" {}
 		}
 	}
@@ -1808,10 +1815,12 @@ bot_presets
 	}
 	Boxer
 	{
-		Name "Boxer"
+		Name "Heavy-Weight"
 		Class HeavyWeapons
 		Items
 		{
+			"The Killing Gloves of Boxing" {}
+			
 			"Pugilist's Protector" {}
 			"The Heavy-Weight Champ" {}
 		}
@@ -2302,10 +2311,12 @@ bot_presets
 	}
 	Cargo
 	{
-		Name "Cargo"
+		Name "Cargo Constructor"
 		Class Engineer
 		Items
 		{
+			"The Southern Hospitality" {}
+			
 			"Cargo Constructor" {}
 			"Hazard Handler" {}
 		}
@@ -2841,6 +2852,8 @@ bot_presets
 		Class Medic
 		Items
 		{
+			"The Quick-Fix" {}
+			
 			"The Surgeon General" {}
 		}
 	}
@@ -2919,12 +2932,13 @@ bot_presets
 	}
 	Lonestar
 	{
-		Name "Lonestar"
+		Name "Lone Star"
 		Class Sniper
 		Items
 		{
 			"The Classic" {}
 			"The Cozy Camper" {}
+			"The Shahanshah" {}
 			
 			"The Lone Star" {}
 			"Awesomenauts Badge" {}
@@ -3002,10 +3016,13 @@ bot_presets
 	}
 	Pith
 	{
-		Name "Pith"
+		Name "Pity Practioner"
 		Class Sniper
 		Items
 		{
+			"The AWPer Hand" {}
+			"The Cozy Camper" {}
+			
 			"Sniper Pith Helmet" {}
 		}
 	}

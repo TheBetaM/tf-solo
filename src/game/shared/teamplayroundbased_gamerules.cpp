@@ -2198,6 +2198,10 @@ void CTeamplayRoundBasedRules::State_Think_STALEMATE( void )
 		return;
 	}
 
+	if ( IsInArenaMode() )
+	{
+		CheckReadyRestart();
+	}
 	if ( IsInTournamentMode() == true && IsInWaitingForPlayers() == true )
 	{
 		CheckReadyRestart();

@@ -350,11 +350,11 @@ void CTFHudObjectiveStatus::Think()
 //-----------------------------------------------------------------------------
 bool CTFHudObjectiveStatus::ShouldDraw()
 {
-	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
-	{
-		return false;
-	}
+	//C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
+	//if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
+	//{
+	//	return false;
+	//}
 
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
 		return false;

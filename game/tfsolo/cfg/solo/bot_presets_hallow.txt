@@ -2,10 +2,12 @@ bot_presets
 {
 	CurseANature
 	{
-		Name "CurseANature"
+		Name "Curse-A-Nature"
 		Class Scout
 		Items
 		{
+			"The Force-a-Nature" {}
+			
 			"Wrap Battler" {}
 			"B-ankh!" {}
 			"Futankhamun" {}
@@ -218,6 +220,8 @@ bot_presets
 		Class Soldier
 		Items
 		{
+			"The Black Box" {}
+			
 			"The Zipperface" {}
 		}
 	}
@@ -470,10 +474,12 @@ bot_presets
 	}
 	Wraith
 	{
-		Name "Wraith"
+		Name "Wandering Wraith"
 		Class Pyro
 		Items
 		{
+			"The Backburner" {}
+			
 			"The Wraith Wrap" {}
 			"The Coffin Kit" {}
 		}
@@ -817,7 +823,7 @@ bot_presets
 	}
 	DeadHeat
 	{
-		Name "SplitHead"
+		Name "DeadHeat"
 		Class Pyro
 		Items
 		{
@@ -826,10 +832,12 @@ bot_presets
 	}
 	SplitHead
 	{
-		Name "SplitHead"
+		Name "Headsplitter"
 		Class Pyro
 		Items
 		{
+			"Upgradeable TF_WEAPON_FLAMETHROWER" {}
+			
 			"Splitting Headache" {}
 		}
 	}
@@ -1024,10 +1032,13 @@ bot_presets
 	}
 	Defaced
 	{
-		Name "Defaced"
+		Name "Defaced Detonator"
 		Class Demoman
 		Items
 		{
+			"The Iron Bomber" {}
+			"Upgradeable TF_WEAPON_PIPEBOMBLAUNCHER" {}
+			
 			"Defaced Detonator" {}
 		}
 	}
@@ -1076,10 +1087,12 @@ bot_presets
 	}
 	Cranium
 	{
-		Name "Cranium"
+		Name "Cranium Opener"
 		Class HeavyWeapons
 		Items
 		{
+			"Tomislav" {}
+			
 			"Cadaver's Cranium" {}
 		}
 	}
@@ -1103,10 +1116,12 @@ bot_presets
 	}
 	MonsterJaw
 	{
-		Name "MonsterJaw"
+		Name "Monstrous Man"
 		Class HeavyWeapons
 		Items
 		{
+			"The Huo Long Heatmaker" {}
+			
 			"The Monstrous Mandible" {}
 		}
 	}
@@ -1210,6 +1225,8 @@ bot_presets
 		Class Engineer
 		Items
 		{
+			"powerhouse_pistol_blackdahlia" {}
+			
 			"The Master Mind" {}
 		}
 	}
@@ -1389,10 +1406,12 @@ bot_presets
 	}
 	SecondOpinion
 	{
-		Name "SecondOpinion"
+		Name "Second Opinion"
 		Class Medic
 		Items
 		{
+			"Upgradeable TF_WEAPON_MEDIGUN" {}
+			
 			"The Second Opinion" {}
 			"Herzensbrecher" {}
 		}
@@ -1492,10 +1511,13 @@ bot_presets
 	}
 	WitchDoctor
 	{
-		Name "WitchDoctor"
+		Name "Witch Doctor"
 		Class Medic
 		Items
 		{
+			"The Overdose" {}
+			"The Vaccinator" {}
+			
 			"The Witch Doctor" {}
 		}
 	}
@@ -1552,10 +1574,13 @@ bot_presets
 	}
 	Headcase
 	{
-		Name "Headcase"
+		Name "Hallowed Headcase"
 		Class Sniper
 		Items
 		{
+			"harvest_sniperrifle_boneyard" {}
+			"Upgradeable TF_WEAPON_SMG" {}
+			
 			"The Hallowed Headcase" {}
 		}
 	}
@@ -1709,6 +1734,9 @@ bot_presets
 		Class Spy
 		Items
 		{
+			"L'Etranger" {}
+			"The Black Rose" {}
+			
 			"Facepeeler" {}
 		}
 	}
@@ -1723,10 +1751,13 @@ bot_presets
 	}
 	VoodooVizier
 	{
-		Name "VoodooVizier"
+		Name "Voodoo Vizier"
 		Class Spy
 		Items
 		{
+			"The Enforcer" {}
+			"The Wanga Prick" {}
+			
 			"Voodoo Vizier" {}
 		}
 	}

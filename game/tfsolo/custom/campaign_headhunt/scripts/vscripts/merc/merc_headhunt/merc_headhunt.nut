@@ -616,11 +616,13 @@ Merc.HubEvents <- {
 		Merc.SpawnActorRED()
 		Merc.SpawnActorBLU()
 	
-		if (Merc.SubsTimer != null)
-		{
-			Merc.SubsTimer[2] = false
-		}
 		Merc.SubsTimer = Merc.Timer(0.25, 0, MercSubsThink)
+	}
+	
+	OnGameEvent_scorestats_accumulated_update = function(params)
+	{
+		Merc.Delays <- {}
+		Merc.Timers <- []
 	}
 }
 CollectEventsInScope(Merc.HubEvents)

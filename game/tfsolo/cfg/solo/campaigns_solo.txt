@@ -4,25 +4,25 @@
 	{
 		"Name" "Headhunt"
 		"Desc" "Your own personal origin story!"
-		"Map" "merc_headhunt_solo"
+		"Map" "merc_headhunt"
 		"ShowProgress" "1"
 		"ProgressKey" "headhunt_progress"
-		"BGArt" "casual/gametype_cp"
+		"BGArt" "campaigns/campaign_headhunt"
 	}
 	"bloodthirst"
 	{
 		"Name" "Bloodthirst"
 		"Desc" "Dracula is waiting!"
-		"Map" "merc_bloodthirst_solo"
+		"Map" "merc_bloodthirst"
 		"ShowProgress" "1"
 		"ProgressKey" "bloodthirst_progress"
-		"BGArt" "casual/gametype_koth"
+		"BGArt" "campaigns/campaign_bloodthirst"
 	}
 	//"xmas"
 	//{
 	//	"Name" "Xmas"
 	//	"Desc" ""
-	//	"Map" "merc_xmas_solo"
+	//	"Map" "merc_xmas"
 	//	"ShowProgress" "1"
 	//	"ProgressKey" "xmas_progress"
 	//	"BGArt" "casual/gametype_plr"
@@ -31,7 +31,7 @@
 	//{
 	//	"Name" "Death Metal"
 	//	"Desc" ""
-	//	"Map" "merc_deathmetal_solo"
+	//	"Map" "merc_deathmetal"
 	//	"ShowProgress" "1"
 	//	"ProgressKey" "deathmetal_progress"
 	//	"BGArt" "casual/gametype_payload"
