@@ -64,6 +64,7 @@ extern ConVar tf_bot_health_critical_ratio;
 // Returns the initial Action we will run concurrently as a child to us
 Action< CTFBot > *CTFBotScenarioMonitor::InitialContainedAction( CTFBot *me )
 {
+	m_roamer = false;
 	if ( me->IsInASquad() )
 	{
 		if ( me->GetSquad()->IsLeader( me ) )
@@ -176,7 +177,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 #endif // TF_RAID_MODE	
 
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		if ( me->IsPlayerClass( TF_CLASS_SPY ) )
 		{
@@ -251,18 +252,18 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
 	{
-		if (TFGameRules()->HasMultipleTrains())
+		if ( TFGameRules()->HasMultipleTrains() )
 		{
 			return new CTFBotPayloadPush;
 		}
 		else
 		{
-			if (me->GetTeamNumber() == TF_TEAM_BLUE)
+			if ( me->GetTeamNumber() == TF_TEAM_BLUE )
 			{
 				// blu is pushing
 				return new CTFBotPayloadPush;
 			}
-			else if (me->GetTeamNumber() == TF_TEAM_RED)
+			else if ( me->GetTeamNumber() == TF_TEAM_RED )
 			{
 				// red is blocking
 				return new CTFBotPayloadGuard;
@@ -293,23 +294,35 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		DevMsg( "%3.2f: %s: Gametype is CP, but I can't find a point to capture or defend!\n", gpGlobals->curtime, me->GetDebugIdentifier() );
 		return new CTFBotCapturePoint;
 	}
-	else if (TFGameRules()->GetGameType() == TF_GAMETYPE_ARENA)
+	else
 	{
-		// if we have a point we can capture - do it
-		CUtlVector< CTeamControlPoint* > captureVector;
-		TFGameRules()->CollectCapturePoints(me, &captureVector);
+		// Arena PLR
+		if ( TFGameRules()->HasMultipleTrains() )
+		{
+			return new CTFBotPayloadPush;
+		}
 
-		if (captureVector.Count() > 0)
+		// if we have a point we can capture - do it
+		CUtlVector< CTeamControlPoint * > captureVector;
+		TFGameRules()->CollectCapturePoints( me, &captureVector );
+
+		if ( captureVector.Count() > 0 )
 		{
 			return new CTFBotCapturePoint;
 		}
 
-		return new CTFBotSeekAndDestroy;
-	}
-	else
-	{
+		// otherwise, defend our point(s) from capture
+		CUtlVector< CTeamControlPoint * > defendVector;
+		TFGameRules()->CollectDefendPoints( me, &defendVector );
+
+		if ( defendVector.Count() > 0 )
+		{
+			return new CTFBotDefendPoint;
+		}
+
+		m_roamer = true;
 		// scenario not implemented yet - just fight
-		return new CTFBotSeekAndDestroy;
+		return new CTFBotSeekAndDestroy( -1.0f, true );
 	}
 
 	return NULL;
@@ -319,7 +332,8 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 //-----------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotScenarioMonitor::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
 {
-	m_ignoreLostFlagTimer.Start( 20.0f );
+	m_roamer = false;
+	m_ignoreLostFlagTimer.Start( 5.0f );
 	m_lostFlagTimer.Invalidate();
 	return Continue();
 }
@@ -345,35 +359,89 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 		return SuspendFor( new CTFBotDeliverFlag, "I've picked up the flag! Running it in..." );
 	}
 
-	if ( me->HasMission( CTFBot::NO_MISSION ) && m_ignoreLostFlagTimer.IsElapsed() && me->IsAllowedToPickUpFlag() )
+	if ( me->HasMission( CTFBot::NO_MISSION ) )
 	{
-		CCaptureFlag *flag = me->GetFlagToFetch();
-
-		if ( flag )
+		if ( m_ignoreLostFlagTimer.IsElapsed() && me->IsAllowedToPickUpFlag() )
 		{
-			CTFPlayer *carrier = ToTFPlayer( flag->GetOwnerEntity() );
-			if ( carrier )
+			CCaptureFlag *flag = me->GetFlagToFetch();
+
+			if ( flag )
 			{
-				m_lostFlagTimer.Invalidate();
-			}
-			else
-			{
-				// flag is loose
-				if ( !m_lostFlagTimer.HasStarted() )
-				{
-					m_lostFlagTimer.Start( tf_bot_fetch_lost_flag_time.GetFloat() );
-				}
-				else if ( m_lostFlagTimer.IsElapsed() )
+				CTFPlayer *carrier = ToTFPlayer( flag->GetOwnerEntity() );
+				if ( carrier )
 				{
 					m_lostFlagTimer.Invalidate();
-
-					// if we're a Medic an actively healing someone, don't interrupt
-					if ( !me->MedicGetHealTarget() )
+				}
+				else
+				{
+					// flag is loose
+					if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION )
 					{
-						// we better go get the flag
-						return SuspendFor( new CTFBotFetchFlag( TEMPORARY_FLAG_FETCH ), "Fetching lost flag..." );
+						// if we're a Medic an actively healing someone, don't interrupt
+						if ( !me->MedicGetHealTarget() )
+						{
+							// we better go get the flag
+							return SuspendFor( new CTFBotFetchFlag( TEMPORARY_FLAG_FETCH ), "Fetching lost flag..." );
+						}
+					}
+					else if ( !m_lostFlagTimer.HasStarted() )
+					{
+						m_lostFlagTimer.Start( tf_bot_fetch_lost_flag_time.GetFloat() );
+					}
+					else if ( m_lostFlagTimer.IsElapsed() )
+					{
+						m_lostFlagTimer.Invalidate();
+
+						// if we're a Medic an actively healing someone, don't interrupt
+						if ( !me->MedicGetHealTarget() )
+						{
+							// we better go get the flag
+							return SuspendFor( new CTFBotFetchFlag( TEMPORARY_FLAG_FETCH ), "Fetching lost flag..." );
+						}
 					}
 				}
+			}
+		}
+
+		if ( m_roamer )
+		{
+			CCaptureFlag *flag = me->GetFlagToFetch();
+
+			if ( flag && !me->MedicGetHealTarget() && me->IsAllowedToPickUpFlag() )
+			{
+				CTFPlayer* carrier = ToTFPlayer( flag->GetOwnerEntity() );
+				if ( !carrier )
+				{
+					// we better go get the flag
+					return SuspendFor( new CTFBotFetchFlag( TEMPORARY_FLAG_FETCH ), "Fetching lost flag..." );
+				}
+			}
+
+			// Arena PLR
+			if ( TFGameRules()->HasMultipleTrains() )
+			{
+				m_roamer = false;
+				return SuspendFor( new CTFBotPayloadPush, "Found payloads" );
+			}
+
+			// if we have a point we can capture - do it
+			CUtlVector< CTeamControlPoint* > captureVector;
+			TFGameRules()->CollectCapturePoints( me, &captureVector );
+
+			if ( captureVector.Count() > 0 )
+			{
+				m_roamer = false;
+				return SuspendFor( new CTFBotCapturePoint, "Found capture points" );
+			}
+
+			// otherwise, defend our point(s) from capture
+			CUtlVector< CTeamControlPoint* > defendVector;
+			TFGameRules()->CollectDefendPoints( me, &defendVector );
+
+			if ( defendVector.Count() > 0 )
+			{
+				m_roamer = false;
+				return SuspendFor( new CTFBotDefendPoint, "Found defend points" );
 			}
 		}
 	}

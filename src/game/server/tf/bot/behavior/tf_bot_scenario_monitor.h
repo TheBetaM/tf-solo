@@ -19,6 +19,7 @@ public:
 private:
 	CountdownTimer m_ignoreLostFlagTimer;
 	CountdownTimer m_lostFlagTimer;
+	bool m_roamer;
 
 	virtual Action< CTFBot > *DesiredScenarioAndClassAction( CTFBot *me );
 };

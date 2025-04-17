@@ -3119,13 +3119,13 @@ void CTFGameRules::PlayerReadyStatus_UpdatePlayerState( CTFPlayer *pTFPlayer, bo
 			}
 			else if ( m_flRestartRoundTime < 0 && !PlayerReadyStatus_ShouldStartCountdown() )
 			{
-				m_flRestartRoundTime.Set( gpGlobals->curtime + 150.f );
+				m_flRestartRoundTime.Set( gpGlobals->curtime + 15.f );
 				m_bAwaitingReadyRestart = false;
 
 				IGameEvent* pEvent = gameeventmanager->CreateEvent( "teamplay_round_restart_seconds" );
 				if ( pEvent )
 				{
-					pEvent->SetInt( "seconds", 150 );
+					pEvent->SetInt( "seconds", 15 );
 					gameeventmanager->FireEvent( pEvent );
 				}
 			}
@@ -16564,6 +16564,9 @@ int CTFGameRules::GetAssignedHumanTeam( void )
 void CTFGameRules::HandleSwitchTeams( void )
 {
 	if ( IsPVEModeActive() )
+		return;
+
+	if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
 		return;
 
 	m_bTeamsSwitched.Set( !m_bTeamsSwitched );

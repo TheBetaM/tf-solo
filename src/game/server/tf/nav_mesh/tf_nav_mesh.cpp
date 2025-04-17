@@ -1675,20 +1675,38 @@ public:
 		m_areaVector = areaVector;
 	}
 
+	void InitNoRoom(int team, CUtlVector< CTFNavArea* >* areaVector)
+	{
+		m_noroom = true;
+		m_team = team;
+		m_areaVector = areaVector;
+	}
+
 	bool operator() ( CNavArea *baseArea )
 	{
 		static Vector stepHeight( 0.0f, 0.0f, 18.0f );
 
-		if ( !m_room )
+		if ( !m_noroom && !m_room )
 			return true;
 
-		if ( m_room->PointIsWithin( baseArea->GetCenter() + stepHeight ) ||
-			 m_room->PointIsWithin( baseArea->GetCorner( NORTH_WEST ) + stepHeight ) ||
-			 m_room->PointIsWithin( baseArea->GetCorner( NORTH_EAST ) + stepHeight ) ||
-			 m_room->PointIsWithin( baseArea->GetCorner( SOUTH_WEST ) + stepHeight ) ||
-			 m_room->PointIsWithin( baseArea->GetCorner( SOUTH_EAST ) + stepHeight ) )
+		if ( !m_noroom )
 		{
-			CTFNavArea *area = (CTFNavArea *)baseArea;
+			if ( m_room->PointIsWithin( baseArea->GetCenter() + stepHeight ) ||
+				 m_room->PointIsWithin( baseArea->GetCorner( NORTH_WEST ) + stepHeight ) ||
+				 m_room->PointIsWithin( baseArea->GetCorner( NORTH_EAST ) + stepHeight ) ||
+				 m_room->PointIsWithin( baseArea->GetCorner( SOUTH_WEST ) + stepHeight ) ||
+				 m_room->PointIsWithin( baseArea->GetCorner( SOUTH_EAST ) + stepHeight ) )
+			{
+				CTFNavArea *area = (CTFNavArea *)baseArea;
+
+				area->SetAttributeTF( ( m_team == TF_TEAM_RED ) ? TF_NAV_SPAWN_ROOM_RED : TF_NAV_SPAWN_ROOM_BLUE );
+
+				m_areaVector->AddToTail( area );
+			}
+		}
+		else
+		{
+			CTFNavArea* area = (CTFNavArea *)baseArea;
 
 			area->SetAttributeTF( ( m_team == TF_TEAM_RED ) ? TF_NAV_SPAWN_ROOM_RED : TF_NAV_SPAWN_ROOM_BLUE );
 
@@ -1701,6 +1719,7 @@ public:
 	CFuncRespawnRoom *m_room;
 	int m_team;
 	CUtlVector< CTFNavArea * > *m_areaVector;
+	bool m_noroom;
 };
 
 
@@ -1742,6 +1761,8 @@ void CTFNavMesh::DecorateMesh( void )
 	m_redSpawnRoomAreaVector.RemoveAll();
 	m_blueSpawnRoomAreaVector.RemoveAll();
 
+	bool bFoundRoomRed = false;
+	bool bFoundRoomBlue = false;
 	for ( int iFuncRespawnRoom=0; iFuncRespawnRoom<IFuncRespawnRoomAutoList::AutoList().Count(); ++iFuncRespawnRoom )
 	{
 		CFuncRespawnRoom *respawnRoom = static_cast< CFuncRespawnRoom* >( IFuncRespawnRoomAutoList::AutoList()[iFuncRespawnRoom] );
@@ -1771,6 +1792,70 @@ void CTFNavMesh::DecorateMesh( void )
 				// found a valid spawn spot in an active spawn room
 				collectAndLabel.Init( respawnRoom, spawnSpot->GetTeamNumber(), spawnSpot->GetTeamNumber() == TF_TEAM_RED ? &m_redSpawnRoomAreaVector : &m_blueSpawnRoomAreaVector );
 				extent.Init( respawnRoom );
+
+				TheNavMesh->ForAllAreasOverlappingExtent( collectAndLabel, extent );
+				if ( spawnSpot->GetTeamNumber() == TF_TEAM_RED )
+				{
+					bFoundRoomRed = true;
+				}
+				else
+				{
+					bFoundRoomBlue = true;
+				}
+			}
+		}
+	}
+
+	// If there are no respawn rooms...
+	if ( !bFoundRoomRed )
+	{
+		for (int iTFTeamSpawn = 0; iTFTeamSpawn < ITFTeamSpawnAutoList::AutoList().Count(); ++iTFTeamSpawn)
+		{
+			CTFTeamSpawn *spawnSpot = static_cast< CTFTeamSpawn *> ( ITFTeamSpawnAutoList::AutoList()[iTFTeamSpawn] );
+
+			if ( !spawnSpot->IsTriggered(NULL) )
+				continue;
+
+			if ( spawnSpot->IsDisabled() )
+				continue;
+
+			if ( spawnSpot->GetTeamNumber() != TF_TEAM_RED )
+				continue;
+
+			CTFNavArea *spawnArea = static_cast< CTFNavArea *>( TheTFNavMesh()->GetNearestNavArea( spawnSpot ) );
+			if ( spawnArea )
+			{
+				collectAndLabel.InitNoRoom( spawnSpot->GetTeamNumber(), spawnSpot->GetTeamNumber() == TF_TEAM_RED ? &m_redSpawnRoomAreaVector : &m_blueSpawnRoomAreaVector );
+				extent.Init();
+				extent.lo = spawnSpot->GetAbsOrigin() + Vector( -100, -100, -100 );
+				extent.hi = spawnSpot->GetAbsOrigin() + Vector( 100, 100, 100 );
+
+				TheNavMesh->ForAllAreasOverlappingExtent( collectAndLabel, extent );
+			}
+		}
+	}
+	if ( !bFoundRoomBlue )
+	{
+		for ( int iTFTeamSpawn = 0; iTFTeamSpawn < ITFTeamSpawnAutoList::AutoList().Count(); ++iTFTeamSpawn )
+		{
+			CTFTeamSpawn *spawnSpot = static_cast< CTFTeamSpawn *> ( ITFTeamSpawnAutoList::AutoList()[iTFTeamSpawn] );
+
+			if ( !spawnSpot->IsTriggered(NULL) )
+				continue;
+
+			if ( spawnSpot->IsDisabled() )
+				continue;
+
+			if ( spawnSpot->GetTeamNumber() != TF_TEAM_BLUE )
+				continue;
+
+			CTFNavArea *spawnArea = static_cast< CTFNavArea *>( TheTFNavMesh()->GetNearestNavArea( spawnSpot ) );
+			if ( spawnArea )
+			{
+				collectAndLabel.InitNoRoom( spawnSpot->GetTeamNumber(), spawnSpot->GetTeamNumber() == TF_TEAM_RED ? &m_redSpawnRoomAreaVector : &m_blueSpawnRoomAreaVector );
+				extent.Init();
+				extent.lo = spawnSpot->GetAbsOrigin() + Vector( -100, -100, -100 );
+				extent.hi = spawnSpot->GetAbsOrigin() + Vector( 100, 100, 100 );
 
 				TheNavMesh->ForAllAreasOverlappingExtent( collectAndLabel, extent );
 			}

@@ -12,11 +12,28 @@
 #include "bot/behavior/engineer/tf_bot_engineer_build_teleport_entrance.h"
 #include "bot/behavior/engineer/tf_bot_engineer_move_to_build.h"
 #include "bot/behavior/tf_bot_get_ammo.h"
+#include "bot/behavior/tf_bot_seek_and_destroy.h"
 
 extern ConVar tf_bot_path_lookahead_range;
 
 ConVar tf_bot_max_teleport_entrance_travel( "tf_bot_max_teleport_entrance_travel", "1500", FCVAR_CHEAT, "Don't plant teleport entrances farther than this travel distance from our spawn room" );
 ConVar tf_bot_teleport_build_surface_normal_limit( "tf_bot_teleport_build_surface_normal_limit", "0.99", FCVAR_CHEAT, "If the ground normal Z component is less that this value, Engineer bots won't place their entrance teleporter" );
+
+//-----------------------------------------------------------------------------------------
+// Returns the initial Action we will run concurrently as a child to us
+Action< CTFBot >* CTFBotEngineerBuildTeleportEntrance::InitialContainedAction( CTFBot* me )
+{
+	CTeamControlPoint* point = me->GetMyControlPoint();
+	auto zone = me->GetFlagCaptureZone();
+	auto passzone = me->GetBallCaptureZone();
+	if ( !point && !zone && !passzone )
+	{
+		// wait until a control point becomes available
+		return new CTFBotSeekAndDestroy( -1.0f, true );
+	}
+
+	return NULL;
+}
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::OnStart( CTFBot *me, Action< CTFBot > *priorAction )

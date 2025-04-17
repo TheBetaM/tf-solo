@@ -2174,6 +2174,14 @@ bool CCaptureFlag::IsDisabled( void ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
+bool CCaptureFlag::IsReturning(void) const
+{
+	return m_flResetTime > 0.0f;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
 void CCaptureFlag::SetDisabled( bool bDisabled )
 {
 	m_bDisabled = bDisabled;

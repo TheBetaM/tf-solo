@@ -2091,7 +2091,7 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 	{
 		CCaptureFlag *flag = static_cast< CCaptureFlag* >( ICaptureFlagAutoList::AutoList()[i] );
 
-		if ( flag->IsDisabled() )
+		if ( flag->IsDisabled() && !flag->IsReturning() )
 			continue;
 
 		// If I'm carrying a flag, look for mine and early-out
@@ -2352,11 +2352,7 @@ float CTFBot::GetTimeLeftToCapture( void ) const
 			return TFGameRules()->GetKothTeamTimer( GetEnemyTeam( GetTeamNumber() ) )->GetTimeRemaining();
 		}
 	}
-	else if ( TFGameRules()->IsInArenaMode() || TFGameRules()->IsPasstimeMode() )
-	{
-		return 0.0f;
-	}
-	else if ( TFGameRules()->GetActiveRoundTimer() )
+	else if ( TFGameRules()->GetActiveRoundTimer() && !TFGameRules()->GetActiveRoundTimer()->IsDisabled() )
 	{
 		return TFGameRules()->GetActiveRoundTimer()->GetTimeRemaining();
 	}

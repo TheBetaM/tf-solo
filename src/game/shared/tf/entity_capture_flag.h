@@ -206,6 +206,7 @@ public:
 
 	bool			IsDisabled( void ) const;
 	void			SetDisabled( bool bDisabled );
+	bool			IsReturning( void ) const;
 	void			SetVisibleWhenDisabled( bool bVisible );
 	bool			IsPoisonous( void ) { return m_flTimeToSetPoisonous > 0 && gpGlobals->curtime > m_flTimeToSetPoisonous; }
 	float			GetPoisonTime( void ) const { return m_flTimeToSetPoisonous; }

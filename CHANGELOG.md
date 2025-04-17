@@ -39,6 +39,7 @@ cl_default_networking_off
 - Fixed bots not moving in Arena
 - Fixed crash on disconnect from PD maps with bots caused by flag dispensers
 - Fixed bots not firing during setup outside Attack/Defend maps
+- Fixed bots not moving if the map has no func_respawnroom's
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

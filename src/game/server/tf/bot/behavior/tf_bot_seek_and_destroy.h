@@ -15,7 +15,7 @@
 class CTFBotSeekAndDestroy : public Action< CTFBot >
 {
 public:
-	CTFBotSeekAndDestroy( float duration = -1.0f );
+	CTFBotSeekAndDestroy( float duration = -1.0f, bool roamer = false );
 
 	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
 	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
@@ -45,6 +45,7 @@ private:
 	void RecomputeSeekPath( CTFBot *me );
 
 	CountdownTimer m_giveUpTimer;
+	bool m_isRoaming;
 };
 
 

@@ -475,8 +475,11 @@ void CTFBotManager::MaintainBotQuota()
 				{
 					if (V_strcmp(key->GetName(), "version"))
 					{
-						chosen.AddToTail(key);
-						count++;
+						if (key->GetInt("Rarity", 1) == 1)
+						{
+							chosen.AddToTail(key);
+							count++;
+						}
 					}
 					key = key->GetNextKey();
 				}
