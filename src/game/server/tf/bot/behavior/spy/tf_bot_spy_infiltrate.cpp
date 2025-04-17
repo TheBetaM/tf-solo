@@ -199,7 +199,9 @@ bool CTFBotSpyInfiltrate::FindHidingSpot( CTFBot *me )
 	}
 
 	int myTeam = me->GetTeamNumber();
-	const CUtlVector< CTFNavArea * > *enemySpawnExitVector = TheTFNavMesh()->GetSpawnRoomExitAreas( GetEnemyTeam( myTeam ) );
+	CUtlVector< CTFNavArea* > backupExitVector;
+	const CUtlVector< CTFNavArea * > *enemySpawnExitVectorMesh = TheTFNavMesh()->GetSpawnRoomExitAreas( GetEnemyTeam( myTeam ) );
+	const CUtlVector< CTFNavArea* > *enemySpawnExitVector = enemySpawnExitVectorMesh;
 
 #ifdef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
@@ -215,7 +217,21 @@ bool CTFBotSpyInfiltrate::FindHidingSpot( CTFBot *me )
 		{
 			DevMsg( "%3.2f: No enemy spawn room exit areas found\n", gpGlobals->curtime );
 		}
-		return false;
+		//return false;
+
+		// Go somewhere already
+		int count = TheTFNavMesh()->GetNavAreaCount();
+		auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
+		if ( carea )
+		{
+			CTFNavArea* area = static_cast<CTFNavArea*>( carea );
+			backupExitVector.AddToTail( area );
+			enemySpawnExitVector = &backupExitVector;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	// find nearby place to hide hear enemy spawn exit(s)

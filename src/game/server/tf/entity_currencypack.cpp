@@ -258,11 +258,11 @@ bool CCurrencyPack::MyTouch( CBasePlayer *pPlayer )
 		if ( !pTFTouchPlayer )
 			return false;
 
-		if ( pTFTouchPlayer->IsBot() )
-			return false;
-
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 		{
+			if ( pTFTouchPlayer->IsBot() && pTFTouchPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+				return false;
+
 			// Prevent losing team from grabbing money - screws up stats in checkpoints
 			if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN )
 			{
@@ -298,7 +298,7 @@ bool CCurrencyPack::MyTouch( CBasePlayer *pPlayer )
 			}
 
 			// is the money blinking and about to burn up?
-			if ( m_blinkCount > 0 )
+			if ( !pTFTouchPlayer->IsBot() && m_blinkCount > 0 )
 			{
 				pTFTouchPlayer->AwardAchievement( ACHIEVEMENT_TF_MVM_PICKUP_MONEY_ABOUT_TO_EXPIRE );
 			}

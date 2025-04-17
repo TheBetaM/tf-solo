@@ -66,7 +66,7 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 			return Done( "Assist trainee in capturing the point" );
 		}
 	}
-	else
+	else if ( !m_isRoaming )
 	{
 		if ( me->IsCapturingPoint() )
 		{
@@ -83,7 +83,7 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 			}
 		}
 		
-		if ( !m_isRoaming && !TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat() )
+		if ( !TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat() )
 		{
 			return Done( "Time to push for the objective" );
 		}
@@ -112,6 +112,11 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 	{
 		m_repathTimer.Start( 1.0f );
 
+		RecomputeSeekPath( me );
+	}
+	else if ( m_repathRandTimer.HasStarted() && m_repathRandTimer.IsElapsed() )
+	{
+		m_repathRandTimer.Reset();
 		RecomputeSeekPath( me );
 	}
 
@@ -191,6 +196,23 @@ CTFNavArea *CTFBotSeekAndDestroy::ChooseGoalArea( CTFBot *me )
 		if ( controlPointAreas && controlPointAreas->Count() > 0 )
 		{
 			goalVector.AddToTail( controlPointAreas->Element( RandomInt( 0, controlPointAreas->Count()-1 ) ) );
+		}
+	}
+
+	// Go somewhere already
+	if ( goalVector.Count() == 0 )
+	{
+		int count = TheTFNavMesh()->GetNavAreaCount();
+		auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
+		if ( carea )
+		{
+			CTFNavArea *area = static_cast< CTFNavArea * >( carea );
+			goalVector.AddToTail( area );
+			m_repathRandTimer.Start( RandomFloat( 15.0f, 25.0f ) );
+		}
+		else
+		{
+			m_repathRandTimer.Start( RandomFloat( 3.0f, 7.0f ) );
 		}
 	}
 

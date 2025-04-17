@@ -403,7 +403,11 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 			}
 		}
 
-		if ( m_roamer )
+		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+
+		}
+		else if ( m_roamer || !GetActiveChildAction() )
 		{
 			CCaptureFlag *flag = me->GetFlagToFetch();
 

@@ -42,6 +42,7 @@ private:
 
 	PathFollower m_path;
 	CountdownTimer m_repathTimer;
+	CountdownTimer m_repathRandTimer;
 	void RecomputeSeekPath( CTFBot *me );
 
 	CountdownTimer m_giveUpTimer;

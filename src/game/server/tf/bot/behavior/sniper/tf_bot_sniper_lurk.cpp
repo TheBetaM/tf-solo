@@ -492,6 +492,15 @@ bool CTFBotSniperLurk::FindNewHome( CTFBot *me )
 	else
 	{
 		m_homePosition = me->GetAbsOrigin();
+
+		// Go somewhere already
+		int count = TheTFNavMesh()->GetNavAreaCount();
+		auto area = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
+		if ( area )
+		{
+			m_homePosition = area->GetCenter();
+			m_findHomeTimer.Start( RandomFloat( 20.0f, 35.0f ) );
+		}
 	}
 
 	return false;

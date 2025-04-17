@@ -2249,6 +2249,55 @@ CFuncPasstimeGoal* CTFBot::GetBallCaptureZone(void) const
 	return NULL;
 }
 
+//-----------------------------------------------------------------------------------------------------
+// Return any objective of interest
+CBaseEntity *CTFBot::GetAnyObjective( void ) const
+{
+	for (int i = 0; i < ICaptureZoneAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureZone *zone = static_cast< CCaptureZone *>( ICaptureZoneAutoList::AutoList()[i] );
+		if ( !zone->IsDisabled() )
+		{
+			return zone;
+		}
+	}
+
+	const auto& list = CFuncPasstimeGoal::GetAutoList();
+	for (int i = 0; i < list.Count(); ++i)
+	{
+		CFuncPasstimeGoal *zone = list[i];
+		if ( !zone->IsDisabled() )
+		{
+			return zone;
+		}
+	}
+
+	CTeamControlPointMaster *master = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
+	if ( master )
+	{
+		for (int i = 0; i < master->GetNumPoints(); ++i)
+		{
+			CTeamControlPoint *point = master->GetControlPoint( i );
+			if ( point )
+			{
+				return point;
+			}
+		}
+	}
+
+	for (int i = 0; i < ICaptureFlagAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureFlag *flag = static_cast< CCaptureFlag *>( ICaptureFlagAutoList::AutoList()[i] );
+
+		if ( flag->IsDisabled() && !flag->IsReturning() )
+			continue;
+
+		return flag;
+	}
+
+	return NULL;
+}
+
 
 //-----------------------------------------------------------------------------------------------------
 void CTFBot::ClearMyControlPoint( void )
