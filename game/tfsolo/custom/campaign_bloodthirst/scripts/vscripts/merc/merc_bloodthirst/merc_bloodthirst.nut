@@ -61,10 +61,19 @@ Merc.ChangeLevelWithBuffer <- function(targetmap)
 	if (Merc.Missions[Merc.MissionID].ForcedTeam == TF_TEAM_RED)
 	{
 		ToConsole("mp_humans_must_join_team red")
+		if (RandomInt(0, 1) == 1)
+		{
+			ToConsole("cl_loadingimage_override ../console/background01_widescreen")
+		}
+		else
+		{
+			ToConsole("cl_loadingimage_override ../console/background02_widescreen")
+		}
 	}
 	else if (Merc.Missions[Merc.MissionID].ForcedTeam == TF_TEAM_BLUE)
 	{
 		ToConsole("mp_humans_must_join_team blue")
+		ToConsole("cl_loadingimage_override ../console/title_blue_widescreen")
 	}
 	else
 	{

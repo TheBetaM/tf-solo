@@ -128,6 +128,7 @@ void CTFCampaignsPanelSingle::OnCommand(const char* command)
 			return;
 		}
 		const char* cMap = m_Config->GetString("Map");
+		const char* cLoadingImage = m_Config->GetString("LoadingImage");
 
 		// reset server enforced cvars
 		g_pCVar->RevertFlaggedConVars(FCVAR_REPLICATED);
@@ -137,6 +138,27 @@ void CTFCampaignsPanelSingle::OnCommand(const char* command)
 		tf_gamemode_campaign.SetValue(1);
 		engine->ClientCmd_Unrestricted("nav_generate_auto 1\n");
 		engine->ClientCmd_Unrestricted("nav_generate_auto_view_distance 2500\n");
+		engine->ClientCmd_Unrestricted("cl_loadingimage_force 1\n");
+		ConVarRef cl_loadingimage_override("cl_loadingimage_override");
+		if ( cLoadingImage && cLoadingImage[0] )
+		{
+			cl_loadingimage_override.SetValue( cLoadingImage );
+		}
+		else
+		{
+			int screenWide, screenTall;
+			surface()->GetScreenSize(screenWide, screenTall);
+			float aspectRatio = (float)screenWide / (float)screenTall;
+			bool bIsWidescreen = aspectRatio >= 1.5999f;
+			if ( bIsWidescreen )
+			{
+				cl_loadingimage_override.SetValue( "../console/title_team_tough_break_widescreen" );
+			}
+			else
+			{
+				cl_loadingimage_override.SetValue( "../console/title_team_tough_break" );
+			}
+		}
 
 		// create the command to execute
 		CFmtStr1024 fmtMapCommand(

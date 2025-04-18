@@ -40,7 +40,7 @@ DESCRIPTION INFO_OPTIONS
 	
 	"category3"
 	{
-		"Campaign - Bloodrhirst"
+		"Campaign - Bloodthirst"
 		{ CATEGORY }
 	}
 	

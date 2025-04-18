@@ -56,6 +56,14 @@ CSoloNodePanel::CSoloNodePanel(Panel* pParent, const char* pszPanelName)
 	, m_eMapState(NEUTRAL)
 	, m_bOverSelected(false)
 	, m_bRequirementsMet(false)
+	, m_bIsIngame(false)
+	, m_bHasItem(false)
+	, m_bIsLocked(false)
+	, m_nCompletionState(0)
+	, m_nCompletionSegments(1)
+	, m_nNodeID(0)
+	, m_nStarCount(0)
+	, m_nCreditsType(0)
 {
 	m_pSelectButton = new CExButton(this, "SelectButton", (char*)NULL);
 	m_pSelectButton->PassMouseTicksTo(this, true);
@@ -131,13 +139,13 @@ void CSoloNodePanel::UpdateStateVisuals()
 	m_bRequirementsMet = bNewRequirementsMetState;
 	*/
 
-	if (m_nCompletionState > m_nCompletionSegments || m_bIsIngame)
+	if ( m_nCompletionState > m_nCompletionSegments || m_bIsIngame )
 	{
-		pIcon->SetDrawColor(colorActive);
+		pIcon->SetDrawColor( colorActive );
 	}
 	else
 	{
-		pIcon->SetDrawColor(Color(100, 100, 100, 255));
+		pIcon->SetDrawColor( Color(100, 100, 100, 255) );
 	}
 	SetControlVisible("LockedIcon", m_bIsLocked);
 	SetControlVisible("ItemIcon", m_bHasItem);

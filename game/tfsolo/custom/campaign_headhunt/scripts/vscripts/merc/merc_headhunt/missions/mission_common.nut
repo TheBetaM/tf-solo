@@ -188,6 +188,8 @@ Merc.ReturnTuHub <- function()
 	
 	ToConsole("mp_humans_must_join_team any")
 	ToConsole("mp_humans_must_join_class any")
+	ToConsole("cl_loadingimage_force 1")
+	ToConsole("cl_loadingimage_override ../console/title_team_tough_break_widescreen")
 	
 	if (IsDedicatedServer())
 		ToConsole("changelevel " + Merc.MapFile)
