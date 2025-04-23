@@ -9,7 +9,16 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 	BackgroundPanel = null
 	ActorPanel1 = null
 	ActorPanel2 = null
-	constructor() {}
+	constructor() {
+		SkipButton = null
+		DialogHolder = null
+		DialogLabel = null
+		DialogSpeakerLabel = null
+		DialogProgressButton = null
+		BackgroundPanel = null
+		ActorPanel1 = null
+		ActorPanel2 = null
+	}
 	
 	function OnEnter()
 	{

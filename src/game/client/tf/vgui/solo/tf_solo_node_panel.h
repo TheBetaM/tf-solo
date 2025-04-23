@@ -49,6 +49,8 @@ public:
 		const Color& colorActive,
 		const Color& colorBonus,
 		const Color& colorInactive,
+		const Color& colorRed,
+		const Color& colorBlue,
 		float flScale) const;
 private:
 	static uint32 m_nDraggingID;
@@ -77,6 +79,7 @@ private:
 	bool m_bIsIngame;
 	int m_nNodeID;
 	const char* m_pszTooltipText;
+	int m_nTeam;
 };
 
 //-----------------------------------------------------------------------------

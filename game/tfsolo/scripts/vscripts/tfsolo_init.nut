@@ -1,12 +1,18 @@
 printl("[TFSOLO] Server Init")
 ::TFSOLO <- {}
 ::TFMOD <- 1
+::TFSOLO.IsCampaign <- Convars.GetInt("tf_gamemode_campaign") != 0
+::TFSOLO.IsSolo <- Convars.GetInt("tf_gamemode_solo") != 0
 
 IncludeScript("solo/util.nut")
 IncludeScript("solo/itemschema.nut")
 if (IsDedicatedServer())
 {
 	IncludeScript("client/solo/preload_items.nut")
+}
+if (TFSOLO.IsSolo)
+{
+	IncludeScript("solo/soloinit.nut")
 }
 
 TFSOLO.CoreEventTag <- UniqueString()
@@ -18,74 +24,6 @@ getroottable()[TFSOLO.CoreEventTag] <- {
 	OnGameEvent_scorestats_accumulated_update = function(_)
 	{
 	}
-	
-	OnGameEvent_player_spawn = function(params)
-	{
-	}
-	
-	OnGameEvent_post_inventory_application = function(params)
-	{
-	}
-
-	OnGameEvent_player_team = function(params)
-	{
-	}
-
-	OnGameEvent_player_death = function(params)
-	{
-	}
 }
 __CollectGameEventCallbacks(getroottable()[TFSOLO.CoreEventTag])
 
-::SoloTestArmoryFlag <- function()
-{
-	SendGlobalGameEvent("solo_armory_flag", {
-		flag = "ArmoryTest",
-		count = 5,
-		setflag = true,
-	})
-}
-::SoloTestCampaignFlag <- function()
-{
-	SendGlobalGameEvent("solo_campaign_flag", {
-		campaign = "campaigntest",
-		flag = "CampaignFlagTest",
-		count = 5,
-		setflag = true,
-	})
-}
-::SoloTestBotPresetFlag <- function()
-{
-	SendGlobalGameEvent("solo_botpreset_flag", {
-		preset = "testpreset",
-		flag = "BotPresetFlagTest",
-		count = 5,
-		setflag = true,
-	})
-}
-::SoloTestGenericFlag <- function()
-{
-	SendGlobalGameEvent("solo_generic_flag", {
-		flag = "GenericTestFlag",
-		count = 5,
-		setflag = true,
-	})
-}
-::SoloTestSave <- function()
-{
-	Entities.FindByClassname(null,"tf_gamerules").AcceptInput("SoloSaveData","",null,null)
-}
-::SoloTestHudText <- function()
-{
-	SendGlobalGameEvent("solohud_string", {
-		key = "objective1",
-		value = "This is a test objective 0/100"
-	})
-}
-::SoloTestHudText2 <- function()
-{
-	SendGlobalGameEvent("solohud_string", {
-		key = "objective1",
-		value = "This is a test objective 5/100"
-	})
-}

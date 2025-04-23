@@ -5,7 +5,7 @@
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added Armory - a way to unlock items using credits earned in the game
 - Added Bestiary - browse enemies encountered in the game
-- Added Campaigns:
+- Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  
 - Added weapon items:  

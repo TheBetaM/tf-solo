@@ -59,6 +59,7 @@ public:
 	int AddNodePath(int startX, int startY, int endX, int endY, bool dashed, bool active, bool arrows);
 	virtual HSCRIPT CreatePanel(HSCRIPT hTable, const char* hParent);
 	virtual HSCRIPT CreatePanelRoot(HSCRIPT hTable);
+	void ApplyPanelSettings(HSCRIPT hPanelHandle, HSCRIPT hTable);
 	virtual HSCRIPT CreatePanelInternal(HSCRIPT hTable, Panel* hParent);
 	virtual HSCRIPT FindPanelRoot(const char* hPanel);
 	virtual HSCRIPT FindPanel(HSCRIPT hPanelRoot, const char* hPanel);

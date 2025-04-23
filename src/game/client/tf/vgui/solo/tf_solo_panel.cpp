@@ -340,6 +340,7 @@ DEFINE_SCRIPTFUNC(GetScreenWidth, "")
 DEFINE_SCRIPTFUNC(GetScreenHeight, "")
 DEFINE_SCRIPTFUNC(ClearNodePaths, "")
 DEFINE_SCRIPTFUNC(AddNodePath, "")
+DEFINE_SCRIPTFUNC(ApplyPanelSettings, "")
 
 END_SCRIPTDESC();
 
@@ -561,6 +562,14 @@ void CSoloPanel::SetActiveCirclePanelPos(HSCRIPT hPanel)
 		}
 	}
 
+}
+
+void CSoloPanel::ApplyPanelSettings(HSCRIPT hPanelHandle, HSCRIPT hTable)
+{
+	auto hPanel = (Panel*)g_pScriptVM->GetInstanceValue(hPanelHandle, GetScriptDescForClass(Panel));
+	if (!hPanel) return;
+	KeyValues* hKV = ScriptTableToKeyValues(g_pScriptVM, "PanelSettings", hTable);
+	hPanel->ApplySettings(hKV);
 }
 
 HSCRIPT CSoloPanel::CreatePanelInternal(HSCRIPT hTable, Panel* hParentTarget)

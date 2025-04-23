@@ -1,13 +1,18 @@
 TFSOLO.ValidMaps <- []
+TFSOLO.DebugNoWorkshop <- 0
 
 TFSOLO.InitMapLists <- function()
 {
 	TFSOLO.ValidMaps.clear()
 	
 	local bAllowWorkshop = false
-	if (GetAppID() == 440)
+	if (GetAppID() == 440 && ConnectedOnline())
 	{
 		bAllowWorkshop = true
+	}
+	if (TFSOLO.DebugNoWorkshop != 0)
+	{
+		bAllowWorkshop = false
 	}
 	
 	local holderkey = TFSOLO.ConfigKV.FindKey("maps")
@@ -16,7 +21,7 @@ TFSOLO.InitMapLists <- function()
 	{
 		if (key.GetInt("enabled") == 1)
 		{
-			if (bAllowWorkshop || key.GetName().find("workshop/") == null)
+			if (bAllowWorkshop || key.GetName().find("workshop_") == null)
 			{
 				TFSOLO.ValidMaps.push(key.GetName())
 			}
@@ -34,6 +39,7 @@ TFSOLO.GetMapEntry <- function(map)
 	{
 		return holderkey.FindKey(map)
 	}
+	printl("FAILED TO FIND MAP: " + map)
 	return null
 }
 

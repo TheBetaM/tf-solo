@@ -64,6 +64,7 @@ CSoloNodePanel::CSoloNodePanel(Panel* pParent, const char* pszPanelName)
 	, m_nNodeID(0)
 	, m_nStarCount(0)
 	, m_nCreditsType(0)
+	, m_nTeam(0)
 {
 	m_pSelectButton = new CExButton(this, "SelectButton", (char*)NULL);
 	m_pSelectButton->PassMouseTicksTo(this, true);
@@ -97,6 +98,7 @@ void CSoloNodePanel::ApplySettings(KeyValues* inResourceData)
 	m_pszIconName = inResourceData->GetString("iconName");
 	m_nNodeID = inResourceData->GetInt("nodeID");
 	m_pszTooltipText = inResourceData->GetString("tooltipText");
+	m_nTeam = inResourceData->GetInt("nodeTeam");
 
 	UpdateStateVisuals();
 }
@@ -109,6 +111,8 @@ void CSoloNodePanel::PerformLayout()
 void CSoloNodePanel::UpdateStateVisuals()
 {
 	Color colorActive = vgui::scheme()->GetIScheme(GetScheme())->GetColor("QuestMap_ActiveOrange", Color(255, 255, 255, 255));
+	Color colorRed = vgui::scheme()->GetIScheme(GetScheme())->GetColor("HUDRedTeamSolid", Color(180, 92, 77, 255));
+	Color colorBlue = vgui::scheme()->GetIScheme(GetScheme())->GetColor("HUDBlueTeamSolid", Color(104, 124, 155, 255));
 	ImagePanel* pIcon = FindControl< ImagePanel >("NodeIcon");
 	pIcon->SetImage(m_pszIconName);
 
@@ -139,9 +143,20 @@ void CSoloNodePanel::UpdateStateVisuals()
 	m_bRequirementsMet = bNewRequirementsMetState;
 	*/
 
-	if ( m_nCompletionState > m_nCompletionSegments || m_bIsIngame )
+	if ( m_nCompletionState >= m_nCompletionSegments || m_bIsIngame )
 	{
-		pIcon->SetDrawColor( colorActive );
+		if ( m_nTeam == TF_TEAM_BLUE )
+		{
+			pIcon->SetDrawColor( colorBlue );
+		}
+		else if ( m_nTeam == TF_TEAM_RED )
+		{
+			pIcon->SetDrawColor( colorRed );
+		}
+		else
+		{
+			pIcon->SetDrawColor( colorActive );
+		}
 	}
 	else
 	{
@@ -213,6 +228,8 @@ void CSoloNodePanel::DrawNode(float flXPos,
 	const Color& colorActive,
 	const Color& colorBonus,
 	const Color& colorInactive,
+	const Color& colorRed,
+	const Color& colorBlue,
 	float flScale) const
 {
 	Color colorBlack(0, 0, 0, 255);
@@ -244,7 +261,18 @@ void CSoloNodePanel::DrawNode(float flXPos,
 		}
 		else
 		{
-			lambdaPaintCompletionSegment(i, colorActive);
+			if (m_nTeam == TF_TEAM_BLUE)
+			{
+				lambdaPaintCompletionSegment(i, colorBlue);
+			}
+			else if (m_nTeam == TF_TEAM_RED)
+			{
+				lambdaPaintCompletionSegment(i, colorRed);
+			}
+			else
+			{
+				lambdaPaintCompletionSegment(i, colorActive);
+			}
 		}
 	}
 }
@@ -253,6 +281,8 @@ void CSoloNodePanel::Paint()
 {
 	Color colorActive = vgui::scheme()->GetIScheme(GetScheme())->GetColor("QuestMap_ActiveOrange", Color(255, 255, 255, 255));
 	Color colorInactive = vgui::scheme()->GetIScheme(GetScheme())->GetColor("QuestMap_InactiveGrey", Color(255, 255, 255, 255));
+	Color colorRed = vgui::scheme()->GetIScheme(GetScheme())->GetColor("HUDRedTeamSolid", Color(180, 92, 77, 255));
+	Color colorBlue = vgui::scheme()->GetIScheme(GetScheme())->GetColor("HUDBlueTeamSolid", Color(104, 124, 155, 255));
 
 	bool bBrighten = m_eMapState == MOUSE_OVER || m_eMapState == SELECTED;
 
@@ -262,6 +292,8 @@ void CSoloNodePanel::Paint()
 		int nGlow = node_mouseover_brightness;
 		BrigthenColor(colorActive, nGlow);
 		BrigthenColor(colorInactive, nGlow);
+		BrigthenColor(colorRed, nGlow);
+		BrigthenColor(colorBlue, nGlow);
 	}
 
 	const float x = (GetWide() * 0.5f) - 0.5f;
@@ -280,7 +312,7 @@ void CSoloNodePanel::Paint()
 	}
 
 	// Draw the node
-	DrawNode(x, y, true, colorActive, colorActive, colorInactive, flScale);
+	DrawNode(x, y, true, colorActive, colorActive, colorInactive, colorRed, colorBlue, flScale);
 }
 
 void CSoloNodePanel::OnCursorEntered()

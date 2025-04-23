@@ -48,10 +48,19 @@ TFSOLO.Screens.MapSelect <- class extends TFSOLO.Screen
 				nodeText		=node.Name
 				nodeID			=i
 				tooltipText		=node.Tooltip
+				isLocked		=node.StateLocked
+				hasCredits		=node.StateCreditsType
+				hasStarCount	=node.StateStarCount
+				hasItem			=node.StateHasItem
+				completionState	=node.StateCompletionState
+				completionSegments =node.StateCompletionSegments
+				nodeTeam 		=node.StateTeam
 			}
 			local NodePanel = SoloPanel.CreatePanelRoot(kvNode)
 			NodePanels.push(NodePanel)
 			node.Panel = NodePanel
+			node.ID = i
+			node.WorldMap = TFSOLO.WorldMaps.Active
 		}
 	}
 	function GenerateMapVisuals()
@@ -104,15 +113,15 @@ getroottable()[TFSOLO.VguiMapSelectEventTag] <- {
 		if (params.command == "map_back")
 		{
 			TFSOLO.WorldMaps.Active = null
-			TFSOLO.Screens.TeamSelect.Enter()
+			TFSOLO.PlayTransitionScreenEffects()
+			TFSOLO.Screens.TC_TeamSelect.Enter()
 		}
 	}
 	
 	OnScriptHook_node_selected = function(params)
 	{
 		if (TFSOLO.Screens.Active != TFSOLO.Screens.MapSelect) return;
-		TFSOLO.WorldMaps.Active.SelectedNode = TFSOLO.WorldMaps.Active.Nodes[params.nodeID]
-		TFSOLO.WorldMaps.Active.Nodes[params.nodeID].Select()
+		TFSOLO.WorldMaps.Active.NodeSelect(params.nodeID)
 	}
 }
 TFSOLO.VguiMapSelectEventTable <- getroottable()[TFSOLO.VguiMapSelectEventTag]

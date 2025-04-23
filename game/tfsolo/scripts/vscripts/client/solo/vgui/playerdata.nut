@@ -4,7 +4,7 @@ TFSOLO.PlayerData <- {
 	TeamSelected = 0
 	Map = ""
 	PlayerClass = "any"
-	PopFile = "mvm_decoy"
+	PopFile = "solo_easy_1"
 	CvarGamemodeOverride = 0
 	
 	// Persistent

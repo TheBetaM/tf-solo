@@ -49,6 +49,7 @@
 		"dulltext"		"0"
 		"brighttext"		"0"
 		"zpos"		"1"
+		"font"			"HudFontMediumSecondary"
 	}
 	"TextLabel"
 	{
@@ -68,6 +69,7 @@
 		"dulltext"		"0"
 		"brighttext"		"0"
 		"zpos"		"1"
+		"font"			"HudFontMediumSecondary"
 	}
 	"ProgressBarSizer"
 	{

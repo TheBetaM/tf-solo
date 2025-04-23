@@ -1,0 +1,187 @@
+#base robot_giant.pop 
+#base robot_standard.pop
+
+WaveSchedule
+{
+
+	StartingCurrency		1200
+	RespawnWaveTime 		5
+	CanBotsAttackWhileInSpawnRoom no
+
+	Mission // Sentry Buster
+	{
+		Objective DestroySentries
+
+		InitialCooldown 30
+		Where spawnbot
+		BeginAtWave 1
+		RunForThisManyWaves 13
+
+		CooldownTime 120            
+
+        TFBot
+		{
+			Template T_TFBot_SentryBuster
+		}
+	}
+	Mission // Sniper
+	{
+		Objective Sniper
+
+		InitialCooldown 20
+		Where spawnbot_mission_sniper
+		BeginAtWave 2
+		RunForThisManyWaves 1
+		CooldownTime 60
+		DesiredCount 2
+
+		TFBot
+		{
+			Class Sniper
+			Skill Hard
+			Name Sniper
+			MaxVisionRange 3000
+		}
+	}	
+	Mission // Spy
+	{
+		Objective Spy  
+
+		InitialCooldown 30
+		Where spawnbot_mission_spy
+		BeginAtWave 1
+		RunForThisManyWaves 1
+		CooldownTime 90
+		DesiredCount 2
+
+		TFBot
+		{
+			Class Spy
+			Skill Expert
+			Name Spy
+		}
+	}
+	
+Wave
+{
+	StartWaveOutput
+	{
+		Target wave_start_relay
+		Action Trigger
+	}
+	DoneOutput					
+	{
+		Target wave_finished_relay
+		Action trigger
+	}
+	WaitWhenDone 65
+	Checkpoint Yes
+	
+	WaveSpawn 
+	{
+			Where spawnbot
+			TotalCount 48
+			MaxActive 6
+			SpawnCount 6
+			WaitBetweenSpawns 7
+			WaitBeforeStarting 0
+			TotalCurrency 400		
+			
+		TFBot
+		{
+			Class Scout
+			Skill Easy
+		}
+	}
+	WaveSpawn
+	{
+		Where spawnbot
+		TotalCount 16
+		MaxActive 6
+		SpawnCount 3
+		WaitBetweenSpawns 6
+		WaitBeforeStarting 10
+		TotalCurrency 200
+		
+		TFBot
+			{
+				Class Pyro
+				Skill Easy
+			}
+	}
+}	
+Wave
+{
+	StartWaveOutput
+		{
+			Target wave_start_relay
+			Action Trigger
+		}
+	Checkpoint Yes
+	
+	WaveSpawn
+	{
+		Where spawnbot
+		TotalCount 40
+		MaxActive 12
+		SpawnCount 4
+		WaitBeforeStarting 10
+		WaitBetweenSpawns 0
+		TotalCurrency 400
+		
+		RandomChoice
+		{
+			TFBot
+			{
+				Class Scout
+				Skill Easy
+			}
+			TFBot
+			{
+				Class Scout
+				Skill Easy
+				Tag nav_prefer_flank_right
+				BehaviorModifiers push
+			}
+			TFBot
+			{
+				Class Scout
+				Skill Easy
+				Tag nav_prefer_flank_left
+				BehaviorModifiers push
+			}
+		}
+	}
+	WaveSpawn
+	{
+		TotalCount 1
+		WaitBeforeStarting 0
+		TotalCurrency 400
+
+        FirstSpawnOutput                                                                                                                                                            
+		{
+             Target boss_spawn_relay                                            
+             Action Trigger                         
+        }
+
+		Tank
+		{
+			Health 3000
+			Speed 75
+			Name "boss"
+			StartingPathTrackNode "boss_path_b1"
+
+			OnKilledOutput                                  
+			{
+				Target boss_dead_relay
+				Action Trigger                         
+			}
+			OnBombDroppedOutput                             
+			{
+				Target boss_deploy_relay 
+				Action Trigger                         
+			}
+		}			
+	}	
+}
+}

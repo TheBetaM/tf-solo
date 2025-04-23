@@ -152,6 +152,7 @@ void CTFStatsSummaryPanel::Init( void )
 	m_xStartRHBar = 0;
 	m_iBarHeight = 1;
 	m_iBarMaxWidth = 1;
+	m_bWasActivated = false;
 
 	m_pPlayerData = new vgui::EditablePanel( this, "statdata" );
 	m_pInteractiveHeaders = new vgui::EditablePanel( m_pPlayerData, "InteractiveHeaders" );
@@ -1505,6 +1506,12 @@ void CTFStatsSummaryPanel::FireGameEvent( IGameEvent *event )
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::OnActivate()
 {
+	if ( m_bWasActivated )
+	{
+		// For some reason workshop maps call this again at the end
+		return;
+	}
+	m_bWasActivated = true;
 	ClearMapLabel();
 
 	m_bShowingLeaderboard = false;
@@ -1523,6 +1530,7 @@ void CTFStatsSummaryPanel::OnActivate()
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::OnDeactivate()
 {
+	m_bWasActivated = false;
 	ClearMapLabel();
 }
 

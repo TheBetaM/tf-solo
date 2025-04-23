@@ -14,7 +14,7 @@ getroottable()[TFSOLO.Screens.EventTag] <- {
 				{
 					SendToConsole("stopsound")
 				}
-				TFSOLO.Screens.TeamSelect.Enter()
+				TFSOLO.Screens.TC_TeamSelect.Enter()
 			}
 		}
 	}
@@ -63,4 +63,4 @@ IncludeScript("client/solo/vgui/screens/test.nut")
 IncludeScript("client/solo/vgui/screens/teamselect.nut")
 IncludeScript("client/solo/vgui/screens/cutscene.nut")
 IncludeScript("client/solo/vgui/screens/mapselect.nut")
-
+IncludeScript("client/solo/vgui/screens/tc_teamselect.nut")

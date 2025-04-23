@@ -2,6 +2,9 @@ TFSOLO.WorldMaps.TestClass <- class extends TFSOLO.WorldMap
 {
 	Name = "Test World Map"
 	constructor() { 
+		Nodes = []
+		SelectedNode = null
+		
 		local Node1 = TFSOLO.WorldMapNode("Dustbowl","cp_dustbowl","",null)
 		local Node2 = TFSOLO.WorldMapNode("Viaduct","koth_viaduct","",TFSOLO.Cutscenes.Test)
 		local Node3 = TFSOLO.WorldMapNode("Upward","pl_upward","",null)
@@ -74,6 +77,11 @@ TFSOLO.WorldMaps.TestClass <- class extends TFSOLO.WorldMap
 		SoloPanel.AddNodePath(PosX2, PosY2, PosX1, PosY1, false, true, true)
 		SoloPanel.AddNodePath(PosX2, PosY2, PosX3, PosY3, true, false, true)
 		SoloPanel.AddNodePath(PosX2, PosY2, PosX2 - 160, PosY2 + 160, false, true, false)
+	}
+	
+	function OnNodeSelect(id)
+	{
+		Nodes[id].Select()
 	}
 }
 TFSOLO.WorldMaps.Test <- TFSOLO.WorldMaps.TestClass()

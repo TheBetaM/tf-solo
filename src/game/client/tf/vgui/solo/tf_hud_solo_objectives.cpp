@@ -188,6 +188,7 @@ DEFINE_SCRIPTFUNC(GetMatchStatusPanel, "")
 DEFINE_SCRIPTFUNC(GetKothTimersPanel, "")
 DEFINE_SCRIPTFUNC(GetBuildingStatusSpyPanel, "Only exists after spawning as Spy!")
 DEFINE_SCRIPTFUNC(GetBuildingStatusEngineerPanel, "Only exists after spawning as Engineer!")
+DEFINE_SCRIPTFUNC(ApplyPanelSettings, "")
 
 END_SCRIPTDESC();
 
@@ -274,6 +275,14 @@ void CTFHUDSoloObjectives::AddActionSignalTargetForPanel(HSCRIPT hPanel)
 	{
 		hPanelRoot->AddActionSignalTarget(this);
 	}
+}
+
+void CTFHUDSoloObjectives::ApplyPanelSettings(HSCRIPT hPanelHandle, HSCRIPT hTable)
+{
+	auto hPanel = (Panel*)g_pScriptVM->GetInstanceValue(hPanelHandle, GetScriptDescForClass(Panel));
+	if (!hPanel) return;
+	KeyValues* hKV = ScriptTableToKeyValues(g_pScriptVM, "PanelSettings", hTable);
+	hPanel->ApplySettings(hKV);
 }
 
 HSCRIPT CTFHUDSoloObjectives::CreatePanelInternal(HSCRIPT hTable, Panel* hParentTarget)

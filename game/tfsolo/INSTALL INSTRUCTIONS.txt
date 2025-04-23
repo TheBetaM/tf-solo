@@ -1,0 +1,19 @@
+To install the mod:
+1) Make sure you have Team Fortress 2 installed on Steam
+2) Install Source SDK Base 2013 Multiplayer (it should be in the Tools section in your Steam library)
+3) If you already have it set-up, make sure it's not on any beta branch
+4) Place the folder that these instructions are inside into your steam installation's "sourcemods" folder
+5) Restart Steam and the mod should appear in your library ready to play
+
+If you want to have base TF2 workshop maps as part of the game, there are more things to do:
+1) Open the "steam.inf" file in any text editor (like Notepad) and change the line starting with "appID=" to "appID=440"
+2) Locate the file "hl2_win64.exe" in your Source SDK Base 2013 Multiplayer installation folder. 
+(You can open the folder by right clicking the tool in your Steam library, and going to Installed Files, then Browse)
+3) Create a shortcut to the "hl2_win64.exe" file, and edit the shortcut's target to add -game "the mod's installation folder"
+(Right click the shortcut, select properties and edit the target field)
+For example: "H:\SteamLibrary\steamapps\common\Source SDK Base 2013 Multiplayer\hl2_win64.exe" -game "E:\Steam\SteamApps\sourcemods\tfsolo"
+4) Launch the mod using the shortcut instead of through Steam to play
+
+This makes Steam consider the mod as the base TF2 so that the workshop functions correctly.
+A side effect of this, is that it forces cloud saves (config.cfg) to be used and saved by the mod.
+However, this shouldn't cause any problems for the base game.

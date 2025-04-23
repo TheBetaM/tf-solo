@@ -15,10 +15,19 @@ TFSOLO.StartMission <- function()
 	if (data.TeamSelected == 1)
 	{
 		SendToConsole("mp_humans_must_join_team blue")
+		SendToConsole("cl_loadingimage_override ../console/title_blue_widescreen")
 	}
 	else
 	{
 		SendToConsole("mp_humans_must_join_team red")
+		if (RandomInt(0, 1) == 1)
+		{
+			SendToConsole("cl_loadingimage_override ../console/background01_widescreen")
+		}
+		else
+		{
+			SendToConsole("cl_loadingimage_override ../console/background02_widescreen")
+		}
 	}
 	SendToConsole("mp_humans_must_join_class " + data.PlayerClass)
 	SendToConsole("nav_generate_auto 1")
@@ -40,4 +49,21 @@ TFSOLO.StartMission <- function()
 	SendToConsole("disconnect;wait;wait;maxplayers 32;progress_enable;map " + data.Map)
 	
 	SoloPanel.ForceClose()
+}
+
+TFSOLO.StartMissionTest <- function(map)
+{
+	if (map.find("workshop_") == null)
+	{
+		TFSOLO.PlayerData.Map = map
+	}
+	else
+	{
+		TFSOLO.PlayerData.Map = "workshop/" + map.slice(9)
+	}
+	TFSOLO.PlayerData.TeamSelected = 1
+	TFSOLO.PlayerData.PlayerClass = "any"
+	TFSOLO.PlayerData.PopFile = "solo_easy_1"
+	TFSOLO.PlayerData.CvarGamemodeOverride = 0
+	TFSOLO.StartMission()
 }

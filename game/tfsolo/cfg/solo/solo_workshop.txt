@@ -2,23 +2,4381 @@ solo_config
 {
 	maps
 	{
-		"workshop/3364324332"
+		workshop_454118349
 		{
-			"enabled" "1"
-			"name" "Fjord"
-			"modename" "#Gametype_Koth"
+			enabled 1
+			name "Glassworks"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
 		}
-		"workshop/3363901826"
+		workshop_454119773
 		{
-			"enabled" "1"
-			"name" "Snowswept"
-			"modename" "#Gametype_CP"
+			enabled 1
+			name "Rooftop"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 3
+				symm 1
+				theme_city 1
+			}
 		}
-		"workshop/3241769114"
+		workshop_454123193
 		{
-			"enabled" "1"
-			"name" "Fragile"
-			"modename" "#Gametype_Koth"
+			enabled 1
+			name "Airfield"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
 		}
+		workshop_454125056
+		{
+			enabled 1
+			name "Coalplant"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_454128304
+		{
+			enabled 1
+			name "Infiltration"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ad 1
+				ctf 1
+				flag_count 1
+				cp_count 1
+				theme_forest 1
+			}
+		}
+		workshop_454131066
+		{
+			enabled 1
+			name "Spire"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_454133897
+		{
+			enabled 1
+			name "Skyward"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_454135153
+		{
+			enabled 1
+			name "Temper"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_454136314
+		{
+			enabled 1
+			name "Disrupt"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_454147714
+		{
+			enabled 1
+			name "Quarry"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_454147907
+		{
+			enabled 1
+			name "Furnace Creek"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
+		workshop_454159900
+		{
+			enabled 1
+			name "Redbrier"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+			}
+		}
+		workshop_454164220
+		{
+			enabled 1
+			name "Craneway"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_454174250
+		{
+			enabled 1
+			name "Hydraulic"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_454176200
+		{
+			enabled 1
+			name "New Normandy"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_frontline 1
+			}
+		}
+		workshop_454194336
+		{
+			enabled 1
+			name "Escarpment"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_454207393
+		{
+			enabled 1
+			name "Rocktop"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_454268166
+		{
+			enabled 1
+			name "Amaranth"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_alpine 1
+			}
+		}
+		workshop_454592932
+		{
+			enabled 1
+			name "Fool Hill"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_454597830
+		{
+			enabled 1
+			name "Sherman"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 2
+				symm 1
+			}
+		}
+		workshop_454619737
+		{
+			enabled 1
+			name "Quagmire"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_swamp 1
+			}
+		}
+		workshop_454653996
+		{
+			enabled 1
+			name "Strata"
+			modename "#Gametype_TerritorialControl"
+			tags
+			{
+				tc 1
+				cp_count 6
+				theme_desert 1
+			}
+		}
+		workshop_454686689
+		{
+			enabled 1
+			name "Angkor"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				stages 3
+				theme_jungle 1
+			}
+		}
+		workshop_454762645
+		{
+			enabled 1
+			name "Boneyard"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_454765835
+		{
+			enabled 1
+			name "Oilfield"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_454774252
+		{
+			enabled 1
+			name "Edifice"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_alpine 1
+			}
+		}
+		workshop_454812035
+		{
+			enabled 1
+			name "Logjam"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_455168490
+		{
+			enabled 1
+			name "Skullcove"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_hallow 1
+			}
+		}
+		workshop_455644069
+		{
+			enabled 1
+			name "Blueberries"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_455978697
+		{
+			enabled 1
+			name "Missilebase"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_456678994
+		{
+			enabled 1
+			name "Subzero"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_snow 1
+			}
+		}
+		workshop_456904131
+		{
+			enabled 1
+			name "Playa"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_457943722
+		{
+			enabled 1
+			name "Mill"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+			}
+		}
+		workshop_458104742
+		{
+			enabled 1
+			name "Snow Station"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_snow 1
+			}
+		}
+		workshop_459329857
+		{
+			enabled 1
+			name "Lighthouse"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_459332747
+		{
+			enabled 1
+			name "Converge"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				symm 1
+			}
+		}
+		workshop_460499484
+		{
+			enabled 1
+			name "Arctic"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_461711794
+		{
+			enabled 1
+			name "Roughshod"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_472747210
+		{
+			enabled 1
+			name "Trainwreck"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_474047132
+		{
+			enabled 1
+			name "Smokeyridge"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_474122822
+		{
+			enabled 1
+			name "Sierra Scurry"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_475946266
+		{
+			enabled 1
+			name "Goldtooth"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_476024707
+		{
+			enabled 1
+			name "Flourmill"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+			}
+		}
+		workshop_479915352
+		{
+			enabled 1
+			name "Checkpoint"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_481724156
+		{
+			enabled 1
+			name "Underhanded"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_482258894
+		{
+			enabled 1
+			name "Stallone"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_484062492
+		{
+			enabled 1
+			name "Hangar"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_489706506
+		{
+			enabled 1
+			name "Canyon"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_491281037
+		{
+			enabled 1
+			name "Security"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_500169819
+		{
+			enabled 1
+			name "Fission"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_512476725
+		{
+			enabled 1
+			name "Isolation"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_513837571
+		{
+			enabled 1
+			name "Hydropower"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_516669593
+		{
+			enabled 1
+			name "Buried"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_egypt 1
+			}
+		}
+		workshop_517401030
+		{
+			enabled 1
+			name "Egyptian Temple"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 2
+				stages 3
+				theme_egypt 1
+			}
+		}
+		workshop_528867291
+		{
+			enabled 1
+			name "Yucatan"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_mayann 1
+			}
+		}
+		workshop_535246596
+		{
+			enabled 1
+			name "Pumpkinpatch Event"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_536469396
+		{
+			enabled 1
+			name "Cloudtop"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_536897251
+		{
+			enabled 1
+			name "Backwoods"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_invasion 1
+			}
+		}
+		workshop_537094436
+		{
+			enabled 1
+			name "Undercrypt"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_546248385
+		{
+			enabled 1
+			name "Meltdown"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+			}
+		}
+		workshop_546498227
+		{
+			enabled 1
+			name "Urban Brook"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_550974850
+		{
+			enabled 1
+			name "Rocket Ravine"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_558352341
+		{
+			enabled 1
+			name "Snowlodge"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_snow 1
+			}
+		}
+		workshop_564918433
+		{
+			enabled 1
+			name "Meridian"
+			modename "#Gametype_TerritorialControl"
+			tags
+			{
+				tc 1
+				cp_count 6
+				theme_jungle 1
+			}
+		}
+		workshop_570869131
+		{
+			enabled 1
+			name "Tidal"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_580052046
+		{
+			enabled 1
+			name "Powerplant"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_industrial 1
+			}
+		}
+		workshop_580070373
+		{
+			enabled 1
+			name "Flowsnake"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_588744025
+		{
+			enabled 1
+			name "Beerbowl"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_597098995
+		{
+			enabled 1
+			name "Slaugtherhouse"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_601801525
+		{
+			enabled 1
+			name "Moonbase"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_space 1
+			}
+		}
+		workshop_603367237
+		{
+			enabled 1
+			name "Snowcliff"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_605653019
+		{
+			enabled 1
+			name "Deadlock"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_619154817
+		{
+			enabled 1
+			name "Warehouse Canal"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_620453905
+		{
+			enabled 1
+			name "Soviet"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_621419541
+		{
+			enabled 1
+			name "Clarify"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_630617124
+		{
+			enabled 1
+			name "Sekhmet"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_egypt 1
+			}
+		}
+		workshop_633361054
+		{
+			enabled 1
+			name "Mountainside"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_642446800
+		{
+			enabled 1
+			name "Hat Factory"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_643671549
+		{
+			enabled 1
+			name "Countryside"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_farm 1
+			}
+		}
+		workshop_645960821
+		{
+			enabled 1
+			name "Forge"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_655370427
+		{
+			enabled 1
+			name "Peaks"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_655567753
+		{
+			enabled 1
+			name "Shelter"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 4
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_662284779
+		{
+			enabled 1
+			name "Hierarch"
+			modename "#Gametype_EscortRace"
+			tags
+			{
+				plr 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_682704531
+		{
+			enabled 1
+			name "Yuno"
+			modename "#Gametype_EscortRace"
+			tags
+			{
+				plr 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_696360091
+		{
+			enabled 1
+			name "Lilburgh"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				mdv 1
+				cp_count 1
+				symm 1
+				theme_castle 1
+			}
+		}
+		workshop_696554453
+		{
+			enabled 1
+			name "Aerospace"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_702844658
+		{
+			enabled 1
+			name "Abyss"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_723738998
+		{
+			enabled 1
+			name "Eros"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_736456893
+		{
+			enabled 1
+			name "Separated"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_737002136
+		{
+			enabled 1
+			name "Derelict"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_swamp 1
+			}
+		}
+		workshop_747296123
+		{
+			enabled 1
+			name "Avalanche"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_752844683
+		{
+			enabled 1
+			name "Lowtide"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_755324034
+		{
+			enabled 1
+			name "Hardway"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_773072205
+		{
+			enabled 1
+			name "Frostline"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_frontline 1
+				theme_snow 1
+			}
+		}
+		workshop_775688428
+		{
+			enabled 1
+			name "Daytrip"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_japan 1
+			}
+		}
+		workshop_775754053
+		{
+			enabled 1
+			name "Eerie"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_788958547
+		{
+			enabled 1
+			name "Drudgery"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_792857459
+		{
+			enabled 1
+			name "Metro"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_city 1
+			}
+		}
+		workshop_804090988
+		{
+			enabled 1
+			name "Canopy"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_808821399
+		{
+			enabled 1
+			name "Tropics"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_jungle 1
+			}
+		}
+		workshop_811970780
+		{
+			enabled 1
+			name "Log"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_814677411
+		{
+			enabled 1
+			name "Rift"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				symm 1
+				theme_mayann 1
+			}
+		}
+		workshop_833076770
+		{
+			enabled 1
+			name "Stockyard"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_841291955
+		{
+			enabled 1
+			name "Ququmannz"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_mayann 1
+			}
+		}
+		workshop_844556164
+		{
+			enabled 1
+			name "Ahau"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_mayann 1
+			}
+		}
+		workshop_854220622
+		{
+			enabled 1
+			name "Pride Rock"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_859099039
+		{
+			enabled 1
+			name "Facility"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_864934789
+		{
+			enabled 1
+			name "Freeflow"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+			}
+		}
+		workshop_873114048
+		{
+			enabled 1
+			name "Grotto"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_jungle 1
+			}
+		}
+		workshop_873248180
+		{
+			enabled 1
+			name "Dewm"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_space 1
+			}
+		}
+		workshop_875947295
+		{
+			enabled 1
+			name "Gray Co."
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_891391032
+		{
+			enabled 1
+			name "Mochville"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_autumn 1
+			}
+		}
+		workshop_903729916
+		{
+			enabled 1
+			name "Orbit"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_space 1
+			}
+		}
+		workshop_920570131
+		{
+			enabled 1
+			name "Gumption"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_936149990
+		{
+			enabled 1
+			name "Discover"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_mayann 1
+			}
+		}
+		workshop_947749085
+		{
+			enabled 1
+			name "Waterfront"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_coast 1
+			}
+		}
+		workshop_954601597
+		{
+			enabled 1
+			name "Rebirth"
+			modename "#Gametype_Rebirth"
+			tags
+			{
+				pl 1
+			}
+		}
+		workshop_962571666
+		{
+			enabled 1
+			name "Heart of the Oak"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_971033772
+		{
+			enabled 1
+			name "Horizon"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_971228749
+		{
+			enabled 1
+			name "Humidity"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_jungle 1
+			}
+		}
+		workshop_972406726
+		{
+			enabled 1
+			name "Riverside"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_974915319
+		{
+			enabled 1
+			name "Potassium"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				cp_count 2
+				theme_jungle 1
+			}
+		}
+		workshop_1087597852
+		{
+			enabled 1
+			name "Mayangold"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_mayann 1
+			}
+		}
+		workshop_1088845807
+		{
+			enabled 1
+			name "Snowflake"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_xmas 1
+			}
+		}
+		workshop_1089026871
+		{
+			enabled 1
+			name "Havana"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_frontline 1
+			}
+		}
+		workshop_1097782363
+		{
+			enabled 1
+			name "Spacepost"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_space 1
+			}
+		}
+		workshop_1098256584
+		{
+			enabled 1
+			name "UTurn"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_1119181564
+		{
+			enabled 1
+			name "Iglesia"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_frontline 1
+			}
+		}
+		workshop_1126268711
+		{
+			enabled 1
+			name "Windyrock"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_1130780387
+		{
+			enabled 1
+			name "Luftangriff"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_frontline 1
+			}
+		}
+		workshop_1214043578
+		{
+			enabled 1
+			name "Barren"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+			}
+		}
+		workshop_1231287299
+		{
+			enabled 1
+			name "Coastrock"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_coast 1
+			}
+		}
+		workshop_1233357991
+		{
+			enabled 1
+			name "Stormy Lab"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_1238849347
+		{
+			enabled 1
+			name "Shoreleave"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_frontline 1
+			}
+		}
+		workshop_1272700588
+		{
+			enabled 1
+			name "Coilblaze"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+			}
+		}
+		workshop_1295046731
+		{
+			enabled 1
+			name "Lystal"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_alpine 1
+			}
+		}
+		workshop_1297371285
+		{
+			enabled 1
+			name "Overgreen"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_forest 1
+			}
+		}
+		workshop_1308454282
+		{
+			enabled 1
+			name "Altitude"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_1308849071
+		{
+			enabled 1
+			name "Haywire"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_farm 1
+			}
+		}
+		workshop_1316374438
+		{
+			enabled 1
+			name "Lavvanded"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_1333143211
+		{
+			enabled 1
+			name "Preposterous"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_1356347293
+		{
+			enabled 1
+			name "Ice Tower"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_1364041671
+		{
+			enabled 1
+			name "Yanqing"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 2
+				symm 1
+				theme_mayann 1
+			}
+		}
+		workshop_1365963729
+		{
+			enabled 1
+			name "Hazyfort"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_autumn 1
+			}
+		}
+		workshop_1366095901
+		{
+			enabled 1
+			name "Oasis"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_egypt 1
+			}
+		}
+		workshop_1378877008
+		{
+			enabled 1
+			name "Cinder"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_1387397877
+		{
+			enabled 1
+			name "Quetzal"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_mayann 1
+			}
+		}
+		workshop_1398087258
+		{
+			enabled 1
+			name "Barnios"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_1411532041
+		{
+			enabled 1
+			name "Rust Belt"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_1415248744
+		{
+			enabled 1
+			name "Hybrid"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 4
+				symm 1
+			}
+		}
+		workshop_1419048064
+		{
+			enabled 1
+			name "Conifer"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+			}
+		}
+		workshop_1458527492
+		{
+			enabled 1
+			name "Pitchfork"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_farm 1
+			}
+		}
+		workshop_1459838211
+		{
+			enabled 1
+			name "Sky Lock"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_1480274637
+		{
+			enabled 1
+			name "Shiver Peak"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_1532120224
+		{
+			enabled 1
+			name "Cathedral"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_castle 1
+			}
+		}
+		workshop_1536699739
+		{
+			enabled 1
+			name "Barley"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				flag_count 2
+				symm 1
+				theme_farm 1
+			}
+		}
+		workshop_1539468284
+		{
+			enabled 1
+			name "Superstition"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_1545183431
+		{
+			enabled 1
+			name "Isla"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_1550750319
+		{
+			enabled 1
+			name "Morrigan's Alley"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				mdv 1
+			}
+		}
+		workshop_1603743849
+		{
+			enabled 1
+			name "Propaganda"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+			}
+		}
+		workshop_1665066790
+		{
+			enabled 1
+			name "Dewpoint"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_1670070885
+		{
+			enabled 1
+			name "Blastpitt"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_1676638157
+		{
+			enabled 1
+			name "Bigdata"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_indoor 1
+			}
+		}
+		workshop_1698502887
+		{
+			enabled 1
+			name "Isotope"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_1699389870
+		{
+			enabled 1
+			name "Snowpine"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_1700895011
+		{
+			enabled 1
+			name "Trainhouse"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_industrial 1
+			}
+		}
+		workshop_1724698099
+		{
+			enabled 1
+			name "Daenam"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_japan 1
+			}
+		}
+		workshop_1776125280
+		{
+			enabled 1
+			name "Data"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_1800059403
+		{
+			enabled 1
+			name "Polymer"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_1816031926
+		{
+			enabled 1
+			name "Brugge"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_city 1
+			}
+		}
+		workshop_1825962946
+		{
+			enabled 1
+			name "Panzerville"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_frontline 1
+			}
+		}
+		workshop_1827403325
+		{
+			enabled 1
+			name "Cyberia"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_1833000147
+		{
+			enabled 1
+			name "Excalibur"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_castle 1
+			}
+		}
+		workshop_1845954732
+		{
+			enabled 1
+			name "Kalamity"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_invasion 1
+			}
+		}
+		workshop_1849111469
+		{
+			enabled 1
+			name "Stallberg"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_1861668959
+		{
+			enabled 1
+			name "Midnight"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_1889017291
+		{
+			enabled 1
+			name "Sharp"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_autumn 1
+			}
+		}
+		workshop_1899550714
+		{
+			enabled 1
+			name "Canary"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_1900737467
+		{
+			enabled 1
+			name "Mannbase"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_space 1
+			}
+		}
+		workshop_1965750682
+		{
+			enabled 1
+			name "Desertbase"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2009851350
+		{
+			enabled 1
+			name "Estate"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_city 1
+			}
+		}
+		workshop_2025494804
+		{
+			enabled 1
+			name "Gravelvalley"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2025508699
+		{
+			enabled 1
+			name "Duckquarry"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2040750552
+		{
+			enabled 1
+			name "Edinbowl"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+			}
+		}
+		workshop_2051915354
+		{
+			enabled 1
+			name "Cliffside"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+			}
+		}
+		workshop_2068252300
+		{
+			enabled 1
+			name "Fulgur"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+			}
+		}
+		workshop_2078233024
+		{
+			enabled 1
+			name "Bonkplant"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_industrial 1
+			}
+		}
+		workshop_2107050255
+		{
+			enabled 1
+			name "Clearcut"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+			}
+		}
+		workshop_2112101546
+		{
+			enabled 1
+			name "Watermill"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+			}
+		}
+		workshop_2112251255
+		{
+			enabled 1
+			name "Databank"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_2113052569
+		{
+			enabled 1
+			name "Villa"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_2133601462
+		{
+			enabled 1
+			name "Maple Hill"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_autumn 1
+			}
+		}
+		workshop_2149817484
+		{
+			enabled 1
+			name "Harter"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2150989732
+		{
+			enabled 1
+			name "Snowylake"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_2151749089
+		{
+			enabled 1
+			name "Akure"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+			}
+		}
+		workshop_2154902912
+		{
+			enabled 1
+			name "Asteroid"
+			modename "#Gametype_RobotDestruction"
+			tags
+			{
+				rd 1
+				flag_count 2
+				symm 1
+				theme_space 1
+			}
+		}
+		workshop_2171502505
+		{
+			enabled 1
+			name "Autumnull"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_autumn 1
+			}
+		}
+		workshop_2183466467
+		{
+			enabled 1
+			name "Neighborhood"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_2216816333
+		{
+			enabled 1
+			name "Spellway"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_2225309359
+		{
+			enabled 1
+			name "Overgrowth"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_2265009230
+		{
+			enabled 1
+			name "Bombhaul"
+			modename "#Gametype_SD"
+			tags
+			{
+				sd 1
+				flag_count 1
+				flag_neutral 1
+				theme_swamp 1
+			}
+		}
+		workshop_2374872429
+		{
+			enabled 1
+			name "Nox"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_forest 1
+			}
+		}
+		workshop_2415638910
+		{
+			enabled 1
+			name "Staple"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_2436897173
+		{
+			enabled 1
+			name "Icebox"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_2476407798
+		{
+			enabled 1
+			name "Hell Farm"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_2487534610
+		{
+			enabled 1
+			name "Boreal"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_2487774790
+		{
+			enabled 1
+			name "Thematic"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_coast 1
+			}
+		}
+		workshop_2502609756
+		{
+			enabled 1
+			name "Cozy Canyon"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+			}
+		}
+		workshop_2503856863
+		{
+			enabled 1
+			name "Water Mine"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_snow 1
+			}
+		}
+		workshop_2512066947
+		{
+			enabled 1
+			name "Smalltime"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2514248103
+		{
+			enabled 1
+			name "Domain"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_2539804213
+		{
+			enabled 1
+			name "Topsoil"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+			}
+		}
+		workshop_2550690867
+		{
+			enabled 1
+			name "Evergreen"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+			}
+		}
+		workshop_2576870721
+		{
+			enabled 1
+			name "Abaddon"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_hallow 1
+			}
+		}
+		workshop_2600419377
+		{
+			enabled 1
+			name "Bloodlust"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_hallow 1
+			}
+		}
+		workshop_2615075201
+		{
+			enabled 1
+			name "Funtime"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_2646201685
+		{
+			enabled 1
+			name "Osiris"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				stages 2
+				theme_egypt 1
+			}
+		}
+		workshop_2663540708
+		{
+			enabled 1
+			name "Gridiron"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_2695844424
+		{
+			enabled 1
+			name "Blacksite"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_2715191327
+		{
+			enabled 1
+			name "Red Bounty"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
+		workshop_2746913016
+		{
+			enabled 1
+			name "Redcorp"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_city 1
+			}
+		}
+		workshop_2758960944
+		{
+			enabled 1
+			name "Giants"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_2775471508
+		{
+			enabled 1
+			name "Sultry"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				theme_industrial 1
+			}
+		}
+		workshop_2776658604
+		{
+			enabled 1
+			name "Hoax"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_invasion 1
+			}
+		}
+		workshop_2786359260
+		{
+			enabled 1
+			name "Industry"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_2797409745
+		{
+			enabled 1
+			name "Creek"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2807734526
+		{
+			enabled 1
+			name "Undergrowth"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_2808118709
+		{
+			enabled 1
+			name "Spybase"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_jungle 1
+			}
+		}
+		workshop_2808425307
+		{
+			enabled 1
+			name "Shorelight"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_2824984385
+		{
+			enabled 1
+			name "Wildfire"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_2824986509
+		{
+			enabled 1
+			name "Meltdown"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_2832315803
+		{
+			enabled 1
+			name "Takeback Mountain"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_swamp 1
+			}
+		}
+		workshop_2838677308
+		{
+			enabled 1
+			name "Chiller"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_hallow 1
+			}
+		}
+		workshop_2838972454
+		{
+			enabled 1
+			name "Electric Avenue"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+			}
+		}
+		workshop_2845236851
+		{
+			enabled 1
+			name "Pit"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_2851677751
+		{
+			enabled 1
+			name "Caper"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
+		workshop_2852697774
+		{
+			enabled 1
+			name "Boulder"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				stages 3
+			}
+		}
+		workshop_2862482421
+		{
+			enabled 1
+			name "Taigalab"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_snow 1
+			}
+		}
+		workshop_2864231357
+		{
+			enabled 1
+			name "Americana"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_2886618275
+		{
+			enabled 1
+			name "Conveyance Spring"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2886781762
+		{
+			enabled 1
+			name "Chimney"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_xmas 1
+			}
+		}
+		workshop_2890790172
+		{
+			enabled 1
+			name "Great North"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_snow 1
+			}
+		}
+		workshop_2904068868
+		{
+			enabled 1
+			name "Premuda"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ad 1
+				ctf 1
+				cp_count 2
+				stages 3
+			}
+		}
+		workshop_2905735376
+		{
+			enabled 1
+			name "Glacier"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_snow 1
+			}
+		}
+		workshop_2919727145
+		{
+			enabled 1
+			name "Haunt"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_2934155904
+		{
+			enabled 1
+			name "Kemptown"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_2935198178
+		{
+			enabled 1
+			name "Cutbank"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2940102144
+		{
+			enabled 1
+			name "Skymill"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2941114271
+		{
+			enabled 1
+			name "Tomb"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2946793305
+		{
+			enabled 1
+			name "Wetworks"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_2947840646
+		{
+			enabled 1
+			name "Coastal"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_coast 1
+			}
+		}
+		workshop_2956638083
+		{
+			enabled 1
+			name "Dryrock"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_2959217803
+		{
+			enabled 1
+			name "Wiretap"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2961457712
+		{
+			enabled 1
+			name "Extinction"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_2962510307
+		{
+			enabled 1
+			name "Karnak"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_egypt 1
+			}
+		}
+		workshop_2963374860
+		{
+			enabled 1
+			name "Outflow"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_coast 1
+			}
+		}
+		workshop_2963798096
+		{
+			enabled 1
+			name "Solar"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2964065613
+		{
+			enabled 1
+			name "Jamram"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2964570577
+		{
+			enabled 1
+			name "Jinn"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_egypt 1
+			}
+		}
+		workshop_2964782550
+		{
+			enabled 1
+			name "Gamma"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_2965301326
+		{
+			enabled 1
+			name "Relic"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_greece 1
+			}
+		}
+		workshop_2965584742
+		{
+			enabled 1
+			name "Drypine"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_alpine 1
+			}
+		}
+		workshop_2966100899
+		{
+			enabled 1
+			name "Pinerock"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_alpine 1
+			}
+		}
+		workshop_2966821677
+		{
+			enabled 1
+			name "Street"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_2966865375
+		{
+			enabled 1
+			name "Nixie"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				stages 2
+				theme_desert 1
+			}
+		}
+		workshop_2967345183
+		{
+			enabled 1
+			name "Tailrace"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2967846633
+		{
+			enabled 1
+			name "RidgeTech"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_2968499540
+		{
+			enabled 1
+			name "Sputnik"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_coast 1
+			}
+		}
+		workshop_2968862976
+		{
+			enabled 1
+			name "Logwash"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_2968908429
+		{
+			enabled 1
+			name "Bound"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_indoor 1
+			}
+		}
+		workshop_2969540689
+		{
+			enabled 1
+			name "Soot"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2969642453
+		{
+			enabled 1
+			name "Topsoil"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2969676944
+		{
+			enabled 1
+			name "Rocksalt"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_2972786439
+		{
+			enabled 1
+			name "Downstream"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_2973486027
+		{
+			enabled 1
+			name "Hypocenter"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3005011338
+		{
+			enabled 1
+			name "Pinnacle"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_jungle 1
+			}
+		}
+		workshop_3025150214
+		{
+			enabled 1
+			name "Infestation"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3028406009
+		{
+			enabled 1
+			name "Crypt"
+			modename "#Gametype_RobotDestruction"
+			tags
+			{
+				rd 1
+				flag_count 2
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3028713899
+		{
+			enabled 1
+			name "Outbound"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_space 1
+			}
+		}
+		workshop_3032677879
+		{
+			enabled 1
+			name "Digsite"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_egypt 1
+			}
+		}
+		workshop_3070057072
+		{
+			enabled 1
+			name "Valor"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_3072550679
+		{
+			enabled 1
+			name "Icy Flats"
+			modename "#Gametype_EscortRace"
+			tags
+			{
+				plr 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3093360989
+		{
+			enabled 1
+			name "Crossroad"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_swamp 1
+			}
+		}
+		workshop_3093921842
+		{
+			enabled 1
+			name "Logtory"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+			}
+		}
+		workshop_3125483617
+		{
+			enabled 1
+			name "Coaltrench"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3126094575
+		{
+			enabled 1
+			name "Shatter"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_swamp 1
+			}
+		}
+		workshop_3142599937
+		{
+			enabled 1
+			name "Division"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 2
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3150703033
+		{
+			enabled 1
+			name "Townscape"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3155576920
+		{
+			enabled 1
+			name "Ravine"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_3171284632
+		{
+			enabled 1
+			name "Lavatech"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_3172304177
+		{
+			enabled 1
+			name "Truck"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3184765963
+		{
+			enabled 1
+			name "Manners Avenue"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_3195874259
+		{
+			enabled 1
+			name "Method"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_alpine 1
+			}
+		}
+		workshop_3202102435
+		{
+			enabled 1
+			name "Holdout"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_industrial 1
+			}
+		}
+		workshop_3205037905
+		{
+			enabled 1
+			name "Jerrycan"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_3213383161
+		{
+			enabled 1
+			name "Ancient"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_greece 1
+			}
+		}
+		workshop_3213916847
+		{
+			enabled 1
+			name "Reportlink"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3225055613
+		{
+			enabled 1
+			name "Facility"
+			modename "#Gametype_VSH"
+			tags
+			{
+				arena_pd 1
+				vsh 1
+				cp_count 1
+				theme_industrial 1
+				vscript 1
+			}
+		}
+		workshop_3228889882
+		{
+			enabled 1
+			name "Yokohama"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_3229965555
+		{
+			enabled 1
+			name "Marino"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+			}
+		}
+		workshop_3231293126
+		{
+			enabled 1
+			name "Sobek"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_egypt 1
+			}
+		}
+		workshop_3233403964
+		{
+			enabled 1
+			name "Greenwood"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_forest 1
+			}
+		}
+		workshop_3233557472
+		{
+			enabled 1
+			name "Humbridge"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_city 1
+			}
+		}
+		workshop_3233699608
+		{
+			enabled 1
+			name "Industrial Hill"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+			}
+		}
+		workshop_3235941879
+		{
+			enabled 1
+			name "Funnel"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3236110703
+		{
+			enabled 1
+			name "Minehill"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3236271388
+		{
+			enabled 1
+			name "Monkeynaut"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3236472362
+		{
+			enabled 1
+			name "Sandswept"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
+		workshop_3236553125
+		{
+			enabled 1
+			name "Watercourse"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_industrial 1
+			}
+		}
+		workshop_3237977497
+		{
+			enabled 1
+			name "Favela"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_3240219208
+		{
+			enabled 1
+			name "Vice"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3241769114
+		{
+			enabled 1
+			name "Fragile"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3245921593
+		{
+			enabled 1
+			name "Leicoast"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				theme_coast 1
+			}
+		}
+		workshop_3256185591
+		{
+			enabled 1
+			name "Goldrock Gulch"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 7
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3258068943
+		{
+			enabled 1
+			name "Highball"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_3261757514
+		{
+			enabled 1
+			name "County"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+			}
+		}
+		workshop_3263266315
+		{
+			enabled 1
+			name "Hurricane"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_swamp 1
+			}
+		}
+		workshop_3277639159
+		{
+			enabled 1
+			name "Bogland"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_swamp 1
+			}
+		}
+		workshop_3283741589
+		{
+			enabled 1
+			name "Cactus Canyon"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				stages 3
+				theme_desert 1
+			}
+		}
+		workshop_3319525576
+		{
+			enabled 1
+			name "Icicle"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_snow 1
+			}
+		}
+		workshop_3320548015
+		{
+			enabled 1
+			name "Broken Hills"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3322275041
+		{
+			enabled 1
+			name "Life Snatcher"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3325568740
+		{
+			enabled 1
+			name "Undermine"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3329421443
+		{
+			enabled 1
+			name "Sewer"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3332394265
+		{
+			enabled 1
+			name "Hollow"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3334019329
+		{
+			enabled 1
+			name "Fiender"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3336514158
+		{
+			enabled 1
+			name "Tondo"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_3356534648
+		{
+			enabled 1
+			name "Edelweiss"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_3359005244
+		{
+			enabled 1
+			name "Desolation"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_snow 1
+			}
+		}
+		workshop_3360843598
+		{
+			enabled 1
+			name "Crumble"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+			}
+		}
+		workshop_3360981389
+		{
+			enabled 1
+			name "Himalaya"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_alpine 1
+			}
+		}
+		workshop_3361496763
+		{
+			enabled 1
+			name "Cryo"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_desert 1
+			}
+		}
+		workshop_3361557780
+		{
+			enabled 1
+			name "Melchior"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_indoor 1
+			}
+		}
+		workshop_3361730430
+		{
+			enabled 1
+			name "Aspen"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_autumn 1
+			}
+		}
+		workshop_3362710666
+		{
+			enabled 1
+			name "Chipper"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_3362948939
+		{
+			enabled 1
+			name "Gavle"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 2
+				hybrid 1
+				stages 2
+				theme_snow 1
+			}
+		}
+		workshop_3363695104
+		{
+			enabled 1
+			name "Matterhorn"
+			modename "#Gametype_EscortRace"
+			tags
+			{
+				plr 1
+				symm 1
+				theme_xmas 1
+			}
+		}
+		workshop_3363716634
+		{
+			enabled 1
+			name "Neo Tropic"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3364324332
+		{
+			enabled 1
+			name "Fjord"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3403215465
+		{
+			enabled 1
+			name "Keylog"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_autumn 1
+			}
+		}
+		workshop_3460148463
+		{
+			enabled 1
+			name "Tailwater Burrow"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_desert 1
+			}
+		}
+		workshop_3460843139
+		{
+			enabled 1
+			name "ClimbSpire"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+			}
+		}
+		workshop_3460960153
+		{
+			enabled 1
+			name "Winter Ridge"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3462326252
+		{
+			enabled 1
+			name "Dryfield"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3462743513
+		{
+			enabled 1
+			name "Oilchange"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3464832118
+		{
+			enabled 1
+			name "Wildlife"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_3467615627
+		{
+			enabled 1
+			name "Albany"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_farm 1
+			}
+		}
+		
 	}
 }

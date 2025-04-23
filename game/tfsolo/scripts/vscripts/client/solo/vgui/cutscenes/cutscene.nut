@@ -54,7 +54,9 @@ TFSOLO.Cutscene <- class
 	Name = "BaseCutscene"
 	Coroutine = null
 	
-	constructor() { }
+	constructor() {
+		Coroutine = null
+	}
 	function _tostring() return this.Name
 }
 
