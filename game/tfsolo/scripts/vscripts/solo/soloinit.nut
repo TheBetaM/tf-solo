@@ -17,14 +17,6 @@ Convars.SetValue("tf_arena_use_queue", 0)
 Convars.SetValue("mp_maxrounds", 1)
 Convars.SetValue("tf_bot_quota_use_presets", 1)
 
-::ToConsole <- function(t)
-{
-	if (IsDedicatedServer())
-		SendToServerConsole(t)
-	else
-		SendToConsole(t)
-}
-
 TFSOLO.DebugWin <- function() {
 	local tempEnt = SpawnEntityFromTable("game_round_win", {
         switch_teams = 0,
@@ -61,6 +53,7 @@ TFSOLO.SoloEventTag <- UniqueString()
 getroottable()[TFSOLO.SoloEventTag] <- {
 	OnGameEvent_teamplay_round_start = function(params)
 	{
+		SetSoloObjectivesResFile("")
 		if (IsMannVsMachineMode())
 		{
 			Convars.SetValue("tf_bot_quota", 0)
@@ -81,6 +74,19 @@ getroottable()[TFSOLO.SoloEventTag] <- {
 			ClientPrint(null, 3, "You can check out this map on the Steam Workshop:") 
 			ClientPrint(null, 3, "https://steamcommunity.com/sharedfiles/filedetails/?id=" + MapWorkshopID)
 		}
+		
+		local team = Convars.GetStr("mp_humans_must_join_team") == "red" ? 2 : 3
+		local hParams = {
+			playerTeam = team,
+			playerWon = (params.team == team),
+			full_round = params.full_round,
+		}
+		FireScriptHook("solo_mission_over", hParams)
+	}
+	
+	OnGameEvent_mvm_mission_complete = function(params)
+	{
+		
 	}
 	
 	OnGameEvent_scorestats_accumulated_update = function(_)

@@ -423,10 +423,11 @@ END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(CTFVideoPanel, EditablePanel, "")
 END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(CExRichText, EditablePanel, "")
+DEFINE_SCRIPTFUNC_NAMED(SetTextConst, "SetText", "")
 END_SCRIPTDESC();
-BEGIN_SCRIPTDESC(CRichTextWithScrollbarBorders, EditablePanel, "")
+BEGIN_SCRIPTDESC(CRichTextWithScrollbarBorders, CExRichText, "")
 END_SCRIPTDESC();
-BEGIN_SCRIPTDESC(CEconItemDetailsRichText, EditablePanel, "")
+BEGIN_SCRIPTDESC(CEconItemDetailsRichText, CRichTextWithScrollbarBorders, "")
 END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(Label, Panel, "")
 DEFINE_SCRIPTFUNC_NAMED(SetTextConst, "SetText", "")

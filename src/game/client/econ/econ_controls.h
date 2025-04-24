@@ -199,6 +199,7 @@ public:
 	virtual void PerformLayout();
 	virtual void SetText( const char *text );
 	virtual void SetText( const wchar_t *text );
+	virtual void SetTextConst( const char* text ) { SetText( text ); }
 
 	virtual void OnTick( void );
 	void SetScrollBarImagesVisible( bool visible );

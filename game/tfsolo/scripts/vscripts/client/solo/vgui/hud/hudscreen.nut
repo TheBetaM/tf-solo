@@ -42,3 +42,4 @@ TFSOLO.HudScreen <- class
 IncludeScript("client/solo/vgui/hud/test.nut")
 IncludeScript("client/solo/vgui/hud/mission_basic.nut")
 IncludeScript("client/solo/vgui/hud/mission_twolines.nut")
+IncludeScript("client/solo/vgui/hud/results_credits.nut")

@@ -50,6 +50,8 @@ Merc.ResetExtraOnFail <- 1
 Merc.IgnoreExtraCap <- 0
 Merc.WaitTimeConvar <- 0
 Merc.PathHUD <- "resource/ui/solo/mission_twolines_red.res"
+Merc.RewardCreditsMain <- false
+Merc.RewardCreditsBonus <- false
 Merc.AllowBuffs <- 1
 Merc.CustomSpawnRED <- 0
 Merc.CustomSpawnBLU <- 0
@@ -526,6 +528,8 @@ Merc.SaveProgress <- function()
 	buffer = buffer.slice(0, buffer.len() - 1)
 	buffer += "]\n"
 	StringToFile("merc/" + Merc.ProjectName + "/savedata.nut", buffer)
+	
+	Entities.FindByClassname(null,"tf_gamerules").AcceptInput("SoloSaveData","",null,null)
 }
 
 Merc.ReturnTuHub <- function()
@@ -591,12 +595,14 @@ Merc.CheckObjectives <- function()
 		if (Merc.MissionStatus[Merc.MissionID] < 2)
 		{
 			Merc.MissionStatus[Merc.MissionID] = 2
+			Merc.RewardCreditsMain = true
 		}
 		if (Merc.ObjectiveExtraCount >= Merc.ObjectiveExtraMax)
 		{
 			if (Merc.MissionStatus[Merc.MissionID] < 3)
 			{
 				Merc.MissionStatus[Merc.MissionID] = 3
+				Merc.RewardCreditsBonus = true
 				// Spell currency
 				if (Merc.ForcedTeam == TF_TEAM_RED)
 				{
@@ -617,24 +623,28 @@ Merc.CheckExit <- function()
 	{
 		Merc.CheckObjectives()
 		Merc.ChatPrint("Mission complete! Returning to hub...")
-		if (Merc.DebugMode != 2)
-		{
-			Convars.SetValue("mp_restartblock", 2)
-			Merc.Delay(4.0, function() { 
-				if (Merc.ExitCancel == 0)
-				{
-					foreach (a in GetClients()) 
-					{	
-						if (!IsPlayerABot(a))
-						{
-							a.AddHudHideFlags(HIDEHUD_ALL)
-							ScreenFade(a, 0, 0, 0, 255, 2.0, 4.0, 2)
-						}
+		if (Merc.DebugMode == 2) return
+		Convars.SetValue("mp_restartblock", 2)
+		
+		local hParams = {
+			reward_main = Merc.RewardCreditsMain,
+			reward_bonus = Merc.RewardCreditsBonus,
+		}
+		FireScriptHook("campaign_mission_over", hParams)
+		Merc.Delay(11.0, function() { 
+			if (Merc.ExitCancel == 0)
+			{
+				foreach (a in GetClients()) 
+				{	
+					if (!IsPlayerABot(a))
+					{
+						a.AddHudHideFlags(HIDEHUD_ALL)
+						ScreenFade(a, 0, 0, 0, 255, 2.0, 4.0, 2)
 					}
 				}
-			} )
-			Merc.Delay(6.9, function() { Merc.ReturnTuHub() } )
-		}
+			}
+		} )
+		Merc.Delay(13.9, function() { Merc.ReturnTuHub() } )
 	}
 }
 
