@@ -25,7 +25,7 @@ DESCRIPTION INFO_OPTIONS
 	"credit2_1"
 	{
 		"Campaign by BetaM"
-		"BetaM"
+		"https://www.youtube.com/BetaM"
 		{ BOOL }
 		{ "1" }
 	}
@@ -33,7 +33,7 @@ DESCRIPTION INFO_OPTIONS
 	"credit2_2"
 	{
 		"Ed voiced by bwab"
-		"bwab"
+		"https://steamcommunity.com/profiles/76561198871068952"
 		{ BOOL }
 		{ "1" }
 	}
@@ -47,16 +47,9 @@ DESCRIPTION INFO_OPTIONS
 	"credit3_1"
 	{
 		"Campaign by BetaM"
-		"BetaM"
+		"https://www.youtube.com/BetaM"
 		{ BOOL }
 		{ "1" }
 	}
 	
-	"credit3_2"
-	{
-		"Ed voiced by bwab"
-		"bwab"
-		{ BOOL }
-		{ "1" }
-	}
 }

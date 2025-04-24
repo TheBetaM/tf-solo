@@ -20,6 +20,22 @@
 			"textAlignment"		"west"
 			"labelText"		"%objective1%"
 		}
+		"ObjText1Dropshadow"
+		{	
+			"ControlName"		"CExLabel"
+			"fieldName"		"ObjText1Dropshadow"
+			"font"			"HudFontMediumSmallSecondary"
+			"fgcolor"		"black"
+			"xpos"			"11"
+			"ypos"			"-4"
+			"zpos"			"5"
+			"wide"			"f0"
+			"tall"			"50"
+			"visible"		"1"
+			"enabled"		"1"
+			"textAlignment"		"west"
+			"labelText"		"%objective1%"
+		}
 		
 		"ObjText2"
 		{
@@ -29,6 +45,22 @@
 			"fgcolor"		"TanLight"
 			"xpos"			"10"
 			"ypos"			"15"
+			"zpos"			"5"
+			"wide"			"f0"
+			"tall"			"50"
+			"visible"		"1"
+			"enabled"		"1"
+			"textAlignment"		"west"
+			"labelText"		"%objective2%"
+		}
+		"ObjText2Dropshadow"
+		{
+			"ControlName"		"CExLabel"
+			"fieldName"		"ObjText2Dropshadow"
+			"font"			"HudFontMediumSmallSecondary"
+			"fgcolor"		"black"
+			"xpos"			"11"
+			"ypos"			"16"
 			"zpos"			"5"
 			"wide"			"f0"
 			"tall"			"50"

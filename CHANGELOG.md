@@ -52,7 +52,8 @@ BSP_CacheStartRemap, BSP_GetCacheJobsRunning, BSP_CacheRemove, BSP_CacheRemoveAr
 SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,SetName/SetKeyName,RemoveSubKey  
 -- KeyValues are no longer deleted after automatically disposing the script
 - TFBot: Added GetPreset(), SetPreset(string)
-- TFPlayer: Added PostInventoryApplication()
+- TFPlayer: Added PostInventoryApplication(), GetKills(), GetDeaths(), GetSuicides(), GetBuildingsBuilt(), 
+GetDamageDone(), GetCrits(), GetPoints()
 - Moved TFBot.GenerateAndWearItem to TFPlayer and optimized execution time
 ## Item changes
 - Shortstop  

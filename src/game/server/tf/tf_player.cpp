@@ -642,6 +642,13 @@ BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer , "Team Fortress 2 Playe
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetResupplyPoints, "GetResupplyPoints", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKillAssists, "GetKillAssists", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetBonusPoints, "GetBonusPoints", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKills, "GetKills", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetDeaths, "GetDeaths", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetSuicides, "GetSuicides", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetBuildingsBuilt, "GetBuildingsBuilt", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetDamageDone, "GetDamageDone", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetCrits, "GetCrits", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetPoints, "GetPoints", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptResetScores, "ResetScores", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptIsParachuteEquipped, "IsParachuteEquipped", "" )
 

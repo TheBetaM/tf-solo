@@ -622,6 +622,13 @@ public:
 	int	GetResupplyPoints( int iIndex ) const		{ return m_ScoreData.m_iResupplyPoints; }
 	int	GetKillAssists( int iIndex ) const			{ return m_ScoreData.m_iKillAssists; }
 	int GetBonusPoints( int iIndex ) const			{ return m_ScoreData.m_iBonusPoints; }
+	int GetKills( int iIndex ) const				{ return m_ScoreData.m_iKills; }
+	int GetDeaths( int iIndex ) const				{ return m_ScoreData.m_iDeaths; }
+	int GetSuicides( int iIndex ) const				{ return m_ScoreData.m_iSuicides; }
+	int GetBuildingsBuilt( int iIndex ) const		{ return m_ScoreData.m_iBuildingsBuilt; }
+	int GetDamageDone( int iIndex ) const			{ return m_ScoreData.m_iDamageDone; }
+	int GetCrits( int iIndex ) const				{ return m_ScoreData.m_iCrits; }
+	int GetPoints( int iIndex ) const				{ return m_ScoreData.m_iPoints; }
 
 	void ResetScores( void ) { m_ScoreData.Reset(); }
 	localplayerscoring_t *GetScoringData( void ) { return &m_ScoreData; }

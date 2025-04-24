@@ -75,7 +75,7 @@
 			// packed up in the .bsp file so that it will be mounted as a map search pack.
 			// The map search pack is mounted at the top of the search path list,
 			// but only while you are connected that server and on that map.
-			game+download		mod_tf/download
+			game+download		|gameinfo_path|download
 		}
 	}
 }

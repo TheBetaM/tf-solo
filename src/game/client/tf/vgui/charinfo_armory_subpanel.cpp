@@ -128,8 +128,8 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pViewSetButton = dynamic_cast<CExButton*>( FindChildByName("ViewSetButton") );
 	m_pStoreButton = dynamic_cast<CExButton*>( FindChildByName("StoreButton") );
 	m_pWikiButton = dynamic_cast<CExButton*>( FindChildByName("WikiButton") );
-	m_pSoloCreditsLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCreditsLabel") );
-	m_pSoloCostLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCostLabel") );
+	m_pSoloCreditsLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCreditsAmountLabel") );
+	m_pSoloCostLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCostAmountLabel") );
 
 	m_pDataTextRichText->SetURLClickedHandler( this );
 
@@ -235,10 +235,7 @@ void CArmoryPanel::OnShowPanel( void )
 
 	auto kvSave = TFInventoryManager()->GetSaveData();
 	int credits = kvSave->GetInt("Credits");
-	CUtlString creditsText;
-	creditsText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Credits"));
-	creditsText.Append(CFmtStr1024("\n%d", credits));
-	m_pSoloCreditsLabel->SetText(creditsText);
+	SetDialogVariable("armorycredits", credits);
 
 	if ( !m_bEventLogging )
 	{
@@ -970,14 +967,8 @@ void CArmoryPanel::UpdateSelectedItem( void )
 				price = key->GetInt("Cost");
 			}
 		}
-		CUtlString costText;
-		costText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Cost"));
-		costText.Append(CFmtStr1024("\n%d", price));
-		m_pSoloCostLabel->SetText(costText);
-		CUtlString creditsText;
-		creditsText.Append(g_pVGuiLocalize->FindAsUTF8("#TFSOLO_Armory_Credits"));
-		creditsText.Append(CFmtStr1024("\n%d", credits));
-		m_pSoloCreditsLabel->SetText(creditsText);
+		SetDialogVariable("armorycost", price);
+		SetDialogVariable("armorycredits", credits);
 
 		// is the item already unlocked?
 		int count = TFInventoryManager()->GetSoloItemCount();

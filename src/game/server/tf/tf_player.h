@@ -799,6 +799,13 @@ public:
 	int					ScriptGetResupplyPoints() const				{ return m_Shared.GetResupplyPoints( 0 ); }
 	int					ScriptGetKillAssists() const				{ return m_Shared.GetKillAssists( 0 ); }
 	int					ScriptGetBonusPoints() const				{ return m_Shared.GetBonusPoints( 0 ); }
+	int					ScriptGetKills() const						{ return m_Shared.GetKills( 0 ); }
+	int					ScriptGetDeaths() const						{ return m_Shared.GetDeaths( 0 ); }
+	int					ScriptGetSuicides() const					{ return m_Shared.GetSuicides( 0 ); }
+	int					ScriptGetBuildingsBuilt() const				{ return m_Shared.GetBuildingsBuilt( 0 ); }
+	int					ScriptGetDamageDone() const					{ return m_Shared.GetDamageDone( 0 ); }
+	int					ScriptGetCrits() const						{ return m_Shared.GetCrits( 0 ); }
+	int					ScriptGetPoints() const						{ return m_Shared.GetPoints( 0 ); }
 	void				ScriptResetScores()							{ m_Shared.ResetScores(); }
 	bool				ScriptIsParachuteEquipped()					{ return m_Shared.IsParachuteEquipped(); }
 

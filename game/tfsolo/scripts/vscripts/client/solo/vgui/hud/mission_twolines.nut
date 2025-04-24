@@ -38,14 +38,18 @@ TFSOLO.HudScreens.MissionTwoLines <- class extends TFSOLO.HudScreen
 	{
 		// Dialog variables stop working for some reason after changing the res file, this is the workaround for now...
 		local text1 = SoloHUD.FindPanelRoot("ObjText1")
+		local text1s = SoloHUD.FindPanelRoot("ObjText1Dropshadow")
 		local text2 = SoloHUD.FindPanelRoot("ObjText2")
+		local text2s = SoloHUD.FindPanelRoot("ObjText2Dropshadow")
 		if (key == "objective1")
 		{
 			text1.SetText(value)
+			text1s.SetText(value)
 		}
 		else if (key == "objective2")
 		{
 			text2.SetText(value)
+			text2s.SetText(value)
 		}
 	}
 }
