@@ -1,4 +1,10 @@
 
+::TFSOLO.Settings <- FileToScriptTable("scriptdata/mission.cfg")
+if (TFSOLO.Settings == null)
+{
+	TFSOLO.Settings = {}
+	printl("[TFSOLO] Failed to load mission settings!")
+}
 
 Convars.SetValue("mp_tournament", 0)
 Convars.SetValue("mp_winlimit", 0)

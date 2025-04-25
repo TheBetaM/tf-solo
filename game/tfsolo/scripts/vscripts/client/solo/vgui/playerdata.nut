@@ -1,13 +1,13 @@
 TFSOLO.PlayerData <- {
 	
-	// Dynamic
+	// Dynamic mission settings
 	TeamSelected = 0
 	Map = ""
 	PlayerClass = "any"
 	PopFile = "solo_easy_1"
 	CvarGamemodeOverride = 0
 	
-	// Persistent
+	// Persistent data
 	Seed = 0
 	
 }

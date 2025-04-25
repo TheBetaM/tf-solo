@@ -141,7 +141,7 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 			local MapKey = TFSOLO.GetMapEntry(MapPool[i])
 			local Node = TFSOLO.WorldMapNode(MapKey.GetString("name"),MapPool[i],"",null)
 			
-			Node.Tooltip = MapKey.GetString("modename")
+			Node.Tooltip = LocalizeString(MapKey.GetString("modename"))
 			if (xoffset > 0)
 			{
 				Node.PosX = "cs-0.5+" + xoffset

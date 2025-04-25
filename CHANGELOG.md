@@ -45,7 +45,8 @@ cl_default_networking_off
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
 ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string), 
-SetSoloObjectivesResFile(string), SetRoundToPlayNext(string)
+SetSoloObjectivesResFile(string), SetRoundToPlayNext(string), LocalizeString(string), 
+ScriptTableToFile(table, string), FileToScriptTable(string)
 - Clientside/Singleplayer dynamic asset loading from map files: BSP_CacheStartSingle, BSP_CacheStartArray, 
 BSP_CacheStartRemap, BSP_GetCacheJobsRunning, BSP_CacheRemove, BSP_CacheRemoveArray, BSP_CacheClear  
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,

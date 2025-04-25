@@ -2769,6 +2769,52 @@ void Script_BSP_CacheClear()
 	BSP_ClearCache();
 }
 
+const char* Script_LocalizeString(const char* input)
+{
+	return g_pVGuiLocalize->FindAsUTF8(input);
+}
+
+static bool Script_ScriptTableToFile(HSCRIPT hTable, const char* pszFileName)
+{
+	if ( !pszFileName || !*pszFileName )
+	{
+		Log_Warning(LOG_VScript, "Script_ScriptTableToFile: NULL/empty file name\n");
+		return false;
+	}
+
+	if ( V_strstr(pszFileName, "..") )
+	{
+		Log_Warning(LOG_VScript, "ScriptTableToFile() file name cannot contain '..'\n");
+		return false;
+	}
+
+	char szFilePath[MAX_PATH];
+	if ( !CreateAndValidateFileLocation( szFilePath, pszFileName ) )
+		return false;
+
+	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, "ScriptTable", hTable );
+	hKV->SaveToFile( g_pFullFileSystem, szFilePath, "DEFAULT_WRITE_PATH" );
+
+	return true;
+}
+
+static HSCRIPT Script_FileToScriptTable(const char* pszFileName)
+{
+	if ( !pszFileName || !*pszFileName )
+	{
+		Log_Warning(LOG_VScript, "Script_FileToScriptTable: NULL/empty file name\n");
+		return NULL;
+	}
+
+	KeyValues* pKeyValues = new KeyValues( "ScriptTable" );
+	if ( pKeyValues->LoadFromFile( g_pFullFileSystem, pszFileName, "GAME" ) )
+	{
+		HSCRIPT hScriptInstance = ScriptTableFromKeyValues( g_pScriptVM, pKeyValues );
+		return hScriptInstance;
+	}
+	return NULL;
+}
+
 #ifdef TF_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -2986,11 +3032,14 @@ bool VScriptServerInit()
 #endif
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileToKeyValues, "FileToKeyValues", "Reads KeyValues from a file to send to script");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileToScriptTable, "FileToScriptTable", "Reads KeyValues from a file to send to script as a table");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ScriptTableToFile, "ScriptTableToFile", "Store a table to a KeyValues file for later reading");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsServer, "IsServer", "Returns true if script is running on the server.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ConnectedOnline, "ConnectedOnline", "Returns true if server is connected to the internet.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");

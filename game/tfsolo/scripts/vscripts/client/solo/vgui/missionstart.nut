@@ -7,6 +7,8 @@ TFSOLO.StartMission <- function()
 		printl("[TFSOLO] MAP ENTRY NOT FOUND IN CONFIG: " + data.Map)
 	}
 	
+	ScriptTableToFile(TFSOLO.PlayerData, "mission.cfg")
+	
 	// Reset server enforced cvars
 	SoloPanel.PrepareForLevelLoad()
 	

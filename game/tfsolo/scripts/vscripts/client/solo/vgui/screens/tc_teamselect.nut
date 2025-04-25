@@ -84,6 +84,141 @@ TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
 			paintbackground		="0"
 		}
 		SoloPanel.CreatePanelRoot(kv3)
+		
+		local savekv = Solo.GetSaveData()
+		local solokv = savekv.GetKey("Solo", true)
+		local tckv = solokv.GetKey("tc", true)
+		local MapPoolFull = TFSOLO.ValidMaps.slice()
+		local MapCount = 0
+		local MapCount_RED = 0
+		local MapCount_BLU = 0
+		local MapCount_NONE = 0
+		
+		for (local i = 0; i < MapPoolFull.len() - 1; i++)
+		{
+			local MapKey = TFSOLO.GetMapEntry(MapPoolFull[i])
+			local TagsKey = MapKey.GetKey("tags", true)
+			if (TagsKey.FindKey("theme_hallow") != null)
+			{
+			}
+			else if (TagsKey.FindKey("theme_xmas") != null)
+			{
+			}
+			else if (TagsKey.FindKey("theme_invasion") != null)
+			{
+			}
+			else if (TagsKey.FindKey("theme_bread") != null)
+			{
+			}
+			else if (TagsKey.FindKey("mvm") != null)
+			{
+			}
+			else if (TagsKey.FindKey("vsh") != null)
+			{
+			}
+			else if (TagsKey.GetInt("stages") > 1)
+			{
+			}
+			else
+			{
+				MapCount++
+				if (tckv.FindKey(MapPoolFull[i]) != null)
+				{
+					local mapkv = tckv.FindKey(MapPoolFull[i])
+					local mapteam = mapkv.GetInt("team")
+					if (mapteam == 2)
+					{
+						MapCount_RED++
+					}
+					else if (mapteam == 3)
+					{
+						MapCount_BLU++
+					}
+					else
+					{
+						MapCount_NONE++
+					}
+				}
+				else
+				{
+					MapCount_NONE++
+				}
+			}
+		}
+		
+		local ControlRED = MapCount_RED//(MapCount_RED / MapCount) * 100
+		local ControlBLU = MapCount_BLU//(MapCount_BLU / MapCount) * 100
+		local ControlNONE = MapCount_NONE//(MapCount_NONE / MapCount) * 100
+		
+		local kv4 = {
+			ControlName	="Label"
+			fieldName		="Title"
+			xpos			="cs-0.5+150"
+			ypos			="cs-0.5+25"
+			wide			="300"
+			tall			="14"
+			autoResize	="0"
+			pinCorner		="0"
+			visible		="1"
+			enabled		="1"
+			tabPosition	="0"
+			labeltext		="RED CONTROL: " + ControlRED// + "%"
+			font			="QuestLargeText"
+			textAlignment	="center"
+			dulltext		="0"
+			brighttext	="0"
+			proportionaltoparent ="1"
+			paintbackground		="0"
+			fgcolor_override = "HUDRedTeam"
+		}
+		SoloPanel.CreatePanelRoot(kv4)
+		
+		local kv5 = {
+			ControlName	="Label"
+			fieldName		="Title"
+			xpos			="cs-0.5-150"
+			ypos			="cs-0.5+25"
+			wide			="300"
+			tall			="14"
+			autoResize	="0"
+			pinCorner		="0"
+			visible		="1"
+			enabled		="1"
+			tabPosition	="0"
+			labeltext		="BLU CONTROL: " + ControlBLU// + "%"
+			font			="QuestLargeText"
+			textAlignment	="center"
+			dulltext		="0"
+			brighttext	="0"
+			proportionaltoparent ="1"
+			paintbackground		="0"
+			fgcolor_override = "HUDBlueTeam"
+		}
+		SoloPanel.CreatePanelRoot(kv5)
+		
+		local kv6 = {
+			ControlName	="Label"
+			fieldName		="Title"
+			xpos			="cs-0.5"
+			ypos			="cs-0.5-25"
+			wide			="300"
+			tall			="14"
+			autoResize	="0"
+			pinCorner		="0"
+			visible		="1"
+			enabled		="1"
+			tabPosition	="0"
+			labeltext		="UNCLAIMED: " + ControlNONE// + "%"
+			font			="QuestLargeText"
+			textAlignment	="center"
+			dulltext		="0"
+			brighttext	="0"
+			proportionaltoparent ="1"
+			paintbackground		="0"
+			fgcolor_override = "QuestMap_ActiveOrange"
+		}
+		SoloPanel.CreatePanelRoot(kv6)
+		
 	}
 }
 
