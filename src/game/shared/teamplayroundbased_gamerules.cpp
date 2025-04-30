@@ -25,6 +25,7 @@
 	#include "team_control_point_master.h"
 	#include "team_train_watcher.h"
 	#include "serverbenchmark_base.h"
+	#include "vscript_server.h"
 
 #if defined( REPLAY_ENABLED )	
 	#include "replay/ireplaysystem.h"
@@ -2821,6 +2822,8 @@ void CTeamplayRoundBasedRules::RoundRespawn( void )
 {
 	m_flRoundStartTime = gpGlobals->curtime;
 
+	RunScriptHook("team_round_respawn", NULL);
+
 	if ( m_bForceMapReset || m_bPrevRoundWasWaitingForPlayers )
 	{
 		CleanUpMap();
@@ -2857,6 +2860,8 @@ void CTeamplayRoundBasedRules::RoundRespawn( void )
 		}
 	}
 	
+	RunScriptHook("team_round_cleanup", NULL);
+
 	// Setup before respawning players, so we can mess with spawnpoints
 	SetupOnRoundStart();
 
@@ -2888,6 +2893,8 @@ void CTeamplayRoundBasedRules::RoundRespawn( void )
     // Free any edicts that were marked deleted. This should hopefully clear some out
     //  so the below function can use the now freed ones.
 	engine->AllowImmediateEdictReuse();
+
+	RunScriptHook("team_round_activate", NULL);
 
 	RespawnPlayers( true );
 

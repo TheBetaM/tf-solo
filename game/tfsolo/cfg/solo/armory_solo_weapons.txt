@@ -3,10 +3,14 @@ armory_config
 	"Bottled Sorrow"
 	{
 		Cost 1000
+		UnlockFlag CampaignOnly
+		UnlockText "Unlockable in a campaign"
 	}
 	"Shocking Truth"
 	{
 		Cost 1000
+		UnlockFlag CampaignOnly
+		UnlockText "Unlockable in a campaign"
 	}
 	"Spineyard Tommygun"
 	{
@@ -20,9 +24,8 @@ armory_config
 	"Steel-Toed Stompers"
 	{
 		Cost 1000
+		UnlockFlag CampaignOnly
+		UnlockText "Unlockable in a campaign"
 	}
-	"The Infernal Orchestrina"
-	{
-		Cost 1000
-	}
+	
 }

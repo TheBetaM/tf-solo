@@ -138,6 +138,7 @@ private:
 	CExButton						*m_pWikiButton;
 	CExLabel						*m_pSoloCreditsLabel;
 	CExLabel						*m_pSoloCostLabel;
+	CExLabel						*m_pSoloUnlockLabel;
 
 	CPanelAnimationVar( int, m_iThumbnailRows, "thumbnails_rows", "1" );
 	CPanelAnimationVar( int, m_iThumbnailColumns, "thumbnails_columns", "1" );

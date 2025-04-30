@@ -1,0 +1,635 @@
+armory_config
+{
+	"concealedkiller_pistol_redrockroscoe"
+	{
+		Cost 1000
+	}
+	"concealedkiller_rocketlauncher_sandcannon"
+	{
+		Cost 1000
+	}
+	"concealedkiller_stickybomblauncher_suddenflurry"
+	{
+		Cost 1000
+	}
+	"concealedkiller_revolver_psychedelicslugger"
+	{
+		Cost 1000
+	}
+	"concealedkiller_sniperrifle_purplerange"
+	{
+		Cost 1000
+	}
+	"concealedkiller_scattergun_nightterror"
+	{
+		Cost 1000
+	}
+	"concealedkiller_stickybomblauncher_carpetbomber"
+	{
+		Cost 1000
+	}
+	"concealedkiller_rocketlauncher_woodlandwarrior"
+	{
+		Cost 1000
+	}
+	"concealedkiller_medigun_wrappedreviver"
+	{
+		Cost 1000
+	}
+	"concealedkiller_flamethrower_forestfire"
+	{
+		Cost 1000
+	}
+	"concealedkiller_sniperrifle_nightowl"
+	{
+		Cost 1000
+	}
+	"concealedkiller_smg_woodsywidowmaker"
+	{
+		Cost 1000
+	}
+	"concealedkiller_shotgun_backwoodsboomstick"
+	{
+		Cost 1000
+	}
+	"concealedkiller_minigun_kingofthejungle"
+	{
+		Cost 1000
+	}
+	"concealedkiller_medigun_maskedmender"
+	{
+		Cost 1000
+	}
+	"craftsmann_scattergun_tartantorpedo"
+	{
+		Cost 1000
+	}
+	"craftsmann_sniperrifle_lumberfromdownunder"
+	{
+		Cost 1000
+	}
+	"craftsmann_shotgun_rusticruiner"
+	{
+		Cost 1000
+	}
+	"craftsmann_flamethrower_barnburner"
+	{
+		Cost 1000
+	}
+	"craftsmann_pistol_homemadeheater"
+	{
+		Cost 1000
+	}
+	"craftsmann_smg_plaidpotshotter"
+	{
+		Cost 1000
+	}
+	"craftsmann_scattergun_countrycrusher"
+	{
+		Cost 1000
+	}
+	"craftsmann_minigun_ironwood"
+	{
+		Cost 1000
+	}
+	"craftsmann_sniperrifle_shotinthedark"
+	{
+		Cost 1000
+	}
+	"craftsmann_stickybomblauncher_blastedbombardier"
+	{
+		Cost 1000
+	}
+	"craftsmann_scattergun_backcountryblaster"
+	{
+		Cost 1000
+	}
+	"craftsmann_minigun_antiqueannihilator"
+	{
+		Cost 1000
+	}
+	"craftsmann_revolver_oldcountry"
+	{
+		Cost 1000
+	}
+	"craftsmann_rocketlauncher_americanpastoral"
+	{
+		Cost 1000
+	}
+	"craftsmann_medigun_reclaimedreanimator"
+	{
+		Cost 1000
+	}
+	"teufort_flamethrower_bovineblazemaker"
+	{
+		Cost 1000
+	}
+	"teufort_minigun_warroom"
+	{
+		Cost 1000
+	}
+	"teufort_smg_treadplatetormenter"
+	{
+		Cost 1000
+	}
+	"teufort_sniperrifle_bogtrotter"
+	{
+		Cost 1000
+	}
+	"teufort_flamethrower_earthskyandfire"
+	{
+		Cost 1000
+	}
+	"teufort_smg_teamsprayer"
+	{
+		Cost 1000
+	}
+	"teufort_scattergun_sprucedeuce"
+	{
+		Cost 1000
+	}
+	"teufort_pistol_hickoryholepuncher"
+	{
+		Cost 1000
+	}
+	"teufort_stickybomblauncher_rooftopwrangler"
+	{
+		Cost 1000
+	}
+	"teufort_shotgun_civicduty"
+	{
+		Cost 1000
+	}
+	"teufort_medigun_civilservant"
+	{
+		Cost 1000
+	}
+	"teufort_pistol_localhero"
+	{
+		Cost 1000
+	}
+	"teufort_revolver_mayor"
+	{
+		Cost 1000
+	}
+	"teufort_rocketlauncher_smalltownbringdown"
+	{
+		Cost 1000
+	}
+	"teufort_minigun_citizenpain"
+	{
+		Cost 1000
+	}
+	"powerhouse_sniperrifle_thunderbolt"
+	{
+		Cost 1000
+	}
+	"powerhouse_stickybomblauncher_liquidasset"
+	{
+		Cost 1000
+	}
+	"powerhouse_rocketlauncher_shellshocker"
+	{
+		Cost 1000
+	}
+	"powerhouse_scattergun_currentevent"
+	{
+		Cost 1000
+	}
+	"powerhouse_stickybomblauncher_pinkelephant"
+	{
+		Cost 1000
+	}
+	"powerhouse_flamethrower_flashfryer"
+	{
+		Cost 1000
+	}
+	"powerhouse_medigun_sparkoflife"
+	{
+		Cost 1000
+	}
+	"powerhouse_revolver_deadreckoner"
+	{
+		Cost 1000
+	}
+	"powerhouse_pistol_blackdahlia"
+	{
+		Cost 1000
+	}
+	"powerhouse_pistol_sandstonespecial"
+	{
+		Cost 1000
+	}
+	"powerhouse_shotgun_lightningrod"
+	{
+		Cost 1000
+	}
+	"powerhouse_minigun_brickhouse"
+	{
+		Cost 1000
+	}
+	"powerhouse_rocketlauncher_aquamarine"
+	{
+		Cost 1000
+	}
+	"powerhouse_smg_lowprofile"
+	{
+		Cost 1000
+	}
+	"powerhouse_flamethrower_turbinetorcher"
+	{
+		Cost 1000
+	}
+	"harvest_revolver_boneyard"
+	{
+		Cost 1000
+	}
+	"harvest_sniperrifle_boneyard"
+	{
+		Cost 1000
+	}
+	"harvest_wrench_boneyard"
+	{
+		Cost 1000
+	}
+	"harvest_knife_boneyard"
+	{
+		Cost 1000
+	}
+	"harvest_flamethrower_pumpkinpatch"
+	{
+		Cost 1000
+	}
+	"harvest_minigun_pumpkinpatch"
+	{
+		Cost 1000
+	}
+	"harvest_sniperrifle_pumpkinpatch"
+	{
+		Cost 1000
+	}
+	"harvest_stickybomblauncher_pumpkinpatch"
+	{
+		Cost 1000
+	}
+	"harvest_pistol_macabreweb"
+	{
+		Cost 1000
+	}
+	"harvest_revolver_macabreweb"
+	{
+		Cost 1000
+	}
+	"harvest_scattergun_macabreweb"
+	{
+		Cost 1000
+	}
+	"harvest_grenadelauncher_macabreweb"
+	{
+		Cost 1000
+	}
+	"harvest_stickybomblauncher_macabreweb"
+	{
+		Cost 1000
+	}
+	"harvest_minigun_macabreweb"
+	{
+		Cost 1000
+	}
+	"harvest_flamethrower_autumn"
+	{
+		Cost 1000
+	}
+	"harvest_grenadelauncher_autumn"
+	{
+		Cost 1000
+	}
+	"harvest_stickybomblauncher_autumn"
+	{
+		Cost 1000
+	}
+	"harvest_rocketlauncher_autumn"
+	{
+		Cost 1000
+	}
+	"harvest_shotgun_autumn"
+	{
+		Cost 1000
+	}
+	"harvest_wrench_autumn"
+	{
+		Cost 1000
+	}
+	"harvest_flamethrower_nutcracker"
+	{
+		Cost 1000
+	}
+	"harvest_minigun_nutcracker"
+	{
+		Cost 1000
+	}
+	"harvest_pistol_nutcracker"
+	{
+		Cost 1000
+	}
+	"harvest_scattergun_nutcracker"
+	{
+		Cost 1000
+	}
+	"harvest_wrench_nutcracker"
+	{
+		Cost 1000
+	}
+	"harvest_medigun_wildwood"
+	{
+		Cost 1000
+	}
+	"harvest_revolver_wildwood"
+	{
+		Cost 1000
+	}
+	"harvest_smg_wildwood"
+	{
+		Cost 1000
+	}
+	"harvest_sniperrifle_wildwood"
+	{
+		Cost 1000
+	}
+	"gentlemanne_grenadelauncher_topshelf"
+	{
+		Cost 1000
+	}
+	"gentlemanne_minigun_topshelf"
+	{
+		Cost 1000
+	}
+	"gentlemanne_wrench_topshelf"
+	{
+		Cost 1000
+	}
+	"gentlemanne_knife_topshelf"
+	{
+		Cost 1000
+	}
+	"gentlemanne_revolver_topshelf"
+	{
+		Cost 1000
+	}
+	"gentlemanne_medigun_highrollers"
+	{
+		Cost 1000
+	}
+	"gentlemanne_smg_highrollers"
+	{
+		Cost 1000
+	}
+	"gentlemanne_grenadelauncher_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_rocketlauncher_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_scattergun_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_shotgun_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_rocketlauncher_highrollers"
+	{
+		Cost 1000
+	}
+	"gentlemanne_flamethrower_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_medigun_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_minigun_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_revolver_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_sniperrifle_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_stickybomblauncher_coffinnail"
+	{
+		Cost 1000
+	}
+	"gentlemanne_knife_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_medigun_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_minigun_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_pistol_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_shotgun_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_sniperrifle_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_stickybomblauncher_dressedtokill"
+	{
+		Cost 1000
+	}
+	"gentlemanne_wrench_dressedtokill"
+	{
+		Cost 1000
+	}
+	"pyroland_flamethrower_rainbow"
+	{
+		Cost 1000
+	}
+	"pyroland_grenadelauncher_rainbow"
+	{
+		Cost 1000
+	}
+	"pyroland_sniperrifle_rainbow"
+	{
+		Cost 1000
+	}
+	"pyroland_flamethrower_balloonicorn"
+	{
+		Cost 1000
+	}
+	"pyroland_sniperrifle_balloonicorn"
+	{
+		Cost 1000
+	}
+	"pyroland_grenadelauncher_sweetdreams"
+	{
+		Cost 1000
+	}
+	"pyroland_stickybomblauncher_sweetdreams"
+	{
+		Cost 1000
+	}
+	"pyroland_minigun_mistercuddles"
+	{
+		Cost 1000
+	}
+	"pyroland_knife_bluemew"
+	{
+		Cost 1000
+	}
+	"pyroland_pistol_bluemew"
+	{
+		Cost 1000
+	}
+	"pyroland_rocketlauncher_bluemew"
+	{
+		Cost 1000
+	}
+	"pyroland_scattergun_bluemew"
+	{
+		Cost 1000
+	}
+	"pyroland_scattergun_shottohell"
+	{
+		Cost 1000
+	}
+	"pyroland_wrench_torquedtohell"
+	{
+		Cost 1000
+	}
+	"pyroland_smg_bluemew"
+	{
+		Cost 1000
+	}
+	"pyroland_knife_stabbedtohell"
+	{
+		Cost 1000
+	}
+	"pyroland_pistol_shottohell"
+	{
+		Cost 1000
+	}
+	"pyroland_knife_braincandy"
+	{
+		Cost 1000
+	}
+	"pyroland_minigun_braincandy"
+	{
+		Cost 1000
+	}
+	"pyroland_pistol_braincandy"
+	{
+		Cost 1000
+	}
+	"pyroland_rocketlauncher_braincandy"
+	{
+		Cost 1000
+	}
+	"pyroland_medigun_flowerpower"
+	{
+		Cost 1000
+	}
+	"pyroland_revolver_flowerpower"
+	{
+		Cost 1000
+	}
+	"pyroland_scattergun_flowerpower"
+	{
+		Cost 1000
+	}
+	"pyroland_shotgun_flowerpower"
+	{
+		Cost 1000
+	}
+	"warbird_rocketlauncher_warhawk"
+	{
+		Cost 1000
+	}
+	"warbird_scattergun_killerbee"
+	{
+		Cost 1000
+	}
+	"warbird_flamethrower_warhawk"
+	{
+		Cost 1000
+	}
+	"warbird_grenadelauncher_warhawk"
+	{
+		Cost 1000
+	}
+	"warbird_shotgun_redbear"
+	{
+		Cost 1000
+	}
+	"warbird_minigun_butcherbird"
+	{
+		Cost 1000
+	}
+	"warbird_sniperrifle_airwolf"
+	{
+		Cost 1000
+	}
+	"warbird_stickybomblauncher_blitzkrieg"
+	{
+		Cost 1000
+	}
+	"warbird_medigun_corsair"
+	{
+		Cost 1000
+	}
+	"warbird_knife_airwolf"
+	{
+		Cost 1000
+	}
+	"warbird_knife_blitzkrieg"
+	{
+		Cost 1000
+	}
+	"warbird_medigun_blitzkrieg"
+	{
+		Cost 1000
+	}
+	"warbird_pistol_blitzkrieg"
+	{
+		Cost 1000
+	}
+	"warbird_revolver_blitzkrieg"
+	{
+		Cost 1000
+	}
+	"warbird_smg_blitzkrieg"
+	{
+		Cost 1000
+	}
+	"warbird_wrench_airwolf"
+	{
+		Cost 1000
+	}
+	"warbird_scattergun_corsair"
+	{
+		Cost 1000
+	}
+	"warbird_grenadelauncher_butcherbird"
+	{
+		Cost 1000
+	}
+}

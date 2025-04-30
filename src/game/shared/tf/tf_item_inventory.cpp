@@ -2450,6 +2450,7 @@ void CTFInventoryManager::LoadSaveData()
 
 void CTFInventoryManager::ResetSaveData()
 {
+	RunScriptHook("solo_save_reset", NULL);
 	InitSaveData();
 	GenerateBaseItems();
 	g_VScriptGameSystem.Reload();

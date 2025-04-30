@@ -4377,6 +4377,31 @@ solo_config
 				theme_farm 1
 			}
 		}
+		workshop_3468906315
+		{
+			enabled 1
+			name "Wildcat"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_desert 1
+			}
+		}
+		workshop_3469785974
+		{
+			enabled 1
+			name "Bridgeway"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		
 		
 	}
 }

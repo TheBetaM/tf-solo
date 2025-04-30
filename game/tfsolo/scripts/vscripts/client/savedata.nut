@@ -183,6 +183,13 @@ getroottable()[TFSOLO.SaveEventTag] <- {
 		TFSOLO.OnItemUnlock(params.item, params.itemid)
 		Solo.WriteSaveData()
 	}
+	
+	OnScriptHook_solo_save_reset = function(params)
+	{
+		// Resets campaign save data
+		StringToFile("merc/merc_headhunt/savedata.nut","printl(0)")
+		StringToFile("merc/merc_bloodthirst/savedata.nut","printl(0)")
+	}
 }
 TFSOLO.SaveEventTable <- getroottable()[TFSOLO.SaveEventTag]
 __CollectGameEventCallbacks(TFSOLO.SaveEventTable)

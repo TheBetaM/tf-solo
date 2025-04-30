@@ -1382,6 +1382,12 @@ solo_config
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_pit_of_death_event"
 			//photosArt ""
+			tags
+			{
+				pd 1
+				symm 1
+				theme_hallow 1
+			}
 		}
 		pd_circus
 		{

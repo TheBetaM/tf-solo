@@ -130,6 +130,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pWikiButton = dynamic_cast<CExButton*>( FindChildByName("WikiButton") );
 	m_pSoloCreditsLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCreditsAmountLabel") );
 	m_pSoloCostLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCostAmountLabel") );
+	m_pSoloUnlockLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloUnlockLabel") );
 
 	m_pDataTextRichText->SetURLClickedHandler( this );
 
@@ -812,6 +813,7 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 //-----------------------------------------------------------------------------
 void CArmoryPanel::UpdateItemList( void )
 {
+	m_pSoloUnlockLabel->SetText("");
 	int iMaxThumbnails = (m_iThumbnailRows * m_iThumbnailColumns);
 	int iNumThumbnails = MIN( m_FilteredItemList.Count(), iMaxThumbnails );
 
@@ -954,6 +956,7 @@ void CArmoryPanel::UpdateSelectedItem( void )
 	if (m_SelectedItem.IsValid())
 	{
 		m_pWikiButton->SetEnabled(true);
+		m_pSoloUnlockLabel->SetText("");
 
 		auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
 		auto kvSave = TFInventoryManager()->GetSaveData();
@@ -994,6 +997,7 @@ void CArmoryPanel::UpdateSelectedItem( void )
 				if (!flagKV || armoryKV->GetInt(key->GetString("UnlockFlag")) < flagrequire)
 				{
 					m_pWikiButton->SetEnabled(false);
+					m_pSoloUnlockLabel->SetText(key->GetString("UnlockText"));
 					return;
 				}
 			}

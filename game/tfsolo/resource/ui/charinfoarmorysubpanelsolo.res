@@ -520,4 +520,23 @@
 		"enabled"		"1"
 		"fgcolor"		"White"
 	}
+	
+	"SoloUnlockLabel"
+	{
+		"ControlName"	"CExLabel"
+		"fieldName"		"SoloUnlockLabel"
+		"font"			"HudFontSmallBold"
+		"labelText"		""
+		"textAlignment"	"center"
+		"xpos"			"c50"
+		"ypos"			"345"
+		"zpos"			"20"
+		"wide"			"260"
+		"tall"			"20"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"fgcolor_override" "255 255 255 255"
+	}
 }

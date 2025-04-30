@@ -2,7 +2,7 @@
 {
 	"items"
 	{
-		"18100"
+		"31"
 		{
 			"name"	"Solo BaseGameUnlock Weapons"
 			"prefab"	""
@@ -30,7 +30,7 @@
 			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
 			"drop_sound"		"ui/item_bag_drop.wav"
 		}
-		"18101"
+		"32"
 		{
 			"name"	"Solo BaseGameUnlock Taunts"
 			"prefab"	""
@@ -58,7 +58,7 @@
 			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
 			"drop_sound"		"ui/item_bag_drop.wav"
 		}
-		"18102"
+		"33"
 		{
 			"name"	"Solo BaseGameUnlock Cosmetics"
 			"prefab"	""
@@ -86,7 +86,7 @@
 			"mouse_pressed_sound"	"ui/item_bag_pickup.wav"
 			"drop_sound"		"ui/item_bag_drop.wav"
 		}
-		"18103"
+		"34"
 		{
 			"name"	"Solo BaseGameUnlock All"
 			"prefab"	""

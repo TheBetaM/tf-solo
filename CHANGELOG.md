@@ -1,13 +1,11 @@
 # 1.0.0
 ## General
-- Added a new main menu interface
-- Loadouts now work offline; live TF2 items still require a connection
-- Added MvM style bot presets, configurable in cfg/bot_presets.txt
-- Added Armory - a way to unlock items using credits earned in the game
-- Added Bestiary - browse enemies encountered in the game
+- Added a new main menu interface for selecting maps to play  
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  
+- Loadouts now work offline; live TF2 items still require a connection
+- Added Armory - a way to unlock items using credits earned in the game
 - Added weapon items:  
 -- The Bottled Sorrow (Demoman)  
 -- The Shocking Truth (Medic)  
@@ -18,6 +16,8 @@
 -- Primal Roar (Heavy)  
 -- Center Of Attention (Scout)  
 -- Signature Stance (All-Class)  
+- Added MvM style bot presets, configurable in cfg/bot_presets.txt
+- Added Bestiary - browse enemies encountered in the game
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
@@ -44,6 +44,7 @@ cl_default_networking_off
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
 ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
+- Added script hooks: team_round_respawn, team_round_cleanup, team_round_activate
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string), 
 SetSoloObjectivesResFile(string), SetRoundToPlayNext(string), LocalizeString(string), 
 ScriptTableToFile(table, string), FileToScriptTable(string)
