@@ -4,7 +4,6 @@ solo_config
 	{
 		arena_offblast_final
 		{
-			enabled 1
 			name "Offblast"
 			modename "#Gametype_Arena"
 			thumbArt "maps/menu_thumb_arena_offblast_final"
@@ -19,7 +18,6 @@ solo_config
 		}
 		arena_watchtower
 		{
-			enabled 1
 			name "Watchtower"
 			modename "#Gametype_Arena"
 			thumbArt "maps/menu_thumb_arena_watchtower"
@@ -34,7 +32,6 @@ solo_config
 		}
 		arena_byre
 		{
-			enabled 1
 			name "Byre"
 			modename "#Gametype_Arena"
 			thumbArt "maps/menu_thumb_arena_byre"
@@ -50,7 +47,6 @@ solo_config
 		}
 		arena_lumberyard_event
 		{
-			enabled 1
 			name "Graveyard"
 			modename "#Gametype_Arena"
 			thumbArt "maps/menu_thumb_arena_lumberyard_event"
@@ -66,7 +62,6 @@ solo_config
 		}
 		arena_perks
 		{
-			enabled 1
 			name "Perks"
 			modename "#Gametype_Arena"
 			thumbArt "maps/menu_thumb_arena_perks"
@@ -82,7 +77,6 @@ solo_config
 		}
 		cp_egypt_final
 		{
-			enabled 1
 			name "Egypt"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_egypt_final"
@@ -98,7 +92,6 @@ solo_config
 		}
 		cp_fastlane
 		{
-			enabled 1
 			name "Fastlane"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_fastlane"
@@ -113,7 +106,6 @@ solo_config
 		}
 		cp_freight_final1
 		{
-			enabled 1
 			name "Freight"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_freight_final1"
@@ -128,7 +120,6 @@ solo_config
 		}
 		cp_junction_final
 		{
-			enabled 1
 			name "Junction"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_junction_final"
@@ -143,7 +134,6 @@ solo_config
 		}
 		cp_mountainlab
 		{
-			enabled 1
 			name "Mountain Lab"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_mountainlab"
@@ -158,7 +148,6 @@ solo_config
 		}
 		cp_standin_final
 		{
-			enabled 1
 			name "Standin"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_standin_final"
@@ -173,7 +162,6 @@ solo_config
 		}
 		cp_steel
 		{
-			enabled 1
 			name "Steel"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_steel"
@@ -188,7 +176,6 @@ solo_config
 		}
 		cp_yukon_final
 		{
-			enabled 1
 			name "Yukon"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_yukon_final"
@@ -203,7 +190,6 @@ solo_config
 		}
 		cp_brew
 		{
-			enabled 1
 			name "Brew"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_brew"
@@ -218,7 +204,6 @@ solo_config
 		}
 		cp_canaveral_5cp
 		{
-			enabled 1
 			name "Canaveral"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_canaveral_5cp"
@@ -233,7 +218,6 @@ solo_config
 		}
 		cp_gullywash_final1
 		{
-			enabled 1
 			name "Gullywash"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_gullywash_final1"
@@ -248,7 +232,6 @@ solo_config
 		}
 		cp_hardwood_final
 		{
-			enabled 1
 			name "Hardwood"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_hardwood_final"
@@ -263,7 +246,6 @@ solo_config
 		}
 		cp_metalworks
 		{
-			enabled 1
 			name "Metalworks"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_metalworks"
@@ -278,7 +260,6 @@ solo_config
 		}
 		cp_mossrock
 		{
-			enabled 1
 			name "Mossrock"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_mossrock"
@@ -293,7 +274,6 @@ solo_config
 		}
 		cp_overgrown
 		{
-			enabled 1
 			name "Overgrown"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_overgrown"
@@ -308,7 +288,6 @@ solo_config
 		}
 		cp_process_final
 		{
-			enabled 1
 			name "Process"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_process_final"
@@ -323,7 +302,6 @@ solo_config
 		}
 		cp_reckoner
 		{
-			enabled 1
 			name "Reckoner"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_reckoner"
@@ -339,7 +317,6 @@ solo_config
 		}
 		cp_sulfur
 		{
-			enabled 1
 			name "Sulfur"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_sulfur"
@@ -355,7 +332,6 @@ solo_config
 		}
 		cp_sunshine
 		{
-			enabled 1
 			name "Sunshine"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_sunshine"
@@ -370,7 +346,6 @@ solo_config
 		}
 		cp_vanguard
 		{
-			enabled 1
 			name "Vanguard"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_vanguard"
@@ -385,7 +360,6 @@ solo_config
 		}
 		cp_burghausen
 		{
-			enabled 1
 			name "Burghausen"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_burghausen"
@@ -402,7 +376,6 @@ solo_config
 		}
 		cp_hadal
 		{
-			enabled 1
 			name "Hadal"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_hadal"
@@ -417,7 +390,6 @@ solo_config
 		}
 		cp_snakewater_final1
 		{
-			enabled 1
 			name "Snakewater"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_snakewater_final1"
@@ -432,7 +404,6 @@ solo_config
 		}
 		cp_ambush_event
 		{
-			enabled 1
 			name "Erebus"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_ambush_event"
@@ -448,7 +419,6 @@ solo_config
 		}
 		cp_darkmarsh
 		{
-			enabled 1
 			name "Darkmarsh"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_darkmarsh"
@@ -464,7 +434,6 @@ solo_config
 		}
 		cp_degrootkeep_rats
 		{
-			enabled 1
 			name "Sandcastle"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_degrootkeep_rats"
@@ -481,7 +450,6 @@ solo_config
 		}
 		cp_gorge_event
 		{
-			enabled 1
 			name "Gorge Event"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_gorge_event"
@@ -496,7 +464,6 @@ solo_config
 		}
 		cp_lavapit_final
 		{
-			enabled 1
 			name "Lava Pit"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_lavapit_final"
@@ -512,7 +479,6 @@ solo_config
 		}
 		cp_spookeyridge
 		{
-			enabled 1
 			name "Spookeyridge"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_spookeyridge"
@@ -527,7 +493,6 @@ solo_config
 		}
 		cp_manor_event
 		{
-			enabled 1
 			name "Mann Manor"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_manor_event"
@@ -542,7 +507,6 @@ solo_config
 		}
 		cp_freaky_fair
 		{
-			enabled 1
 			name "Freaky Fair"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_freaky_fair"
@@ -559,7 +523,6 @@ solo_config
 		}
 		cp_sunshine_event
 		{
-			enabled 1
 			name "Sinshine"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_sunshine_event"
@@ -574,7 +537,6 @@ solo_config
 		}
 		cp_carrier
 		{
-			enabled 1
 			name "Carrier"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_carrier"
@@ -591,7 +553,6 @@ solo_config
 		}
 		cp_coldfront
 		{
-			enabled 1
 			name "Coldfront"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_coldfront"
@@ -606,7 +567,6 @@ solo_config
 		}
 		cp_frostwatch
 		{
-			enabled 1
 			name "Frostwatch"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_frostwatch"
@@ -622,7 +582,6 @@ solo_config
 		}
 		cp_snowplow
 		{
-			enabled 1
 			name "Snowplow"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_snowplow"
@@ -638,7 +597,6 @@ solo_config
 		}
 		cp_altitude
 		{
-			enabled 1
 			name "Altitude"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_altitude"
@@ -653,7 +611,6 @@ solo_config
 		}
 		cp_gravelpit_snowy
 		{
-			enabled 1
 			name "Coal Pit"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_gravelpit_snowy"
@@ -670,7 +627,6 @@ solo_config
 		}
 		cp_fortezza
 		{
-			enabled 1
 			name "Fortezza"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_fortezza"
@@ -685,7 +641,6 @@ solo_config
 		}
 		ctf_applejack
 		{
-			enabled 1
 			name "Applejack"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_applejack"
@@ -700,7 +655,6 @@ solo_config
 		}
 		ctf_landfall
 		{
-			enabled 1
 			name "Landfall"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_landfall"
@@ -715,7 +669,6 @@ solo_config
 		}
 		ctf_pelican_peak
 		{
-			enabled 1
 			name "Pelican Peak"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_pelican_peak"
@@ -730,7 +683,6 @@ solo_config
 		}
 		ctf_turbine
 		{
-			enabled 1
 			name "Turbine"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_turbine"
@@ -745,7 +697,6 @@ solo_config
 		}
 		ctf_crasher
 		{
-			enabled 1
 			name "Crasher"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_crasher"
@@ -760,7 +711,6 @@ solo_config
 		}
 		ctf_helltrain_event
 		{
-			enabled 1
 			name "Helltrain"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_helltrain_event"
@@ -775,7 +725,6 @@ solo_config
 		}
 		ctf_2fort_invasion
 		{
-			enabled 1
 			name "2Fort Invasion"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_2fort_invasion"
@@ -791,7 +740,6 @@ solo_config
 		}
 		ctf_turbine_winter
 		{
-			enabled 1
 			name "Turbine Center"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_turbine_winter"
@@ -806,7 +754,6 @@ solo_config
 		}
 		ctf_snowfall_final
 		{
-			enabled 1
 			name "Snowfall"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_snowfall_final"
@@ -821,7 +768,6 @@ solo_config
 		}
 		ctf_doublecross_snowy
 		{
-			enabled 1
 			name "Doublefrost"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_doublecross_snowy"
@@ -836,7 +782,6 @@ solo_config
 		}
 		ctf_frosty
 		{
-			enabled 1
 			name "Frosty"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_frosty"
@@ -851,7 +796,6 @@ solo_config
 		}
 		ctf_haarp
 		{
-			enabled 1
 			name "Haarp"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_haarp"
@@ -868,7 +812,6 @@ solo_config
 		}
 		ctf_penguin_peak
 		{
-			enabled 1
 			name "Penguin Peak"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_penguin_peak"
@@ -883,7 +826,6 @@ solo_config
 		}
 		koth_harvest_final
 		{
-			enabled 1
 			name "Harvest"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_harvest_final"
@@ -898,7 +840,6 @@ solo_config
 		}
 		koth_highpass
 		{
-			enabled 1
 			name "Highpass"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_highpass"
@@ -913,7 +854,6 @@ solo_config
 		}
 		koth_suijin
 		{
-			enabled 1
 			name "Suijin"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_suijin"
@@ -928,7 +868,6 @@ solo_config
 		}
 		koth_brazil
 		{
-			enabled 1
 			name "Brazil"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_brazil"
@@ -943,7 +882,6 @@ solo_config
 		}
 		koth_cachoeira
 		{
-			enabled 1
 			name "Cachoeira"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_cachoeira"
@@ -958,7 +896,6 @@ solo_config
 		}
 		koth_king
 		{
-			enabled 1
 			name "Kong King"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_king"
@@ -973,7 +910,6 @@ solo_config
 		}
 		koth_lakeside_final
 		{
-			enabled 1
 			name "Lakeside"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_lakeside_final"
@@ -988,7 +924,6 @@ solo_config
 		}
 		koth_lazarus
 		{
-			enabled 1
 			name "Lazarus"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_lazarus"
@@ -1003,7 +938,6 @@ solo_config
 		}
 		koth_megaton
 		{
-			enabled 1
 			name "Megaton"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_megaton"
@@ -1019,7 +953,6 @@ solo_config
 		}
 		koth_rotunda
 		{
-			enabled 1
 			name "Rotunda"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_rotunda"
@@ -1034,7 +967,6 @@ solo_config
 		}
 		koth_sharkbay
 		{
-			enabled 1
 			name "Sharkbay"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_sharkbay"
@@ -1049,7 +981,6 @@ solo_config
 		}
 		koth_bagel_event
 		{
-			enabled 1
 			name "Cauldron"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_bagel_event"
@@ -1064,7 +995,6 @@ solo_config
 		}
 		koth_los_muertos
 		{
-			enabled 1
 			name "Los Muertos"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_los_muertos"
@@ -1079,7 +1009,6 @@ solo_config
 		}
 		koth_moonshine_event
 		{
-			enabled 1
 			name "Moonshine"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_moonshine_event"
@@ -1094,7 +1023,6 @@ solo_config
 		}
 		koth_sawmill_event
 		{
-			enabled 1
 			name "Soul-Mill"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_sawmill_event"
@@ -1109,7 +1037,6 @@ solo_config
 		}
 		koth_slasher
 		{
-			enabled 1
 			name "Slasher"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_slasher"
@@ -1124,7 +1051,6 @@ solo_config
 		}
 		koth_slaughter_event
 		{
-			enabled 1
 			name "Laughter"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_slaughter_event"
@@ -1139,7 +1065,6 @@ solo_config
 		}
 		koth_slime
 		{
-			enabled 1
 			name "Slime"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_slime"
@@ -1155,7 +1080,6 @@ solo_config
 		}
 		koth_synthetic_event
 		{
-			enabled 1
 			name "Sinthetic"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_synthetic_event"
@@ -1170,7 +1094,6 @@ solo_config
 		}
 		koth_toxic
 		{
-			enabled 1
 			name "Toxic"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_toxic"
@@ -1185,7 +1108,6 @@ solo_config
 		}
 		koth_undergrove_event
 		{
-			enabled 1
 			name "Moldergrove"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_undergrove_event"
@@ -1200,7 +1122,6 @@ solo_config
 		}
 		koth_maple_ridge_event
 		{
-			enabled 1
 			name "Maple Ridge Event"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_maple_ridge_event"
@@ -1215,7 +1136,6 @@ solo_config
 		}
 		koth_megalo
 		{
-			enabled 1
 			name "Megalo"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_megalo"
@@ -1230,7 +1150,6 @@ solo_config
 		}
 		koth_probed
 		{
-			enabled 1
 			name "Probed"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_probed"
@@ -1245,7 +1164,6 @@ solo_config
 		}
 		koth_krampus
 		{
-			enabled 1
 			name "Krampus"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_krampus"
@@ -1261,7 +1179,6 @@ solo_config
 		}
 		koth_cascade
 		{
-			enabled 1
 			name "Cascade"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_cascade"
@@ -1276,7 +1193,6 @@ solo_config
 		}
 		koth_snowtower
 		{
-			enabled 1
 			name "Snowtower"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_snowtower"
@@ -1291,7 +1207,6 @@ solo_config
 		}
 		koth_overcast
 		{
-			enabled 1
 			name "Overcast"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_overcast"
@@ -1306,7 +1221,6 @@ solo_config
 		}
 		pd_atom_smash
 		{
-			enabled 1
 			name "Atom Smash"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_atom_smash"
@@ -1320,7 +1234,6 @@ solo_config
 		}
 		pd_selbyen
 		{
-			enabled 1
 			name "Selbyen"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_selbyen"
@@ -1334,7 +1247,6 @@ solo_config
 		}
 		pd_farmageddon
 		{
-			enabled 1
 			name "Farmageddon"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_farmageddon"
@@ -1349,7 +1261,6 @@ solo_config
 		}
 		pd_mannsylvania
 		{
-			enabled 1
 			name "Mannsylvania"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_mannsylvania"
@@ -1363,7 +1274,6 @@ solo_config
 		}
 		pd_monster_bash
 		{
-			enabled 1
 			name "Monster Bash"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_monster_bash"
@@ -1377,7 +1287,6 @@ solo_config
 		}
 		pd_pit_of_death_event
 		{
-			enabled 1
 			name "Pit of Death"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_pit_of_death_event"
@@ -1391,7 +1300,6 @@ solo_config
 		}
 		pd_circus
 		{
-			enabled 1
 			name "Circus"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_circus"
@@ -1405,7 +1313,6 @@ solo_config
 		}
 		pd_cursed_cove_event
 		{
-			enabled 1
 			name "Cursed Cove"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_cursed_cove_event"
@@ -1419,7 +1326,6 @@ solo_config
 		}
 		pd_watergate
 		{
-			enabled 1
 			name "Watergate"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_watergate"
@@ -1433,7 +1339,6 @@ solo_config
 		}
 		pd_galleria
 		{
-			enabled 1
 			name "Galleria"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_galleria"
@@ -1448,7 +1353,6 @@ solo_config
 		}
 		pd_snowville_event
 		{
-			enabled 1
 			name "SnowVille"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_snowville_event"
@@ -1462,7 +1366,6 @@ solo_config
 		}
 		pl_borneo
 		{
-			enabled 1
 			name "Borneo"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_borneo"
@@ -1475,7 +1378,6 @@ solo_config
 		}
 		pl_frontier_final
 		{
-			enabled 1
 			name "Frontier"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_frontier_final"
@@ -1488,7 +1390,6 @@ solo_config
 		}
 		pl_breadspace
 		{
-			enabled 1
 			name "Breadspace"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_breadspace"
@@ -1502,7 +1403,6 @@ solo_config
 		}
 		pl_camber
 		{
-			enabled 1
 			name "Camber"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_camber"
@@ -1515,7 +1415,6 @@ solo_config
 		}
 		pl_cashworks
 		{
-			enabled 1
 			name "Cashworks"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_cashworks"
@@ -1528,7 +1427,6 @@ solo_config
 		}
 		pl_enclosure_final
 		{
-			enabled 1
 			name "Enclosure"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_enclosure_final"
@@ -1542,7 +1440,6 @@ solo_config
 		}
 		pl_hoodoo_final
 		{
-			enabled 1
 			name "Hoodoo"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_hoodoo_final"
@@ -1556,7 +1453,6 @@ solo_config
 		}
 		pl_odyssey
 		{
-			enabled 1
 			name "Odyssey"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_odyssey"
@@ -1570,7 +1466,6 @@ solo_config
 		}
 		pl_pier
 		{
-			enabled 1
 			name "Pier"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_pier"
@@ -1583,7 +1478,6 @@ solo_config
 		}
 		pl_swiftwater_final1
 		{
-			enabled 1
 			name "Swiftwater"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_swiftwater_final1"
@@ -1596,7 +1490,6 @@ solo_config
 		}
 		pl_venice
 		{
-			enabled 1
 			name "Venice"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_venice"
@@ -1609,7 +1502,6 @@ solo_config
 		}
 		pl_embargo
 		{
-			enabled 1
 			name "Embargo"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_embargo"
@@ -1623,7 +1515,6 @@ solo_config
 		}
 		pl_phoenix
 		{
-			enabled 1
 			name "Phoenix"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_phoenix"
@@ -1636,7 +1527,6 @@ solo_config
 		}
 		pl_bloodwater
 		{
-			enabled 1
 			name "Bloodwater"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_bloodwater"
@@ -1649,7 +1539,6 @@ solo_config
 		}
 		pl_corruption
 		{
-			enabled 1
 			name "Corruption"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_corruption"
@@ -1662,7 +1551,6 @@ solo_config
 		}
 		pl_fifthcurve_event
 		{
-			enabled 1
 			name "Brimstone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_fifthcurve_event"
@@ -1675,7 +1563,6 @@ solo_config
 		}
 		pl_hasslecastle
 		{
-			enabled 1
 			name "Hassle Castle"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_hasslecastle"
@@ -1688,7 +1575,6 @@ solo_config
 		}
 		pl_millstone_event
 		{
-			enabled 1
 			name "Hellstone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_millstone_event"
@@ -1701,7 +1587,6 @@ solo_config
 		}
 		pl_precipice_event_final
 		{
-			enabled 1
 			name "Precipice"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_precipice_event_final"
@@ -1714,7 +1599,6 @@ solo_config
 		}
 		pl_rumble_event
 		{
-			enabled 1
 			name "Gravestone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_rumble_event"
@@ -1727,7 +1611,6 @@ solo_config
 		}
 		pl_sludgepit_event
 		{
-			enabled 1
 			name "Ghoulpit"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_sludgepit_event"
@@ -1741,7 +1624,6 @@ solo_config
 		}
 		pl_spineyard
 		{
-			enabled 1
 			name "Spineyard"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_spineyard"
@@ -1755,7 +1637,6 @@ solo_config
 		}
 		pl_terror_event
 		{
-			enabled 1
 			name "Terror"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_terror_event"
@@ -1768,7 +1649,6 @@ solo_config
 		}
 		pl_snowycoast
 		{
-			enabled 1
 			name "Snowycoast"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_snowycoast"
@@ -1782,7 +1662,6 @@ solo_config
 		}
 		pl_chilly
 		{
-			enabled 1
 			name "Chilly"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_chilly"
@@ -1795,7 +1674,6 @@ solo_config
 		}
 		pl_coal_event
 		{
-			enabled 1
 			name "Polar"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_coal_event"
@@ -1808,7 +1686,6 @@ solo_config
 		}
 		pl_emerge
 		{
-			enabled 1
 			name "Emerge"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_emerge"
@@ -1821,7 +1698,6 @@ solo_config
 		}
 		pl_frostcliff
 		{
-			enabled 1
 			name "Frostcliff"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_frostcliff"
@@ -1835,7 +1711,6 @@ solo_config
 		}
 		pl_rumford_event
 		{
-			enabled 1
 			name "Rumford"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_rumford_event"
@@ -1848,7 +1723,6 @@ solo_config
 		}
 		pl_wutville_event
 		{
-			enabled 1
 			name "Wutville"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_wutville_event"
@@ -1861,7 +1735,6 @@ solo_config
 		}
 		pl_patagonia
 		{
-			enabled 1
 			name "Patagonia"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_patagonia"
@@ -1875,7 +1748,6 @@ solo_config
 		}
 		plr_nightfall_final
 		{
-			enabled 1
 			name "Nightfall"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_nightfall_final"
@@ -1890,7 +1762,6 @@ solo_config
 		}
 		plr_bananabay
 		{
-			enabled 1
 			name "Banana Bay"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_bananabay"
@@ -1904,7 +1775,6 @@ solo_config
 		}
 		plr_hacksaw
 		{
-			enabled 1
 			name "Hacksaw"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_hacksaw"
@@ -1918,7 +1788,6 @@ solo_config
 		}
 		plr_hacksaw_event
 		{
-			enabled 1
 			name "Bonesaw"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_hacksaw_event"
@@ -1932,7 +1801,6 @@ solo_config
 		}
 		plr_cutter
 		{
-			enabled 1
 			name "Cutter"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_cutter"
@@ -1946,7 +1814,6 @@ solo_config
 		}
 		tow_dynamite
 		{
-			enabled 1
 			name "Dynamite"
 			modename "#Gametype_TOW"
 			thumbArt "maps/menu_thumb_tow_dynamite"
@@ -1961,7 +1828,6 @@ solo_config
 		}
 		vsh_distillery
 		{
-			enabled 1
 			name "Distillery"
 			modename "#Gametype_VSH"
 			thumbArt "maps/menu_thumb_vsh_distillery"
@@ -1977,7 +1843,6 @@ solo_config
 		}
 		vsh_nucleus
 		{
-			enabled 1
 			name "Nucleus (VSH)"
 			modename "#Gametype_VSH"
 			thumbArt "maps/menu_thumb_vsh_nucleus"
@@ -1993,7 +1858,6 @@ solo_config
 		}
 		vsh_skirmish
 		{
-			enabled 1
 			name "Skirmish"
 			modename "#Gametype_VSH"
 			thumbArt "maps/menu_thumb_vsh_skirmish"
@@ -2009,7 +1873,6 @@ solo_config
 		}
 		vsh_tinyrock
 		{
-			enabled 1
 			name "Tinyrock"
 			modename "#Gametype_VSH"
 			thumbArt "maps/menu_thumb_vsh_tinyrock"
@@ -2025,7 +1888,6 @@ solo_config
 		}
 		vsh_outburst
 		{
-			enabled 1
 			name "Outburst"
 			modename "#Gametype_VSH"
 			thumbArt "maps/menu_thumb_vsh_outburst"
@@ -2041,7 +1903,6 @@ solo_config
 		}
 		vsh_maul
 		{
-			enabled 1
 			name "Maul"
 			modename "#Gametype_VSH"
 			thumbArt "maps/menu_thumb_vsh_maul"
@@ -2057,7 +1918,6 @@ solo_config
 		}
 		zi_devastation_final1
 		{
-			enabled 1
 			name "Devastation"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_devastation_final1"
@@ -2072,7 +1932,6 @@ solo_config
 		}
 		zi_murky
 		{
-			enabled 1
 			name "Murky"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_murky"
@@ -2087,7 +1946,6 @@ solo_config
 		}
 		zi_sanitarium
 		{
-			enabled 1
 			name "Sanitarium"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_sanitarium"
@@ -2102,7 +1960,6 @@ solo_config
 		}
 		zi_atoll
 		{
-			enabled 1
 			name "Atoll"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_atoll"
@@ -2117,7 +1974,6 @@ solo_config
 		}
 		zi_blazehattan
 		{
-			enabled 1
 			name "Blazehattan"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_blazehattan"
@@ -2132,7 +1988,6 @@ solo_config
 		}
 		zi_woods
 		{
-			enabled 1
 			name "Woods"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_woods"

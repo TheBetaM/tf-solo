@@ -5,21 +5,24 @@ TFSOLO.WorldMaps.TestClass <- class extends TFSOLO.WorldMap
 		Nodes = []
 		SelectedNode = null
 		
-		local Node1 = TFSOLO.WorldMapNode("Dustbowl","cp_dustbowl","",null)
-		local Node2 = TFSOLO.WorldMapNode("Viaduct","koth_viaduct","",TFSOLO.Cutscenes.Test)
-		local Node3 = TFSOLO.WorldMapNode("Upward","pl_upward","",null)
+		local Node1 = TFSOLO.WorldMapNode("Dustbowl","",null)
+		local Node2 = TFSOLO.WorldMapNode("Viaduct","",TFSOLO.Cutscenes.Test)
+		local Node3 = TFSOLO.WorldMapNode("Upward","",null)
 		
 		Node1.PosX = "cs-0.5-150"
 		Node1.Icon = "cyoa/cyoa_icon_spy"
-		Node1.PlayerClass = "spy"
+		Node1.Settings.PlayerClass <- "spy"
+		Node1.Settings.Map <- "cp_dustbowl"
 		
 		Node2.Icon = "cyoa/cyoa_icon_scout"
-		Node2.PlayerClass = "scout"
+		Node2.Settings.PlayerClass <- "scout"
+		Node2.Settings.Map <- "koth_viaduct"
 		Node2.Tooltip = "This one starts a cutscene."
 		
 		Node3.Icon = "cyoa/cyoa_icon_soldier"
 		Node3.PosX = "cs-0.5+150"
-		Node3.PlayerClass = "soldier"
+		Node3.Settings.PlayerClass <- "soldier"
+		Node3.Settings.Map <- "pl_upward"
 		
 		Nodes.push(Node1)
 		Nodes.push(Node2)

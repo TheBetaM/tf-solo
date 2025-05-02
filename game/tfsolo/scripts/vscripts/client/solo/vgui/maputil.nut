@@ -19,7 +19,7 @@ TFSOLO.InitMapLists <- function()
 	local key = holderkey.GetFirstSubKey()
 	while (key)
 	{
-		if (key.GetInt("enabled") == 1)
+		if (key.GetInt("disabled") == 0)
 		{
 			if (bAllowWorkshop || key.GetName().find("workshop_") == null)
 			{

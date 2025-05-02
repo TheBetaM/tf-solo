@@ -1,5 +1,3 @@
-printl("[TFSOLO] Util")
-
 function CollectEventsInScope(events)
 {
 	local events_id = UniqueString()
@@ -14,3 +12,4 @@ function CollectEventsInScope(events)
 		delete getroottable()[events_id]
 	} __CollectGameEventCallbacks(events_table)
 }
+

@@ -1,6 +1,8 @@
 # 1.0.0
 ## General
-- Added a new main menu interface for selecting maps to play  
+- Added a new main menu interface for selecting maps to play normally, as well as in new ways:
+-- Arena, now playable on KOTH, 5CP and other symmetrical maps  
+-- King of the Hill, now playable on Arena, 5CP and other symmetrical maps  
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  

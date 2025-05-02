@@ -47,14 +47,21 @@ TFSOLO.StartMission <- function()
 	SendToConsole("tf_gamemode_override " + data.CvarGamemodeOverride)
 	SendToConsole("tf_mvm_popfile_requested " + data.PopFile)
 	
+	local MapFile = data.Map
+	if (MapFile.find("workshop_") != null)
+	{
+		MapFile = "workshop/" + data.Map.slice(9)
+	}
+	
 	// GO!
-	SendToConsole("disconnect;wait;wait;maxplayers 32;progress_enable;map " + data.Map)
+	SendToConsole("disconnect;wait;wait;maxplayers 32;progress_enable;map " + MapFile)
 	
 	SoloPanel.ForceClose()
 }
 
 TFSOLO.StartMissionTest <- function(map)
 {
+	TFSOLO.ResetMissionSettings()
 	if (map.find("workshop_") == null)
 	{
 		TFSOLO.PlayerData.Map = map
@@ -64,8 +71,5 @@ TFSOLO.StartMissionTest <- function(map)
 		TFSOLO.PlayerData.Map = "workshop/" + map.slice(9)
 	}
 	TFSOLO.PlayerData.TeamSelected = 1
-	TFSOLO.PlayerData.PlayerClass = "any"
-	TFSOLO.PlayerData.PopFile = "solo_easy_1"
-	TFSOLO.PlayerData.CvarGamemodeOverride = 0
 	TFSOLO.StartMission()
 }

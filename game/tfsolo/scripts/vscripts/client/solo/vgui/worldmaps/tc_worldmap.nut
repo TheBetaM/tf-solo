@@ -6,6 +6,19 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 	ActiveNode = -1
 	CounterMap = null
 	MapTeam = 0
+	PlayerClassNames = [
+		"civilian",
+		"scout",
+		"sniper",
+		"soldier",
+		"demoman",
+		"medic",
+		"heavyweapons",
+		"pyro",
+		"spy",
+		"engineer",
+		"civilian"
+	]
 	
 	constructor() { 
 		Name = "TC Map"
@@ -37,7 +50,7 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 		Node.StateCompletionSegments = 1
 		Node.Update()
 		
-		local MapName = Node.Map
+		local MapName = Node.Settings.Map
 		local savekv = Solo.GetSaveData()
 		local solokv = savekv.GetKey("Solo", true)
 		local tckv = solokv.GetKey("tc", true)
@@ -65,6 +78,129 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 		}
 	}
 	
+	function CheckMapTags(TagsKey, Tags)
+	{
+		local pass = 0
+		foreach (a in Tags)
+		{
+			if (TagsKey.FindKey(a) != null)
+			{
+				pass++
+			}
+		}
+		if (pass == Tags.len())
+		{
+			return true
+		}
+		return false
+	}
+	function CheckAnyMapTags(TagsKey, Tags)
+	{
+		local pass = 0
+		foreach (a in Tags)
+		{
+			if (TagsKey.FindKey(a) != null)
+			{
+				return true
+			}
+		}
+		return false
+	}
+	
+	function GenerateNode(Node, MapKey, tckv, MapFile)
+	{
+		Node.Name = MapKey.GetString("name")
+		Node.Tooltip = LocalizeString(MapKey.GetString("modename"))
+		
+		// Settings
+		local TagsKey = MapKey.GetKey("tags", true)
+		Node.Settings.Map <- MapFile
+		Node.Settings.TeamSelected <- 0
+		if (MapTeam == 3)
+		{
+			Node.Settings.TeamSelected <- 1
+		}
+		Node.Settings.PlayerClass <- "any"
+		Node.Settings.GameMode <- "standard"
+		Node.Settings.MapMode <- "standard"
+		Node.Settings.BotMode <- "standard"
+		
+		if (RandomInt(0,4) == 0)
+		{
+			local GameModes = []
+			
+			if ( CheckMapTags(TagsKey, ["cp_count","symm"]) && !CheckAnyMapTags(TagsKey, ["koth","arena_pd"]) )
+			{
+				GameModes.push("koth")
+			}
+			if ( CheckMapTags(TagsKey, ["cp_count","symm"]) && !CheckAnyMapTags(TagsKey, ["arena","arena_pd"]) )
+			{
+				GameModes.push("arena")
+			}
+			
+			if (GameModes.len() != 0)
+			{
+				local pos = RandomInt(0, GameModes.len() - 1)
+				local mode = GameModes[pos]
+				local AllowClassLock = true
+				Node.Settings.GameMode <- mode
+				
+				if (mode == "koth")
+				{
+					Node.Tooltip = LocalizeString("#Gametype_Koth")
+				}
+				else if (mode == "arena")
+				{
+					Node.Tooltip = LocalizeString("#Gametype_Arena")
+				}
+				
+				if (AllowClassLock && RandomInt(0,20) == 0)
+				{
+					Node.Settings.PlayerClass <- PlayerClassNames[RandomInt(1,9)]
+				}
+				
+				Node.Name = Node.Name + "*"
+			}
+		}
+		else
+		{
+			if (RandomInt(0,20) == 0)
+			{
+				Node.Settings.PlayerClass <- PlayerClassNames[RandomInt(1,9)]
+			}
+		}
+		if (RandomInt(0,100) == 0 && !CheckAnyMapTags(TagsKey, ["mdv"]))
+		{
+			Node.Settings.Medieval <- 1
+			Node.Tooltip = LocalizeString("#GameType_Medieval") + " " + Node.Tooltip
+			Node.Name = Node.Name + "*"
+		}
+		
+		// Progression
+		if (tckv.FindKey(MapFile) != null)
+		{
+			local mapkv = tckv.FindKey(MapFile)
+			Node.StateTeam = mapkv.GetInt("team")
+			Node.StateCompletionState = 1
+			Node.StateCompletionSegments = 1
+		}
+		
+		// Visuals
+		if (Node.Settings.PlayerClass != "any")
+		{
+			Node.Icon = "cyoa/cyoa_icon_" + Node.Settings.PlayerClass
+			if (Node.Settings.PlayerClass == "heavyweapons")
+			{
+				Node.Icon = "cyoa/cyoa_icon_heavy"
+			}
+		}
+		else
+		{
+			Node.Icon = "cyoa/cyoa_classchoice_icon"
+		}
+		
+	}
+	
 	function GenerateMap()
 	{
 		local savekv = Solo.GetSaveData()
@@ -73,16 +209,16 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 	
 		Nodes.clear()
 		
-		local NodeCount = RandomInt(9,15)
+		local NodeCount = RandomInt(12,15)
 		local MapPoolFull = TFSOLO.ValidMaps.slice()
 		local MapPool = []
 		if (CounterMap != null && CounterMap.MapGenerated != 0)
 		{
 			for (local i = 0; i < CounterMap.Nodes.len(); i++)
 			{
-				if (MapPoolFull.find(CounterMap.Nodes[i].Map))
+				if (MapPoolFull.find(CounterMap.Nodes[i].Settings.Map))
 				{
-					MapPoolFull.remove(MapPoolFull.find(CounterMap.Nodes[i].Map))
+					MapPoolFull.remove(MapPoolFull.find(CounterMap.Nodes[i].Settings.Map))
 				}
 			}
 		}
@@ -139,9 +275,9 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 		for (local i = 0; i < NodeCount; i++)
 		{
 			local MapKey = TFSOLO.GetMapEntry(MapPool[i])
-			local Node = TFSOLO.WorldMapNode(MapKey.GetString("name"),MapPool[i],"",null)
+			local Node = TFSOLO.WorldMapNode("Node","",null)
+			GenerateNode(Node, MapKey, tckv, MapPool[i])
 			
-			Node.Tooltip = LocalizeString(MapKey.GetString("modename"))
 			if (xoffset > 0)
 			{
 				Node.PosX = "cs-0.5+" + xoffset
@@ -163,86 +299,6 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 			{
 				yoffset += 100
 				xoffset = -150
-			}
-			
-			if (tckv.FindKey(Node.Map) != null)
-			{
-				local mapkv = tckv.FindKey(Node.Map)
-				Node.StateTeam = mapkv.GetInt("team")
-				Node.StateCompletionState = 1
-				Node.StateCompletionSegments = 1
-			}
-			
-			if (RandomInt(1,10) == 1)
-			{
-				local pick = RandomInt(1,9)
-				switch (pick)
-				{
-					case 1:
-					{
-						Node.Icon = "cyoa/cyoa_icon_scout"
-						Node.PlayerClass = "scout"
-						break;
-					}
-					case 2:
-					{
-						Node.Icon = "cyoa/cyoa_icon_soldier"
-						Node.PlayerClass = "soldier"
-						break;
-					}
-					case 3:
-					{
-						Node.Icon = "cyoa/cyoa_icon_pyro"
-						Node.PlayerClass = "pyro"
-						break;
-					}
-					case 4:
-					{
-						Node.Icon = "cyoa/cyoa_icon_demoman"
-						Node.PlayerClass = "demoman"
-						break;
-					}
-					case 5:
-					{
-						Node.Icon = "cyoa/cyoa_icon_heavy"
-						Node.PlayerClass = "heavyweapons"
-						break;
-					}
-					case 6:
-					{
-						Node.Icon = "cyoa/cyoa_icon_engineer"
-						Node.PlayerClass = "engineer"
-						break;
-					}
-					case 7:
-					{
-						Node.Icon = "cyoa/cyoa_icon_medic"
-						Node.PlayerClass = "medic"
-						break;
-					}
-					case 8:
-					{
-						Node.Icon = "cyoa/cyoa_icon_sniper"
-						Node.PlayerClass = "sniper"
-						break;
-					}
-					case 9:
-					{
-						Node.Icon = "cyoa/cyoa_icon_spy"
-						Node.PlayerClass = "spy"
-						break;
-					}
-					default:
-					{
-						Node.Icon = "cyoa/cyoa_classchoice_icon"
-						break;
-					}
-				}
-				
-			}
-			else
-			{
-				Node.Icon = "cyoa/cyoa_classchoice_icon"
 			}
 			
 			Nodes.push(Node)

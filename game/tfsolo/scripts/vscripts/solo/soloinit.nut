@@ -6,6 +6,10 @@ if (TFSOLO.Settings == null)
 	printl("[TFSOLO] Failed to load mission settings!")
 }
 
+IncludeScript("solo/gamemodes/gamemode.nut")
+IncludeScript("solo/mapmodes/mapmode.nut")
+IncludeScript("solo/botmodes/botmode.nut")
+
 Convars.SetValue("mp_tournament", 0)
 Convars.SetValue("mp_winlimit", 0)
 Convars.SetValue("mp_forceautoteam", 0)

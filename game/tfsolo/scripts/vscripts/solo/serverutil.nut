@@ -1,6 +1,18 @@
-::tf_player_manager <- Entities.FindByClassname(null, "tf_player_manager")
-::tf_gamerules <- Entities.FindByClassname(null, "tf_gamerules")
 ::MAX_PLAYERS <- MaxClients().tointeger()
+
+::TF_CLASS_NAMES <- [
+    "civilian",
+    "scout",
+    "sniper",
+    "soldier",
+    "demoman",
+    "medic",
+    "heavyweapons",
+    "pyro",
+    "spy",
+    "engineer",
+    "civilian"
+]
 
 ::ToConsole <- function(t)
 {

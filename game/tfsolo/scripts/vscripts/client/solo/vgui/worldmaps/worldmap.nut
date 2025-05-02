@@ -24,8 +24,10 @@ TFSOLO.WorldMapNode <- class
 	StateCompletionSegments = 1
 	StateTeam = 0
 	
-	Map = ""
-	PlayerClass = "any"
+	Settings = {
+		Map = ""
+		PlayerClass = "any"
+	}
 	
 	function Select()
 	{
@@ -42,15 +44,12 @@ TFSOLO.WorldMapNode <- class
 	{
 		if (StateLocked != 0)
 			return
-		if (Map.find("workshop_") == null)
+			
+		TFSOLO.ResetMissionSettings()
+		foreach (a in Settings.keys())
 		{
-			TFSOLO.PlayerData.Map = Map
+			TFSOLO.PlayerData[a] <- Settings[a]
 		}
-		else
-		{
-			TFSOLO.PlayerData.Map = "workshop/" + Map.slice(9)
-		}
-		TFSOLO.PlayerData.PlayerClass = PlayerClass
 		
 		TFSOLO.WorldMaps.Ingame = true
 		TFSOLO.WorldMaps.ActiveNode = this
@@ -91,9 +90,8 @@ TFSOLO.WorldMapNode <- class
 		
 	}
 	
-	constructor(aname, amap, aicon, acts) { 
+	constructor(aname, aicon, acts) { 
 		Name = aname
-		Map = amap
 		Icon = aicon
 		Cutscene = acts
 		PosX = "cs-0.5"
@@ -101,7 +99,6 @@ TFSOLO.WorldMapNode <- class
 		Tooltip = ""
 		Panel = null
 		WorldMap = null
-		PlayerClass = "any"
 		ID = 0
 		StateLocked = 0
 		StateCreditsType = 0
@@ -109,6 +106,11 @@ TFSOLO.WorldMapNode <- class
 		StateHasItem = 0
 		StateCompletionState = 0
 		StateCompletionSegments = 1
+		
+		Settings = {
+			Map = ""
+			PlayerClass = "any"
+		}
 	}
 	function _tostring() return this.Name
 }
