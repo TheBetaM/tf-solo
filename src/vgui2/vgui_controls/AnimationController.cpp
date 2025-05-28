@@ -1707,6 +1707,10 @@ void AnimationController::StartCmd_Animate(UtlSymId_t seqName, AnimCmdAnimate_t 
 	if (!panel)
 		return;
 
+	// Block some panels (like HudScope). Unfortunately players are abusing animations with broad/null parents.
+	if ( !panel->CanAnimate() )
+		return;
+
 	StartCmd_Animate(panel, seqName, cmd, bCanBeCancelled);
 }
 
