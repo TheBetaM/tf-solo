@@ -63,7 +63,16 @@ TFSOLO.SoloEventTag <- UniqueString()
 getroottable()[TFSOLO.SoloEventTag] <- {
 	OnGameEvent_teamplay_round_start = function(params)
 	{
+		local tf_gamerules = Entities.FindByClassname(null, "tf_gamerules")
 		SetSoloObjectivesResFile("")
+		if (TFSOLO.Settings.Medieval == 1)
+		{
+			NetProps.SetPropBool(tf_gamerules, "m_bPlayingMedieval", true)
+		}
+		else if (TFSOLO.Settings.Medieval == 2)
+		{
+			NetProps.SetPropBool(tf_gamerules, "m_bPlayingMedieval", false)
+		}
 		if (IsMannVsMachineMode())
 		{
 			Convars.SetValue("tf_bot_quota", 0)

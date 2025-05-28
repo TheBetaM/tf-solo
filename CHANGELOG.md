@@ -42,6 +42,7 @@ cl_default_networking_off
 - Fixed crash on disconnect from PD maps with bots caused by flag dispensers
 - Fixed bots not firing during setup outside Attack/Defend maps
 - Fixed bots not moving if the map has no func_respawnroom's
+- Fixed crash on point capture if no nav areas found around point
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

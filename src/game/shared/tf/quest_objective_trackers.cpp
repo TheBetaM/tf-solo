@@ -706,8 +706,8 @@ void CQuestItemTracker::EnsureObjectiveTrackersForPlayer( const CSteamID& steamI
 		if ( bAlreadyHas )
 			continue;
 
-		CBaseQuestObjectiveTracker* pNewTracker = new CBaseQuestObjectiveTracker( vecObjectives[i], this, steamIDTrackingPlayer );
-		m_vecObjectiveTrackers.AddToTail( pNewTracker );
+		//CBaseQuestObjectiveTracker* pNewTracker = new CBaseQuestObjectiveTracker( vecObjectives[i], this, steamIDTrackingPlayer );
+		//m_vecObjectiveTrackers.AddToTail( pNewTracker );
 
 #ifdef GAME_DLL
 		if ( GetOwnerSteamID() != steamIDTrackingPlayer )

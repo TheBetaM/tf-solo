@@ -2,1163 +2,1162 @@ armory_config
 {
 	"Parasite Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Allbrero"
 	{
-		Cost 1000
+		Cost 100
 	}
 	//"Propaganda Contest Second Place"
 	//{
 	//}
 	"The Anger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Antlers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Potato Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Archimedes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Area 451"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Argyle Ace"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"MNC Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Audio File"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Awesomenauts Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"B-ankh!"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The B.M.O.C."
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Backbiter's Billycock"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bacteria Blocker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ball-Kicking Boots"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pet Balloonicorn"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Baronial Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Baseball Bill's Sports Shine"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Batter's Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Battery Bandolier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Battle Bob"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Benefactor's Kanmuri"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Big Daddy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"L4D Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blazing Bull"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blind Justice"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolgan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolgan Family Crest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolt Action Blitzer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolted Bushman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bombinomicon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bonk Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Treasure Hat 1"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bucket Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Breather Bag"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brigade Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brimstone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Duel Medal Bronze"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Buck Turner All-Stars"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Burning Bongos"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bushman's Boonie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Buzz Killer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Camera Beard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Can Opener"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Honest Halo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Civilian Grade JACK Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Clockwerk's Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cockfighter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cold War Luchador"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Combat Medic's Crusher Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Portal 2 Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Conjurer's Cowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Conspiracy Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crafty Hair"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Criminal Cloak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cross-Comm Crash Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cross-Comm Express"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crosslinker's Coil"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"TTG Glasses"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dashin' Hashshashin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Traffic Cone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Poker Visor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Demoman's Fro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Der Maschinensoldaten-Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Die Regime-Panzerung"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Doe-Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Doublecross-Comm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dr. Gogglestache"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dr. Grordbort's Crest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dragonborn Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dread Hiding Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Daily Duel Winner Reward Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"OSX Item"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Einstein"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The El Jefe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ellis Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Emerald Jarate"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Engineer's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"MNC Mascot Outfit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Faerie Solitaire Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fallen Angel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fancy Fedora"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Finder's Fee"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The First American"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Flamingo Kid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scout Flip-Flops"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Football Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"KF Pyro Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Friends Forever Companion Square Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Frontier Flyboy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Camera Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Full Head of Steam"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Futankhamun"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Garlic Flank Stake"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Web Easteregg Medal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gentle Munitionne of Leisure"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ghastly Gibus 2010"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ghastly Gibus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ghastly Gibus 2011"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ghostly Gibus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Daily Gift Giver Reward Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gilded Guard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Glengarry Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Duel Medal Gold"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grandmaster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Griffin's Gog"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Employee Badge A"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hair of the Dog"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Scout"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Sniper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Soldier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Demoman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Medic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Heavy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Spy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Engineer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Pyro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halloween Mask - Saxton Hale"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Treasure Hat 3"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Heavy Artillery Officer's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hero's Hachimaki"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hero's Tail"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Heroic Companion Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Polish War Babushka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Holy Hunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Horseless Headless Horseman's Head"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Humanitarian's Hachimaki"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Idiot Box"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Infernal Orchestrina"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Intangible Ascot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	//"Propaganda Contest First Place"
 	//{
 	//}
 	"Janissary Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lacking Moral Fiber Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Legend of Bugfoot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"TTG Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Little Bear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lone Star"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Long Fall Loafers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lord Cockswain's Novelty Mutton Chops and Pipe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lord Cockswain's Pith Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lucky No. 42"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Worms Gear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mangnanimous Monarch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mann Co. Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mann Co. Online Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mannanas Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Manniversary Paper Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mark of the Saint"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mask of the Shaman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Master's Yellow Belt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"TTG Max Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Medic Mech-bag"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Merc Medal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Merc's Pride Scarf"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Employee Badge C"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mercenary Park Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mildly Disturbing Halloween Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Military Grade JACK Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mining Light"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mister Bubbles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Modest Pile of Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"MONOCULUS!"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yeti Park Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Never Forget Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Noble Amassment of Hats"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Officer's Ushanka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tour of Duty Badge Expert 1"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tour of Duty Badge Advanced 2"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tour of Duty Badge Intermediate 1"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tour of Duty Badge Advanced 1"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tour of Duty Badge Advanced 3"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Otolaryngologist's Mirror"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Paisley Pro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"TF Birthday Hat 2011"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"PASS Time Early Participation Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"PASS Time Miniature Half JACK"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Person in the Iron Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Daily Map Stamp Reward Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pickled Paws"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pip-Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scout MtG Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medic MtG Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Duel Medal Plat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Point and Shoot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pomade Prince"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Portable Smissmas Spirit Dispenser"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pounding Father"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Employee Badge Plat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prince Tavish's Crown"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Professional's Panama"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Friendly Item"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Professor's Peculiarity"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Loyalty Reward"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prussian Pickelhaube"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Public Accessor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro's Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pyrobotics Pack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyrovision Goggles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Randolph the Blood-Nosed Caribou"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pet Reindoonicorn"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Respectless Rubber Glove"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Resurrection Associate Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ritzy Rick's Hair Fixative"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Robot Running Man"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Russian Rocketeer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sack Fulla Smissmas"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Saxton Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Saxxy Clapper Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scotsman's Stove Pipe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scottish Snarl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scrap Pack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Seal Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Seeing Double"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shoestring Budget"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sign of the Wolf's School"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Silver Bullets"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Duel Medal Silver"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Six Pack Abs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Skull Island Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Smissmas Caribou"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Smissmas Wreath"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sniper's Snipin' Glass"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Employee Badge B"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soldier's Stash"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Soldier's Stogie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soviet Stitch-Up"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"SpaceChem Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spine-Chilling Skull"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spine-Chilling Skull 2011"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spine-Chilling Skull 2011 Style 1"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spine-Chilling Skull 2011 Style 2"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spine-Chilling Skull 2011 Style 3"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spiral Sallet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spirit Of Giving"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stainless Pot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Stealth Steeler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Steel Pipes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Steel Songbird"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Steel-Toed Stompers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"KF Pyro Tie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Storm Spirit's Jolly Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Summer Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Summer Shades"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"MNC Mascot Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sydney Straw Boat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tail From the Crypt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Texas Slim's Dome Shine"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Texas Ten Gallon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The TF2VRH"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tin Pot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tin-1000"
 	{
-		Cost 1000
+		Cost 100
 	}
 	//"The Top Notch"
 	//{
 	//}
 	"Tough Guy's Toque"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Towering Pillar of Hats"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Towering Pillar of Summer Shades"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Treasure Hat 2"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Triclops"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Triple A Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Trophy Belt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tux"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tyrant's Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The U-clank-a"
 	{
-		Cost 1000
+		Cost 100
 	}
 	//"Propaganda Contest Third Place"
 	//{
 	//}
 	"Under Cover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Unusual Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Vigilant Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vintage Tyrolean"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Voodoo Juju"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Scout"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Soldier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Heavy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Demo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Engineer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Medic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Spy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Pyro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Zombie Sniper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vox Diabolus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"War Head"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The War on Smissmas Battle Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The War on Smissmas Battle Socks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Warsworn Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Weather Master"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Whale Bone Charm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wingstick"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"World Traveler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wrap Battler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ye Olde Baker Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yeti Park Hardhat"
 	{
-		Cost 1000
+		Cost 100
 	}
-	
 }

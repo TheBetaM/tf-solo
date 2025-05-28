@@ -1829,8 +1829,11 @@ void CAchievementMgr::SetAchievementThink( CBaseAchievement *pAchievement, float
 
 	// Otherwise, add it to the list
 	int iIdx = m_vecThinkListeners.AddToTail();
-	m_vecThinkListeners[iIdx].pAchievement = pAchievement;
-	m_vecThinkListeners[iIdx].m_flThinkTime = gpGlobals->curtime + flThinkTime;
+	if ( m_vecThinkListeners.IsValidIndex( iIdx ) )
+	{
+		m_vecThinkListeners[iIdx].pAchievement = pAchievement;
+		m_vecThinkListeners[iIdx].m_flThinkTime = gpGlobals->curtime + flThinkTime;
+	}
 }
 
 void CAchievementMgr::UpdateStateFromSteam_Internal()

@@ -2,5974 +2,5974 @@ armory_config
 {
 	"TF2Maps 72hr TF2Jam Summer Participant 2016"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Brush with Death"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Handsome Handy Thing"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Hat to Kill For"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Head Full of Hot Air"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Rather Festive Tree"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Shell of a Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Well Wrapped Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"A Whiff of the Old Brimstone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Abhorrent Appendages"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yeti_Legs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Accursed Apparition"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Aerobatics Demonstrator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The After Dark"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Aim Assistant"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Aimframe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Air Raider"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Airborne Attire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Airdog"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Airtight Arsonist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Aladdin's Private Reserve"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Alakablamicon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Alcoholic Automaton"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Alien Cranium"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"All Hallows' Hatte"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The All-Father"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Aloha Apparel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Alternative Medicine Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Altruist's Adornment"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Angel of Death"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Antarctic Eyewear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Antarctic Parka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Antarctic Researcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Apparatchik's Apparel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Apparition's Aspect"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Aqua Flops"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Arachno-Arsonist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Archers Groundings"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Archer's Sterling"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Archimedes the Undying"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Arctic Mole"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Aristotle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Arkham Cowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Armored Authority"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Arsonist Apparatus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Arthropod's Aspect"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Assassin's Attire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Asymmetric Accolade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Athenian Attire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Atomic Accolade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Attack Packs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Attendant"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Au Courant Assassin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Auspicious Automaton Assembler's Accolade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Avian Amante"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Aviator Assassin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Aztec Aggressor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Aztec Warrior"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"B'aaarrgh-n-Bicorne"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"B'aaarrgh-n-Britches"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Backbreaker's Guards"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Backbreaker's Skullcracker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Backpack Broiler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Backstabber's Boomslang"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Backwards Ballcap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Badlands Bandido"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bait and Bite"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Balkan's Brute"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Balloonicorpse"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Balloonihoodie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ballooniphones"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bananades"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bandit's Boots"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Baphomet Trotters"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bare Bear Bones"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bare Necessities"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Barefoot Brawler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Barnstormer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Baron von Havenaplane"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Base Metal Billycock"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bat Backup"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bat Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Batbelt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Batter's Beak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Batter's Bracers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Battle Balaclava"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Battle Bear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Battle Bird"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Battle Boonie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Battle Music"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bazaar Bauble"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Beacon from Beyond"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Beanie The All-Gnawing"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bear Necessities"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bear Walker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bearded Bombardier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Beast From Below"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Beastly Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Beaten and Bruised"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"BedBug Protection"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bedouin Bandana"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Beep Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Beep Man"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Belgian Detective"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Berlin Brain Bowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Berliner's Bucket Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Big Chief"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Big Country"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Big Elfin Deal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Big Star"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Big Steel Jaw of Summer Fun"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Big Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bigg Mann on Campus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bigger Mann on Campus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Binoculus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Biomech Backpack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bird's Eye Viewer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bird-Man of Aberdeen"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Birdcage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Birdie Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Birdman of Australiacatraz"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Black Knights Bascinet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Black Watch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blast Blocker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Blast Bowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blast Defense"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blastphomet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blighted Beak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blitzen Bowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Blizzard Breather"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Blizzard Britches"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sniper Fishing Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Blood Banker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bloodhound"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Boarder's Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bobby Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolshevik Biker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolt Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolted Bicorne"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolted Birdcage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bolted Bombardier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bomb Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bombard Brigadier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bomber Knight"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_summerhat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bombing Run"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bone Cone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bone Dome"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bone-Cut Belt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bonedolier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bonk Batter's Backup"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bonk Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bonk Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bonk Leadwear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Boo Balloon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Boom Boxers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bootenkhamuns"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bootie Time"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bootleg Base Metal Billycock"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Borscht Belt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Boston Boom-Bringer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Boston Brain Bucket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bot Dogger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Botler 2000"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bottle Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bountiful Bow"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_FURCAP"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bozo's Bouffant"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bozo's Brogues"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brain Cane"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brain Interface"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brain-Warming Wear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brainiac Goggles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brainiac Hairpiece"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brand Loyalist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brass Bucket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brawling Buccaneer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Breach and Bomb"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bread Biter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bread Heads"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Breadcrab"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Breakneck Baggies"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brim of Fire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brim-Full Of Bullets"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brimmed Bootlegger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Broadband Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brock's Locks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_blinks_breeches"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brother Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brotherhood of Arms"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brothers in Blues"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brown Bomber"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bruce's Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bruiser's Bandanna"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Brute's Braces"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Brutal Bouffant"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bubble Pipe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Buccaneer's Bicorne"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Buck's Brim"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Buckaroos Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Builder's Blueprints"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bulb Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bull Locks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bullet Buzz"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bumble Beenie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bunnyhopper's Ballistics Vest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bunsen Brave"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Burly Beast"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Burning Bandana"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Burning Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Burning Question"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Burny's Boney Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bushi-Dou"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Bushman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 hunter_beard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Business Casual"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Buttler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Byte'd Beak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cabinet Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cadaver's Capper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cadaver's Cranium"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cadet Visor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Caffeine Cooler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Calamitous Cauldron"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"California Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cammy Jammies"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Candleer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Candy Cantlers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Candy Cranium"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Candy Crown"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Candyman's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cap'n Calamari"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Caped Crusader"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Capone's Capper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Captain Cardbeard Cutthroat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Captain Space Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Captain's Cocktails"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cargo Constructor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Caribbean Conqueror"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Caribou Companion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Carious Chameleon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Carl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Carouser's Capotain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Carrion Companion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Carry-Van"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cat's Pajamas"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Catastrophic Companions"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Catcher's Companion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cauterizer's Caudal Appendage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Centurion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Champ Stamp"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Charmer's Chapeau"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Armoured Appendages"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Chaser"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Checkered Past"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cheet Sheet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Chicago Overcoat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Chicken Kiev"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Chief Constable"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Chieftain's Challenge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Chill Chullo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Chiromancer's Kit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Chronomancer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Chronoscarf"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Chucklenuts"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Citizen Cane"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Clan Pride"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Class Crown"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Classic Criminal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Classified Coif"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Classy Capper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Claws and Infect"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cleaner's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Climbing Commander"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Close Quarters Cover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cloud Crasher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Clown's Cover-Up"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 engineer_seal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Clue Hairdo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 CoPilot_2014"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cobber Chameleon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Coffin Kit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cold Blooded Coat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cold Case"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cold Killer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"eotl_winter_coat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Coldfront Carapace"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Coldfront Commander"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_Coldfront Curbstompers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_Brisk-weather Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Colonel Kringle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Colonel's Coat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Colonial Clogs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Colossal Cranium"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Combat Casual"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Combat Slacks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Combustible Cutie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Combustible Kabuto"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Commanding Presence"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Commando Elite"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Commissar's Coat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Commonwealth Commando"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sarif Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Compatriot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Computron 5000"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 engineer_detectiveglasses"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Conaghers' Utility Idol"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Concealed Convict"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_soldierhat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Connoisseur's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Conquistador"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Consigliere's Coverup"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Conspicuous Camouflage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Constructor's Cover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Contaminated Carryall"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Control Patrol"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Convict Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cool Breeze"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cool Capuchon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cool Cat Cardigan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cool Warm Sweater"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 engineer_detectiveradio"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Copper's Hard Top"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Corona Australis"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Corpse Carrier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Corpsemopolitan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Corpus Christi Cranium"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cosa Nostra Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cossack Camo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cotton Head"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Counterfeit Billycock"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Coupe D'isaster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Truands Tunic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Courtly Cuirass"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Couvre Corner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Covert Covers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cozy Catchers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cozy Cover-Up"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crabe de Chapeau"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crack Pot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cranial Carcharodon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Conspiratorial Cut"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cranial Cowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cranium Cooler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cranium Cover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crazy Legs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Creature From The Heap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Creature's Grin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Creepy Crawlers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cremator's Conscience"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crimbo Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crispy Golden Locks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crit Cloak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Croaking Hazard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crocleather Slouch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crocodile Dandy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crocodile Mun-Dee"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crocodile Smile"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Croft's Crest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crone's Dome"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crook Combatant"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crook's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crosshair Cardigan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Crown of the Old Kingdom"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crusader's Getup"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Crustaceous Cowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cryptic Keepsake"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cuban Bristle Crisis"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cut-Throat Concierge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cute Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Cyborg Stunt Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"D-eye-monds"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dad Duds"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dadliest Catch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dancing Doe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Danger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dapper Dickens"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dapper Disguise"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dapper Noel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Daring Dell"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dark Age Defender"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dark Falkirk Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dark Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Blutliebhaber"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Fantzipantzen"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Feelinbeterbager"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Gutenkutteharen"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Hazmattenhatten"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Maddendoktor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Metalmeatencasen"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Naggenvatcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Das Ubersternmann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Data Mining Light"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dayjogger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dead Head"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dead Heat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dead Little Buddy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dead of Night"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dead'er Alive"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Deadbeats"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Deadliest Duckling"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Death Racer's Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Death Stare"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Death Support Pack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Decorated Veteran"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Deep Cover Operator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Defaced Detonator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Defiant Spartan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Defragmenting Hard Hat 17%"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Deity's Dress"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Delinquent's Down Vest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dell Dynamic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dell in the Shell"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Delldozer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Demo's Dustcatcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Demonic Dome"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Der Wintermantel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Derangement Garment"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Desert Marauder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Desk Engineer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Detective"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The DethKapp"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Deus Specs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dictator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Digit Divulger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dillinger's Duffel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Diplomat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Discovision"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Distinguished Rogue"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Doc's Holiday"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Doctor's Sack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dogfighter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_demopants"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_demo_dynamite"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dough Puncher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Down Tundra Coat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Down Under Duster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dr's Dapper Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dr. Grordbort's Copper Crest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dr. Grordbort's Silver Crest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Bowtie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Topknot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dressperado"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dry Gulch Gulp"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dual-Core Devil Doll"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Duality of Mantle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Duck Billed Hatypus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Dumb Bell"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dusk Duster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dustbowl Devil"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Dynamite Abs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Detective Noir"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ebenezer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Egghead's Overalls"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ein"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Eingineer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Caballero"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Duderino"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Fiestibrero"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Mostacho"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Muchacho"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The El Paso Poncho"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Patron"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"El Zapateador"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Electric Badge-aloo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Electric Escorter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Electric Twanger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Elf Care Provider"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Elf Defence"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Elf Esteem"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Elf Ignition"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Elf-Made Bandanna"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Eliminators Safeguard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Elizabeth the Third"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Employee of the Mmmph"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"End of the Line Community Update Medal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Endothermic Exowear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Escapist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ethereal Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Executioner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Exorcizor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Exquisite Rack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The External Organ"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Extra Layer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Eye-Catcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Eye-see-you"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Eyeborg"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Eyequarium"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Face Full of Festive"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Face of Mercy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Face Plante"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Facepeeler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Falconer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Familiar Fez"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fancy Dress Uniform"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fashionable Megalomaniac"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fast Food"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fast Learner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fat Man's Field Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Faun Feet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Faux Manchu"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fear Monger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Feathered Fiend"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fed-Fightin' Fedora"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Federal Casemaker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Festive Cover-Up"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Festive Fascinator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Festive Flip-Thwomps"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Festive Frames"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Festive Rack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Field Fatigues"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Field Practice"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fiercesome Fluorescence"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fiery Phoenix"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Filamental"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Final Frontier Freighter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Final Frontiersman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fire Breather"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fire Fighter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fire Marshal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fire Tooth"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Firearm Protector"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Firebrand"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Firefly"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fireman's Essentials"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Firestalker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Firewall Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Five-Month Shadow"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fizzy Pharmacist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flair!"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flak Jack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flakcatcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Flamboyant Flamenco"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Flame Warrior"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flamehawk"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flammable Favor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Flapjack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Flared Frontiersman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flash of Inspiration"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_hiphunter_boots"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flatliner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flavorful Baggies"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fleet Commander"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Flight of the Monarch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flipped Trilby"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Flunkyware"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Foppish Physician"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Forest Footwear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Forgotten King's Pauldrons"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Forgotten King's Restless Head"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fortunate Son"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fortune Hunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Foul Cowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Founding Father"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fowl Fists"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The FR-0"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Frag Proof Fragger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Free Mann's Fashion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Freedom Feathers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spy Beret"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Frenchman's Formals"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Frickin' Sweet Ninja Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fried Batter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Frigid Fashion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Front Runner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Frontier Djustice"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Frostbite Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Frostbite Fit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Fruit Shoot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Frymaster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Fuel Injector"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Full Metal Drill Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Full Metal Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_Flat_cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Furious Fukaamigasa"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gabe Glasses"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gaelic Garb"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Gaelic Glutton"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gaelic Golf Bag"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gaiter Guards"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Galvanized Gibus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Garden Bristles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gas Guzzler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gauzed Gaze"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medic Geisha Hair"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medic Gatsby"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gentleman's Ushanka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"German Gonzila"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ghost of Spies Checked Past"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ghoul Box"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ghoul Gibbin' Gear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gift Bringer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Giftcrafter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Gingerbread Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Glasgow Bankroll"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Glasgow Great Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Glittering Garland"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Glob"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Globetrotter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Glorious Gambeson"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Glow from Below"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Gnome Dome"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Goalkeeper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Goblineer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gold Digger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Golden Garment"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Gone Commando"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Googly Gazer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Googol Glass Eyes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gothic Guise"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Gourd Grin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grand Duchess Fairy Wings"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grand Duchess Tiara"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grand Duchess Tutu"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Graybanns"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Graylien"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grease Monkey"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Greased Lightning"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grenadier Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grenadier's Softcap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gridiron Guardian"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Grim Tweeter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Grimm Hatte"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grisly Gumbo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Grizzled Growth"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ground Control"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Grounded Flyboy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Grub Grenades"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Gruesome Gourd"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Guano"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Guilden Guardian"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Gym Rat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Half-Pipe Hurdler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hallowed Headcase"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Halloweiner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Halogen Head Lamp"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Handhunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Handsome Devil"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Handsome Hitman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Handy Canes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Handyman's Handle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hanger-On Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hard Counter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hard-Headed Hardware"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hardium Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hardy Laurel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Fools Footwear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Harmburg"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Harry"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hat Chocolate"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hat of Cards"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hat Outta Hell"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hat With No Name"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Haunted Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hawaiian Hangover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hawaiian Hunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hawk Warrior"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hawk Eyed Hunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hazard Handler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hazard Headgear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hazardous Environment Vest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The HazMat Headcase"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The HDMI Patch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Head Banger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Head Hedge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Head Hunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Head Mounted Double Observatory"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Head of Defense"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Head of the Dead"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Head Prize"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Head Warmer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Headhunter's Brim"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Headtaker's Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Heat of Winter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Do-rag"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Harness"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Heating"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Heavy Lifter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Metal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Tourism"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy's Hockey Hair"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Heavy-Weight Champ"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heer's Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hellhunter's Headpiece"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hellish Overlord"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hellmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Helm Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Helmet Without a Home"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hephaistos' Handcraft"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Herald's Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hermes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Herzensbrecher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hidden Dragon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Highland High Heels"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Highway Star"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hillbilly Speed-Bump"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yeti_Arms"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hitt Mann Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hive Minder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hog Heels"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Holiday Headcase"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hollowed Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hollowhead"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 engineer_detectiveholster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Honcho's Headgear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hong Kong Cone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hood of Sorrows"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hooded Haunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hook Line and Cinder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hook, Line, and Thinker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Horace"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hornblower"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Horned Honcho"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Horrible Horns"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Horrific Head of Hare"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Horrific Headsplitter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Horror Shawl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Horsemann's Hand-Me-Down"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hot Case"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hot Dogger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hot Heels"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hot Huaraches"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hot Spaniel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Engineer Welding Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hottie's Hoodie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Heavy Hair"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hound's Hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hovering Hotshot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Human Cannonball"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hundekopf"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hunger Force"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hungover Hero"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_sheavyshirt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hunter in Darkness"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hunting Cloak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Huntsman's Essentials"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hurt Locher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Demoman Hallmark"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Hyperbaric Bowler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Hypno-eyes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Idea Tube"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Immobile Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Imp's Imprint"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Impact Impaler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Impish Ears"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Industrial Festivizer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Infernal Impaler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Infiltrator's Insulation"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"InfoShow LAN Party 2014 Participant"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_Insulated_innovator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Invasion Community Update Medal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Invisible Flame"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Iron Fist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Iron Lung"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Isotopic Insulator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Itsy Bitsy Spyer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ivan the Inedible"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Jarmaments"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Jingle Belt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Joe-on-the-Go"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jolly Jester"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jolly Jingler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Juggernaut Jacket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jumper's Jeepcap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jumping Jester"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jungle Booty"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jungle Jersey"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jungle Wreath"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Jupiter Jetpack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Jupiter Jumpers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Justice Johns"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Juvenile's Jumper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The K-9 Mane"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Kanga Kickers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Kapitan's Kaftan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yeti_Head"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Katyusha"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Kazan Karategi"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Killer Exclusive"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soldier Samurai Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Killer's Kit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Killing Tree"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"King Cardbeard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The King of Scotland Cape"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Kiss King"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Koala Compact"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Kriegsmaschine-9000"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Kringle Collection"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"L'aire Filteure"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"L'homme Burglerre"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"L'Inspecteur"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lady Killer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Large Luchadore"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Larrikin Robin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Larval Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Last Bite"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Last Breath"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Last Laugh"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Last Straw"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lavish Labwear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Law"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lawnmaker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lazy Lounger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Le Frosteaux"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Le Party Phantom"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Le Professionnel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Leftover Trap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Legendary Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Letch's LED"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Level Three Chin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Cursed Cruise"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Li'l Snaggletooth"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lieutenant Bites"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lieutenant Bites the Dust"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Life Support System"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lightning Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lil' Bitey"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Liquidator's Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Liquor Locker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Little Buddy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Little Drummer Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lo-Fi Longwave"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lo-Grav Loafers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Loaf Loafers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lollichop Licker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lone Survivor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lonesome Loafers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lordly Lapels"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lucky Cat Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lucky Shot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ludicrously Lunatic Lunon Fedora"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lumbercap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lunatic's Leathers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Lurker's Leathers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Lurking Legionnaire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Macabre Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Macho Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mad Lad"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mad Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Madame Dixie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Made Man"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Madmann's Muzzle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Magical Mercenary"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Magical Mount"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spy Noble Hair"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Magnificent Mongolian"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Main Cast"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mair Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Make Ogre"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Man in Slacks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Maniac's Manacles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mann of Reason"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mann of the House"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mann of the Seven Sees"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mann-Bird of Aberdeen"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mann-O-War"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Manndatory Attire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Manneater"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Explosive Mind"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mannhattan Protect"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mannvich"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Map Maker's Medallion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mappers vs. Machines Participant Medal 2017"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 hunter_vest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Marshall's Mutton Chops"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Marsupial Man"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Marsupial Muzzle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Marxman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Masked Fiend"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Masked Loyalty"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Master Mind"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Meal Dealer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mean Captain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mecha-Medes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medi-Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medic's Mountain Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medical Emergency"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medical Monarch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medical Mummy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Medical Mystery"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Medicine Manpurse"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medimedes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mediterranean Mercenary"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Megapixel Beard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Melody of Misery"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Melted Mop"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Menpo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Merc's Mohawk"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Merc's Muffler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Merry Cone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Messenger's Mail Bag"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Metal Slug"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Miami Rooster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mighty Mitre"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Milkman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Millennial Mercenary"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mine Sweepers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mini-Engy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Minnesota Slick"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Minsk Beef"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Miser's Muttonchops"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Misfortune Fedora"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Misha's Maw"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mishap Mercenary"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mislaid Sweater"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Missing Piece"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_beard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mister Bones"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The MK 50"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mo'Horn"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Moccasin Machinery"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Modest Metal Pile of Scrap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Momma Kiev"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Monsieur Grenouille"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Monster's Stompers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Monstrous Mandible"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Moonman Backpack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mooshanka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"More Gun Marshal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Most Dangerous Mane"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Motley Sleeves"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Marauders Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mr. Juice"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mr. Mundee's Wild Ride"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Mr. Quackers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mucous Membrain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Murderer's Motif"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mustachioed Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Mutton Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Nabler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Belltower Spec Ops"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Napoleon Complex"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Napper's Respite"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nasty Norsemann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Neckwear Headwear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Necronomicrown"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Necroprancer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Neptune's Nightmare"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Night Vision Gawkers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Night Ward"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nightbane Brim"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nightcap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nightfall Veil"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nightmare Hunter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Nine-Pipe Problem"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ninja Cowl"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Noble Nickel Amassment of Hats"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spy Oni Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_pyro_sweater"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nose Candy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nuclear Necessity"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Nugget Noggin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Nuke"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Nunhood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Oh Deer!"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Oktoberfester"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ol' Geezer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ol' Reliable"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ol' Snaggletooth"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Old Guadalajara"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 The Big Papa"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Olympic Leapers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ominous Offering"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The One-Man Army"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The One-Way Ticket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Onimann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Optic Nerve"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Orion's Belt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ornament Armament"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Outback Intellectual"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Outdoorsman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Outta' Sight"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Packable Provisions"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Paka Parka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pampered Pyro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Panisher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Parasight"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pardner's Pompadour"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Particulate Protector"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Partizan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Party Poncho"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pathfinder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Patriot Peak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Patriot's Pouches"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Peacebreaker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Peacenik's Ponytail"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pebbles the Penguin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pencil Pusher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pest's Pads"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pestering Jester"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Philanthropist's Indulgence"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Phobos Filter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Phononaut"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Photo Badge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medic Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Physician's Protector"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pilotka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pin Pals"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pirate Bandana"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pithy Professional"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Plaid Lad"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Platinum Pickelhaube"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Plug-In Prospector"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Plumber's Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Plumber's Pipe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Plutonidome"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Poacher's Safari Jacket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Admin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Halloween Boss"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Heavy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pocket Horsemann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Medic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Pocket Momma"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Pardner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Pauling"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pocket Purrer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pocket Pyro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pocket Raiders"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Santa"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Saxton"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Villains"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket Yeti"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pocket-Medes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Polar Bear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Polar Charger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Polar Pal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Polar Pullover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Poleur Voyeur"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Polly Putrid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Polycount Pin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pom-Pommed Provocateur"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pompous Privateer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pony Express"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Poolside Polo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Poopy Doe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pop-eyes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Potassium Bonnett"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Potato of Labor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Powdered Practitioner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Power Spike"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Practitioner's Processing Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prairie Heel Biters"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prancer's Pride"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prehistoric Pullover"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Preventative Measure"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prinny Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prinny Pouch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Private Eye"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Private Maggot Muncher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Prize Plushy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Professional's Pom Pom"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 hunter_ushanka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Professor's Pineapple"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Prohibition Opposition"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Propaniac"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Provisions Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Public Speaker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Puffed Practitioner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Puffy Polar Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 The Puffy Provocateur"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pug Mug"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Puggyback"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pugilist's Protector"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Punk's Pomp"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pure Tin Capotain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Purity Fist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"PY-40 Incinibot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyr'o Lantern"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro in Chinatown"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro Shark"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro the Flamedeer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro's Boron Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 2014_pyromancer_hood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyromancer's Mask"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Pyromancer's Raiments"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Pyrotechnic Tote"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Quadwrangler"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Quizzical Quetzal"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Quoth"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Racc Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rail Spikes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ramses' Regalia"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rat Stompers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Raven's Visage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Razor Cut"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Reader's Choice"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rebel Rouser"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Red Army Robin"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Red Socks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Reel Fly Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Reggaelator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Reindoonibeanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Reindoonihorns"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Remorseless Raptor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Respectless Robo-Glove"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rifleman's Regalia"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rimmed Raincatcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ripped Rider"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Road Block"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Road Rage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Roaming Roman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Robin Walkers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Roboot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Robot Chicken Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pet Robro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rocket Operator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rocko"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rogue's Brogues"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rogue's Col Roule"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rogue's Rabbit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rogue's Robe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rolfe Copter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Roo Rippers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rotation Sensation"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Round-A-Bout"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ruffled Ruprecht"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Rugged Rags"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rugged Respirator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rump-o'-Lantern"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Runner's Warm-Up"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Rusty Reaper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sackcloth Spook"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sacrificial Stone"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Engineer Earmuffs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Safety Stripes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Salty Dog"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sammy Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Samson Skewer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Demo Kabuto"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"SandMann's Brush"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sandvich Safe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sangu Sleeves"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Santarchimedes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Skinless Slashers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scarecrow"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scariest Mask EVER"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"School Nuisance"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scoped Spartan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scopers Scales"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scoper's Smoke"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scorched Earth Stompers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scorched Skirt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Comforter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scotch Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scotch Saver"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scourge of the Sky"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scout Shako"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scrap Sack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_soldier_garrison"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scrooge McDoc"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scruffed 'n Stitched"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Scrumpy Strongbox"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sear Seer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Seared Sorcerer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Seasonal Employee"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Seasonal Spring"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Second Opinion"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Second-Head Headwear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Security Shades"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Self-Care"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Semi-Tame Trapper's Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sengoku Scorcher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soldier Drill Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shadow Shroud"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shadowman's Shade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Shaman's Skull"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Shaolin Sash"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sharp Chest Pain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sharpshooter's Shroud"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Shellmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sheriff's Stetson"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shin Shredders"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shoestring Santa"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Shogun's Shoulder Guard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sniper Pith Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shooter's Tin Topi"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shortness Of Breath"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Showstopper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Shrapnel Shell"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Shutterbug"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 heavy_parka"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Siberian Sophisticate"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Siberian Sweater"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Siberian Tigerstripe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sidekick's Side Slick"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sight for Sore Eyes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sightliner"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sightseer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sinner's Shade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sir Hootsalot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sir Pumpkinton"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sir Shootsalot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Six-Eyed Specs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Skullbrero"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Skullcap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sky Captain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sky High Fly Guy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sledder's Sidekick"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_Ursa Major"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sleuth Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Slick Cut"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Slithering Scarf"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Slo-Poke"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Slumber Slacks"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Smiling Somen"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Smissmas Saxton"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Smissmass Sorcerer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Smock Surgeon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Smokey Sombrero"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Smoking Jacket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Smoking Skid Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Snack Stack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Snaggletoothed Stetson"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Snapped Pupil"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sneaky Blinder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sneaky Spats of Sneaking"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Snow Scoper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_hiphunter_jacket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_winter_pants"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Snowcapped"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Snowmann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Snowwing"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Snug Sharpshooter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sober Stuntman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Socked and Loaded"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soda Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soda Specs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Soft Hard Hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Soho Sleuth"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soldered Sensei"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soldier's Slope Scopers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soldier's Sparkplug"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sole Mate"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sole Saviors"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Soot Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sophisticated Smoker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soul of 'Spenser's Past"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Southie Shinobi"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Soviet Gentleman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Soviet Strongmann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Space Bracers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Space Diver"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Space Hamster Hammy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spawn Camper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Special Eyes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spectralnaut"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spectre's Spectacles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Speedster's Spandex"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Speedy Scoundrel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spellbinder's Bonnet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spider Sights"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spiky Viking"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spirit of the Bombing Past"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Splitting Headache"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spook Specs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spooktacles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spooky Head-Bouncers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spooky Shoes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spooky Sleeves"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sprinting Cephalopod"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Spycrab"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Spyder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Squatter's Right"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Squid's Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Squire's Sabatons"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stahlhelm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stapler's Specs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Starboard Crusader"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Starduster"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Starlight Sorcerer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stately Steel Toe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stealth Bomber"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Stealthy Scarf"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Steam Pipe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Steel Shako"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Steel Sixpack"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Stereoscopic Shades"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Stocking Stuffer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Viking Boots"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Stormin' Norman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stout Shako"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Stovepipe Sniper Shako"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Strasbourg Scholar"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Strigoi Stare"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Strikeout"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Strontium Stove Pipe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stunt Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Stylish DeGroot"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Sub Zero Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sucker Slug"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sultan's Ceremonial"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Supernatural Stalker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Support Spurs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Supreme Strategist's Sigil of Status"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgeon General"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Surgeon's Shako"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgeon's Side Satchel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgeon's Sidearms"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgeon's Space Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgeon's Stahlhelm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgeon's Stethoscope"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Surgical Survivalist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Swagman's Swatter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Sweet Smissmas Sweater"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tactical Turtleneck"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Talon Trotters"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tam O'Shanter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tank Top"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tanker's Top"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tartan Shade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tartan Spartan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tartan Tyrolean"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tartantaloons"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tavish DeGroot Experience"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Team Captain"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Team Player"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Teddy Robobelt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Teddy Roosebelt"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Telefragger Toque"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Templar's Spirit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Terrier Trousers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Terror-antula"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Teufort Knight"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Teufort Tooth Kicker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Teutonic Toque"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Teutonkahmun"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Texas Half-Pants"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Texas Tin-Gallon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Texas Toast"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"That '70s Chapeau"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Thermal Insulation Layer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_thermal_sleeves"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Thirst Blood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Thousand-Yard Stare"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Thrilling Tracksuit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Throttlehead"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Thunder Dome"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ticket Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Timeless Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tiny Texan"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tiny Timber"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tipped Lid"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Demoman Tricorne"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Titanium Towel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Titanium Tyrolean"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Toadstool Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tomb Readers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tomb Wrapper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tools of the Tourist"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tools of the Trade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Toowoomba Tunic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Top Brass"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Torchers Tabard"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Torcher's Trench Coat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Toss-Proof Towel"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tough Stuff Muffs"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Towering Patch of Pumpkins"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Towering Pile Of Presents"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Towering Pillar of Beanies"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Towering Titanium Pillar of Hats"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Toy Soldier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Toy Tailor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Track Terrorizer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trail-Blazer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Train of Thought"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Transparent Trousers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Transylvania Top"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Trapper's Flap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trash Man"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trash Toter"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Treehugger"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Trench Warefarer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trencher's Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trencher's Tunic"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trepanabotomizer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Triad Trinket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tribal Bones"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Triboniophorus Gentlemannus"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro Brain Sucker"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Trick Stabber"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Trickster's Treats"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Trickster's Turnout Gear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Triggerman's Tacticals"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Triple Jumper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tropical Brim"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tropical Camo"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tropical Toad"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scout Beanie"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Trucker's Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tsar Platinum"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tsarboosh"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tundra Top"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tungsten Toque"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tuque or Treat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Turncoat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tuxedo Royale"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tuxxy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Twisted Topper"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Two Punch Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Tyrantium Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Tyurtlenek"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Undercover Brolly"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Underminer's Overcoat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Unforgiven Glory"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Unidentified Following Object"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Universal Translator"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 medic_unknown_mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Unknown Monkeynaut"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Unshaved Bear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Up Pyroscopes"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Upgrade"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Viking Helmet"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Valley Forge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Transylvanian Toupe"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vampire Vanquisher"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vampiric Vesture"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vampyro"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Vascular Vestment"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Vaudeville Visor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Veterans Attire"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Vicar's Vestments"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Vicious Visage"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Victorian Villainy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Viking Braider"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Villain's Veil"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro Helm"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Virtual Reality Headset"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Virtual Viewfinder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Virus Doctor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vitals Vest"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Vive La France"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Void Monk Hair"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Voodoo Juju (Slight Return)"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Voodoo Vizier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wagga Wagga Wear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"dec2014 Wally Pocket"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wanderer's Wear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wanderer's Wool"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wandering Wraith"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"War Blunder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"War Dog"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The War Eagle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The War Goggles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The War Pig"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Ward"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Warhood"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Warlock's Warcloak"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Warmth Preserver"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_Skier"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Watchmann's Wetsuit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Water Waders"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wavefinder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Waxy Wayfinder"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Weight Room Warmer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Well-Rounded Rifleman"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Westcoat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Western Wear"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Western Wraps"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wet Works"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Whirly Warrior"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Pyro Monocle"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Whiskey Bib"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"White Russian"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Scout Whoopee Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Wide-Brimmed Bandito"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wiki Cap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wild Brim Slouch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wild West Waistcoat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wild West Whiskers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wild Whip"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Wilson Weave"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Wing Mann"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wings of Purity"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Winter Backup"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Winter Wonderland Wrap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"EOTL_hiphunter_hat"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Winter Wrap Up"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wipe Out Wraps"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wise Whiskers"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Witch Doctor"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Woolen Warmer"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Wooly Pulli"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Wraith Wrap"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Wrap-A-Khamon"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Xeno Suit"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ye Oiled Baker Boy"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Your Worst Nightmare"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yule Hog"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Yuri's Revenge"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Medic Goggles"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Ze Ubermensch"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"The Zipperface"
 	{
-		Cost 1000
+		Cost 100
 	}
 	"Uber-Wear"
 	{
-		Cost 1000
+		Cost 100
 	}
 }

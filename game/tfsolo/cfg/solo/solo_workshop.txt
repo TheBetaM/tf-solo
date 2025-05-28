@@ -1238,18 +1238,6 @@ solo_config
 				theme_forest 1
 			}
 		}
-		workshop_859099039
-		{
-			name "Facility"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 2
-				symm 1
-				theme_industrial 1
-			}
-		}
 		workshop_864934789
 		{
 			name "Freeflow"
@@ -1331,18 +1319,6 @@ solo_config
 				flag_count 2
 				symm 1
 				theme_alpine 1
-			}
-		}
-		workshop_936149990
-		{
-			name "Discover"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 2
-				symm 1
-				theme_mayann 1
 			}
 		}
 		workshop_947749085
@@ -1538,18 +1514,6 @@ solo_config
 				theme_coast 1
 			}
 		}
-		workshop_1233357991
-		{
-			name "Stormy Lab"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 2
-				symm 1
-				theme_snow 1
-			}
-		}
 		workshop_1238849347
 		{
 			name "Shoreleave"
@@ -1638,18 +1602,6 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_alpine 1
-			}
-		}
-		workshop_1356347293
-		{
-			name "Ice Tower"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_snow 1
 			}
 		}
 		workshop_1364041671
@@ -2052,19 +2004,6 @@ solo_config
 				theme_autumn 1
 			}
 		}
-		workshop_1899550714
-		{
-			name "Canary"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 1
-				flag_neutral 1
-				symm 1
-				theme_desert 1
-			}
-		}
 		workshop_1900737467
 		{
 			name "Mannbase"
@@ -2098,32 +2037,6 @@ solo_config
 				mvm 1
 				flag_count 1
 				theme_city 1
-			}
-		}
-		workshop_2025494804
-		{
-			name "Gravelvalley"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 1
-				flag_neutral 1
-				symm 1
-				theme_desert 1
-			}
-		}
-		workshop_2025508699
-		{
-			name "Duckquarry"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 1
-				flag_neutral 1
-				symm 1
-				theme_desert 1
 			}
 		}
 		workshop_2040750552
@@ -2568,17 +2481,6 @@ solo_config
 				theme_snow 1
 			}
 		}
-		workshop_2775471508
-		{
-			name "Sultry"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 5
-				theme_industrial 1
-			}
-		}
 		workshop_2776658604
 		{
 			name "Hoax"
@@ -2636,18 +2538,6 @@ solo_config
 				mvm 1
 				flag_count 1
 				theme_jungle 1
-			}
-		}
-		workshop_2808425307
-		{
-			name "Shorelight"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_coast 1
 			}
 		}
 		workshop_2824984385
@@ -2778,19 +2668,6 @@ solo_config
 				theme_alpine 1
 			}
 		}
-		workshop_2886781762
-		{
-			name "Chimney"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 1
-				flag_neutral 1
-				symm 1
-				theme_xmas 1
-			}
-		}
 		workshop_2890790172
 		{
 			name "Great North"
@@ -2911,16 +2788,6 @@ solo_config
 				theme_coast 1
 			}
 		}
-		workshop_2956638083
-		{
-			name "Dryrock"
-			modename "#Gametype_Escort"
-			tags
-			{
-				pl 1
-				theme_desert 1
-			}
-		}
 		workshop_2959217803
 		{
 			name "Wiretap"
@@ -2999,18 +2866,6 @@ solo_config
 			{
 				pl 1
 				theme_egypt 1
-			}
-		}
-		workshop_2964782550
-		{
-			name "Gamma"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_industrial 1
 			}
 		}
 		workshop_2965301326
@@ -3384,18 +3239,6 @@ solo_config
 				theme_city 1
 			}
 		}
-		workshop_3195874259
-		{
-			name "Method"
-			modename "#Gametype_CP"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 3
-				theme_alpine 1
-			}
-		}
 		workshop_3202102435
 		{
 			name "Holdout"
@@ -3416,18 +3259,6 @@ solo_config
 			{
 				pl 1
 				theme_desert 1
-			}
-		}
-		workshop_3213383161
-		{
-			name "Ancient"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 5
-				symm 1
-				theme_greece 1
 			}
 		}
 		workshop_3213916847
@@ -3463,17 +3294,6 @@ solo_config
 			{
 				pl 1
 				theme_industrial 1
-			}
-		}
-		workshop_3229965555
-		{
-			name "Marino"
-			modename "#Gametype_Arena"
-			tags
-			{
-				arena_pd 1
-				cp_count 1
-				symm 1
 			}
 		}
 		workshop_3231293126
@@ -3544,18 +3364,6 @@ solo_config
 				theme_snow 1
 			}
 		}
-		workshop_3236271388
-		{
-			name "Monkeynaut"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 2
-				symm 1
-				theme_industrial 1
-			}
-		}
 		workshop_3236472362
 		{
 			name "Sandswept"
@@ -3591,18 +3399,6 @@ solo_config
 				flag_neutral 1
 				symm 1
 				theme_city 1
-			}
-		}
-		workshop_3240219208
-		{
-			name "Vice"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_coast 1
 			}
 		}
 		workshop_3241769114
@@ -3718,19 +3514,6 @@ solo_config
 				theme_hallow 1
 			}
 		}
-		workshop_3322275041
-		{
-			name "Life Snatcher"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				flag_count 1
-				flag_neutral 1
-				symm 1
-				theme_hallow 1
-			}
-		}
 		workshop_3325568740
 		{
 			name "Undermine"
@@ -3779,18 +3562,6 @@ solo_config
 				theme_hallow 1
 			}
 		}
-		workshop_3336514158
-		{
-			name "Tondo"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_city 1
-			}
-		}
 		workshop_3356534648
 		{
 			name "Edelweiss"
@@ -3811,18 +3582,6 @@ solo_config
 				theme_snow 1
 			}
 		}
-		workshop_3360843598
-		{
-			name "Crumble"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_farm 1
-			}
-		}
 		workshop_3360981389
 		{
 			name "Himalaya"
@@ -3834,19 +3593,6 @@ solo_config
 				symm 1
 				ft 1
 				theme_alpine 1
-			}
-		}
-		workshop_3361496763
-		{
-			name "Cryo"
-			modename "#Gametype_Arena"
-			tags
-			{
-				arena_pd 1
-				cp_count 1
-				symm 1
-				ft 1
-				theme_desert 1
 			}
 		}
 		workshop_3361557780
@@ -3875,18 +3621,6 @@ solo_config
 				theme_autumn 1
 			}
 		}
-		workshop_3362710666
-		{
-			name "Chipper"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 5
-				symm 1
-				theme_alpine 1
-			}
-		}
 		workshop_3362948939
 		{
 			name "Gavle"
@@ -3909,18 +3643,6 @@ solo_config
 				plr 1
 				symm 1
 				theme_xmas 1
-			}
-		}
-		workshop_3363716634
-		{
-			name "Neo Tropic"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_coast 1
 			}
 		}
 		workshop_3364324332
@@ -3994,18 +3716,6 @@ solo_config
 				theme_desert 1
 			}
 		}
-		workshop_3462743513
-		{
-			name "Oilchange"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_desert 1
-			}
-		}
 		workshop_3464832118
 		{
 			name "Wildlife"
@@ -4040,16 +3750,6 @@ solo_config
 				cp 1
 				cp_count 2
 				theme_desert 1
-			}
-		}
-		workshop_3469785974
-		{
-			name "Bridgeway"
-			modename "#Gametype_Escort"
-			tags
-			{
-				pl 1
-				theme_alpine 1
 			}
 		}
 		workshop_3470866894
@@ -4087,18 +3787,6 @@ solo_config
 				theme_farm 1
 			}
 		}
-		workshop_3473248257
-		{
-			name "Blowout"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_offshore 1
-			}
-		}
 		workshop_3474004562
 		{
 			name "Naphtha"
@@ -4123,8 +3811,42 @@ solo_config
 				theme_city 1
 			}
 		}
-		
-		
+		workshop_3475904158
+		{
+			name "Gigantic"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_3476040858
+		{
+			name "Dune"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				stages 2
+				theme_egypt 1
+			}
+		}
+		workshop_3480634190
+		{
+			name "Pressure"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_indoor 1
+			}
+		}
 		
 	}
 }

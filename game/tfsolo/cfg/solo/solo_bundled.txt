@@ -1,0 +1,360 @@
+solo_config
+{
+	maps
+	{
+		tow_tetsudo_b7
+		{
+			name "Tetsudo"
+			modename "#Gametype_Koth"
+			tags
+			{
+				tow 1
+				symm 1
+				theme_japan 1
+			}
+		}
+		pl_candyland_b2
+		{
+			disabled 1
+			name "Candyland"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_pyroland 1
+			}
+		}
+		koth_riverport_rc1
+		{
+			disabled 1
+			name "Riverport"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		cp_gelid_b7b
+		{
+			disabled 1
+			name "Gelid"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_snow 1
+			}
+		}
+		koth_blowout_b3
+		{
+			disabled 1
+			name "Blowout"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_offshore 1
+			}
+		}
+		pl_bridgeway_b2
+		{
+			disabled 1
+			name "Bridgeway"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		koth_tondo_rc4b
+		{
+			disabled 1
+			name "Tondo"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		koth_oilchange_rc2
+		{
+			name "Oilchange"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		koth_shorelight_rc9
+		{
+			disabled 1
+			name "Shorelight"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		koth_gamma_rc1
+		{
+			disabled 1
+			name "Gamma"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		koth_crumble_rc2
+		{
+			disabled 1
+			name "Crumble"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+			}
+		}
+		koth_neo_tropic_b3b
+		{
+			disabled 1
+			name "Neo Tropic"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		ft_cryo_b2
+		{
+			name "Cryo"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_desert 1
+			}
+		}
+		cp_chipper_b5
+		{
+			disabled 1
+			name "Chipper"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		koth_lifesnatcher_b5
+		{
+			name "Life Snatcher"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		koth_icetower_rc7
+		{
+			disabled 1
+			name "Ice Tower"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		ctf_monkeynaut_b5
+		{
+			name "Monkeynaut"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		cp_ancient_b4
+		{
+			disabled 1
+			name "Ancient"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_greece 1
+			}
+		}
+		cp_method_b4b
+		{
+			disabled 1
+			name "Method"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_alpine 1
+			}
+		}
+		mvm_goldbend_b8
+		{
+			name "Goldbend Valley"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+			}
+		}
+		koth_tombtown_rc6
+		{
+			disabled 1
+			name "Tomb Town"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		ctf_stormylab_b112
+		{
+			disabled 1
+			name "Stormy Lab"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		ctf_discover_b59
+		{
+			disabled 1
+			name "Discover"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_mayann 1
+			}
+		}
+		ctf_facility_build55
+		{
+			disabled 1
+			name "Facility"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		cp_rocketforge_b3
+		{
+			disabled 1
+			name "Rocketforge"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_industrial 1
+			}
+		}
+		pl_dryrock_b6
+		{
+			disabled 1
+			name "Dryrock"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		ctf_chimney_rc2
+		{
+			disabled 1
+			name "Chimney"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_xmas 1
+			}
+		}
+		ctf_icelands_b4
+		{
+			disabled 1
+			name "Icelands"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_xmas 1
+			}
+		}
+		
+	}
+}
