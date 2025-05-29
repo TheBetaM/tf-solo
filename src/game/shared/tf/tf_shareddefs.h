@@ -2550,6 +2550,10 @@ enum MedicCallerType
 #define ACHIEVEMENT_TF_MAPS_POWERHOUSE_KILL_ENEMY_IN_WATER		2805
 #define ACHIEVEMENT_TF_MAPS_POWERHOUSE_END_RANGE				2805
 
+// TFSOLO Achievements
+#define ACHIEVEMENT_START_TFSOLO								5000
+#define ACHIEVEMENT_START_TFSOLO_GENERAL						5000
+
 const unsigned char *GetTFEncryptionKey( void );
 
 //-----------------------------------------------------------------------------

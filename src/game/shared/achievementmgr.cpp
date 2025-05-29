@@ -94,7 +94,7 @@ static void WriteAchievementGlobalState( KeyValues *pKV, bool bPersistToSteamClo
 	}
 	else
 	{
-		Q_snprintf( szFilename, sizeof( szFilename ), "GameState.txt" );
+		Q_snprintf( szFilename, sizeof( szFilename ), "GameStateSolo.txt" );
 	}
 
 	// Never call pKV->SaveToFile!!!!
@@ -270,7 +270,8 @@ m_CallbackUserStatsStored( this, &CAchievementMgr::Steam_OnUserStatsStored )
     // [dwenger] Steam Cloud Support
     //=============================================================================
 
-    if ( ePersistToSteamCloud == SteamCloudPersist_Off )
+    //if ( ePersistToSteamCloud == SteamCloudPersist_Off )
+	if ( true )
     {
         m_bPersistToSteamCloud = false;
     }
@@ -349,6 +350,12 @@ void CAchievementMgr::PostInit()
 	{
 		// create and initialize all achievements and insert them in our map
 		CBaseAchievement *pAchievement = pAchievementHelper->m_pfnCreate();
+		if ( pAchievement->GetAchievementID() < ACHIEVEMENT_START_TFSOLO )
+		{
+			delete pAchievement;
+			pAchievementHelper = pAchievementHelper->m_pNext;
+			continue;
+		}
 		pAchievement->m_pAchievementMgr = this;
 		pAchievement->Init();
 		pAchievement->CalcProgressMsgIncrement();
@@ -372,6 +379,27 @@ void CAchievementMgr::PostInit()
 		}
 
 		pAchievementHelper = pAchievementHelper->m_pNext;
+	}
+
+	KeyValuesAD pKV( "achievements" );
+	if ( pKV->LoadFromFile( filesystem, "cfg/solo/achievements.txt", "GAME" ) )
+	{
+		KeyValues* pNode = pKV->GetFirstSubKey();
+		while ( pNode )
+		{
+			CCustomAchievement* pAchievement = new CCustomAchievement();
+			pAchievement->m_pAchievementMgr = this;
+			pAchievement->Init();
+			pAchievement->InitFromKV( pNode );
+			pAchievement->CalcProgressMsgIncrement();
+			m_mapAchievement.Insert( pAchievement->GetAchievementID(), pAchievement );
+			if ( pAchievement->IsMetaAchievement() )
+			{
+				m_mapMetaAchievement.Insert( pAchievement->GetAchievementID(), dynamic_cast<CAchievement_AchievedCount*>(pAchievement) );
+			}
+
+			pNode = pNode->GetNextKey();
+		}
 	}
 
 	FOR_EACH_MAP( m_mapAchievement, iter )
@@ -746,7 +774,7 @@ void CAchievementMgr::LoadGlobalState()
 	}
 	else
 	{
-		Q_snprintf( szFilename, sizeof( szFilename ), "GameState.txt" );
+		Q_snprintf( szFilename, sizeof( szFilename ), "GameStateSolo.txt" );
 	}
 
     //=============================================================================
@@ -971,7 +999,6 @@ void CAchievementMgr::AwardAchievement( int iAchievementID )
 //-----------------------------------------------------------------------------
 void CAchievementMgr::UpdateAchievement( int iAchievementID, int nData )
 {
-	return;
 	CBaseAchievement *pAchievement = GetAchievementByID( iAchievementID );
 	Assert( pAchievement );
 	if ( !pAchievement )

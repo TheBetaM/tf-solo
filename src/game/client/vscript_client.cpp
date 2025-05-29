@@ -20,6 +20,7 @@
 #include "vgui/ISurface.h"
 #include <tier1/utlhashtable.h>
 #include "bsp_utils.h"
+#include "achievementmgr.h"
 
 
 #ifdef PANORAMA_ENABLE
@@ -1066,6 +1067,14 @@ static HSCRIPT Script_FileToScriptTable(const char* pszFileName)
 	return NULL;
 }
 
+static void Script_AwardAchievement( int achID, int achCount )
+{
+	CAchievementMgr* pAchievementMgr = dynamic_cast<CAchievementMgr*>( engine->GetAchievementMgr() );
+	if ( !pAchievementMgr )
+		return;
+	pAchievementMgr->OnAchievementEvent( achID, achCount );
+}
+
 #ifdef TF_CLIENT_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -1284,6 +1293,7 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySound, "VGUI_PlaySound", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySoundEntry, "VGUI_PlaySoundEntry", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for the local player.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");

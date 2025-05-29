@@ -1362,6 +1362,10 @@ Merc.CS_EndingRED <- function()
 		local mtext = Entities.FindByName(null, "wtext_monitor_" + team)
 		mtext.AcceptInput("SetText",wtext,null,null)
 		EntFire("monitor_red", "SetCamera", "cam_mission_red")
+		foreach (a in GetClients()) 
+		{
+			AwardAchievement(a.entindex(), 151, 1)
+		}
 	} )
 	
 	Merc.HideCrosshair()
@@ -1395,6 +1399,10 @@ Merc.CS_EndingBLU <- function()
 		local mtext = Entities.FindByName(null, "wtext_monitor_" + team)
 		mtext.AcceptInput("SetText",wtext,null,null)
 		EntFire("monitor_blu", "SetCamera", "cam_mission_blu")
+		foreach (a in GetClients()) 
+		{
+			AwardAchievement(a.entindex(), 151, 1)
+		}
 	} )
 	
 	Merc.HideCrosshair()
@@ -1559,6 +1567,10 @@ Merc.CS_RED_Complete <- function()
 		text = "100 percent complete! All unlocked weapons are now killstreak weapons!",
 		lifetime = 15.0,
 	})
+	foreach (a in GetClients()) 
+	{
+		AwardAchievement(a.entindex(), 152, 1)
+	}
 }
 
 Merc.CS_BLU_Complete <- function()
@@ -1571,6 +1583,10 @@ Merc.CS_BLU_Complete <- function()
 		text = "100 percent complete! All unlocked weapons are now killstreak weapons!",
 		lifetime = 15.0,
 	})
+	foreach (a in GetClients()) 
+	{
+		AwardAchievement(a.entindex(), 152, 1)
+	}
 }
 
 Merc.CS_Choice1_RED <- function()

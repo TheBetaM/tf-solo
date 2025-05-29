@@ -2815,6 +2815,29 @@ static HSCRIPT Script_FileToScriptTable(const char* pszFileName)
 	return NULL;
 }
 
+static void Script_AwardAchievement( int iPlayerIndex, int achID, int achCount )
+{
+	if ( iPlayerIndex < 0 )
+	{
+		Warning("AwardAchievement called with invalid player index!\n");
+		return;
+	}
+
+	CBasePlayer* pPlayer = NULL;
+	pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
+	if ( !pPlayer || pPlayer->IsFakeClient() )
+	{
+		Warning("AwardAchievement called with a player index that doesn't resolve to a valid player!\n");
+		return;
+	}
+
+#if TF_DLL
+	CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
+	pTFPlayer->AwardAchievement( achID, achCount );
+#endif
+
+}
+
 #ifdef TF_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -3040,6 +3063,7 @@ bool VScriptServerInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ConnectedOnline, "ConnectedOnline", "Returns true if server is connected to the internet.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for a player.");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");

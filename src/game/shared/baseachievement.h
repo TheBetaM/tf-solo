@@ -200,6 +200,25 @@ class CMapAchievement : public CBaseAchievement
 	}
 };
 
+// Class for VScript controlled achievements
+class CCustomAchievement : public CBaseAchievement
+{
+	DECLARE_CLASS(CCustomAchievement, CBaseAchievement);
+
+public:
+	virtual bool AlwaysListen() { return true; }
+	virtual bool LocalPlayerCanEarn() { return true; }
+	virtual bool AlwaysEnabled() { return true; }
+
+	void Init()
+	{
+		this->SetFlags(ACH_SAVE_GLOBAL);
+		this->SetGoal(1);
+	}
+
+	void InitFromKV(KeyValues* pKV);
+};
+
 
 //----------------------------------------------------------------------------------------------------------------
 class CAchievement_AchievedCount : public CBaseAchievement

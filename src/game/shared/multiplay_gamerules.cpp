@@ -1692,8 +1692,8 @@ ConVarRef suitcharger( "sk_suitcharger" );
 				// nor are the achievement's actually DECLARED (they rely on a bunch of client code)
 				// so we have a list of achievements in achievements_tf_list.inc.
 				// Let's validate the achievement is actually valid before continuing...
-				if ( g_ValidAchiementIdxs.find( nAchievementID ) == g_ValidAchiementIdxs.end() )
-					return;
+				//if ( g_ValidAchiementIdxs.find( nAchievementID ) == g_ValidAchiementIdxs.end() )
+				//	return;
 #endif
 
 				IGameEvent * event = gameeventmanager->CreateEvent( "achievement_earned" );
