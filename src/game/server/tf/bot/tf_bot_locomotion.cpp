@@ -41,7 +41,13 @@ void CTFBotLocomotion::Update( void )
 // Move directly towards the given position
 void CTFBotLocomotion::Approach( const Vector &pos, float goalWeight )
 {
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	CTFBot* me = ToTFBot( GetBot()->GetEntity() );
+	if ( !me )
+	{
+		return;
+	}
+
+	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		if ( !IsOnGround() && !IsClimbingOrJumping() )
 		{

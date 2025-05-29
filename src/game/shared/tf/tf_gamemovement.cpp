@@ -2299,7 +2299,7 @@ bool CTraceFilterObject::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
 				if ( pOwner->IsBotOfType( TF_BOT_TYPE ) )
 				{
 					bool bHitObjectType = pObject->GetType() == OBJ_SENTRYGUN || pObject->GetType() == OBJ_DISPENSER;
-					if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+					if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && pOwner->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 					{
 						bHitObjectType |= pObject->GetType() == OBJ_TELEPORTER;
 					}

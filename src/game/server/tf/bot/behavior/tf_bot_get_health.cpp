@@ -118,7 +118,7 @@ bool CTFBotGetHealth::IsPossible( CTFBot *me )
 	}
 #endif // TF_RAID_MODE
 
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		return false;
 	}

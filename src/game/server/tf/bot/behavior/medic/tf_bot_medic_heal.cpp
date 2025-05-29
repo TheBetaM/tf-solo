@@ -485,7 +485,7 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 	m_patient = SelectPatient( me, m_patient );
 
 	// prevent a group of medic healing each other in a loop. always heal the top guy in the chain
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && m_patient != NULL && m_patient->IsPlayerClass( TF_CLASS_MEDIC ) )
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS && m_patient != NULL && m_patient->IsPlayerClass( TF_CLASS_MEDIC ) )
 	{
 		CUtlVector< CBaseEntity* > seenPatients;
 		seenPatients.AddToTail( m_patient );
@@ -506,13 +506,13 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 	{
 		// no patients
 
-		if ( TFGameRules()->IsMannVsMachineMode() )
+		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
 			// no-one is left to heal - get the flag!
 			return ChangeTo( new CTFBotFetchFlag, "Everyone is gone! Going for the flag" );
 		}
 
-		if ( TFGameRules()->IsPVEModeActive() )
+		if ( TFGameRules()->IsPVEModeActive() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
 			// don't retreat, just wait
 			return Continue();

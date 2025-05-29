@@ -21087,11 +21087,11 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			// find our cart!
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
-				// find the red cart
+				// find the blue cart
 				CTeamTrainWatcher* watcher = NULL;
 				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
 				{
-					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
 					{
 						m_redPayloadToBlock = watcher;
 						break;
@@ -21122,11 +21122,11 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 		{
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
-				// find the blue cart
+				// find the red cart
 				CTeamTrainWatcher* watcher = NULL;
 				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
 				{
-					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
 					{
 						m_bluePayloadToBlock = watcher;
 						break;

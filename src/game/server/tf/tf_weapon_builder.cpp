@@ -1119,7 +1119,7 @@ void CTFWeaponBuilder::StartBuilding( void )
 			if ( pObj->ObjectType() == OBJ_ATTACHMENT_SAPPER )
 			{
 				// Let human players place player-targeted sappers in modes that allow upgrades
-				if ( !pOwner->IsBot() && pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
+				if ( pOwner->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS && pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
 				{
 					int iRoboSapper = 0;
 					CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iRoboSapper, robo_sapper );

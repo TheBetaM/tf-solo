@@ -211,7 +211,7 @@ bool CTFBotEngineerBuilding::IsMetalSourceNearby( CTFBot *me ) const
 bool CTFBotEngineerBuilding::CheckIfSentryIsOutOfPosition( CTFBot *me ) const
 {
 	// Re-evaluate if MvM ever needs something more dynamic
-	if ( TFGameRules()->IsPVEModeActive() )
+	if ( TFGameRules()->IsPVEModeActive() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		return false;
 
 	CObjectSentrygun *mySentry = (CObjectSentrygun *)me->GetObjectOfType( OBJ_SENTRYGUN );
@@ -226,13 +226,20 @@ bool CTFBotEngineerBuilding::CheckIfSentryIsOutOfPosition( CTFBot *me ) const
 	{
 		CTeamTrainWatcher *trainWatcher;
 
-		if ( me->GetTeamNumber() == TF_TEAM_BLUE )
+		if ( TFGameRules()->HasMultipleTrains() )
 		{
-			trainWatcher = TFGameRules()->GetPayloadToPush( me->GetTeamNumber() );
+			trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
 		}
 		else
 		{
-			trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
+			if ( me->GetTeamNumber() == TF_TEAM_BLUE )
+			{
+				trainWatcher = TFGameRules()->GetPayloadToPush( me->GetTeamNumber() );
+			}
+			else
+			{
+				trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
+			}
 		}
 
 		if ( trainWatcher )

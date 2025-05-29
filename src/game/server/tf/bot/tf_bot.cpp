@@ -1504,7 +1504,7 @@ void CTFBot::Touch( CBaseEntity *pOther )
 		if ( them->m_Shared.IsStealthed() || them->m_Shared.InCond( TF_COND_DISGUISED ) )
 		{
 			// bumped a spy - they are discovered!
-			if ( TFGameRules()->IsMannVsMachineMode() )	// we have to build up to knowing that they are a spy in MvM
+			if ( TFGameRules()->IsMannVsMachineMode() && them->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS )	// we have to build up to knowing that they are a spy in MvM
 			{
 				SuspectSpy( them );
 			}
@@ -1537,7 +1537,7 @@ void CTFBot::AvoidPlayers( CUserCmd *pCmd )
 	Vector avoidVector = vec3_origin;
 
 	float tooClose = 50.0f;
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		// bots stay farther apart in MvM mode
 		tooClose = 150.0f;
@@ -1766,7 +1766,7 @@ void CTFBot::Event_Killed( const CTakeDamageInfo &info )
 	}
 
 	// announce Spies
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		if ( IsPlayerClass( TF_CLASS_SPY ) )
 		{
@@ -3324,7 +3324,7 @@ float CTFBot::GetDesiredAttackRange( void ) const
 		return FLT_MAX;
 	}
 
-	if ( myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) && !TFGameRules()->IsMannVsMachineMode() )
+	if ( myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) && ( !TFGameRules()->IsMannVsMachineMode() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS ) )
 	{
 		return 1250.0f;
 	}
@@ -3406,7 +3406,7 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 	}
 
 	// no secondary weapons in MvM
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		if ( IsPlayerClass( TF_CLASS_MEDIC ) && IsInASquad() && GetSquad() && !GetSquad()->IsLeader( this ) )
 		{
@@ -3553,7 +3553,7 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 bool CTFBot::EquipLongRangeWeapon( void )
 {
 	// no secondary weapons in MvM
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		return false;
 
 	if ( IsPlayerClass( TF_CLASS_SOLDIER ) || 
@@ -4225,7 +4225,7 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		}
 	}
 
-	bool shouldPushPlayers = !TFGameRules()->IsMannVsMachineMode();
+	bool shouldPushPlayers = !TFGameRules()->IsMannVsMachineMode() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS;
 
 	if ( shouldPushPlayers )
 	{

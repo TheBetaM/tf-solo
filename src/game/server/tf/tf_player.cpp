@@ -3365,7 +3365,7 @@ void CTFPlayer::ApplyAbsVelocityImpulse( const Vector &vecImpulse )
 	if ( m_Shared.InCond( TF_COND_PARACHUTE_ACTIVE ) )
 	{
 		// don't allow parachute robot to get push in MvM
-		float flHorizontalScale = TFGameRules()->IsMannVsMachineMode() && IsBot() ? 0.f : 1.5f;
+		float flHorizontalScale = (TFGameRules()->IsMannVsMachineMode() && IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS) ? 0.f : 1.5f;
 		vecForce.x *= flHorizontalScale;
 		vecForce.y *= flHorizontalScale;
 	}
@@ -12228,7 +12228,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 	{
 		MannVsMachineStats_PlayerEvent_Died( this );
 
-		if ( IsBot() )
+		if ( IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
 			m_nCurrency = 0;
 			if ( !IsMissionEnemy() && m_pWaveSpawnPopulator )
@@ -12338,7 +12338,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 			}
 		}
 
-		if ( !IsBot() && !m_hReviveMarker )
+		if ( ( !IsBot() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS ) && !m_hReviveMarker )
 		{
 			m_hReviveMarker = CTFReviveMarker::Create( this );
 		}
@@ -12463,7 +12463,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 	
 	SetGibbedOnLastDeath( bGib );
 
-	bool bIsMvMRobot = TFGameRules()->IsMannVsMachineMode() && IsBot();
+	bool bIsMvMRobot = TFGameRules()->IsMannVsMachineMode() && IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS;
 	if ( bGib && !bIsMvMRobot && IsPlayerClass( TF_CLASS_SCOUT ) && RandomInt( 1, 100 ) <= SCOUT_ADD_BIRD_ON_GIB_CHANCE )
 	{
 		Vector vecPos = WorldSpaceCenter();
@@ -12927,7 +12927,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 
 	// Is the player inside a respawn time override volume?
 	// don't do this for MvM bots
-	if ( !TFGameRules()->IsMannVsMachineMode() || !IsBot() )
+	if ( !TFGameRules()->IsMannVsMachineMode() || !IsBot() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS )
 	{
 		FOR_EACH_VEC( ITriggerPlayerRespawnOverride::AutoList(), i )
 		{
@@ -13058,7 +13058,7 @@ void CTFPlayer::AmmoPackCleanUp( void )
 //-----------------------------------------------------------------------------
 bool CTFPlayer::ShouldDropAmmoPack()
 {
-	if ( TFGameRules()->IsMannVsMachineMode() && IsBot() )
+	if ( TFGameRules()->IsMannVsMachineMode() && IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		return false;
 
 	if ( TFGameRules()->IsInArenaMode() && TFGameRules()->InStalemate() == false )
@@ -15671,7 +15671,7 @@ void CTFPlayer::TeleportEffect( void )
 	m_Shared.AddCond( TF_COND_TELEPORTED );
 
 	float flDuration = 12.f;
-	if ( TFGameRules()->IsMannVsMachineMode() && m_bIsABot && IsBotOfType( TF_BOT_TYPE ) )
+	if ( TFGameRules()->IsMannVsMachineMode() && m_bIsABot && IsBotOfType( TF_BOT_TYPE ) && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		flDuration = 30.f;
 	}

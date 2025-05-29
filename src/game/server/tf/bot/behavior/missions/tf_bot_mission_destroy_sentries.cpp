@@ -61,7 +61,7 @@ ActionResult< CTFBot > CTFBotMissionDestroySentries::Update( CTFBot *me, float i
 			// next destroy the most dangerous sentry
  			int iTeam = ( me->GetTeamNumber() == TF_TEAM_RED ) ? TF_TEAM_BLUE : TF_TEAM_RED;
 
-			if ( TFGameRules() && TFGameRules()->IsPVEModeActive() )
+			if ( TFGameRules() && TFGameRules()->IsPVEModeActive() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 			{
 				iTeam = TF_TEAM_PVE_DEFENDERS;
 			}

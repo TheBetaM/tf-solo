@@ -45,7 +45,7 @@ ActionResult< CTFBot >	CTFBotEngineerBuild::OnStart( CTFBot *me, Action< CTFBot 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotEngineerBuild::Update( CTFBot *me, float interval )
 {
-	if ( TFGameRules()->IsPVEModeActive() && tf_raid_engineer_infinte_metal.GetBool() )
+	if ( TFGameRules()->IsPVEModeActive() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS && tf_raid_engineer_infinte_metal.GetBool() )
 	{
 		// infinite ammo
 		me->GiveAmmo( 1000, TF_AMMO_METAL, true );
