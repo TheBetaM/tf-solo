@@ -39,10 +39,10 @@ Merc.ProgressLoaded <- false
 Merc.InHub <- true
 
 Merc.WeaponUnlocks <- [
-	"Steel-Toed Stompers",
-	"Bottled Sorrow",
+	"The Scottish Resistance",
+	"The Frontier Justice",
 	"The Force-a-Nature",
-	"Shocking Truth",
+	"The Direct Hit",
 ]
 Merc.WeaponUnlockClass <- [
 	"Heavy",

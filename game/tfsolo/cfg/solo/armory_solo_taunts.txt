@@ -4,18 +4,18 @@ armory_config
 	{
 		Cost 75
 	}
-	"Taunt Robot"
-	{
-		Cost 30
-	}
-	"Taunt Werewolf"
-	{
-		Cost 30
-	}
-	"Taunt Frankenheavy"
-	{
-		Cost 30
-	}
+	//"Taunt Robot"
+	//{
+	//	Cost 30
+	//}
+	//"Taunt Werewolf"
+	//{
+	//	Cost 30
+	//}
+	//"Taunt Frankenheavy"
+	//{
+	//	Cost 30
+	//}
 	"Taunt ComeAndGetMe"
 	{
 		Cost 30

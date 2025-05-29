@@ -1,6 +1,6 @@
 "GameInfo"
 {
-	game					"TF SOLO"
+	game					"Team Fortress: Greatest Hits"
 	type 					multiplayer_only
 	nomodels				1
 	nohimodel 				1
