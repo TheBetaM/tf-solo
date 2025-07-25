@@ -2000,5 +2000,126 @@ solo_config
 				vscript 1
 			}
 		}
+		
+		pl_aquarius
+		{
+			name "Aquarius"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_offshore 1
+				theme_underwater 1
+			}
+		}
+		koth_blowout
+		{
+			name "Blowout"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_offshore 1
+				vscript 1
+			}
+		}
+		koth_boardwalk
+		{
+			name "Boardwalk"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		cp_cargo
+		{
+			name "Cargo"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_offshore 1
+			}
+		}
+		pl_citadel
+		{
+			name "Citadel"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_coast 1
+				vscript 1
+			}
+		}
+		cp_conifer
+		{
+			name "Conifer"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_alpine 1
+			}
+		}
+		koth_demolition
+		{
+			name "Demolition"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_offshore 1
+			}
+		}
+		cp_fulgur
+		{
+			name "Fulgur"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_jungle 1
+			}
+		}
+		koth_mannhole
+		{
+			name "Mannhole"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		ctf_pressure
+		{
+			name "Pressure"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_offshore 1
+			}
+		}
+		
 	}
 }

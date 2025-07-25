@@ -36,8 +36,8 @@ achievements
 	//{
 	//	id 159
 	//}
-	//TFSOLO_SOLO_MTT_COMPLETE
-	//{
-	//	id 160
-	//}
+	TFSOLO_SOLO_MTT_COMPLETE
+	{
+		id 160
+	}
 }

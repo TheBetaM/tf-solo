@@ -1694,17 +1694,6 @@ solo_config
 				symm 1
 			}
 		}
-		workshop_1419048064
-		{
-			name "Conifer"
-			modename "#Gametype_CP"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 2
-			}
-		}
 		workshop_1458527492
 		{
 			name "Pitchfork"
@@ -2057,17 +2046,6 @@ solo_config
 				mvm 1
 				flag_count 1
 				theme_desert 1
-			}
-		}
-		workshop_2068252300
-		{
-			name "Fulgur"
-			modename "#Gametype_CP"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 3
 			}
 		}
 		workshop_2078233024
@@ -3833,18 +3811,6 @@ solo_config
 				cp_count 2
 				stages 2
 				theme_egypt 1
-			}
-		}
-		workshop_3480634190
-		{
-			name "Pressure"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 2
-				symm 1
-				theme_indoor 1
 			}
 		}
 		

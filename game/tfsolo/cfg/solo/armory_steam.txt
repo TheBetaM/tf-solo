@@ -146,6 +146,10 @@ armory_config
 	{
 		Cost 100
 	}
+	"The Gentle Munitionne of Leisure"
+	{
+		Cost 100
+	}
 	"The Skull Island Topper"
 	{
 		Cost 100
