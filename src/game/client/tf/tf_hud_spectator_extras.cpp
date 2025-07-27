@@ -25,6 +25,8 @@ using namespace vgui;
 ConVar tf_spec_xray_disable( "tf_spec_xray_disable", "1", FCVAR_ARCHIVE, "Disable the spectator xray mode." );
 ConVar tf_enable_glows_after_respawn( "tf_enable_glows_after_respawn", "0", FCVAR_ARCHIVE, "Enable teammate glow effects after respawn." );
 
+extern ConVar tf_mirrormode;
+
 DECLARE_HUDELEMENT( CTFHudSpectatorExtras );
 
 //-----------------------------------------------------------------------------
@@ -397,6 +399,10 @@ void CTFHudSpectatorExtras::Paint()
 		Vector vecWorld( vecPos.x, vecPos.y, vecPos.z );
 		if ( GetVectorInHudSpace( vecWorld, iX, iY ) )
 		{
+			if ( tf_mirrormode.GetBool() )
+			{
+				iX = ScreenWidth() - iX;
+			}
  			// draw the name
  			vgui::surface()->DrawSetTextFont( m_hNameFont );
 			vgui::surface()->DrawSetTextPos( iX - ( m_vecEntitiesToDraw[i].m_nNameWidth / 2 ), iY - nNameOffset );

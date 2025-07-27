@@ -64,6 +64,10 @@ static ConVar sc_pitch_sensitivity_default( "sc_pitch_sensitivity_default","0.75
 
 ConVar sc_look_sensitivity_scale( "sc_look_sensitivity_scale", "0.125", FCVAR_NONE, "Steam Controller look sensitivity global scale factor." );
 
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_mirrormode;
+#endif
+
 void CInput::ApplySteamControllerCameraMove( QAngle& viewangles, CUserCmd *cmd, Vector2D vecPosition )
 {
 	//roll the view angles so roll is 0 (the HL2 assumed state) and mouse adjustments are relative to the screen.
@@ -324,12 +328,24 @@ void CInput::SteamControllerMove( float flFrametime, CUserCmd *cmd )
 
 	// Apply sidestep movement
 	cmd->sidemove += cl_sidespeed.GetFloat() * moveDir.x;
+#ifdef TF_CLIENT_DLL
+	if ( tf_mirrormode.GetBool() )
+	{
+		cmd->sidemove -= cl_sidespeed.GetFloat() * moveDir.x * 2.0f;
+	}
+#endif
 
 	ControllerAnalogActionData_t action = steamcontroller->GetAnalogActionData( controller, g_ControllerCameraHandle );
 
 	const float fSensitivityFactor = sc_look_sensitivity_scale.GetFloat();
 
 	Vector2D vecMouseDelta = Vector2D( action.x, -action.y ) * fSensitivityFactor;
+#ifdef TF_CLIENT_DLL
+	if ( tf_mirrormode.GetBool() )
+	{
+		vecMouseDelta.x *= -1.0f;
+	}
+#endif
 
 	if ( vecMouseDelta.Length() > 0 )
 	{

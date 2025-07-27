@@ -74,6 +74,7 @@ ConVar tf_hud_target_id_alpha( "tf_hud_target_id_alpha", "100", FCVAR_ARCHIVE, "
 ConVar tf_hud_target_id_offset( "tf_hud_target_id_offset", "0", FCVAR_ARCHIVE, "RES file Y offset for target id" );
 ConVar tf_hud_target_id_show_avatars( "tf_hud_target_id_show_avatars", "2", FCVAR_ARCHIVE, "Display Steam avatars on TargetID when using floating health icons.  1 = everyone, 2 = friends only." );
 
+extern ConVar tf_mirrormode;
 
 bool ShouldHealthBarBeVisible( CBaseEntity *pTarget, CTFPlayer *pLocalPlayer )
 {
@@ -1526,6 +1527,10 @@ bool CFloatingHealthIcon::CalculatePosition( )
 
 	int iX, iY;
 	GetVectorInHudSpace( vecTarget, iX, iY );				// TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
+	if ( tf_mirrormode.GetBool() )
+	{
+		iX = ScreenWidth() - iX;
+	}
 	SetPos( iX - ( GetWide() / 2 ), iY - GetTall() );
 
 	return true;

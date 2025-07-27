@@ -173,6 +173,8 @@ static const hitsound_params_t g_LastHitSounds[] =
 ConVar tf_dingalingaling_effect( "tf_dingalingaling_effect", "0", FCVAR_ARCHIVE, "Which Dingalingaling sound is used", true, 0, true, ARRAYSIZE( g_HitSounds )-1 );
 ConVar tf_dingalingaling_last_effect( "tf_dingalingaling_last_effect", "0", FCVAR_ARCHIVE, "Which final hit sound to play when the target expires.", true, 0, true, ARRAYSIZE( g_LastHitSounds )-1 );
 
+extern ConVar tf_mirrormode;
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -1124,6 +1126,10 @@ void CAccountPanel::Paint( void )
 
 				flXPos = iX;
 				flYPos = iY;
+				if ( tf_mirrormode.GetBool() )
+				{
+					flXPos = ScreenWidth() - iX;
+				}
 			}
 
 			// If we have a background texture, then draw it!

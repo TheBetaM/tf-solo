@@ -898,6 +898,7 @@ extern ConVar tf_flag_return_time_credit_factor;
 ConVar tf_grapplinghook_enable( "tf_grapplinghook_enable", "0", FCVAR_REPLICATED );
 
 ConVar tf_roundstarttalk_disable("tf_roundstarttalk_disable", "0", FCVAR_REPLICATED, "Disable forced talking at the start of a round.\n");
+ConVar tf_mirrormode( "tf_mirrormode", "0", FCVAR_REPLICATED, "Flip everyone's viewmodels, world and controls.\n" );
 
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;

@@ -450,6 +450,7 @@ vscript_convar_allowlist
     tf_merasmus_speed_recovery_rate                                   allowed
     tf_merasmus_stun_duration                                         allowed
     tf_minigame_suddendeath_time                                      allowed
+    tf_mirrormode                                                     allowed
     tf_movement_aircurrent_aircontrol_mult                            allowed
     tf_movement_aircurrent_friction_mult                              allowed
     tf_movement_lost_footing_friction                                 allowed

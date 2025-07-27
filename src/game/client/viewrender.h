@@ -490,6 +490,10 @@ private:
 
 	CMaterialReference	m_ScriptOverlayMaterial;
 	char m_szCurrentScriptMaterialName[ MAX_PATH ];
+#ifdef TF_CLIENT_DLL
+	CMaterialReference	m_MirrorOverlayMaterial;
+	bool m_MirrorInitDone;
+#endif
 
 	Vector			m_vecLastFacing;
 	float			m_flCheapWaterStartDistance;

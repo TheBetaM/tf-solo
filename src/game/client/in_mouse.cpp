@@ -45,6 +45,10 @@
 	bool g_bUpsideDown = false; // Set when the player is upside down in Portal to invert the mouse.
 #endif //#ifdef PORTAL
 
+#ifdef TF_CLIENT_DLL
+	extern ConVar tf_mirrormode;
+#endif
+
 extern ConVar lookstrafe;
 extern ConVar cl_pitchdown;
 extern ConVar cl_pitchup;
@@ -528,7 +532,16 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 			else
 			{
 				// Otherwize, use mouse to spin around vertical axis
-				viewangles[YAW] -= CAM_CapYaw( m_yaw.GetFloat() * mouse_x );
+#ifdef TF_CLIENT_DLL
+				if ( tf_mirrormode.GetBool() )
+				{
+					viewangles[YAW] += CAM_CapYaw( m_yaw.GetFloat() * mouse_x );
+				}
+				else
+#endif
+				{
+					viewangles[YAW] -= CAM_CapYaw( m_yaw.GetFloat() * mouse_x );
+				}
 			}
 		}
 	}

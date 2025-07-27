@@ -5972,4 +5972,96 @@ armory_config
 	{
 		Cost 100
 	}
+	"Mann of the Hour"
+	{
+		Cost 100
+	}
+	"The Headliner"
+	{
+		Cost 100
+	}
+	"Case of the Blues"
+	{
+		Cost 100
+	}
+	"Jarhead"
+	{
+		Cost 100
+	}
+	"The Abyss Diver"
+	{
+		Cost 100
+	}
+	"Frogmann's Fittings"
+	{
+		Cost 100
+	}
+	"Oxygen Provider"
+	{
+		Cost 100
+	}
+	"Short Fuse"
+	{
+		Cost 100
+	}
+	"Hunk Of Monk"
+	{
+		Cost 100
+	}
+	"Fat Friar"
+	{
+		Cost 100
+	}
+	"Mr. Rostov"
+	{
+		Cost 100
+	}
+	"Esprit De Corps"
+	{
+		Cost 100
+	}
+	"Hardcore Pantalon"
+	{
+		Cost 100
+	}
+	"Cattleman's Kettle"
+	{
+		Cost 100
+	}
+	"Sir Buildsalot"
+	{
+		Cost 100
+	}
+	"Shadow of Doubt"
+	{
+		Cost 100
+	}
+	"Clinical Investigator"
+	{
+		Cost 100
+	}
+	"Blindin' Bonnett"
+	{
+		Cost 100
+	}
+	"Shady Shelby"
+	{
+		Cost 100
+	}
+	"Le Sapeur"
+	{
+		Cost 100
+	}
+	"Le Morne Uniforme"
+	{
+		Cost 100
+	}
+	"Spy Ties"
+	{
+		Cost 100
+	}
+	"Team Cap"
+	{
+		Cost 100
+	}
 }

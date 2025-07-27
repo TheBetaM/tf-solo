@@ -25,6 +25,8 @@ extern ConVar tf_rd_points_per_steal;
 extern ConVar tf_rd_points_approach_interval;
 extern ConVar tf_rd_points_per_approach;
 
+extern ConVar tf_mirrormode;
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -822,6 +824,11 @@ void CTFHUDRobotDestruction::PaintPDPlayerScore( const CTFPlayer* pPlayer )
 		wchar_t wszScore[3];
 		V_snwprintf( wszScore, ARRAYSIZE( wszScore ), L"%d", iCurrentLeadingPoint );
 		const int nWidth = V_wcslen( wszScore ) * 15;
+
+		if ( tf_mirrormode.GetBool() )
+		{
+			iX = ScreenWidth() - iX;
+		}
 	
  		// draw the name
  		vgui::surface()->DrawSetTextFont( m_hPDPlayerScoreFont );

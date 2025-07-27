@@ -93,6 +93,7 @@ END_SCRIPTDESC();
 
 #ifdef TF_CLIENT_DLL
 extern ConVar cl_flipviewmodels;
+extern ConVar tf_mirrormode;
 #endif
 
 
@@ -857,7 +858,12 @@ int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
 {
 #ifdef TF_CLIENT_DLL
 	CMatRenderContextPtr pRenderContext( materials );
-	if ( cl_flipviewmodels.GetBool() != m_bAlwaysFlip )
+	bool isFlipped = cl_flipviewmodels.GetBool();
+	if ( tf_mirrormode.GetBool() )
+	{
+		isFlipped = !isFlipped;
+	}
+	if ( isFlipped != m_bAlwaysFlip )
 	{
 		pRenderContext->CullMode( MATERIAL_CULLMODE_CW );
 	}

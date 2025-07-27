@@ -52,6 +52,8 @@ extern float g_flFreezeFlash;
 
 extern ConVar hud_freezecamhide;
 
+extern ConVar tf_mirrormode;
+
 bool IsTakingAFreezecamScreenshot( void )
 {
 	// Don't draw in freezecam, or when the game's not running
@@ -697,6 +699,10 @@ CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector
 		{
 			*iX -= iXOffset;
 			*iY -= iYOffset;
+			if ( tf_mirrormode.GetBool() )
+			{
+				*iX = ScreenWidth() - *iX;
+			}
 			int iRight = *iX + CALLOUT_WIDE;
 			int iBottom = *iY + CALLOUT_TALL;
 			if ( *iX > 0 && *iY > 0 && (iRight < ScreenWidth()) && (iBottom < (ScreenHeight()-YRES(40))) )

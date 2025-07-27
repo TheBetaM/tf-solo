@@ -31,6 +31,8 @@ DECLARE_HUDELEMENT_DEPTH( CTFAnnotationsPanel, 1 );
 
 static const float LIFE_TIME = 1.0f;
 
+extern ConVar tf_mirrormode;
+
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -400,6 +402,10 @@ void CTFAnnotationsPanelCallout::PerformLayout( void )
 	// Is the target visible on screen?
 	int iX, iY;
 	bool bOnscreen = GetVectorInHudSpace( vecTarget, iX, iY ); // Tested - confirmed NOT GetVectorInScreenSpace
+	if ( tf_mirrormode.GetBool() )
+	{
+		iX = ScreenWidth() - iX;
+	}
 
 	// Calculate the perp dot product
 	QAngle angPlayerView = MainViewAngles();
@@ -436,6 +442,10 @@ void CTFAnnotationsPanelCallout::PerformLayout( void )
 		const int nHorizontalBuffer = XRES( 20 );
 		iX = flPerpDot <= 0.0f ? nHorizontalBuffer : ( ScreenWidth() - nHorizontalBuffer - m_pBackground->GetWide() - m_pArrow->GetWide() );
 		iY = ( ScreenHeight() - m_pBackground->GetTall() ) / 2;
+		if ( tf_mirrormode.GetBool() )
+		{
+			iX = ScreenWidth() - iX;
+		}
 	}
 	else
 	{

@@ -25,6 +25,8 @@
 #define MEDICCALLER_ARROW_WIDE	(XRES(16))
 #define MEDICCALLER_ARROW_TALL	(YRES(24))
 
+extern ConVar tf_mirrormode;
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -348,6 +350,10 @@ void CTFMedicCallerPanel::PaintBackground( void )
 	Vector vecDelta = vecTarget - MainViewOrigin();
 
 	bool bOnscreen = GetVectorInHudSpace( vecTarget, iX, iY );				// Tested and correct - should NOT be GetVectorInScreenSpace.
+	if ( tf_mirrormode.GetBool() )
+	{
+		iX = ScreenWidth() - iX;
+	}
 
 	int halfWidth = GetWide() / 2;
 	if( !bOnscreen || iX < halfWidth || iX > ScreenWidth()-halfWidth )
@@ -361,15 +367,33 @@ void CTFMedicCallerPanel::PaintBackground( void )
 
 		iX = xpos;
 		iY = ypos;
+		if ( tf_mirrormode.GetBool() )
+		{
+			iX = ScreenWidth() - iX;
+		}
 
 		Vector vCenter = m_hEntity->WorldSpaceCenter( );
 		if( MainViewRight().Dot( vCenter - MainViewOrigin() ) > 0 )
 		{
-			m_iDrawArrow = DRAW_ARROW_RIGHT;
+			if ( tf_mirrormode.GetBool() )
+			{
+				m_iDrawArrow = DRAW_ARROW_LEFT;
+			}
+			else
+			{
+				m_iDrawArrow = DRAW_ARROW_RIGHT;
+			}
 		}
 		else
 		{
-			m_iDrawArrow = DRAW_ARROW_LEFT;
+			if ( tf_mirrormode.GetBool() )
+			{
+				m_iDrawArrow = DRAW_ARROW_RIGHT;
+			}
+			else
+			{
+				m_iDrawArrow = DRAW_ARROW_LEFT;
+			}
 		}
 
 		// Move the icon there

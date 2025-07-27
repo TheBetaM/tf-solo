@@ -308,5 +308,20 @@ armory_config
 	{
 		Cost 100
 	}
-	
+	"Taunt: The Final Score"
+	{
+		Cost 100
+	}
+	"Taunt: Bear Hug"
+	{
+		Cost 100
+	}
+	"Taunt: Texan Trickshot"
+	{
+		Cost 100
+	}
+	"Taunt: Flying Colors"
+	{
+		Cost 100
+	}
 }

@@ -50,6 +50,8 @@ ConVar tf_rd_flag_ui_mode( "tf_rd_flag_ui_mode", "3", FCVAR_DEVELOPMENTONLY, "Wh
 
 extern ConVar tf_flag_caps_per_round;
 
+extern ConVar tf_mirrormode;
+
 void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 
 //-----------------------------------------------------------------------------
@@ -193,6 +195,10 @@ float CTFArrowPanel::GetAngleRotation( void )
 		float dot = DotProduct( vecFlag, forward );
 		float angleBetween = acos( dot );
 
+		if ( tf_mirrormode.GetBool() )
+		{
+			right = -right;
+		}
 		dot = DotProduct( vecFlag, right );
 
 		if ( dot < 0.0f )
@@ -1166,6 +1172,10 @@ void CTFFlagCalloutPanel::OnTick( void )
 	Vector vecDelta = vecTarget - MainViewOrigin();
 	bool bOnScreen = GetVectorInHudSpace( vecTarget, iX, iY );
 	int nHalfWidth = GetWide() / 2;
+	if ( tf_mirrormode.GetBool() )
+	{
+		iX = ScreenWidth() - iX;
+	}
 
 	if ( !bOnScreen || iX < nHalfWidth || iX > ScreenWidth() - nHalfWidth )
 	{
@@ -1186,6 +1196,10 @@ void CTFFlagCalloutPanel::OnTick( void )
 
 			iX = xpos;
 			iY = ypos;
+			if ( tf_mirrormode.GetBool() )
+			{
+				iX = ScreenWidth() - iX;
+			}
 
 			Vector vCenter = m_hFlag->WorldSpaceCenter( );
 			if ( MainViewRight().Dot( vCenter - MainViewOrigin() ) > 0 )
