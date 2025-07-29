@@ -14,6 +14,7 @@
 -- Signature Stance (All-Class)  
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added Bestiary - browse enemies encountered in the game
+- Added Mirror Mode - flip the world using the tf_mirrormode command
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 

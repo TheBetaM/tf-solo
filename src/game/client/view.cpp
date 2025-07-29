@@ -126,6 +126,9 @@ ConVar	gl_clear_randomcolor( "gl_clear_randomcolor", "0", FCVAR_CHEAT, "Clear th
 static ConVar r_farz( "r_farz", "-1", FCVAR_CHEAT, "Override the far clipping plane. -1 means to use the value in env_fog_controller." );
 static ConVar cl_demoviewoverride( "cl_demoviewoverride", "0", 0, "Override view during demo playback" );
 
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_mirrormode;
+#endif
 
 void SoftwareCursorChangedCB( IConVar *pVar, const char *pOldValue, float fOldValue )
 {
@@ -783,15 +786,23 @@ void CViewRender::SetUpViews()
 	AudioState_t audioState;
 	audioState.m_Origin = viewEye.origin;
 	audioState.m_Angles = viewEye.angles;
+	QAngle premirror = QAngle( viewEye.angles.x, viewEye.angles.y, viewEye.angles.z );
+#ifdef TF_CLIENT_DLL
+	if ( tf_mirrormode.GetBool() )
+	{
+		QAngle mirror = QAngle( viewEye.angles.x, viewEye.angles.y + 180.0, viewEye.angles.z );
+		audioState.m_Angles = mirror;
+	}
+#endif
 	audioState.m_bIsUnderwater = pPlayer && pPlayer->AudioStateIsUnderwater( viewEye.origin );
 
 	ToolFramework_SetupAudioState( audioState );
 
     // TomF: I wonder when the audio tools modify this, if ever...
-    Assert ( viewEye.origin == audioState.m_Origin );
-    Assert ( viewEye.angles == audioState.m_Angles );
+    //Assert ( viewEye.origin == audioState.m_Origin );
+    //Assert ( viewEye.angles == audioState.m_Angles );
 	viewEye.origin = audioState.m_Origin;
-	viewEye.angles = audioState.m_Angles;
+	viewEye.angles = premirror;
 
 	engine->SetAudioState( audioState );
 
