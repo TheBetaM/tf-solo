@@ -1,12 +1,13 @@
 # 1.0.0
 ## General
-- Added a new main menu interface for selecting maps to play normally, as well as in new ways:
--- Arena, now playable on KOTH, 5CP and other symmetrical maps  
--- King of the Hill, now playable on Arena, 5CP and other symmetrical maps  
+- Added a new main menu interface for selecting maps to play!
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  
-- Loadouts now work offline; live TF2 items still require a connection
+- Added Scenarios:  
+-- Meet The Team - An introduction for each individual class
+-- Territory Control - Choose from a randomly generated set of scenarios to control every map
+- Loadouts now work offline; accessing your base TF2 inventory still requires a connection
 - Added Armory - a way to unlock items using credits earned in the game
 - Added taunt items:  
 -- The Thriller (All-Class)  
@@ -15,11 +16,12 @@
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added Bestiary - browse enemies encountered in the game
 - Added Mirror Mode - flip the world using the tf_mirrormode command
+- Added 4 new achievements
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
-cl_default_networking_off
+cl_default_networking_off, nav_save_compressed
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
