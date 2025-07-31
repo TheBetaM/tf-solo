@@ -48,6 +48,7 @@ ConVar nav_generate_incremental_tolerance( "nav_generate_incremental_tolerance",
 ConVar nav_generate_noreload( "nav_generate_noreload", "1", FCVAR_NONE, "Reload only the navmesh after generation/analysis instead of the entire map." );
 ConVar nav_generate_auto( "nav_generate_auto", "0", FCVAR_NONE, "Automatically generate a nav mesh when there isn't any." );
 ConVar nav_generate_auto_view_distance( "nav_generate_auto_view_distance", "2500", FCVAR_NONE, "Set the auto generation view distance to optimize generation time." );
+ConVar nav_save_compressed( "nav_save_compressed", "1", FCVAR_CHEAT, "Saved nav files get compressed using LZMA." );
 ConVar nav_area_max_size( "nav_area_max_size", "50", FCVAR_CHEAT, "Max area size created in nav generation" );
 
 // Common bounding box for traces
