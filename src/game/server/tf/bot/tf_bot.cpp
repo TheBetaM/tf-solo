@@ -4265,6 +4265,10 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		}
 	}
 
+	// if we use the shortstop, we shouldn't try to push enemy projectiles here.
+	CTFWeaponBase* myWeapon = m_Shared.GetActiveTFWeapon();
+	if ( myWeapon->IsWeapon( TF_WEAPON_HANDGUN_SCOUT_PRIMARY ) )
+		return false;
 
 	Vector vecEye = EyePosition();
 	Vector vecForward, vecRight, vecUp;
@@ -4717,15 +4721,15 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				}
 			}
 		}
-		else if ( weapon->GetWeaponID() == TF_WEAPON_BAT_WOOD )
+		else if ( weapon->GetWeaponID() == TF_WEAPON_BAT_WOOD || weapon->GetWeaponID() == TF_WEAPON_BAT_GIFTWRAP )
 		{
-			// sandman
+			// sandman or wrap assassin
 			if ( GetAmmoCount( TF_AMMO_GRENADES1 ) > 0 )
 			{
 				const CKnownEntity *threat = GetVisionInterface()->GetPrimaryKnownThreat();
 				if ( threat && threat->IsVisibleInFOVNow() )
 				{
-					// hit a stunball
+					// hit a stunball or bauble
 					PressAltFireButton();			
 				}
 			}
