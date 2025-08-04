@@ -26,6 +26,7 @@
 #include "tf_weapon_buff_item.h"
 #include "tf_weapon_lunchbox.h"
 #include "tf_weapon_medigun.h"
+#include "halloween/tf_weapon_spellbook.h"
 #include "func_respawnroom.h"
 #include "soundenvelope.h"
 
@@ -65,6 +66,8 @@ ConVar tf_bot_debug_tags( "tf_bot_debug_tags", "0", FCVAR_CHEAT, "ent_text will 
 
 ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "1", FCVAR_CHEAT, "Bot will choose class from a preset class table." );
 
+ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
+
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
 extern ConVar tf_bot_sniper_misfire_chance;
@@ -76,6 +79,8 @@ extern ConVar tf_mvm_miniboss_min_health;
 extern ConVar tf_bot_path_lookahead_range;
 
 extern ConVar tf_mvm_miniboss_scale;
+extern ConVar tf_bot_health_critical_ratio;
+extern ConVar tf_bot_health_ok_ratio;
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -4731,6 +4736,173 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				{
 					// hit a stunball or bauble
 					PressAltFireButton();			
+				}
+			}
+		}
+		else if ( weapon->GetWeaponID() == TF_WEAPON_SPELLBOOK && tf_bot_spells.GetBool() )
+		{
+			CTFSpellBook *book = (CTFSpellBook *)weapon;
+			if ( book->HasASpellWithCharges() )
+			{
+				bool threatVisible = false;
+				bool isHurt = false;
+				bool inCombat = IsInCombat();
+
+				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+				if ( threat && threat->IsVisibleInFOVNow() )
+				{
+					threatVisible = true;
+				}
+				
+				if ( inCombat || IsPlayerClass( TF_CLASS_SNIPER ) )
+				{
+					// stay in the fight until we're nearly dead
+					isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_critical_ratio.GetFloat();
+				}
+				else
+				{
+					isHurt = m_Shared.InCond( TF_COND_BURNING ) || ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+				}
+
+				switch ( book->m_iSelectedSpellIndex )
+				{
+					case 0: // Fireball
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 1: // Bats
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 3: // Heal
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 4: // Pumpkins
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+					
+					case 5: // Jump
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 6: // Teleport
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 7: // Lightning
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 8: // Mouse
+					{
+						if ( inCombat )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 9: // Meteor
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 10: // Monoculus
+					{
+						if ( inCombat )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 11: // Skeletons
+					{
+						if ( inCombat )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 12: // Kart Glove
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 13: // Kart Jump
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 14: // Kart Heal
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 15: // Kart Bomb
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					default:
+						break;
 				}
 			}
 		}

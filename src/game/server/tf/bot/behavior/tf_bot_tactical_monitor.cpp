@@ -34,9 +34,12 @@
 
 #include "tf_obj_sentrygun.h"
 #include "tf_item_system.h"
+#include "halloween/spell/tf_spell_pickup.h"
+#include "halloween/tf_weapon_spellbook.h"
 
 extern ConVar tf_bot_health_ok_ratio;
 extern ConVar tf_bot_health_critical_ratio;
+extern ConVar tf_bot_spells;
 
 ConVar tf_bot_force_jump( "tf_bot_force_jump", "0", FCVAR_CHEAT, "Force bots to continuously jump" );
 
@@ -347,6 +350,16 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		}
 	}
 
+	if ( ShouldOpportunisticallyCollectCrumpkins( me ) && CTFBotGetAmmo::IsCrumpkinPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( true ), "Grabbing nearby crumpkin" );
+	}
+
+	if ( ShouldOpportunisticallyCollectSpell( me ) && CTFBotGetAmmo::IsSpellPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false ), "Grabbing nearby spell" );
+	}
+
 	// detonate sticky bomb traps when victims are near
 	MonitorArmedStickyBombs( me );
 
@@ -568,4 +581,56 @@ CObjectTeleporter *CTFBotTacticalMonitor::FindNearbyTeleporter( CTFBot *me )
 	}
 
 	return NULL;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCrumpkins( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsHolidayActive( kHoliday_Halloween ) || !TFGameRules()->IsHolidayMap( kHoliday_Halloween ) || TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) )
+	{
+		return false;
+	}
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return false;
+		}
+	}
+
+	// only if I'm fighting
+	if ( !me->IsInCombat() )
+	{
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectSpell( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsUsingSpells() || !tf_bot_spells.GetBool() )
+	{
+		return false;
+	}
+
+	CTFSpellBook *pSpellBook = dynamic_cast<CTFSpellBook *>( me->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
+	if ( !pSpellBook || pSpellBook->HasASpellWithCharges() )
+		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return false;
+		}
+	}
+
+	return true;
 }

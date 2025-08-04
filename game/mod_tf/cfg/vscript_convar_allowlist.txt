@@ -237,6 +237,7 @@ vscript_convar_allowlist
     tf_bot_sniper_spot_search_count                                   allowed
     tf_bot_sniper_target_linger_duration                              allowed
     tf_bot_spawn_use_preset_roster                                    allowed
+    tf_bot_spells                                                     allowed
     tf_bot_spy_change_target_range_threshold                          allowed
     tf_bot_spy_knife_range                                            allowed
     tf_bot_squad_escort_range                                         allowed

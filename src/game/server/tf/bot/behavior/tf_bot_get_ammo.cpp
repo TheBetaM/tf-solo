@@ -8,10 +8,14 @@
 #include "tf_gamerules.h"
 #include "bot/tf_bot.h"
 #include "bot/behavior/tf_bot_get_ammo.h"
+#include "tf_ammo_pack.h"
+#include "halloween/tf_weapon_spellbook.h"
 
 extern ConVar tf_bot_path_lookahead_range;
 
 ConVar tf_bot_ammo_search_range( "tf_bot_ammo_search_range", "5000", FCVAR_CHEAT, "How far bots will search to find ammo around them" );
+ConVar tf_bot_crumpkin_search_range( "tf_bot_crumpkin_search_range", "600", FCVAR_CHEAT, "How far bots will search to find crumpkins around them" );
+ConVar tf_bot_spell_search_range( "tf_bot_spell_search_range", "1200", FCVAR_CHEAT, "How far bots will search to find spells around them" );
 ConVar tf_bot_debug_ammo_scavenging( "tf_bot_debug_ammo_scavenging", "0", FCVAR_CHEAT );
 
 
@@ -21,8 +25,18 @@ CTFBotGetAmmo::CTFBotGetAmmo( void )
 	m_path.Invalidate();
 	m_ammo = NULL;
 	m_isGoalDispenser = false;
+	m_isGoalCrumpkin = false;
+	m_isGoalSpell = false;
 }
 
+CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin )
+{
+	m_path.Invalidate();
+	m_ammo = NULL;
+	m_isGoalDispenser = false;
+	m_isGoalCrumpkin = crumpkin;
+	m_isGoalSpell = !crumpkin;
+}
 
 //---------------------------------------------------------------------------------------------
 class CAmmoFilter : public INextBotFilter
@@ -32,6 +46,8 @@ public:
 	{
 		m_me = me;
 		m_ammoArea = NULL;
+		m_crumpkin = false;
+		m_spell = false;
 	}
 
 	bool IsSelected( const CBaseEntity *constCandidate ) const
@@ -50,7 +66,7 @@ public:
 			return false;
 
 		// resupply cabinets (not assigned a team)
-		if ( candidate->ClassMatches( "func_regenerate" ) )
+		if ( !m_crumpkin && !m_spell && candidate->ClassMatches( "func_regenerate" ) )
 		{
 			if ( !m_ammoArea->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE | TF_NAV_SPAWN_ROOM_RED ) )
 			{
@@ -73,8 +89,18 @@ public:
 		if ( candidate->IsEffectActive( EF_NODRAW ) )
 			return false;
 
-		if ( candidate->ClassMatches( "tf_ammo_pack" ) )
+		if ( m_spell && candidate->ClassMatches( "tf_spell_pickup" ) )
 			return true;
+
+		if ( candidate->ClassMatches( "tf_ammo_pack" ) )
+		{
+			if ( m_crumpkin )
+			{
+				CTFAmmoPack* pack = dynamic_cast<CTFAmmoPack *>( candidate );
+				return pack->GetPackType() == AP_HALLOWEEN;
+			}
+			return true;
+		}
 
 		if ( candidate->ClassMatches( "item_ammopack*" ) )
 			return true;
@@ -102,6 +128,8 @@ public:
 
 	CTFBot *m_me;
 	mutable CTFNavArea *m_ammoArea;
+	bool m_crumpkin;
+	bool m_spell;
 };
 
 
@@ -194,6 +222,110 @@ bool CTFBotGetAmmo::IsPossible( CTFBot *me )
 	return true;
 }
 
+bool CTFBotGetAmmo::IsCrumpkinPossible( CTFBot* me )
+{
+	VPROF_BUDGET("CTFBotGetAmmo::IsCrumpkinPossible", "NextBot");
+
+	int i;
+
+	CUtlVector< CNavArea* > nearbyAreaVector;
+	CollectSurroundingAreas( &nearbyAreaVector, me->GetLastKnownArea(), tf_bot_crumpkin_search_range.GetFloat(), me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
+
+	CAmmoFilter ammoFilter( me );
+	ammoFilter.m_crumpkin = true;
+	CBaseEntity* closestAmmo = NULL;
+	float closestAmmoTravelDistance = FLT_MAX;
+
+	// append nearby crumpkins
+	CBaseEntity* ammoPack = NULL;
+	while ( ( ammoPack = gEntList.FindEntityByClassname( ammoPack, "tf_ammo_pack" ) ) != NULL )
+	{
+		if ( ammoFilter.IsSelected( ammoPack ) )
+		{
+			if ( ammoFilter.m_ammoArea && ammoFilter.m_ammoArea->IsMarked() )
+			{
+				if ( ammoFilter.m_ammoArea->GetCostSoFar() < closestAmmoTravelDistance )
+				{
+					closestAmmo = ammoPack;
+					closestAmmoTravelDistance = ammoFilter.m_ammoArea->GetCostSoFar();
+				}
+
+				if ( tf_bot_debug_ammo_scavenging.GetBool() )
+				{
+					NDebugOverlay::Cross3D( ammoPack->WorldSpaceCenter(), 5.0f, 255, 100, 0, true, 999.9 );
+				}
+			}
+		}
+	}
+
+	if ( !closestAmmo )
+	{
+		//if ( me->IsDebugging( NEXTBOT_BEHAVIOR ) )
+		//{
+		//	Log( "%3.2f: No crumpkin nearby\n", gpGlobals->curtime );
+		//}
+		return false;
+	}
+
+	s_possibleBot = me;
+	s_possibleAmmo = closestAmmo;
+	s_possibleFrame = gpGlobals->framecount;
+
+	return true;
+}
+
+bool CTFBotGetAmmo::IsSpellPossible( CTFBot* me )
+{
+	VPROF_BUDGET("CTFBotGetAmmo::IsSpellPossible", "NextBot");
+
+	int i;
+
+	CUtlVector< CNavArea* > nearbyAreaVector;
+	CollectSurroundingAreas( &nearbyAreaVector, me->GetLastKnownArea(), tf_bot_spell_search_range.GetFloat(), me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
+
+	CAmmoFilter ammoFilter( me );
+	ammoFilter.m_spell = true;
+	CBaseEntity* closestAmmo = NULL;
+	float closestAmmoTravelDistance = FLT_MAX;
+
+	// append nearby crumpkins
+	CBaseEntity* ammoPack = NULL;
+	while ( ( ammoPack = gEntList.FindEntityByClassname( ammoPack, "tf_spell_pickup" ) ) != NULL )
+	{
+		if ( ammoFilter.IsSelected( ammoPack ) )
+		{
+			if ( ammoFilter.m_ammoArea && ammoFilter.m_ammoArea->IsMarked() )
+			{
+				if ( ammoFilter.m_ammoArea->GetCostSoFar() < closestAmmoTravelDistance )
+				{
+					closestAmmo = ammoPack;
+					closestAmmoTravelDistance = ammoFilter.m_ammoArea->GetCostSoFar();
+				}
+
+				if ( tf_bot_debug_ammo_scavenging.GetBool() )
+				{
+					NDebugOverlay::Cross3D(ammoPack->WorldSpaceCenter(), 5.0f, 255, 100, 0, true, 999.9);
+				}
+			}
+		}
+	}
+
+	if ( !closestAmmo )
+	{
+		//if ( me->IsDebugging( NEXTBOT_BEHAVIOR ) )
+		//{
+		//	Log( "%3.2f: No crumpkin nearby\n", gpGlobals->curtime );
+		//}
+		return false;
+	}
+
+	s_possibleBot = me;
+	s_possibleAmmo = closestAmmo;
+	s_possibleFrame = gpGlobals->framecount;
+
+	return true;
+}
+
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
@@ -221,7 +353,7 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 	}
 
 	// if I'm a spy, cloak and disguise
-	if ( me->IsPlayerClass( TF_CLASS_SPY ) )
+	if ( me->IsPlayerClass( TF_CLASS_SPY ) && !m_isGoalCrumpkin )
 	{
 		if ( !me->m_Shared.IsStealthed() )
 		{
@@ -236,9 +368,16 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotGetAmmo::Update( CTFBot *me, float interval )
 {
-	if ( me->IsAmmoFull() )
+	if ( me->IsAmmoFull() && !m_isGoalCrumpkin && !m_isGoalSpell )
 	{
 		return Done( "My ammo is full" );
+	}
+	
+	if ( m_isGoalSpell )
+	{
+		CTFSpellBook* pSpellBook = dynamic_cast<CTFSpellBook*>( me->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
+		if ( !pSpellBook || pSpellBook->HasASpellWithCharges() )
+			return Done( "Don't need to look for spells anymore" );
 	}
 
 	if ( m_ammo == NULL ) // || ( m_ammo->IsEffectActive( EF_NODRAW ) && !FClassnameIs( m_ammo, "func_regenerate" ) ) )

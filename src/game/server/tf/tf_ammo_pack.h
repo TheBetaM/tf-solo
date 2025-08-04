@@ -54,6 +54,7 @@ public:
 	float GetCreationTime( void ) { return m_flCreationTime; }
 	void  SetInitialVelocity( Vector &vecVelocity );
 	void  SetHealthInstead( bool bHealth ) { m_bHealthInstead = bHealth; }
+	AmmoPackType_t GetPackType( void ) { return m_PackType; }
 
 	const char* MakeHolidayAmmoPack( const char* inModelName, CBaseEntity *pOwner, const CTakeDamageInfo &info );
 
