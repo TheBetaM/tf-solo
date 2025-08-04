@@ -13,7 +13,6 @@
 -- The Thriller (All-Class)  
 -- Center Of Attention (Scout)  
 -- Signature Stance (All-Class)  
-- Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added Bestiary - browse enemies encountered in the game
 - Added Mirror Mode - flip the world using the tf_mirrormode command
 - Added 4 new achievements
@@ -26,12 +25,16 @@ cl_default_networking_off, nav_save_compressed
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
 - Disabled halloween taunts, holiday restrictions by default
-- Fixed generated nav meshes for workshop maps not being loaded
 - Fixed some cases of MvM workshop maps not being able to find any popfile
-- Fixed nav mesh generation not taking into account multiple spawn areas and stages
 - Minimal HUD no longer prevents game_text_tf from appearing
 - Fixed round restart commands not working in Arena mode
 ## TFBot improvements
+- Added MvM style bot presets, configurable in cfg/bot_presets.txt
+- Added nav files for many existing maps
+- Improved nav meshes in many existing maps
+- Saved nav files now get compressed by default
+- Fixed generated nav meshes for workshop maps not being loaded
+- Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR
 - Fixed bots ignoring SD, PD, RD and neutral flags
 - Fixed bots ignoring neutral flag capture zones
