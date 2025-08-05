@@ -28,6 +28,7 @@ cl_default_networking_off, nav_save_compressed, tf_bot_spells
 - Fixed some cases of MvM workshop maps not being able to find any popfile
 - Minimal HUD no longer prevents game_text_tf from appearing
 - Fixed round restart commands not working in Arena mode
+- Fixed mini-rounds without a setup timer being stuck in setup mode
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps

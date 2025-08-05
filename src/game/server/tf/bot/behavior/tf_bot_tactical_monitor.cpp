@@ -597,8 +597,9 @@ bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCrumpkins( CTFBot* me 
 		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
 		if ( pPatient && pPatient->IsDead() )
 		{
-			return false;
+			return true;
 		}
+		return false;
 	}
 
 	// only if I'm fighting
@@ -628,8 +629,9 @@ bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectSpell( CTFBot* me ) co
 		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
 		if ( pPatient && pPatient->IsDead() )
 		{
-			return false;
+			return true;
 		}
+		return false;
 	}
 
 	return true;
