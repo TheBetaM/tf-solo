@@ -10,12 +10,14 @@
 #include "bot/behavior/tf_bot_get_ammo.h"
 #include "tf_ammo_pack.h"
 #include "halloween/tf_weapon_spellbook.h"
+#include "entity_rune.h"
 
 extern ConVar tf_bot_path_lookahead_range;
 
 ConVar tf_bot_ammo_search_range( "tf_bot_ammo_search_range", "5000", FCVAR_CHEAT, "How far bots will search to find ammo around them" );
 ConVar tf_bot_crumpkin_search_range( "tf_bot_crumpkin_search_range", "600", FCVAR_CHEAT, "How far bots will search to find crumpkins around them" );
 ConVar tf_bot_spell_search_range( "tf_bot_spell_search_range", "1200", FCVAR_CHEAT, "How far bots will search to find spells around them" );
+ConVar tf_bot_powerup_search_range( "tf_bot_powerup_search_range", "1200", FCVAR_CHEAT, "How far bots will search to find powerups around them" );
 ConVar tf_bot_debug_ammo_scavenging( "tf_bot_debug_ammo_scavenging", "0", FCVAR_CHEAT );
 
 
@@ -27,6 +29,7 @@ CTFBotGetAmmo::CTFBotGetAmmo( void )
 	m_isGoalDispenser = false;
 	m_isGoalCrumpkin = false;
 	m_isGoalSpell = false;
+	m_isGoalPowerup = false;
 }
 
 CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin )
@@ -36,6 +39,17 @@ CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin )
 	m_isGoalDispenser = false;
 	m_isGoalCrumpkin = crumpkin;
 	m_isGoalSpell = !crumpkin;
+	m_isGoalPowerup = false;
+}
+
+CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin, bool powerup )
+{
+	m_path.Invalidate();
+	m_ammo = NULL;
+	m_isGoalDispenser = false;
+	m_isGoalCrumpkin = false;
+	m_isGoalSpell = false;
+	m_isGoalPowerup = true;
 }
 
 //---------------------------------------------------------------------------------------------
@@ -48,6 +62,7 @@ public:
 		m_ammoArea = NULL;
 		m_crumpkin = false;
 		m_spell = false;
+		m_powerup = false;
 	}
 
 	bool IsSelected( const CBaseEntity *constCandidate ) const
@@ -65,8 +80,26 @@ public:
 		if ( close.m_closePlayer && !m_me->InSameTeam( close.m_closePlayer ) )
 			return false;
 
+		if ( m_spell )
+		{
+			return candidate->ClassMatches( "tf_spell_pickup" ) && !candidate->IsEffectActive( EF_NODRAW );
+		}
+
+		if ( m_powerup )
+		{
+			if ( candidate->ClassMatches( "item_powerup_rune" ) && !candidate->IsEffectActive( EF_NODRAW ) )
+			{
+				CTFRune* rune = dynamic_cast< CTFRune *>( candidate );
+				if ( rune->GetRuneTeam() == TEAM_ANY || rune->GetRuneTeam() == m_me->GetTeamNumber() )
+					return true;
+				if ( m_me->IsPlayerClass( TF_CLASS_SPY ) && m_me->m_Shared.GetDisguiseTeam() == rune->GetRuneTeam() )
+					return true;
+			}
+			return false;
+		}
+
 		// resupply cabinets (not assigned a team)
-		if ( !m_crumpkin && !m_spell && candidate->ClassMatches( "func_regenerate" ) )
+		if ( !m_crumpkin && candidate->ClassMatches( "func_regenerate" ) )
 		{
 			if ( !m_ammoArea->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE | TF_NAV_SPAWN_ROOM_RED ) )
 			{
@@ -89,9 +122,6 @@ public:
 		if ( candidate->IsEffectActive( EF_NODRAW ) )
 			return false;
 
-		if ( m_spell && candidate->ClassMatches( "tf_spell_pickup" ) )
-			return true;
-
 		if ( candidate->ClassMatches( "tf_ammo_pack" ) )
 		{
 			if ( m_crumpkin )
@@ -101,6 +131,9 @@ public:
 			}
 			return true;
 		}
+
+		if ( m_crumpkin )
+			return false;
 
 		if ( candidate->ClassMatches( "item_ammopack*" ) )
 			return true;
@@ -130,6 +163,7 @@ public:
 	mutable CTFNavArea *m_ammoArea;
 	bool m_crumpkin;
 	bool m_spell;
+	bool m_powerup;
 };
 
 
@@ -326,6 +360,58 @@ bool CTFBotGetAmmo::IsSpellPossible( CTFBot* me )
 	return true;
 }
 
+bool CTFBotGetAmmo::IsPowerupPossible( CTFBot* me )
+{
+	VPROF_BUDGET("CTFBotGetAmmo::IsPowerupPossible", "NextBot");
+
+	int i;
+
+	CUtlVector< CNavArea* > nearbyAreaVector;
+	CollectSurroundingAreas( &nearbyAreaVector, me->GetLastKnownArea(), tf_bot_powerup_search_range.GetFloat(), me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
+
+	CAmmoFilter ammoFilter( me );
+	ammoFilter.m_powerup = true;
+	CBaseEntity* closestAmmo = NULL;
+	float closestAmmoTravelDistance = FLT_MAX;
+
+	// append nearby crumpkins
+	CBaseEntity* ammoPack = NULL;
+	while ( ( ammoPack = gEntList.FindEntityByClassname( ammoPack, "item_powerup_rune" ) ) != NULL )
+	{
+		if ( ammoFilter.IsSelected( ammoPack ) )
+		{
+			if ( ammoFilter.m_ammoArea && ammoFilter.m_ammoArea->IsMarked() )
+			{
+				if ( ammoFilter.m_ammoArea->GetCostSoFar() < closestAmmoTravelDistance )
+				{
+					closestAmmo = ammoPack;
+					closestAmmoTravelDistance = ammoFilter.m_ammoArea->GetCostSoFar();
+				}
+
+				if ( tf_bot_debug_ammo_scavenging.GetBool() )
+				{
+					NDebugOverlay::Cross3D(ammoPack->WorldSpaceCenter(), 5.0f, 255, 100, 0, true, 999.9);
+				}
+			}
+		}
+	}
+
+	if ( !closestAmmo )
+	{
+		//if ( me->IsDebugging( NEXTBOT_BEHAVIOR ) )
+		//{
+		//	Log( "%3.2f: No powerup nearby\n", gpGlobals->curtime );
+		//}
+		return false;
+	}
+
+	s_possibleBot = me;
+	s_possibleAmmo = closestAmmo;
+	s_possibleFrame = gpGlobals->framecount;
+
+	return true;
+}
+
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
@@ -353,7 +439,7 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 	}
 
 	// if I'm a spy, cloak and disguise
-	if ( me->IsPlayerClass( TF_CLASS_SPY ) && !m_isGoalCrumpkin )
+	if ( me->IsPlayerClass( TF_CLASS_SPY ) && !m_isGoalCrumpkin && !m_isGoalPowerup && !m_isGoalSpell )
 	{
 		if ( !me->m_Shared.IsStealthed() )
 		{
@@ -368,7 +454,7 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotGetAmmo::Update( CTFBot *me, float interval )
 {
-	if ( me->IsAmmoFull() && !m_isGoalCrumpkin && !m_isGoalSpell )
+	if ( me->IsAmmoFull() && !m_isGoalCrumpkin && !m_isGoalSpell && !m_isGoalPowerup )
 	{
 		return Done( "My ammo is full" );
 	}
@@ -378,6 +464,14 @@ ActionResult< CTFBot >	CTFBotGetAmmo::Update( CTFBot *me, float interval )
 		CTFSpellBook* pSpellBook = dynamic_cast<CTFSpellBook*>( me->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
 		if ( !pSpellBook || pSpellBook->HasASpellWithCharges() )
 			return Done( "Don't need to look for spells anymore" );
+	}
+
+	if ( m_isGoalPowerup )
+	{
+		if ( me->m_Shared.IsCarryingRune() )
+		{
+			return Done("Don't need to look for powerups anymore");
+		}
 	}
 
 	if ( m_ammo == NULL ) // || ( m_ammo->IsEffectActive( EF_NODRAW ) && !FClassnameIs( m_ammo, "func_regenerate" ) ) )

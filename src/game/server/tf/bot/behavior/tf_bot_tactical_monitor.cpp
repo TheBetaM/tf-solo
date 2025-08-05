@@ -360,6 +360,11 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		return SuspendFor( new CTFBotGetAmmo( false ), "Grabbing nearby spell" );
 	}
 
+	if ( ShouldOpportunisticallyCollectPowerup( me ) && CTFBotGetAmmo::IsPowerupPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby powerup" );
+	}
+
 	// detonate sticky bomb traps when victims are near
 	MonitorArmedStickyBombs( me );
 
@@ -621,6 +626,31 @@ bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectSpell( CTFBot* me ) co
 
 	CTFSpellBook *pSpellBook = dynamic_cast<CTFSpellBook *>( me->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
 	if ( !pSpellBook || pSpellBook->HasASpellWithCharges() )
+		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectPowerup( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsPowerupMode() )
+	{
+		return false;
+	}
+
+	if ( me->m_Shared.IsCarryingRune() )
 		return false;
 
 	// only if my patient is dead

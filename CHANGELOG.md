@@ -34,7 +34,7 @@ cl_default_networking_off, nav_save_compressed, tf_bot_spells
 - Added nav files for many existing maps
 - Improved nav meshes in many existing maps
 - Saved nav files now get compressed by default
-- Bots can now proactively seek out spell and crumpkin pickups
+- Bots can now proactively seek out spell, crumpkin and powerup pickups
 - Bots can now use spellbook spells
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
@@ -48,6 +48,7 @@ cl_default_networking_off, nav_save_compressed, tf_bot_spells
 - Fixed crash on point capture if no nav areas found around point
 - Where needed, bots will now follow the capture zone instead of the payload directly
 - Fixed bots using Payload logic on hybrid maps like Snowplow
+- Fixed crash with bots after playing on a Mannpower map
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

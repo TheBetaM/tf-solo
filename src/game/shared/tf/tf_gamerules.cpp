@@ -1136,7 +1136,7 @@ void cc_powerup_mode( IConVar *pConVar, const char *pOldString, float flOldValue
 		}
 
 		TFGameRules()->SetPowerupMode( var.GetBool() );
-		TFGameRules()->State_Transition( GR_STATE_PREROUND );
+		//TFGameRules()->State_Transition( GR_STATE_PREROUND );
 		tf_flag_caps_per_round.SetValue( var.GetBool() ? 7 : 3 );	// Hack
 	}
 }
@@ -4493,14 +4493,6 @@ void CTFGameRules::Activate()
 	m_flVoteCheckThrottle = 0;
 
 
-	if ( tf_powerup_mode.GetBool()  )
-	{
-		if ( !IsPowerupMode() )
-		{
-			SetPowerupMode( true );
-		}
-	}
-
 // 	if ( !IsInTournamentMode() )
 // 	{
 // 		CExtraMapEntity::SpawnExtraModel();
@@ -4538,6 +4530,14 @@ void CTFGameRules::Activate()
 
 	CLogicMannPower *pLogicMannPower = dynamic_cast< CLogicMannPower* > ( gEntList.FindEntityByClassname( NULL, "tf_logic_mannpower" ) );
 	tf_powerup_mode.SetValue( pLogicMannPower ? 1 : 0 );
+
+	if ( tf_powerup_mode.GetBool() )
+	{
+		if ( !IsPowerupMode() )
+		{
+			SetPowerupMode( true );
+		}
+	}
 
 	if ( !IsInTraining() && IsHolidayActive( kHoliday_Soldier ) )
 	{

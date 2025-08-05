@@ -42,6 +42,7 @@ private:
 
 	bool ShouldOpportunisticallyCollectCrumpkins( CTFBot* me ) const;
 	bool ShouldOpportunisticallyCollectSpell( CTFBot* me ) const;
+	bool ShouldOpportunisticallyCollectPowerup( CTFBot* me ) const;
 
 	void AvoidBumpingEnemies( CTFBot *me );
 };
