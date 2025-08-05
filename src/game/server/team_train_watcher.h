@@ -94,6 +94,8 @@ public:
 
 	float GetTrainProgress() { return m_flTotalProgress; }
 
+	bool IsHandlingTrainMovement( void ) { return m_bHandleTrainMovement; }
+
 private:
 
 	void StartCaptureAlarm( CTeamControlPoint *pPoint );

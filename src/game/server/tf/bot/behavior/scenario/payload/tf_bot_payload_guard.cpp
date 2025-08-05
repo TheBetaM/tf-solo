@@ -58,6 +58,20 @@ ActionResult< CTFBot >	CTFBotPayloadGuard::Update( CTFBot *me, float interval )
 		return Continue();
 	}
 
+	if ( !trainWatcher->IsHandlingTrainMovement() )
+	{
+		int team = me->GetTeamNumber() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED;
+		for (int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i)
+		{
+			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+			if ( pArea->IsActive() && !pArea->IsBlocked() && pArea->TeamCanCap( team ) )
+			{
+				cart = pArea;
+				break;
+			}
+		}
+	}
+
 	if ( !trainWatcher->IsDisabled() && trainWatcher->GetCapturerCount() > 0 )
 	{
 		// the cart is being pushed ahead - block it

@@ -45,6 +45,8 @@ cl_default_networking_off, nav_save_compressed, tf_bot_spells
 - Fixed bots not firing during setup outside Attack/Defend maps
 - Fixed bots not moving if the map has no func_respawnroom's
 - Fixed crash on point capture if no nav areas found around point
+- Where needed, bots will now follow the capture zone instead of the payload directly
+- Fixed bots using Payload logic on hybrid maps like Snowplow
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

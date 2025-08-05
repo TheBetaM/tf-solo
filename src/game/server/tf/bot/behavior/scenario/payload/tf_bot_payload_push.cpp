@@ -63,6 +63,18 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 		return Continue();
 	}
 
+	if ( !trainWatcher->IsHandlingTrainMovement() )
+	{
+		for (int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i)
+		{
+			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+			if ( pArea->IsActive() && !pArea->IsBlocked() && pArea->TeamCanCap( me->GetTeamNumber() ) )
+			{
+				cart = pArea;
+				break;
+			}
+		}
+	}
 
 	// move toward the point, periodically repathing to account for changing situation
 	if ( m_repathTimer.IsElapsed() )

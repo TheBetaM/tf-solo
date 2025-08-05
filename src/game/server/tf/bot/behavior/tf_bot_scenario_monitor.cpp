@@ -250,7 +250,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		// capture the flag
 		return new CTFBotFetchFlag;
 	}
-	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
+	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT && TFGameRules()->GetHUDType() != TF_HUDTYPE_CP )
 	{
 		if ( TFGameRules()->HasMultipleTrains() )
 		{
@@ -270,7 +270,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 			}
 		}
 	}
-	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP )
+	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP || TFGameRules()->GetHUDType() == TF_HUDTYPE_CP )
 	{
 		// if we have a point we can capture - do it
 		CUtlVector< CTeamControlPoint * > captureVector;
