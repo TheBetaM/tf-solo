@@ -440,6 +440,8 @@ CTFNavMesh::CTFNavMesh( void )
 	{
 		m_controlPointAreaVector[j].RemoveAll();
 		m_controlPointCenterAreaVector[j] = NULL;
+		m_flagCapzoneAreaVector[j].RemoveAll();
+		m_flagCapzoneCenterAreaVector[j] = NULL;
 	}
 
 	ListenForGameEvent( "teamplay_setup_finished" );
@@ -528,6 +530,8 @@ void CTFNavMesh::OnServerActivate( void )
 	{
 		m_controlPointAreaVector[i].RemoveAll();
 		m_controlPointCenterAreaVector[i] = NULL;
+		m_flagCapzoneAreaVector[i].RemoveAll();
+		m_flagCapzoneCenterAreaVector[i] = NULL;
 	}
 }
 
@@ -905,6 +909,49 @@ void CTFNavMesh::CollectControlPointAreas( void )
 	}
 }
 
+//-------------------------------------------------------------------------
+void CTFNavMesh::CollectFlagCapzoneAreas( void )
+{
+	for (int i = 0; i < MAX_CONTROL_POINTS; ++i)
+	{
+		m_flagCapzoneAreaVector[i].RemoveAll();
+		m_flagCapzoneCenterAreaVector[i] = NULL;
+	}
+
+	for ( int a = 0; a < ICaptureZoneAutoList::AutoList().Count(); ++a )
+	{
+		CCaptureZone* zone = static_cast< CCaptureZone *>( ICaptureZoneAutoList::AutoList()[a] );
+		if ( zone )
+		{
+			Extent extent;
+			extent.Init( zone );
+
+			// expand extent a bit to make sure it intersects ground below (koth_viaduct)
+			extent.lo.z -= HalfHumanHeight;
+			extent.hi.z += HalfHumanHeight;
+
+			CUtlVector< CTFNavArea* >* pointAreaVector = &m_flagCapzoneAreaVector[ zone->GetTeamNumber() ];
+			TheNavMesh->CollectAreasOverlappingExtent< CTFNavArea >( extent, pointAreaVector );
+
+			// find area closest to the control point's center
+			m_flagCapzoneCenterAreaVector[ zone->GetTeamNumber() ] = NULL;
+			float closeRangeSq = FLT_MAX;
+
+			for (int i = 0; i < pointAreaVector->Count(); ++i)
+			{
+				CTFNavArea* area = pointAreaVector->Element(i);
+
+				float rangeSq = ( area->GetCenter() - zone->WorldSpaceCenter() ).Length2DSqr();
+				if ( rangeSq < closeRangeSq )
+				{
+					m_flagCapzoneCenterAreaVector[ zone->GetTeamNumber() ] = area;
+					closeRangeSq = rangeSq;
+				}
+			}
+		}
+	}
+}
+
 
 //-------------------------------------------------------------------------
 // For MvM mode. Mark all nav areas where the bomb can drop and the invaders can reach it.
@@ -1125,6 +1172,7 @@ void CTFNavMesh::ComputeBombTargetDistance()
 void CTFNavMesh::RecomputeInternalData( void )
 {
 	CollectControlPointAreas();
+	CollectFlagCapzoneAreas();
 	RemoveAllMeshDecoration();
 	DecorateMesh();
 	ComputeBlockedAreas();			// relies on DecorateMesh() being complete

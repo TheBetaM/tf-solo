@@ -116,6 +116,7 @@ public:
 
 	CCaptureFlag *GetFlagToFetch( void ) const;						// return flag we want to fetch
 	CCaptureZone *GetFlagCaptureZone( void ) const;					// return capture zone for our flag(s)
+	CCaptureZone *GetEnemyFlagCaptureZone( void ) const;			// return capture zone for enemy flag(s)
 	CFuncPasstimeGoal *GetBallCaptureZone( void ) const;			// return capture zone for our ball
 	CBaseEntity *GetAnyObjective( void ) const;						// return any objective of interest
 

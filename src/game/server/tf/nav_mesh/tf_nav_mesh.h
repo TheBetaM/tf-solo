@@ -77,6 +77,7 @@ public:
 	void ResetMeshAttributes( bool bScheduleRecomputation );
 
 	void CollectControlPointAreas( void );
+	void CollectFlagCapzoneAreas( void );
 
 	void DecorateMesh( void );
 	void DecorateMeshTacticalHints( void );
@@ -96,6 +97,8 @@ public:
 	CTFNavArea *GetControlPointCenterArea( int pointIndex ) const;				// return area overlapping the center of the given control point
 	const CUtlVector< CTFNavArea * > *GetSpawnRoomAreas( int team ) const;		// return vector of areas within the given team spawn room(s)
 	const CUtlVector< CTFNavArea * > *GetSpawnRoomExitAreas( int team ) const;	// return vector of areas where the given team exits their spawn room(s)
+	const CUtlVector< CTFNavArea * > *GetFlagCapzoneAreas( int team ) const;    // return vector of areas overlapping the given team
+	CTFNavArea* GetFlagCapzoneCenterArea( int team ) const;						// return area overlapping the center of the given capzone
 
 	enum RecomputeReasonType
 	{
@@ -140,6 +143,9 @@ private:
 
 	CUtlVector< CTFNavArea * > m_controlPointAreaVector[ MAX_CONTROL_POINTS ];
 	CTFNavArea *m_controlPointCenterAreaVector[ MAX_CONTROL_POINTS ];
+
+	CUtlVector< CTFNavArea* > m_flagCapzoneAreaVector[ MAX_CONTROL_POINTS ];
+	CTFNavArea* m_flagCapzoneCenterAreaVector[ MAX_CONTROL_POINTS ];
 
 	CUtlVector< CTFNavArea * > m_redSpawnRoomAreaVector;
 	CUtlVector< CTFNavArea * > m_blueSpawnRoomAreaVector;
@@ -210,6 +216,26 @@ inline CTFNavArea *CTFNavMesh::GetControlPointCenterArea( int pointIndex ) const
 	}
 
 	return m_controlPointCenterAreaVector[ pointIndex ];
+}
+
+inline const CUtlVector< CTFNavArea* >* CTFNavMesh::GetFlagCapzoneAreas( int team ) const
+{
+	if ( team < 0 || team >= MAX_CONTROL_POINTS )
+	{
+		return NULL;
+	}
+
+	return &m_flagCapzoneAreaVector[ team ];
+}
+
+inline CTFNavArea* CTFNavMesh::GetFlagCapzoneCenterArea( int team ) const
+{
+	if ( team < 0 || team >= MAX_CONTROL_POINTS )
+	{
+		return NULL;
+	}
+
+	return m_flagCapzoneCenterAreaVector[ team ];
 }
 
 inline const CUtlVector< CTFNavArea * > *CTFNavMesh::GetSetupGateDefenseAreas( void ) const

@@ -2228,7 +2228,21 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 	for( int i=0; i<ICaptureZoneAutoList::AutoList().Count(); ++i )
 	{
 		CCaptureZone *zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
-		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
+		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) ) )
+		{
+			return zone;
+		}
+	}
+
+	return NULL;
+}
+
+CCaptureZone* CTFBot::GetEnemyFlagCaptureZone( void ) const
+{
+	for (int i = 0; i < ICaptureZoneAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureZone* zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
+		if ( zone->GetTeamNumber() != GetTeamNumber() )
 		{
 			return zone;
 		}
@@ -2239,13 +2253,13 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 
 //-----------------------------------------------------------------------------------------------------
 // Return capture zone for our ball
-CFuncPasstimeGoal* CTFBot::GetBallCaptureZone(void) const
+CFuncPasstimeGoal* CTFBot::GetBallCaptureZone( void ) const
 {
 	const auto& list = CFuncPasstimeGoal::GetAutoList();
-	for (int i = 0; i < list.Count(); ++i)
+	for ( int i = 0; i < list.Count(); ++i )
 	{
 		CFuncPasstimeGoal *zone = list[i];
-		if ( !zone->IsDisabled() && (zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
+		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) ) )
 		{
 			return zone;
 		}

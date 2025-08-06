@@ -24,6 +24,7 @@
 #include "bot/behavior/scenario/capture_point/tf_bot_defend_point.h"
 #include "bot/behavior/scenario/payload/tf_bot_payload_guard.h"
 #include "bot/behavior/scenario/payload/tf_bot_payload_push.h"
+#include "bot/behavior/scenario/capture_the_flag/tf_bot_defend_flag_capzone.h"
 #include "bot/behavior/tf_bot_use_teleporter.h"
 #include "bot/behavior/training/tf_bot_training.h"
 #include "bot/behavior/tf_bot_destroy_enemy_sentry.h"
@@ -296,6 +297,16 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 	else
 	{
+		// Attack/Defend CTF
+		if ( TFGameRules()->GetHUDType() == TF_HUDTYPE_CTF && me->GetEnemyFlagCaptureZone() )
+		{
+			if ( me->GetTeamNumber() == TF_TEAM_RED )
+			{
+				// Red is defending
+				return new CTFBotDefendFlagCapzone;
+			}
+		}
+
 		// Arena PLR
 		if ( TFGameRules()->HasMultipleTrains() )
 		{
