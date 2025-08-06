@@ -36,6 +36,7 @@
 #include "tf_item_system.h"
 #include "halloween/spell/tf_spell_pickup.h"
 #include "halloween/tf_weapon_spellbook.h"
+#include "halloween/merasmus/merasmus.h"
 
 extern ConVar tf_bot_health_ok_ratio;
 extern ConVar tf_bot_health_critical_ratio;
@@ -206,6 +207,15 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 	{
 		// clear stuck monitor so we dont jump when the preround elapses
 		me->GetLocomotionInterface()->ClearStuckStatus( "In preround" );
+	}
+
+	if ( me->m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) )
+	{
+		if ( TFGameRules()->GetActiveBoss() && TFGameRules()->GetActiveBoss()->GetBossType() == HALLOWEEN_BOSS_MERASMUS )
+		{
+			CMerasmus *pMerasmus = assert_cast< CMerasmus *>( TFGameRules()->GetActiveBoss() );
+			return SuspendFor( new CTFBotGetAmmo( me, pMerasmus ), "Heading for MERASMUS" );
+		}
 	}
 
 	Action< CTFBot > *result = me->OpportunisticallyUseWeaponAbilities();

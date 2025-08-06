@@ -30,6 +30,7 @@ CTFBotGetAmmo::CTFBotGetAmmo( void )
 	m_isGoalCrumpkin = false;
 	m_isGoalSpell = false;
 	m_isGoalPowerup = false;
+	m_isGoalMerasmus = false;
 }
 
 CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin )
@@ -40,6 +41,8 @@ CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin )
 	m_isGoalCrumpkin = crumpkin;
 	m_isGoalSpell = !crumpkin;
 	m_isGoalPowerup = false;
+	m_isGoalGeneric = false;
+	m_isGoalMerasmus = false;
 }
 
 CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin, bool powerup )
@@ -50,6 +53,8 @@ CTFBotGetAmmo::CTFBotGetAmmo( bool crumpkin, bool powerup )
 	m_isGoalCrumpkin = false;
 	m_isGoalSpell = false;
 	m_isGoalPowerup = true;
+	m_isGoalGeneric = false;
+	m_isGoalMerasmus = false;
 }
 
 //---------------------------------------------------------------------------------------------
@@ -172,6 +177,21 @@ static CTFBot *s_possibleBot = NULL;
 static CHandle< CBaseEntity > s_possibleAmmo = NULL;
 static int s_possibleFrame = 0;
 
+
+CTFBotGetAmmo::CTFBotGetAmmo( CTFBot* me, CBaseEntity* target )
+{
+	m_path.Invalidate();
+	m_ammo = NULL;
+	m_isGoalDispenser = false;
+	m_isGoalCrumpkin = false;
+	m_isGoalSpell = false;
+	m_isGoalPowerup = false;
+	m_isGoalGeneric = true;
+	m_isGoalMerasmus = false;
+	s_possibleBot = me;
+	s_possibleAmmo = target;
+	s_possibleFrame = gpGlobals->framecount;
+}
 
 //---------------------------------------------------------------------------------------------
 /**
@@ -431,6 +451,7 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 
 	m_ammo = s_possibleAmmo;
 	m_isGoalDispenser = m_ammo->ClassMatches( "obj_dispenser*" );
+	m_isGoalMerasmus = m_ammo->ClassMatches( "merasmus" );
 
 	CTFBotPathCost cost( me, FASTEST_ROUTE );
 	if ( !m_path.Compute( me, m_ammo->WorldSpaceCenter(), cost ) )
@@ -439,7 +460,7 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 	}
 
 	// if I'm a spy, cloak and disguise
-	if ( me->IsPlayerClass( TF_CLASS_SPY ) && !m_isGoalCrumpkin && !m_isGoalPowerup && !m_isGoalSpell )
+	if ( me->IsPlayerClass( TF_CLASS_SPY ) && !m_isGoalCrumpkin && !m_isGoalPowerup && !m_isGoalSpell && !m_isGoalGeneric )
 	{
 		if ( !me->m_Shared.IsStealthed() )
 		{
@@ -454,7 +475,7 @@ ActionResult< CTFBot >	CTFBotGetAmmo::OnStart( CTFBot *me, Action< CTFBot > *pri
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotGetAmmo::Update( CTFBot *me, float interval )
 {
-	if ( me->IsAmmoFull() && !m_isGoalCrumpkin && !m_isGoalSpell && !m_isGoalPowerup )
+	if ( me->IsAmmoFull() && !m_isGoalCrumpkin && !m_isGoalSpell && !m_isGoalPowerup && !m_isGoalGeneric )
 	{
 		return Done( "My ammo is full" );
 	}
@@ -471,6 +492,14 @@ ActionResult< CTFBot >	CTFBotGetAmmo::Update( CTFBot *me, float interval )
 		if ( me->m_Shared.IsCarryingRune() )
 		{
 			return Done("Don't need to look for powerups anymore");
+		}
+	}
+
+	if ( m_isGoalMerasmus )
+	{
+		if ( !me->m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) )
+		{
+			return Done( "Curse cleared" );
 		}
 	}
 

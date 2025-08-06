@@ -14,6 +14,7 @@ public:
 	CTFBotGetAmmo( void );
 	CTFBotGetAmmo( bool crumpkin );
 	CTFBotGetAmmo( bool crumpkin, bool powerup );
+	CTFBotGetAmmo( CTFBot* me, CBaseEntity* target );
 
 	static bool IsPossible( CTFBot *me );			// return true if this Action has what it needs to perform right now
 	static bool IsCrumpkinPossible( CTFBot *me );
@@ -40,6 +41,8 @@ private:
 	bool m_isGoalCrumpkin;
 	bool m_isGoalSpell;
 	bool m_isGoalPowerup;
+	bool m_isGoalGeneric;
+	bool m_isGoalMerasmus;
 };
 
 
