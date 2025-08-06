@@ -1069,6 +1069,12 @@ public:
 				DebuggerBreakOnNaN_StagingOnly( cost );
 			}
 
+			// Crouch-only areas
+			if ( area->HasAttributes( NAV_MESH_CROUCH ) )
+			{
+				cost *= 2.0f;
+			}
+
 			return cost + fromArea->GetCostSoFar();
 		}
 	}

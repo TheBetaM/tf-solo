@@ -89,6 +89,12 @@ bool CTFBotLocomotion::IsAreaTraversable( const CNavArea *baseArea ) const
 		return false;
 	}
 
+	// Force giants to avoid low ceilings
+	if ( area->HasAttributes( NAV_MESH_STOP ) && me->m_flModelScale > 1.0f )
+	{
+		return false;
+	}
+
 	if ( !TFGameRules()->RoundHasBeenWon() || TFGameRules()->GetWinningTeam() != me->GetTeamNumber() )
 	{
 		if ( area->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) && me->GetTeamNumber() == TF_TEAM_BLUE )

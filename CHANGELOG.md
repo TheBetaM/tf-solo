@@ -49,6 +49,7 @@ cl_default_networking_off, nav_save_compressed, tf_bot_spells
 - Where needed, bots will now follow the capture zone instead of the payload directly
 - Fixed bots using Payload logic on hybrid maps like Snowplow
 - Fixed crash with bots after playing on a Mannpower map
+- Giants will now always avoid nav areas marked with nav_stop
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
