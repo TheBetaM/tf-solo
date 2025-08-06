@@ -20,7 +20,8 @@
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
-cl_default_networking_off, nav_save_compressed, tf_bot_spells
+cl_default_networking_off, nav_save_compressed, tf_bot_spells, 
+tf_vision_force
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

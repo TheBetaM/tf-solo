@@ -101,6 +101,14 @@ void UpdateLocalPlayerVisionFlags()
 		g_nLocalPlayerVisionFlagsWeaponsCheck = pPlayer->GetVisionFilterFlags( true );
 		g_nLocalPlayerVisionFlags = pPlayer->GetVisionFilterFlags( false );
 	}
+#ifdef TF_CLIENT_DLL
+	ConVarRef tf_vision_force("tf_vision_force");
+	if ( tf_vision_force.GetInt() != 0 && tf_vision_force.GetInt() != 4 )
+	{
+		g_nLocalPlayerVisionFlagsWeaponsCheck = tf_vision_force.GetInt();
+		g_nLocalPlayerVisionFlags = tf_vision_force.GetInt();
+	}
+#endif // TF_CLIENT_DLL
 }
 
 bool IsLocalPlayerUsingVisionFilterFlags( int nFlags, bool bWeaponsCheck /* = false */ )

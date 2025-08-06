@@ -689,6 +689,7 @@ vscript_convar_allowlist
     tf_use_fixed_weaponspreads                                        allowed
     tf_useparticletracers                                             allowed
     tf_vaccinator_uber_charge_rate_modifier                           allowed
+    tf_vision_force                                                   allowed
     tf_weapon_criticals                                               allowed
     tf_weapon_criticals_bucket_bottom                                 allowed
     tf_weapon_criticals_bucket_cap                                    allowed

@@ -899,6 +899,7 @@ ConVar tf_grapplinghook_enable( "tf_grapplinghook_enable", "0", FCVAR_REPLICATED
 
 ConVar tf_roundstarttalk_disable("tf_roundstarttalk_disable", "0", FCVAR_REPLICATED, "Disable forced talking at the start of a round.\n");
 ConVar tf_mirrormode( "tf_mirrormode", "0", FCVAR_REPLICATED, "Flip everyone's viewmodels, world and controls.\n" );
+ConVar tf_vision_force( "tf_vision_force", "0", FCVAR_REPLICATED, "Force a specific vision mode on all players.\n" );
 
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;
@@ -17555,6 +17556,7 @@ bool CTFGameRules::AllowWeatherParticles( void )
 
 bool CTFGameRules::AllowMapVisionFilterShaders( void )
 {
+	return true;
 	if ( !m_pkvVisionFilterShadersMapWhitelist )
 		return false;
 
