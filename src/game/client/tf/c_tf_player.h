@@ -860,7 +860,7 @@ private:
 	mutable char m_bIsCalculatingMaximumSpeed;
 
 	// In-game currency
-	int m_nCurrency;
+	CNetworkVar( int, m_nCurrency );
 	int m_nOldCurrency;
 
 	// Bounty Mode

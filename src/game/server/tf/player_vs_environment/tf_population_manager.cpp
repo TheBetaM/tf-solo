@@ -855,7 +855,7 @@ void CPopulationManager::ResetMap( void )
 		if ( !pTFPlayer )
 			continue;
 
-		if ( pTFPlayer->IsBot() )
+		if ( pTFPlayer->IsBot() && pTFPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 			continue;
 
 		pTFPlayer->ResetRefundableUpgrades();
@@ -2242,11 +2242,18 @@ bool CPopulationManager::Parse( void )
 //-------------------------------------------------------------------------
 CPopulationManager::CheckpointSnapshotInfo *CPopulationManager::FindCheckpointSnapshot( CTFPlayer *player ) const
 {
-	CSteamID steamId;
-	if (!player->GetSteamID( &steamId ))
-		return NULL;
+	if ( !player->IsBot() )
+	{
+		CSteamID steamId;
+		if ( !player->GetSteamID( &steamId ) )
+			return NULL;
 
-	return FindCheckpointSnapshot( steamId );
+		return FindCheckpointSnapshot(steamId);
+	}
+	else
+	{
+		return FindCheckpointSnapshot( player->GetUserID() );
+	}
 }
 
 // ----------------------------------------------------------------------------------
@@ -2266,18 +2273,41 @@ CPopulationManager::CheckpointSnapshotInfo *CPopulationManager::FindCheckpointSn
 }
 
 // ----------------------------------------------------------------------------------
+// Purpose : Find a Checkpoint info
+//-------------------------------------------------------------------------
+CPopulationManager::CheckpointSnapshotInfo* CPopulationManager::FindCheckpointSnapshot( int userid ) const
+{
+	for ( int i = 0; i < m_checkpointSnapshot.Count(); ++i )
+	{
+		CheckpointSnapshotInfo* snapshot = m_checkpointSnapshot[ i ];
+
+		if ( userid == snapshot->m_userId )
+			return snapshot;
+	}
+
+	return NULL;
+}
+
+// ----------------------------------------------------------------------------------
 // Purpose : Returns the Player's Upgrade History Struct, Adds a new entry if not present
 // ----------------------------------------------------------------------------------
 CPopulationManager::PlayerUpgradeHistory *CPopulationManager::FindOrAddPlayerUpgradeHistory ( CTFPlayer *player )
 {
-	CSteamID steamId;
-	if (!player->GetSteamID( &steamId ))
+	if ( !player->IsBot() )
 	{
-		Log( "MvM : Unable to Find SteamID for player %s, unable to locate their upgrade history!", player->GetPlayerName() );
-		return NULL;
-	}
+		CSteamID steamId;
+		if ( !player->GetSteamID( &steamId ) )
+		{
+			Log( "MvM : Unable to Find SteamID for player %s, unable to locate their upgrade history!", player->GetPlayerName() );
+			return NULL;
+		}
 
-	return FindOrAddPlayerUpgradeHistory( steamId );
+		return FindOrAddPlayerUpgradeHistory( steamId );
+	}
+	else
+	{
+		return FindOrAddPlayerUpgradeHistory( player->GetUserID() );
+	}
 }
 
 // ----------------------------------------------------------------------------------
@@ -2296,6 +2326,28 @@ CPopulationManager::PlayerUpgradeHistory *CPopulationManager::FindOrAddPlayerUpg
 	PlayerUpgradeHistory *history = new PlayerUpgradeHistory;
 
 	history->m_steamId = steamId; 
+	history->m_currencySpent = 0;
+
+	m_playerUpgrades.AddToTail( history );
+	return history;
+}
+
+// ----------------------------------------------------------------------------------
+// Purpose : Returns the Player's Upgrade History Struct, Adds a new entry if not present
+// ----------------------------------------------------------------------------------
+CPopulationManager::PlayerUpgradeHistory* CPopulationManager::FindOrAddPlayerUpgradeHistory( int userid )
+{
+	FOR_EACH_VEC( m_playerUpgrades, i )
+	{
+		if ( userid == m_playerUpgrades[i]->m_userId )
+		{
+			return m_playerUpgrades[i];
+		}
+	}
+
+	PlayerUpgradeHistory* history = new PlayerUpgradeHistory;
+
+	history->m_userId = userid;
 	history->m_currencySpent = 0;
 
 	m_playerUpgrades.AddToTail( history );

@@ -171,11 +171,11 @@ void CHudInspectPanel::UserCmd_InspectTarget( void )
 			// Inspect a player
 			else if ( pTargetPlayer && ( pTargetPlayer->GetTeamNumber() != TF_TEAM_PVE_INVADERS ) )
 			{
-				if ( !GetClientModeTFNormal()->BIsFriendOrPartyMember( pTargetPlayer ) )
-				{
-					internalCenterPrint->Print( "#TF_Invalid_Inspect_Target" );
-					return;
-				}
+				//if ( !GetClientModeTFNormal()->BIsFriendOrPartyMember( pTargetPlayer ) )
+				//{
+					//internalCenterPrint->Print( "#TF_Invalid_Inspect_Target" );
+					//return;
+				//}
 				
 				pUpgradePanel->InspectUpgradesForPlayer( pTargetPlayer );
 			}
@@ -190,20 +190,39 @@ void CHudInspectPanel::UserCmd_InspectTarget( void )
 	{
 		if ( pTargetPlayer && !pTargetPlayer->IsEnemyPlayer() )
 		{
-			m_hTarget = pTargetPlayer;
-
-			CEconItemView *pItem = m_hTarget->GetInspectItem( &m_iTargetItemIterator );
-			if ( pItem && pItem->IsValid() )
+			CSteamID steamID;
+			if ( TFGameRules() && TFGameRules()->GameModeUsesUpgrades() && pTargetPlayer->GetSteamID( &steamID ) == false )
 			{
-				m_pItemPanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_hTarget->entindex() ) );
-				m_pItemPanel->SetItem( pItem );
+				CHudUpgradePanel* pUpgradePanel = GET_HUDELEMENT( CHudUpgradePanel );
+				if ( pUpgradePanel )
+				{
+					if ( pUpgradePanel->IsVisible() )
+					{
+						pUpgradePanel->OnCommand( "cancel" );
+					}
+					else
+					{
+						pUpgradePanel->InspectUpgradesForPlayer( pTargetPlayer );
+					}
+				}
+			}
+			else
+			{
+				m_hTarget = pTargetPlayer;
 
-				// force update description to get the correct panel size
-				m_pItemPanel->UpdateDescription();
-				bVisible = true;
-				int x,y;
-				GetPos( x, y );
-				SetPos( x, ScreenHeight() - YRES( 12 ) - m_pItemPanel->GetTall() );
+				CEconItemView *pItem = m_hTarget->GetInspectItem( &m_iTargetItemIterator );
+				if ( pItem && pItem->IsValid() )
+				{
+					m_pItemPanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_hTarget->entindex() ) );
+					m_pItemPanel->SetItem( pItem );
+
+					// force update description to get the correct panel size
+					m_pItemPanel->UpdateDescription();
+					bVisible = true;
+					int x,y;
+					GetPos( x, y );
+					SetPos( x, ScreenHeight() - YRES(12) - m_pItemPanel->GetTall() );
+				}
 			}
 		}
 		else

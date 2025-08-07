@@ -168,6 +168,7 @@ private:
 		CSteamID m_steamId;							// which player this snapshot is for	
 		int m_currencySpent;						// how much money they had spent up to this check point
 		CUtlVector< CUpgradeInfo > m_upgradeVector;	// the upgrades the player had as this checkpoint
+		int m_userId;								// fallback for bots
 	};
 
 	struct PlayerUpgradeHistory
@@ -175,6 +176,7 @@ private:
 		CSteamID m_steamId;							// which player this snapshot is for
 		CUtlVector< CUpgradeInfo > m_upgradeVector;	 
 		int m_currencySpent;
+		int m_userId;								// fallback for bots
 	};
 
 	void PostInitialize( void );
@@ -182,8 +184,10 @@ private:
 
 	CheckpointSnapshotInfo *FindCheckpointSnapshot( CTFPlayer *player ) const;
 	CheckpointSnapshotInfo *FindCheckpointSnapshot( CSteamID id ) const;
+	CheckpointSnapshotInfo *FindCheckpointSnapshot( int userid ) const;
 	PlayerUpgradeHistory *FindOrAddPlayerUpgradeHistory ( CTFPlayer *player );
 	PlayerUpgradeHistory *FindOrAddPlayerUpgradeHistory ( CSteamID steamId );
+	PlayerUpgradeHistory *FindOrAddPlayerUpgradeHistory ( int userId );
 
 	void LoadLastKnownMission();
 	bool LoadMvMMission( KeyValues *pNextMission );

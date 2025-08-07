@@ -15286,9 +15286,24 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 		{
 			if ( GameModeUsesUpgrades() )
 			{
+				CTFPlayer* upgradePlayer = pTFPlayer;
+				bool isRemote = false;
+				KeyValues* pTargetKey = pKeyValues->FindKey( "targetplayer" );
+				if ( pTargetKey && pTargetKey->GetInt("player") != -1 )
+				{
+					CTFPlayer* targetPlayer = ToTFPlayer ( UTIL_PlayerByUserId( pTargetKey->GetInt( "player" ) ) );
+					// double checking that it's a bot on the same team as sender
+					if ( targetPlayer && targetPlayer->IsBot() && targetPlayer->GetTeamNumber() == pTFPlayer->GetTeamNumber() )
+					{
+						upgradePlayer = targetPlayer;
+						isRemote = true;
+						upgradePlayer->BeginPurchasableUpgrades();
+					}
+				}
+
 				if ( IsMannVsMachineMode() )
 				{
-					if ( sv_cheats && !sv_cheats->GetBool() && !pTFPlayer->m_Shared.IsInUpgradeZone() )
+					if ( sv_cheats && !sv_cheats->GetBool() && !isRemote && !pTFPlayer->m_Shared.IsInUpgradeZone() )
 						return;
 				}
 
@@ -15298,6 +15313,11 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 					KeyValues *pSubKey = pKeyValues->GetFirstTrueSubKey();
 					while ( pSubKey )
 					{
+						if ( FStrEq( pSubKey->GetName(), "targetplayer" ) )
+						{
+							pSubKey = pSubKey->GetNextTrueSubKey();
+							continue;
+						}
 						int iCount = pSubKey->GetInt("count");
 						if ( iCount < 0 )
 						{
@@ -15310,7 +15330,7 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 							bool bAllowed = true;
 							while ( bAllowed && iCount < 0 )
 							{
-								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( pTFPlayer, iItemSlot, iUpgrade, true, bFree );
+								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, true, bFree );
 								++iCount;
 							}
 						}
@@ -15322,6 +15342,11 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 					pSubKey = pKeyValues->GetFirstTrueSubKey();
 					while ( pSubKey )
 					{
+						if ( FStrEq( pSubKey->GetName(), "targetplayer" ) )
+						{
+							pSubKey = pSubKey->GetNextTrueSubKey();
+							continue;
+						}
 						int iCount = pSubKey->GetInt("count");
 						if ( iCount > 0 )
 						{
@@ -15334,13 +15359,18 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 							bool bAllowed = true;
 							while ( bAllowed && iCount > 0 )
 							{
-								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( pTFPlayer, iItemSlot, iUpgrade, false, bFree );
+								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, false, bFree );
 								--iCount;
 							}
 						}
 
 						pSubKey = pSubKey->GetNextTrueSubKey();
 					}
+				}
+
+				if ( isRemote )
+				{
+					upgradePlayer->EndPurchasableUpgrades();
 				}
 			}
 		}

@@ -855,6 +855,8 @@ IMPLEMENT_SERVERCLASS_ST( CTFPlayer, DT_TFPlayer )
 	SendPropInt( SENDINFO( m_iPlayerSkinOverride ) ),
 	SendPropBool( SENDINFO( m_bViewingCYOAPDA ) ),
 	SendPropBool( SENDINFO( m_bRegenerating ) ),
+
+	SendPropInt( SENDINFO( m_nCurrency ) ),
 END_SEND_TABLE()
 
 // -------------------------------------------------------------------------------- //
@@ -22248,7 +22250,12 @@ void CTFPlayer::GrantOrRemoveAllUpgrades( bool bRemove, bool bRefund )
 void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUpgrade, int nCost, bool bDowngrade )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	if ( TFGameRules() == NULL || !TFGameRules()->GameModeUsesUpgrades() )
 		return;
@@ -22316,7 +22323,12 @@ void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUp
 void CTFPlayer::ForgetFirstUpgradeForItem( CEconItemView *pItem )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	if ( TFGameRules() && !TFGameRules()->GameModeUsesUpgrades() )
 		return;
@@ -22367,7 +22379,12 @@ void CTFPlayer::ClearUpgradeHistory( void )
 void CTFPlayer::ReapplyItemUpgrades( CEconItemView *pItem )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	int iClassIndex = GetPlayerClass()->GetClassIndex();
 
@@ -22397,7 +22414,12 @@ void CTFPlayer::ReapplyItemUpgrades( CEconItemView *pItem )
 void CTFPlayer::ReapplyPlayerUpgrades( void )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	int iClassIndex = GetPlayerClass()->GetClassIndex();
 	RemovePlayerAttributes( false );

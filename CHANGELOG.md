@@ -35,6 +35,7 @@ tf_vision_force
 - Added nav files for many existing maps
 - Improved nav meshes in many existing maps
 - Saved nav files now get compressed by default
+- Human players can now manually manage bot teammates' PvP/MvM upgrades by inspecting them
 - Bots can now proactively seek out spells, crumpkins, credits, cores and powerup pickups
 - Bots can now use spellbook spells
 - Bots can now stun Merasmus

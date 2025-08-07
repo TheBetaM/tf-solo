@@ -234,7 +234,7 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 	m_pIncrementButton->SetActiveImage( "pve/buy_disabled" );
 	m_pIcon->SetImage( VarArgs( "%s_bw", pMannVsMachineUpgrade->szIcon ) );
 
-	if ( m_bInspectMode )
+	if ( CheckInspectMode() )
 	{
 		m_pDecrementButton->SetEnabled( false );
 		m_pDecrementButton->SetVisible( false );
@@ -531,7 +531,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 		engine->ServerCmdKeyValues( kv );
 		
 		// Get our currency
-		if ( m_hPlayer && !m_bInspectMode )
+		if ( m_hPlayer && !CheckInspectMode() )
 		{
 			m_nCurrency = m_hPlayer->GetCurrency();
 		}
@@ -1143,7 +1143,7 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
 					pItemSlotBuyPanel->SetItemID( pCurItemData->GetItemID() );
 				}
 
-				if ( !m_bInspectMode )
+				if ( !CheckInspectMode() )
 				{
 					pUpgradeBuyPanel->m_pIncrementButton->SetCommand( VarArgs( "mvm_upgrade%03d_%i", pUpgradeBuyPanel->m_nUpgradeIndex, pUpgradeBuyPanel->m_nPrice ) );
 					pUpgradeBuyPanel->m_pDecrementButton->SetCommand( VarArgs( "mvm_downgrade%03d_%i", pUpgradeBuyPanel->m_nUpgradeIndex, pUpgradeBuyPanel->m_nPrice ) );
@@ -1512,6 +1512,7 @@ void CHudUpgradePanel::UpdateMouseOverHighlight( void )
 
 void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0*/, int nNumPurchased /*= 0*/ )
 {	
+	C_TFPlayer* pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	for ( int nSlotIndex = 0; nSlotIndex < ARRAYSIZE( m_ItemSlotBuyPanels ); ++nSlotIndex )
 	{
 		ItemSlotBuyPanels *pItemSlotBuyPanel = &( m_ItemSlotBuyPanels[ nSlotIndex ] );
@@ -1565,6 +1566,14 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 								kvSub->SetBool( "free", true );
 								kv->AddSubKey( kvSub );
 							}
+
+							KeyValues* kvSubT = new KeyValues( "targetplayer" );
+							kvSubT->SetInt( "player" , -1 );
+							if ( m_hPlayer && pLocalPlayer != m_hPlayer )
+							{
+								kvSubT->SetInt( "player", m_hPlayer->GetUserID() );
+							}
+							kv->AddSubKey( kvSubT );
 
 							engine->ServerCmdKeyValues( kv );
 						}
@@ -1643,6 +1652,14 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 				}
 
 				kvSub->SetInt( "count", nNumPurchased );
+
+				KeyValues* kvSubT = new KeyValues( "targetplayer" );
+				kvSubT->SetInt( "player", -1 );
+				if ( m_hPlayer && pLocalPlayer != m_hPlayer )
+				{
+					kvSubT->SetInt( "player", m_hPlayer->GetUserID() );
+				}
+				kv->AddSubKey( kvSubT );
 
 				kv->AddSubKey( kvSub );
 				engine->ServerCmdKeyValues( kv );
@@ -1769,6 +1786,14 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 						kvSub->SetBool( "free", true );
 						kv->AddSubKey( kvSub );
 
+						KeyValues* kvSubT = new KeyValues( "targetplayer" );
+						kvSubT->SetInt( "player", -1 );
+						if ( m_hPlayer && pLocalPlayer != m_hPlayer )
+						{
+							kvSubT->SetInt( "player", m_hPlayer->GetUserID() );
+						}
+						kv->AddSubKey( kvSubT );
+
 						engine->ServerCmdKeyValues( kv );
 
 						pActionBuyPanel->m_nPurchases = 0;
@@ -1849,6 +1874,7 @@ void CHudUpgradePanel::UpdateItemStatsLabel( void )
 void CHudUpgradePanel::CancelUpgrades( void )
 {
 	bool bSellAllowed = ( TFObjectiveResource() ? TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 : true );
+	C_TFPlayer* pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
 	KeyValues *kv = new KeyValues( "MVM_Upgrade" );
 
@@ -1878,6 +1904,14 @@ void CHudUpgradePanel::CancelUpgrades( void )
 			}
 		}
 	}
+
+	KeyValues* kvSubT = new KeyValues( "targetplayer" );
+	kvSubT->SetInt( "player", -1 );
+	if ( m_hPlayer && pLocalPlayer != m_hPlayer )
+	{
+		kvSubT->SetInt( "player", m_hPlayer->GetUserID() );
+	}
+	kv->AddSubKey( kvSubT );
 
 	engine->ServerCmdKeyValues( kv );
 }
@@ -1976,6 +2010,7 @@ void CHudUpgradePanel::OnCommand( const char *command )
 		m_bShowUpgradeMenu = false;
 		m_bCancelUpgrades = false;
 		m_bOpenLoadout = false;
+		m_bInspectMode = false;
 
 		// See if we need to award achievements
 		if ( m_bAwardMaxSlotAchievement )
