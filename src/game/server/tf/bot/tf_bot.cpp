@@ -38,6 +38,7 @@
 #include "bot/map_entities/tf_bot_generator.h"
 #include "bot/map_entities/tf_bot_hint_entity.h"
 #include "func_passtime_goal.h"
+#include "tf_item_powerup_bottle.h"
 
 ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a class name, all TFBots will respawn as that class" );
 
@@ -1413,6 +1414,7 @@ void CTFBot::Spawn()
 	GetVisionInterface()->ForgetAllKnownEntities();
 
 	SpawnCustom();
+	m_lastUsedCanteenTimer.Invalidate();
 }
 
 
@@ -4712,6 +4714,91 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 		return NULL;
 	}
 
+	if ( TFGameRules()->GameModeUsesUpgrades() )
+	{
+		CTFWearable* pWearable = GetEquippedWearableForLoadoutSlot( LOADOUT_POSITION_ACTION );
+		CTFPowerupBottle* pPowerupBottle = dynamic_cast<CTFPowerupBottle*>( pWearable );
+		if ( !m_lastUsedCanteenTimer.HasStarted() )
+		{
+			m_lastUsedCanteenTimer.Start( RandomFloat( 3.0f, 10.0f ) );
+		}
+		if ( pPowerupBottle && pPowerupBottle->GetNumCharges() > 0 && pPowerupBottle->AllowedToUse() && m_lastUsedCanteenTimer.HasStarted() && m_lastUsedCanteenTimer.IsElapsed() )
+		{
+			bool isThreatVisible = false;
+			bool isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+			bool isBadlyHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_critical_ratio.GetFloat();
+			bool inCombat = IsInCombat();
+			bool isAmmoLow = IsAmmoLow();
+			bool willUse = false;
+
+			const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+			if ( threat && threat->IsVisibleInFOVNow() )
+			{
+				isThreatVisible = true;
+			}
+
+			switch ( pPowerupBottle->GetPowerupType() )
+			{
+				case POWERUP_BOTTLE_CRITBOOST:
+				{
+					if ( inCombat && isThreatVisible )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_UBERCHARGE:
+				{
+					if ( isBadlyHurt )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_RECALL:
+				{
+					if ( isBadlyHurt )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_REFILL_AMMO:
+				{
+					if ( inCombat && isAmmoLow )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_BUILDINGS_INSTANT_UPGRADE:
+				{
+					break;
+				}
+				case POWERUP_BOTTLE_RADIUS_STEALTH:
+				{
+					break;
+				}
+				default:
+				{
+					if ( inCombat && isThreatVisible )
+					{
+						willUse = true;
+					}
+					break;
+				}
+			}
+
+			if ( willUse )
+			{
+				UseActionSlotItemPressed();
+				UseActionSlotItemReleased();
+				m_lastUsedCanteenTimer.Reset();
+				m_lastUsedCanteenTimer.Start( RandomFloat( 3.0f, 10.0f ) );
+			}
+		}
+	}
+
 	for ( int w=0; w<MAX_WEAPONS; ++w )
 	{
 		CTFWeaponBase *weapon = ( CTFWeaponBase * )GetWeapon( w );
@@ -4759,23 +4846,13 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 			if ( book->HasASpellWithCharges() )
 			{
 				bool threatVisible = false;
-				bool isHurt = false;
+				bool isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
 				bool inCombat = IsInCombat();
 
 				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
 				if ( threat && threat->IsVisibleInFOVNow() )
 				{
 					threatVisible = true;
-				}
-				
-				if ( inCombat || IsPlayerClass( TF_CLASS_SNIPER ) )
-				{
-					// stay in the fight until we're nearly dead
-					isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_critical_ratio.GetFloat();
-				}
-				else
-				{
-					isHurt = m_Shared.InCond( TF_COND_BURNING ) || ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
 				}
 
 				switch ( book->m_iSelectedSpellIndex )

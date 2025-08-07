@@ -594,6 +594,7 @@ private:
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
 
 	CUtlString m_preset;
+	CountdownTimer m_lastUsedCanteenTimer;
 };
 
 
