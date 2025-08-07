@@ -35,8 +35,9 @@ tf_vision_force
 - Added nav files for many existing maps
 - Improved nav meshes in many existing maps
 - Saved nav files now get compressed by default
-- Bots can now proactively seek out spell, crumpkin and powerup pickups
+- Bots can now proactively seek out spells, crumpkins, credits, cores and powerup pickups
 - Bots can now use spellbook spells
+- Bots can now stun Merasmus
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR

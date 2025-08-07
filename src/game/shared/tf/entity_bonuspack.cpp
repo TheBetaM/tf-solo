@@ -30,7 +30,7 @@ END_NETWORK_TABLE()
 BEGIN_DATADESC( CBonusPack )
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( item_bonuspack, CBonusPack );
+LINK_ENTITY_TO_CLASS( item_bonuspack_old, CBonusPack );
 
 IMPLEMENT_AUTO_LIST( IBonusPackAutoList );
 
@@ -184,5 +184,22 @@ void CBonusPack::BlinkThink()
 	{
 		SetRenderColorA( 255 );
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Forces the pack to be collected
+//-----------------------------------------------------------------------------
+void CBonusPack::ForceCollect( void )
+{
+	if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
+	{
+		CTFRobotDestructionLogic::GetRobotDestructionLogic()->ScorePoints( GetTeamNumber()
+			, tf_bonuspack_score.GetInt()
+			, SCORE_CORES_COLLECTED
+			, NULL );
+	}
+
+	m_bTouched = true;
+	UTIL_Remove( this );
 }
 #endif

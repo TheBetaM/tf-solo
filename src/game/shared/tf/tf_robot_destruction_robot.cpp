@@ -723,7 +723,7 @@ void CTFRobotDestruction_Robot::SpewBars( int nNumToSpew )
 {
 	for( int i=0; i < nNumToSpew; ++i )
 	{
-		CBonusPack *pBonusPack = assert_cast< CBonusPack* >( CreateEntityByName( "item_bonuspack" ) );
+		CCurrencyPack *pBonusPack = assert_cast< CCurrencyPack* >( CreateEntityByName( "item_bonuspack" ) );
 		if ( pBonusPack )
 		{
 			pBonusPack->ChangeTeam( GetEnemyTeam( GetTeamNumber() ) );

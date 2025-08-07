@@ -48,6 +48,7 @@ public:
 	virtual bool	AffectedByRadiusCollection() const OVERRIDE { return false; }
 	virtual bool	MyTouch( CBasePlayer *pPlayer ) OVERRIDE;
 	virtual bool	ValidTouch( CBasePlayer *pPlayer ) OVERRIDE;
+	virtual void	ForceCollect( void ) OVERRIDE;
 
 	virtual const char *GetDefaultPowerupModel( void ) OVERRIDE
 	{ 

@@ -36,8 +36,10 @@ public:
 	void	UpdateOnRemove( void );
 	virtual int UpdateTransmitState() OVERRIDE;
 	virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
-	bool	MyTouch( CBasePlayer *pPlayer );
+	virtual bool MyTouch( CBasePlayer *pPlayer );
 	virtual bool AffectedByRadiusCollection() const { return true; }
+	virtual void ForceCollect( void );
+	virtual void PostSpawn( void ) { };
 
 	void	SetAmount( float flAmount );
 	void	SetClaimed( void ) { m_bClaimed = true; }	// Radius collection code "steers" packs toward the player
@@ -46,6 +48,7 @@ public:
 	
 	virtual CurrencyRewards_t	GetPackSize( void ) { return TF_CURRENCY_PACK_LARGE; }
 	virtual const char *GetDefaultPowerupModel( void ) { return "models/items/currencypack_large.mdl"; }
+	virtual bool	IsBonusPack( void ) { return false; }
 
 protected:
 	virtual void ComeToRest( void );
@@ -88,6 +91,24 @@ public:
 	virtual const char *GetDefaultPowerupModel( void );
 };
 
+class CCurrencyPackBonus : public CCurrencyPack
+{
+public:
+	DECLARE_CLASS( CCurrencyPackBonus, CCurrencyPack );
+
+	virtual CurrencyRewards_t	GetPackSize( void ) { return TF_CURRENCY_PACK_SMALL; }
+	virtual const char* GetDefaultPowerupModel( void ) { return "models/bots/bot_worker/bot_worker_powercore.mdl"; }
+	virtual bool	IsBonusPack( void ) OVERRIDE { return true; }
+	virtual bool	MyTouch( CBasePlayer* pPlayer ) OVERRIDE;
+	virtual bool	ValidTouch( CBasePlayer* pPlayer ) OVERRIDE;
+	virtual void	PostSpawn( void ) OVERRIDE;
+private:
+	void BlinkThink();
+
+	int m_nBlinkCount;
+	float m_flKillTime;
+	float m_flCanPickupTime;
+};
 
 #endif // ENTITY_CURRENCYPACK_H
 

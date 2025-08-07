@@ -41,6 +41,7 @@
 extern ConVar tf_bot_health_ok_ratio;
 extern ConVar tf_bot_health_critical_ratio;
 extern ConVar tf_bot_spells;
+extern ConVar tf_gamemode_pd;
 
 ConVar tf_bot_force_jump( "tf_bot_force_jump", "0", FCVAR_CHEAT, "Force bots to continuously jump" );
 
@@ -367,12 +368,22 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 
 	if ( ShouldOpportunisticallyCollectSpell( me ) && CTFBotGetAmmo::IsSpellPossible( me ) )
 	{
-		return SuspendFor( new CTFBotGetAmmo( false ), "Grabbing nearby spell" );
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby spell" );
 	}
 
 	if ( ShouldOpportunisticallyCollectPowerup( me ) && CTFBotGetAmmo::IsPowerupPossible( me ) )
 	{
 		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby powerup" );
+	}
+
+	if ( ShouldOpportunisticallyCollectCredits( me ) && CTFBotGetAmmo::IsCreditPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby credits" );
+	}
+
+	if ( ShouldOpportunisticallyCollectCores( me ) && CTFBotGetAmmo::IsCorePossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby cores" );
 	}
 
 	// detonate sticky bomb traps when victims are near
@@ -662,6 +673,53 @@ bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectPowerup( CTFBot* me ) 
 
 	if ( me->m_Shared.IsCarryingRune() )
 		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCredits( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsMannVsMachineMode() || me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	{
+		return false;
+	}
+
+	if ( me->IsInCombat() && !me->IsPlayerClass( TF_CLASS_SCOUT ) )
+		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCores( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsPlayingRobotDestructionMode() || tf_gamemode_pd.GetBool() )
+	{
+		return false;
+	}
 
 	// only if my patient is dead
 	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )

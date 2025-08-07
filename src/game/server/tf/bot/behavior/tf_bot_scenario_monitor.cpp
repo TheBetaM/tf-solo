@@ -228,7 +228,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		return new CTFBotSpyInfiltrate;
 	}
 
-	if ( !TheTFBots().IsMeleeOnly() )
+	if ( !TheTFBots().IsMeleeOnly() && !TFGameRules()->IsInMedievalMode() && !me->HasWeaponRestriction( 1 ) )
 	{
 		if ( me->IsPlayerClass( TF_CLASS_SNIPER ) )
 		{

@@ -19,6 +19,8 @@
 #include "collisionutils.h"
 #include "func_respawnroom.h"
 #include "tf_objective_resource.h"
+#include "tf_logic_robot_destruction.h"
+#include "tf_fx.h"
 
 //=============================================================================
 //
@@ -33,10 +35,19 @@
 
 #define TF_CURRENCYPACK_GLOW_THINK_TIME	0.1f		// how often should we check if cash should glow
 
+#define TF_BONUSPACK_BLINK_TIME 5.f
+#define TF_BONUSPACK_REMOVE_TIME 20.f
+#define TF_BONUSPACK_PICKUP_TIME 0.5f
+#define TF_BONUSPACK_BLINK_CONTEXT "blink_think"
+#define TF_BONUSPACK_RED_PICKUP "powercore_embers_red"
+#define TF_BONUSPACK_BLUE_PICKUP "powercore_embers_blue"
+
+extern ConVar tf_bonuspack_score;
 
 LINK_ENTITY_TO_CLASS( item_currencypack_large, CCurrencyPack );
 LINK_ENTITY_TO_CLASS( item_currencypack_medium, CCurrencyPackMedium );
 LINK_ENTITY_TO_CLASS( item_currencypack_small, CCurrencyPackSmall );
+LINK_ENTITY_TO_CLASS( item_bonuspack, CCurrencyPackBonus );
 
 LINK_ENTITY_TO_CLASS( item_currencypack_custom, CCurrencyPackCustom );
 
@@ -62,6 +73,10 @@ CCurrencyPack::CCurrencyPack()
 	m_bTouched = false;
 	m_bClaimed = false;
 	m_bDistributed = false;
+	if ( IsBonusPack() )
+	{
+		m_bAutoMaterialize = false;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -78,6 +93,9 @@ CCurrencyPack::~CCurrencyPack()
 void CCurrencyPack::UpdateOnRemove( void )
 {
 	BaseClass::UpdateOnRemove();
+
+	if ( IsBonusPack() )
+		return;
 
 	if ( g_pPopulationManager && !m_bTouched )
 	{
@@ -118,6 +136,13 @@ int CCurrencyPack::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 void CCurrencyPack::Spawn( void )
 {
 	BaseClass::Spawn();
+
+	if ( IsBonusPack() )
+	{
+		PostSpawn();
+		return;
+	}
+
 	m_blinkCount = 0;
 	m_blinkTimer.Invalidate();
 	SetContextThink( &CCurrencyPack::BlinkThink, gpGlobals->curtime + GetLifeTime() - TF_CURRENCYPACK_BLINK_PERIOD - RandomFloat( 0.0, TF_CURRENCYPACK_BLINK_DURATION ), "CurrencyPackWaitingToBlinkThink" );
@@ -186,10 +211,7 @@ void CCurrencyPack::ComeToRest( void )
 	// if we've come to rest in an area with no nav, just grant the money to the player
 	if ( TheNavMesh->GetNavArea( GetAbsOrigin() ) == NULL )
 	{
-		TFGameRules()->DistributeCurrencyAmount( m_nAmount );
-		m_bTouched = true;
-		UTIL_Remove( this );
-
+		ForceCollect();
 		return;
 	}
 
@@ -197,17 +219,10 @@ void CCurrencyPack::ComeToRest( void )
 	for ( int i = 0; i < ITriggerHurtAutoList::AutoList().Count(); i++ )
 	{
 		CTriggerHurt *pTrigger = static_cast<CTriggerHurt*>( ITriggerHurtAutoList::AutoList()[i] );
-		if ( !pTrigger->m_bDisabled )
+		if ( !pTrigger->m_bDisabled && pTrigger->PointIsWithin( GetAbsOrigin() ) )
 		{
-			Vector vecMins, vecMaxs;
-			pTrigger->GetCollideable()->WorldSpaceSurroundingBounds( &vecMins, &vecMaxs );
-			if ( IsPointInBox( GetCollideable()->GetCollisionOrigin(), vecMins, vecMaxs ) )
-			{
-				TFGameRules()->DistributeCurrencyAmount( m_nAmount );
-
-				m_bTouched = true;
-				UTIL_Remove( this );
-			}
+			ForceCollect();
+			return;
 		}
 	}
 
@@ -215,16 +230,36 @@ void CCurrencyPack::ComeToRest( void )
 	for ( int i = 0; i < IFuncRespawnRoomAutoList::AutoList().Count(); i++ )
 	{
 		CFuncRespawnRoom *pRespawnRoom = static_cast<CFuncRespawnRoom *>( IFuncRespawnRoomAutoList::AutoList()[ i ] );
-		Vector vecMins, vecMaxs;
-		pRespawnRoom->GetCollideable()->WorldSpaceSurroundingBounds( &vecMins, &vecMaxs );
-		if ( IsPointInBox( GetCollideable()->GetCollisionOrigin(), vecMins, vecMaxs ) )
+		if ( pRespawnRoom->PointIsWithin( GetAbsOrigin() ) )
 		{
-			TFGameRules()->DistributeCurrencyAmount( m_nAmount );
-
-			m_bTouched = true;
-			UTIL_Remove( this );
+			ForceCollect();
+			return;
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Forces the pack to be collected
+//-----------------------------------------------------------------------------
+void CCurrencyPack::ForceCollect( void )
+{
+	if ( IsBonusPack() )
+	{
+		if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
+		{
+			CTFRobotDestructionLogic::GetRobotDestructionLogic()->ScorePoints( GetTeamNumber()
+				, tf_bonuspack_score.GetInt()
+				, SCORE_CORES_COLLECTED
+				, NULL );
+		}
+	}
+	else
+	{
+		TFGameRules()->DistributeCurrencyAmount( m_nAmount );
+	}
+
+	m_bTouched = true;
+	UTIL_Remove( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -260,6 +295,13 @@ void CCurrencyPack::Precache( void )
 	PrecacheScriptSound( TF_CURRENCYPACK_VANISH_SOUND );
 	PrecacheParticleSystem( "mvm_cash_embers" );
 	PrecacheParticleSystem( "mvm_cash_explosion" );
+	if ( IsBonusPack() )
+	{
+		PrecacheParticleSystem( TF_BONUSPACK_RED_PICKUP );
+		PrecacheParticleSystem( TF_BONUSPACK_BLUE_PICKUP );
+		PrecacheParticleSystem( "powercore_alert_blue" );
+		PrecacheParticleSystem( "powercore_alert_red" );
+	}
 	BaseClass::Precache();
 }
 
@@ -360,3 +402,109 @@ const char *CCurrencyPackCustom::GetDefaultPowerupModel( void )
 	return "models/items/currencypack_small.mdl";
 }
 
+bool CCurrencyPackBonus::ValidTouch( CBasePlayer* pPlayer )
+{
+	if ( ( GetTeamNumber() > LAST_SHARED_TEAM ) && ( pPlayer->GetTeamNumber() != GetTeamNumber() ) )
+		return false;
+
+	CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
+	if ( !pTFPlayer )
+		return false;
+
+	// No invis spies
+	if ( pTFPlayer->m_Shared.InCond( TF_COND_STEALTHED ) || pTFPlayer->m_Shared.GetPercentInvisible() > 0.25f )
+		return false;
+
+	// No disguised spies
+	if ( pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) || pTFPlayer->m_Shared.InCond( TF_COND_DISGUISING ) )
+		return false;
+
+	// No bonk'd scouts
+	if ( pTFPlayer->m_Shared.InCond( TF_COND_PHASE ) || pTFPlayer->m_Shared.InCond( TF_COND_PASSTIME_INTERCEPTION ) )
+		return false;
+
+	// No teleporting players
+	if ( pTFPlayer->m_Shared.InCond( TF_COND_SELECTED_TO_TELEPORT ) )
+		return false;
+
+	// No invulns
+	if ( pTFPlayer->m_Shared.IsInvulnerable() )
+		return false;
+
+	return BaseClass::ValidTouch( pPlayer );
+}
+
+bool CCurrencyPackBonus::MyTouch( CBasePlayer* pPlayer )
+{
+	if ( ValidTouch( pPlayer ) && gpGlobals->curtime >= m_flCanPickupTime )
+	{
+		CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
+		if (!pTFPlayer)
+			return true;
+
+		// Play a particle colored the color of the player that picked it up
+		Vector vecOrigin = GetAbsOrigin() + Vector(0, 0, 5);
+		CPVSFilter pvsfilter( vecOrigin );
+		const char* pszParticleName = pPlayer->GetTeamNumber() == TF_TEAM_RED ? TF_BONUSPACK_RED_PICKUP : TF_BONUSPACK_BLUE_PICKUP;
+		TE_TFParticleEffect( pvsfilter, 0.f, pszParticleName, vecOrigin, vec3_angle );
+
+		if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
+		{
+			CTFRobotDestructionLogic::GetRobotDestructionLogic()->ScorePoints( GetTeamNumber()
+				, tf_bonuspack_score.GetInt()
+				, SCORE_CORES_COLLECTED
+				, ToTFPlayer( pPlayer ) );
+		}
+
+		int iBoostMax = pTFPlayer->m_Shared.GetMaxBuffedHealth();
+		// Cap it to the max we'll boost a player's health
+		int nHealthToAdd = clamp( 5, 0, iBoostMax - pTFPlayer->GetHealth() );
+		// Give health
+		pPlayer->TakeHealth( nHealthToAdd, DMG_GENERIC | DMG_IGNORE_MAXHEALTH );
+
+		for ( int i = 0; i < TF_AMMO_COUNT; i++ )
+		{
+			pPlayer->GiveAmmo( 5, i );
+		}
+
+		pPlayer->SetLastObjectiveTime( gpGlobals->curtime );
+
+		return true;
+	}
+
+	return false;
+}
+
+void CCurrencyPackBonus::BlinkThink()
+{
+	float flTimeToKill = m_flKillTime - gpGlobals->curtime;
+	float flNextBlink = RemapValClamped(flTimeToKill, TF_BONUSPACK_BLINK_TIME, 0.f, 0.5f, 0.1f);
+
+	SetContextThink( &CCurrencyPackBonus::BlinkThink, gpGlobals->curtime + flNextBlink, TF_BONUSPACK_BLINK_CONTEXT );
+
+	SetRenderMode( kRenderTransAlpha );
+
+	++m_nBlinkCount;
+	if ( m_nBlinkCount % 2 == 0 )
+	{
+		SetRenderColorA( 25 );
+	}
+	else
+	{
+		SetRenderColorA( 255 );
+	}
+}
+
+void CCurrencyPackBonus::PostSpawn()
+{
+	const char* pszParticleName = GetTeamNumber() == TF_TEAM_RED ? "powercore_alert_blue" : "powercore_alert_red";
+	DispatchParticleEffect( pszParticleName, PATTACH_POINT_FOLLOW, this, "particle_spawn" );
+
+	SetModel( GetPowerupModel() );
+	CollisionProp()->UseTriggerBounds( true, 64 );
+	m_flCanPickupTime = gpGlobals->curtime + TF_BONUSPACK_PICKUP_TIME;
+	m_nBlinkCount = 0;
+	m_flKillTime = gpGlobals->curtime + TF_BONUSPACK_REMOVE_TIME + TF_BONUSPACK_BLINK_TIME;
+	SetContextThink( &CCurrencyPackBonus::BlinkThink, gpGlobals->curtime + TF_BONUSPACK_REMOVE_TIME, TF_BONUSPACK_BLINK_CONTEXT );
+	SetContextThink( &CCurrencyPackBonus::SUB_Remove, m_flKillTime, "RemoveThink" );
+}

@@ -20,6 +20,8 @@ public:
 	static bool IsCrumpkinPossible( CTFBot *me );
 	static bool IsSpellPossible( CTFBot *me );
 	static bool IsPowerupPossible( CTFBot *me );
+	static bool IsCreditPossible( CTFBot *me );
+	static bool IsCorePossible( CTFBot *me );
 
 	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
 	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
@@ -43,6 +45,8 @@ private:
 	bool m_isGoalPowerup;
 	bool m_isGoalGeneric;
 	bool m_isGoalMerasmus;
+	bool m_isGoalCredits;
+	bool m_isGoalCores;
 };
 
 
