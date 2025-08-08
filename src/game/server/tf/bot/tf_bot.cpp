@@ -1415,6 +1415,7 @@ void CTFBot::Spawn()
 
 	SpawnCustom();
 	m_lastUsedCanteenTimer.Invalidate();
+	m_lastUsedHaleChargeTimer.Invalidate();
 }
 
 
@@ -3366,7 +3367,7 @@ bool CTFBot::EquipRequiredWeapon( void )
 		return Weapon_Switch( pWeapon );
 	}
 
-	if ( TheTFBots().IsMeleeOnly() || TFGameRules()->IsInMedievalMode() || HasWeaponRestriction( MELEE_ONLY ) )
+	if ( TheTFBots().IsMeleeOnly() || TFGameRules()->IsInMedievalMode() || HasWeaponRestriction( MELEE_ONLY ) || m_Shared.InCond( TF_COND_CANNOT_SWITCH_FROM_MELEE ) )
 	{
 		// force use of melee weapons
 		Weapon_Switch( Weapon_GetSlot( TF_WPN_TYPE_MELEE ) );
@@ -5084,6 +5085,32 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				}
 				}
 			}
+			else if ( flHealthMult <= 0.0f )
+			{
+				// Versus Saxton Hale (Community) Hale's Own Fists
+				bool threatVisible = false;
+				bool inCombat = IsInCombat();
+
+				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+				if ( threat && threat->IsVisibleInFOVNow() )
+				{
+					threatVisible = true;
+				}
+
+				if ( !m_lastUsedHaleChargeTimer.HasStarted() )
+				{
+					m_lastUsedHaleChargeTimer.Start( RandomFloat( 15.0f, 30.0f ) );
+				}
+				if ( threatVisible && m_lastUsedHaleChargeTimer.IsElapsed() )
+				{
+					PressReloadButton( RandomFloat( 1.0f, 4.0f ) );
+					m_lastUsedHaleChargeTimer.Reset();
+					m_lastUsedHaleChargeTimer.Start( RandomFloat( 15.0f, 35.0f ) );
+				}
+
+
+			}
+
 		}
 	}
 

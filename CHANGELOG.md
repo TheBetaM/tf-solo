@@ -40,6 +40,7 @@ tf_vision_force
 - Bots can now use spellbook spells and canteens
 - Bots can now stun Merasmus
 - Bots can now use all ZI abilities
+- Bots can now use Sweeping Charge in VSH
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR

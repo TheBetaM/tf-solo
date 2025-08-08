@@ -595,6 +595,7 @@ private:
 
 	CUtlString m_preset;
 	CountdownTimer m_lastUsedCanteenTimer;
+	CountdownTimer m_lastUsedHaleChargeTimer;
 };
 
 
