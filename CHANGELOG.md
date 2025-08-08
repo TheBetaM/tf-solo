@@ -95,7 +95,7 @@ GetDamageDone(), GetCrits(), GetPoints()
   
 - Loch-n-Load  
 -- Replaced +20% damage to buildings with +20% damage bonus   
-- Stickybomb Jumper
+- Stickybomb Jumper  
 -- Removed max sticky active penalty  
 - Ullapool Caber  
 -- Increased base explosion damage from 75 to 100  
