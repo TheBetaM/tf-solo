@@ -13,6 +13,7 @@
 #include "bot/behavior/medic/tf_bot_medic_retreat.h"
 #include "bot/behavior/tf_bot_use_teleporter.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_fetch_flag.h"
+#include "bot/behavior/tf_bot_seek_and_destroy.h"
 #include "nav_mesh.h"
 #include "tier0/vprof.h"
 
@@ -500,6 +501,12 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 			seenPatients.AddToTail( pTestPatient );
 			m_patient = ToTFPlayer( pTestPatient );
 		}
+	}
+
+	if ( me->HasWeaponRestriction( 1 ) )
+	{
+		// can't heal reliably without a medigun
+		return ChangeTo( new CTFBotSeekAndDestroy( -1.0f, true ) );
 	}
 
 	if ( m_patient == NULL )

@@ -69,7 +69,7 @@ public:
 		if ( candidate->IsEffectActive( EF_NODRAW ) )
 			return false;
 
-		if ( candidate->ClassMatches( "item_healthkit*" ) )
+		if ( candidate->ClassMatches( "item_healthkit*" ) && ( candidate->GetTeamNumber() == TEAM_UNASSIGNED || m_me->InSameTeam( candidate ) ) )
 			return true;
 
 		if ( m_me->InSameTeam( candidate ) )
@@ -119,6 +119,14 @@ bool CTFBotGetHealth::IsPossible( CTFBot *me )
 #endif // TF_RAID_MODE
 
 	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	{
+		return false;
+	}
+
+	// ZI fallback
+	float flHealthMult = 1.0f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( me, flHealthMult, mult_health_frompacks );
+	if ( flHealthMult <= 0.0f )
 	{
 		return false;
 	}

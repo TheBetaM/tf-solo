@@ -4997,6 +4997,94 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				}
 			}
 		}
+		else if ( weapon->GetWeaponID() == TF_WEAPON_FISTS )
+		{
+			// Zombie Infection (Community) zombies
+			int iZombieFists = 0;
+			CALL_ATTRIB_HOOK_INT( iZombieFists, zombiezombiezombiezombie );
+			float flHealthMult = 1.0f;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( this, flHealthMult, mult_health_frompacks );
+			if ( iZombieFists > 0 && flHealthMult <= 0.0f )
+			{
+				SetWeaponRestriction( 1 ); // force melee only behavior
+
+				bool threatVisible = false;
+				bool inCombat = IsInCombat();
+				bool isBadlyHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_critical_ratio.GetFloat();
+				bool isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+
+				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+				if ( threat && threat->IsVisibleInFOVNow() )
+				{
+					threatVisible = true;
+				}
+
+				int iClass = GetPlayerClass()->GetClassIndex();
+				switch ( iClass )
+				{
+				case TF_CLASS_SOLDIER:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_PYRO:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_DEMOMAN:
+				{
+					if ( isBadlyHurt && threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_ENGINEER:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_MEDIC:
+				{
+					if ( isHurt || inCombat )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_SNIPER:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_SPY:
+				{
+					if ( isHurt || inCombat )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				default:
+				{
+					break;
+				}
+				}
+			}
+		}
 	}
 
 	return NULL;

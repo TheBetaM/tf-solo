@@ -1523,7 +1523,7 @@ QueryResultType	CTFBotMainAction::ShouldRetreat( const INextBot *bot ) const
 	CTFBot *me = (CTFBot *)bot->GetEntity();
 
 	// don't retreat if we're in "melee only" mode
-	if ( TheTFBots().IsMeleeOnly() )
+	if ( TheTFBots().IsMeleeOnly() || TFGameRules()->IsInMedievalMode() || me->HasWeaponRestriction( 1 ) )
 		return ANSWER_NO;
 
 	// don't retreat if ubered

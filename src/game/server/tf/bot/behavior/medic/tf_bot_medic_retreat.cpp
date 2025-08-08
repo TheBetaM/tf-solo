@@ -9,6 +9,7 @@
 #include "tf_weapon_medigun.h"
 #include "bot/tf_bot.h"
 #include "bot/behavior/medic/tf_bot_medic_retreat.h"
+#include "bot/behavior/tf_bot_seek_and_destroy.h"
 
 #include "nav_mesh.h"
 
@@ -73,6 +74,12 @@ ActionResult< CTFBot >	CTFBotMedicRetreat::Update( CTFBot *me, float interval )
 				me->Weapon_Switch( syringeGun );
 			}
 		}
+	}
+
+	if ( me->HasWeaponRestriction( 1 ) )
+	{
+		// can't heal reliably without a medigun
+		return ChangeTo( new CTFBotSeekAndDestroy( -1.0f, true ) );
 	}
 
 	m_path.Update( me );
