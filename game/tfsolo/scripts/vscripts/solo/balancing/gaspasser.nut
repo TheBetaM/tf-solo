@@ -11,6 +11,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	statattrib.RemoveSubKey("item_meter_starts_empty_DISPLAY_ONLY")
 	statattrib.RemoveSubKey("item_meter_charge_type_3_DISPLAY_ONLY")
 	// Shorten charge time from 60s to 20s, reduce damage needed from 750 to 400
-	statattrib.SetInt("item_meter_charge_rate", 20)
-	statattrib.SetInt("item_meter_damage_for_full_charge", 400)
+	//statattrib.SetInt("item_meter_charge_rate", 20)
+	//statattrib.SetInt("item_meter_damage_for_full_charge", 400)
 })

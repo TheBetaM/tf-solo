@@ -387,15 +387,10 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 
 	const float DALOKOHS_MAXHEALTH_BUFF = 50.f;
 
-	if ( nLunchBoxType == LUNCHBOX_CHOCOLATE_BAR )
+	if ( nLunchBoxType == LUNCHBOX_CHOCOLATE_BAR || nLunchBoxType == LUNCHBOX_FISHCAKE )
 	{
 		// add 50 health to player for 30 seconds
 		pPlayer->AddCustomAttribute( "hidden maxhealth non buffed", DALOKOHS_MAXHEALTH_BUFF, 30.f );
-	}
-	else if ( nLunchBoxType == LUNCHBOX_FISHCAKE )
-	{
-		// Add +10 health regenerataion for 20 seconds
-		pPlayer->AddCustomAttribute( "health regen", 10.0f, 20.f );
 	}
 	else if ( nLunchBoxType == LUNCHBOX_ADDS_MINICRITS )
 	{
@@ -421,11 +416,6 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 	float flHealScale = 1.0f;
 	CALL_ATTRIB_HOOK_FLOAT( flHealScale, lunchbox_healing_scale );
 	iHeal = iHeal * flHealScale;
-
-	if ( nLunchBoxType == LUNCHBOX_FISHCAKE )
-	{
-		iHeal = 0;
-	}
 
 	int iHealed = pPlayer->TakeHealth( iHeal, iHealType );
 

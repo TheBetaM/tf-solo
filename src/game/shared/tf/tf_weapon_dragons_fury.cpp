@@ -229,7 +229,7 @@ void CTFWeaponFlameBall::SecondaryAttack( void )
 		Assert( m_flRechargeScale == 1.f );
 	}
 	m_flRechargeScale = tf_fireball_airblast_recharge_penalty.GetFloat();
-	pPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_PRIMARY, 50.0f );
+	pPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_PRIMARY, 0.0f );
 #ifdef GAME_DLL
 	StartPressureSound();
 	CSoundEnvelopeController::GetController().SoundChangePitch( m_pSndPressure, 80, 0.3f );
