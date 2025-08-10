@@ -55,6 +55,7 @@ tf_vision_force
 - Fixed bots using Payload logic on hybrid maps like Snowplow
 - Fixed crash with bots after playing on a Mannpower map
 - Giants will now always avoid nav areas marked with nav_stop
+- Fixed bots not moving during setup in symmetrial capture point maps
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

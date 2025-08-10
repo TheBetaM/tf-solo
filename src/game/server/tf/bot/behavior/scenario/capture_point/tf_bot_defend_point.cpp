@@ -129,7 +129,7 @@ ActionResult< CTFBot >	CTFBotDefendPoint::Update( CTFBot *me, float interval )
 	if ( point == NULL )
 	{
 		const float roamTime = 10.0f;
-		return SuspendFor( new CTFBotSeekAndDestroy( roamTime ), "Seek and destroy until a point becomes available" );
+		return SuspendFor( new CTFBotSeekAndDestroy( roamTime, true ), "Seek and destroy until a point becomes available" );
 	}
 
 	if ( point->GetTeamNumber() != me->GetTeamNumber() )
@@ -156,12 +156,12 @@ ActionResult< CTFBot >	CTFBotDefendPoint::Update( CTFBot *me, float interval )
 
 	if ( point && point->IsLocked() )
 	{
-		return SuspendFor( new CTFBotSeekAndDestroy, "Seek and destroy until the point unlocks" );
+		return SuspendFor( new CTFBotSeekAndDestroy ( 10.0f, true ), "Seek and destroy until the point unlocks");
 	}
 
 	if ( m_isAllowedToRoam && me->GetTimeLeftToCapture() > tf_bot_defense_must_defend_time.GetFloat() )
 	{
-		return SuspendFor( new CTFBotSeekAndDestroy( 15.0f ), "Seek and destroy - we have lots of time" );
+		return SuspendFor( new CTFBotSeekAndDestroy( 15.0f, true ), "Seek and destroy - we have lots of time" );
 	}
 
 	if ( TFGameRules()->InSetup() )

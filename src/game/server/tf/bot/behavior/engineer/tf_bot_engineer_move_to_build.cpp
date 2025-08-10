@@ -72,7 +72,7 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 	if ( zone )
 	{
 		// NOTE: Not strictly the right thing - should defend location of our team's flag
-		CTFNavArea *zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( zone->WorldSpaceCenter(), false, 500.0f, true );
+		CTFNavArea *zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( zone->WorldSpaceCenter(), false, 1000.0f, true );
 		if ( zoneArea )
 		{
 			pointAreaVector.AddToTail( zoneArea );
@@ -83,7 +83,7 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 	else if ( passzone )
 	{
 		// NOTE: Not strictly the right thing - should defend location of our team's flag
-		CTFNavArea* zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( passzone->WorldSpaceCenter(), false, 500.0f, true );
+		CTFNavArea* zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( passzone->WorldSpaceCenter(), false, 1000.0f, true );
 		if ( zoneArea )
 		{
 			pointAreaVector.AddToTail( zoneArea );
@@ -91,7 +91,7 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 			pointEnemyIncursion += zoneArea->GetIncursionDistance( enemyTeam );
 		}
 	}
-	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
+	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT && TFGameRules()->GetHUDType() != TF_HUDTYPE_CP )
 	{
 		CTeamTrainWatcher *trainWatcher;
 
@@ -115,7 +115,7 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 		{
 			Vector checkpointPos = trainWatcher->GetNextCheckpointPosition();
 
-			CTFNavArea *checkpointArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( checkpointPos, false, 500.0f, true );
+			CTFNavArea *checkpointArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( checkpointPos, false, 1000.0f, true );
 			if ( checkpointArea )
 			{
 				pointAreaVector.AddToTail( checkpointArea );
@@ -143,7 +143,7 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 	}
 	else if ( genericzone )
 	{
-		CTFNavArea *zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( genericzone->WorldSpaceCenter(), false, 500.0f, true );
+		CTFNavArea *zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( genericzone->WorldSpaceCenter(), true, 10000.0f, true );
 		if ( zoneArea )
 		{
 			pointAreaVector.AddToTail( zoneArea );
@@ -191,13 +191,13 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 			if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP )
 			{
 				// don't build directly on the point
-				if ( visibleArea->HasAttributeTF( TF_NAV_CONTROL_POINT ) )
-					continue;
+				//if ( visibleArea->HasAttributeTF( TF_NAV_CONTROL_POINT ) )
+				//	continue;
 
 				// ignore areas below the point
-				const float tooFarBelow = 150.0f;
-				if ( visibleArea->GetCenter().z < pointCentroid.z - tooFarBelow )
-					continue;
+				//const float tooFarBelow = 150.0f;
+				//if ( visibleArea->GetCenter().z < pointCentroid.z - tooFarBelow )
+				//	continue;
 
 				// ignore areas too far from the point for the sentry gun to reach
 				const float tolerance = 1.1f;
@@ -206,10 +206,11 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 			}
 
 			// ignore areas that don't have clear line of FIRE (not sight)
-			const float sentryEyeHeight = 60.0f;
-			const float pointFlagHeight = 70.0f; // 100.0f;
-			if ( !me->IsLineOfFireClear( visibleArea->GetCenter() + Vector( 0, 0, sentryEyeHeight ), pointCentroid + Vector( 0, 0, pointFlagHeight ) ) )
-				continue;
+			// flawed on maps with LoS obstructions always blocking the centroid point
+			//const float sentryEyeHeight = 60.0f;
+			//const float pointFlagHeight = 70.0f; // 100.0f;
+			//if ( !me->IsLineOfFireClear( visibleArea->GetCenter() + Vector( 0, 0, sentryEyeHeight ), pointCentroid + Vector( 0, 0, pointFlagHeight ) ) )
+			//	continue;
 
 			if ( !exposedAreaVector.HasElement( visibleArea ) )
 				exposedAreaVector.AddToTail( visibleArea );

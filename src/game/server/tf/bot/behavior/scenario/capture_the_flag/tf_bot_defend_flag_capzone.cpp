@@ -85,7 +85,7 @@ ActionResult< CTFBot >	CTFBotDefendFlagCapzone::Update( CTFBot* me, float interv
 	if ( point == NULL )
 	{
 		const float roamTime = 10.0f;
-		return SuspendFor( new CTFBotSeekAndDestroy( roamTime ), "Seek and destroy until a zone becomes available" );
+		return SuspendFor( new CTFBotSeekAndDestroy( roamTime, true ), "Seek and destroy until a zone becomes available" );
 	}
 
 	// if point in is danger - get ON the point!

@@ -29,6 +29,7 @@
 #include "halloween/tf_weapon_spellbook.h"
 #include "func_respawnroom.h"
 #include "soundenvelope.h"
+#include "tf_projectile_energy_ball.h"
 
 #include "econ_entity_creation.h"
 
@@ -45,7 +46,6 @@ ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a
 ConVar tf_bot_notice_gunfire_range( "tf_bot_notice_gunfire_range", "3000", FCVAR_GAMEDLL );
 ConVar tf_bot_notice_quiet_gunfire_range( "tf_bot_notice_quiet_gunfire_range", "500", FCVAR_GAMEDLL );
 ConVar tf_bot_sniper_personal_space_range( "tf_bot_sniper_personal_space_range", "1000", FCVAR_CHEAT, "Enemies beyond this range don't worry the Sniper" );
-ConVar tf_bot_pyro_deflect_tolerance( "tf_bot_pyro_deflect_tolerance", "0.5", FCVAR_CHEAT );
 ConVar tf_bot_keep_class_after_death( "tf_bot_keep_class_after_death", "0", FCVAR_GAMEDLL );
 ConVar tf_bot_prefix_name_with_difficulty( "tf_bot_prefix_name_with_difficulty", "0", FCVAR_GAMEDLL, "Append the skill level of the bot to the bot's name" );
 ConVar tf_bot_near_point_travel_distance( "tf_bot_near_point_travel_distance", "750", FCVAR_CHEAT, "If within this travel distance to the current point, bot is 'near' it" );
@@ -65,7 +65,7 @@ ConVar tf_bot_suspect_spy_forget_cooldown( "tf_bot_suspect_spy_forget_cooldown",
 
 ConVar tf_bot_debug_tags( "tf_bot_debug_tags", "0", FCVAR_CHEAT, "ent_text will only show tags on bots" );
 
-ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "1", FCVAR_CHEAT, "Bot will choose class from a preset class table." );
+ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "0", FCVAR_NONE, "Bot will choose class from a preset class table." );
 
 ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
 
@@ -875,6 +875,8 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 		return false;
 	}
 
+	// These rosters assume a maximum team size of 12.
+	// If the team size goes beyond 12, the limits will scale accordingly. 
 	struct ClassSelectionInfo
 	{
 		ETFClass m_class;
@@ -979,9 +981,20 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 		}
 	}
 
+	float maxLimitScale = 1.0f;
+	if ( currentRoster.m_teamSize > 12 )
+	{
+		maxLimitScale = currentRoster.m_teamSize / 12.0f;
+	}
+
 	// build vector of classes we can pick from
 	CUtlVector< ETFClass > desiredClassVector;
 	CUtlVector< ETFClass > allowedClassForBotRosterVector;
+
+	// Avoid massive variance in class selection on large team sizes.
+	// Using a soft cap which can be exceeded if the team size is absolutely gigantic (e.g. 1v99)
+	int classLimitSoftCap = 8;
+	int classLimitHardCap = (int)MAX(ceil(0.15f * currentRoster.m_teamSize), classLimitSoftCap);
 
 	bool bHasRequiredClass = false;
 	int nCurrentMinRequiredClass = INT_MAX;
@@ -1025,7 +1038,8 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 		}
 
 		int maxLimit = desiredClassInfo->m_maxLimit[ (int)clamp( GetDifficulty(), CTFBot::EASY, CTFBot::EXPERT ) ];
-		if ( maxLimit > NoLimit && currentRoster.m_count[ desiredClassInfo->m_class ] >= maxLimit )
+		if ( ( maxLimit > NoLimit && currentRoster.m_count[ desiredClassInfo->m_class ] >= maxLimit * maxLimitScale ) ||
+			currentRoster.m_count[desiredClassInfo->m_class] >= classLimitHardCap )
 		{
 			// at or above limit for this class
 			continue;
@@ -1184,20 +1198,26 @@ ETFClass CTFBot::GetPresetClassToSpawn() const
 	CCountClassMembers currentRoster( this, GetTeamNumber() );
 	ForEachPlayer( currentRoster );
 
+	// go through the roster multiple times if we have more than 12 players.
+	// this will not affect bots 1-12 as we return immediately upon finding a valid class.
+	int rosterCount = 1 + ((currentRoster.m_teamSize - 1) / 12);
 	int classCount[TF_LAST_NORMAL_CLASS];
 	V_memset( classCount, 0, sizeof( classCount ) );
-	for ( int i=0; i<12; ++i )
+	for ( int r = 1; r <= rosterCount; ++r )
 	{
-		ETFClass iClass = desiredRoster[i];
+		for ( int i = 0; i < 12; ++i )
+		{
+			ETFClass iClass = desiredRoster[i];
 
-		if ( currentRoster.m_count[ iClass ] > classCount[ iClass ] )
-		{
-			// if we have enough of this class, skip it
-			classCount[ iClass ]++;
-		}
-		else
-		{
-			return iClass;
+			if ( currentRoster.m_count[ iClass ] > classCount[ iClass ] * r )
+			{
+				// if we have enough of this class, skip it
+				classCount[ iClass ]++;
+			}
+			else
+			{
+				return iClass;
+			}
 		}
 	}
 
@@ -1391,7 +1411,7 @@ void CTFBot::Spawn()
 	m_spawnArea = NULL;
 	m_justLostPointTimer.Invalidate();
 	m_squad = NULL;
-	m_didReselectClass = false;
+	// m_didReselectClass = false; // moved to CTFBot::Event_Killed so we don't enter an infinite class-reeval loop.
 	m_isLookingAroundForEnemies = true;
 	m_attentionFocusEntity = NULL;
 
@@ -1909,6 +1929,9 @@ void CTFBot::Event_Killed( const CTakeDamageInfo &info )
 		}
 	}
 
+	// moved from CTFBot::Spawn so we don't enter an infinite class-reeval loop.
+	m_didReselectClass = false;
+
 	StopIdleSound();
 }
 
@@ -2315,6 +2338,15 @@ CBaseEntity *CTFBot::GetAnyObjective( void ) const
 			continue;
 
 		return flag;
+	}
+
+	for (int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i)
+	{
+		CTriggerAreaCapture *pArea = static_cast< CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+		if ( pArea->IsActive() )
+		{
+			return pArea;
+		}
 	}
 
 	return NULL;
@@ -4317,12 +4349,60 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		if ( pObject->IsPlayer() )
 			continue;
 
-		// is this something I want to deflect?
-		if ( !pObject->IsDeflectable() )
+		bool bSeesProjectile = false;
+
+		CTFBaseRocket *pBaseRocket = dynamic_cast<CTFBaseRocket *>( pObject );
+		if ( pBaseRocket )
+		{
+			// is this something I want to deflect?
+			if ( pBaseRocket->IsDeflectable() )
+			{
+				bSeesProjectile = true;
+			}
+		}
+
+		if ( !bSeesProjectile )
+		{
+			CTFGrenadePipebombProjectile* pBaseGrenade = dynamic_cast<CTFGrenadePipebombProjectile*>( pObject );
+			if ( pBaseGrenade )
+			{
+				// is this something I want to deflect?
+				if ( pBaseGrenade->IsDeflectable() )
+				{
+					bSeesProjectile = true;
+				}
+			}
+		}
+
+		// we can't deflect it.
+		if ( !bSeesProjectile )
 			continue;
 
-		if ( FClassnameIs( pObject, "tf_projectile_rocket" ) || FClassnameIs( pObject, "tf_projectile_energy_ball" ) )
+		if ( bSeesProjectile )
 		{
+			// on hard or expert, we're not restricted to what projectiles we should reflect.
+			// on lower difficulties, only deflect rockets or energy balls.
+			if ( !IsDifficulty( CTFBot::HARD ) && !IsDifficulty( CTFBot::EXPERT ) )
+			{
+				bool bCanReflectThisProj = false;
+
+				CTFProjectile_Rocket *pRocket = dynamic_cast<CTFProjectile_Rocket *>( pObject );
+				if ( pRocket )
+				{
+					bCanReflectThisProj = true;
+				}
+				else
+				{
+					CTFProjectile_EnergyBall *pBall = dynamic_cast<CTFProjectile_EnergyBall *>( pObject );
+					if ( pBall )
+					{
+						bCanReflectThisProj = true;
+					}
+				}
+
+				if ( !bCanReflectThisProj )
+					continue;
+			}
 			// is it headed right for me?
 			Vector vecThemUnitVel = pObject->GetAbsVelocity();
 			vecThemUnitVel.z = 0.0f;
@@ -4331,16 +4411,12 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 			Vector horzForward( vecForward.x, vecForward.y, 0.0f );
 			horzForward.NormalizeInPlace();
 
-			if ( DotProduct( horzForward, vecThemUnitVel ) > -tf_bot_pyro_deflect_tolerance.GetFloat() )
+			if ( DotProduct( horzForward, vecThemUnitVel ) > 0 )
 				continue;
+
+			// bounce it!
+			return true;
 		}
-
-		// can I see it?
-		if ( !GetVisionInterface()->IsLineOfSightClear( pObject->WorldSpaceCenter() ) )
-			continue;
-
-		// bounce it!
-		return true;
 	}
 
 	return false;
