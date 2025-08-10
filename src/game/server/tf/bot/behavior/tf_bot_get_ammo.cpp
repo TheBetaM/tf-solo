@@ -226,6 +226,9 @@ bool CTFBotGetAmmo::IsPossible( CTFBot *me )
 {
 	VPROF_BUDGET( "CTFBotGetAmmo::IsPossible", "NextBot" );
 
+	if ( me->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+		return false;
+
 	int i;
 
 	CUtlVector< CNavArea * > nearbyAreaVector;

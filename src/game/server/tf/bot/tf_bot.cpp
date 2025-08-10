@@ -2134,6 +2134,12 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 			}
 		}
 
+		// Flag is being used as a workaround
+		if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION && flag->GetPrevOwner() && FClassnameIs( flag->GetPrevOwner(), "worldspawn" ) )
+		{
+			continue;
+		}
+
 		switch( flag->GetType() )
 		{
 		case TF_FLAGTYPE_CTF:

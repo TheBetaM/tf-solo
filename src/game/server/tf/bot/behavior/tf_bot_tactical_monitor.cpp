@@ -219,6 +219,11 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		}
 	}
 
+	if ( me->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+	{
+		return SuspendFor( new CTFBotSeekAndDestroy( 10.0f, true ), "I'm just a ghost" );
+	}
+
 	Action< CTFBot > *result = me->OpportunisticallyUseWeaponAbilities();
 	if ( result )
 	{
