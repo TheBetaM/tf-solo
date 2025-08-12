@@ -26,6 +26,7 @@ tf_vision_force
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
 - Disabled halloween taunts, holiday restrictions by default
+- Disabled soul gargoyle and halloween soul spawning
 - Fixed some cases of MvM workshop maps not being able to find any popfile
 - Minimal HUD no longer prevents game_text_tf from appearing
 - Fixed round restart commands not working in Arena mode
@@ -38,9 +39,10 @@ tf_vision_force
 - Human players can now manually manage bot teammates' PvP/MvM upgrades by inspecting them
 - Bots can now proactively seek out spells, crumpkins, credits, cores and powerup pickups
 - Bots can now use spellbook spells and canteens
-- Bots can now stun Merasmus
+- Bots can now stun Merasmus and seek him out while he's hiding
 - Bots can now use all ZI abilities
 - Bots can now use Sweeping Charge in VSH
+- Bots can now buyback in MvM
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR

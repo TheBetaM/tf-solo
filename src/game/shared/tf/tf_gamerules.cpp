@@ -8714,6 +8714,9 @@ void CTFGameRules::Think()
 void CTFGameRules::PeriodicHalloweenUpdate()
 {
 	// DEBUG
+	
+	// Not using these at the moment
+	return;
 
 	// Are we on a Halloween Map?
 	// Do we have Halloween Contracts?
@@ -11028,6 +11031,9 @@ void CTFGameRules::DropHalloweenSoulPackToTeam( int nAmount, const Vector& vecPo
 //-----------------------------------------------------------------------------
 void CTFGameRules::DropHalloweenSoulPack( int nAmount, const Vector& vecSource, CBaseEntity *pTarget, int nSourceTeam )
 {
+	// Not using these at the moment
+	return;
+
 	QAngle angles(0,0,0);
 	CHalloweenSoulPack *pSoulsPack = assert_cast<CHalloweenSoulPack*>( CBaseEntity::CreateNoSpawn( "halloween_souls_pack", vecSource, angles, NULL ) );
 

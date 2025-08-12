@@ -1487,20 +1487,38 @@ public:
 			const float nearRange = 750.0f;
 			if ( m_me->IsRangeLessThan( known.GetEntity(), nearRange ) )
 			{
-				if ( m_me->IsFriend( known.GetEntity() ) )
+				if ( known.GetEntity()->MyCombatCharacterPointer() )
 				{
-					m_friendScore += m_me->GetThreatDanger( known.GetEntity()->MyCombatCharacterPointer() );
+					if ( m_me->IsFriend( known.GetEntity() ) )
+					{
+						m_friendScore += m_me->GetThreatDanger( known.GetEntity()->MyCombatCharacterPointer() );
+					}
+					else if ( known.WasEverVisible() && known.GetTimeSinceLastSeen() < 3.0f && m_me->IsEnemy( known.GetEntity() ) )
+					{
+						// ignore disguised spies, etc
+						if ( m_me->GetVisionInterface()->IsIgnored( known.GetEntity() ) )
+							return true;
+
+						// only count them if they are facing me
+						if ( UTIL_IsFacingWithinTolerance( known.GetEntity(), m_me->EyePosition(), 0.5f ) )
+						{
+							m_foeScore += m_me->GetThreatDanger( known.GetEntity()->MyCombatCharacterPointer() );
+						}
+					}
 				}
-				else if ( known.WasEverVisible() && known.GetTimeSinceLastSeen() < 3.0f && m_me->IsEnemy( known.GetEntity() ) )
+				else
 				{
-					// ignore disguised spies, etc
 					if ( m_me->GetVisionInterface()->IsIgnored( known.GetEntity() ) )
 						return true;
 
-					// only count them if they are facing me
-					if ( UTIL_IsFacingWithinTolerance( known.GetEntity(), m_me->EyePosition(), 0.5f ) )
+					if ( m_me->IsFriend( known.GetEntity() ) )
 					{
-						m_foeScore += m_me->GetThreatDanger( known.GetEntity()->MyCombatCharacterPointer() );
+						m_friendScore += 1.0f;
+					}
+					else
+					{
+						m_friendScore += 1.0f;
+						//m_foeScore += 1.0f;
 					}
 				}
 			}

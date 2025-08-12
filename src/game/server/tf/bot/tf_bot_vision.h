@@ -34,6 +34,7 @@ public:
 
 private:
 	CUtlVector< CHandle< CBaseCombatCharacter > > m_potentiallyVisibleNPCVector;
+	CUtlVector< CHandle< CBaseEntity > > m_potentiallyVisibleObjectVector;
 	CountdownTimer m_potentiallyVisibleUpdateTimer;
 	void UpdatePotentiallyVisibleNPCVector( void );
 

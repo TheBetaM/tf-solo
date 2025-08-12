@@ -13,6 +13,7 @@
 
 #include "nav_mesh.h"
 
+ConVar tf_bot_mvm_buyback( "tf_bot_mvm_buyback", "1", FCVAR_NONE, "Allow defender bots to buyback" );
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotDead::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
@@ -47,6 +48,38 @@ ActionResult< CTFBot >	CTFBotDead::Update( CTFBot *me, float interval )
 		{
 			me->ChangeTeam( TEAM_SPECTATOR, false, true );
 			return Done();
+		}
+	}
+
+	if ( TFGameRules()->IsPVEModeActive() && tf_bot_mvm_buyback.GetBool() && me->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS && !me->IsPlayerClass( TF_CLASS_SCOUT ) && m_deadTimer.IsGreaterThen( 1.0f ) )
+	{
+		float flNextRespawn = TFGameRules()->GetNextRespawnWave( me->GetTeamNumber(), me );
+		if ( flNextRespawn )
+		{
+			int iRespawnWait = ( flNextRespawn - gpGlobals->curtime );
+			int iEnemiesAlive = 0;
+			for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+			{
+				CTFPlayer* pTFPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
+				if ( !pTFPlayer )
+					continue;
+				if ( pTFPlayer->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS || !pTFPlayer->IsAlive() )
+					continue;
+
+				iEnemiesAlive++;
+				if ( pTFPlayer->IsMiniBoss() )
+				{
+					iEnemiesAlive += 10;
+				}
+			}
+
+			if ( iRespawnWait > 2.0f && iEnemiesAlive >= 10 )
+			{
+				CCommand args;
+				args.Tokenize( "td_buyback\n" );
+				me->ClientCommand( args );
+				m_deadTimer.Reset();
+			}
 		}
 	}
 

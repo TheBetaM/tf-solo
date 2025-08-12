@@ -11,6 +11,7 @@
 #include "tf_player.h"
 #include "tf_gamerules.h"
 #include "tf_obj_sentrygun.h"
+#include "halloween/merasmus/merasmus_trick_or_treat_prop.h"
 
 ConVar tf_bot_choose_target_interval( "tf_bot_choose_target_interval", "0.3f", FCVAR_CHEAT, "How often, in seconds, a TFBot can reselect his target" );
 ConVar tf_bot_sniper_choose_target_interval( "tf_bot_sniper_choose_target_interval", "3.0f", FCVAR_CHEAT, "How often, in seconds, a zoomed-in Sniper can reselect his target" );
@@ -101,6 +102,10 @@ void CTFBotVision::CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * 
 	{
 		potentiallyVisible->AddToTail( m_potentiallyVisibleNPCVector[ it ] );
 	}
+	FOR_EACH_VEC( m_potentiallyVisibleObjectVector, it )
+	{
+		potentiallyVisible->AddToTail( m_potentiallyVisibleObjectVector[ it ] );
+	}
 }
 
 
@@ -113,6 +118,7 @@ void CTFBotVision::UpdatePotentiallyVisibleNPCVector( void )
 
 		// collect list of active buildings
 		m_potentiallyVisibleNPCVector.RemoveAll();
+		m_potentiallyVisibleObjectVector.RemoveAll();
 
 		bool bShouldSeeTeleporter = !TFGameRules()->IsMannVsMachineMode() || GetBot()->GetEntity()->GetTeamNumber() != TF_TEAM_PVE_INVADERS;
 		for ( int i=0; i<IBaseObjectAutoList::AutoList().Count(); ++i )
@@ -142,6 +148,12 @@ void CTFBotVision::UpdatePotentiallyVisibleNPCVector( void )
 				// NPC
 				m_potentiallyVisibleNPCVector.AddToTail( botEntity );
 			}
+		}
+
+		for ( int i = 0; i < ITFMerasmusTrickOrTreatProp::AutoList().Count(); ++i )
+		{
+			CTFMerasmusTrickOrTreatProp *pObj = static_cast<CTFMerasmusTrickOrTreatProp *>( ITFMerasmusTrickOrTreatProp::AutoList()[ i ] );
+			m_potentiallyVisibleObjectVector.AddToTail( pObj );
 		}
 	}
 }
