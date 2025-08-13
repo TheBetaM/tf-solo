@@ -42,7 +42,7 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 		me->EquipBestWeaponForThreat( threat );
 	}
 
-	if ( TFGameRules()->InSetup() )
+	if ( TFGameRules()->InSetup() && !TFGameRules()->HasMultipleTrains() )
 	{
 		// wait until the gates open, then path
 		m_path.Invalidate();

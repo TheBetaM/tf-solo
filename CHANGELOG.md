@@ -43,6 +43,7 @@ tf_vision_force
 - Bots can now use all ZI abilities
 - Bots can now use Sweeping Charge in VSH
 - Bots can now buyback in MvM
+- Bots will now try to escape the Underworld and Loot Island through nav areas marked with nav_stop
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR

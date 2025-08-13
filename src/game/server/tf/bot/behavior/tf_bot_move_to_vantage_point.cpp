@@ -17,6 +17,14 @@ extern ConVar tf_bot_path_lookahead_range;
 CTFBotMoveToVantagePoint::CTFBotMoveToVantagePoint( float maxTravelDistance )
 {
 	m_maxTravelDistance = maxTravelDistance;
+	m_isEscaping = false;
+}
+
+//---------------------------------------------------------------------------------------------
+CTFBotMoveToVantagePoint::CTFBotMoveToVantagePoint( float maxTravelDistance, bool escape )
+{
+	m_maxTravelDistance = maxTravelDistance;
+	m_isEscaping = true;
 }
 
 
@@ -25,7 +33,14 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CT
 {
 	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-	m_vantageArea = me->FindVantagePoint( m_maxTravelDistance );
+	if ( !m_isEscaping )
+	{
+		m_vantageArea = me->FindVantagePoint( m_maxTravelDistance );
+	}
+	else
+	{
+		m_vantageArea = me->FindUnderworldExitPoint( m_maxTravelDistance );
+	}
 	if ( !m_vantageArea )
 	{
 		return Done( "No vantage point found" );
@@ -41,10 +56,13 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CT
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float interval )
 {
-	const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-	if ( threat && threat->IsVisibleInFOVNow() )
+	if ( !m_isEscaping )
 	{
-		return Done( "Enemy is visible" );
+		const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
+		if ( threat && threat->IsVisibleInFOVNow() )
+		{
+			return Done( "Enemy is visible" );
+		}
 	}
 
 	if ( !m_path.IsValid() && m_repathTimer.IsElapsed() )
@@ -58,6 +76,11 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float inter
 		}
 	}
 
+	if ( m_isEscaping && !me->m_Shared.InCond( TF_COND_PURGATORY ) && !me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) )
+	{
+		return Done( "I've escaped" );
+	}
+
 	// move along path to vantage point
 	m_path.Update( me );
 
@@ -68,7 +91,10 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float inter
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnStuck( CTFBot *me )
 {
-	m_path.Invalidate();
+	if ( !m_isEscaping )
+	{
+		m_path.Invalidate();
+	}
 	return TryContinue();
 }
 

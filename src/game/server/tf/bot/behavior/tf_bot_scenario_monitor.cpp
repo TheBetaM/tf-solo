@@ -48,6 +48,7 @@
 #include "bot/behavior/tf_bot_escort.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_fetch_flag.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_deliver_flag.h"
+#include "bot/behavior/tf_bot_move_to_vantage_point.h"
 
 #include "bot/behavior/missions/tf_bot_mission_suicide_bomber.h"
 #include "bot/behavior/squad/tf_bot_escort_squad_leader.h"
@@ -416,9 +417,15 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 
 		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
-
+			return Continue();
 		}
-		else if ( m_roamer || !GetActiveChildAction() )
+
+		if ( me->m_Shared.InCond( TF_COND_PURGATORY ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL) )
+		{
+			return SuspendFor( new CTFBotMoveToVantagePoint( -1.0f, true ), "I gotta get out of here" );
+		}
+
+		if ( m_roamer || !GetActiveChildAction() )
 		{
 			CCaptureFlag *flag = me->GetFlagToFetch();
 

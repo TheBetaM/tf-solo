@@ -169,6 +169,8 @@ public:
 	CTFNavArea *FindVantagePoint( float maxTravelDistance = 2000.0f ) const;	// return a nearby area where we can see a member of the enemy team
 	HSCRIPT ScriptFindVantagePoint( float maxTravelDistance ) { return ToHScript( this->FindVantagePoint( maxTravelDistance ) ); }
 
+	CTFNavArea *FindUnderworldExitPoint( float maxTravelDistance = 2000.0f ) const;
+
 	bool GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpawn ) const;	// return true if class in the output vector is required
 	ETFClass GetPresetClassToSpawn() const;	// return next class from preset table to spawn
 	bool CanChangeClass() const;
