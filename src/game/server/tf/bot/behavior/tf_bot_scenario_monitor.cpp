@@ -301,7 +301,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		// Attack/Defend CTF
 		if ( TFGameRules()->GetHUDType() == TF_HUDTYPE_CTF && me->GetEnemyFlagCaptureZone() )
 		{
-			if ( me->GetTeamNumber() == TF_TEAM_RED )
+			if ( TFGameRules()->IsAttackDefenseMode() && me->GetTeamNumber() == TF_TEAM_RED )
 			{
 				// Red is defending
 				return new CTFBotDefendFlagCapzone;
@@ -464,6 +464,12 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 			{
 				m_roamer = false;
 				return SuspendFor( new CTFBotDefendPoint, "Found defend points" );
+			}
+
+			if ( me->GetEnemyFlagCaptureZone() )
+			{
+				m_roamer = false;
+				return SuspendFor( new CTFBotDefendFlagCapzone, "Found defend zone" );
 			}
 		}
 	}

@@ -13,6 +13,7 @@
 #include "bot/behavior/scenario/capture_point/tf_bot_defend_point_block_capture.h"
 #include "bot/behavior/sniper/tf_bot_sniper_attack.h"
 #include "bot/behavior/demoman/tf_bot_prepare_stickybomb_trap.h"
+#include "bot/behavior/scenario/capture_the_flag/tf_bot_fetch_flag.h"
 
 
 extern ConVar tf_bot_path_lookahead_range;
@@ -33,7 +34,7 @@ ActionResult< CTFBot >	CTFBotDefendFlagCapzone::OnStart( CTFBot* me, Action< CTF
 
 	// higher skilled bots prefer to seek and destroy until the time is almost up
 	static float roamChance[CTFBot::NUM_DIFFICULTY_LEVELS] = { 10.0f, 50.0f, 75.0f, 90.0f };
-	m_isAllowedToRoam = (RandomFloat(0.0f, 100.0f) < roamChance[(int)clamp(me->GetDifficulty(), CTFBot::EASY, CTFBot::EXPERT)]);
+	m_isAllowedToRoam = ( RandomFloat( 0.0f, 100.0f ) < roamChance[ (int)clamp( me->GetDifficulty(), CTFBot::EASY, CTFBot::EXPERT) ] );
 
 	return Continue();
 }
@@ -86,6 +87,17 @@ ActionResult< CTFBot >	CTFBotDefendFlagCapzone::Update( CTFBot* me, float interv
 	{
 		const float roamTime = 10.0f;
 		return SuspendFor( new CTFBotSeekAndDestroy( roamTime, true ), "Seek and destroy until a zone becomes available" );
+	}
+
+	CCaptureFlag* flag = me->GetFlagToFetch();
+
+	if ( flag && !me->MedicGetHealTarget() && me->IsAllowedToPickUpFlag() )
+	{
+		CTFPlayer* carrier = ToTFPlayer( flag->GetOwnerEntity() );
+		if ( !carrier )
+		{
+			return SuspendFor( new CTFBotFetchFlag( TEMPORARY_FLAG_FETCH ), "Going back to offense" );
+		}
 	}
 
 	// if point in is danger - get ON the point!
@@ -345,6 +357,18 @@ CTFNavArea* CTFBotDefendFlagCapzone::SelectAreaToDefendFrom( CTFBot* me )
 	if ( defenseAreas.Count() == 0 )
 	{
 		CTFNavArea* pointArea = TheTFNavMesh()->GetFlagCapzoneCenterArea( point->GetTeamNumber() );
+		if ( pointArea )
+		{
+			// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly
+			CSelectDefenseAreaForCapzone defenseScan( pointArea, me->GetTeamNumber(), &defenseAreas );
+			SearchSurroundingAreas( pointArea, defenseScan );
+		}
+	}
+
+	if ( defenseAreas.Count() == 0 )
+	{
+		CNavArea* area = TheTFNavMesh()->GetNearestNavArea( point );
+		CTFNavArea* pointArea = (CTFNavArea *)area;
 		if ( pointArea )
 		{
 			// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly

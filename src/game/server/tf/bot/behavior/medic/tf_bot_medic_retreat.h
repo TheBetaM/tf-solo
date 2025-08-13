@@ -24,6 +24,7 @@ public:
 private:
 	PathFollower m_path;
 	CountdownTimer m_lookAroundTimer;
+	CountdownTimer m_patienceTimer;
 };
 
 #endif // TF_BOT_MEDIC_RETREAT_H

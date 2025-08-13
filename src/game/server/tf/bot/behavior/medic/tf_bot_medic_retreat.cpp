@@ -32,6 +32,8 @@ ActionResult< CTFBot >	CTFBotMedicRetreat::OnStart( CTFBot *me, Action< CTFBot >
 	CTFBotPathCost cost( me, FASTEST_ROUTE );
 	m_path.Compute( me, homeArea->GetCenter(), cost );
 
+	m_patienceTimer.Start( 10.0f );
+
 	return Continue();
 }
 
@@ -106,6 +108,13 @@ ActionResult< CTFBot >	CTFBotMedicRetreat::Update( CTFBot *me, float interval )
 	if ( known )
 	{
 		return Done( "I know of a teammate" );
+	}
+
+	if ( m_patienceTimer.HasStarted() && m_patienceTimer.IsElapsed() )
+	{
+		m_patienceTimer.Reset();
+		m_patienceTimer.Start( 12.0f );
+		return SuspendFor( new CTFBotSeekAndDestroy( 10.0f, true ), "I'm on my own now" );
 	}
 
 	return Continue();
