@@ -176,6 +176,11 @@ public:
 			return contender;
 		}
 
+		if ( !current->IsAlive() && current->GetReviveMarker() && m_me->GetDistanceBetween( current ) < 750.0f )
+			return current;
+
+		if ( !contender->IsAlive() && contender->GetReviveMarker() && m_me->GetDistanceBetween( contender ) < 750.0f )
+			return contender;
 
 		int currentRank = 999, contenderRank = 999;
 		for( i=0; preferredClass[i] != TF_CLASS_UNDEFINED; ++i )
@@ -210,11 +215,14 @@ public:
 
 	bool Inspect( const CKnownEntity &known )
 	{
-		if ( !known.GetEntity() || !known.GetEntity()->IsPlayer() || !known.GetEntity()->IsAlive() || !m_me->IsFriend( known.GetEntity() ) )
+		if ( !known.GetEntity() || !known.GetEntity()->IsPlayer() || !m_me->IsFriend( known.GetEntity() ) )
 			return true;
 
 		CTFPlayer *player = dynamic_cast< CTFPlayer * >( known.GetEntity() );
 		if ( player == NULL )
+			return true;
+
+		if ( !known.GetEntity()->IsAlive() && !player->GetReviveMarker() )
 			return true;
 
 		if ( m_me->IsSelf( player ) )
@@ -253,7 +261,7 @@ CTFPlayer *CTFBotMedicHeal::SelectPatient( CTFBot *me, CTFPlayer *current )
 
 	if ( medigun )
 	{
-		if ( current == NULL || !current->IsAlive() )
+		if ( current == NULL || ( !current->IsAlive() && !current->GetReviveMarker() ) )
 		{
 			current = ToTFPlayer( medigun->GetHealTarget() );
 		}
@@ -277,7 +285,8 @@ CTFPlayer *CTFBotMedicHeal::SelectPatient( CTFBot *me, CTFPlayer *current )
 	{
 		// assume perfect knowledge
 		CUtlVector< CTFPlayer * > livePlayerVector;
-		CollectPlayers( &livePlayerVector, me->GetTeamNumber(), COLLECT_ONLY_LIVING_PLAYERS );
+		bool onlyAlive = me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS;
+		CollectPlayers( &livePlayerVector, me->GetTeamNumber(), onlyAlive );
 
 		for( int i=0; i<livePlayerVector.Count(); ++i )
 		{
@@ -289,6 +298,20 @@ CTFPlayer *CTFBotMedicHeal::SelectPatient( CTFBot *me, CTFPlayer *current )
 	}
 	else
 	{
+		CUtlVector< CTFPlayer* > deadPlayerVector;
+		CollectPlayers( &deadPlayerVector, me->GetTeamNumber(), false );
+
+		for ( int i = 0; i < deadPlayerVector.Count(); ++i )
+		{
+			if ( !deadPlayerVector[i] || deadPlayerVector[i]->IsAlive() || !deadPlayerVector[i]->GetReviveMarker() )
+				continue;
+
+			CKnownEntity known( deadPlayerVector[i] );
+			known.UpdatePosition();
+
+			choose.Inspect( known );
+		}
+
 		me->GetVisionInterface()->ForEachKnownEntity( choose );
 	}
 
@@ -303,6 +326,9 @@ CTFPlayer *CTFBotMedicHeal::SelectPatient( CTFBot *me, CTFPlayer *current )
 bool CTFBotMedicHeal::IsStable( CTFPlayer *patient ) const
 {
 	const float safeTime = 3.0f;
+
+	if ( !patient->IsAlive() && patient->GetReviveMarker() )
+		return false;
 
 	// if they are in combat, they are not stable
 	if ( patient->GetTimeSinceLastInjury( GetEnemyTeam( patient->GetTeamNumber() ) ) < safeTime )
@@ -347,6 +373,13 @@ public:
 
 			if ( !m_me->IsLineOfFireClear( player->EyePosition() ) )
 				return true;
+
+			if ( !m_me->IsSelf( player ) && !player->IsAlive() && player->GetReviveMarker() )
+			{
+				m_mostInjured = player;
+				m_injuredHealthRatio = 0.0f;
+				return true;
+			}
 
 			if ( !m_me->IsSelf( player ) && player->IsAlive() && player->InSameTeam( m_me ) )
 			{
@@ -485,6 +518,11 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 
 	m_patient = SelectPatient( me, m_patient );
 
+	if ( m_patient && !m_patient->IsAlive() && !m_patient->GetReviveMarker() )
+	{
+		m_patient = NULL;
+	}
+
 	// prevent a group of medic healing each other in a loop. always heal the top guy in the chain
 	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS && m_patient != NULL && m_patient->IsPlayerClass( TF_CLASS_MEDIC ) )
 	{
@@ -574,6 +612,11 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 
 
 	CTFPlayer *actualHealTarget = m_patient;
+	CBaseEntity *actualHealTargetEntity = m_patient;
+	if ( !m_patient->IsAlive() && m_patient->GetReviveMarker() )
+	{
+		actualHealTargetEntity = (CBaseEntity *)m_patient->GetReviveMarker();
+	}
 	bool isHealTargetBlocked = true;
 	bool isActivelyHealing = false;
 	bool isUsingProjectileShield = false;
@@ -611,9 +654,9 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 		}
 
 		// juice 'em
-		me->GetBodyInterface()->AimHeadTowards( actualHealTarget, IBody::CRITICAL, 1.0f, NULL, "Aiming at my patient" );
+		me->GetBodyInterface()->AimHeadTowards( actualHealTargetEntity, IBody::CRITICAL, 1.0f, NULL, "Aiming at my patient" );
 
-		if ( medigun->GetHealTarget() == NULL || medigun->GetHealTarget() == actualHealTarget )
+		if ( medigun->GetHealTarget() == NULL || medigun->GetHealTarget() == actualHealTarget || medigun->GetHealTarget() == actualHealTargetEntity )
 		{
 			// only hold fire button if we're healing who we think we're healing
 			me->PressFireButton();

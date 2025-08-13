@@ -1486,6 +1486,7 @@ private:
 	CHandle< CTFReviveMarker >		m_hReviveMarker;
 public:
 	CTFReviveMarker	*GetReviveMarker( void ) { return m_hReviveMarker; }
+	void	SetReviveMarkerEnt( CTFReviveMarker* marker ) { m_hReviveMarker = marker; }
 
 	// Send ForcePlayerViewAngles user message. Handled in __MsgFunc_ForcePlayerViewAngles in
 	// clientmode_tf.cpp. Sets Local and Abs angles, along with TauntYaw and VehicleMovingAngles.

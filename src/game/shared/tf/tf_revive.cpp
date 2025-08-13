@@ -222,6 +222,12 @@ void CTFReviveMarker::ReviveThink( void )
 		return;
 	}
 
+	// PvP revives fix
+	if ( m_hOwner && !m_hOwner->GetReviveMarker() )
+	{
+		m_hOwner->SetReviveMarkerEnt( this );
+	}
+
 	if ( !GetMaxHealth() )
 	{
 		// Set health of marker based on class, and number of previous revives

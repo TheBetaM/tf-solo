@@ -2143,6 +2143,7 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		switch( flag->GetType() )
 		{
 		case TF_FLAGTYPE_CTF:
+		case TF_FLAGTYPE_ROBOT_DESTRUCTION:
 			if ( flag->GetTeamNumber() != GetTeamNumber() )
 			{
 				// we want to steal the other team's flag
@@ -2154,7 +2155,6 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		case TF_FLAGTYPE_TERRITORY_CONTROL:
 		case TF_FLAGTYPE_INVADE:
 		case TF_FLAGTYPE_RESOURCE_CONTROL:
-		case TF_FLAGTYPE_ROBOT_DESTRUCTION:
 		case TF_FLAGTYPE_PLAYER_DESTRUCTION:
 			if ( flag->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) )
 			{

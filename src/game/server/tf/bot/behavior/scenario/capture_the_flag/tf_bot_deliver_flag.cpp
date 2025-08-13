@@ -30,6 +30,8 @@ ConVar tf_mvm_bot_flag_carrier_interval_to_3rd_upgrade( "tf_mvm_bot_flag_carrier
 
 ConVar tf_mvm_bot_flag_carrier_health_regen( "tf_mvm_bot_flag_carrier_health_regen", "45.0f", FCVAR_CHEAT );
 
+extern ConVar tf_rd_min_points_to_steal;
+
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotDeliverFlag::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
@@ -224,6 +226,13 @@ ActionResult< CTFBot > CTFBotDeliverFlag::Update( CTFBot *me, float interval )
 	{
 		// prepare to fight
 		me->EquipBestWeaponForThreat( threat );
+	}
+
+	// RD flag - wait for all points to be stolen
+	if ( flag->GetType() == TF_FLAGTYPE_ROBOT_DESTRUCTION && flag->GetPointValue() < tf_rd_min_points_to_steal.GetInt() )
+	{
+		me->GetLocomotionInterface()->Stop();
+		return Continue();
 	}
 
 	// deliver the flag
