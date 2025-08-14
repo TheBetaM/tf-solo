@@ -30,6 +30,8 @@
 #include "func_respawnroom.h"
 #include "soundenvelope.h"
 #include "tf_projectile_energy_ball.h"
+#include "player_vs_environment/tf_upgrades.h"
+#include "tf_upgrades_shared.h"
 
 #include "econ_entity_creation.h"
 
@@ -68,6 +70,7 @@ ConVar tf_bot_debug_tags( "tf_bot_debug_tags", "0", FCVAR_CHEAT, "ent_text will 
 ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "0", FCVAR_NONE, "Bot will choose class from a preset class table." );
 
 ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
+ConVar tf_bot_buy_upgrades( "tf_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
 
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
@@ -469,6 +472,9 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			}
 
 			pBot->HandleCommand_JoinTeam( teamname );
+
+			// forces MvM defenders to sync currency
+			pBot->GetAutoTeam();
 
 			pBot->SetDifficulty( skill );
 
@@ -1371,6 +1377,7 @@ CTFBot::CTFBot()
 	m_squadFormationError = 0.0f;
 
 	m_hFollowingFlagTarget = NULL;
+	m_bHasUpgradedAfterSpawn = false;
 
 	SetShouldQuickBuild( false );
 	SetAutoJump( 0.f, 0.f );
@@ -1381,6 +1388,7 @@ CTFBot::CTFBot()
 	ListenForGameEvent( "teamplay_point_captured" );
 	ListenForGameEvent( "teamplay_round_win" );
 	ListenForGameEvent( "teamplay_flag_event" );
+	ListenForGameEvent( "mvm_wave_complete" );
 }
 
 
@@ -1436,6 +1444,8 @@ void CTFBot::Spawn()
 	SpawnCustom();
 	m_lastUsedCanteenTimer.Invalidate();
 	m_lastUsedHaleChargeTimer.Invalidate();
+	m_bHasUpgradedAfterSpawn = false;
+	m_checkUpgradesTimer.Start( RandomFloat( 0.5f, 1.2f ) );
 }
 
 
@@ -1779,6 +1789,11 @@ void CTFBot::FireGameEvent( IGameEvent *event )
 				OnPickUp( NULL, NULL );
 			}
 		}
+	}
+	else if ( FStrEq( eventName, "mvm_wave_complete" ) )
+	{
+		m_bHasUpgradedAfterSpawn = false;
+		m_checkUpgradesTimer.Start( RandomFloat( 2.0f, 5.0f ) );
 	}
 }
 
@@ -4781,6 +4796,140 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 
 	m_opportunisticTimer.Start( RandomFloat( 0.1f, 0.2f ) );
 
+	// Buy upgrades inside spawn
+	if ( TFGameRules()->GameModeUsesUpgrades() && !m_bHasUpgradedAfterSpawn && tf_bot_buy_upgrades.GetBool() 
+		&& m_checkUpgradesTimer.IsElapsed() && GetCurrency() > 0 ) //&& ( PointInRespawnRoom( this, GetAbsOrigin() ) || m_bHasToUpgradeAfterWave ) )
+	{
+		m_bHasUpgradedAfterSpawn = true;
+		BeginPurchasableUpgrades();
+
+		struct UpgradeInfo
+		{
+			int m_Slot;
+			int m_Index;
+		};
+
+		int baseCurrency = GetCurrency();
+		CUtlVector<int> slotsToCheck;
+		CUtlVector<UpgradeInfo> upgradeCandidates;
+		if ( !IsPlayerClass( TF_CLASS_SPY ) )
+		{
+			slotsToCheck.AddToTail( LOADOUT_POSITION_PRIMARY );
+		}
+		slotsToCheck.AddToTail( LOADOUT_POSITION_SECONDARY );
+		slotsToCheck.AddToTail( LOADOUT_POSITION_MELEE );
+		if ( IsPlayerClass( TF_CLASS_SPY ) )
+		{
+			slotsToCheck.AddToTail( LOADOUT_POSITION_BUILDING );
+		}
+		if ( IsPlayerClass( TF_CLASS_ENGINEER ) )
+		{
+			slotsToCheck.AddToTail( LOADOUT_POSITION_PDA );
+		}
+
+		bool bCanteen = false;
+		CTFWearable* pWearable = GetEquippedWearableForLoadoutSlot( LOADOUT_POSITION_ACTION );
+		CTFPowerupBottle* pPowerupBottle = dynamic_cast<CTFPowerupBottle*>( pWearable );
+		if ( pPowerupBottle && pPowerupBottle->GetNumCharges() <= 0 )
+		{
+			bCanteen = true;
+		}
+
+		FOR_EACH_VEC( g_MannVsMachineUpgrades.m_Upgrades, i )
+		{
+			CMannVsMachineUpgrades *pUpgrade = &( g_MannVsMachineUpgrades.m_Upgrades[ i ] );
+
+			CEconItemAttributeDefinition *pAttribDef = ItemSystem()->GetStaticDataForAttributeByName( pUpgrade->szAttrib );
+			if ( !pAttribDef )
+			{
+				Warning( "BAD ATTRIBUTE IN MVM_UPGRADES: %s\n", pUpgrade->szAttrib );
+				continue;
+			}
+
+			int nUIGroup = pUpgrade->nUIGroup;
+			if ( nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER )
+			{
+				// Player Upgrades
+				if ( !TFGameRules()->CanUpgradeWithAttrib( this, -1, pAttribDef->GetDefinitionIndex(), pUpgrade ) )
+				{
+					continue;
+				}
+				int nCost = g_MannVsMachineUpgrades.m_Upgrades[i].nCost;
+
+				if ( nCost > baseCurrency )
+					continue;
+
+				UpgradeInfo info;
+				info.m_Index = i;
+				info.m_Slot = -1;
+				upgradeCandidates.AddToTail( info );
+			}
+			else if ( nUIGroup == UIGROUP_POWERUPBOTTLE )
+			{
+				// Canteen Upgrades
+				if ( !bCanteen )
+					continue;
+
+				if ( !TFGameRules()->CanUpgradeWithAttrib( this, LOADOUT_POSITION_ACTION, pAttribDef->GetDefinitionIndex(), pUpgrade ) )
+				{
+					continue;
+				}
+				int nCost = TFGameRules()->GetCostForUpgrade( &( g_MannVsMachineUpgrades.m_Upgrades[i] ), LOADOUT_POSITION_ACTION, GetPlayerClass()->GetClassIndex(), this );
+
+				if ( nCost > baseCurrency )
+					continue;
+
+				UpgradeInfo info;
+				info.m_Index = i;
+				info.m_Slot = LOADOUT_POSITION_ACTION;
+				upgradeCandidates.AddToTail( info );
+			}
+			else
+			{
+				// Weapon Upgrades
+				FOR_EACH_VEC( slotsToCheck, a )
+				{
+					if ( !TFGameRules()->CanUpgradeWithAttrib( this, slotsToCheck[a], pAttribDef->GetDefinitionIndex(), pUpgrade ) )
+					{
+						continue;
+					}
+					int nCost = TFGameRules()->GetCostForUpgrade( &( g_MannVsMachineUpgrades.m_Upgrades[i] ), slotsToCheck[a], GetPlayerClass()->GetClassIndex(), this );
+
+					if ( nCost > baseCurrency )
+						continue;
+
+					UpgradeInfo info;
+					info.m_Index = i;
+					info.m_Slot = slotsToCheck[a];
+					upgradeCandidates.AddToTail( info );
+				}
+			}
+		}
+
+		bool bPickedCanteen = false;
+		while ( upgradeCandidates.Count() > 0 )
+		{
+			int pos = RandomInt( 0, upgradeCandidates.Count() - 1 );
+			int iUpgrade = upgradeCandidates[pos].m_Index;
+			int iSlot = upgradeCandidates[pos].m_Slot;
+			bool bAllowed = true;
+			if ( iSlot == LOADOUT_POSITION_ACTION && bPickedCanteen )
+			{
+				bAllowed = false;
+			}
+			while ( bAllowed )
+			{
+				bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( this, iSlot, iUpgrade, false, false );
+				if ( bAllowed && iSlot == LOADOUT_POSITION_ACTION )
+				{
+					bPickedCanteen = true;
+				}
+			}
+			upgradeCandidates.Remove( pos );
+		}
+
+		EndPurchasableUpgrades();
+	}
 
 	// if I'm wearing a charge shield, use it!
 	if ( IsPlayerClass( TF_CLASS_DEMOMAN ) && m_Shared.IsShieldEquipped() )

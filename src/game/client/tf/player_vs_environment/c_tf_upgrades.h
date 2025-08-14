@@ -82,7 +82,7 @@ public:
 
 	bool CheckInspectMode( void ) {
 		CSteamID steamID;
-		return m_bInspectMode && m_hPlayer->GetSteamID( &steamID ) != false;
+		return m_bInspectMode && m_hPlayer && m_hPlayer->GetSteamID( &steamID ) != false;
 	};
 
 public:

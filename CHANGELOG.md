@@ -21,7 +21,7 @@ tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>,
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
 cl_default_networking_off, nav_save_compressed, tf_bot_spells, 
-tf_vision_force
+tf_vision_force, tf_bot_buy_upgrades  
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
@@ -37,6 +37,7 @@ tf_vision_force
 - Improved nav meshes in many existing maps
 - Saved nav files now get compressed by default
 - Human players can now manually manage bot teammates' PvP/MvM upgrades by inspecting them
+- Bots can now auto-buy PvP/MvM upgrades where available
 - Bots can now proactively seek out spells, crumpkins, credits, cores and powerup pickups
 - Bots can now use spellbook spells and canteens
 - Bots can now stun Merasmus and seek him out while he's hiding

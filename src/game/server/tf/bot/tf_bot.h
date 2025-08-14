@@ -600,6 +600,8 @@ private:
 	CUtlString m_preset;
 	CountdownTimer m_lastUsedCanteenTimer;
 	CountdownTimer m_lastUsedHaleChargeTimer;
+	CountdownTimer m_checkUpgradesTimer;
+	bool m_bHasUpgradedAfterSpawn;
 };
 
 

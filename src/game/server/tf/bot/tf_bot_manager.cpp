@@ -533,6 +533,9 @@ void CTFBotManager::MaintainBotQuota()
 						pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
 					}
 
+					// forces MvM defenders to sync currency
+					pBot->GetAutoTeam();
+
 					// Keep track of any bots we add during a match
 					CMatchInfo* pMatchInfo = GTFGCClientSystem()->GetMatch();
 					if (pMatchInfo)
@@ -554,6 +557,9 @@ void CTFBotManager::MaintainBotQuota()
 
 					// join a team before we pick our class, since we use our teammates to decide what class to be
 					pBot->HandleCommand_JoinTeam("auto");
+
+					// forces MvM defenders to sync currency
+					pBot->GetAutoTeam();
 
 					pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
 
