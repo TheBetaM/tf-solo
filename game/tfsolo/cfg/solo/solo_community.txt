@@ -1718,6 +1718,7 @@ solo_config
 			tags
 			{
 				pl 1
+				theme_xmas 1
 				theme_snow 1
 			}
 		}
@@ -2010,6 +2011,7 @@ solo_config
 				pl 1
 				theme_offshore 1
 				theme_underwater 1
+				vscript 1
 			}
 		}
 		koth_blowout
@@ -2022,7 +2024,6 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_offshore 1
-				vscript 1
 			}
 		}
 		koth_boardwalk
@@ -2035,6 +2036,7 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_coast 1
+				vscript 1
 			}
 		}
 		cp_cargo
@@ -2106,6 +2108,7 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_city 1
+				vscript 1
 			}
 		}
 		ctf_pressure
@@ -2118,8 +2121,8 @@ solo_config
 				flag_count 2
 				symm 1
 				theme_offshore 1
+				vscript 1
 			}
 		}
-		
 	}
 }
