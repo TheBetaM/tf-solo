@@ -18,6 +18,8 @@
 #ifdef TF_DLL
 #include "tf_shareddefs.h"
 #include "tf_gamerules.h"
+
+extern ConVar tf_gamemode_override;
 #endif
 
 #define CONTROL_POINT_UNLOCK_THINK			"UnlockThink"
@@ -1094,6 +1096,17 @@ void CTeamControlPoint::UnlockThink( void )
 		 ( TeamplayRoundBasedRules() && TeamplayRoundBasedRules()->State_Get() == GR_STATE_RND_RUNNING ) )
 	{
 		InternalSetLocked( false );
+
+		if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
+		{
+			CArenaLogic* pArenaLogic = dynamic_cast<CArenaLogic*> ( gEntList.FindEntityByClassname(NULL, "tf_logic_arena" ) );
+
+			if ( pArenaLogic )
+			{
+				pArenaLogic->m_OnCapEnabled.FireOutput( pArenaLogic, pArenaLogic );
+			}
+		}
+
 		return;
 	}
 

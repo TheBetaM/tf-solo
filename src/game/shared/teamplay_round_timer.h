@@ -140,6 +140,7 @@ private:
 	int				m_nOldTimerState;
 
 #else
+public:
 	COutputEvent	m_OnRoundStart;
 	COutputEvent	m_OnFinished;
 	COutputEvent	m_On5MinRemain;
@@ -160,6 +161,8 @@ private:
 
 	float			m_flNextOvertimeNag;
 	float			m_flLastTime;
+
+private:
 
 	DECLARE_DATADESC();
 

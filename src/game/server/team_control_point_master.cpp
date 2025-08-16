@@ -57,6 +57,10 @@ LINK_ENTITY_TO_CLASS( team_control_point_master, CTeamControlPointMaster );
 
 ConVar mp_time_between_capscoring( "mp_time_between_capscoring", "30", FCVAR_GAMEDLL, "Delay between scoring of owned capture points.", true, 1, false, 0 );
 
+#if defined ( TF_DLL )
+extern ConVar tf_gamemode_override;
+#endif
+
 // sort function for the list of control_point_rounds (we're sorting them by priority...highest first)
 int ControlPointRoundSort( CTeamControlPointRound* const *p1, CTeamControlPointRound* const *p2 )
 {
@@ -68,6 +72,18 @@ int ControlPointRoundSort( CTeamControlPointRound* const *p1, CTeamControlPointR
 
 	return -1;
 }
+
+int ControlPointOrderSort( CTeamControlPoint* const* p1, CTeamControlPoint* const* p2 )
+{
+	// check the priority
+	if ( (*p2)->GetPointIndex() > (*p1)->GetPointIndex() )
+	{
+		return 1;
+	}
+
+	return -1;
+}
+
 
 //-----------------------------------------------------------------------------
 // Purpose: init
@@ -191,30 +207,93 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 
 	int numFound = 0;
 	
-	while( pEnt )
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_ARENA || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
 	{
-		CTeamControlPoint *pPoint = assert_cast<CTeamControlPoint *>(pEnt);
+		CUtlMap<int, CTeamControlPoint*> AllPoints;
+		CUtlVector<CTeamControlPoint*> AllPointsVec;
+		CTeamControlPoint* CenterPoint;
+		SetDefLessFunc( AllPoints );
 
-		if( pPoint->IsActive() && !pPoint->IsMarkedForDeletion() )
+		while ( pEnt )
 		{
-			int index = pPoint->GetPointIndex();
+			CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>( pEnt );
 
-			Assert( index >= 0 );
+			if ( pPoint->IsActive() && !pPoint->IsMarkedForDeletion() )
+			{
+				int index = pPoint->GetPointIndex();
 
-			if( m_ControlPoints.Find( index ) == m_ControlPoints.InvalidIndex())
-			{
-				DevMsg( 2, "**** Adding control point %s with index %d to control point master\n", pPoint->GetName(), index );
-				m_ControlPoints.Insert( index, pPoint );
-				numFound++;
+				Assert( index >= 0 );
+
+				if ( AllPoints.Find( index ) == AllPoints.InvalidIndex() )
+				{
+					AllPoints.Insert( index, pPoint );
+					AllPointsVec.AddToTail( pPoint );
+					numFound++;
+				}
+				else
+				{
+					Warning( "!!!!\nMultiple control points with the same index, duplicates ignored\n!!!!\n" );
+					UTIL_Remove( pPoint );
+				}
 			}
-			else
-			{
-				Warning( "!!!!\nMultiple control points with the same index, duplicates ignored\n!!!!\n" );
-				UTIL_Remove( pPoint );
-			}
+
+			pEnt = gEntList.FindEntityByClassname( pEnt, GetControlPointName() );
 		}
 
-		pEnt = gEntList.FindEntityByClassname( pEnt, GetControlPointName() );
+		AllPointsVec.Sort( ControlPointOrderSort );
+		if ( numFound != 0 )
+		{
+			int pos = numFound / 2;
+			//Msg("**** Forcing point %s index %d as center point\n", AllPointsVec[pos]->GetName(), pos);
+			int targetIndex = AllPointsVec[pos]->GetPointIndex();
+			m_ControlPoints.Insert( targetIndex, AllPointsVec[ pos ] );
+
+			pEnt = gEntList.FindEntityByClassname( NULL, GetControlPointName() );
+			while ( pEnt )
+			{
+				CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>( pEnt );
+
+				if ( pPoint->IsActive() && !pPoint->IsMarkedForDeletion() )
+				{
+					int index = pPoint->GetPointIndex();
+					if ( index != targetIndex )
+					{
+						pPoint->SetActive( false );
+						UTIL_Remove( pPoint );
+					}
+				}
+
+				pEnt = gEntList.FindEntityByClassname( pEnt, GetControlPointName() );
+			}
+		}
+	}
+	else
+	{
+		while( pEnt )
+		{
+			CTeamControlPoint *pPoint = assert_cast<CTeamControlPoint *>(pEnt);
+
+			if( pPoint->IsActive() && !pPoint->IsMarkedForDeletion() )
+			{
+				int index = pPoint->GetPointIndex();
+
+				Assert( index >= 0 );
+
+				if( m_ControlPoints.Find( index ) == m_ControlPoints.InvalidIndex())
+				{
+					DevMsg( 2, "**** Adding control point %s with index %d to control point master\n", pPoint->GetName(), index );
+					m_ControlPoints.Insert( index, pPoint );
+					numFound++;
+				}
+				else
+				{
+					Warning( "!!!!\nMultiple control points with the same index, duplicates ignored\n!!!!\n" );
+					UTIL_Remove( pPoint );
+				}
+			}
+
+			pEnt = gEntList.FindEntityByClassname( pEnt, GetControlPointName() );
+		}
 	}
 
 	if( numFound > MAX_CONTROL_POINTS )

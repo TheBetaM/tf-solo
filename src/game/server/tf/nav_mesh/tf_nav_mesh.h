@@ -110,6 +110,7 @@ public:
 		MAP_LOGIC
 	};
 	void ScheduleRecomputationOfInternalData( RecomputeReasonType reason, int whichPoint );
+	void ScheduleRecomputationOfInternalData( RecomputeReasonType reason, float delay );
 
 	virtual void OnDoorCreated( CBaseEntity *door );					// invoked when a door is created
 
@@ -167,6 +168,12 @@ inline void CTFNavMesh::ScheduleRecomputationOfInternalData( CTFNavMesh::Recompu
 	m_recomputeReasonWhichPoint = whichPoint;
 }
 
+inline void CTFNavMesh::ScheduleRecomputationOfInternalData( CTFNavMesh::RecomputeReasonType reason, float delay )
+{
+	m_recomputeInternalDataTimer.Start( delay );
+	m_recomputeReason = reason;
+	m_recomputeReasonWhichPoint = 0;
+}
 
 inline const CUtlVector< CTFNavArea * > *CTFNavMesh::GetSpawnRoomAreas( int team ) const
 {

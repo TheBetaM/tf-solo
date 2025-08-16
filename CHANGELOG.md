@@ -1,6 +1,9 @@
 # 1.0.0
 ## General
-- Added a new main menu interface for selecting maps to play!
+- Added a new main menu interface for selecting maps to play, and in new ways!
+-- Arena Mode - Now playable on any map  
+-- King of the Hill - Now playable on any symmetrical point map  
+-- Mirror Mode - The entire world flipped, it's like having two maps in one!  
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  
@@ -14,14 +17,13 @@
 -- Center Of Attention (Scout)  
 -- Signature Stance (All-Class)  
 - Added Bestiary - browse enemies encountered in the game
-- Added Mirror Mode - flip the world using the tf_mirrormode command
 - Added 4 new achievements
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
 cl_default_networking_off, nav_save_compressed, tf_bot_spells, 
-tf_vision_force, tf_bot_buy_upgrades  
+tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode  
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

@@ -62,7 +62,6 @@ public:
 	bool AlreadyUsedForMatchSummary( void ){ return m_bAlreadyUsedForMatchSummary; }
 	void SetAlreadyUsedForMatchSummary( void ){ m_bAlreadyUsedForMatchSummary = true; }
 
-private:
 	bool							m_bDisabled;		// Enabled/Disabled?
 	PlayerTeamSpawnMode_t			m_nSpawnMode;		// How are players allowed to spawn here?
 
@@ -74,6 +73,7 @@ private:
 	CHandle<CTeamControlPointRound>	m_hRoundBlueSpawn;
 	CHandle<CTeamControlPointRound>	m_hRoundRedSpawn;
 
+private:
 	PlayerTeamSpawn_MatchSummary_t	m_nMatchSummaryType;		// is this a spawn location for a match summary?
 	bool m_bAlreadyUsedForMatchSummary;
 
