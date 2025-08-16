@@ -150,6 +150,7 @@ enum {
 	TF_GAMEMODEOVERRIDE_ARENA,
 	TF_GAMEMODEOVERRIDE_KOTH,
 	TF_GAMEMODEOVERRIDE_CTF,
+	TF_GAMEMODEOVERRIDE_PD,
 };
 
 class CTFGameRulesProxy : public CTeamplayRoundBasedRulesProxy, public CGameEventListener

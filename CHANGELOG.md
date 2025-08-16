@@ -4,6 +4,7 @@
 -- Arena Mode - Now playable on any map  
 -- King of the Hill - Now playable on any symmetrical point map  
 -- Capture the Flag - Now playable on any symmetrical multi-point map  
+-- Player Destruction - Now playable on any map
 -- Mirror Mode - The entire world flipped, it's like having two maps in one!  
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  

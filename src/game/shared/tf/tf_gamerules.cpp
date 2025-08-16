@@ -127,6 +127,7 @@
 	#include "tf_party.h"
 	#include "tf_autobalance.h"
 	#include "player_voice_listener.h"
+	#include "eventqueue.h"
 #endif
 
 #include "tf_mann_vs_machine_stats.h"
@@ -1073,7 +1074,7 @@ ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FC
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - Force KOTH\n4 - Force CTF" );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - Force KOTH\n4 - Force CTF\n5 - Force PD" );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
@@ -4570,17 +4571,18 @@ void CTFGameRules::Activate()
 		m_nGameType.Set( TF_GAMETYPE_CP );
 		m_bPlayingKoth.Set( true );
 		tf_gamemode_cp.SetValue( 1 );
-		CKothLogic* pLogicKoth = dynamic_cast<CKothLogic*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_koth" ) );
-		if ( !pLogicKoth )
-		{
-
-		}
 	}
 	else if ( overrideMode == TF_GAMEMODEOVERRIDE_CTF )
 	{
 		// CTF
 		m_nGameType.Set( TF_GAMETYPE_CTF );
 		tf_gamemode_ctf.SetValue( 1 );
+	}
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_PD )
+	{
+		m_bPlayingRobotDestructionMode.Set( true );
+		tf_gamemode_pd.SetValue( 1 );
+		m_nGameType.Set( TF_GAMETYPE_PD );
 	}
 }
 
@@ -4845,7 +4847,7 @@ void CTFGameRules::RecalculateControlPointState( void )
 
 		return;
 	}
-	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF )
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD )
 	{
 		// Taking advantage of forward spawns if possible
 		CUtlVector<CTeamControlPoint*> AllPointsVec;
@@ -5011,6 +5013,15 @@ void CTFGameRules::SetupOnRoundStart( void )
 			}
 		}
 	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_ARENA )
+	{
+		CBaseEntity* pKit = gEntList.FindEntityByClassname( NULL, "item_healthkit*" );
+		while ( pKit )
+		{
+			UTIL_Remove( pKit );
+			pKit = gEntList.FindEntityByClassname( pKit, "item_healthkit*" );
+		}
+	}
 	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
 	{
 		CKothLogic* pKoth = dynamic_cast<CKothLogic *>( CreateEntityByName( "tf_logic_koth" ) );
@@ -5079,13 +5090,113 @@ void CTFGameRules::SetupOnRoundStart( void )
 						CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", blueFlag->GetAbsOrigin(), vec3_angle, NULL ) );
 						pZone->ChangeTeam( TF_TEAM_BLUE );
 						DispatchSpawn( pZone );
-						pZone->SetSize( Vector (-128, -128, -32 ), Vector( 128, 128, 256 ) );
+						pZone->SetSize( Vector ( -128, -128, -32 ), Vector( 128, 128, 256 ) );
 						pZone->SetSolid( SOLID_OBB );
 					}
 					pArea->Disable();
 				}
 			}
 		}
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD )
+	{
+		CUtlVector<CTeamControlPoint*> AllPointsVec;
+		int numFound = 0;
+
+		CBaseEntity* pFlag = gEntList.FindEntityByClassname( NULL, "item_teamflag" );
+		while ( pFlag )
+		{
+			UTIL_Remove( pFlag );
+			pFlag = gEntList.FindEntityByClassname( pFlag, "item_teamflag" );
+		}
+		CBaseEntity* pFlagZone = gEntList.FindEntityByClassname( NULL, "func_capturezone" );
+		while ( pFlagZone )
+		{
+			UTIL_Remove( pFlagZone );
+			pFlagZone = gEntList.FindEntityByClassname( pFlagZone, "func_capturezone" );
+		}
+
+		CBaseEntity* pEnt = gEntList.FindEntityByClassname( NULL, "team_control_point" );
+		while ( pEnt )
+		{
+			CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>(pEnt);
+
+			if ( !pPoint->IsMarkedForDeletion() )
+			{
+				int index = pPoint->GetPointIndex();
+				AllPointsVec.AddToTail( pPoint );
+				numFound++;
+			}
+
+			pEnt = gEntList.FindEntityByClassname( pEnt, "team_control_point" );
+		}
+
+		AllPointsVec.Sort( ControlPointOrderSortOverride );
+		int pos = numFound / 2;
+		int targetIndex = 0;
+		if ( numFound != 0 )
+		{
+			targetIndex = AllPointsVec[pos]->GetPointIndex();
+		}
+
+		CTFPlayerDestructionLogic* pPDLogic = dynamic_cast<CTFPlayerDestructionLogic *>( CreateEntityByName( "tf_logic_player_destruction" ) );
+		pPDLogic->KeyValueFromInt( "points_per_player", 5 );
+		pPDLogic->KeyValueFromInt( "min_points", 10 );
+		pPDLogic->KeyValueFromString( "prop_model_name", "models/items/currencypack_small.mdl" );
+		pPDLogic->KeyValueFromString( "res_file", "resource/UI/HudObjectivePlayerDestruction.res" );
+		pPDLogic->KeyValueFromInt( "flag_reset_delay", 60 );
+		pPDLogic->KeyValueFromInt( "heal_distance", 450 );
+		pPDLogic->KeyValueFromInt( "finale_length", 5 );
+		pPDLogic->KeyValueFromFloat( "red_respawn_time", 10.0f );
+		pPDLogic->KeyValueFromFloat( "blue_respawn_time", 10.0f );
+		DispatchSpawn( pPDLogic );
+		pPDLogic->SetName( AllocPooledString( "pd_logic" ) );
+		pPDLogic->InputEnableMaxScoreUpdating( inputdata_t() );
+		g_EventQueue.AddEvent( pPDLogic, "DisableMaxScoreUpdating", variant_t(), 30.0f, NULL, NULL );
+
+		Vector capZoneOrigin = vec3_origin;
+		if ( numFound != 0 )
+		{
+			capZoneOrigin = AllPointsVec[pos]->GetAbsOrigin();
+		}
+
+		CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", capZoneOrigin, vec3_angle, NULL ) );
+		pZone->KeyValueFromFloat( "capture_delay", 1.1f );
+		pZone->KeyValueFromFloat( "capture_delay_offset", 0.025f );
+		if ( numFound != 0 )
+		{
+			pZone->KeyValueFromInt( "shouldBlock", 1 );
+		}
+		else
+		{
+			pZone->KeyValueFromInt( "shouldBlock", 0 );
+		}
+		DispatchSpawn( pZone );
+		if ( numFound != 0 )
+		{
+			pZone->SetSize( Vector( -256, -256, -32 ), Vector( 256, 256, 256 ) );
+		}
+		else
+		{
+			// No points found - fallback to instant capture
+			pZone->SetSize( Vector( MIN_COORD_FLOAT, MIN_COORD_FLOAT, MIN_COORD_FLOAT ), Vector( MAX_COORD_FLOAT, MAX_COORD_FLOAT, MAX_COORD_FLOAT ) );
+		}
+		pZone->SetSolid( SOLID_OBB );
+		pZone->SetName( AllocPooledString( "capzone" ) );
+		inputdata_t InCapRed;
+		InCapRed.pActivator = NULL;
+		InCapRed.pCaller = NULL;
+		InCapRed.value.SetString( AllocPooledString( "OnCapTeam1_PD pd_logic,ScoreRedPoints,,0,-1" ) );
+		InCapRed.nOutputID = 0;
+		inputdata_t InCapBlue;
+		InCapBlue.pActivator = NULL;
+		InCapBlue.pCaller = NULL;
+		InCapBlue.value.SetString( AllocPooledString( "OnCapTeam2_PD pd_logic,ScoreBluePoints,,0,-1" ) );
+		InCapBlue.nOutputID = 1;
+		pZone->InputAddOutput( InCapRed );
+		pZone->InputAddOutput( InCapBlue );
+		pZone->Activate();
+
 	}
 
 	// Let all entities know that a new round is starting

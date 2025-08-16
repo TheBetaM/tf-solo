@@ -177,6 +177,7 @@ DESCRIPTION SERVER_OPTIONS
 			"Arena" "2"
 			"King of the Hill" "3"
 			"Capture the Flag" "4"
+			"Player Destruction" "5"
 		}
 		{ "0" }
 	}
