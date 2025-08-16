@@ -206,6 +206,20 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 	CBaseEntity *pEnt = gEntList.FindEntityByClassname( NULL, GetControlPointName() );
 
 	int numFound = 0;
+
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF )
+	{
+		while ( pEnt )
+		{
+			CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>( pEnt );
+			if ( pPoint->IsActive() && !pPoint->IsMarkedForDeletion() )
+			{
+				pPoint->SetActive( false );
+			}
+			pEnt = gEntList.FindEntityByClassname( pEnt, GetControlPointName() );
+		}
+		return false;
+	}
 	
 	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_ARENA || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
 	{

@@ -166,4 +166,27 @@ DESCRIPTION SERVER_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
+	
+	"tf_gamemode_override"
+	{
+		"Gamemode Override"
+		{
+			LIST
+			"Default" "0"
+			"No Mode" "1"
+			"Arena" "2"
+			"King of the Hill" "3"
+			"Capture the Flag" "4"
+		}
+		{ "0" }
+	}
+	
+	"tf_mirrormode"
+	{
+		"Mirror Mode"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	
 }

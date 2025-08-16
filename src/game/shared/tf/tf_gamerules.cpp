@@ -1073,7 +1073,7 @@ ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FC
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena mode\n3 - Force KOTH mode" );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - Force KOTH\n4 - Force CTF" );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
@@ -4556,7 +4556,7 @@ void CTFGameRules::Activate()
 		SetAllowBetweenRounds( false );
 	}
 
-	if ( overrideMode == 2 )
+	if ( overrideMode == TF_GAMEMODEOVERRIDE_ARENA )
 	{
 		// Arena
 		m_nGameType.Set( TF_GAMETYPE_ARENA );
@@ -4564,7 +4564,7 @@ void CTFGameRules::Activate()
 		Msg( "Executing server arena config file\n" );
 		engine->ServerCommand( "exec config_arena.cfg\n" );
 	}
-	else if ( overrideMode == 3 )
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_KOTH )
 	{
 		// KOTH
 		m_nGameType.Set( TF_GAMETYPE_CP );
@@ -4575,6 +4575,12 @@ void CTFGameRules::Activate()
 		{
 
 		}
+	}
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_CTF )
+	{
+		// CTF
+		m_nGameType.Set( TF_GAMETYPE_CTF );
+		tf_gamemode_ctf.SetValue( 1 );
 	}
 }
 
@@ -4791,6 +4797,17 @@ void CTFGameRules::CleanUpMap( void )
 #endif
 }
 
+int ControlPointOrderSortOverride( CTeamControlPoint* const* p1, CTeamControlPoint* const* p2 )
+{
+	// check the priority
+	if ( (*p2)->GetPointIndex() > (*p1)->GetPointIndex() )
+	{
+		return 1;
+	}
+
+	return -1;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -4821,6 +4838,52 @@ void CTFGameRules::RecalculateControlPointState( void )
 					else
 					{
 						pTFSpawn->SetDisabled( true );
+					}
+				}
+			}
+		}
+
+		return;
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF )
+	{
+		// Taking advantage of forward spawns if possible
+		CUtlVector<CTeamControlPoint*> AllPointsVec;
+		int numFound = 0;
+
+		CBaseEntity* pEnt = gEntList.FindEntityByClassname( NULL, "team_control_point" );
+		while ( pEnt )
+		{
+			CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>( pEnt );
+
+			if ( !pPoint->IsMarkedForDeletion() )
+			{
+				int index = pPoint->GetPointIndex();
+				AllPointsVec.AddToTail( pPoint );
+				numFound++;
+			}
+
+			pEnt = gEntList.FindEntityByClassname( pEnt, "team_control_point" );
+		}
+
+		AllPointsVec.Sort( ControlPointOrderSortOverride );
+		int pos = numFound / 2;
+		int targetIndex = AllPointsVec[pos]->GetPointIndex();
+
+		for ( int iTeam = LAST_SHARED_TEAM + 1; iTeam < GetNumberOfTeams(); iTeam++ )
+		{
+			for ( int i = 0; i < ITFTeamSpawnAutoList::AutoList().Count(); ++i )
+			{
+				CTFTeamSpawn* pTFSpawn = static_cast<CTFTeamSpawn*>( ITFTeamSpawnAutoList::AutoList()[i] );
+				if ( pTFSpawn->m_iszControlPointName != NULL_STRING && pTFSpawn->GetTeamNumber() == iTeam )
+				{
+					if ( !pTFSpawn->GetControlPoint() || pTFSpawn->GetControlPoint()->GetPointIndex() != targetIndex )
+					{
+						pTFSpawn->SetDisabled( true );
+					}
+					else
+					{
+						pTFSpawn->SetDisabled( false );
 					}
 				}
 			}
@@ -4955,6 +5018,74 @@ void CTFGameRules::SetupOnRoundStart( void )
 		SetTeamGoalString( TF_TEAM_RED, "#koth_setup_goal" );
 		SetTeamRespawnWaveTime( TF_TEAM_BLUE, 6 );
 		SetTeamRespawnWaveTime( TF_TEAM_RED, 6 );
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF )
+	{
+		int nPoints = 0;
+		int iLowestPoint = 90;
+		int iHighestPoint = -90;
+		CTeamControlPoint* pLowestPoint = NULL;
+		CTeamControlPoint* pHighestPoint = NULL;
+
+		CBaseEntity* pEnt = gEntList.FindEntityByClassname( NULL, "team_control_point" );
+		while ( pEnt )
+		{
+			CTeamControlPoint *pPoint = assert_cast<CTeamControlPoint *>( pEnt );
+			if ( pPoint->GetPointIndex() < iLowestPoint )
+			{
+				iLowestPoint = pPoint->GetPointIndex();
+				pLowestPoint = pPoint;
+			}
+			if ( pPoint->GetPointIndex() > iHighestPoint )
+			{
+				iHighestPoint = pPoint->GetPointIndex();
+				pHighestPoint = pPoint;
+			}
+			nPoints++;
+			pEnt = gEntList.FindEntityByClassname( pEnt, "team_control_point" );
+		}
+
+		if ( pHighestPoint->GetDefaultOwner() == TF_TEAM_BLUE )
+		{
+			CTeamControlPoint* pTemp = pLowestPoint;
+			pLowestPoint = pHighestPoint;
+			pHighestPoint = pTemp;
+		}
+
+		if ( nPoints > 2 && pLowestPoint && pHighestPoint )
+		{
+			CCaptureFlag* redFlag = CCaptureFlag::Create( pHighestPoint->GetAbsOrigin() + Vector( 0, 0, 16.0f ), TF_FLAG_MODEL, TF_FLAGTYPE_CTF );
+			CCaptureFlag* blueFlag = CCaptureFlag::Create( pLowestPoint->GetAbsOrigin() + Vector( 0, 0, 16.0f ), TF_FLAG_MODEL, TF_FLAGTYPE_CTF );
+			redFlag->ChangeTeam( TF_TEAM_RED );
+			blueFlag->ChangeTeam( TF_TEAM_BLUE );
+			redFlag->Activate();
+			blueFlag->Activate();
+
+			for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+			{
+				CTriggerAreaCapture *pArea = static_cast< CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+				if ( pArea )
+				{
+					if ( pArea->PointIsWithin( redFlag->GetAbsOrigin() ) )
+					{
+						CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", redFlag->GetAbsOrigin(), vec3_angle, NULL ) );
+						pZone->ChangeTeam( TF_TEAM_RED );
+						DispatchSpawn( pZone );
+						pZone->SetSize( Vector( -128, -128, -32 ), Vector( 128, 128, 256 ) );
+						pZone->SetSolid( SOLID_OBB );
+					}
+					else if ( pArea->PointIsWithin( blueFlag->GetAbsOrigin() ) )
+					{
+						CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", blueFlag->GetAbsOrigin(), vec3_angle, NULL ) );
+						pZone->ChangeTeam( TF_TEAM_BLUE );
+						DispatchSpawn( pZone );
+						pZone->SetSize( Vector (-128, -128, -32 ), Vector( 128, 128, 256 ) );
+						pZone->SetSolid( SOLID_OBB );
+					}
+					pArea->Disable();
+				}
+			}
+		}
 	}
 
 	// Let all entities know that a new round is starting
