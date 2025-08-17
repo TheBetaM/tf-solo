@@ -30,6 +30,7 @@
 #include <../common/GameUI/cvarslider.h>
 #include "filesystem.h"
 #include "hud_controlpointicons.h"
+#include "achievementmgr.h"
 
 using namespace vgui;
 
@@ -1302,6 +1303,10 @@ void CTFTextToolTip::ShowTooltip( Panel *pCurrentPanel )
 
 static vgui::DHANDLE<CTFAdvancedOptionsDialog> g_pTFAdvancedOptionsDialog;
 static vgui::DHANDLE<CTFModCreditsDialog> g_pTFModCreditsDialog;
+static vgui::DHANDLE<CTFCustomMatchSettingsDialog> g_pTFCustomMatchSettingsDialog;
+static vgui::DHANDLE<CTFCustomMatchModeDialog> g_pTFCustomMatchModeDialog;
+static vgui::DHANDLE<CTFCustomMatchMapDialog> g_pTFCustomMatchMapDialog;
+static vgui::DHANDLE<CTFAchievementsDialog> g_pTFAchievementsDialog;
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback to open the game menus
@@ -1317,17 +1322,37 @@ void CL_OpenTFAdvancedOptionsDialog( const CCommand &args )
 }
 void CL_OpenTFModCreditsDialog(const CCommand& args)
 {
-	if (g_pTFModCreditsDialog.Get() == NULL)
+	if ( g_pTFModCreditsDialog.Get() == NULL )
 	{
-		g_pTFModCreditsDialog = vgui::SETUP_PANEL(new CTFModCreditsDialog(NULL));
+		g_pTFModCreditsDialog = vgui::SETUP_PANEL( new CTFModCreditsDialog( NULL ) );
 	}
 
 	g_pTFModCreditsDialog->Deploy();
 }
+void CL_OpenTFCustomMatchDialog(const CCommand& args)
+{
+	if ( g_pTFCustomMatchMapDialog.Get() == NULL )
+	{
+		g_pTFCustomMatchMapDialog = vgui::SETUP_PANEL( new CTFCustomMatchMapDialog( NULL ) );
+	}
+
+	g_pTFCustomMatchMapDialog->Deploy();
+}
+void CL_OpenTFAchievementsDialog(const CCommand& args)
+{
+	if ( g_pTFAchievementsDialog.Get() == NULL )
+	{
+		g_pTFAchievementsDialog = vgui::SETUP_PANEL( new CTFAchievementsDialog( NULL ) );
+	}
+
+	g_pTFAchievementsDialog->Deploy();
+}
 
 // the console commands
-static ConCommand opentf2options( "opentf2options", &CL_OpenTFAdvancedOptionsDialog, "Displays the TF2 Advanced Options dialog." );
-static ConCommand openmodcredits( "openmodcredits", &CL_OpenTFModCreditsDialog, "Displays the TF2 Advanced Options dialog." );
+static ConCommand opentf2options( "opentf2options", &CL_OpenTFAdvancedOptionsDialog, "Displays the Advanced Options dialog." );
+static ConCommand openmodcredits( "openmodcredits", &CL_OpenTFModCreditsDialog, "Displays the mod credits dialog." );
+static ConCommand opencustommatch( "opencustommatch", &CL_OpenTFCustomMatchDialog, "Displays the custom match dialog." );
+static ConCommand openachievements( "openachievements", &CL_OpenTFAchievementsDialog, "Displays the achievements dialog." );
 
 //-----------------------------------------------------------------------------
 // Purpose: A scroll bar that can have specified width
@@ -2483,6 +2508,8 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 }
 
 #define MOD_CREDITS_FILE "cfg/solo/mod_credits.txt"
+#define TFSOLO_CUSTOM_MATCH_CONFIG_FILE "cfg/solo/custom_match_config.txt"
+#define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/solo_config.txt"
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -2601,107 +2628,6 @@ void CTFModCreditsDialog::OnKeyCodePressed(KeyCode code)
 	else
 	{
 		BaseClass::OnKeyCodePressed(code);
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CTFModCreditsDialog::GatherCurrentValues()
-{
-	if (!m_pDescription)
-		return;
-
-	// OK
-	CheckButton* pBox;
-	TextEntry* pEdit;
-	ComboBox* pCombo;
-	CCvarSlider* pSlider;
-
-	mpcontrol_t* pList;
-
-	CScriptObject* pObj;
-	CScriptListItem* pItem;
-
-	char szValue[256];
-	char strValue[256];
-
-	pList = m_pList;
-	while (pList)
-	{
-		pObj = pList->pScrObj;
-
-		if (pObj->type == O_CATEGORY || pObj->type == O_BUTTON)
-		{
-			pList = pList->next;
-			continue;
-		}
-
-		if (!pList->pControl)
-		{
-			pObj->SetCurValue(pObj->defValue);
-			pList = pList->next;
-			continue;
-		}
-
-		switch (pObj->type)
-		{
-		case O_BOOL:
-			pBox = (CheckButton*)pList->pControl;
-			sprintf(szValue, "%s", pBox->IsSelected() ? "1" : "0");
-			break;
-		case O_NUMBER:
-			pEdit = (TextEntry*)pList->pControl;
-			pEdit->GetText(strValue, sizeof(strValue));
-			sprintf(szValue, "%s", strValue);
-			break;
-		case O_STRING:
-			pEdit = (TextEntry*)pList->pControl;
-			pEdit->GetText(strValue, sizeof(strValue));
-			sprintf(szValue, "%s", strValue);
-			break;
-		case O_LIST:
-		{
-			pCombo = (ComboBox*)pList->pControl;
-			// pCombo->GetText( strValue, sizeof( strValue ) );
-			int activeItem = pCombo->GetActiveItem();
-
-			pItem = pObj->pListItems;
-			//			int n = (int)pObj->fdefValue;
-
-			while (pItem)
-			{
-				if (!activeItem--)
-					break;
-
-				pItem = pItem->pNext;
-			}
-
-			if (pItem)
-			{
-				sprintf(szValue, "%s", pItem->szValue);
-			}
-			else  // Couln't find index
-			{
-				//assert(!("Couldn't find string in list, using default value"));
-				sprintf(szValue, "%s", pObj->defValue);
-			}
-			break;
-		}
-		case O_SLIDER:
-			pSlider = (CCvarSlider*)pList->pControl;
-			sprintf(szValue, "%.2f", pSlider->GetSliderValue());
-			break;
-		}
-
-		// Remove double quotes and % characters
-		UTIL_StripInvalidCharacters(szValue, sizeof(szValue));
-
-		V_strcpy_safe(strValue, szValue);
-
-		pObj->SetCurValue(strValue);
-
-		pList = pList->next;
 	}
 }
 
@@ -2953,6 +2879,1597 @@ void CTFModCreditsDialog::DestroyControls()
 // Purpose: 
 //-----------------------------------------------------------------------------
 void CTFModCreditsDialog::Deploy(void)
+{
+	SetVisible(true);
+	MakePopup();
+	MoveToFront();
+	SetKeyBoardInputEnabled(true);
+	SetMouseInputEnabled(true);
+	TFModalStack()->PushModal(this);
+
+	// Center it, keeping requested size
+	int x, y, ww, wt, wide, tall;
+	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
+	GetSize(wide, tall);
+	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: Constructor
+//-----------------------------------------------------------------------------
+CTFCustomMatchSettingsDialog::CTFCustomMatchSettingsDialog(vgui::Panel* parent) : BaseClass(NULL, "TFCustomMatchSettingsDialog")
+{
+	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
+	SetScheme(scheme);
+	SetProportional(true);
+
+	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+
+	m_pList = NULL;
+
+	m_pToolTip = new CTFTextToolTip(this);
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled(false);
+	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
+	m_pToolTip->SetTooltipDelay(0);
+
+	m_pDescription = new CInfoDescription();
+	m_pDescription->setDescription("SERVER_OPTIONS");
+	m_pDescription->InitFromFile(TFSOLO_CUSTOM_MATCH_CONFIG_FILE);
+	m_pDescription->TransferCurrentValues(NULL);
+
+	m_iszRequestedMap = "";
+	m_iRequestedMode = 0;
+
+	// 	MoveToCenterOfScreen();
+	// 	SetSizeable( false );
+	// 	SetDeleteSelfOnClose( true );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Destructor
+//-----------------------------------------------------------------------------
+CTFCustomMatchSettingsDialog::~CTFCustomMatchSettingsDialog()
+{
+	delete m_pDescription;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
+{
+	BaseClass::ApplySchemeSettings(pScheme);
+
+	LoadControlSettings("resource/ui/TFCustomMatchSettingsDialog.res");
+	m_pListPanel->SetFirstColumnWidth(0);
+
+	CreateControls();
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::ApplySettings(KeyValues* inResourceData)
+{
+	BaseClass::ApplySettings(inResourceData);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::OnClose()
+{
+	BaseClass::OnClose();
+
+	TFModalStack()->PopModal(this);
+	MarkForDeletion();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  : *command - 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::OnCommand(const char* command)
+{
+	if ( !stricmp(command, "Ok") )
+	{
+		StartMatch();
+		OnClose();
+		return;
+	}
+	else if (!stricmp(command, "Close"))
+	{
+		OnClose();
+		if ( g_pTFCustomMatchModeDialog.Get() == NULL )
+		{
+			g_pTFCustomMatchModeDialog = vgui::SETUP_PANEL( new CTFCustomMatchModeDialog( NULL ) );
+		}
+		g_pTFCustomMatchModeDialog->Deploy( m_iszRequestedMap );
+
+		return;
+	}
+
+	BaseClass::OnCommand(command);
+}
+
+void CTFCustomMatchSettingsDialog::OnKeyCodeTyped(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (code == KEY_ESCAPE)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodeTyped(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::OnKeyCodePressed(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (GetBaseButtonCode(code) == KEY_XBUTTON_B || GetBaseButtonCode(code) == STEAMCONTROLLER_B || GetBaseButtonCode(code) == STEAMCONTROLLER_START)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodePressed(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::CreateControls()
+{
+	DestroyControls();
+
+	if ( !m_iszRequestedMap )
+	{
+		return;
+	}
+
+	// Go through desciption creating controls
+	CScriptObject* pObj;
+
+	pObj = m_pDescription->pObjList;
+
+	mpcontrol_t* pCtrl;
+
+	Button* pButton;
+	CheckButton* pBox;
+	TextEntry* pEdit;
+	ComboBox* pCombo;
+	CCvarSlider* pSlider;
+	CScriptListItem* pListItem;
+
+	Panel* objParent = m_pListPanel;
+
+	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
+	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
+	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
+	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
+	Color creditColor = Color(255, 255, 255, 255);
+
+	while (pObj)
+	{
+		if (pObj->type == O_OBSOLETE)
+		{
+			pObj = pObj->pNext;
+			continue;
+		}
+
+		pCtrl = new mpcontrol_t(objParent, "mpcontrol_t");
+		pCtrl->type = pObj->type;
+
+		// Force it to invalidate scheme now, so we can change color afterwards and have it persist
+		pCtrl->InvalidateLayout(true, true);
+
+		switch (pCtrl->type)
+		{
+		case O_BOOL:
+			pBox = new CheckButton(pCtrl, "DescCheckButton", pObj->prompt);
+			pBox->SetSelected(pObj->fdefValue != 0.0f ? true : false);
+
+			pCtrl->pControl = (Panel*)pBox;
+			pBox->SetFont(hTextFont);
+
+			pBox->InvalidateLayout(true, true);
+
+			pBox->SetFgColor(tanDark);
+			pBox->SetDefaultColor(tanDark, pBox->GetBgColor());
+			pBox->SetArmedColor(tanDark, pBox->GetBgColor());
+			pBox->SetDepressedColor(tanDark, pBox->GetBgColor());
+			pBox->SetSelectedColor(tanDark, pBox->GetBgColor());
+			pBox->SetHighlightColor(tanDark);
+			pBox->GetCheckImage()->SetColor(tanDark);
+			break;
+		case O_STRING:
+		case O_NUMBER:
+			pEdit = new TextEntry(pCtrl, "DescTextEntry");
+			pEdit->InsertString(pObj->defValue);
+			pCtrl->pControl = (Panel*)pEdit;
+			pEdit->SetFont(hTextFont);
+
+			pEdit->InvalidateLayout(true, true);
+			pEdit->SetBgColor(Color(0, 0, 0, 255));
+			break;
+		case O_LIST:
+		{
+			pCombo = new ComboBox(pCtrl, "DescComboBox", 5, false);
+
+			// track which row matches the current value
+			int iRow = -1;
+			int iCount = 0;
+			pListItem = pObj->pListItems;
+			while (pListItem)
+			{
+				if (iRow == -1 && !Q_stricmp(pListItem->szValue, pObj->curValue))
+					iRow = iCount;
+
+				pCombo->AddItem(pListItem->szItemText, NULL);
+				pListItem = pListItem->pNext;
+				++iCount;
+			}
+
+
+			pCombo->ActivateItemByRow(iRow);
+
+			pCtrl->pControl = (Panel*)pCombo;
+			pCombo->SetFont(hTextFont);
+		}
+		break;
+		case O_SLIDER:
+			pSlider = new CCvarSlider(pCtrl, "DescSlider", "Test", pObj->fMin, pObj->fMax, pObj->cvarname, false);
+			pCtrl->pControl = (Panel*)pSlider;
+			break;
+		case O_BUTTON:
+			pButton = new CExButton(pCtrl, "DescButton", pObj->prompt, this, pObj->defValue);
+			pButton->SetFont(hTextFont);
+			pCtrl->pControl = (Panel*)pButton;
+			break;
+		case O_CATEGORY:
+			pCtrl->SetBorder(pScheme->GetBorder("OptionsCategoryBorder"));
+			break;
+		default:
+			break;
+		}
+
+		if (pCtrl->type != O_BOOL && pCtrl->type != O_BUTTON)
+		{
+			pCtrl->pPrompt = new vgui::Label(pCtrl, "DescLabel", "");
+			pCtrl->pPrompt->SetContentAlignment(vgui::Label::a_west);
+			pCtrl->pPrompt->SetTextInset(5, 0);
+			pCtrl->pPrompt->SetText(pObj->prompt);
+			pCtrl->pPrompt->SetFont(hTextFont);
+
+			pCtrl->pPrompt->InvalidateLayout(true, true);
+
+			if (pCtrl->type == O_CATEGORY)
+			{
+				pCtrl->pPrompt->SetFont(pScheme->GetFont("HudFontSmallBold", true));
+				pCtrl->pPrompt->SetFgColor(pScheme->GetColor("TanLight", Color(255, 0, 0, 255)));
+			}
+			else
+			{
+				pCtrl->pPrompt->SetFgColor(tanDark);
+			}
+		}
+
+		pCtrl->pScrObj = pObj;
+
+		switch (pCtrl->type)
+		{
+		case O_BOOL:
+		case O_STRING:
+		case O_NUMBER:
+		case O_LIST:
+		case O_BUTTON:
+		case O_CATEGORY:
+			pCtrl->SetSize(m_iControlW, m_iControlH);
+			break;
+		case O_SLIDER:
+			pCtrl->SetSize(m_iSliderW, m_iSliderH);
+			break;
+		default:
+			break;
+		}
+
+		// Hook up the tooltip, if the entry has one
+		if (pObj->tooltip && pObj->tooltip[0])
+		{
+			if (pCtrl->pPrompt)
+			{
+				pCtrl->pPrompt->SetTooltip(m_pToolTip, pObj->tooltip);
+			}
+			else
+			{
+				pCtrl->SetTooltip(m_pToolTip, pObj->tooltip);
+				pCtrl->pControl->SetTooltip(m_pToolTip, pObj->tooltip);
+			}
+		}
+
+		m_pListPanel->AddItem(NULL, pCtrl);
+
+		// Link it in
+		if (!m_pList)
+		{
+			m_pList = pCtrl;
+			pCtrl->next = NULL;
+		}
+		else
+		{
+			mpcontrol_t* p;
+			p = m_pList;
+			while (p)
+			{
+				if (!p->next)
+				{
+					p->next = pCtrl;
+					pCtrl->next = NULL;
+					break;
+				}
+				p = p->next;
+			}
+		}
+
+		pObj = pObj->pNext;
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::DestroyControls()
+{
+	mpcontrol_t* p, * n;
+
+	p = m_pList;
+	while (p)
+	{
+		n = p->next;
+		//
+		if (p->pControl)
+		{
+			p->pControl->MarkForDeletion();
+			p->pControl = NULL;
+		}
+		if (p->pPrompt)
+		{
+			p->pPrompt->MarkForDeletion();
+			p->pPrompt = NULL;
+		}
+		delete p;
+		p = n;
+	}
+
+	m_pList = NULL;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::Deploy( const char* map, int mode )
+{
+	m_iszRequestedMap = V_strdup(map);
+	m_iRequestedMode = mode;
+
+	SetVisible(true);
+	MakePopup();
+	MoveToFront();
+	SetKeyBoardInputEnabled(true);
+	SetMouseInputEnabled(true);
+	TFModalStack()->PushModal(this);
+
+	// Center it, keeping requested size
+	int x, y, ww, wt, wide, tall;
+	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
+	GetSize(wide, tall);
+	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::GatherCurrentValues()
+{
+	if ( !m_pDescription )
+		return;
+
+	// OK
+	CheckButton* pBox;
+	TextEntry* pEdit;
+	ComboBox* pCombo;
+	CCvarSlider* pSlider;
+
+	mpcontrol_t* pList;
+
+	CScriptObject* pObj;
+	CScriptListItem* pItem;
+
+	char szValue[256];
+	char strValue[256];
+
+	pList = m_pList;
+	while (pList)
+	{
+		pObj = pList->pScrObj;
+
+		if (pObj->type == O_CATEGORY || pObj->type == O_BUTTON)
+		{
+			pList = pList->next;
+			continue;
+		}
+
+		if (!pList->pControl)
+		{
+			pObj->SetCurValue(pObj->defValue);
+			pList = pList->next;
+			continue;
+		}
+
+		switch (pObj->type)
+		{
+		case O_BOOL:
+			pBox = (CheckButton*)pList->pControl;
+			sprintf(szValue, "%s", pBox->IsSelected() ? "1" : "0");
+			break;
+		case O_NUMBER:
+			pEdit = (TextEntry*)pList->pControl;
+			pEdit->GetText(strValue, sizeof(strValue));
+			sprintf(szValue, "%s", strValue);
+			break;
+		case O_STRING:
+			pEdit = (TextEntry*)pList->pControl;
+			pEdit->GetText(strValue, sizeof(strValue));
+			sprintf(szValue, "%s", strValue);
+			break;
+		case O_LIST:
+		{
+			pCombo = (ComboBox*)pList->pControl;
+			// pCombo->GetText( strValue, sizeof( strValue ) );
+			int activeItem = pCombo->GetActiveItem();
+
+			pItem = pObj->pListItems;
+			//			int n = (int)pObj->fdefValue;
+
+			while (pItem)
+			{
+				if (!activeItem--)
+					break;
+
+				pItem = pItem->pNext;
+			}
+
+			if (pItem)
+			{
+				sprintf(szValue, "%s", pItem->szValue);
+			}
+			else  // Couln't find index
+			{
+				//assert(!("Couldn't find string in list, using default value"));
+				sprintf(szValue, "%s", pObj->defValue);
+			}
+			break;
+		}
+		case O_SLIDER:
+			pSlider = (CCvarSlider*)pList->pControl;
+			sprintf(szValue, "%.2f", pSlider->GetSliderValue());
+			break;
+		}
+
+		// Remove double quotes and % characters
+		UTIL_StripInvalidCharacters(szValue, sizeof(szValue));
+
+		V_strcpy_safe(strValue, szValue);
+
+		pObj->SetCurValue(strValue);
+
+		pList = pList->next;
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchSettingsDialog::StartMatch(void)
+{
+	engine->ClientCmd_Unrestricted( "disconnect\n" );
+
+	// reset server enforced cvars
+	g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
+	g_pCVar->RevertFlaggedConVars( FCVAR_CHEAT );
+
+	// Get the values from the controls:
+	GatherCurrentValues();
+
+	// Apply the cvars
+	if ( m_pDescription )
+	{
+		m_pDescription->WriteToConfig();
+	}
+
+	CFmtStr1024 fmtModeCommand(
+		"tf_gamemode_override %u\n", m_iRequestedMode
+	);
+	engine->ClientCmd_Unrestricted( fmtModeCommand.Access() );
+	CFmtStr1024 fmtMapCommand(
+		"wait\nwait\nmaxplayers 32\n\nprogress_enable\nmap %s\n", m_iszRequestedMap
+	);
+	engine->ClientCmd_Unrestricted( fmtMapCommand.Access() );
+	//GetMMDashboard()->OnCommand("dimmer_hide");
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Constructor
+//-----------------------------------------------------------------------------
+CTFCustomMatchModeDialog::CTFCustomMatchModeDialog(vgui::Panel* parent) : BaseClass(NULL, "TFCustomMatchModeDialog")
+{
+	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
+	SetScheme(scheme);
+	SetProportional(true);
+
+	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+
+	m_TitleLabel = new CExLabel(this, "TitleLabel", "");
+
+	m_pToolTip = new CTFTextToolTip(this);
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled(false);
+	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
+	m_pToolTip->SetTooltipDelay(0);
+
+	m_iszRequestedMap = "";
+	m_iRequestedMode = 0;
+
+	// 	MoveToCenterOfScreen();
+	// 	SetSizeable( false );
+	// 	SetDeleteSelfOnClose( true );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Destructor
+//-----------------------------------------------------------------------------
+CTFCustomMatchModeDialog::~CTFCustomMatchModeDialog()
+{
+	
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
+{
+	BaseClass::ApplySchemeSettings(pScheme);
+
+	LoadControlSettings("resource/ui/TFCustomMatchModeDialog.res");
+	m_pListPanel->SetFirstColumnWidth(0);
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::ApplySettings(KeyValues* inResourceData)
+{
+	BaseClass::ApplySettings(inResourceData);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::OnClose()
+{
+	BaseClass::OnClose();
+
+	TFModalStack()->PopModal(this);
+	MarkForDeletion();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  : *command - 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::OnCommand(const char* command)
+{
+	if ( !stricmp( command, "Ok" ))
+	{
+		OnClose();
+		return;
+	}
+	else if ( !stricmp( command, "Close" ) )
+	{
+		OnClose();
+		if ( g_pTFCustomMatchMapDialog.Get() == NULL )
+		{
+			g_pTFCustomMatchMapDialog = vgui::SETUP_PANEL( new CTFCustomMatchMapDialog( NULL ) );
+		}
+		g_pTFCustomMatchMapDialog->Deploy();
+
+		return;
+	}
+	else if ( !V_strnicmp( command, "map$", 4 ) )
+	{
+		CUtlStringList outStr;
+		V_SplitString( command, "$", outStr );
+		m_iszRequestedMap = V_strdup( outStr[1] );
+		m_iRequestedMode = 0;
+
+		if ( g_pTFCustomMatchSettingsDialog.Get() == NULL )
+		{
+			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
+		}
+		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode );
+
+		OnClose();
+		return;
+	}
+	else if ( !V_strnicmp( command, "mode$", 4 ) )
+	{
+		CUtlStringList outStr;
+		V_SplitString( command, "$", outStr );
+		m_iRequestedMode = V_atoi( outStr[1] );
+
+		if ( g_pTFCustomMatchSettingsDialog.Get() == NULL )
+		{
+			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
+		}
+		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode );
+
+		OnClose();
+		return;
+	}
+
+	BaseClass::OnCommand(command);
+}
+
+void CTFCustomMatchModeDialog::OnKeyCodeTyped(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (code == KEY_ESCAPE)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodeTyped(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::OnKeyCodePressed(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (GetBaseButtonCode(code) == KEY_XBUTTON_B || GetBaseButtonCode(code) == STEAMCONTROLLER_B || GetBaseButtonCode(code) == STEAMCONTROLLER_START)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodePressed(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::CreateControls()
+{
+	DestroyControls();
+
+	if ( !m_iszRequestedMap )
+	{
+		return;
+	}
+
+	Panel* objParent = m_pListPanel;
+
+	KeyValuesAD config("solo_config");
+	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
+	{
+		Msg("Unable to parse solo_config.txt into keyvalues.\n");
+		return;
+	}
+	KeyValues* maps = config->FindKey("maps");
+	if (!maps)
+	{
+		return;
+	}
+	KeyValues* map = maps->FindKey( m_iszRequestedMap );
+	if (!map)
+	{
+		return;
+	}
+
+	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
+	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
+	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
+	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
+	Color textColor = Color(255, 255, 255, 255);
+	Color textShadowColor = Color(0, 0, 0, 255);
+	Color textAltColor = Color(0, 255, 0, 255);
+
+	struct ModeOption
+	{
+		int ModeOverride;
+		const char* MapAlt;
+		const char* ModeName;
+	};
+	enum
+	{
+		OVERRIDE_OFF = 0,
+		OVERRIDE_NOMODE,
+		OVERRIDE_ARENA,
+		OVERRIDE_KOTH,
+		OVERRIDE_CTF,
+		OVERRIDE_PD,
+	};
+
+	if ( m_TitleLabel )
+	{
+		m_TitleLabel->SetText( map->GetString("name") );
+	}
+	m_pListPanel->SetNumColumns( 4 );
+
+	CUtlVector<ModeOption> possibleModes;
+
+	ModeOption mode0;
+	mode0.ModeOverride = OVERRIDE_OFF;
+	mode0.MapAlt = NULL_STRING;
+	mode0.ModeName = map->GetString("modename");
+	possibleModes.AddToTail( mode0 );
+
+	KeyValues* alts = map->FindKey( "alts" );
+	if ( alts )
+	{
+		KeyValues* key = alts->GetFirstSubKey();
+		while (key)
+		{
+			KeyValues* altmap = maps->FindKey( key->GetName() );
+			if ( !altmap )
+			{
+				key = key->GetNextKey();
+				continue;
+			}
+
+			ModeOption modemap;
+			modemap.ModeOverride = 0;
+			modemap.MapAlt = V_strdup( key->GetName() );
+			modemap.ModeName = V_strdup( altmap->GetString("modename") );
+
+			possibleModes.AddToTail( modemap );
+
+			key = key->GetNextKey();
+		}
+	}
+
+	KeyValues* tags = map->FindKey("tags");
+	if ( tags )
+	{
+		//if (tags->GetInt("allow_arena") == 1)
+			ModeOption mode2;
+			mode2.ModeOverride = OVERRIDE_ARENA;
+			mode2.MapAlt = NULL_STRING;
+			mode2.ModeName = "#Gametype_Arena";
+			possibleModes.AddToTail( mode2 );
+		//if (tags->GetInt("allow_koth") == 1)
+			ModeOption mode3;
+			mode3.ModeOverride = OVERRIDE_KOTH;
+			mode3.MapAlt = NULL_STRING;
+			mode3.ModeName = "#Gametype_Koth";
+			possibleModes.AddToTail( mode3 );
+		//if (tags->GetInt("allow_ctf") == 1)
+			ModeOption mode4;
+			mode4.ModeOverride = OVERRIDE_CTF;
+			mode4.MapAlt = NULL_STRING;
+			mode4.ModeName = "#Gametype_CTF";
+			possibleModes.AddToTail( mode4 );
+		//if (tags->GetInt("allow_pd") == 1)
+			ModeOption mode5;
+			mode5.ModeOverride = OVERRIDE_PD;
+			mode5.MapAlt = NULL_STRING;
+			mode5.ModeName = "#Gametype_PlayerDestruction";
+			possibleModes.AddToTail( mode5 );
+	}
+
+	ModeOption mode1;
+	mode1.ModeOverride = OVERRIDE_NOMODE;
+	mode1.MapAlt = NULL_STRING;
+	mode1.ModeName = "#TFSOLO_CustomMatch_NoMode";
+	possibleModes.AddToTail( mode1 );
+
+	FOR_EACH_VEC( possibleModes, a )
+	{
+		ModeOption mode = possibleModes[a];
+
+		EditablePanel* holder = new EditablePanel(objParent, "ModeHolder");
+		holder->SetSize(256, 256);
+
+		ScalableImagePanel* mapIcon = new ScalableImagePanel(holder, "MapImage");
+		mapIcon->SetSize(256, 256);
+		mapIcon->SetZPos(5);
+		mapIcon->SetMouseInputEnabled(false);
+		mapIcon->SetKeyBoardInputEnabled(false);
+		if ( !stricmp(mode.ModeName, "#Gametype_Arena") )
+		{
+			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_CP"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_cp");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_AttackDefense"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_attackdefend");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_CTF"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_ctf");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_Powerup"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_powerup");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_Koth"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_koth");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_Passtime"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_passtime");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_Escort"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_payload");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_EscortRace"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_payloadrace");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_SD"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_sd");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_TerritorialControl"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_cp");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_MVM"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_mvm");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_RobotDestruction"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_robotdestruction_beta");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_Training"))
+		{
+			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_PlayerDestruction"))
+		{
+			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_TOW"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_payload");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_VSH"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_operation_gunmettle");
+		}
+		else if (!stricmp(mode.ModeName, "#Gametype_ZI"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_halloween");
+		}
+		else
+		{
+			mapIcon->SetImage("illustrations/quickplay");
+		}
+		ScalableImagePanel* mapIconBG = new ScalableImagePanel(holder, "MapImageBG");
+		mapIconBG->SetImage("illustrations/bg");
+		mapIconBG->SetSize(256, 256);
+		mapIconBG->SetZPos(4);
+		mapIconBG->SetMouseInputEnabled(false);
+		mapIconBG->SetKeyBoardInputEnabled(false);
+
+		CExLabel* label = new CExLabel(holder, "DescLabel", mode.ModeName);
+		label->SetContentAlignment(vgui::Label::a_southwest);
+		label->SetTextInset(5, 0);
+		label->SetFont(hTextFont);
+		label->InvalidateLayout(true, true);
+		label->SetFgColor(textColor);
+		label->SetZPos(10);
+		label->SetSize(256, 256);
+		label->SetMouseInputEnabled(false);
+		label->SetKeyBoardInputEnabled(false);
+		//label->SetWrap(true);
+
+		CExLabel* labelShadow = new CExLabel(holder, "DescLabelShadow", mode.ModeName);
+		labelShadow->SetContentAlignment(vgui::Label::a_southwest);
+		labelShadow->SetTextInset(8, 3);
+		labelShadow->SetFont(hTextFont);
+		labelShadow->InvalidateLayout(true, true);
+		labelShadow->SetFgColor(textShadowColor);
+		labelShadow->SetZPos(9);
+		labelShadow->SetSize(256, 256);
+		labelShadow->SetMouseInputEnabled(false);
+		labelShadow->SetKeyBoardInputEnabled(false);
+		//labelShadow->SetWrap(true);
+
+		if ( mode.ModeOverride == 0 )
+		{
+			label->SetFgColor( textAltColor );
+		}
+
+		if ( mode.ModeOverride == 0 && mode.MapAlt && V_strlen(mode.MapAlt) > 1 )
+		{
+			CFmtStr1024 fmtModeCommand(
+				"map$%s", mode.MapAlt
+			);
+			CExButton* mapButton = new CExButton(holder, "ModeButton", "", this, fmtModeCommand);
+			mapButton->SetSize(256, 256);
+			mapButton->SetZPos(3);
+			mapButton->AddActionSignalTarget(this);
+			mapButton->SetVisible(true);
+		}
+		else
+		{
+			CFmtStr1024 fmtModeCommand(
+				"mode$%u", mode.ModeOverride
+			);
+			CExButton* mapButton = new CExButton(holder, "ModeButton", "", this, fmtModeCommand);
+			mapButton->SetSize(256, 256);
+			mapButton->SetZPos(3);
+			mapButton->AddActionSignalTarget(this);
+			mapButton->SetVisible(true);
+		}
+
+		m_pListPanel->AddItem(NULL, holder);
+	}
+
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::DestroyControls()
+{
+	
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::Deploy( const char* map )
+{
+	m_iszRequestedMap = V_strdup(map);
+	
+	CreateControls();
+
+	SetVisible(true);
+	MakePopup();
+	MoveToFront();
+	SetKeyBoardInputEnabled(true);
+	SetMouseInputEnabled(true);
+	TFModalStack()->PushModal(this);
+
+	// Center it, keeping requested size
+	int x, y, ww, wt, wide, tall;
+	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
+	GetSize(wide, tall);
+	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Constructor
+//-----------------------------------------------------------------------------
+CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClass(NULL, "TFCustomMatchMapDialog")
+{
+	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
+	SetScheme(scheme);
+	SetProportional(true);
+
+	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+
+	m_pToolTip = new CTFTextToolTip(this);
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled(false);
+	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
+	m_pToolTip->SetTooltipDelay(0);
+
+	m_iszRequestedMap = "";
+
+	// 	MoveToCenterOfScreen();
+	// 	SetSizeable( false );
+	// 	SetDeleteSelfOnClose( true );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Destructor
+//-----------------------------------------------------------------------------
+CTFCustomMatchMapDialog::~CTFCustomMatchMapDialog()
+{
+
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
+{
+	BaseClass::ApplySchemeSettings(pScheme);
+
+	LoadControlSettings("resource/ui/TFCustomMatchMapDialog.res");
+	m_pListPanel->SetFirstColumnWidth(0);
+
+	CreateControls();
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::ApplySettings(KeyValues* inResourceData)
+{
+	BaseClass::ApplySettings(inResourceData);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::OnClose()
+{
+	BaseClass::OnClose();
+
+	TFModalStack()->PopModal(this);
+	MarkForDeletion();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  : *command - 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::OnCommand(const char* command)
+{
+	if ( !stricmp( command, "Ok" ) )
+	{
+		if ( g_pTFCustomMatchModeDialog.Get() == NULL )
+		{
+			g_pTFCustomMatchModeDialog = vgui::SETUP_PANEL( new CTFCustomMatchModeDialog( NULL ) );
+		}
+		g_pTFCustomMatchModeDialog->Deploy( m_iszRequestedMap );
+
+		OnClose();
+		return;
+	}
+	else if ( !stricmp( command, "Close" ) )
+	{
+		OnClose();
+		return;
+	}
+	else if ( !V_strnicmp(command, "map$", 4) )
+	{
+		CUtlStringList outStr;
+		V_SplitString(command, "$", outStr);
+		m_iszRequestedMap = V_strdup(outStr[1]);
+
+		if (g_pTFCustomMatchModeDialog.Get() == NULL)
+		{
+			g_pTFCustomMatchModeDialog = vgui::SETUP_PANEL( new CTFCustomMatchModeDialog( NULL ) );
+		}
+		g_pTFCustomMatchModeDialog->Deploy( m_iszRequestedMap );
+
+		OnClose();
+		return;
+	}
+
+	BaseClass::OnCommand(command);
+}
+
+void CTFCustomMatchMapDialog::OnKeyCodeTyped(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (code == KEY_ESCAPE)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodeTyped(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::OnKeyCodePressed(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (GetBaseButtonCode(code) == KEY_XBUTTON_B || GetBaseButtonCode(code) == STEAMCONTROLLER_B || GetBaseButtonCode(code) == STEAMCONTROLLER_START)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodePressed(code);
+	}
+}
+
+struct CTFCustomMatchMapInfo
+{
+	const char* m_Name;
+	const char* m_ModeName;
+	const char* m_ThumbArt;
+	const char* m_MapFile;
+};
+
+int TFCustomMatchMapSort( CTFCustomMatchMapInfo const* p1, CTFCustomMatchMapInfo const* p2 )
+{
+	return -V_strcmp( (p2)->m_Name, (p1)->m_Name );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::CreateControls()
+{
+	DestroyControls();
+
+	Panel* objParent = m_pListPanel;
+
+	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
+	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
+	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
+	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
+	Color textColor = Color(255, 255, 255, 255);
+	Color textShadowColor = Color(0, 0, 0, 255);
+
+	CUtlVector<CTFCustomMatchMapInfo> mapSort;
+
+	KeyValuesAD config("solo_config");
+	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
+	{
+		Msg("Unable to parse solo_config.txt into keyvalues.\n");
+		return;
+	}
+	KeyValues* maps = config->FindKey("maps");
+	if (!maps)
+	{
+		return;
+	}
+	KeyValues* key = maps->GetFirstSubKey();
+	while (key)
+	{
+		if ( key->GetInt("disabled") == 1 )
+		{
+			key = key->GetNextKey();
+			continue;
+		}
+		if ( !V_strnicmp( key->GetName(), "workshop_", 9 ) && engine->GetAppID() != 440 )
+		{
+			key = key->GetNextKey();
+			continue;
+		}
+		KeyValues* tags = key->FindKey("tags");
+		if ( tags )
+		{
+			if ( tags->GetInt("custom_hide") == 1)
+			{
+				key = key->GetNextKey();
+				continue;
+			}
+		}
+
+		CTFCustomMatchMapInfo info;
+		info.m_MapFile = key->GetName();
+		info.m_Name = key->GetString("name");
+		info.m_ModeName = key->GetString("modename");
+		info.m_ThumbArt = key->GetString("thumbArt");
+
+		mapSort.AddToTail( info );
+		key = key->GetNextKey();
+	}
+
+	mapSort.Sort( TFCustomMatchMapSort );
+	m_pListPanel->SetNumColumns( 4 );
+
+	bool bFirstItem = false;
+
+	FOR_EACH_VEC( mapSort, a )
+	{
+		CTFCustomMatchMapInfo map = mapSort[a];
+
+		EditablePanel* holder = new EditablePanel(objParent, "MapHolder");
+		holder->SetSize(256, 192);
+
+		ScalableImagePanel* mapIcon = new ScalableImagePanel(holder, "MapImage");
+		mapIcon->SetImage(map.m_ThumbArt);
+		mapIcon->SetSize(256, 256);
+		mapIcon->SetZPos(5);
+		mapIcon->SetMouseInputEnabled(false);
+		mapIcon->SetKeyBoardInputEnabled(false);
+
+		CExLabel* label = new CExLabel(holder, "DescLabel", map.m_Name);
+		label->SetContentAlignment(vgui::Label::a_southwest);
+		label->SetTextInset(5, 0);
+		label->SetFont(hTextFont);
+		label->InvalidateLayout(true, true);
+		label->SetFgColor(textColor);
+		label->SetZPos(10);
+		label->SetSize(256, 192);
+		label->SetMouseInputEnabled(false);
+		label->SetKeyBoardInputEnabled(false);
+		//label->SetWrap(true);
+
+		CExLabel* labelShadow = new CExLabel(holder, "DescLabelShadow", map.m_Name);
+		labelShadow->SetContentAlignment(vgui::Label::a_southwest);
+		labelShadow->SetTextInset(8, 3);
+		labelShadow->SetFont(hTextFont);
+		labelShadow->InvalidateLayout(true, true);
+		labelShadow->SetFgColor(textShadowColor);
+		labelShadow->SetZPos(9);
+		labelShadow->SetSize(256, 192);
+		labelShadow->SetMouseInputEnabled(false);
+		labelShadow->SetKeyBoardInputEnabled(false);
+		//labelShadow->SetWrap(true);
+
+		CFmtStr1024 fmtMapCommand(
+			"map$%s", map.m_MapFile
+		);
+		CExButton* mapButton = new CExButton(holder, "MapButton", "", this, fmtMapCommand);
+		mapButton->SetSize(256, 192);
+		mapButton->SetZPos(4);
+		mapButton->AddActionSignalTarget(this);
+		mapButton->SetVisible(true);
+		if ( !bFirstItem )
+		{
+			mapButton->SetArmed(true);
+			m_iszRequestedMap = V_strdup(map.m_MapFile);
+			bFirstItem = true;
+		}
+
+		m_pListPanel->AddItem(NULL, holder);
+	}
+
+
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::DestroyControls()
+{
+	
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchMapDialog::Deploy(void)
+{
+	SetVisible(true);
+	MakePopup();
+	MoveToFront();
+	SetKeyBoardInputEnabled(true);
+	SetMouseInputEnabled(true);
+	TFModalStack()->PushModal(this);
+
+	// Center it, keeping requested size
+	int x, y, ww, wt, wide, tall;
+	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
+	GetSize(wide, tall);
+	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Constructor
+//-----------------------------------------------------------------------------
+CTFAchievementsDialog::CTFAchievementsDialog(vgui::Panel* parent) : BaseClass(NULL, "TFAchievementsDialog")
+{
+	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
+	SetScheme(scheme);
+	SetProportional(true);
+
+	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+
+	m_pList = NULL;
+
+	m_pToolTip = new CTFTextToolTip(this);
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled(false);
+	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
+	m_pToolTip->SetTooltipDelay(0);
+
+	// 	MoveToCenterOfScreen();
+	// 	SetSizeable( false );
+	// 	SetDeleteSelfOnClose( true );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Destructor
+//-----------------------------------------------------------------------------
+CTFAchievementsDialog::~CTFAchievementsDialog()
+{
+	
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
+{
+	BaseClass::ApplySchemeSettings(pScheme);
+
+	LoadControlSettings("resource/ui/TFAchievementsDialog.res");
+	m_pListPanel->SetFirstColumnWidth(0);
+
+	CreateControls();
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::ApplySettings(KeyValues* inResourceData)
+{
+	BaseClass::ApplySettings(inResourceData);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::OnClose()
+{
+	BaseClass::OnClose();
+
+	TFModalStack()->PopModal(this);
+	MarkForDeletion();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  : *command - 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::OnCommand(const char* command)
+{
+	if ( !stricmp( command, "Ok" ) )
+	{
+		OnClose();
+		return;
+	}
+	else if ( !stricmp( command, "Close" ) )
+	{
+		OnClose();
+		return;
+	}
+
+	BaseClass::OnCommand(command);
+}
+
+void CTFAchievementsDialog::OnKeyCodeTyped(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (code == KEY_ESCAPE)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodeTyped(code);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::OnKeyCodePressed(KeyCode code)
+{
+	// force ourselves to be closed if the escape key it pressed
+	if (GetBaseButtonCode(code) == KEY_XBUTTON_B || GetBaseButtonCode(code) == STEAMCONTROLLER_B || GetBaseButtonCode(code) == STEAMCONTROLLER_START)
+	{
+		OnClose();
+	}
+	else
+	{
+		BaseClass::OnKeyCodePressed(code);
+	}
+}
+
+
+int TFAchievementsListSort( CBaseAchievement* const* p1, CBaseAchievement* const* p2 )
+{
+	if ( !(*p2)->IsAchieved() && (*p1)->IsAchieved() )
+	{
+		return 1;
+	}
+	else if ( (*p2)->IsAchieved() && !(*p1)->IsAchieved() )
+	{
+		return -1;
+	}
+
+	if ((*p2)->GetAchievementID() > (*p1)->GetAchievementID())
+	{
+		return -1;
+	}
+
+	return 1;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::CreateControls()
+{
+	DestroyControls();
+
+	CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr *>( engine->GetAchievementMgr() );
+	if ( !pAchievementMgr )
+		return;
+
+	mpcontrol_t* pCtrl;
+
+	Button* pButton;
+	CheckButton* pBox;
+	TextEntry* pEdit;
+	ComboBox* pCombo;
+	CCvarSlider* pSlider;
+	CScriptListItem* pListItem;
+
+	Panel* objParent = m_pListPanel;
+
+	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
+	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
+	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
+	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
+	Color tfOrange = pScheme->GetColor("TFOrange", Color(145, 73, 59, 255));
+	Color creditColor = Color(255, 255, 255, 255);
+
+	CUtlVector<CBaseAchievement*> achSort;
+	FOR_EACH_VEC(pAchievementMgr->m_vecAchievement, a)
+	{
+		achSort.AddToTail(pAchievementMgr->m_vecAchievement[a]);
+	}
+	achSort.Sort( TFAchievementsListSort );
+
+	FOR_EACH_VEC( achSort, a )
+	{
+		CCustomAchievement *pAch = dynamic_cast<CCustomAchievement *>( achSort[a] );
+		CFmtStr1024 fmtAchName(
+			"#%s_NAME", pAch->GetName()
+		);
+		const wchar_t* nameLoc = g_pVGuiLocalize->Find( fmtAchName );
+		wchar_t wszNumber1[16] = L"";
+		wchar_t wszNumber2[16] = L"";
+		wchar_t wszFmt[16] = L"%s1 (%s2/%s3)";
+		V_swprintf_safe(wszNumber1, L"%i", pAch->GetCount());
+		V_swprintf_safe(wszNumber2, L"%i", pAch->GetGoal());
+		wchar_t wszText[1024] = L"";
+		g_pVGuiLocalize->ConstructString_safe( wszText, wszFmt, 3, nameLoc, wszNumber1, wszNumber2 );
+		CFmtStr1024 fmtAchDesc(
+			"#%s_DESC", pAch->GetName()
+		);
+		CFmtStr1024 fmtAchImage(
+			"achievements/%s", pAch->GetName()
+		);
+		CFmtStr1024 fmtAchImageBW(
+			"achievements/%s_bw", pAch->GetName()
+		);
+
+		Color targetColor = creditColor;
+		if ( pAch->IsAchieved() )
+		{
+			targetColor = tanDark;
+		}
+
+		pCtrl = new mpcontrol_t(objParent, "mpcontrol_t");
+		pCtrl->type = O_BOOL;
+		pCtrl->InvalidateLayout( true, true );
+
+		ImagePanel* achIcon = new vgui::ImagePanel( pCtrl, "AchImage" );
+		pCtrl->pControl = achIcon;
+		if ( pAch->IsAchieved() )
+		{
+			achIcon->SetImage( fmtAchImage );
+		}
+		else
+		{
+			achIcon->SetImage( fmtAchImageBW );
+		}
+		
+		pCtrl->pPrompt = new vgui::Label(pCtrl, "DescLabel", "");
+		pCtrl->pPrompt->SetContentAlignment( vgui::Label::a_east );
+		pCtrl->pPrompt->SetTextInset(10, 0);
+		pCtrl->pPrompt->SetText(wszText);
+		pCtrl->pPrompt->SetFont(hTextFont);
+		pCtrl->pPrompt->InvalidateLayout(true, true);
+		pCtrl->pPrompt->SetFgColor(targetColor);
+		pCtrl->pPrompt->SetDisabledFgColor1(targetColor);
+		pCtrl->pPrompt->SetDisabledFgColor2(targetColor);
+
+		pCtrl->pPrompt->SetTooltip(m_pToolTip, fmtAchDesc);
+		achIcon->SetTooltip(m_pToolTip, fmtAchDesc);
+
+		pCtrl->SetSize(m_iControlW, 70);
+
+		m_pListPanel->AddItem(NULL, pCtrl);
+
+		// Link it in
+		if (!m_pList)
+		{
+			m_pList = pCtrl;
+			pCtrl->next = NULL;
+		}
+		else
+		{
+			mpcontrol_t* p;
+			p = m_pList;
+			while (p)
+			{
+				if (!p->next)
+				{
+					p->next = pCtrl;
+					pCtrl->next = NULL;
+					break;
+				}
+				p = p->next;
+			}
+		}
+
+	}
+
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::DestroyControls()
+{
+	mpcontrol_t* p, * n;
+
+	p = m_pList;
+	while (p)
+	{
+		n = p->next;
+		//
+		if (p->pControl)
+		{
+			p->pControl->MarkForDeletion();
+			p->pControl = NULL;
+		}
+		if (p->pPrompt)
+		{
+			p->pPrompt->MarkForDeletion();
+			p->pPrompt = NULL;
+		}
+		delete p;
+		p = n;
+	}
+
+	m_pList = NULL;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFAchievementsDialog::Deploy( void )
 {
 	SetVisible(true);
 	MakePopup();

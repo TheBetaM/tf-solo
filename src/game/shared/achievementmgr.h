@@ -117,7 +117,6 @@ public:
 
 	void SetAchievementThink( CBaseAchievement *pAchievement, float flThinkTime );
 
-private:
 	void FireGameEvent( IGameEvent *event );
 	void OnKillEvent( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event );
 	void ResetAchievement_Internal( CBaseAchievement *pAchievement );
@@ -129,7 +128,7 @@ private:
 	CUtlVector<CBaseAchievement *> m_vecMapEventListeners;				// vector of achievements that are listening for map events
 	CUtlVector<CBaseAchievement *> m_vecComponentListeners;				// vector of achievements that are listening for components that make up an achievement
 	CUtlMap<int, CAchievement_AchievedCount *> m_mapMetaAchievement;				// map of CAchievement_AchievedCount
-
+private:
 	struct achievementthink_t
 	{
 		float			 m_flThinkTime;

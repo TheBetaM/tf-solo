@@ -1,6 +1,6 @@
-"Resource\UI\TFModCreditsDialog.res"
+"Resource\UI\TFAchievementsDialog.res"
 {
-	"TFModCreditsDialog"
+	"TFAchievementsDialog"
 	{
 		"ControlName"		"EditablePanel"
 		"fieldName"		"TFAdvancedOptionsDialog"
@@ -30,7 +30,7 @@
 		"ControlName"	"CExLabel"
 		"fieldName"		"TitleLabel"
 		"font"			"HudFontMediumBold"
-		"labelText"		"#TFSOLO_ModCredits_Title"
+		"labelText"		"#TF_Achievements_Title"
 		"textAlignment"	"center"
 		"xpos"			"0"
 		"ypos"			"0"

@@ -229,7 +229,6 @@ private:
 
 	void CreateControls();
 	void DestroyControls();
-	void GatherCurrentValues();
 
 	virtual void OnCommand(const char* command);
 	virtual void OnClose();
@@ -238,6 +237,171 @@ private:
 
 private:
 	CInfoDescription* m_pDescription;
+	mpcontrol_t* m_pList;
+	vgui::PanelListPanel* m_pListPanel;
+	CTFTextToolTip* m_pToolTip;
+	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+
+	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderW, "slider_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderH, "slider_h", "0", "proportional_int");
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: Custom match settings
+//-----------------------------------------------------------------------------
+class CTFCustomMatchSettingsDialog : public vgui::EditablePanel
+{
+	DECLARE_CLASS_SIMPLE(CTFCustomMatchSettingsDialog, vgui::EditablePanel);
+
+public:
+	CTFCustomMatchSettingsDialog(vgui::Panel* parent);
+	~CTFCustomMatchSettingsDialog();
+
+	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
+	virtual void	ApplySettings(KeyValues* pResourceData);
+
+	void	Deploy( const char* map, int mode );
+
+	const char* m_iszRequestedMap;
+	int m_iRequestedMode;
+
+private:
+
+	void CreateControls();
+	void DestroyControls();
+	void GatherCurrentValues();
+	void StartMatch();
+
+	virtual void OnCommand(const char* command);
+	virtual void OnClose();
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
+
+private:
+	CInfoDescription* m_pDescription;
+	mpcontrol_t* m_pList;
+	vgui::PanelListPanel* m_pListPanel;
+	CTFTextToolTip* m_pToolTip;
+	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+
+	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderW, "slider_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderH, "slider_h", "0", "proportional_int");
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: Custom match gamemode
+//-----------------------------------------------------------------------------
+class CTFCustomMatchModeDialog : public vgui::EditablePanel
+{
+	DECLARE_CLASS_SIMPLE(CTFCustomMatchModeDialog, vgui::EditablePanel);
+
+public:
+	CTFCustomMatchModeDialog(vgui::Panel* parent);
+	~CTFCustomMatchModeDialog();
+
+	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
+	virtual void	ApplySettings(KeyValues* pResourceData);
+
+	void	Deploy( const char* map );
+
+	const char* m_iszRequestedMap;
+	int m_iRequestedMode;
+	vgui::Panel* m_SelectedModePanel;
+
+private:
+
+	void CreateControls();
+	void DestroyControls();
+
+	virtual void OnCommand(const char* command);
+	virtual void OnClose();
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
+
+private:
+	vgui::PanelListPanel* m_pListPanel;
+	CTFTextToolTip* m_pToolTip;
+	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+	CExLabel* m_TitleLabel;
+
+	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderW, "slider_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderH, "slider_h", "0", "proportional_int");
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: Custom match map
+//-----------------------------------------------------------------------------
+class CTFCustomMatchMapDialog : public vgui::EditablePanel
+{
+	DECLARE_CLASS_SIMPLE(CTFCustomMatchMapDialog, vgui::EditablePanel);
+
+public:
+	CTFCustomMatchMapDialog(vgui::Panel* parent);
+	~CTFCustomMatchMapDialog();
+
+	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
+	virtual void	ApplySettings(KeyValues* pResourceData);
+
+	void	Deploy(void);
+
+	const char* m_iszRequestedMap;
+	vgui::Panel* m_SelectedMapPanel;
+
+private:
+
+	void CreateControls();
+	void DestroyControls();
+
+	virtual void OnCommand(const char* command);
+	virtual void OnClose();
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
+
+private:
+	vgui::PanelListPanel* m_pListPanel;
+	CTFTextToolTip* m_pToolTip;
+	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+
+	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderW, "slider_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderH, "slider_h", "0", "proportional_int");
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: Mod achievements
+//-----------------------------------------------------------------------------
+class CTFAchievementsDialog : public vgui::EditablePanel
+{
+	DECLARE_CLASS_SIMPLE(CTFAchievementsDialog, vgui::EditablePanel);
+
+public:
+	CTFAchievementsDialog(vgui::Panel* parent);
+	~CTFAchievementsDialog();
+
+	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
+	virtual void	ApplySettings(KeyValues* pResourceData);
+
+	void	Deploy(void);
+
+private:
+
+	void CreateControls();
+	void DestroyControls();
+
+	virtual void OnCommand(const char* command);
+	virtual void OnClose();
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
+
+private:
+	//CInfoDescription* m_pDescription;
 	mpcontrol_t* m_pList;
 	vgui::PanelListPanel* m_pListPanel;
 	CTFTextToolTip* m_pToolTip;

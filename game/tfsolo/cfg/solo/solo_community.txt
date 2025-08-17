@@ -78,7 +78,7 @@ solo_config
 		cp_egypt_final
 		{
 			name "Egypt"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_egypt_final"
 			photosArt "maps/menu_photos_cp_egypt_final"
 			tags
@@ -121,7 +121,7 @@ solo_config
 		cp_junction_final
 		{
 			name "Junction"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_junction_final"
 			photosArt "maps/menu_photos_cp_junction_final"
 			tags
@@ -135,7 +135,7 @@ solo_config
 		cp_mountainlab
 		{
 			name "Mountain Lab"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_mountainlab"
 			photosArt "maps/menu_photos_cp_mountainlab"
 			tags
@@ -163,7 +163,7 @@ solo_config
 		cp_steel
 		{
 			name "Steel"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_steel"
 			photosArt "maps/menu_photos_cp_steel"
 			tags
@@ -191,7 +191,7 @@ solo_config
 		cp_brew
 		{
 			name "Brew"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_brew"
 			photosArt "maps/menu_photos_cp_brew"
 			tags
@@ -233,7 +233,7 @@ solo_config
 		cp_hardwood_final
 		{
 			name "Hardwood"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_hardwood_final"
 			photosArt "maps/menu_photos_cp_hardwood_final"
 			tags
@@ -261,7 +261,7 @@ solo_config
 		cp_mossrock
 		{
 			name "Mossrock"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_mossrock"
 			photosArt "maps/menu_photos_cp_mossrock"
 			tags
@@ -275,7 +275,7 @@ solo_config
 		cp_overgrown
 		{
 			name "Overgrown"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_overgrown"
 			photosArt "maps/menu_photos_cp_overgrown"
 			tags
@@ -318,7 +318,7 @@ solo_config
 		cp_sulfur
 		{
 			name "Sulfur"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_sulfur"
 			photosArt "maps/menu_photos_cp_sulfur"
 			tags
@@ -361,7 +361,7 @@ solo_config
 		cp_burghausen
 		{
 			name "Burghausen"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_burghausen"
 			photosArt "maps/menu_photos_cp_burghausen"
 			tags
@@ -377,7 +377,7 @@ solo_config
 		cp_hadal
 		{
 			name "Hadal"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_hadal"
 			photosArt "maps/menu_photos_cp_hadal"
 			tags
@@ -405,7 +405,7 @@ solo_config
 		cp_ambush_event
 		{
 			name "Erebus"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_ambush_event"
 			photosArt "maps/menu_photos_cp_ambush_event"
 			tags
@@ -420,7 +420,7 @@ solo_config
 		cp_darkmarsh
 		{
 			name "Darkmarsh"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_darkmarsh"
 			photosArt "maps/menu_photos_cp_darkmarsh"
 			tags
@@ -435,7 +435,7 @@ solo_config
 		cp_degrootkeep_rats
 		{
 			name "Sandcastle"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_degrootkeep_rats"
 			photosArt "maps/menu_photos_cp_degrootkeep_rats"
 			tags
@@ -451,7 +451,7 @@ solo_config
 		cp_gorge_event
 		{
 			name "Gorge Event"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_gorge_event"
 			photosArt "maps/menu_photos_cp_gorge_event"
 			tags
@@ -465,7 +465,7 @@ solo_config
 		cp_lavapit_final
 		{
 			name "Lava Pit"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_lavapit_final"
 			photosArt "maps/menu_photos_cp_lavapit_final"
 			tags
@@ -480,7 +480,7 @@ solo_config
 		cp_spookeyridge
 		{
 			name "Spookeyridge"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_spookeyridge"
 			photosArt "maps/menu_photos_cp_spookeyridge"
 			tags
@@ -494,7 +494,7 @@ solo_config
 		cp_manor_event
 		{
 			name "Mann Manor"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_manor_event"
 			photosArt "maps/menu_photos_cp_manor_event"
 			tags
@@ -538,7 +538,7 @@ solo_config
 		cp_carrier
 		{
 			name "Carrier"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_carrier"
 			photosArt "maps/menu_photos_cp_carrier"
 			tags
@@ -568,7 +568,7 @@ solo_config
 		cp_frostwatch
 		{
 			name "Frostwatch"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_frostwatch"
 			photosArt "maps/menu_photos_cp_frostwatch"
 			tags
@@ -583,7 +583,7 @@ solo_config
 		cp_snowplow
 		{
 			name "Snowplow"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_snowplow"
 			//photosArt ""
 			tags
@@ -598,7 +598,7 @@ solo_config
 		cp_altitude
 		{
 			name "Altitude"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_altitude"
 			photosArt "maps/menu_photos_cp_altitude"
 			tags
@@ -612,7 +612,7 @@ solo_config
 		cp_gravelpit_snowy
 		{
 			name "Coal Pit"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_gravelpit_snowy"
 			photosArt "maps/menu_photos_cp_gravelpit_snowy"
 			tags
@@ -628,7 +628,7 @@ solo_config
 		cp_fortezza
 		{
 			name "Fortezza"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_fortezza"
 			photosArt "maps/menu_photos_cp_fortezza"
 			tags
@@ -797,7 +797,7 @@ solo_config
 		ctf_haarp
 		{
 			name "Haarp"
-			modename "#Gametype_CTF"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_ctf_haarp"
 			photosArt "maps/menu_photos_ctf_haarp"
 			tags
@@ -1209,8 +1209,8 @@ solo_config
 		{
 			name "Overcast"
 			modename "#Gametype_Koth"
-			thumbArt "maps/menu_thumb_koth_overcast"
-			photosArt "maps/menu_photos_koth_overcast"
+			thumbArt "maps/menu_thumb_koth_overcast_final"
+			photosArt "maps/menu_photos_koth_overcast_final"
 			tags
 			{
 				koth 1
@@ -1855,6 +1855,7 @@ solo_config
 				cp_count 1
 				theme_industrial 1
 				vscript 1
+				custom_hide 1
 			}
 		}
 		vsh_skirmish
@@ -2006,6 +2007,8 @@ solo_config
 		{
 			name "Aquarius"
 			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_aquarius"
+			photosArt "maps/menu_photos_pl_aquarius"
 			tags
 			{
 				pl 1
@@ -2018,6 +2021,8 @@ solo_config
 		{
 			name "Blowout"
 			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_blowout"
+			photosArt "maps/menu_photos_koth_blowout"
 			tags
 			{
 				koth 1
@@ -2030,6 +2035,8 @@ solo_config
 		{
 			name "Boardwalk"
 			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_boardwalk"
+			photosArt "maps/menu_photos_koth_boardwalk"
 			tags
 			{
 				koth 1
@@ -2042,7 +2049,9 @@ solo_config
 		cp_cargo
 		{
 			name "Cargo"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_cargo"
+			photosArt "maps/menu_photos_cp_cargo"
 			tags
 			{
 				ad 1
@@ -2055,6 +2064,8 @@ solo_config
 		{
 			name "Citadel"
 			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_citadel"
+			photosArt "maps/menu_photos_pl_citadel"
 			tags
 			{
 				pl 1
@@ -2065,7 +2076,9 @@ solo_config
 		cp_conifer
 		{
 			name "Conifer"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_conifer"
+			photosArt "maps/menu_photos_cp_conifer"
 			tags
 			{
 				ad 1
@@ -2078,6 +2091,8 @@ solo_config
 		{
 			name "Demolition"
 			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_demolition"
+			photosArt "maps/menu_photos_koth_demolition"
 			tags
 			{
 				koth 1
@@ -2089,7 +2104,9 @@ solo_config
 		cp_fulgur
 		{
 			name "Fulgur"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_fulgur"
+			photosArt "maps/menu_photos_cp_fulgur"
 			tags
 			{
 				ad 1
@@ -2102,6 +2119,8 @@ solo_config
 		{
 			name "Mannhole"
 			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_mannhole"
+			photosArt "maps/menu_photos_koth_mannhole"
 			tags
 			{
 				koth 1
@@ -2115,6 +2134,8 @@ solo_config
 		{
 			name "Pressure"
 			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_pressure"
+			photosArt "maps/menu_photos_ctf_pressure"
 			tags
 			{
 				ctf 1

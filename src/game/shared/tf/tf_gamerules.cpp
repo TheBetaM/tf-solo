@@ -5015,6 +5015,7 @@ void CTFGameRules::SetupOnRoundStart( void )
 	}
 	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_ARENA )
 	{
+		tf_arena_override_cap_enable_time.SetValue( 30 );
 		CBaseEntity* pKit = gEntList.FindEntityByClassname( NULL, "item_healthkit*" );
 		while ( pKit )
 		{

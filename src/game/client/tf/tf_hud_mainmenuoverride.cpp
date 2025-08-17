@@ -2118,6 +2118,10 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 			ShowConfirmDialog("#TFSOLO_ResetProgress_Title", "#TFSOLO_ResetProgress_Body", "#TF_Coach_Yes", "#TF_Coach_No", ConfirmModProgressReset, this);
 		}
 	}
+	else if (!Q_stricmp(command, "showmodachievements"))
+	{
+		engine->ClientCmd_Unrestricted( "openachievements" );
+	}
 	else
 	{
 		// Pass it on to GameUI main menu

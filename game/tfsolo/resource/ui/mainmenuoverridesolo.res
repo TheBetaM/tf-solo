@@ -3127,7 +3127,7 @@
 		"dulltext"		"0"
 		"brighttext"	"0"
 		"default"		"1"
-		"Command"		"OpenAchievementsDialog"
+		"Command"		"showmodachievements"
 		"use_proportional_insets"	"1"
 		"textinsetx"	"25"
 

@@ -384,6 +384,7 @@ void CBaseAchievement::AwardAchievement()
 		return;
 
 	m_pAchievementMgr->AwardAchievement( m_iAchievementID );
+	ShowProgressNotification();
 }
 
 //-----------------------------------------------------------------------------
