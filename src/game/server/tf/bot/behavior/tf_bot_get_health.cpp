@@ -47,6 +47,12 @@ public:
 		// resupply cabinets (not assigned a team)
 		if ( candidate->ClassMatches( "func_regenerate" ) )
 		{
+			if ( TFGameRules()->InStalemate() )
+			{
+				// Resupply disabled in Sudden Death/Arena mode
+				return false;
+			}
+
 			if ( !area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE | TF_NAV_SPAWN_ROOM_RED ) )
 			{
 				// Assume any resupply cabinets not in a teamed spawn room are inaccessible.

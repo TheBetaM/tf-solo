@@ -992,7 +992,7 @@ void CTFGameStats::Event_PlayerUsedTeleport( CTFPlayer *pTeleportOwner, CTFPlaye
 void CTFGameStats::Event_PlayerFiredWeapon( CTFPlayer *pPlayer, bool bCritical ) 
 {
 	// If normal gameplay state, track weapon stats. 
-	if ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
+	if ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING || TFGameRules()->State_Get() == GR_STATE_STALEMATE )
 	{
 		CTFWeaponBase *pTFWeapon = pPlayer->GetActiveTFWeapon();
 		if ( pTFWeapon )
@@ -1000,7 +1000,7 @@ void CTFGameStats::Event_PlayerFiredWeapon( CTFPlayer *pPlayer, bool bCritical )
 			// record shots fired in reported per-weapon stats
 			int iWeaponID = pTFWeapon->GetWeaponID();
 
-			if ( m_reportedStats.m_pCurrentGame != NULL )
+			if ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING && m_reportedStats.m_pCurrentGame != NULL )
 			{
 				TF_Gamestats_WeaponStats_t *pWeaponStats = &m_reportedStats.m_pCurrentGame->m_aWeaponStats[iWeaponID];
 				pWeaponStats->iShotsFired++;

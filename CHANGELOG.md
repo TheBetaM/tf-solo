@@ -35,6 +35,7 @@ tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode
 - Minimal HUD no longer prevents game_text_tf from appearing
 - Fixed round restart commands not working in Arena mode
 - Fixed mini-rounds without a setup timer being stuck in setup mode
+- Fixed canteens being unusable in Sudden Death/Arena
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps
@@ -65,6 +66,8 @@ tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode
 - Fixed crash with bots after playing on a Mannpower map
 - Giants will now always avoid nav areas marked with nav_stop
 - Fixed bots not moving during setup in symmetrical capture point maps
+- Fixed bots trying to use resupply lockers in Sudden Death/Arena
+- Fixed players/bots firing weapons never affecting bot behavior in Sudden Death/Arena
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

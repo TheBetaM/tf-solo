@@ -5198,6 +5198,14 @@ void CTFGameRules::SetupOnRoundStart( void )
 		pZone->InputAddOutput( InCapBlue );
 		pZone->Activate();
 
+		for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+		{
+			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture*>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+			if ( pArea )
+			{
+				pArea->Disable();
+			}
+		}
 	}
 
 	// Let all entities know that a new round is starting

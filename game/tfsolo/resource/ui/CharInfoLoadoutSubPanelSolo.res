@@ -283,8 +283,8 @@
 		"Default"			"0"
 		"font"				"MenuKeys"
 		"scaleImage"		"1"
-		"activeimage"		"catalog_book"
-		"inactiveimage"		"catalog_book_gray"
+		"activeimage"		"..\hud\backpack_01"
+		"inactiveimage"		"..\hud\backpack_01_grey"
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
 	}	
@@ -329,8 +329,8 @@
 		"Default"			"0"
 		"font"				"MenuKeys"
 		"scaleImage"		"1"
-		"activeimage"		"crafting_anvil"
-		"inactiveimage"		"crafting_anvil_gray"
+		"activeimage"		"catalog_book"
+		"inactiveimage"		"catalog_book_gray"
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
 	}

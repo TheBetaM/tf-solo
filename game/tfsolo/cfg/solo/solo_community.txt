@@ -14,6 +14,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_desert 1
+				allow_koth 1
+				allow_pd 1
 			}
 		}
 		arena_watchtower
@@ -28,6 +30,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_desert 1
+				allow_koth 1
+				allow_pd 1
 			}
 		}
 		arena_byre
@@ -102,6 +106,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_desert 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_freight_final1
@@ -116,6 +124,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_industrial 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_junction_final
@@ -158,6 +170,9 @@ solo_config
 				cp_count 3
 				symm 1
 				theme_swamp 1
+				allow_koth 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_steel
@@ -186,6 +201,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_forest 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_brew
@@ -228,6 +247,8 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_desert 1
+				allow_koth 1
+				allow_ctf 1
 			}
 		}
 		cp_hardwood_final
@@ -256,6 +277,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_industrial 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_mossrock
@@ -298,6 +323,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_alpine 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_reckoner
@@ -313,6 +342,10 @@ solo_config
 				symm 1
 				theme_japan 1
 				theme_industrial 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_sulfur
@@ -342,6 +375,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_alpine 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_vanguard
@@ -356,6 +393,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_industrial 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_burghausen
@@ -400,6 +441,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_swamp 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_ambush_event
@@ -519,6 +564,10 @@ solo_config
 				theme_hallow 1
 				vscript 1
 				upgrades 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_sunshine_event
@@ -533,6 +582,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_hallow 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_carrier
@@ -563,6 +616,10 @@ solo_config
 				cp_count 5
 				symm 1
 				theme_snow 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_frostwatch
@@ -836,6 +893,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_farm 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_highpass
@@ -850,6 +909,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_desert 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_suijin
@@ -864,6 +925,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_japan 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_brazil
@@ -878,6 +941,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_jungle 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_cachoeira
@@ -892,6 +957,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_jungle 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_king
@@ -906,6 +973,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_city 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_lakeside_final
@@ -920,6 +989,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_egypt 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_lazarus
@@ -934,6 +1005,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_jungle 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_megaton
@@ -949,6 +1022,8 @@ solo_config
 				symm 1
 				theme_coast 1
 				vscript 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_rotunda
@@ -963,6 +1038,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_industrial 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_sharkbay
@@ -977,6 +1054,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_coast 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_bagel_event
@@ -991,6 +1070,7 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
 			}
 		}
 		koth_los_muertos
@@ -1005,6 +1085,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_moonshine_event
@@ -1019,6 +1101,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_sawmill_event
@@ -1033,6 +1117,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_slasher
@@ -1047,6 +1133,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_slaughter_event
@@ -1061,6 +1149,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_slime
@@ -1076,6 +1166,8 @@ solo_config
 				symm 1
 				theme_hallow 1
 				vscript 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_synthetic_event
@@ -1090,6 +1182,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_toxic
@@ -1104,6 +1198,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_undergrove_event
@@ -1118,6 +1214,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_maple_ridge_event
@@ -1132,6 +1230,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_megalo
@@ -1160,6 +1260,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_invasion 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_krampus
@@ -1189,6 +1291,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_snow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_snowtower
@@ -1203,6 +1307,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_snow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_overcast
@@ -1217,6 +1323,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_snow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		pd_atom_smash
@@ -2029,6 +2137,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_offshore 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_boardwalk
@@ -2044,6 +2154,8 @@ solo_config
 				symm 1
 				theme_coast 1
 				vscript 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_cargo
@@ -2099,6 +2211,8 @@ solo_config
 				cp_count 1
 				symm 1
 				theme_offshore 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		cp_fulgur
@@ -2128,6 +2242,8 @@ solo_config
 				symm 1
 				theme_city 1
 				vscript 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		ctf_pressure

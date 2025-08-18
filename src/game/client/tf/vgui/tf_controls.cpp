@@ -3659,30 +3659,38 @@ void CTFCustomMatchModeDialog::CreateControls()
 	KeyValues* tags = map->FindKey("tags");
 	if ( tags )
 	{
-		//if (tags->GetInt("allow_arena") == 1)
+		if ( tags->GetInt( "allow_arena" ) == 1 )
+		{
 			ModeOption mode2;
 			mode2.ModeOverride = OVERRIDE_ARENA;
 			mode2.MapAlt = NULL_STRING;
 			mode2.ModeName = "#Gametype_Arena";
 			possibleModes.AddToTail( mode2 );
-		//if (tags->GetInt("allow_koth") == 1)
+		}
+		if ( tags->GetInt( "allow_koth" ) == 1 )
+		{
 			ModeOption mode3;
 			mode3.ModeOverride = OVERRIDE_KOTH;
 			mode3.MapAlt = NULL_STRING;
 			mode3.ModeName = "#Gametype_Koth";
 			possibleModes.AddToTail( mode3 );
-		//if (tags->GetInt("allow_ctf") == 1)
+		}
+		if ( tags->GetInt( "allow_ctf" ) == 1 )
+		{
 			ModeOption mode4;
 			mode4.ModeOverride = OVERRIDE_CTF;
 			mode4.MapAlt = NULL_STRING;
 			mode4.ModeName = "#Gametype_CTF";
 			possibleModes.AddToTail( mode4 );
-		//if (tags->GetInt("allow_pd") == 1)
+		}
+		if ( tags->GetInt( "allow_pd" ) == 1 )
+		{
 			ModeOption mode5;
 			mode5.ModeOverride = OVERRIDE_PD;
 			mode5.MapAlt = NULL_STRING;
 			mode5.ModeName = "#Gametype_PlayerDestruction";
 			possibleModes.AddToTail( mode5 );
+		}
 	}
 
 	ModeOption mode1;

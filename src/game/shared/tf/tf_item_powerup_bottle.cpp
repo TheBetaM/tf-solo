@@ -545,7 +545,7 @@ uint8 CTFPowerupBottle::GetMaxNumCharges() const
 //-----------------------------------------------------------------------------
 bool CTFPowerupBottle::AllowedToUse()
 {
-	if ( TFGameRules() && !( TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS || TFGameRules()->State_Get() == GR_STATE_RND_RUNNING ) )
+	if ( TFGameRules() && !( TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS || TFGameRules()->State_Get() == GR_STATE_RND_RUNNING || TFGameRules()->State_Get() == GR_STATE_STALEMATE ) )
 		return false;
 
 	CTFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
