@@ -63,6 +63,7 @@
 #include "ienginevgui.h"
 #include "vscript_client.h"
 #include "vgui/solo/tf_solo_panel.h"
+#include "tf_vgui_video.h"
 
 
 #include "c_tf_gamestats.h"
@@ -253,6 +254,8 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 
 	//m_pWatchStreamsPanel = new CTFStreamListPanel( this, "StreamListPanel" );
 	m_pCharacterImagePanel = new ImagePanel( this, "TFCharacterImage" );
+
+	m_pTFBackgroundVideo = new CTFVideoPanel( this, "VideoPanel" );
 
 	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
 }
@@ -973,6 +976,16 @@ void CHudMainMenuOverride::PerformLayout( void )
 	m_pEventPromoContainer->SetVisible(false);
 
 	UpdateRankPanelVisibility();
+
+	ConVarRef r_drawfriendslist("r_drawfriendslist");
+	if ( !r_drawfriendslist.GetBool() )
+	{
+		SetControlVisible( "ToggleChatButton", false, true );
+	}
+	if ( m_pTFBackgroundVideo )
+	{
+		m_pTFBackgroundVideo->BeginPlaybackRand();
+	}
 }
 
 
@@ -1017,12 +1030,27 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 		{
 			m_pCharacterImagePanel->SetVisible( false );
 		}
+		if ( m_pTFBackgroundVideo && m_pTFBackgroundVideo->IsVisible() )
+		{
+			m_pTFBackgroundVideo->SetVisible( false );
+			m_pTFBackgroundVideo->SetEnabled( false );
+			m_pTFBackgroundVideo->EndRand();
+			m_pTFBackgroundVideo->OnClose();
+
+		}
 	}
 	else if ( !bInGame && !bInReplay )
 	{
 		if ( !m_pCharacterImagePanel->IsVisible() )
 		{
 			m_pCharacterImagePanel->SetVisible( m_bBackgroundUsesCharacterImages );
+		}
+		if ( m_pTFBackgroundVideo && !m_pTFBackgroundVideo->IsVisible() )
+		{
+			m_pTFBackgroundVideo->m_iLastClip = -1;
+			m_pTFBackgroundVideo->BeginPlaybackRand();
+			m_pTFBackgroundVideo->SetVisible( true );
+			m_pTFBackgroundVideo->SetEnabled( true );
 		}
 	}
 

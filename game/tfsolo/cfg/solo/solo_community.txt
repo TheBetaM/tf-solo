@@ -1965,6 +1965,11 @@ solo_config
 				vscript 1
 				custom_hide 1
 			}
+			alts
+			{
+				arena_nucleus 1
+				koth_nucleus 1
+			}
 		}
 		vsh_skirmish
 		{

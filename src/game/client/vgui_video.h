@@ -47,6 +47,9 @@ public:
 	virtual bool BeginPlayback( const char *pFilename );
 
 	void SetBlackBackground( bool bBlack ){ m_bBlackBackground = bBlack; }
+	void SetIgnoreAudio( bool bAudio ){ m_bIgnoreAudio = bAudio; }
+	void SetStretchVideo( bool bStretch ){ m_bStretchVideo = bStretch; }
+	void SetForceLoop( bool bLoop ){ m_bForceLoop = bLoop; }
 
 protected:
 
@@ -67,6 +70,9 @@ protected:
 
 	bool			m_bBlackBackground;
 	bool			m_bAllowAlternateMedia;
+	bool			m_bIgnoreAudio;
+	bool			m_bStretchVideo;
+	bool			m_bForceLoop;
 };
 
 

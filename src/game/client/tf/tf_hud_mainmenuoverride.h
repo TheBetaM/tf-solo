@@ -28,6 +28,7 @@
 #include "gcsdk/gcclientsdk.h"
 #include "quest_log_panel.h"
 #include "local_steam_shared_object_listener.h"
+#include "tf_vgui_video.h"
 
 
 #include "mute_player_dialog.h"
@@ -250,6 +251,8 @@ private:
 	CPvPRankPanel*	m_pRankPanel = NULL;
 	CPvPRankPanel*	m_pRankModelPanel = NULL;
 	vgui::Menu*		m_pRankTypeMenu = NULL;
+
+	CTFVideoPanel*  m_pTFBackgroundVideo;
 
 	CPanelAnimationVarAliasType( int, m_iButtonXOffset, "button_x_offset", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iButtonY, "button_y", "0", "proportional_int" );

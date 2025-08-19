@@ -94,6 +94,24 @@ CUtlVector<CTFStatsSummaryPanel *> g_vecStatPanels;
 ConVar cl_loadingimage_override("cl_loadingimage_override", "", FCVAR_REPLICATED, "Override the loading screen image");
 ConVar cl_loadingimage_force("cl_loadingimage_force", "0", FCVAR_REPLICATED, "Force the loading screen image to be used for the whole loading");
 
+void SetLoadingVisibilityRecursive( vgui::VPANEL parentPanel, const char* targetPanelName, int depth = 0 )
+{
+	int numChildren = vgui::ipanel()->GetChildCount( parentPanel );
+	for ( int i = 0; i < numChildren; i++ )
+	{
+		vgui::VPANEL childPanel = vgui::ipanel()->GetChild( parentPanel, i );
+		const char* childPanelName = vgui::ipanel()->GetName( childPanel );
+
+		if ( V_strcmp( childPanelName, targetPanelName ) == 0 )
+		{
+			vgui::ipanel()->SetPos( childPanel, 10000, 10000 );
+			vgui::ipanel()->SetZPos( childPanel, -10000 );
+		}
+
+		SetLoadingVisibilityRecursive( childPanel, targetPanelName, depth + 1 );
+	}
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -179,6 +197,16 @@ void CTFStatsSummaryPanel::Init( void )
 	m_pBarChartComboBoxA->AddActionSignalTarget( this );
 	m_pBarChartComboBoxB->AddActionSignalTarget( this );
 	m_pClassComboBox->AddActionSignalTarget( this );
+
+	m_pLoadingIcon = new ScalableImagePanel( this, "TFLoadingIcon" );
+	m_pLoadingIcon->SetImage("animated/tf2_logo_hourglass");
+	m_pLoadingIcon->SetPos( ScreenWidth() - 300, ScreenHeight() - 300 );
+	m_pLoadingIcon->SetSize( 256, 256 );
+	m_pLoadingIcon->SetZPos( 4 );
+	m_pLoadingIcon->SetMouseInputEnabled( false );
+	m_pLoadingIcon->SetKeyBoardInputEnabled( false );
+	m_pLoadingIcon->SetVisible( false );
+	m_pLoadingIcon->SetEnabled( false );
 
 	ListenForGameEvent( "server_spawn" );
 
@@ -275,6 +303,12 @@ void CTFStatsSummaryPanel::OnThink()
 	if ( m_bShowingLeaderboard )
 	{
 		UpdateLeaderboard();
+	}
+
+	if ( m_bWasActivated )
+	{
+		vgui::VPANEL rootPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
+		SetLoadingVisibilityRecursive( rootPanel, "LoadingDialog" );
 	}
 }
 
@@ -1523,6 +1557,13 @@ void CTFStatsSummaryPanel::OnActivate()
 #endif
 
 	UpdateDialog();
+	
+	if ( m_pLoadingIcon )
+	{
+		m_pLoadingIcon->SetVisible( true );
+		m_pLoadingIcon->SetEnabled( true );
+		m_pLoadingIcon->SetPos( ScreenWidth() - 300, ScreenHeight() - 300 );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1531,6 +1572,12 @@ void CTFStatsSummaryPanel::OnActivate()
 void CTFStatsSummaryPanel::OnDeactivate()
 {
 	m_bWasActivated = false;
+	if ( m_pLoadingIcon )
+	{
+		m_pLoadingIcon->SetVisible( false );
+		m_pLoadingIcon->SetEnabled( false );
+	}
+
 	ClearMapLabel();
 }
 

@@ -244,6 +244,12 @@ void CDashboardPartyMember::PerformLayout()
 	{
 		m_pInteractButton->SetTooltip( GetDashboardTooltip( k_eSmallFont ), strTipText );
 	}
+
+	ConVarRef r_drawfriendslist("r_drawfriendslist");
+	if ( !r_drawfriendslist.GetBool() )
+	{
+		SetVisible( false );
+	}
 }
 
 void CDashboardPartyMember::PostChildPaint()

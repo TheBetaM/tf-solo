@@ -31,6 +31,8 @@ public:
 	float GetEndDelay(){ return m_flEndAnimDelay; }
 
 	virtual bool BeginPlayback( const char *pFilename ) OVERRIDE;
+	bool BeginPlaybackRand( void );
+	void EndRand( void );
 
 protected:
 	virtual void ReleaseVideo();
@@ -40,6 +42,10 @@ private:
 	float m_flStartAnimDelay;
 	float m_flEndAnimDelay;
 	bool m_bLoop;
+	bool m_bRandomClips;
+	CUtlVector<const char*> m_ClipList;
+public:
+	int m_iLastClip;
 };
 
 #endif // TF_VGUI_VIDEO_H

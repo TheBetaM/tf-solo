@@ -33,6 +33,8 @@ CTFVideoPanel::CTFVideoPanel( vgui::Panel *parent, const char *panelName ) : Vid
 	m_flStartAnimDelay = 0.0f;
 	m_flEndAnimDelay = 0.0f;
 	m_bLoop = false;
+	m_bRandomClips = false;
+	m_iLastClip = -1;
 }
 
 //-----------------------------------------------------------------------------
@@ -48,7 +50,10 @@ CTFVideoPanel::~CTFVideoPanel()
 //-----------------------------------------------------------------------------
 void CTFVideoPanel::ReleaseVideo()
 {
-	enginesound->NotifyEndMoviePlayback();
+	if ( !m_bRandomClips )
+	{
+		enginesound->NotifyEndMoviePlayback();
+	}
 
 	// Destroy any previously allocated video
 	if ( g_pVideo && m_VideoMaterial != NULL )
@@ -69,6 +74,22 @@ void CTFVideoPanel::ApplySettings( KeyValues *inResourceData )
 	m_flStartAnimDelay = inResourceData->GetFloat( "start_delay", 0.0 );
 	m_flEndAnimDelay = inResourceData->GetFloat( "end_delay", 0.0 );
 	m_bLoop = inResourceData->GetBool( "loop", false );
+	SetBlackBackground( inResourceData->GetBool( "blackbg", false ) );
+	SetIgnoreAudio( inResourceData->GetBool( "ignoreaudio", false ) );
+	SetStretchVideo( inResourceData->GetBool( "stretchvideo", false ) );
+	SetForceLoop( inResourceData->GetBool( "forceloop", false ) );
+	
+	KeyValues* clips = inResourceData->FindKey( "clips" );
+	if ( clips )
+	{
+		m_bRandomClips = true;
+		KeyValues* key = clips->GetFirstSubKey();
+		while ( key )
+		{
+			m_ClipList.AddToTail( V_strdup( key->GetName() ) );
+			key = key->GetNextKey();
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -93,6 +114,11 @@ void CTFVideoPanel::OnVideoOver()
 //-----------------------------------------------------------------------------
 void CTFVideoPanel::OnClose()
 {
+	if ( m_bRandomClips )
+	{
+		BeginPlaybackRand();
+		return;
+	}
 	// Fire an exit command if we're asked to do so
 	if ( m_szExitCommand[0] )
 	{
@@ -126,4 +152,35 @@ bool CTFVideoPanel::BeginPlayback( const char *pFilename )
 	}
 
 	return bSuccess;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CTFVideoPanel::BeginPlaybackRand()
+{
+	if ( m_ClipList.Count() <= 0 )
+		return false;
+
+	if ( m_iLastClip == -1 )
+	{
+		m_iLastClip = RandomInt( 0, m_ClipList.Count() - 1 );
+	}
+	bool bSuccess = BaseClass::BeginPlayback( m_ClipList[ m_iLastClip ] );
+
+	if ( m_VideoMaterial )
+	{
+		m_VideoMaterial->SetLooping( true );
+	}
+
+	return bSuccess;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFVideoPanel::EndRand()
+{
+	m_bRandomClips = false;
+	OnClose();
 }

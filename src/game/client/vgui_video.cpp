@@ -32,6 +32,8 @@ VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHe
 	m_szExitCommand[0] = '\0';
 
 	m_bBlackBackground = true;
+	m_bIgnoreAudio = false;
+	m_bStretchVideo = false;
 
 	SetKeyBoardInputEnabled( true );
 	SetMouseInputEnabled( false );
@@ -103,7 +105,10 @@ bool VideoPanel::BeginPlayback( const char *pFilename )
 
 	// We want to be the sole audio source
 	// FIXME: This may not always be true!
-	enginesound->NotifyBeginMoviePlayback();
+	if ( !m_bIgnoreAudio )
+	{
+		enginesound->NotifyBeginMoviePlayback();
+	}
 
 	int nWidth, nHeight;
 	m_VideoMaterial->GetVideoImageSize( &nWidth, &nHeight );
@@ -125,6 +130,12 @@ bool VideoPanel::BeginPlayback( const char *pFilename )
 		m_nPlaybackHeight = GetTall();
 	}
 	else
+	{
+		m_nPlaybackWidth = GetWide();
+		m_nPlaybackHeight = GetTall();
+	}
+
+	if ( m_bStretchVideo )
 	{
 		m_nPlaybackWidth = GetWide();
 		m_nPlaybackHeight = GetTall();
@@ -205,7 +216,10 @@ void VideoPanel::OnKeyCodePressed( vgui::KeyCode code )
 //-----------------------------------------------------------------------------
 void VideoPanel::OnClose( void )
 {
-	enginesound->NotifyEndMoviePlayback();
+	if ( !m_bIgnoreAudio )
+	{
+		enginesound->NotifyEndMoviePlayback();
+	}
 	BaseClass::OnClose();
 
 	if ( vgui::input()->GetAppModalSurface() == GetVPanel() )
@@ -243,6 +257,11 @@ void VideoPanel::Paint( void )
 
 	if ( m_VideoMaterial == NULL )
 		return;
+
+	if ( m_bForceLoop && m_VideoMaterial->GetCurrentVideoTime() >= m_VideoMaterial->GetVideoDuration() - 0.1f )
+	{
+		m_VideoMaterial->SetFrame( 0 );
+	}
 
 	if ( m_VideoMaterial->Update() == false )
 	{

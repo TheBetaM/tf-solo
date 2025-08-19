@@ -128,6 +128,7 @@ private:
 	int m_yStartLeaderboard;
 	CUtlVector< vgui::EditablePanel* > m_vecLeaderboardEntries;
 
+	ScalableImagePanel* m_pLoadingIcon;
 #ifdef _X360
 	bool m_bShowBackButton;
 #endif

@@ -19,7 +19,7 @@ void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int 
 	///             slots, which server mods could easily override.  This has caused numerous bugs in the past, and
 	///             servers that want to have the 33rd slot can trivially do so, so just don't clamp it beyond what we
 	///             support.
-	minplayers = 2;  // Force multiplayer.
+	minplayers = 1;
 #ifdef PLATFORM_64BITS
 	maxplayers = MAX_PLAYERS;
 #else
@@ -36,7 +36,7 @@ void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int 
 	else
 		maxplayers = 33;
 #endif
-	defaultMaxPlayers = 24;
+	defaultMaxPlayers = 32;
 }
 
 // -------------------------------------------------------------------------------------------- //
