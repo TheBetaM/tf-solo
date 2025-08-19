@@ -3882,6 +3882,30 @@ void CTFCustomMatchModeDialog::Deploy( const char* map )
 	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
 }
 
+enum CustomMatchMapCategory
+{
+	MapCategory_Default = 0,
+
+	MapCategory_CP,
+	MapCategory_KOTH,
+	MapCategory_ARENA,
+	MapCategory_AD,
+	MapCategory_CTF,
+	MapCategory_PL,
+	MapCategory_PLR,
+	MapCategory_MVM,
+	MapCategory_PASS,
+	MapCategory_PD,
+	MapCategory_VSH,
+	MapCategory_ZI,
+
+	MapCategory_Hallow,
+	MapCategory_Xmas,
+
+	MapCategory_MAX,
+};
+
+
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -3893,6 +3917,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	SetProportional(true);
 
 	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+	m_iSelectedCategory = MapCategory_Default;
 
 	m_pToolTip = new CTFTextToolTip(this);
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
@@ -3902,6 +3927,27 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pToolTip->SetTooltipDelay(0);
 
 	m_iszRequestedMap = "";
+
+	m_pCategoryList = new vgui::ComboBox( this, "MapCategoryList", MapCategory_MAX, false );
+	m_pCategoryList->AddItem("All", NULL);
+
+	m_pCategoryList->AddItem("#Gametype_CP", NULL);
+	m_pCategoryList->AddItem("#Gametype_Koth", NULL);
+	m_pCategoryList->AddItem("#Gametype_Arena", NULL);
+	m_pCategoryList->AddItem("#Gametype_AttackDefense", NULL);
+	m_pCategoryList->AddItem("#Gametype_CTF", NULL);
+	m_pCategoryList->AddItem("#Gametype_Escort", NULL);
+	m_pCategoryList->AddItem("#Gametype_EscortRace", NULL);
+	m_pCategoryList->AddItem("#Gametype_MVM", NULL);
+	m_pCategoryList->AddItem("#Gametype_Passtime", NULL);
+	m_pCategoryList->AddItem("#Gametype_PlayerDestruction", NULL);
+	m_pCategoryList->AddItem("#Gametype_VSH", NULL);
+	m_pCategoryList->AddItem("#Gametype_ZI", NULL);
+
+	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
+	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
+	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
+	m_pCategoryList->AddActionSignalTarget( this );
 
 	// 	MoveToCenterOfScreen();
 	// 	SetSizeable( false );
@@ -3927,6 +3973,17 @@ void CTFCustomMatchMapDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 	m_pListPanel->SetFirstColumnWidth(0);
 
 	CreateControls();
+}
+
+void CTFCustomMatchMapDialog::OnTextChanged( KeyValues* data )
+{
+	Panel* pPanel = reinterpret_cast<vgui::Panel*>( data->GetPtr("panel") );
+	vgui::ComboBox* pComboBox = dynamic_cast<vgui::ComboBox*>( pPanel );
+	if ( pComboBox && m_pCategoryList )
+	{
+		m_iSelectedCategory = m_pCategoryList->GetActiveItem();
+		CreateControls();
+	}
 }
 
 
@@ -4077,11 +4134,150 @@ void CTFCustomMatchMapDialog::CreateControls()
 		KeyValues* tags = key->FindKey("tags");
 		if ( tags )
 		{
-			if ( tags->GetInt("custom_hide") == 1)
+			if ( tags->GetInt("custom_hide") == 1 )
 			{
 				key = key->GetNextKey();
 				continue;
 			}
+			switch ( m_iSelectedCategory )
+			{
+			case MapCategory_CP:
+			{
+				if ( tags->GetInt("cp_count") < 1 || tags->GetInt("ad") != 0 || tags->GetInt("ctf") != 0 || tags->GetInt("koth") != 0 || tags->GetInt("mvm") != 0 || tags->GetInt("vsh") != 0
+					|| tags->GetInt("arena") != 0 || tags->GetInt("arena_pd") != 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_KOTH:
+			{
+				if ( tags->GetInt("koth") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_ARENA:
+			{
+				if ( ( tags->GetInt("arena") == 0 && tags->GetInt("arena_pd") == 0 ) || tags->GetInt("vsh") != 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_AD:
+			{
+				if ( tags->GetInt("ad") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_CTF:
+			{
+				if ( tags->GetInt("ctf") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_PL:
+			{
+				if ( tags->GetInt("pl") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_PLR:
+			{
+				if ( tags->GetInt("plr") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_MVM:
+			{
+				if ( tags->GetInt("mvm") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_PASS:
+			{
+				if ( tags->GetInt("pass") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_PD:
+			{
+				if ( tags->GetInt("pd") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_VSH:
+			{
+				if ( tags->GetInt("vsh") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_ZI:
+			{
+				if ( tags->GetInt("zi") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_Hallow:
+			{
+				if ( tags->GetInt("theme_hallow") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_Xmas:
+			{
+				if ( tags->GetInt("theme_xmas") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
+		else if ( m_iSelectedCategory != MapCategory_Default )
+		{
+			key = key->GetNextKey();
+			continue;
 		}
 
 		CTFCustomMatchMapInfo info;
@@ -4163,7 +4359,10 @@ void CTFCustomMatchMapDialog::CreateControls()
 //-----------------------------------------------------------------------------
 void CTFCustomMatchMapDialog::DestroyControls()
 {
-	
+	if ( m_pListPanel && m_pListPanel->GetItemCount() != 0 )
+	{
+		m_pListPanel->DeleteAllItems();
+	}
 }
 
 //-----------------------------------------------------------------------------

@@ -350,6 +350,8 @@ public:
 
 	void	Deploy(void);
 
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
+
 	const char* m_iszRequestedMap;
 	vgui::Panel* m_SelectedMapPanel;
 
@@ -367,6 +369,8 @@ private:
 	vgui::PanelListPanel* m_pListPanel;
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+	vgui::ComboBox* m_pCategoryList;
+	int m_iSelectedCategory;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");

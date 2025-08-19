@@ -128,6 +128,7 @@ const char *CQuestNotification_NewQuest::GetSoundEntry( const CQuestThemeDefinit
 
 bool CQuestNotification_NewQuest::ShouldPresent() const
 {
+	return false;
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( !pPlayer )
 		return false;

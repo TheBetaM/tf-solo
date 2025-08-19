@@ -494,6 +494,7 @@ solo_config
 			tags
 			{
 				ctf 1
+				mannpower 1
 				flag_count 2
 				symm 1
 				theme_alpine 1

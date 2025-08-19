@@ -43,25 +43,18 @@ DESCRIPTION SERVER_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
-
-	"mp_disable_respawn_times"
+	
+	"tf_bot_difficulty"
 	{
-		"Disable Respawn Times"
-		{ BOOL }
-		{ "0" }
-	}
-
-	"mp_highlander"
-	{
-		"HighLander Mode"
-		{ BOOL }
-		{ "0" }
-	}
-
-	"tf_weapon_criticals"
-	{
-		"Random Crits"
-		{ BOOL }
+		"Bot Difficulty"
+		{
+			LIST
+			"Easy" "0"
+			"Normal" "1"
+			"Hard" "2"
+			"Expert" "3"
+			"Random" "4"
+		}
 		{ "1" }
 	}
 	
@@ -72,5 +65,50 @@ DESCRIPTION SERVER_OPTIONS
 		{ "0" }
 	}
 	
+	"tf_vision_force"
+	{
+		"Force Vision"
+		{
+			LIST
+			"Default" "0"
+			"Pyrovision" "1"
+		}
+		{ "0" }
+	}
+
+	"mp_disable_respawn_times"
+	{
+		"Disable Respawn Times"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	"tf_grapplinghook_enable"
+	{
+		"Enable Grappling Hooks"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	"tf_medieval"
+	{
+		"Enable Medieval Mode"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	"tf_spells_enabled"
+	{
+		"Enable Halloween Spells"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	"tf_player_spell_drop_on_death_rate"
+	{
+		"Halloween Spell On Death Chance"
+		{ NUMBER 0.0 1.0 }
+		{ "0" }
+	}
 	
 }

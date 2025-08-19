@@ -143,4 +143,24 @@
 			//"centerwrap"	"1"
 		}
 	}	
+	"MapCategoryList"
+	{
+		"fieldName"		"MapCategoryList"
+		"xpos"			"340"
+		"ypos"			"10"
+		"zpos"			"1"
+		"wide"			"150"
+		"tall"			"25"
+		"autoResize"	"0"
+		"pinCorner"		"3"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"	"0"
+		"font"			"HudFontSmallBold"
+		"textAlignment"	"west"
+		"dulltext"		"0"
+		"brighttext"	"0"
+		"editable"		"0"
+		"bgcolor_override"	"0 0 0 255"
+	}
 }

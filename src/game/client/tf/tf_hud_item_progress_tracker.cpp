@@ -62,6 +62,7 @@ ConVar tf_contract_progress_report_item_hold_time( "tf_contract_progress_report_
 
 EContractHUDVisibility GetContractHUDVisibility()
 {
+	return CONTRACT_HUD_SHOW_NONE;
 	if ( TFGameRules() && TFGameRules()->IsMatchTypeCompetitive() )
 		return (EContractHUDVisibility)tf_contract_competitive_show.GetInt();
 
