@@ -15,6 +15,7 @@
 #include "vscript_client.h"
 #include "vscript_utils.h"
 #include "softline.h"
+#include "character_info_panel.h"
 
 class CSoloTooltip : public CTFTextToolTip
 {
@@ -767,6 +768,7 @@ CON_COMMAND(tfsolo_show_menu, "Show the solo menu")
 		{
 			engine->ClientCmd_Unrestricted("gameui_activate");
 		}
+		EconUI()->CloseEconUI();
 		GetSoloPanel()->SetVisible(true);
 		GetSoloPanel()->GoToCurrentQuest();
 	}

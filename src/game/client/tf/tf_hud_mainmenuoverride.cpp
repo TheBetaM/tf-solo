@@ -982,7 +982,7 @@ void CHudMainMenuOverride::PerformLayout( void )
 	{
 		SetControlVisible( "ToggleChatButton", false, true );
 	}
-	if ( m_pTFBackgroundVideo )
+	if ( m_pTFBackgroundVideo && !engine->IsInGame() )
 	{
 		m_pTFBackgroundVideo->BeginPlaybackRand();
 	}
