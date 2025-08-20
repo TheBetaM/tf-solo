@@ -1554,7 +1554,7 @@ QueryResultType	CTFBotMainAction::ShouldRetreat( const INextBot *bot ) const
 		return ANSWER_NO;
 
 	// retreat if stunned
-	if ( me->m_Shared.IsControlStunned() || me->m_Shared.IsLoserStateStunned() )
+	if ( ( me->m_Shared.IsControlStunned() || me->m_Shared.IsLoserStateStunned() ) && !me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) && !me->m_Shared.InCond( TF_COND_PURGATORY ) )
 		return ANSWER_YES;
 
 	// don't retreat during setup time, since we're always safe

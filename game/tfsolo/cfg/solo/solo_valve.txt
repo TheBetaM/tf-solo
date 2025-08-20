@@ -487,6 +487,7 @@ solo_config
 		}
 		ctf_thundermountain
 		{
+			disabled 1
 			name "Thunder Mountain (CTF)"
 			modename "#Gametype_Powerup"
 			thumbArt "maps/menu_thumb_ctf_thundermountain"
@@ -640,6 +641,7 @@ solo_config
 		}
 		pass_brickyard
 		{
+			disabled 1
 			name "Brickyard"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_brickyard"
@@ -654,6 +656,7 @@ solo_config
 		}
 		pass_district
 		{
+			disabled 1
 			name "District"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_district"
@@ -668,6 +671,7 @@ solo_config
 		}
 		pass_timbertown
 		{
+			disabled 1
 			name "Timbertown"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_timbertown"
@@ -809,6 +813,7 @@ solo_config
 		}
 		sd_doomsday_event
 		{
+			disabled 1
 			name "Carnival of Carnage"
 			modename "#Gametype_SD"
 			thumbArt "maps/menu_thumb_sd_doomsday_event"
@@ -838,6 +843,7 @@ solo_config
 		}
 		mvm_bigrock
 		{
+			disabled 1
 			name "Bigrock"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_bigrock"
@@ -852,6 +858,7 @@ solo_config
 		}
 		mvm_coaltown
 		{
+			disabled 1
 			name "Coaltown"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_coaltown"
@@ -866,6 +873,7 @@ solo_config
 		}
 		mvm_decoy
 		{
+			disabled 1
 			name "Decoy"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_decoy"
@@ -880,6 +888,7 @@ solo_config
 		}
 		mvm_ghost_town
 		{
+			disabled 1
 			name "Ghost Town"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_ghost_town"
@@ -895,6 +904,7 @@ solo_config
 		}
 		mvm_mannhattan
 		{
+			disabled 1
 			name "Mannhattan"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_mannhattan"
@@ -910,6 +920,7 @@ solo_config
 		}
 		mvm_mannworks
 		{
+			disabled 1
 			name "Mannworks"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_mannworks"
@@ -924,6 +935,7 @@ solo_config
 		}
 		mvm_rottenburg
 		{
+			disabled 1
 			name "Rottenburg"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_rottenburg"

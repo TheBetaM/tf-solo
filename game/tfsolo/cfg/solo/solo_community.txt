@@ -177,6 +177,7 @@ solo_config
 		}
 		cp_steel
 		{
+			disabled 1
 			name "Steel"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_steel"
@@ -350,6 +351,7 @@ solo_config
 		}
 		cp_sulfur
 		{
+			disabled 1
 			name "Sulfur"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_sulfur"
@@ -417,6 +419,7 @@ solo_config
 		}
 		cp_hadal
 		{
+			disabled 1
 			name "Hadal"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_hadal"
@@ -524,6 +527,7 @@ solo_config
 		}
 		cp_spookeyridge
 		{
+			disabled 1
 			name "Spookeyridge"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_spookeyridge"
@@ -1091,6 +1095,7 @@ solo_config
 		}
 		koth_moonshine_event
 		{
+			disabled 1
 			name "Moonshine"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_moonshine_event"
@@ -1123,6 +1128,7 @@ solo_config
 		}
 		koth_slasher
 		{
+			disabled 1
 			name "Slasher"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_slasher"
@@ -1188,6 +1194,7 @@ solo_config
 		}
 		koth_toxic
 		{
+			disabled 1
 			name "Toxic"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_toxic"
@@ -1204,6 +1211,7 @@ solo_config
 		}
 		koth_undergrove_event
 		{
+			disabled 1
 			name "Moldergrove"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_undergrove_event"
@@ -1250,6 +1258,7 @@ solo_config
 		}
 		koth_probed
 		{
+			disabled 1
 			name "Probed"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_probed"
@@ -1355,6 +1364,7 @@ solo_config
 		}
 		pd_farmageddon
 		{
+			disabled 1
 			name "Farmageddon"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_farmageddon"
@@ -1369,6 +1379,7 @@ solo_config
 		}
 		pd_mannsylvania
 		{
+			disabled 1
 			name "Mannsylvania"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_mannsylvania"
@@ -1382,6 +1393,7 @@ solo_config
 		}
 		pd_monster_bash
 		{
+			disabled 1
 			name "Monster Bash"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_monster_bash"
@@ -1395,6 +1407,7 @@ solo_config
 		}
 		pd_pit_of_death_event
 		{
+			disabled 1
 			name "Pit of Death"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_pit_of_death_event"
@@ -1408,6 +1421,7 @@ solo_config
 		}
 		pd_circus
 		{
+			disabled 1
 			name "Circus"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_circus"
@@ -1421,6 +1435,7 @@ solo_config
 		}
 		pd_cursed_cove_event
 		{
+			disabled 1
 			name "Cursed Cove"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_cursed_cove_event"
@@ -1434,6 +1449,7 @@ solo_config
 		}
 		pd_watergate
 		{
+			disabled 1
 			name "Watergate"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_watergate"
@@ -1461,6 +1477,7 @@ solo_config
 		}
 		pd_snowville_event
 		{
+			disabled 1
 			name "SnowVille"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_snowville_event"
@@ -1610,6 +1627,7 @@ solo_config
 		}
 		pl_embargo
 		{
+			disabled 1
 			name "Embargo"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_embargo"
@@ -1647,6 +1665,7 @@ solo_config
 		}
 		pl_corruption
 		{
+			disabled 1
 			name "Corruption"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_corruption"
@@ -1683,6 +1702,7 @@ solo_config
 		}
 		pl_millstone_event
 		{
+			disabled 1
 			name "Hellstone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_millstone_event"
@@ -1707,6 +1727,7 @@ solo_config
 		}
 		pl_rumble_event
 		{
+			disabled 1
 			name "Gravestone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_rumble_event"
@@ -1897,6 +1918,7 @@ solo_config
 		}
 		plr_hacksaw_event
 		{
+			disabled 1
 			name "Bonesaw"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_hacksaw_event"
@@ -1923,6 +1945,7 @@ solo_config
 		}
 		tow_dynamite
 		{
+			disabled 1
 			name "Dynamite"
 			modename "#Gametype_TOW"
 			thumbArt "maps/menu_thumb_tow_dynamite"
@@ -2075,6 +2098,7 @@ solo_config
 		}
 		zi_atoll
 		{
+			disabled 1
 			name "Atoll"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_atoll"
@@ -2103,6 +2127,7 @@ solo_config
 		}
 		zi_woods
 		{
+			disabled 1
 			name "Woods"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_woods"
@@ -2118,6 +2143,7 @@ solo_config
 		
 		pl_aquarius
 		{
+			disabled 1
 			name "Aquarius"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_aquarius"

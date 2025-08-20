@@ -3893,8 +3893,8 @@ enum CustomMatchMapCategory
 	MapCategory_CTF,
 	MapCategory_PL,
 	MapCategory_PLR,
-	MapCategory_MVM,
-	MapCategory_PASS,
+	//MapCategory_MVM,
+	//MapCategory_PASS,
 	MapCategory_PD,
 	MapCategory_VSH,
 	MapCategory_ZI,
@@ -3903,6 +3903,9 @@ enum CustomMatchMapCategory
 	MapCategory_Xmas,
 
 	MapCategory_MAX,
+
+	MapCategory_MVM,
+	MapCategory_PASS,
 };
 
 
@@ -3938,8 +3941,8 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_CTF", NULL);
 	m_pCategoryList->AddItem("#Gametype_Escort", NULL);
 	m_pCategoryList->AddItem("#Gametype_EscortRace", NULL);
-	m_pCategoryList->AddItem("#Gametype_MVM", NULL);
-	m_pCategoryList->AddItem("#Gametype_Passtime", NULL);
+	//m_pCategoryList->AddItem("#Gametype_MVM", NULL);
+	//m_pCategoryList->AddItem("#Gametype_Passtime", NULL);
 	m_pCategoryList->AddItem("#Gametype_PlayerDestruction", NULL);
 	m_pCategoryList->AddItem("#Gametype_VSH", NULL);
 	m_pCategoryList->AddItem("#Gametype_ZI", NULL);
