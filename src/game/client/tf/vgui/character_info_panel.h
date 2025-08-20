@@ -12,6 +12,9 @@
 #endif
 
 #include "econ_ui.h"
+#include <vgui_controls/EditablePanel.h>
+#include <vgui_controls/ScrollableEditablePanel.h>
+#include "tf_controls.h"
 #include "vgui_controls/PropertyDialog.h"
 #include "tf_shareddefs.h"
 #include "GameEventListener.h"
@@ -49,6 +52,31 @@ public:
 
 	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
 	virtual void	OnCommand( const char *command );
+};
+
+class CCharacterInfoToolTip : public vgui::BaseTooltip
+{
+	DECLARE_CLASS_SIMPLE( CCharacterInfoToolTip, vgui::BaseTooltip );
+public:
+	CCharacterInfoToolTip( vgui::Panel* parent, const char* text = NULL ) : vgui::BaseTooltip( parent, text )
+	{
+		m_pEmbeddedPanel = NULL;
+	}
+	virtual ~CCharacterInfoToolTip() {}
+
+	virtual void SetText( const char* text );
+	const char* GetText() { return NULL; }
+
+	virtual void HideTooltip();
+	virtual void PerformLayout();
+
+	void SetEmbeddedPanel( vgui::EditablePanel* pPanel )
+	{
+		m_pEmbeddedPanel = pPanel;
+	}
+
+protected:
+	vgui::EditablePanel* m_pEmbeddedPanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -128,6 +156,9 @@ private:
 	int							m_iDefaultTeam;
 
 	CUtlVector< vgui::VPanelHandle >	m_vecOnCloseListeners;
+
+	CCharacterInfoToolTip* m_pToolTip;
+	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
 };
 
 CCheatDetectionDialog *OpenCheatDetectionDialog( vgui::Panel *pParent, const char *pszCheatMessage );

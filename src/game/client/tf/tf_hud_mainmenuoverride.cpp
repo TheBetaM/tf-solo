@@ -634,6 +634,14 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 			pPanelToAddTooltipTipTo->SetVisible(false);
 		}
 	};
+	auto lambdaAddTooltipSolo = [&]( const char* pszPanelName, const char* pszTooltipText )
+	{
+		Panel* pPanelToAddTooltipTipTo = FindChildByName( pszPanelName );
+		if ( pPanelToAddTooltipTipTo)
+		{
+			pPanelToAddTooltipTipTo->SetTooltip( m_pToolTip, pszTooltipText );
+		}
+	};
 
 	lambdaAddTooltip( "CommentaryButton", "#MMenu_Tooltip_Commentary" );
 	lambdaAddTooltip( "CoachPlayersButton", "#MMenu_Tooltip_Coach" );
@@ -645,6 +653,11 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 	lambdaAddTooltip( "SettingsButton", "#MMenu_Tooltip_Options" );
 	lambdaAddTooltip( "TF2SettingsButton", "#MMenu_Tooltip_AdvOptions" );
 
+	lambdaAddTooltipSolo( "AchievementsButtonSolo", "#MMenu_Tooltip_Achievements" );
+	lambdaAddTooltipSolo( "ResetModProgressButton", "#TFSOLO_ResetProgress_Title" );
+	lambdaAddTooltipSolo( "ModCreditsButton", "#TFSOLO_ModCredits_Title" );
+	lambdaAddTooltipSolo( "SettingsButtonSDK", "#MMenu_Tooltip_Options" );
+	lambdaAddTooltipSolo( "TF2SettingsButtonSDK", "#MMenu_Tooltip_AdvOptions" );
 
 	LoadCharacterImageFile();
 

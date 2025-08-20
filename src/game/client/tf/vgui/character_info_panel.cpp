@@ -28,6 +28,7 @@
 #include "store/v2/tf_store_panel2.h"
 #include "store/tf_store.h"
 #include "tf_matchmaking_dashboard.h"
+#include "tf_controls.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -103,6 +104,14 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 	// Achievements
 	//AddPage(new CCharacterInfoSubAchievements(this), "#Achievements");
 
+	m_pToolTip = new CCharacterInfoToolTip( this );
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled( false );
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled( false );
+	m_pToolTipEmbeddedPanel->MoveToFront();
+	m_pToolTip->SetEmbeddedPanel( m_pToolTipEmbeddedPanel );
+	m_pToolTip->SetTooltipDelay( 0 );
+
 	ListenForGameEvent( "gameui_hidden" );
 
 	m_pLoadoutPanel->SetVisible( false );
@@ -128,6 +137,18 @@ void CCharacterInfoPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	LoadControlSettings( "Resource/UI/CharInfoPanelSolo.res" );
+
+	auto lambdaAddTooltipSolo = [&](const char* pszPanelName, const char* pszTooltipText)
+	{
+		Panel* pPanelToAddTooltipTipTo = FindChildByName(pszPanelName);
+		if (pPanelToAddTooltipTipTo)
+		{
+			pPanelToAddTooltipTipTo->SetTooltip(m_pToolTip, pszTooltipText);
+		}
+	};
+
+	lambdaAddTooltipSolo( "ResetButton", "#TF_SDK_ResetLoadout_Title" );
+	lambdaAddTooltipSolo( "ClearButton", "#TF_SDK_ClearLoadout_Title" );
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);
@@ -909,4 +930,85 @@ CCheatDetectionDialog *OpenCheatDetectionDialog( vgui::Panel *pParent, const cha
 	TFModalStack()->PushModal( g_CheatDetectionDialog );
 	g_CheatDetectionDialog->SetDialogVariable( "reason", g_pVGuiLocalize->Find( pszCheatMessage ) );
 	return g_CheatDetectionDialog;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CCharacterInfoToolTip::PerformLayout()
+{
+	if ( !ShouldLayout() )
+		return;
+
+	_isDirty = false;
+
+	// Resize our text labels to fit.
+	int iW = 0;
+	int iH = 0;
+	for ( int i = 0; i < m_pEmbeddedPanel->GetChildCount(); i++ )
+	{
+		vgui::Label* pLabel = dynamic_cast<vgui::Label*>( m_pEmbeddedPanel->GetChild( i ) );
+		if ( !pLabel )
+			continue;
+
+		// Only checking to see if we have any text
+		char szTmp[2];
+		pLabel->GetText( szTmp, sizeof( szTmp ) );
+		if ( !szTmp[0] )
+			continue;
+
+		pLabel->InvalidateLayout( true );
+
+		int iX, iY;
+		pLabel->GetPos(iX, iY);
+		iW = MAX( iW, ( pLabel->GetWide() + (iX * 2) ) );
+
+		if ( iH == 0 )
+		{
+			iH += MAX( iH, pLabel->GetTall() + ( iY * 2 ) );
+		}
+		else
+		{
+			iH += MAX( iH, pLabel->GetTall() );
+		}
+	}
+	m_pEmbeddedPanel->SetSize( iW, iH );
+
+	m_pEmbeddedPanel->SetVisible( true );
+
+	PositionWindow( m_pEmbeddedPanel );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CCharacterInfoToolTip::HideTooltip()
+{
+	if ( m_pEmbeddedPanel )
+	{
+		m_pEmbeddedPanel->SetVisible( false );
+	}
+
+	BaseTooltip::HideTooltip();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CCharacterInfoToolTip::SetText(const char* pszText)
+{
+	if ( m_pEmbeddedPanel )
+	{
+		_isDirty = true;
+
+		if ( pszText && pszText[0] == '#' )
+		{
+			m_pEmbeddedPanel->SetDialogVariable( "tiptext", g_pVGuiLocalize->Find( pszText ) );
+		}
+		else
+		{
+			m_pEmbeddedPanel->SetDialogVariable( "tiptext", pszText );
+		}
+		m_pEmbeddedPanel->SetDialogVariable( "tipsubtext", "" );
+	}
 }
