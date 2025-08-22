@@ -86,5 +86,12 @@ TFSOLO.WorldMaps.TestClass <- class extends TFSOLO.WorldMap
 	{
 		Nodes[id].Select()
 	}
+	
+	function OnBackButton()
+	{
+		TFSOLO.WorldMaps.Active = null
+		TFSOLO.PlayTransitionScreenEffects()
+		TFSOLO.Screens.TC_TeamSelect.Enter()
+	}
 }
 TFSOLO.WorldMaps.Test <- TFSOLO.WorldMaps.TestClass()

@@ -3,6 +3,7 @@ TFSOLO.WorldMaps.Active <- null
 TFSOLO.WorldMaps.ActiveNode <- null
 TFSOLO.WorldMaps.Ingame <- false
 TFSOLO.WorldMaps.LastWinner <- 0
+TFSOLO.WorldMaps.ProgressTracking <- []
 
 TFSOLO.WorldMapNode <- class
 {
@@ -145,6 +146,16 @@ TFSOLO.WorldMap <- class
 		
 	}
 	
+	function OnBackButton()
+	{
+		
+	}
+	
+	function OnLoadSave()
+	{
+		
+	}
+	
 	Name = "Base World Map"
 	Nodes = []
 	SelectedNode = null
@@ -159,6 +170,7 @@ TFSOLO.WorldMap <- class
 
 IncludeScript("client/solo/vgui/worldmaps/test.nut")
 IncludeScript("client/solo/vgui/worldmaps/tc_worldmap.nut")
+IncludeScript("client/solo/vgui/worldmaps/mtt.nut")
 
 
 TFSOLO.WorldMapEventTag <- UniqueString()
@@ -189,6 +201,14 @@ getroottable()[TFSOLO.WorldMapEventTag] <- {
 	OnGameEvent_teamplay_round_win = function(params)
 	{
 		TFSOLO.WorldMaps.LastWinner = params.team
+	}
+	
+	OnScriptHook_solopanel_first_open = function(params)
+	{
+		foreach (a in TFSOLO.WorldMaps.ProgressTracking)
+		{
+			a.OnLoadSave()
+		}
 	}
 }
 TFSOLO.WorldMapEventTable <- getroottable()[TFSOLO.WorldMapEventTag]

@@ -547,10 +547,10 @@ Merc.ReturnTuHub <- function()
 	ToConsole("cl_loadingimage_force 1")
 	ToConsole("cl_loadingimage_override ../console/title_team_tough_break_widescreen")
 	
-	if (IsDedicatedServer())
+	//if (IsDedicatedServer())
 		ToConsole("changelevel " + Merc.MapFile)
-	else
-		ToConsole("map " + Merc.MapFile)
+	//else
+	//	ToConsole("map " + Merc.MapFile)
 }
 
 Merc.GetObjText <- function()

@@ -17,4 +17,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	attrib.RemoveSubKey("vision opt in flags")
 	attrib.RemoveSubKey("pyrovision only DISPLAY ONLY")
 	attrib.RemoveSubKey("pyrovision opt in DISPLAY ONLY")
+	
+	// TODO: New design
 })

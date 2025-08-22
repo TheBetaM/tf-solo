@@ -1,7 +1,13 @@
-TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
+TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 {
 	Name = "TC_TeamSelect"
-	constructor() { }
+	Type = 0
+	TitleNames = ["Territorial Control", "Terrifying Control", "Smissmas Control"]
+	SaveKeyNames = ["tc","tc_hallow","tc_xmas"]
+	constructor(t) { 
+		Type = t
+		Name = TitleNames[t]
+	}
 	
 	function OnEnter()
 	{
@@ -69,13 +75,13 @@ TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
 			xpos			="cs-0.5"
 			ypos			="50"
 			wide			="300"
-			tall			="14"
+			tall			="20"
 			autoResize	="0"
 			pinCorner		="0"
 			visible		="1"
 			enabled		="1"
 			tabPosition	="0"
-			labeltext		="Territorial Control"
+			labeltext		=TitleNames[Type]
 			font			="QuestLargeText"
 			textAlignment	="center"
 			dulltext		="0"
@@ -87,22 +93,37 @@ TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
 		
 		local savekv = Solo.GetSaveData()
 		local solokv = savekv.GetKey("Solo", true)
-		local tckv = solokv.GetKey("tc", true)
+		local tckv = solokv.GetKey(SaveKeyNames[Type], true)
 		local MapPoolFull = TFSOLO.ValidMaps.slice()
 		local MapCount = 0
 		local MapCount_RED = 0
 		local MapCount_BLU = 0
 		local MapCount_NONE = 0
 		
-		for (local i = 0; i < MapPoolFull.len() - 1; i++)
+		for (local i = 0; i < MapPoolFull.len(); i++)
 		{
 			local MapKey = TFSOLO.GetMapEntry(MapPoolFull[i])
 			local TagsKey = MapKey.GetKey("tags", true)
-			if (TagsKey.FindKey("theme_hallow") != null)
+			local pass = false
+			if (TagsKey.FindKey("mvm") != null)
 			{
+			}
+			else if (TagsKey.FindKey("vsh") != null)
+			{
+			}
+			else if (TagsKey.FindKey("theme_hallow") != null)
+			{
+				if (Type == 1)
+				{
+					pass = true
+				}
 			}
 			else if (TagsKey.FindKey("theme_xmas") != null)
 			{
+				if (Type == 2)
+				{
+					pass = true
+				}
 			}
 			else if (TagsKey.FindKey("theme_invasion") != null)
 			{
@@ -110,16 +131,14 @@ TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
 			else if (TagsKey.FindKey("theme_bread") != null)
 			{
 			}
-			else if (TagsKey.FindKey("mvm") != null)
-			{
-			}
-			else if (TagsKey.FindKey("vsh") != null)
-			{
-			}
-			else if (TagsKey.GetInt("stages") > 1)
-			{
-			}
 			else
+			{
+				if (Type == 0)
+				{
+					pass = true
+				}
+			}
+			if (pass)
 			{
 				MapCount++
 				if (tckv.FindKey(MapPoolFull[i]) != null)
@@ -149,6 +168,11 @@ TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
 		local ControlRED = MapCount_RED//(MapCount_RED / MapCount) * 100
 		local ControlBLU = MapCount_BLU//(MapCount_BLU / MapCount) * 100
 		local ControlNONE = MapCount_NONE//(MapCount_NONE / MapCount) * 100
+		
+		if (MapCount_NONE <= 0)
+		{
+			AwardAchievement(159, 1) // TFSOLO_SOLO_TC_COMPLETE
+		}
 		
 		local kv4 = {
 			ControlName	="Label"
@@ -219,25 +243,85 @@ TFSOLO.Screens.TC_TeamSelect <- class extends TFSOLO.Screen
 		}
 		SoloPanel.CreatePanelRoot(kv6)
 		
+		local kvBack = {
+			ControlName =	"CExImageButton",
+			fieldName =		"MapScreenButtonBack",
+			xpos =			"cs-0.5-150",
+			ypos =			"cs-0.5-150",
+			zpos =			"16",
+			wide =			"110",
+			tall =			"25",
+			autoResize =	"0",
+			pinCorner =		"3",
+			visible =		"1",
+			enabled =		"1",
+			tabPosition =	"0",
+			labelText =		"BACK",
+			font =			"HudFontSmallBold",
+			textAlignment =	"center",
+			textinsetx =	"5",
+			use_proportional_insets = "1",
+			dulltext =		"0",
+			brighttext =	"0",
+			Command =		"map_back",
+			proportionaltoparent = "1",
+
+			sound_depressed =	"UI/buttonclick.wav",
+			sound_released =	"UI/buttonclickrelease.wav",
+		}
+		SoloPanel.CreatePanelRoot(kvBack)
+		
 	}
 }
+TFSOLO.Screens.TC_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(0)
+TFSOLO.Screens.TC_Hallow_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(1)
+TFSOLO.Screens.TC_Xmas_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(2)
 
 TFSOLO.TC_TeamSelectEventTag <- UniqueString()
 getroottable()[TFSOLO.TC_TeamSelectEventTag] <- {
 	OnScriptHook_solopanel_command = function(params)
 	{
-		if (TFSOLO.Screens.Active != TFSOLO.Screens.TC_TeamSelect) return;
+		if (TFSOLO.Screens.Active != TFSOLO.Screens.TC_TeamSelect
+			&& TFSOLO.Screens.Active != TFSOLO.Screens.TC_Hallow_TeamSelect
+			&& TFSOLO.Screens.Active != TFSOLO.Screens.TC_Xmas_TeamSelect) return;
 		if (params.command == "teamselect_blue")
 		{
 			TFSOLO.PlayerData.TeamSelected = 1
 			TFSOLO.PlayTransitionScreenEffects()
-			TFSOLO.WorldMaps.TC_BLU.Enter()
+			if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_BLU.Enter()
+			}
+			else if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_Hallow_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_Hallow_BLU.Enter()
+			}
+			else if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_Xmas_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_Xmas_BLU.Enter()
+			}
 		}
 		else if (params.command == "teamselect_red")
 		{
 			TFSOLO.PlayerData.TeamSelected = 0
 			TFSOLO.PlayTransitionScreenEffects()
-			TFSOLO.WorldMaps.TC_RED.Enter()
+			if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_RED.Enter()
+			}
+			else if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_Hallow_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_Hallow_RED.Enter()
+			}
+			else if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_Xmas_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_Xmas_RED.Enter()
+			}
+		}
+		else if (params.command == "map_back")
+		{
+			TFSOLO.PlayTransitionScreenEffects()
+			TFSOLO.Screens.WorldMapSelect.Enter()
 		}
 	}
 }

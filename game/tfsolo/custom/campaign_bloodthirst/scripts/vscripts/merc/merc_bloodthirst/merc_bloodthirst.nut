@@ -96,10 +96,10 @@ Merc.ChangeLevelWithBuffer <- function(targetmap)
 		ToConsole("tf_gamemode_override 1")
 	}
 	
-	if (IsDedicatedServer())
+	//if (IsDedicatedServer())
 		ToConsole("changelevel "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
-	else
-		ToConsole("map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
+	//else
+	//	ToConsole("map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
 }
 
 // Map file name is different in workshop downloads, so the name is passed through the boot buffer
@@ -107,10 +107,10 @@ Merc.ReturnTuHub <- function()
 {
 	Merc.SaveProgress()
 	// changelevel breaks cosmetics in listen server
-	if (IsDedicatedServer())
+	//if (IsDedicatedServer())
 		ToConsole("changelevel " + Merc.MapFile)
-	else
-		ToConsole("disconnect;wait;maxplayers 32;map " + Merc.MapFile)
+	//else
+	//	ToConsole("disconnect;wait;maxplayers 32;map " + Merc.MapFile)
 }
 Merc.LoadBuffer <- function(t)
 {

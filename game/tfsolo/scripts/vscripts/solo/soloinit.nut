@@ -5,6 +5,7 @@ if (TFSOLO.Settings == null)
 	TFSOLO.Settings = {}
 	printl("[TFSOLO] Failed to load mission settings!")
 }
+::TFSOLO.CanRetry <- false
 
 IncludeScript("solo/gamemodes/gamemode.nut")
 IncludeScript("solo/mapmodes/mapmode.nut")
@@ -12,6 +13,7 @@ IncludeScript("solo/botmodes/botmode.nut")
 
 Convars.SetValue("mp_tournament", 0)
 Convars.SetValue("mp_winlimit", 0)
+//ToConsole("mp_timelimit 0")
 Convars.SetValue("mp_forceautoteam", 0)
 Convars.SetValue("mp_autoteambalance", 0)
 //Convars.SetValue("mp_allowspectators", 0)
@@ -59,6 +61,13 @@ if (IsWorkshopMap)
 	}
 }
 
+if ("MissionScript" in TFSOLO.Settings && TFSOLO.Settings.MissionScript.len() != 0)
+{
+	IncludeScript(TFSOLO.Settings.MissionScript)
+	TFSOLO.CanRetry = true
+	Convars.SetValue("mp_maxrounds", 0)
+}
+
 TFSOLO.SoloEventTag <- UniqueString()
 getroottable()[TFSOLO.SoloEventTag] <- {
 	OnGameEvent_teamplay_round_start = function(params)
@@ -100,7 +109,10 @@ getroottable()[TFSOLO.SoloEventTag] <- {
 			playerWon = (params.team == team),
 			full_round = params.full_round,
 		}
-		FireScriptHook("solo_mission_over", hParams)
+		if (!TFSOLO.CanRetry || params.team == team)
+		{
+			FireScriptHook("solo_mission_over", hParams)
+		}
 	}
 	
 	OnGameEvent_mvm_mission_complete = function(params)

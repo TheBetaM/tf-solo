@@ -1,0 +1,1 @@
+IncludeScript("solo/mission/mission_common.nut")

@@ -1,0 +1,1 @@
+Convars.SetValue("tf_mirrormode", 1)

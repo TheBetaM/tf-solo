@@ -61,3 +61,12 @@ TFSOLO.Cutscene <- class
 }
 
 IncludeScript("client/solo/vgui/cutscenes/test.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/scout.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/soldier.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/pyro.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/demoman.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/heavy.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/engineer.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/medic.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/sniper.nut")
+IncludeScript("client/solo/vgui/cutscenes/mtt/spy.nut")

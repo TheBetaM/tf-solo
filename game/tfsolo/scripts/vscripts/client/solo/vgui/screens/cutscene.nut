@@ -7,6 +7,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 	DialogSpeakerLabel = null
 	DialogProgressButton = null
 	BackgroundPanel = null
+	InteractIconPanel = null
 	ActorPanel1 = null
 	ActorPanel2 = null
 	constructor() {
@@ -16,6 +17,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 		DialogSpeakerLabel = null
 		DialogProgressButton = null
 		BackgroundPanel = null
+		InteractIconPanel = null
 		ActorPanel1 = null
 		ActorPanel2 = null
 	}
@@ -70,9 +72,9 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 		DialogHolder <- SoloPanel.CreatePanelRoot(kvHolder)
 		
 		local kvDialogLabel = {
-			ControlName	=	"CExLabel"
+			ControlName	=	"CExRichText"//"CExLabel"
 			fieldName=		"DialogueRichText2"
-			font=			"ScoreboardSmall"
+			font=			"HudFontMediumSmallSecondary"//"Default"//"ScoreboardMedium"
 			labelText=		"very long text test"
 			textAlignment=	"north-west"
 			xpos=			"5"
@@ -80,7 +82,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 			zpos=			"11"
 			wide=			"460"
 			tall=			"75"
-			autoResize=		"0"
+			autoResize=		"3"//"0"
 			pinCorner=		"0"
 			visible=		"1"
 			enabled=		"1"
@@ -93,11 +95,65 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 			image_up_arrow_mouseover=		"scroll_up_on"
 			image_down_arrow=				"scroll_down_off"
 			image_down_arrow_mouseover=	"scroll_down_on"
-			image_line=		"ArmoryScrollbarWell"
-			image_box=			"ArmoryScrollbarBox"
+			//image_line=		"ArmoryScrollbarWell"
+			//image_box=			"ArmoryScrollbarBox"
+			tabPosition=		"0"
+			maxchars=		"-1"
+			text=			""
 		}
 		kvDialogLabel["default"] <- "0"
 		DialogLabel <- SoloPanel.CreatePanel(kvDialogLabel, kvHolder.fieldName)
+		
+		local kvSpeakerHolder = {
+			ControlName=	"EditablePanel"
+			fieldName=		"DialogueSpeakerPanel"
+			xpos=			"cs-0.5"
+			ypos=			"r110"
+			zpos=			"10"
+			wide=			"470"
+			tall=			"80"
+			visible=		"1"
+			PaintBackgroundType=	"0"
+			paintborder=	"0"
+			//border=		"StorePreviewBorder"
+			proportionaltoparent = "1"
+			mouseinputenabled=	"0"
+			keyboardinputenabled= "0"
+		}
+		local DialogSpeakerHolder = SoloPanel.CreatePanelRoot(kvSpeakerHolder)
+		
+		local kvSpeakerLabel = {
+			ControlName	=	"CExRichText"//"CExLabel"
+			fieldName=		"DialogueRichText3"
+			font=			"HudFontMediumBold"//"HudFontMedium"
+			labelText=		"very long text test"
+			textAlignment=	"north-west"
+			xpos=			"0"
+			ypos=			"5"
+			zpos=			"11"
+			wide=			"460"
+			tall=			"75"
+			autoResize=		"3"//"0"
+			pinCorner=		"0"
+			visible=		"1"
+			enabled=		"1"
+			fgcolor=		"TanLight"
+			wrap=			"1"
+			highlight_color=	"177 168 149 255"
+			itemset_color=		"216 244 9 255"
+			link_color=		"252 191 27 255"
+			image_up_arrow=				"scroll_up_off"
+			image_up_arrow_mouseover=		"scroll_up_on"
+			image_down_arrow=				"scroll_down_off"
+			image_down_arrow_mouseover=	"scroll_down_on"
+			//image_line=		"ArmoryScrollbarWell"
+			//image_box=			"ArmoryScrollbarBox"
+			tabPosition=		"0"
+			maxchars=		"-1"
+			text=			""
+		}
+		kvSpeakerLabel["default"] <- "0"
+		DialogSpeakerLabel <- SoloPanel.CreatePanel(kvSpeakerLabel, kvSpeakerHolder.fieldName)
 		
 		local kvProgressButton = {
 			ControlName=	"Button"
@@ -140,6 +196,25 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 			drawcolor=		"QuestMap_BGImages"
 		}
 		BackgroundPanel <- SoloPanel.CreatePanelRoot(kvBackgroundPanel)
+		
+		local kvInteractIconPanel = {
+			ControlName=	"ImagePanel"
+			fieldName=		"InteractIconImage"
+			xpos=			"r35"
+			ypos=			"r30"
+			zpos=			"14"
+			wide=			"64"
+			tall=			"64"
+			visible=		"1"
+			enabled=		"1"
+			//scaleImage=		"1"
+			image=			"blog_forward_solid"
+			proportionaltoparent=	"1"
+			mouseinputenabled=	"0"
+			keyboardinputenabled= "0"
+			//drawcolor=		"QuestMap_BGImages"
+		}
+		InteractIconPanel <- SoloPanel.CreatePanel(kvInteractIconPanel, kvHolder.fieldName)
 		
 		local kvActorPanel1 = {
 			ControlName=	"CTFPlayerModelPanel"

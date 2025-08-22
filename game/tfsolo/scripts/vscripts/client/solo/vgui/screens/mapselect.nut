@@ -71,7 +71,7 @@ TFSOLO.Screens.MapSelect <- class extends TFSOLO.Screen
 			xpos			="cs-0.5"
 			ypos			="50"
 			wide			="300"
-			tall			="14"
+			tall			="20"
 			autoResize		="0"
 			pinCorner		="0"
 			visible			="1"
@@ -112,9 +112,7 @@ getroottable()[TFSOLO.VguiMapSelectEventTag] <- {
 		if (TFSOLO.Screens.Active != TFSOLO.Screens.MapSelect) return;
 		if (params.command == "map_back")
 		{
-			TFSOLO.WorldMaps.Active = null
-			TFSOLO.PlayTransitionScreenEffects()
-			TFSOLO.Screens.TC_TeamSelect.Enter()
+			TFSOLO.WorldMaps.Active.OnBackButton()
 		}
 	}
 	

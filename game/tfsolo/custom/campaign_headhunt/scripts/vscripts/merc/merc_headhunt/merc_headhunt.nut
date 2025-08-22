@@ -88,10 +88,10 @@ Merc.ChangeLevelWithBuffer <- function(targetmap)
 		ToConsole("mp_humans_must_join_class " + TF_CLASS_NAMES[Merc.Missions[Merc.MissionID].ForcedClass])
 	}
 	
-	if (IsDedicatedServer())
+	//if (IsDedicatedServer())
 		ToConsole("changelevel "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
-	else
-		ToConsole("map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
+	//else
+	//	ToConsole("map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
 	//ToConsole("disconnect;wait;maxplayers 32;map "+targetmap+";wait 60;script_execute "+Merc.ProjectDir+"/missions/mission_"+Merc.MissionID+".nut;")
 }
 
@@ -100,10 +100,10 @@ Merc.ReturnTuHub <- function()
 {
 	Merc.SaveProgress()
 	// changelevel breaks cosmetics in listen server
-	if (IsDedicatedServer())
+	//if (IsDedicatedServer())
 		ToConsole("changelevel " + Merc.MapFile)
-	else
-		ToConsole("disconnect;wait;maxplayers 32;map " + Merc.MapFile)
+	//else
+	//	ToConsole("disconnect;wait;maxplayers 32;map " + Merc.MapFile)
 }
 Merc.LoadBuffer <- function(t)
 {

@@ -10,3 +10,13 @@ else if (TFSOLO.Settings.gamemode == "mvm")
 {
 	IncludeScript("solo/gamemodes/mvm.nut")
 }
+else if (TFSOLO.Settings.gamemode == "ctf")
+{
+	IncludeScript("solo/gamemodes/ctf.nut")
+}
+else if (TFSOLO.Settings.gamemode == "pd")
+{
+	IncludeScript("solo/gamemodes/pd.nut")
+}
+
+

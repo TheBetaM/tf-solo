@@ -88,6 +88,10 @@ OnScriptHook_campaign_mission_over = function(params)
 	
 OnScriptHook_solo_mission_over = function(params)
 {
+	if (TFSOLO.CanRetry && !params.playerWon)
+	{
+		return
+	}
 	TFSOLO.CreditPool = 0
 	TFSOLO.CreditLines = []
 	if (params.playerWon)
