@@ -347,6 +347,12 @@ HSCRIPT CTFHUDSoloObjectives::CreatePanelInternal(HSCRIPT hTable, Panel* hParent
 		pPanel = pBasePanel;
 		pDesc = GetScriptDescForClass(ImagePanel);
 	}
+	else if (FStrEq(pszPanelType, "ScalableImagePanel"))
+	{
+		ScalableImagePanel* pBasePanel = new ScalableImagePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(ScalableImagePanel);
+	}
 	else if (FStrEq(pszPanelType, "CTFImagePanel"))
 	{
 		CTFImagePanel* pBasePanel = new CTFImagePanel(hParent, pszControlName);

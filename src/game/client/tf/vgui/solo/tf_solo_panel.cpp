@@ -407,8 +407,12 @@ END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(CExImageButton, Button, "")
 END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(ImagePanel, Panel, "")
+DEFINE_SCRIPTFUNC(SetImageConst, "")
 END_SCRIPTDESC();
-BEGIN_SCRIPTDESC(CTFImagePanel, EditablePanel, "")
+BEGIN_SCRIPTDESC(ScalableImagePanel, Panel, "")
+DEFINE_SCRIPTFUNC(SetImage, "")
+END_SCRIPTDESC();
+BEGIN_SCRIPTDESC(CTFImagePanel, ScalableImagePanel, "")
 END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(CBaseModelPanel, EditablePanel, "")
 END_SCRIPTDESC();
@@ -420,6 +424,17 @@ DEFINE_SCRIPTFUNC(HoldItemInSlot, "")
 DEFINE_SCRIPTFUNC(HoldItem, "")
 DEFINE_SCRIPTFUNC(ClearCarriedItems, "")
 DEFINE_SCRIPTFUNC(PlayVCD, "")
+DEFINE_SCRIPTFUNC(SetTeam, "")
+DEFINE_SCRIPTFUNC(SetDisableSpeak, "")
+DEFINE_SCRIPTFUNC(SetPlayerOrigin, "")
+DEFINE_SCRIPTFUNC(SetPlayerAngles, "")
+DEFINE_SCRIPTFUNC(SetForceNoItems, "")
+DEFINE_SCRIPTFUNC(SetForceSequence, "")
+DEFINE_SCRIPTFUNC(AttachModel, "")
+DEFINE_SCRIPTFUNC(GetPlayerPos, "")
+DEFINE_SCRIPTFUNC(GetPlayerAngles, "")
+DEFINE_SCRIPTFUNC(RotateYaw, "")
+DEFINE_SCRIPTFUNC(RotatePitch, "")
 END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(CTFVideoPanel, EditablePanel, "")
 END_SCRIPTDESC();
@@ -518,6 +533,7 @@ HSCRIPT PanelToScriptHandle(Panel* pPanel)
 	if (dynamic_cast<Frame*>(pPanel) != NULL) return g_pScriptVM->RegisterInstance(dynamic_cast<Frame*>(pPanel));
 	if (dynamic_cast<EditablePanel*>(pPanel) != NULL) return g_pScriptVM->RegisterInstance(dynamic_cast<EditablePanel*>(pPanel));
 	if (dynamic_cast<ImagePanel*>(pPanel) != NULL) return g_pScriptVM->RegisterInstance(dynamic_cast<ImagePanel*>(pPanel));
+	if (dynamic_cast<ScalableImagePanel*>(pPanel) != NULL) return g_pScriptVM->RegisterInstance(dynamic_cast<ScalableImagePanel*>(pPanel));
 	
 	return g_pScriptVM->RegisterInstance(pPanel);
 }
@@ -635,6 +651,12 @@ HSCRIPT CSoloPanel::CreatePanelInternal(HSCRIPT hTable, Panel* hParentTarget)
 		ImagePanel* pBasePanel = new ImagePanel(hParent, pszControlName);
 		pPanel = pBasePanel;
 		pDesc = GetScriptDescForClass(ImagePanel);
+	}
+	else if (FStrEq(pszPanelType, "ScalableImagePanel"))
+	{
+		ScalableImagePanel* pBasePanel = new ScalableImagePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(ScalableImagePanel);
 	}
 	else if (FStrEq(pszPanelType, "CTFImagePanel"))
 	{

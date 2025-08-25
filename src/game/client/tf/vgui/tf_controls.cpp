@@ -3403,7 +3403,7 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 	);
 	engine->ClientCmd_Unrestricted( fmtModeCommand.Access() );
 	CFmtStr1024 fmtMapCommand(
-		"wait\nwait\nmaxplayers 32\n\nprogress_enable\nmap %s\n", m_iszRequestedMap
+		"wait\nwait\nmaxplayers 33\n\nprogress_enable\nmap %s\n", m_iszRequestedMap
 	);
 	engine->ClientCmd_Unrestricted( fmtMapCommand.Access() );
 	//GetMMDashboard()->OnCommand("dimmer_hide");

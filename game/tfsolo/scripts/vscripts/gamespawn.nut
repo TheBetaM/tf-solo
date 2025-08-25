@@ -68,11 +68,11 @@ __CollectGameEventCallbacks(TFSOLO.CoreEventTable)
 		["materials/models/props_selbyen/seal_skin2.vtf"] = "materials/models/props_selbyen/seal_skin2.vtf",
 		["materials/models/props_selbyen/seal_whiskers.vmt"] = "materials/models/props_selbyen/seal_whiskers.vmt",
 		["materials/models/props_selbyen/seal_whiskers.vtf"] = "materials/models/props_selbyen/seal_whiskers.vtf",
-		["models/props_selbyen/seal.mdl"] = "models/props_selbyen/sealremap.mdl",
-		["models/props_selbyen/seal.vvd"] = "models/props_selbyen/sealremap.vvd",
-		["models/props_selbyen/seal.dx80.vtx"] = "models/props_selbyen/sealremap.dx80.vtx",
-		["models/props_selbyen/seal.dx90.vtx"] = "models/props_selbyen/sealremap.dx90.vtx",
-		["models/props_selbyen/seal.sw.vtx"] = "models/props_selbyen/sealremap.sw.vtx",
+		["models/props_selbyen/seal.mdl"] = "models/props_selbyen/seal.mdl",
+		["models/props_selbyen/seal.vvd"] = "models/props_selbyen/seal.vvd",
+		["models/props_selbyen/seal.dx80.vtx"] = "models/props_selbyen/seal.dx80.vtx",
+		["models/props_selbyen/seal.dx90.vtx"] = "models/props_selbyen/seal.dx90.vtx",
+		["models/props_selbyen/seal.sw.vtx"] = "models/props_selbyen/seal.sw.vtx",
 		}
 	}
 	

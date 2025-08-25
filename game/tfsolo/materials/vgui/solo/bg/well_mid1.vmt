@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui\solo\bg\well_mid1"
+	"$translucent" 1
+	"$ignorez" 1
+}

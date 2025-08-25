@@ -138,6 +138,9 @@ CTFPlayerModelPanel::CTFPlayerModelPanel( vgui::Panel *pParent, const char *pNam
 	m_bDrawActionSlotEffects = false;
 	m_bDrawTauntParticles = false;
 	m_strPlayerModelOverride = "";
+	m_bForceNoItems = false;
+	m_pszForceSequenceName = "";
+	m_bForceSequenceLoop = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -259,6 +262,12 @@ void CTFPlayerModelPanel::HoldFirstValidItem( void )
 
 	if ( m_iCurrentClassIndex == TF_CLASS_UNDEFINED )
 		return;
+
+	if ( m_bForceNoItems )
+	{
+		SwitchHeldItemTo( NULL );
+		return;
+	}
 
 	int iDesiredSlot = -1;
 
@@ -542,14 +551,17 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 	}
 
 	// Then equip the held item
-	EquipItem( pItem );
-	m_iCurrentSlotIndex = pItem->GetStaticData()->GetLoadoutSlot( m_iCurrentClassIndex );
+	if ( pItem )
+	{
+		EquipItem( pItem );
+		m_iCurrentSlotIndex = pItem->GetStaticData()->GetLoadoutSlot( m_iCurrentClassIndex );
+	}
 
 	m_StatTrackModel.m_bDisabled = true;
 	m_StatTrackModel.m_MDL.SetMDL( MDLHANDLE_INVALID );
 
 	CAttribute_String attrModule;
-	if ( GetStattrak( m_pHeldItem, &attrModule ) )
+	if ( pItem && GetStattrak( m_pHeldItem, &attrModule ) )
 	{
 		// Allow for already strange items
 		bool bIsStrange = false;
@@ -600,7 +612,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 	SetSequenceLayers( NULL, 0 );
 
 	// See if our VCD is overridden
-	if ( m_pszVCD )
+	if ( m_pszVCD && m_pszVCD[0] )
 	{
 		// Make sure we're holding the weapon, if it's required
 		bool bCanRunScene = true;
@@ -638,12 +650,28 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 		}
 	}
 
+	if ( m_pszForceSequenceName && m_pszForceSequenceName[0] )
+	{
+		CStudioHdr& studioHdr = *m_RootMDL.m_pStudioHdr;
+		int iSequence = LookupSequence( &studioHdr, m_pszForceSequenceName );
+		if ( iSequence >= 0 )
+		{
+			MDLSquenceLayer_t tmpSequenceLayers[1];
+			tmpSequenceLayers[0].m_nSequenceIndex = iSequence;
+			tmpSequenceLayers[0].m_flWeight = 1.0;
+			tmpSequenceLayers[0].m_bNoLoop = !m_bForceSequenceLoop;
+			tmpSequenceLayers[0].m_flCycleBeganAt = gpGlobals->curtime; //m_RootMDL.m_MDL.m_flTime;
+			SetSequenceLayers( tmpSequenceLayers, 1 );
+		}
+		return;
+	}
+
 	const char *pScene = NULL;
 	const char *pSequence = NULL;
 	const char *pRequiredItem = NULL;
 	bool bRemoveTauntParticles = true;
 
-	if ( IsTauntItem( pItem->GetStaticData(), GetTeam(), m_iCurrentClassIndex, &pSequence, &pRequiredItem, &pScene ) )
+	if ( pItem && IsTauntItem( pItem->GetStaticData(), GetTeam(), m_iCurrentClassIndex, &pSequence, &pRequiredItem, &pScene ) )
 	{	
 		MDLCACHE_CRITICAL_SECTION();
 
@@ -728,7 +756,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 	}
 
 	// update poseparam
-	if ( pItem->GetStaticData()->GetNumPlayerPoseParameters( m_iTeam ) > 0 )
+	if ( pItem && pItem->GetStaticData()->GetNumPlayerPoseParameters( m_iTeam ) > 0 )
 	{
 		for ( int iPlayerPoseParam=0; iPlayerPoseParam < pItem->GetStaticData()->GetNumPlayerPoseParameters( m_iTeam ); ++iPlayerPoseParam )
 		{
@@ -755,7 +783,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 		SafeDeleteParticleData( &m_aParticleSystems[ SYSTEM_ACTIONSLOT ] );
 	}
 	m_bDrawActionSlotEffects = false;
-	if ( pItem->GetStaticData()->GetItemClass() )
+	if ( pItem && pItem->GetStaticData()->GetItemClass() )
 	{
 		m_bDrawActionSlotEffects = FStrEq( pItem->GetStaticData()->GetItemClass(), "tf_weapon_spellbook" );
 	}
@@ -769,6 +797,9 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::EquipRequiredLoadoutSlot( int iRequiredLoadoutSlot )
 {
+	if ( m_bForceNoItems )
+		return;
+
 	if ( iRequiredLoadoutSlot != LOADOUT_POSITION_INVALID )
 	{
 		int iDesiredSlot = -1;
@@ -1126,7 +1157,7 @@ void CTFPlayerModelPanel::LoadAndAttachAdditionalModel( const char *pMDLName, CE
 {
 	int nModelIndex = -1;
 	
-	if ( pItem->GetStaticData()->IsContentStreamable() )
+	if ( pItem && pItem->GetStaticData()->IsContentStreamable() )
 	{
 		// Get the client-only dynamic model index. The auto-addref
 		// of vecDynamicAssetsLoaded will actually trigger the load.
@@ -1147,17 +1178,27 @@ void CTFPlayerModelPanel::LoadAndAttachAdditionalModel( const char *pMDLName, CE
 		if ( hMDL != MDLHANDLE_INVALID )
 		{
 			// Model not loaded, not dynamic. Hard load and exit out.
-			SetMergeMDL( hMDL, static_cast<IClientRenderable*>(pItem), pItem->GetSkin( m_iTeam ) );
+			if ( pItem )
+			{
+				SetMergeMDL( hMDL, static_cast<IClientRenderable*>(pItem), pItem->GetSkin( m_iTeam ) );
+			}
+			else
+			{
+				SetMergeMDL( hMDL, NULL, m_iTeam );
+			}
 		}
 		m_MergeMDL = hMDL;
 		return;
 	}
 
-	CEconItemView *pClone = new CEconItemView;
-	*pClone = *pItem;
+	if ( pItem )
+	{
+		CEconItemView *pClone = new CEconItemView;
+		*pClone = *pItem;
+		m_vecItemsLoaded.AddToTail( pClone );
+	}
 	m_vecDynamicAssetsLoaded[ m_vecDynamicAssetsLoaded.AddToTail() ] = nModelIndex;
-	m_vecItemsLoaded.AddToTail( pClone );
-
+	
 	// callback triggers immediately if not dynamic
 	modelinfo->RegisterModelLoadCallback( nModelIndex, this, true );
 }
@@ -1330,6 +1371,26 @@ Vector CTFPlayerModelPanel::GetZoomOffset()
 {
 	const Vector vecOffset( 100, 0, ClassZoomZ[m_iCurrentClassIndex] );
 	return m_bZoomedToHead ? -vecOffset : vecOffset;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerModelPanel::SetPlayerOrigin( float x, float y, float z )
+{
+	m_vecPlayerPos = Vector( x, y, z );
+
+	SetModelAnglesAndPosition( m_angPlayer, m_vecPlayerPos );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerModelPanel::SetPlayerAngles(float x, float y, float z)
+{
+	m_angPlayer = QAngle( x, y, z );
+
+	SetModelAnglesAndPosition( m_angPlayer, m_vecPlayerPos );
 }
 
 //-----------------------------------------------------------------------------

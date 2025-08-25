@@ -54,6 +54,13 @@ public:
 	void	SetTeam( int iTeam );
 	int		GetTeam( void ) { return m_iTeam; }
 
+	void	SetDisableSpeak( bool speak ) { m_bDisableSpeakEvent = speak; }
+	void	SetPlayerOrigin( float x, float y, float z );
+	void	SetPlayerAngles( float x, float y, float z );
+	void	SetForceNoItems( bool noitems ) { m_bForceNoItems = noitems; }
+	void	SetForceSequence( const char* name, bool loop ) { m_pszForceSequenceName = V_strdup(name); m_bForceSequenceLoop = loop; }
+	void	AttachModel( const char* name ) { LoadAndAttachAdditionalModel( name, NULL ); }
+
 	void	UpdatePreviewVisuals( void );
 
 	// From IChoreoEventCallback
@@ -210,6 +217,10 @@ private:
 	float m_flTauntParticleRefireRate;
 
 	CUtlString m_strPlayerModelOverride;
+
+	bool m_bForceNoItems;
+	const char* m_pszForceSequenceName;
+	bool m_bForceSequenceLoop;
 
 	CPanelAnimationVar( bool, m_bDisableSpeakEvent, "disable_speak_event", "0" );
 

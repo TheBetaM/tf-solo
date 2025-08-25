@@ -198,13 +198,13 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 		BackgroundPanel <- SoloPanel.CreatePanelRoot(kvBackgroundPanel)
 		
 		local kvInteractIconPanel = {
-			ControlName=	"ImagePanel"
+			ControlName=	"ScalableImagePanel"
 			fieldName=		"InteractIconImage"
 			xpos=			"r35"
 			ypos=			"r30"
 			zpos=			"14"
-			wide=			"64"
-			tall=			"64"
+			wide=			"24"
+			tall=			"24"
 			visible=		"1"
 			enabled=		"1"
 			//scaleImage=		"1"
@@ -254,7 +254,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 		}
 		ActorPanel1 <- SoloPanel.CreatePanelRoot(kvActorPanel1)
 		ActorPanel1.SetToPlayerClass(5, true, null)
-		ActorPanel1.HoldItemInSlot(1)
+		ActorPanel1.SetDisableSpeak(false)
 		
 		local kvActorPanel2 = {
 			ControlName=	"CTFPlayerModelPanel"
@@ -294,7 +294,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 		}
 		ActorPanel2 <- SoloPanel.CreatePanelRoot(kvActorPanel2)
 		ActorPanel2.SetToPlayerClass(1, true, null)
-		ActorPanel2.HoldItemInSlot(2)
+		ActorPanel2.SetDisableSpeak(false)
 	}
 }
 

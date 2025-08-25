@@ -5277,6 +5277,8 @@ void CTFGameRules::SetupOnRoundStart( void )
 				pArea->InputAddOutput( InBlueSpawn2 );
 			}
 		}
+		SetTeamGoalString( TF_TEAM_BLUE, "#koth_setup_goal" );
+		SetTeamGoalString( TF_TEAM_RED, "#koth_setup_goal" );
 		SetTeamRespawnWaveTime( TF_TEAM_BLUE, 6 );
 		SetTeamRespawnWaveTime( TF_TEAM_RED, 6 );
 	}

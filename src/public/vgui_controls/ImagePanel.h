@@ -32,6 +32,7 @@ public:
 
 	virtual void SetImage(IImage *image);
 	virtual void SetImage(const char *imageName);
+	void SetImageConst(const char* imageName) { SetImage( imageName ); };
 	virtual IImage *GetImage();
 	char *GetImageName();
 

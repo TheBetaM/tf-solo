@@ -54,7 +54,7 @@ TFSOLO.StartMission <- function()
 	}
 	
 	// GO!
-	SendToConsole("disconnect;wait;wait;maxplayers 32;progress_enable;map " + MapFile)
+	SendToConsole("disconnect;wait;wait;maxplayers 33;progress_enable;map " + MapFile)
 	
 	SoloPanel.ForceClose()
 }

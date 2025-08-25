@@ -25,7 +25,7 @@ Merc.Bots <- [
 	Merc.Bot(TF_TEAM_BLUE, 1, "Defaced"),
 	Merc.Bot(TF_TEAM_BLUE, 1, "Headcase"),
 	Merc.Bot(TF_TEAM_BLUE, 1, "Facepeeler"),
-	Merc.Bot(TF_TEAM_BLUE, 2,  "Master Mind"),
+	Merc.Bot(TF_TEAM_BLUE, 2, "MasterMind"),
 ]
 Merc.ObjectiveText <- LOCM_OBJECTIVE_GENERIC
 Merc.ObjectiveMainCount <- 0

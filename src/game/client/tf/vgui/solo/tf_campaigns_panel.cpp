@@ -162,7 +162,7 @@ void CTFCampaignsPanelSingle::OnCommand(const char* command)
 
 		// create the command to execute
 		CFmtStr1024 fmtMapCommand(
-			"disconnect\nwait\nwait\nmaxplayers 32\n\nprogress_enable\nmap %s\n", cMap
+			"disconnect\nwait\nwait\nmaxplayers 33\n\nprogress_enable\nmap %s\n", cMap
 		);
 		engine->ClientCmd_Unrestricted(fmtMapCommand.Access());
 		GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >(k_eCampaigns)->SetVisible(false);

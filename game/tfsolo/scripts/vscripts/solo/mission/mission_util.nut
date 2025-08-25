@@ -20,6 +20,32 @@ if (tf_gamerules != null)
     "civilian"
 ]
 
+::TFBOT_EASY <- 0
+::TFBOT_MEDIUM <- 1
+::TFBOT_HARD <- 2
+::TFBOT_EXPERT <- 3
+
+::TFBOT_SKILLS <- [
+	"easy",
+	"medium",
+	"hard",
+	"expert"
+]
+
+TFSOLO.BotClassNames <- [
+    "generic",
+    "scout",
+    "sniper",
+    "soldier",
+    "demoman",
+    "medic",
+    "heavyweapons",
+    "pyro",
+    "spy",
+    "engineer",
+    "civilian"
+]
+
 ::CTFPlayer.GetUserID <- function()
 {
     return GetPropIntArray(tf_player_manager, "m_iUserID", this.entindex())
@@ -87,3 +113,11 @@ if (tf_gamerules != null)
         }
     }
 }
+
+foreach (k, v in ::NetProps.getclass())
+    if (k != "IsValid")
+        getroottable()[k] <- ::NetProps[k].bindenv(::NetProps);
+
+foreach (_, cGroup in Constants)
+    foreach (k, v in cGroup)
+        getroottable()[k] <- v != null ? v : 0;

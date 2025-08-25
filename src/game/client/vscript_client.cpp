@@ -744,6 +744,20 @@ void Script_VGUI_PlaySoundEntry(const char* file)
 		vgui::surface()->PlaySound(pszSoundName);
 	}
 }
+void Script_VGUI_EmitSound( const char* file )
+{
+	soundlevel_t iSoundlevel = SNDLVL_TALKING;
+	EmitSound_t es;
+	es.m_nChannel = CHAN_VOICE;
+	es.m_flVolume = 1;
+	es.m_SoundLevel = iSoundlevel;
+	es.m_flSoundTime = gpGlobals->curtime;
+	es.m_bEmitCloseCaption = false;
+	es.m_pSoundName = file;
+
+	C_RecipientFilter filter;
+	C_BaseEntity::EmitSound( filter, -2, es ); //SOUND_FROM_UI_PANEL
+}
 
 bool Script_IsServer()
 {
@@ -1292,6 +1306,7 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySound, "VGUI_PlaySound", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySoundEntry, "VGUI_PlaySoundEntry", "");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_EmitSound, "EmitSound", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for the local player.");
 
