@@ -92,6 +92,7 @@ IncludeScript("solo/balancing/ambassador.nut")
 IncludeScript("solo/balancing/caber.nut")
 IncludeScript("solo/balancing/stickyjumper.nut")
 IncludeScript("solo/balancing/yer.nut")
+IncludeScript("solo/balancing/gunboats.nut")
 
 ::TFSOLO.SetupItemSchema <- function()
 {

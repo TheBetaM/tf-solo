@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/solo/c_wallboots"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

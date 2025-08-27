@@ -2,6 +2,7 @@
 #base items_solo_balancing.txt
 #base items_solo_cosmetics.txt
 #base items_solo_taunts.txt
+//#base items_solo_standins.txt
 #base items_solo_weapons.txt
 #base items_solo_tools.txt
 #base items_solo_live.txt
@@ -588,6 +589,16 @@
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
 			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3558"
+		{
+			"name"	"blast dmg to self reduced"
+			"attribute_class"	"rocket_jump_dmg_reduction"
+			"description_string"	"#Attrib_BlastDamageToSelf_Reduced"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
 		

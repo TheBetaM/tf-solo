@@ -4,20 +4,17 @@
 -- Arena Mode - Now playable on any map  
 -- King of the Hill - Now playable on any symmetrical point map  
 -- Capture the Flag - Now playable on any symmetrical multi-point map  
--- Player Destruction - Now playable on any map
+-- Player Destruction - Now playable on any map  
 -- Mirror Mode - The entire world flipped, it's like having two maps in one!  
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  
 - Added Scenarios:  
--- Meet The Team - An introduction for each individual class
--- Territory Control - Choose from a randomly generated set of scenarios to control every map
+-- Meet The Team - An introduction for each individual class  
+-- Territory Control - Choose from a randomly generated set of scenarios to control every map  
 - Loadouts now work offline; accessing your base TF2 inventory still requires a connection
 - Added Armory - a way to unlock items using credits earned in the game
-- Added taunt items:  
--- The Thriller (All-Class)  
--- Center Of Attention (Scout)  
--- Signature Stance (All-Class)  
+- Added new weapon and taunt items
 - Added Bestiary - browse enemies encountered in the game
 - Added new achievements
 - Added console commands: r_drawfriendslist, mp_humans_must_join_class, 
@@ -136,3 +133,6 @@ GetDamageDone(), GetCrits(), GetPoints()
 -- Removed critical damage falloff  
 - Your Eternal Reward  
 -- Removed cloak drain penalty  
+
+- Stats changed to match with new items on the following:  
+-- The Gunboats  
