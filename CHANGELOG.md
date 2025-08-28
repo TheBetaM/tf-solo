@@ -86,6 +86,9 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Shortstop  
 -- Removed 50% reload speed penalty   
   
+- Gunboats  
+-- Now also usable by Demoman  
+-- Added: Allows wearer to stick to walls by jumping into them  
 - Righteous Bison  
 -- Allow the projectile to deal damage every tick, instead of every 2 ticks  
 - B.A.S.E. Jumper  
@@ -94,6 +97,8 @@ GetDamageDone(), GetCrits(), GetPoints()
   
 - Rainblower  
 -- Removed Pyrovision requirement  
+- Backburner  
+-- Added: Airblast dashes  
 - Manmelter  
 -- Removed flaming particle effect  
 - Panic Attack  
@@ -104,6 +109,11 @@ GetDamageDone(), GetCrits(), GetPoints()
 -- Gas meter now starts full and resupplies  
 - Lollichop  
 -- Removed Pyrovision requirement  
+- Axtinguisher  
+-- Reverted to original stats:  
+-- 100% critical chance vs burning players  
+-- -50% damage vs non-burning players  
+-- No critical hits vs non-burning players  
   
 - Loch-n-Load  
 -- Replaced +20% damage to buildings with +20% damage bonus   
@@ -134,5 +144,3 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Your Eternal Reward  
 -- Removed cloak drain penalty  
 
-- Stats changed to match with new items on the following:  
--- The Gunboats  

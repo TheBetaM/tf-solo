@@ -6,8 +6,12 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local attrib = prefab.GetKey("attributes", true)
 	local statattrib = prefab.FindKey("static_attrs")
 	// Remove airblast cost penalty
-	statattrib.RemoveSubKey("airblast cost increased")
-	// Add no random critical hits
+	//statattrib.RemoveSubKey("airblast cost increased")
+	// Add airblast dashes
+	local a2 = attrib.GetKey("airblast_dashes", true)
+	a2.SetString("attribute_class","airblast_dashes")
+	a2.SetInt("value", 1)
+	// Add no random critical hits text
 	local a1 = attrib.GetKey("crit mod disabled", true)
 	a1.SetString("attribute_class","mult_crit_chance")
 	a1.SetInt("value",0)
