@@ -113,6 +113,23 @@ armory_config
 		Cost 100
 	}
 	
+	"The Dragon's Fury"
+	{
+		Cost 100
+	}
+	"The Thermal Thruster"
+	{
+		Cost 100
+	}
+	"The Gas Passer"
+	{
+		Cost 100
+	}
+	"The Hot Hand"
+	{
+		Cost 100
+	}
+	
 	"Power Up Canteen (MvM)"
 	{
 		Cost 100

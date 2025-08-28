@@ -34,4 +34,24 @@ armory_config
 		// UnlockFlag ScenarioOnly
 		// UnlockText "Unlockable from WAR! scenarios"
 	}
+	"Critee Cool"
+	{
+		Cost 100
+	}
+	"Rocket Center"
+	{
+		Cost 100
+	}
+	"Rocket Trainer"
+	{
+		Cost 100
+	}
+	"Stickybomb Trainer"
+	{
+		Cost 100
+	}
+	"The Runaway Pride"
+	{
+		Cost 100
+	}
 }

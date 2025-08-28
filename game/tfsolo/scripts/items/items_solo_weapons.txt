@@ -260,6 +260,333 @@
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 		}
+		"weapon_critdrink"
+		{
+			"name"	"Critee Cool"
+			"prefab"	"valve weapon_scout_drink"
+			"first_sale_date"	"2010/09/29"
+			"item_name"	"Critee Cool"
+			"item_description"	""
+			"image_inventory"	"backpack/weapons/c_models/c_energy_drink/c_energy_drink"
+			"inspect_panel_dist" 			"20"
+			"model_player"	"models/weapons/solo/c_critdrink.mdl"
+			"static_attrs"
+			{
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"2"
+				}
+				"mod_mark_attacker_for_death"
+				{
+					"attribute_class"	"mod_mark_attacker_for_death"
+					"value"	"5.0"
+				}
+			}
+		}
+		"weapon_rocketlauncher_center"
+		{
+			"name"	"Rocket Center"
+			"item_class"	"tf_weapon_rocketlauncher"
+			"craft_material_type"	"weapon"
+			"craft_class"	"weapon"
+			"capabilities"
+			{
+				"nameable"				"1"
+				"can_craft_count"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"		"1"
+				"can_deal_gib_damage"	"1"
+				"can_deal_posthumous_damage"	"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_long_distance_damage"	"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_RocketLauncher"
+			"item_name"	"Rocket Center"
+			"item_slot"	"primary"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"inspect_panel_dist" "68"
+			"image_inventory"	"backpack/weapons/w_models/w_rocketlauncher"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/weapons/solo/c_rocketlauncher_center.mdl"
+			"attach_to_hands" "1"
+			"used_by_classes"
+			{
+				"soldier"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -5"	
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"centerfire projectile"
+				{
+					"attribute_class"	"centerfire_projectile"
+					"value"	"1"
+				}
+			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_DRAW"	"ACT_VM_DRAW_QRL"
+					"ACT_VM_IDLE"	"ACT_VM_IDLE_QRL"
+					"ACT_VM_PULLBACK"	"ACT_VM_PULLBACK_QRL"
+					"ACT_VM_PRIMARYATTACK"	"ACT_VM_PRIMARYATTACK_QRL"
+					"ACT_VM_RELOAD"	"ACT_VM_RELOAD_QRL"
+					"ACT_RELOAD_START"	"ACT_VM_RELOAD_START_QRL"
+					"ACT_RELOAD_FINISH"	"ACT_VM_RELOAD_FINISH_QRL"
+					"ACT_MP_RELOAD_STAND_PRIMARY"	"ACT_MP_RELOAD_STAND_PRIMARY3"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY"	"ACT_MP_RELOAD_CROUCH_PRIMARY3"
+					"ACT_MP_RELOAD_AIRWALK_PRIMARY"	"ACT_MP_RELOAD_AIRWALK_PRIMARY3"
+					"ACT_MP_RELOAD_STAND_PRIMARY_LOOP"	"ACT_MP_RELOAD_STAND_PRIMARY3_LOOP"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP"	"ACT_MP_RELOAD_CROUCH_PRIMARY3_LOOP"
+					"ACT_MP_RELOAD_AIRWALK_PRIMARY_LOOP"	"ACT_MP_RELOAD_AIRWALK_PRIMARY3_LOOP"
+					"ACT_MP_RELOAD_STAND_PRIMARY_END"	"ACT_MP_RELOAD_STAND_PRIMARY3_END"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY_END"	"ACT_MP_RELOAD_CROUCH_PRIMARY3_END"
+					"ACT_MP_RELOAD_AIRWALK_PRIMARY_END"	"ACT_MP_RELOAD_AIRWALK_PRIMARY3_END"
+					"ACT_MP_RELOAD_SWIM_PRIMARY"	"ACT_MP_RELOAD_SWIM_PRIMARY3"
+					"ACT_PRIMARY_VM_INSPECT_START"		"ACT_PRIMARY_ALT1_VM_INSPECT_START"
+					"ACT_PRIMARY_VM_INSPECT_IDLE"		"ACT_PRIMARY_ALT1_VM_INSPECT_IDLE"
+					"ACT_PRIMARY_VM_INSPECT_END"		"ACT_PRIMARY_ALT1_VM_INSPECT_END"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+		}
+		"weapon_rocketlauncher_training"
+		{
+			"name"	"Rocket Trainer"
+			"prefab"	"valve"
+			"item_class"	"tf_weapon_rocketlauncher"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_RocketLauncher"
+			"item_name"	"Rocket Trainer"
+			"item_description"	"#TF_Weapon_RocketLauncher_Jump_Desc"
+			"item_slot"	"primary"
+			"item_quality"	"unique"
+			"baseitem" "0"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			"propername" 	"1"
+			"image_inventory"	"backpack/weapons/w_models/w_rocketlauncher"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/weapons/solo/c_rocketlauncher_training.mdl"
+			"attach_to_hands" "1"
+			"used_by_classes"
+			{
+				"soldier"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 -3 -10"		
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+				"no self blast dmg"
+				{
+					"attribute_class"	"no_self_blast_dmg"
+					"value" "2"
+				}
+				"maxammo primary increased"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value" "3.0"
+				}
+				"cannot pick up intelligence"
+				{
+					"attribute_class"	"cannot_pick_up_intelligence"
+					"value"				"1"
+				}
+			}
+		}
+		"weapon_sticky_training"
+		{
+			"name"	"Stickybomb Trainer"
+			"prefab"	"valve"
+			"first_sale_date"	"2010/10/11"
+			"item_class"	"tf_weapon_pipebomblauncher"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#Tf_Weapon_Pipebomblauncher"
+			"item_name"	"Stickybomb Trainer"
+			"item_description"	"#TF_Weapon_StickyBomb_Jump_Desc"
+			"item_slot"	"secondary"
+			"anim_slot"	"primary"
+			"item_quality"	"unique"
+			"baseitem" "0"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			"propername" 	"1"
+			"image_inventory"	"backpack/weapons/w_models/w_stickybomb_launcher"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"50"
+			"model_player"	"models/weapons/solo/c_stickybomb_launcher_training.mdl"
+			"attach_to_hands"	"1"
+			"used_by_classes"
+			{
+				"demoman"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+				"no self blast dmg"
+				{
+					"attribute_class"	"no_self_blast_dmg"
+					"value" "1"
+				}
+				"maxammo secondary increased"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" "3.0"
+				}
+				"cannot pick up intelligence"
+				{
+					"attribute_class"	"cannot_pick_up_intelligence"
+					"value"				"1"
+				}
+			}
+		}
+		"weapon_pickaxe_surrender"
+		{
+			"name"	"The Runaway Pride"
+			"prefab"	"valve"
+			"first_sale_date"	"2012/06/29"
+			"item_class"	"tf_weapon_shovel"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_be_equipped_by_soldier_or_demo"	"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_taunt_damage"		"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Pickaxe"
+			"item_name"	"The Runaway Pride"
+			"item_logname"	"unique_pickaxe"
+			"item_slot"	"melee"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"10"
+			"max_ilevel"	"10"
+			"image_inventory" "backpack/weapons/c_models/c_pickaxe/c_pickaxe_s2"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			  "50"			
+			"model_player"	"models/weapons/solo/c_pickaxe_surrender.mdl"
+			"attach_to_hands" "1"
+			"used_by_classes"
+			{
+				"soldier"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 -3 -11"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" "1"
+				}
+				"mod shovel speed boost"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"2"
+				}
+				"reduced_healing_from_medics"
+				{
+					"attribute_class"	"mult_healing_from_medics"
+					"value" "0.1"
+				}
+				"self mark for death"
+				{
+					"attribute_class"	"self_mark_for_death"
+					"value"	"1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"	"Weapon_PickAxe.Swing"
+				"sound_melee_hit"	"Weapon_PickAxe.HitFlesh"
+				"sound_burst"		"Weapon_PickAxe.SwingCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
 	}
 	"items"
 	{
@@ -282,6 +609,31 @@
 		{
 			"name" "Wallboots"
 			"prefab" "weapon_wallboots"
+		}
+		"20102"
+		{
+			"name" "Critee Cool"
+			"prefab" "weapon_critdrink"
+		}
+		"20103"
+		{
+			"name" "Rocket Center"
+			"prefab" "weapon_rocketlauncher_center"
+		}
+		"20104"
+		{
+			"name" "Rocket Trainer"
+			"prefab" "weapon_rocketlauncher_training"
+		}
+		"20105"
+		{
+			"name" "Stickybomb Trainer"
+			"prefab" "weapon_sticky_training"
+		}
+		"20106"
+		{
+			"name" "The Runaway Pride"
+			"prefab" "weapon_pickaxe_surrender"
 		}
 	}
 }
