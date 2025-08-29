@@ -262,7 +262,6 @@
 		}
 		"weapon_critdrink"
 		{
-			"name"	"Critee Cool"
 			"prefab"	"valve weapon_scout_drink"
 			"first_sale_date"	"2010/09/29"
 			"item_name"	"Critee Cool"
@@ -291,7 +290,6 @@
 		}
 		"weapon_rocketlauncher_center"
 		{
-			"name"	"Rocket Center"
 			"item_class"	"tf_weapon_rocketlauncher"
 			"craft_material_type"	"weapon"
 			"craft_class"	"weapon"
@@ -371,7 +369,6 @@
 		}
 		"weapon_rocketlauncher_training"
 		{
-			"name"	"Rocket Trainer"
 			"prefab"	"valve"
 			"item_class"	"tf_weapon_rocketlauncher"
 			"craft_class"	"weapon"
@@ -438,7 +435,6 @@
 		}
 		"weapon_sticky_training"
 		{
-			"name"	"Stickybomb Trainer"
 			"prefab"	"valve"
 			"first_sale_date"	"2010/10/11"
 			"item_class"	"tf_weapon_pipebomblauncher"
@@ -508,7 +504,6 @@
 		}
 		"weapon_pickaxe_surrender"
 		{
-			"name"	"The Runaway Pride"
 			"prefab"	"valve"
 			"first_sale_date"	"2012/06/29"
 			"item_class"	"tf_weapon_shovel"
@@ -587,53 +582,254 @@
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 		}
+		"weapon_barbell"
+		{
+			"item_class"	"saxxy"
+			"prefab"	"weapon_melee_allclass"
+			"craft_class"			"" 
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+				"can_craft_count"	"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_be_equipped_by_soldier_or_demo"	"1"
+				"can_deal_critical_damage"	"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"Melee Weapon"
+			"item_name"	"Barbell"
+			"item_description"	""
+			"item_slot"	"melee"
+			"item_quality"	"unique"
+			"min_ilevel"	"25"
+			"max_ilevel"	"25"
+			"propername"	"1"
+			"attach_to_hands"	"1"
+			"image_inventory"	"backpack/weapons/c_models/c_carnival_mallet/c_carnival_mallet"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 				"80"			
+			"model_player"	"models/weapons/solo/c_barbell.mdl"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"heavy"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"10 0 -5"	
+				"inspect_viewmodel_offset"			"5 0 -3"		
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"visuals"
+			{
+				"sound_melee_hit_world"	"Weapon_Machete.HitWorld"
+				"sound_melee_miss"	"Weapon_Machete.Miss"
+				"sound_melee_hit"	"Weapon_Machete.HitFlesh"
+				"sound_burst"		"Weapon_Machete.MissCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_wood_pole_pickup.wav"
+			"drop_sound"		"ui/item_wood_pole_drop.wav"
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" "1"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"	"1.3"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"1.3"
+				}
+				"heal on kill"
+				{
+					"attribute_class"	"heal_on_kill"
+					"value"	"50"
+				}
+			}
+		}
+		"weapon_blacksmith_hammer"
+		{
+			"item_class"	"tf_weapon_fireaxe"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_destroy_sappers"		"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_SledgeHammer"
+			"item_name"	"Hammer"
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/c_models/c_fireaxe_pyro/c_fireaxe_pyro"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/weapons/solo/c_blacksmith_hammer.mdl"
+			"attach_to_hands"	"1"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"pyro"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -9"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"			
+			}
+			"attributes"
+			{
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"	"2.0"
+				}
+				"dmg penalty vs players"
+				{
+					"attribute_class"	"mult_dmg_vs_players"
+					"value"	"0.75"
+				}
+				"damage applies to sappers"
+				{
+					"attribute_class"	"set_dmg_apply_to_sapper"
+					"value"	"1"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_hit"	"Weapon_Machete.HitFlesh"
+			}
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+		}
+		"weapon_backstabber"
+		{
+			"prefab"	"weapon_spy_knife_item2"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_taunt_damage"		"1"
+			}
+			"item_name"	"Backstabber"
+			"propername"	"0"
+			"image_inventory"	"backpack/weapons/w_models/w_knife"
+			"model_player"	"models/weapons/solo/c_backstabber.mdl"
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 0 -4"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"		
+			}
+			"attributes"
+			{
+				"disguise on backstab"
+				{
+					"attribute_class"	"set_disguise_on_backstab"
+					"value" "1"
+				}
+				"silent killer"
+				{
+					"attribute_class"	"set_silent_killer"
+					"value" "1"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value" "1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+				"mult cloak meter consume rate"
+				{
+					"attribute_class"	"mult_cloak_meter_consume_rate"
+					"value" "1.33"
+				}
+				"mod_disguise_consumes_cloak"
+				{
+					"attribute_class"	"mod_disguise_consumes_cloak"
+					"value"				"1"
+				}
+			}
+		}
 	}
 	"items"
 	{
-		//"34444"
-		//{
-		//	"name" "Bottled Sorrow"
-		//	"prefab" "weapon_melee_allclass weapon_bottledsorrow"
-		//}
-		//"34445"
-		//{
-		//	"name" "Shocking Truth"
-		//	"prefab" "weapon_melee_allclass weapon_shockingtruth"
-		//}
 		"20100"
 		{
-			"name" "Spineyard Tommygun"
+			"name" "Solo Spineyard Tommygun"
 			"prefab" "weapon_spineyard_tommygun"
 		}
 		"20101"
 		{
-			"name" "Wallboots"
+			"name" "Solo Wallboots"
 			"prefab" "weapon_wallboots"
 		}
 		"20102"
 		{
-			"name" "Critee Cool"
+			"name" "Solo Critee Cool"
 			"prefab" "weapon_critdrink"
 		}
 		"20103"
 		{
-			"name" "Rocket Center"
+			"name" "Solo Rocket Center"
 			"prefab" "weapon_rocketlauncher_center"
 		}
 		"20104"
 		{
-			"name" "Rocket Trainer"
+			"name" "Solo Rocket Trainer"
 			"prefab" "weapon_rocketlauncher_training"
 		}
 		"20105"
 		{
-			"name" "Stickybomb Trainer"
+			"name" "Solo Stickybomb Trainer"
 			"prefab" "weapon_sticky_training"
 		}
 		"20106"
 		{
-			"name" "The Runaway Pride"
+			"name" "Solo The Runaway Pride"
 			"prefab" "weapon_pickaxe_surrender"
+		}
+		"20107"
+		{
+			"name" "Solo Barbell"
+			"prefab" "weapon_barbell"
+		}
+		"20108"
+		{
+			"name" "Solo Hammer"
+			"prefab" "weapon_blacksmith_hammer"
+		}
+		"20109"
+		{
+			"name" "Solo Backstabber"
+			"prefab" "weapon_backstabber"
 		}
 	}
 }

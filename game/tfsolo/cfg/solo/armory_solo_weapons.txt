@@ -1,56 +1,44 @@
 armory_config
 {
-	//"Bottled Sorrow"
-	//{
-	//	Cost 1000
-	//	UnlockFlag CampaignOnly
-	//	UnlockText "Unlockable in a campaign"
-	//}
-	//"Shocking Truth"
-	//{
-	//	Cost 1000
-	//	UnlockFlag CampaignOnly
-	//	UnlockText "Unlockable in a campaign"
-	//}
-	"Spineyard Tommygun"
+	"Solo Spineyard Tommygun"
 	{
 		Cost 100
 	}
-	
-	//"Emerald Jarate"
-	//{
-	//	Cost 100
-	//}
-	//"Steel-Toed Stompers"
-	//{
-	//	Cost 1000
-	//	UnlockFlag CampaignOnly
-	//	UnlockText "Unlockable in a campaign"
-	//}
-	
-	"Wallboots"
+	"Solo Wallboots"
 	{
 		Cost 100
 		// UnlockFlag ScenarioOnly
 		// UnlockText "Unlockable from WAR! scenarios"
 	}
-	"Critee Cool"
+	"Solo Critee Cool"
 	{
 		Cost 100
 	}
-	"Rocket Center"
+	"Solo Rocket Center"
 	{
 		Cost 100
 	}
-	"Rocket Trainer"
+	"Solo Rocket Trainer"
 	{
 		Cost 100
 	}
-	"Stickybomb Trainer"
+	"Solo Stickybomb Trainer"
 	{
 		Cost 100
 	}
-	"The Runaway Pride"
+	"Solo The Runaway Pride"
+	{
+		Cost 100
+	}
+	"Solo Barbell"
+	{
+		Cost 100
+	}
+	"Solo Hammer"
+	{
+		Cost 100
+	}
+	"Solo Backstabber"
 	{
 		Cost 100
 	}

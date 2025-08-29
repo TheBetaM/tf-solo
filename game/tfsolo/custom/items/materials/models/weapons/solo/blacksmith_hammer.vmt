@@ -1,0 +1,4 @@
+"VertexLitGeneric"
+{
+	$baseTexture "models/props_medieval/blacksmith_hammer.vtf"
+}
