@@ -48,6 +48,7 @@ public:
 
 #ifdef GAME_DLL
 	static CTFReviveMarker *Create( CTFPlayer *pOwner );
+	static CTFReviveMarker *CreateNearby( CTFPlayer *pOwner );
 	virtual int	UpdateTransmitState( void ) OVERRIDE;
 	virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
 	void ReviveThink( void );

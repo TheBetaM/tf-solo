@@ -17,12 +17,14 @@
 #include "world.h"
 #include "collisionutils.h"
 #include "triggers.h"
+#include "nav_mesh.h"
 #endif // CLIENT_DLL
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 #define MARKER_MODEL	"models/props_mvm/mvm_revive_tombstone.mdl"
+#define MARKER_MODEL_BLUE	"models/props_mvm/mvm_revive_tombstone_blue.mdl"
 
 static const int REVIVE_EASY_LIMIT = 4;
 static const int REVIVE_MEDIUM_LIMIT = 8;
@@ -33,6 +35,9 @@ extern void HandleRageGain( CTFPlayer *pPlayer, unsigned int iRequiredBuffFlags,
 extern void AddMedicCaller( C_BaseEntity *pEntity, float flDuration, Vector &vecOffset, bool bAutoCaller = false );
 #endif // GAME_DLL
 
+extern ConVar tf_revives_enable;
+ConVar tf_revives_range( "tf_revives_range", "256", FCVAR_REPLICATED, "Range for Freeze Tag style revives\n" );
+ConVar tf_revives_rate( "tf_revives_rate", "1.0", FCVAR_REPLICATED, "Speed of Freeze Tag style revives per player\n" );
 
 //-----------------------------------------------------------------------------
 //
@@ -89,6 +94,7 @@ void CTFReviveMarker::Precache()
 	BaseClass::Precache();
 
 	PrecacheModel( MARKER_MODEL );
+	PrecacheModel( MARKER_MODEL_BLUE );
 	PrecacheScriptSound( "MVM.PlayerRevived" );
 	PrecacheParticleSystem( "speech_revivecall" );
 	PrecacheParticleSystem( "speech_revivecall_medium" );
@@ -162,7 +168,7 @@ void CTFReviveMarker::OnDataChanged( DataUpdateType_t updateType )
 		}
 		
 		Vector vecPos;
-		if ( GetAttachmentLocal( LookupAttachment( "mediccall" ), vecPos ) )
+		if ( tf_revives_enable.GetInt() == 0 && GetAttachmentLocal( LookupAttachment( "mediccall" ), vecPos ) )
 		{
 			CTFMedicCallerPanel::AddMedicCaller( this, 5.0, vecPos, nType );
 		}
@@ -196,6 +202,38 @@ CTFReviveMarker *CTFReviveMarker::Create( CTFPlayer *pOwner )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+CTFReviveMarker* CTFReviveMarker::CreateNearby( CTFPlayer* pOwner )
+{
+	if ( !pOwner )
+	{
+		return NULL;
+	}
+
+	CTFReviveMarker* pMarker = static_cast< CTFReviveMarker *>( CBaseEntity::Create( "entity_revive_marker", pOwner->GetAbsOrigin() + Vector( 0, 0, 50 ), pOwner->GetAbsAngles() ) );
+	if ( !pMarker )
+	{
+		return NULL;
+	}
+
+	pMarker->SetOwner( pOwner );
+	pMarker->ChangeTeam( pOwner->GetTeamNumber() );
+
+	if ( TheNavMesh && TheNavMesh->GetNavAreaCount() > 0 )
+	{
+		CNavArea* area = TheNavMesh->GetNearestNavArea( pOwner, GETNAVAREA_CHECK_GROUND );
+		if ( area )
+		{
+			auto point = area->GetRandomPoint();
+			pMarker->SetAbsOrigin( point + Vector( 0, 0, 25 ) );
+		}
+	}
+
+	return pMarker;
+}
+
+//-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 int CTFReviveMarker::UpdateTransmitState( void )
@@ -226,6 +264,72 @@ void CTFReviveMarker::ReviveThink( void )
 	if ( m_hOwner && !m_hOwner->GetReviveMarker() )
 	{
 		m_hOwner->SetReviveMarkerEnt( this );
+	}
+
+	if ( tf_revives_enable.GetInt() == 2 && m_hOwner )
+	{
+		CUtlVector<CTFPlayer *> playerVector;
+		CollectPlayers( &playerVector, GetTeamNumber(), COLLECT_ONLY_LIVING_PLAYERS );
+
+		float maxRange = tf_revives_range.GetFloat();
+		int teammateCount = 0;
+		int enemyCount = 0;
+		CTFPlayer* reviver = NULL;
+
+		for ( int i = 0; i < playerVector.Count(); i++ )
+		{
+			CTFPlayer* player = playerVector[i];
+			if ( player && player != m_hOwner )
+			{
+				float range =  ( GetAbsOrigin() - player->GetAbsOrigin() ).Length();
+				if ( range > maxRange )
+				{
+					continue;
+				}
+				if ( player->IsPlayerClass( TF_CLASS_SPY ) )
+				{
+					if ( player->m_Shared.IsStealthed() || player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+						player->m_Shared.InCond( TF_COND_DISGUISED ) || player->m_Shared.InCond( TF_COND_DISGUISING ) )
+					{
+						continue;
+					}
+				}
+				if ( player->InSameTeam( this ) )
+				{
+					teammateCount++;
+					if ( teammateCount > 4 )
+					{
+						teammateCount = 4;
+					}
+					reviver = player;
+				}
+				else
+				{
+					enemyCount++;
+				}
+			}
+		}
+
+		if ( enemyCount == 0 && teammateCount != 0 )
+		{
+			SetReviver( reviver );
+
+			float reviveRate = tf_revives_rate.GetFloat() * teammateCount;
+			AddMarkerHealth( reviveRate );
+
+			if ( m_hOwner->GetObserverMode() > OBS_MODE_FREEZECAM )
+			{
+				if ( reviver && m_hOwner->GetObserverTarget() != reviver )
+				{
+					m_hOwner->SetObserverTarget( reviver );
+				}
+			}
+
+			if ( !HasOwnerBeenPrompted() )
+			{
+				PromptOwner();
+			}
+		}
 	}
 
 	if ( !GetMaxHealth() )
@@ -280,8 +384,11 @@ void CTFReviveMarker::ReviveThink( void )
 		}
 
 		// DispatchParticleEffect( pszParticle, GetAbsOrigin() + Vector( 0, 0, 80 ), vec3_angle );
-		DispatchParticleEffect( pszParticle, PATTACH_POINT_FOLLOW, this, "mediccall" );
-		EmitSound( "Medic.AutoCallerAnnounce" );
+		if ( tf_revives_enable.GetInt() == 0 )
+		{
+			DispatchParticleEffect( pszParticle, PATTACH_POINT_FOLLOW, this, "mediccall" );
+			EmitSound( "Medic.AutoCallerAnnounce" );
+		}
 	}
 
 	// Close revive prompt if no longer being revived
@@ -312,6 +419,10 @@ void CTFReviveMarker::SetOwner( CTFPlayer *pPlayer )
 
 	m_hOwner = pPlayer;
 	ChangeTeam( m_hOwner->GetTeamNumber() );
+	if ( m_hOwner->GetTeamNumber() == TF_TEAM_BLUE )
+	{
+		SetModel( MARKER_MODEL_BLUE );
+	}
 
 	// Determine bodygroup based on class
 	SetBodygroup( 1, m_hOwner->GetPlayerClass()->GetClassIndex() - 1 );

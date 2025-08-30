@@ -89,6 +89,18 @@ DESCRIPTION SERVER_OPTIONS
 		{ BOOL }
 		{ "0" }
 	}
+
+	"tf_revives_enable"
+	{
+		"Revives"
+		{
+			LIST
+			"Disabled" "0"
+			"Medic Revives Only" "1"
+			"Stay Nearby To Revive" "2"
+		}
+		{ "0" }
+	}
 	
 	"tf_medieval"
 	{

@@ -593,6 +593,9 @@ vscript_convar_allowlist
     tf_rd_robot_repair_rate                                           allowed
     tf_rd_steal_rate                                                  allowed
     tf_resolve_stuck_players                                          allowed
+    tf_revives_enable                                                 allowed
+    tf_revives_range                                                  allowed
+    tf_revives_rate                                                   allowed
     tf_rocketpack_airborne_launch_absvelocity_preserved               allowed
     tf_rocketpack_cost                                                allowed
     tf_rocketpack_delay_launch                                        allowed
