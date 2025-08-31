@@ -15,6 +15,14 @@
 
 #include "ServerBrowser/IServerBrowser.h"
 
+#if defined( _WIN32 ) && !defined( _X360 )
+#include <windows.h>
+#elif defined( POSIX )
+#include <unistd.h>
+#define _chdir chdir
+#define _access access
+#endif
+
 #if !defined ( _GAMECONSOLE ) && !defined ( NO_STEAM )
 
 CTFMapsWorkshop g_TFMapsWorkshop;
@@ -102,15 +110,30 @@ CTFWorkshopMap::CTFWorkshopMap( PublishedFileId_t fileID )
 	  m_rtimeUpdated( 0 ),
 	  m_nFileSize( 0 ),
 	  m_eState( eState_Refreshing ),
-	  m_bHighPriority( false )
+	  m_bHighPriority( false ),
+	  m_bIsLocal( false )
 {
 	TFWorkshopDebug( "Created TFWorkshopMap for [ %llu ]\n", (uint64)fileID );
 
 	Refresh();
 }
 
+CTFWorkshopMap::CTFWorkshopMap( PublishedFileId_t fileID, bool local )
+	: m_nFileID( fileID ),
+	m_rtimeUpdated( 1 ),
+	m_nFileSize( 1 ),
+	m_eState( eState_Downloaded ),
+	m_bHighPriority( false ),
+	m_bIsLocal( true )
+{
+	
+}
+
 void CTFWorkshopMap::Refresh( eRefreshType refreshType )
 {
+	if ( m_bIsLocal )
+		return;
+
 	ISteamUGC *steamUGC = GetWorkshopUGC();
 
 	if ( !steamUGC )
@@ -262,6 +285,13 @@ void CTFWorkshopMap::Steam_OnQueryUGCDetails( SteamUGCQueryCompleted_t *pResult,
 
 bool CTFWorkshopMap::GetLocalFile( /* out */ CUtlString &strLocalFile )
 {
+	if (m_bIsLocal)
+	{
+		char szFullPath[ MAX_PATH ] = { 0 };
+		V_MakeAbsolutePath( szFullPath, sizeof( szFullPath ), m_strMapName, m_strLocalFolder );
+		strLocalFile = szFullPath;
+		return true;
+	}
 	uint64 nUGCSize = 0;
 	uint32 nTimestamp = 0;
 	char szFolder[MAX_PATH] = { 0 };
@@ -464,6 +494,8 @@ void CTFMapsWorkshop::Refresh()
 
 	// Ensure directory for maps exists
 	g_pFullFileSystem->CreateDirHierarchy( "maps/workshop", UGC_PATHID );
+
+	UpdateLocalTF2WorkshopCache();
 
 	ISteamUGC *steamUGC = GetWorkshopUGC();
 
@@ -783,10 +815,18 @@ void CTFMapsWorkshop::PrintStatusToConsole()
 
 bool CTFMapsWorkshop::GetWorkshopMapDesc( uint32 uIndex, WorkshopMapDesc_t* pDesc )
 {
-	if ( !m_vecSubscribedMaps.IsValidIndex( uIndex ) )
+	if ( !m_vecSubscribedMaps.IsValidIndex( uIndex ) && !m_vecLocalWorkshopMaps.IsValidIndex( uIndex ) )
 		return false;
 
-	PublishedFileId_t id = m_vecSubscribedMaps[ uIndex ];
+	PublishedFileId_t id = 0;
+	if ( m_vecSubscribedMaps.IsValidIndex( uIndex ) )
+	{
+		id = m_vecSubscribedMaps[uIndex];
+	}
+	else
+	{
+		id = m_vecLocalWorkshopMaps[uIndex];
+	}
 
 	V_sprintf_safe( pDesc->szMapName, "workshop/%llu", id );
 	pDesc->uTimestamp  = 0;
@@ -966,6 +1006,220 @@ bool CTFMapsWorkshop::AddMap( PublishedFileId_t nMapID )
 	}
 
 	return false;
+}
+
+// From https://github.com/ValveSoftware/source-sdk-2013/pull/1510
+static const char* GetSteamInstallationPath()
+{
+	// Steam path to pass over
+	static char szSteamPath[1024] = {};
+#ifdef WIN32
+	// Open the registry to look for the Steam installation.
+	HKEY hKey = nullptr;
+	LSTATUS status = RegOpenKeyEx(
+		HKEY_CURRENT_USER,
+		TEXT("SOFTWARE\\Valve\\Steam"),
+		0,
+		KEY_READ,
+		&hKey);
+
+	// Check result
+	if ( status != ERROR_SUCCESS )
+		return nullptr;
+
+	// Query the SteamPath key
+	char szPathBuf[1024] = {};
+	DWORD dwBufSize = sizeof( szPathBuf );
+	DWORD dwType = 0;
+	LSTATUS result = RegQueryValueEx(
+		hKey,
+		"SteamPath",
+		NULL,
+		&dwType,
+		reinterpret_cast<BYTE*>( szPathBuf ),
+		&dwBufSize);
+
+	// check for the result
+	if ( result != ERROR_SUCCESS )
+		return nullptr;
+
+	// Close the registry key, we're done with it
+	RegCloseKey( hKey );
+
+	// Put this in the steam path var.
+	Q_strncpy( szSteamPath, szPathBuf, sizeof( szSteamPath ) );
+#else
+	// No registry on Linux, look for the symlink.
+	const char* pszHomeDir = getenv("HOME");
+	const char* pszSteamPath = "/.steam/steam";
+	Q_snprintf( szSteamPath, sizeof( szSteamPath ), "%s%s", pszHomeDir, pszSteamPath );
+#endif // WIN32 ELSE !WIN32
+	return szSteamPath;
+}
+
+KeyValues* ReadVDFKeyValuesFile( const char* pFilename )
+{
+	// Read in the gameinfo.txt file and null-terminate it.
+	FILE* fp = fopen( pFilename, "rb" );
+	if ( !fp )
+		return NULL;
+	CUtlVector<char> buf;
+	fseek( fp, 0, SEEK_END );
+	buf.SetSize( ftell( fp ) + 1 );
+	fseek( fp, 0, SEEK_SET );
+	fread( buf.Base(), 1, buf.Count() - 1, fp );
+	fclose( fp );
+	buf[ buf.Count() - 1 ] = 0;
+
+	KeyValues* kv = new KeyValues( "" );
+	if ( !kv->LoadFromBuffer( pFilename, buf.Base() ) )
+	{
+		kv->deleteThis();
+		return NULL;
+	}
+
+	return kv;
+}
+
+// Based on https://github.com/ValveSoftware/source-sdk-2013/pull/1510
+static KeyValues* GetAppWorkshopManifest( int nAppID )
+{
+	// First, get the Steam installation.
+	char szSteamPath[1024] = {};
+	V_strncpy( szSteamPath, GetSteamInstallationPath(), sizeof( szSteamPath ) );
+	if ( !szSteamPath || szSteamPath[0] == '\0' )
+		return nullptr;
+
+	// Second, go to the libraryfolders.vdf and look if the appid is in them.
+	char szLibraryFoldersFile[1024] = {};
+	V_snprintf( szLibraryFoldersFile, sizeof( szLibraryFoldersFile ), "%s%s", szSteamPath, "/config/libraryfolders.vdf" );
+
+	// NOTE: ReadKeyValuesFile already deletes the KV if it doesn't exist
+	// read the libraryfolders.vdf file
+	KeyValues* pRootKV = ReadVDFKeyValuesFile( szLibraryFoldersFile );
+	if (!pRootKV)
+		return nullptr;
+
+	// Get a string representation of the Steam AppID passed
+	char szAppID[32] = {};
+	V_snprintf( szAppID, sizeof( szAppID ), "%d", nAppID );
+
+	// Path KV
+	KeyValues* pPathKV = nullptr;
+
+	// Go thru each possible install path until we find the app.
+	FOR_EACH_TRUE_SUBKEY( pRootKV, pKVPath )
+	{
+		// Check for the apps subkey
+		KeyValues* pApps = pKVPath->FindKey( "apps" );
+		if ( !pApps )
+			continue;
+
+		// Try to find the appid path
+		if ( pApps->FindKey( szAppID ) )
+		{
+			// Okay, we found the app id key. now use the path key from the root KV
+			pPathKV = pKVPath->FindKey( "path" ); // This is null checked below.
+			break;
+		}
+	}
+
+	// Error out if we can't find it
+	if ( !pPathKV )
+		return nullptr;
+
+	// Look for the game that this mod asked for
+	char szInstallationPath[1024] = {};
+	// copy this string over since we're gonna delete the KV
+	V_strncpy( szInstallationPath, pPathKV->GetString(), sizeof( szInstallationPath ) );
+	// If it's empty somehow, error out
+	if ( !szInstallationPath || szInstallationPath[0] == '\0' )
+	{
+		// Clear this keyvalue.
+		pRootKV->deleteThis();
+		pRootKV = nullptr;
+		return nullptr;
+	}
+
+	// we no longer need this KV
+	pRootKV->deleteThis();
+	pRootKV = nullptr;
+
+	// get the appworkshop_APPID.acf file
+	char szAppManifestPath[1024] = {};
+	V_snprintf( szAppManifestPath, sizeof( szAppManifestPath ), "%s%s%s.acf", szInstallationPath, "/steamapps/workshop/appworkshop_", szAppID );
+	// Reuse the root pointer to open the appmanifest file
+	pRootKV = ReadVDFKeyValuesFile( szAppManifestPath );
+
+	// Add workshop folder path
+	char szWorkshopFoldersPath[1024] = {};
+	V_snprintf( szWorkshopFoldersPath, sizeof( szWorkshopFoldersPath ), "%s%s%s%s", szInstallationPath, "/steamapps/workshop/content/", szAppID, "/" );
+	pRootKV->SetString( "ws", szWorkshopFoldersPath );
+
+	return pRootKV;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Update
+//-----------------------------------------------------------------------------
+void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
+{
+	TFWorkshopDebug( "UpdateLocalTF2Cache\n" );
+
+	KeyValues* TF2_KV = GetAppWorkshopManifest( 440 );
+	if ( !TF2_KV )
+	{
+		TFWorkshopMsg( "TF2 workshop manifest not found\n" );
+		return;
+	}
+
+	const char* rootPath = TF2_KV->GetString( "ws" );
+
+	KeyValues* items = TF2_KV->FindKey( "WorkshopItemsInstalled" );
+	if ( !items )
+	{
+		TFWorkshopMsg( "TF2 workshop manifest parse error\n" );
+		return;
+	}
+
+	int mapCount = 0;
+	m_vecLocalWorkshopMaps.RemoveAll();
+
+	KeyValues* key = items->GetFirstSubKey();
+	while ( key )
+	{
+		const char* itemID = key->GetName();
+
+		FileFindHandle_t hFind = NULL;
+		const char* pszSearch = CFmtStr( "%s%s/*.bsp", rootPath, itemID );
+		const char* pszRootFolder = CFmtStr( "%s%s/", rootPath, itemID );
+		char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
+		while ( szFileName )
+		{
+			// Map file found, let's add it to the map list
+			PublishedFileId_t fileID = V_atoui64( itemID );
+			m_vecLocalWorkshopMaps.AddToTail( (uint64)itemID );
+			if ( m_mapMaps.Find( fileID ) == m_mapMaps.InvalidIndex() )
+			{
+				CTFWorkshopMap* newMap = new CTFWorkshopMap( fileID, true );
+				newMap->m_strMapName = V_strdup( szFileName );
+				newMap->m_strCanonicalName = V_strdup( szFileName );
+				CanonicalNameForMap( fileID, szFileName, newMap->m_strCanonicalName );
+				newMap->m_strLocalFolder = V_strdup( pszRootFolder );
+				m_mapMaps.Insert( fileID, newMap );
+			}
+
+			mapCount++;
+			szFileName = g_pFullFileSystem->FindNext( hFind );
+		}
+
+		g_pFullFileSystem->FindClose( hFind );
+
+
+		key = key->GetNextKey();
+	}
+
+	TFWorkshopMsg( "Local TF2 workshop maps found: %u\n", mapCount );
 }
 
 //-----------------------------------------------------------------------------

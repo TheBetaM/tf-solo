@@ -64,6 +64,7 @@ public:
 private:
 	friend class CTFMapsWorkshop;
 	CTFWorkshopMap( PublishedFileId_t nMapID );
+	CTFWorkshopMap( PublishedFileId_t nMapID, bool local );
 
 	// Forwarded callback from maps workshop about map downloads
 	void OnUGCDownload( DownloadItemResult_t *pResult );
@@ -84,6 +85,8 @@ private:
 	CUtlString m_strMapName;
 	eState m_eState;
 	bool m_bHighPriority;
+	bool m_bIsLocal;
+	CUtlString m_strLocalFolder;
 };
 
 // Autogamesystem to request user maps on startup and call update on the workshop manager.
@@ -158,6 +161,8 @@ public:
 
 	bool GetWorkshopMapDesc( uint32 uIndex, WorkshopMapDesc_t *pDesc );
 
+	void UpdateLocalTF2WorkshopCache();
+
 private:
 	CCallback<CTFMapsWorkshop, DownloadItemResult_t, false> m_callbackDownloadItem;
 	CCallback<CTFMapsWorkshop, ItemInstalled_t, false> m_callbackItemInstalled;
@@ -176,6 +181,7 @@ private:
 	// All managed workshop maps
 	CUtlMap< PublishedFileId_t, CTFWorkshopMap * > m_mapMaps;
 	CUtlVector< PublishedFileId_t > m_vecSubscribedMaps;
+	CUtlVector< PublishedFileId_t > m_vecLocalWorkshopMaps;
 
 	PublishedFileId_t m_nPreparingMap;
 };
