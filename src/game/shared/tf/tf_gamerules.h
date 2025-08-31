@@ -151,6 +151,57 @@ enum {
 	TF_GAMEMODEOVERRIDE_KOTH,
 	TF_GAMEMODEOVERRIDE_CTF,
 	TF_GAMEMODEOVERRIDE_PD,
+	TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH,
+	TF_GAMEMODEOVERRIDE_TFSOLO_PROPCONTROL,
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+class CLogicMadDash : public CBaseEntity
+{
+	DECLARE_CLASS( CLogicMadDash, CBaseEntity );
+public:
+	DECLARE_DATADESC();
+
+#ifdef GAME_DLL
+	CLogicMadDash()
+	{
+		m_bFlipTeams = false;
+		m_flChargeTime = 0.0f;
+		m_flDepleteTime = 0.0f;
+		m_flDischargeTime = 0.0f;
+		m_iDepleteAction = 0;
+	}
+	virtual int UpdateTransmitState()
+	{
+		return SetTransmitState( FL_EDICT_ALWAYS );
+	}
+
+	bool m_bFlipTeams;
+	float m_flChargeTime;
+	float m_flDepleteTime;
+	float m_flDischargeTime;
+	int m_iDepleteAction;
+
+private:
+
+	COutputEvent m_onFullCharge;
+	COutputEvent m_onChargeDepleted;
+	COutputEvent m_onChargeDischarged;
+
+#endif
+
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+class CLogicPropControl : public CBaseEntity
+{
+	DECLARE_CLASS( CLogicPropControl, CBaseEntity );
+public:
+	DECLARE_DATADESC();
 };
 
 class CTFGameRulesProxy : public CTeamplayRoundBasedRulesProxy, public CGameEventListener
@@ -761,6 +812,9 @@ bool IsCreepWaveMode( void ) const;
 
 	bool HaveStopWatchWinner( void ) { return m_bStopWatchWinner; }
 
+	float GetMadDashMeter( void ) { return m_flMadDashMeter; }
+	void SetMadDashMeter( float meter ) { m_flMadDashMeter = meter; }
+
 	int GetGameTeamForGCTeam( TF_GC_TEAM nGCTeam );
 	TF_GC_TEAM GetGCTeamForGameTeam( int nGameTeam );
 
@@ -1249,6 +1303,10 @@ private:
 	CNetworkVar( ENextMapVotingState, m_eRematchState );
 	CNetworkArray( MapDefIndex_t, m_nNextMapVoteOptions, 3 );
 
+	CNetworkVar( float, m_flMadDashMeter );
+	CNetworkHandle( CLogicMadDash, m_hMadDashLogic );
+	CNetworkHandle( CLogicPropControl, m_hPropControlLogic );
+
 	float		m_flCTFCaptureBonusTime;
 public:
 
@@ -1417,6 +1475,8 @@ private:
 	CountdownTimer m_zombieMobTimer;
 	int m_zombiesLeftToSpawn;
 	Vector m_zombieSpawnSpot;
+
+	void MadDashThink( void );
 
 public:
 	void BeginHaunting( int nDesiredCount, float flMinDuration, float flMaxDuration );

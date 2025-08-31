@@ -20,6 +20,7 @@
 #include <vgui_controls/AnimationController.h>
 #include "tf_imagepanel.h"
 #include "vgui_controls/Label.h"
+#include "tf_gamerules.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -27,6 +28,7 @@
 using namespace vgui;
 
 extern ConVar weapon_medigun_resist_num_chunks;
+extern ConVar tf_maddash_mode;
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -148,6 +150,15 @@ bool CHudMedicChargeMeter::ShouldDraw( void )
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
+	if ( tf_maddash_mode.GetBool() )
+	{
+		if ( !pPlayer || !pPlayer->IsAlive() )
+		{
+			return false;
+		}
+		return CHudElement::ShouldDraw();
+	}
+
 	if ( !pPlayer || !pPlayer->IsPlayerClass( TF_CLASS_MEDIC ) || !pPlayer->IsAlive() )
 	{
 		return false;
@@ -178,6 +189,56 @@ void CHudMedicChargeMeter::OnTick( void )
 
 	if ( !pPlayer )
 		return;
+
+	if ( tf_maddash_mode.GetBool() && TFGameRules() )
+	{
+		int x, y;
+		GetPos( x, y );
+		SetPos( ( ScreenWidth() / 2 ) - ( GetWide() / 4 ), y );
+
+		float flCharge = TFGameRules()->GetMadDashMeter();
+
+		if ( flCharge != m_flLastChargeValue )
+		{
+			m_pChargeMeter->SetProgress( flCharge );
+			SetDialogVariable( "charge", (int)( flCharge * 100 ) );
+			if ( !m_bCharged )
+			{
+				if ( flCharge >= 1.0 )
+				{
+					//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "HudMedicCharged" );
+					m_bCharged = true;
+				}
+			}
+			else
+			{
+				if ( flCharge < 0.01f )
+				{
+					//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "HudMedicChargedStop" );
+					m_bCharged = false;
+				}
+			}
+			if ( flCharge < 0.2f )
+			{
+				int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
+				int red = 160 + ( color_offset * 10 );
+				m_pChargeMeter->SetFgColor( Color( red, 0, 0, 255 ) );
+			}
+			else if ( flCharge < 0.5f )
+			{
+				int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
+				int yellow = 160 + ( color_offset * 10 );
+				m_pChargeMeter->SetFgColor( Color( yellow, yellow, 0, 255 ) );
+			}
+			else
+			{
+				m_pChargeMeter->SetFgColor( Color( 255, 255, 255, 255 ) );
+			}
+		}
+
+		m_flLastChargeValue = flCharge;
+		return;
+	}
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
 
@@ -309,6 +370,25 @@ void CHudMedicChargeMeter::UpdateControlVisibility()
 
 	if ( !pPlayer )
 		return;
+
+	if ( tf_maddash_mode.GetBool() ) 
+	{
+		m_pResistPanel->SetVisible( false );
+		for ( int i = 0; i < m_vecpChargeMeters.Count(); ++i )
+		{
+			m_vecpChargeMeters[i]->SetVisible( false );
+		}
+		m_pChargeMeter->SetVisible( true );
+		if ( m_pUberchargeLabel )
+		{
+			m_pUberchargeLabel->SetVisible( true );
+		}
+		if ( m_pUberchargeCountLabel )
+		{
+			m_pUberchargeCountLabel->SetVisible( true );
+		}
+		return;
+	}
 
 	CTFWeaponBase *pWpn = pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN );
 

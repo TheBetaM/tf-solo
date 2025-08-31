@@ -2829,6 +2829,15 @@ void CTFPlayer::PrecacheMvM()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+void CTFPlayer::PrecacheMadDash()
+{
+	PrecacheScriptSound( "TFPlayer.InvulnerableOn" );
+	PrecacheScriptSound( "TFPlayer.InvulnerableOff" );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void CTFPlayer::PrecacheKart()
 {
 	PrecacheModel( "models/player/items/taunts/bumpercar/parts/bumpercar.mdl" );

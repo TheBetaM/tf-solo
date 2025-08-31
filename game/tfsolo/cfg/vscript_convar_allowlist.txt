@@ -422,6 +422,12 @@ vscript_convar_allowlist
     tf_helpme_range                                                   allowed
     tf_invuln_time                                                    allowed
     tf_item_based_forced_holiday                                      allowed
+    tf_maddash_mode                                                   allowed
+    tf_maddash_flipteams                                              allowed
+    tf_maddash_charge_time                                            allowed
+    tf_maddash_deplete_time                                           allowed
+    tf_maddash_discharge_time                                         allowed
+    tf_maddash_deplete_action                                         allowed
     tf_max_active_zombie                                              allowed
     tf_max_charge_speed                                               allowed
     tf_max_health_boost                                               allowed
@@ -582,6 +588,7 @@ vscript_convar_allowlist
     tf_powerup_mode_imbalance_delta                                   allowed
     tf_powerup_mode_killcount_timer_length                            allowed
     tf_preround_push_from_damage_enable                               allowed
+    tf_propcontrol_mode                                               allowed
     tf_rd_max_points_override                                         allowed
     tf_rd_min_points_to_steal                                         allowed
     tf_rd_points_approach_interval                                    allowed

@@ -148,6 +148,7 @@ public:
 	virtual CBaseEntity	*EntSelectSpawnPoint( void );
 	virtual void		InitialSpawn();
 	static void			PrecacheMvM();
+	static void			PrecacheMadDash();
 	static void			PrecacheKart();
 private:
 	static void			PrecachePlayerModels();
