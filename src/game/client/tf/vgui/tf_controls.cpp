@@ -2510,6 +2510,7 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 #define MOD_CREDITS_FILE "cfg/solo/mod_credits.txt"
 #define TFSOLO_CUSTOM_MATCH_CONFIG_FILE "cfg/solo/custom_match_config.txt"
 #define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/solo_config.txt"
+#define TFSOLO_WORKSHOP_CACHE_FILE "workshop_localcache.txt"
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -3958,10 +3959,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
-	if ( engine->GetAppID() == 440 )
-	{
-		m_pCategoryList->AddItem("TF2 Workshop", NULL);
-	}
+	m_pCategoryList->AddItem("TF2 Workshop", NULL);
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );
 
@@ -4137,6 +4135,11 @@ void CTFCustomMatchMapDialog::CreateControls()
 		Msg("Unable to parse solo_config.txt into keyvalues.\n");
 		return;
 	}
+	KeyValuesAD workshopConfig("workshop");
+	if ( !workshopConfig->LoadFromFile( g_pFullFileSystem, TFSOLO_WORKSHOP_CACHE_FILE, "GAME" ) )
+	{
+		DevMsg( "Unable to parse workshop_localcache.txt into keyvalues.\n" );
+	}
 	KeyValues* maps = config->FindKey("maps");
 	if ( !maps )
 	{
@@ -4154,10 +4157,16 @@ void CTFCustomMatchMapDialog::CreateControls()
 		if ( !V_strnicmp( key->GetName(), "workshop_", 9 ) )
 		{
 			isWorkshop = true;
-			if ( engine->GetAppID() != 440 )
+			if ( engine->GetAppID() != 440 && workshopConfig )
 			{
-				key = key->GetNextKey();
-				continue;
+				char mapIDstr[MAX_PATH] = { 0 };
+				V_StrSlice( key->GetName(), 9, 0, mapIDstr, sizeof( mapIDstr ) );
+				PublishedFileId_t mapID = V_atoui64( mapIDstr );
+				if ( !workshopConfig->FindKey( mapIDstr ) )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
 			}
 		}
 		KeyValues* tags = key->FindKey("tags");

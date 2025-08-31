@@ -39,6 +39,7 @@
 #include "nav_mesh/tf_nav_area.h"
 #include "NextBot/NextBotLocomotionInterface.h"
 #include "bot/tf_bot.h"
+#include "workshop/maps_workshop.h"
 #endif
 
 #if defined( _WIN32 ) || defined( POSIX )
@@ -2839,6 +2840,14 @@ static void Script_AwardAchievement( int iPlayerIndex, int achID, int achCount )
 }
 
 #ifdef TF_DLL
+static bool Script_IsSubscribedToMap( const char* pszLongMapID )
+{
+	char mapIDstr[ MAX_PATH ] = { 0 };
+	V_StrSlice( pszLongMapID, 9, 0, mapIDstr, sizeof( mapIDstr ) );
+	PublishedFileId_t mapID = V_atoui64( mapIDstr );
+	return TFMapsWorkshop() && TFMapsWorkshop()->IsSubscribed( mapID );
+}
+
 // ----------------------------------------------------------------------------
 // Solo access
 // ----------------------------------------------------------------------------
@@ -3064,6 +3073,7 @@ bool VScriptServerInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for a player.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsSubscribedToMap, "IsSubscribedToMap", "Check workshop map ID if it's downloaded. (Pass the ID as a string)");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");

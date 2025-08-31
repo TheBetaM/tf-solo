@@ -551,7 +551,7 @@ void CTFMapsWorkshop::Refresh()
 //-----------------------------------------------------------------------------
 bool CTFMapsWorkshop::IsSubscribed( PublishedFileId_t nFileID )
 {
-	return ( m_vecSubscribedMaps.Find( nFileID ) != m_vecSubscribedMaps.InvalidIndex() );
+	return ( m_vecSubscribedMaps.Find( nFileID ) != m_vecSubscribedMaps.InvalidIndex() || m_vecLocalWorkshopMaps.Find( nFileID ) != m_vecLocalWorkshopMaps.InvalidIndex() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1182,6 +1182,8 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 		return;
 	}
 
+	KeyValuesAD cachefile("workshop");
+
 	int mapCount = 0;
 	m_vecLocalWorkshopMaps.RemoveAll();
 
@@ -1207,6 +1209,7 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 				CanonicalNameForMap( fileID, szFileName, newMap->m_strCanonicalName );
 				newMap->m_strLocalFolder = V_strdup( pszRootFolder );
 				m_mapMaps.Insert( fileID, newMap );
+				cachefile->SetString( itemID, "1" );
 			}
 
 			mapCount++;
@@ -1220,6 +1223,7 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 	}
 
 	TFWorkshopMsg( "Local TF2 workshop maps found: %u\n", mapCount );
+	cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );
 }
 
 //-----------------------------------------------------------------------------

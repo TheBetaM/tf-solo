@@ -5,12 +5,14 @@ TFSOLO.InitMapLists <- function()
 {
 	TFSOLO.ValidMaps.clear()
 	
-	local bAllowWorkshop = false
-	if (GetAppID() == 440 && ConnectedOnline())
+	local WorkshopKV = FileToKeyValues("workshop_localcache.txt")
+	
+	local bAllowWorkshop = true
+	if (GetAppID() == 440 && !ConnectedOnline())
 	{
-		bAllowWorkshop = true
+		bAllowWorkshop = false
 	}
-	if (TFSOLO.DebugNoWorkshop != 0)
+	if (TFSOLO.DebugNoWorkshop != 0 || WorkshopKV == null)
 	{
 		bAllowWorkshop = false
 	}
@@ -21,9 +23,17 @@ TFSOLO.InitMapLists <- function()
 	{
 		if (key.GetInt("disabled") == 0)
 		{
-			if (bAllowWorkshop || key.GetName().find("workshop_") == null)
+			local name = key.GetName()
+			if (name.find("workshop_") == null)
 			{
-				TFSOLO.ValidMaps.push(key.GetName())
+				TFSOLO.ValidMaps.push(name)
+			}
+			else if (bAllowWorkshop)
+			{
+				if (WorkshopKV.FindKey(name.slice(9)) != null)
+				{
+					TFSOLO.ValidMaps.push(name)
+				}
 			}
 		}
 		
