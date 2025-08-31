@@ -39,8 +39,8 @@
 		"tall"			"40"
 		"autoResize"	"0"
 		"pinCorner"		"0"
-		"visible"		"1"
-		"enabled"		"1"
+		"visible"		"0"
+		"enabled"		"0"
 		"fgcolor_override" "200 80 60 255"
 		"mouseinputenabled"	"0"
 	}
@@ -146,10 +146,10 @@
 	"MapCategoryList"
 	{
 		"fieldName"		"MapCategoryList"
-		"xpos"			"340"
+		"xpos"			"140"
 		"ypos"			"10"
 		"zpos"			"1"
-		"wide"			"150"
+		"wide"			"350"
 		"tall"			"25"
 		"autoResize"	"0"
 		"pinCorner"		"3"
@@ -162,5 +162,6 @@
 		"brighttext"	"0"
 		"editable"		"0"
 		"bgcolor_override"	"0 0 0 255"
+		"selectionColor_override" "0 0 0 0"
 	}
 }
