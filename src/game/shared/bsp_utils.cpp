@@ -319,50 +319,65 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	}
 	else
 	{
-		// Workshop map
-		uint64 nUGCSize = 0;
-		uint32 nTimestamp = 0;
-		char szFolder[MAX_PATH * 2] = { 0 };
-
-		m_MapReadyStatus = MapReadyStatus_FetchingUGC;
-
-		auto steamUGC = GetSteamUGC();
-		UGCQueryHandle_t ugcQuery = steamUGC->CreateQueryUGCDetailsRequest(&nMapID, 1);
-		bool setMeta = steamUGC->SetReturnMetadata(ugcQuery, true);
-		bool setCache = steamUGC->SetAllowCachedResponse(ugcQuery, 0);
-		if (ugcQuery == k_UGCQueryHandleInvalid || !setMeta || !setCache)
+		KeyValuesAD workshopConfig( "workshop" );
+		if ( !workshopConfig->LoadFromFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" ) )
 		{
-			Warning("Failed to create UGC details request for map [ %llu ]\n", nMapID);
+			Msg( "Unable to parse workshop_localcache.txt into keyvalues.\n" );
 			return false;
 		}
-		SteamAPICall_t hSteamAPICall = steamUGC->SendQueryUGCRequest(ugcQuery);
-		m_callbackQueryUGCDetails.Set(hSteamAPICall, this, &BackgroundBSPCacheThread::Steam_OnQueryUGCDetails);
+		char mapIDstr[MAX_PATH] = { 0 };
+		Q_snprintf( mapIDstr, sizeof( mapIDstr ), "%llu", nMapID );
+		if ( workshopConfig->FindKey( mapIDstr ) )
+		{
+			pszInputMapFile = V_strdup( workshopConfig->GetString( mapIDstr ) );
+		}
+		else
+		{
+			// Workshop map
+			uint64 nUGCSize = 0;
+			uint32 nTimestamp = 0;
+			char szFolder[MAX_PATH * 2] = { 0 };
 
-		while (m_MapReadyStatus == MapReadyStatus_FetchingUGC)
-		{
-			Sleep(100);
-		}
-		while (m_MapReadyStatus == MapReadyStatus_Downloading)
-		{
-			// TODO
-			//Sleep(100);
-			Warning("Download callback not yet implemeted\n");
-			return false;
-		}
-		if (m_MapReadyStatus == MapReadyStatus_Error)
-		{
-			return false;
-		}
+			m_MapReadyStatus = MapReadyStatus_FetchingUGC;
 
-		if (!GetSteamUGC()->GetItemInstallInfo(nMapID, &nUGCSize, szFolder, sizeof(szFolder), &nTimestamp))
-		{
-			Msg("BSP cache failed: GetItemInstallInfo failed for item, map not usable [ %s ]\n", m_strCanonicalName);
-			return false;
-		}
+			auto steamUGC = GetSteamUGC();
+			UGCQueryHandle_t ugcQuery = steamUGC->CreateQueryUGCDetailsRequest(&nMapID, 1);
+			bool setMeta = steamUGC->SetReturnMetadata(ugcQuery, true);
+			bool setCache = steamUGC->SetAllowCachedResponse(ugcQuery, 0);
+			if (ugcQuery == k_UGCQueryHandleInvalid || !setMeta || !setCache)
+			{
+				Warning("Failed to create UGC details request for map [ %llu ]\n", nMapID);
+				return false;
+			}
+			SteamAPICall_t hSteamAPICall = steamUGC->SendQueryUGCRequest(ugcQuery);
+			m_callbackQueryUGCDetails.Set(hSteamAPICall, this, &BackgroundBSPCacheThread::Steam_OnQueryUGCDetails);
 
-		char szFullPath[MAX_PATH * 2] = { 0 };
-		V_MakeAbsolutePath(szFullPath, sizeof(szFullPath), m_strMapName, szFolder);
-		pszInputMapFile = szFullPath;
+			while (m_MapReadyStatus == MapReadyStatus_FetchingUGC)
+			{
+				Sleep(100);
+			}
+			while (m_MapReadyStatus == MapReadyStatus_Downloading)
+			{
+				// TODO
+				//Sleep(100);
+				Warning("Download callback not yet implemeted\n");
+				return false;
+			}
+			if (m_MapReadyStatus == MapReadyStatus_Error)
+			{
+				return false;
+			}
+
+			if (!GetSteamUGC()->GetItemInstallInfo(nMapID, &nUGCSize, szFolder, sizeof(szFolder), &nTimestamp))
+			{
+				Msg("BSP cache failed: GetItemInstallInfo failed for item, map not usable [ %s ]\n", m_strCanonicalName);
+				return false;
+			}
+
+			char szFullPath[MAX_PATH * 2] = { 0 };
+			V_MakeAbsolutePath(szFullPath, sizeof(szFullPath), m_strMapName, szFolder);
+			pszInputMapFile = szFullPath;
+		}
 	}
 
 	if (!g_pFullFileSystem->FileExists(pszInputMapFile))

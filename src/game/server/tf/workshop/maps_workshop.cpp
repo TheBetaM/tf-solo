@@ -33,7 +33,7 @@ CTFMapsWorkshop *TFMapsWorkshop()
 	return &g_TFMapsWorkshop;
 }
 
-ConVar sv_workshop_mount_sfm( "sv_workshop_mount_sfm", "1", FCVAR_GAMEDLL, "Mount SFM workshop content if available" );
+ConVar sv_workshop_mount_sfm( "sv_workshop_mount_sfm", "0", FCVAR_GAMEDLL, "Mount SFM workshop content if available" );
 
 static_assert( sizeof( PublishedFileId_t ) == 8, "Various printfs in this file assuming PublishedFileId_t is a 64bit type (e.g. %llu)" );
 
@@ -555,6 +555,14 @@ void CTFMapsWorkshop::Refresh()
 bool CTFMapsWorkshop::IsSubscribed( PublishedFileId_t nFileID )
 {
 	return ( m_vecSubscribedMaps.Find( nFileID ) != m_vecSubscribedMaps.InvalidIndex() || m_vecLocalWorkshopMaps.Find( nFileID ) != m_vecLocalWorkshopMaps.InvalidIndex() );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Check if a map is in our subscribed list
+//-----------------------------------------------------------------------------
+bool CTFMapsWorkshop::IsLocallyDownloaded( PublishedFileId_t nFileID )
+{
+	return ( m_vecLocalWorkshopMaps.Find( nFileID ) != m_vecLocalWorkshopMaps.InvalidIndex() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1275,11 +1283,13 @@ static const char* GetAppInstallDirNoSteam( int nAppID )
 void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 {
 	TFWorkshopDebug( "UpdateLocalTF2Cache\n" );
+	KeyValuesAD cachefile( "workshop" );
 
 	KeyValues* TF2_KV = GetAppWorkshopManifest( 440 );
 	if ( !TF2_KV )
 	{
 		TFWorkshopMsg( "TF2 workshop manifest not found\n" );
+		cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );
 		return;
 	}
 
@@ -1289,10 +1299,9 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 	if ( !items )
 	{
 		TFWorkshopMsg( "TF2 workshop manifest parse error\n" );
+		cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );
 		return;
 	}
-
-	KeyValuesAD cachefile("workshop");
 
 	int mapCount = 0;
 	m_vecLocalWorkshopMaps.RemoveAll();
@@ -1319,7 +1328,7 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 				CanonicalNameForMap( fileID, szFileName, newMap->m_strCanonicalName );
 				newMap->m_strLocalFolder = V_strdup( pszRootFolder );
 				m_mapMaps.Insert( fileID, newMap );
-				cachefile->SetString( itemID, "1" );
+				cachefile->SetString( itemID, CFmtStr( "%s%s", pszRootFolder, szFileName ) );
 			}
 
 			mapCount++;
@@ -1327,8 +1336,6 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 		}
 
 		g_pFullFileSystem->FindClose( hFind );
-
-
 		key = key->GetNextKey();
 	}
 

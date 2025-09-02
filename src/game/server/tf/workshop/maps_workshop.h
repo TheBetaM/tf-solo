@@ -110,6 +110,7 @@ public:
 
 	// Is user currently subscribed to this map
 	bool IsSubscribed( PublishedFileId_t nFileID );
+	bool IsLocallyDownloaded( PublishedFileId_t nFileID );
 
 	// Build a canonical map name given its ID and original file name.
 	bool CanonicalNameForMap( PublishedFileId_t, const CUtlString &strOriginalName, /* out */ CUtlString &strCanonName );

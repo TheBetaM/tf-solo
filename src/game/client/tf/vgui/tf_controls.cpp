@@ -3959,7 +3959,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
-	m_pCategoryList->AddItem("TF2 Workshop", NULL);
+	m_pCategoryList->AddItem("#MMenu_SteamWorkshop", NULL);
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );
 
