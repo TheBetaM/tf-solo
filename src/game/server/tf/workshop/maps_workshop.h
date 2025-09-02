@@ -162,6 +162,7 @@ public:
 	bool GetWorkshopMapDesc( uint32 uIndex, WorkshopMapDesc_t *pDesc );
 
 	void UpdateLocalTF2WorkshopCache();
+	void UpdateLocalSFMWorkshopCache();
 
 private:
 	CCallback<CTFMapsWorkshop, DownloadItemResult_t, false> m_callbackDownloadItem;

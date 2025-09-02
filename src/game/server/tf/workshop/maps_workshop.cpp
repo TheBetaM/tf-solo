@@ -33,6 +33,8 @@ CTFMapsWorkshop *TFMapsWorkshop()
 	return &g_TFMapsWorkshop;
 }
 
+ConVar sv_workshop_mount_sfm( "sv_workshop_mount_sfm", "1", FCVAR_GAMEDLL, "Mount SFM workshop content if available" );
+
 static_assert( sizeof( PublishedFileId_t ) == 8, "Various printfs in this file assuming PublishedFileId_t is a 64bit type (e.g. %llu)" );
 
 static CDllDemandLoader g_ServerBrowser( "ServerBrowser" );
@@ -496,6 +498,7 @@ void CTFMapsWorkshop::Refresh()
 	g_pFullFileSystem->CreateDirHierarchy( "maps/workshop", UGC_PATHID );
 
 	UpdateLocalTF2WorkshopCache();
+	UpdateLocalSFMWorkshopCache();
 
 	ISteamUGC *steamUGC = GetWorkshopUGC();
 
@@ -1150,6 +1153,10 @@ static KeyValues* GetAppWorkshopManifest( int nAppID )
 	V_snprintf( szAppManifestPath, sizeof( szAppManifestPath ), "%s%s%s.acf", szInstallationPath, "/steamapps/workshop/appworkshop_", szAppID );
 	// Reuse the root pointer to open the appmanifest file
 	pRootKV = ReadVDFKeyValuesFile( szAppManifestPath );
+	if ( !pRootKV )
+	{
+		return nullptr;
+	}
 
 	// Add workshop folder path
 	char szWorkshopFoldersPath[1024] = {};
@@ -1157,6 +1164,109 @@ static KeyValues* GetAppWorkshopManifest( int nAppID )
 	pRootKV->SetString( "ws", szWorkshopFoldersPath );
 
 	return pRootKV;
+}
+
+// From https://github.com/ValveSoftware/source-sdk-2013/pull/1510
+static const char* GetAppInstallDirNoSteam( int nAppID )
+{
+	// First, get the Steam installation.
+	char szSteamPath[1024] = {};
+	V_strncpy( szSteamPath, GetSteamInstallationPath(), sizeof( szSteamPath ) );
+	if ( !szSteamPath || szSteamPath[0] == '\0' )
+		return nullptr;
+
+	// Second, go to the libraryfolders.vdf and look if the appid is in them.
+	char szLibraryFoldersFile[1024] = {};
+	V_snprintf( szLibraryFoldersFile, sizeof( szLibraryFoldersFile ), "%s%s", szSteamPath, "/config/libraryfolders.vdf" );
+
+	// NOTE: ReadKeyValuesFile already deletes the KV if it doesn't exist
+	// read the libraryfolders.vdf file
+	KeyValues* pRootKV = ReadVDFKeyValuesFile( szLibraryFoldersFile );
+	if ( !pRootKV )
+		return nullptr;
+
+	// Get a string representation of the Steam AppID passed
+	char szAppID[32] = {};
+	V_snprintf( szAppID, sizeof( szAppID ), "%d", nAppID );
+
+	// Path KV
+	KeyValues* pPathKV = nullptr;
+
+	// Go thru each possible install path until we find the app.
+	FOR_EACH_TRUE_SUBKEY( pRootKV, pKVPath )
+	{
+		// Check for the apps subkey
+		KeyValues* pApps = pKVPath->FindKey( "apps" );
+		if ( !pApps )
+			continue;
+
+		// Try to find the appid path
+		if ( pApps->FindKey( szAppID ) )
+		{
+			// Okay, we found the app id key. now use the path key from the root KV
+			pPathKV = pKVPath->FindKey( "path" ); // This is null checked below.
+			break;
+		}
+	}
+
+	// Error out if we can't find it
+	if ( !pPathKV )
+		return nullptr;
+
+	// Look for the game that this mod asked for
+	char szInstallationPath[1024] = {};
+	// copy this string over since we're gonna delete the KV
+	V_strncpy( szInstallationPath, pPathKV->GetString(), sizeof( szInstallationPath ) );
+	// If it's empty somehow, error out
+	if ( !szInstallationPath || szInstallationPath[0] == '\0' )
+	{
+		// Clear this keyvalue.
+		pRootKV->deleteThis();
+		pRootKV = nullptr;
+		return nullptr;
+	}
+
+	// we no longer need this KV
+	pRootKV->deleteThis();
+	pRootKV = nullptr;
+
+	// get the appmanifest_APPID.acf file
+	char szAppManifestPath[1024] = {};
+	V_snprintf( szAppManifestPath, sizeof( szAppManifestPath ), "%s%s%s.acf", szInstallationPath, "/steamapps/appmanifest_", szAppID );
+	// Reuse the root pointer to open the appmanifest file
+	pRootKV = ReadVDFKeyValuesFile( szAppManifestPath );
+
+	// Error out if this file can't be found
+	if ( !pRootKV )
+		return nullptr;
+
+	// Find the install dir
+	KeyValues* pInstallDirKV = pRootKV->FindKey( "installdir" );
+
+	// Error out if we can't find this key
+	if ( !pInstallDirKV )
+		return nullptr;
+
+	// Get the game name to get it from the common dir.
+	// Again, deleting the KV after this
+	char szGameName[256] = {};
+	V_strncpy( szGameName, pInstallDirKV->GetString(), sizeof( szGameName ) );
+
+	if ( !szGameName || szGameName[0] == '\0' )
+		return nullptr;
+
+	// Not needed anymore
+	pRootKV->deleteThis();
+	pRootKV = nullptr;
+
+	// Now that we got everything, put it all together
+	static char szAbsoluteGameDirPath[1024] = {};
+	V_snprintf( szAbsoluteGameDirPath, sizeof( szAbsoluteGameDirPath ), "%s%s%s", szInstallationPath, "/steamapps/common/", szGameName );
+
+	// Fix the slashes before passing it
+	V_FixDoubleSlashes( szAbsoluteGameDirPath );
+	V_FixSlashes( szAbsoluteGameDirPath );
+	return szAbsoluteGameDirPath;
 }
 
 //-----------------------------------------------------------------------------
@@ -1224,6 +1334,33 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 
 	TFWorkshopMsg( "Local TF2 workshop maps found: %u\n", mapCount );
 	cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Update
+//-----------------------------------------------------------------------------
+void CTFMapsWorkshop::UpdateLocalSFMWorkshopCache()
+{
+	if ( !sv_workshop_mount_sfm.GetBool() )
+		return;
+
+	TFWorkshopDebug ( "UpdateLocalSFMCache\n" );
+
+	const char* SFM_Path = GetAppInstallDirNoSteam( 1840 );
+	if ( !SFM_Path || !SFM_Path[0] )
+	{
+		TFWorkshopMsg( "SFM install path not found\n" );
+		return;
+	}
+
+	static char szWorkshopPath[1024] = {};
+	V_snprintf( szWorkshopPath, sizeof( szWorkshopPath ), "%s%s", SFM_Path, "/game/workshop/" );
+	if ( g_pFullFileSystem->IsDirectory( szWorkshopPath ) )
+	{
+		g_pFullFileSystem->AddSearchPath( szWorkshopPath, "GAME" );
+	}
+
+	TFWorkshopMsg( "SFM workshop content mounted.\n" );
 }
 
 //-----------------------------------------------------------------------------
