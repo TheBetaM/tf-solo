@@ -52,6 +52,7 @@ solo_config
 		}
 		workshop_454128304
 		{
+			disabled 1
 			name "Infiltration"
 			modename "#Gametype_CTF"
 			tags
@@ -89,6 +90,7 @@ solo_config
 		}
 		workshop_454135153
 		{
+			disabled 1
 			name "Temper"
 			modename "#Gametype_Koth"
 			tags
@@ -138,6 +140,7 @@ solo_config
 		}
 		workshop_454159900
 		{
+			disabled 1
 			name "Redbrier"
 			modename "#Gametype_MVM"
 			tags
@@ -161,6 +164,7 @@ solo_config
 		}
 		workshop_454174250
 		{
+			disabled 1
 			name "Hydraulic"
 			modename "#Gametype_Koth"
 			tags
@@ -173,6 +177,7 @@ solo_config
 		}
 		workshop_454176200
 		{
+			disabled 1
 			name "New Normandy"
 			modename "#Gametype_MVM"
 			tags
@@ -321,6 +326,7 @@ solo_config
 		}
 		workshop_455168490
 		{
+			disabled 1
 			name "Skullcove"
 			modename "#Gametype_MVM"
 			tags
@@ -567,6 +573,7 @@ solo_config
 		}
 		workshop_491281037
 		{
+			disabled 1
 			name "Security"
 			modename "#Gametype_CTF"
 			tags
@@ -591,6 +598,7 @@ solo_config
 		}
 		workshop_512476725
 		{
+			disabled 1
 			name "Isolation"
 			modename "#Gametype_MVM"
 			tags
@@ -636,6 +644,7 @@ solo_config
 		}
 		workshop_528867291
 		{
+			disabled 1
 			name "Yucatan"
 			modename "#Gametype_MVM"
 			tags
@@ -695,6 +704,7 @@ solo_config
 		}
 		workshop_546248385
 		{
+			disabled 1
 			name "Meltdown"
 			modename "#Gametype_MVM"
 			tags
@@ -763,6 +773,7 @@ solo_config
 		}
 		workshop_580052046
 		{
+			disabled 1
 			name "Powerplant"
 			modename "#Gametype_MVM"
 			tags
@@ -910,6 +921,7 @@ solo_config
 		}
 		workshop_643671549
 		{
+			disabled 1
 			name "Countryside"
 			modename "#Gametype_MVM"
 			tags
@@ -1040,6 +1052,7 @@ solo_config
 		}
 		workshop_737002136
 		{
+			disabled 1
 			name "Derelict"
 			modename "#Gametype_MVM"
 			tags
@@ -1136,6 +1149,7 @@ solo_config
 		}
 		workshop_792857459
 		{
+			disabled 1
 			name "Metro"
 			modename "#Gametype_MVM"
 			tags
@@ -1159,6 +1173,7 @@ solo_config
 		}
 		workshop_808821399
 		{
+			disabled 1
 			name "Tropics"
 			modename "#Gametype_MVM"
 			tags
@@ -1323,6 +1338,7 @@ solo_config
 		}
 		workshop_947749085
 		{
+			disabled 1
 			name "Waterfront"
 			modename "#Gametype_MVM"
 			tags
@@ -1389,6 +1405,7 @@ solo_config
 		}
 		workshop_974915319
 		{
+			disabled 1
 			name "Potassium"
 			modename "#Gametype_MVM"
 			tags
@@ -1413,6 +1430,7 @@ solo_config
 		}
 		workshop_1088845807
 		{
+			disabled 1
 			name "Snowflake"
 			modename "#Gametype_MVM"
 			tags
@@ -1424,6 +1442,7 @@ solo_config
 		}
 		workshop_1089026871
 		{
+			disabled 1
 			name "Havana"
 			modename "#Gametype_MVM"
 			tags
@@ -1435,6 +1454,7 @@ solo_config
 		}
 		workshop_1097782363
 		{
+			disabled 1
 			name "Spacepost"
 			modename "#Gametype_MVM"
 			tags
@@ -1494,6 +1514,7 @@ solo_config
 		}
 		workshop_1214043578
 		{
+			disabled 1
 			name "Barren"
 			modename "#Gametype_MVM"
 			tags
@@ -1505,6 +1526,7 @@ solo_config
 		}
 		workshop_1231287299
 		{
+			disabled 1
 			name "Coastrock"
 			modename "#Gametype_MVM"
 			tags
@@ -1549,6 +1571,7 @@ solo_config
 		}
 		workshop_1297371285
 		{
+			disabled 1
 			name "Overgreen"
 			modename "#Gametype_MVM"
 			tags
@@ -1652,6 +1675,7 @@ solo_config
 		}
 		workshop_1387397877
 		{
+			disabled 1
 			name "Quetzal"
 			modename "#Gametype_MVM"
 			tags
@@ -1696,6 +1720,7 @@ solo_config
 		}
 		workshop_1458527492
 		{
+			disabled 1
 			name "Pitchfork"
 			modename "#Gametype_MVM"
 			tags
@@ -1719,6 +1744,7 @@ solo_config
 		}
 		workshop_1480274637
 		{
+			disabled 1
 			name "Shiver Peak"
 			modename "#Gametype_MVM"
 			tags
@@ -1846,6 +1872,7 @@ solo_config
 		}
 		workshop_1699389870
 		{
+			disabled 1
 			name "Snowpine"
 			modename "#Gametype_MVM"
 			tags
@@ -1857,6 +1884,7 @@ solo_config
 		}
 		workshop_1700895011
 		{
+			disabled 1
 			name "Trainhouse"
 			modename "#Gametype_MVM"
 			tags
@@ -1904,6 +1932,7 @@ solo_config
 		}
 		workshop_1816031926
 		{
+			disabled 1
 			name "Brugge"
 			modename "#Gametype_MVM"
 			tags
@@ -1927,6 +1956,7 @@ solo_config
 		}
 		workshop_1827403325
 		{
+			disabled 1
 			name "Cyberia"
 			modename "#Gametype_MVM"
 			tags
@@ -1984,6 +2014,7 @@ solo_config
 		}
 		workshop_1889017291
 		{
+			disabled 1
 			name "Sharp"
 			modename "#Gametype_MVM"
 			tags
@@ -2019,6 +2050,7 @@ solo_config
 		}
 		workshop_2009851350
 		{
+			disabled 1
 			name "Estate"
 			modename "#Gametype_MVM"
 			tags
@@ -2039,6 +2071,7 @@ solo_config
 		}
 		workshop_2051915354
 		{
+			disabled 1
 			name "Cliffside"
 			modename "#Gametype_MVM"
 			tags
@@ -2050,6 +2083,7 @@ solo_config
 		}
 		workshop_2078233024
 		{
+			disabled 1
 			name "Bonkplant"
 			modename "#Gametype_MVM"
 			tags
@@ -2109,6 +2143,7 @@ solo_config
 		}
 		workshop_2133601462
 		{
+			disabled 1
 			name "Maple Hill"
 			modename "#Gametype_MVM"
 			tags
@@ -2132,6 +2167,7 @@ solo_config
 		}
 		workshop_2150989732
 		{
+			disabled 1
 			name "Snowylake"
 			modename "#Gametype_Passtime"
 			tags
@@ -2143,6 +2179,7 @@ solo_config
 		}
 		workshop_2151749089
 		{
+			disabled 1
 			name "Akure"
 			modename "#Gametype_MVM"
 			tags
@@ -2166,6 +2203,7 @@ solo_config
 		}
 		workshop_2171502505
 		{
+			disabled 1
 			name "Autumnull"
 			modename "#Gametype_MVM"
 			tags
@@ -2225,6 +2263,7 @@ solo_config
 		}
 		workshop_2374872429
 		{
+			disabled 1
 			name "Nox"
 			modename "#Gametype_MVM"
 			tags
@@ -2248,6 +2287,7 @@ solo_config
 		}
 		workshop_2436897173
 		{
+			disabled 1
 			name "Icebox"
 			modename "#Gametype_MVM"
 			tags
@@ -2271,6 +2311,7 @@ solo_config
 		}
 		workshop_2487534610
 		{
+			disabled 1
 			name "Boreal"
 			modename "#Gametype_MVM"
 			tags
@@ -2282,6 +2323,7 @@ solo_config
 		}
 		workshop_2487774790
 		{
+			disabled 1
 			name "Thematic"
 			modename "#Gametype_MVM"
 			tags
@@ -2302,6 +2344,7 @@ solo_config
 		}
 		workshop_2503856863
 		{
+			disabled 1
 			name "Water Mine"
 			modename "#Gametype_MVM"
 			tags
@@ -2313,6 +2356,7 @@ solo_config
 		}
 		workshop_2512066947
 		{
+			disabled 1
 			name "Smalltime"
 			modename "#Gametype_Passtime"
 			tags
@@ -2368,6 +2412,7 @@ solo_config
 		}
 		workshop_2600419377
 		{
+			disabled 1
 			name "Bloodlust"
 			modename "#Gametype_MVM"
 			tags
@@ -2404,6 +2449,7 @@ solo_config
 		}
 		workshop_2663540708
 		{
+			disabled 1
 			name "Gridiron"
 			modename "#Gametype_Passtime"
 			tags
@@ -2438,6 +2484,7 @@ solo_config
 		}
 		workshop_2746913016
 		{
+			disabled 1
 			name "Redcorp"
 			modename "#Gametype_MVM"
 			tags
@@ -2509,6 +2556,7 @@ solo_config
 		}
 		workshop_2808118709
 		{
+			disabled 1
 			name "Spybase"
 			modename "#Gametype_MVM"
 			tags
@@ -2568,6 +2616,7 @@ solo_config
 		}
 		workshop_2838972454
 		{
+			disabled 1
 			name "Electric Avenue"
 			modename "#Gametype_MVM"
 			tags
@@ -3104,6 +3153,7 @@ solo_config
 		}
 		workshop_3093360989
 		{
+			disabled 1
 			name "Crossroad"
 			modename "#Gametype_MVM"
 			tags
@@ -3298,6 +3348,7 @@ solo_config
 		}
 		workshop_3233557472
 		{
+			disabled 1
 			name "Humbridge"
 			modename "#Gametype_MVM"
 			tags
@@ -3309,6 +3360,7 @@ solo_config
 		}
 		workshop_3233699608
 		{
+			disabled 1
 			name "Industrial Hill"
 			modename "#Gametype_MVM"
 			tags
@@ -3439,6 +3491,7 @@ solo_config
 		}
 		workshop_3263266315
 		{
+			disabled 1
 			name "Hurricane"
 			modename "#Gametype_MVM"
 			tags
@@ -3450,6 +3503,7 @@ solo_config
 		}
 		workshop_3277639159
 		{
+			disabled 1
 			name "Bogland"
 			modename "#Gametype_MVM"
 			tags
@@ -3661,6 +3715,7 @@ solo_config
 		}
 		workshop_3460843139
 		{
+			disabled 1
 			name "ClimbSpire"
 			modename "#Gametype_MVM"
 			tags
@@ -3791,6 +3846,7 @@ solo_config
 		}
 		workshop_3475904158
 		{
+			disabled 1
 			name "Gigantic"
 			modename "#Gametype_Passtime"
 			tags
@@ -3811,6 +3867,280 @@ solo_config
 				cp_count 2
 				stages 2
 				theme_egypt 1
+			}
+		}
+		workshop_3481396928
+		{
+			name "Tetsudo"
+			modename "#Gametype_Koth"
+			tags
+			{
+				tow 1
+				symm 1
+				theme_japan 1
+			}
+		}
+		workshop_3485114931
+		{
+			name "Riverport"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3555310735
+		{
+			name "Gelid"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3469785974
+		{
+			name "Bridgeway"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_3336514158
+		{
+			name "Tondo"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_3462743513
+		{
+			name "Oilchange"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_2808425307
+		{
+			name "Shorelight"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_2964782550
+		{
+			name "Gamma"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3360843598
+		{
+			name "Crumble"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+			}
+		}
+		workshop_3363716634
+		{
+			name "Neo Tropic"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3361496763
+		{
+			name "Cryo"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_desert 1
+			}
+		}
+		workshop_3362710666
+		{
+			name "Chipper"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_3322275041
+		{
+			name "Life Snatcher"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_1356347293
+		{
+			name "Ice Tower"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3236271388
+		{
+			name "Monkeynaut"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3213383161
+		{
+			name "Ancient"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_greece 1
+			}
+		}
+		workshop_3195874259
+		{
+			name "Method"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_alpine 1
+			}
+		}
+		workshop_3538742869
+		{
+			disabled 1
+			name "Goldbend Valley"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+			}
+		}
+		workshop_1233357991
+		{
+			name "Stormy Lab"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_2359977726
+		{
+			name "Rocketforge"
+			modename "#Gametype_CP"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_industrial 1
+			}
+		}
+		workshop_2956638083
+		{
+			name "Dryrock"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_2886781762
+		{
+			name "Chimney"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_xmas 1
+			}
+		}
+		workshop_2883911890
+		{
+			name "Icelands"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_xmas 1
 			}
 		}
 		

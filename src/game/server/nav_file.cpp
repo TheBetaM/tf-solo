@@ -1436,6 +1436,21 @@ NavErrorType CNavMesh::GetNavDataFromFile( CUtlBuffer &outBuffer, bool *pNavData
 	char maptmp2[256];
 	const char* pszMapName2 = STRING( gpGlobals->mapname );
 
+	bool isWorkshop = false;
+	char const* szWorkshopFileName = NULL;
+	char* ugc = V_strstr( pszMapName2, ".ugc" );
+	if ( ugc && ugc[0] )
+	{
+		FileFindHandle_t hFind = NULL;
+		const char* pszSearch = CFmtStr( "maps/workshop/*.ugc%s.nav", ugc + 4 );
+		szWorkshopFileName = filesystem->FindFirstEx( pszSearch, "MOD", &hFind );
+		if ( szWorkshopFileName )
+		{
+			isWorkshop = true;
+			szWorkshopFileName = CFmtStr( "maps/workshop/%s", szWorkshopFileName );
+		}
+	}
+
 	// nav filename is derived from map filename
 	char filename[MAX_PATH] = { 0 };
 	Q_snprintf( filename, sizeof( filename ), FORMAT_NAVFILE, pszMapName );
@@ -1446,17 +1461,20 @@ NavErrorType CNavMesh::GetNavDataFromFile( CUtlBuffer &outBuffer, bool *pNavData
 	{
 		if (!filesystem->ReadFile(filename2, "MOD", outBuffer)) // checks workshop generated nav file
 		{
-			if (!filesystem->ReadFile(filename, "BSP", outBuffer))	// ... and this looks for one if it's the only one around.
+			if ( !isWorkshop || !filesystem->ReadFile( szWorkshopFileName, "MOD", outBuffer ) ) // checks workshop nav file fallback in case map name changed
 			{
-				// Finally, check for the special embed name for in-BSP nav meshes only
-				if (!filesystem->ReadFile(PATH_NAVFILE_EMBEDDED, "BSP", outBuffer))
+				if (!filesystem->ReadFile(filename, "BSP", outBuffer))	// ... and this looks for one if it's the only one around.
 				{
-					return NAV_CANT_ACCESS_FILE;
+					// Finally, check for the special embed name for in-BSP nav meshes only
+					if (!filesystem->ReadFile(PATH_NAVFILE_EMBEDDED, "BSP", outBuffer))
+					{
+						return NAV_CANT_ACCESS_FILE;
+					}
 				}
-			}
-			if (pNavDataFromBSP)
-			{
-				*pNavDataFromBSP = true;
+				if (pNavDataFromBSP)
+				{
+					*pNavDataFromBSP = true;
+				}
 			}
 		}
 	}
