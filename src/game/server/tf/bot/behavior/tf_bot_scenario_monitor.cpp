@@ -298,6 +298,12 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 	else
 	{
+		// MvM Defenders
+		if ( TFGameRules()->IsMannVsMachineMode() )
+		{
+			return new CTFBotDefendFlagCapzone( true );
+		}
+
 		// Attack/Defend CTF
 		if ( TFGameRules()->GetHUDType() == TF_HUDTYPE_CTF && me->GetEnemyFlagCaptureZone() )
 		{

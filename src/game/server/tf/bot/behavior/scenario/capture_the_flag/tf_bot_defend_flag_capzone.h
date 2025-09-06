@@ -7,6 +7,10 @@
 class CTFBotDefendFlagCapzone : public Action< CTFBot >
 {
 public:
+	CTFBotDefendFlagCapzone();
+	CTFBotDefendFlagCapzone( bool isMVM );
+	virtual ~CTFBotDefendFlagCapzone() { }
+
 	virtual ActionResult< CTFBot >	OnStart( CTFBot* me, Action< CTFBot >* priorAction );
 	virtual ActionResult< CTFBot >	Update( CTFBot* me, float interval );
 	virtual ActionResult< CTFBot >	OnResume( CTFBot* me, Action< CTFBot >* interruptingAction );
@@ -21,7 +25,12 @@ public:
 	virtual EventDesiredResult< CTFBot > OnTerritoryCaptured( CTFBot* me, int territoryID );
 	virtual EventDesiredResult< CTFBot > OnTerritoryLost( CTFBot* me, int territoryID );
 
+	virtual QueryResultType	ShouldRetreat( const INextBot* me ) const;
+	virtual QueryResultType ShouldHurry( const INextBot* me ) const;
+
 	virtual const char* GetName(void) const { return "DefendFlagCapzone"; };
+
+	bool IsMVM() { return m_bIsMVM; }
 
 private:
 	PathFollower m_path;				// for moving to a defense position
@@ -37,6 +46,7 @@ private:
 	bool IsPointThreatened(CTFBot* me);
 	bool WillBlockCapture(CTFBot* me) const;
 	bool m_isAllowedToRoam;
+	bool m_bIsMVM;
 };
 
 

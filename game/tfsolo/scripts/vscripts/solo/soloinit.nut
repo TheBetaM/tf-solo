@@ -18,9 +18,9 @@ Convars.SetValue("mp_forceautoteam", 0)
 Convars.SetValue("mp_autoteambalance", 0)
 //Convars.SetValue("mp_allowspectators", 0)
 Convars.SetValue("mp_bonusroundtime", 15)
-Convars.SetValue("tf_bot_quota_mode", 0)
-Convars.SetValue("tf_bot_quota", 23)
 Convars.SetValue("tf_bot_count", 0)
+Convars.SetValue("tf_bot_quota_mode", "fill")
+Convars.SetValue("tf_bot_quota", 24)
 //Convars.SetValue("tf_bot_reevaluate_class_in_spawnroom", 0)
 //Convars.SetValue("tf_bot_keep_class_after_death", 1)
 Convars.SetValue("mp_teams_unbalance_limit", 0)
@@ -84,9 +84,8 @@ getroottable()[TFSOLO.SoloEventTag] <- {
 		}
 		if (IsMannVsMachineMode())
 		{
-			Convars.SetValue("tf_bot_quota", 0)
-			ToConsole("tf_bot_kick all")
-			ToConsole("tf_bot_add 5 red expert noquota")
+			Convars.SetValue("tf_bot_quota", 6)
+			Convars.SetValue("tf_bot_difficulty", 3)
 		}
 		if (IsWorkshopMap)
 		{

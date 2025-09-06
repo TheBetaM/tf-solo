@@ -14,6 +14,8 @@
 #include "bot/behavior/sniper/tf_bot_sniper_attack.h"
 #include "bot/behavior/demoman/tf_bot_prepare_stickybomb_trap.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_fetch_flag.h"
+#include "bot/behavior/scenario/capture_the_flag/tf_bot_deliver_flag.h"
+#include "tf_objective_resource.h"
 
 
 extern ConVar tf_bot_path_lookahead_range;
@@ -24,6 +26,24 @@ extern ConVar tf_bot_offense_must_push_time;
 extern ConVar tf_bot_defense_debug;
 
 ConVar tf_bot_max_capzone_defend_range("tf_bot_max_capzone_defend_range", "1250", FCVAR_CHEAT, "How far (in travel distance) from the capzone defending bots will take up positions");
+ConVar tf_bot_max_capzone_defend_range_mvm("tf_bot_max_capzone_defend_range_mvm", "600", FCVAR_CHEAT, "How far (in travel distance) from the capzone defending bots will take up positions");
+ConVar tf_bot_max_capzone_flag_distance("tf_bot_max_capzone_flag_distance", "2400", FCVAR_CHEAT, "How far (in travel distance) from the flag to the capzone defending bots will take up positions");
+
+//---------------------------------------------------------------------------------------------
+CTFBotDefendFlagCapzone::CTFBotDefendFlagCapzone()
+{
+	m_bIsMVM = false;
+	m_defenseArea = NULL;
+	m_isAllowedToRoam = false;
+}
+
+//---------------------------------------------------------------------------------------------
+CTFBotDefendFlagCapzone::CTFBotDefendFlagCapzone( bool isMVM )
+{
+	m_bIsMVM = isMVM;
+	m_defenseArea = NULL;
+	m_isAllowedToRoam = false;
+}
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotDefendFlagCapzone::OnStart( CTFBot* me, Action< CTFBot >* priorAction )
@@ -51,13 +71,13 @@ bool CTFBotDefendFlagCapzone::IsPointThreatened( CTFBot* me )
 	if ( point == NULL )
 		return false;
 
-	// if we just lost a point, we should fall back and stand on the next point to defend against a rush
-	if ( me->WasPointJustLost() )
-	{
-		return true;
-	}
+	CCaptureFlag* flag = me->GetEnemyFlag();
 
-	return false;
+	if ( !flag )
+		return false;
+
+	float distance = ( point->GetAbsOrigin() - flag->GetAbsOrigin() ).Length();
+	return distance <= tf_bot_max_capzone_flag_distance.GetFloat();
 }
 
 
@@ -81,6 +101,11 @@ bool CTFBotDefendFlagCapzone::WillBlockCapture( CTFBot* me ) const
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotDefendFlagCapzone::Update( CTFBot* me, float interval )
 {
+	if  ( me->HasTheFlag() )
+	{
+		return SuspendFor( new CTFBotDeliverFlag, "I've picked up the flag! Running it in..." );
+	}
+
 	CCaptureZone* point = me->GetEnemyFlagCaptureZone();
 
 	if ( point == NULL )
@@ -100,16 +125,6 @@ ActionResult< CTFBot >	CTFBotDefendFlagCapzone::Update( CTFBot* me, float interv
 		}
 	}
 
-	// if point in is danger - get ON the point!
-	// Don't do this in training to keep things easy for the new trainee
-	//if ( IsPointThreatened(me) && WillBlockCapture( me ) )
-	//{
-		// point is being captured - get on it!
-	//	return SuspendFor(new CTFBotDefendPointBlockCapture, "Moving to block point capture!");
-	//}
-
-	// point is safe for the moment
-
 	// if I'm uber'd, go get 'em!
 	if ( me->m_Shared.InCond( TF_COND_INVULNERABLE ) )
 	{
@@ -127,11 +142,11 @@ ActionResult< CTFBot >	CTFBotDefendFlagCapzone::Update( CTFBot* me, float interv
 	//	return SuspendFor(new CTFBotSeekAndDestroy(15.0f), "Seek and destroy - we have lots of time");
 	//}
 
-	if ( TFGameRules()->InSetup() )
-	{
+	//if ( TFGameRules()->InSetup() )
+	//{
 		// don't lose patience during setup time
-		m_idleTimer.Reset();
-	}
+	//	m_idleTimer.Reset();
+	//}
 
 	// if we see an enemy as we have a melee weapon equipped, chase them down
 	const CKnownEntity* threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
@@ -273,15 +288,27 @@ EventDesiredResult< CTFBot > CTFBotDefendFlagCapzone::OnTerritoryLost( CTFBot* m
 	return TryContinue();
 }
 
+//---------------------------------------------------------------------------------------------
+QueryResultType CTFBotDefendFlagCapzone::ShouldHurry( const INextBot* bot ) const
+{
+	return ANSWER_UNDEFINED;
+}
+
+//---------------------------------------------------------------------------------------------
+QueryResultType CTFBotDefendFlagCapzone::ShouldRetreat( const INextBot* bot ) const
+{
+	return ANSWER_NO;
+}
 
 //---------------------------------------------------------------------------------------------
 class CSelectDefenseAreaForCapzone : public ISearchSurroundingAreasFunctor
 {
 public:
-	CSelectDefenseAreaForCapzone( CTFNavArea* pointArea, int myTeam, CUtlVector< CTFNavArea* >* areaVector )
+	CSelectDefenseAreaForCapzone( CTFNavArea* pointArea, int myTeam, CUtlVector< CTFNavArea* >* areaVector, bool mvm )
 	{
 		m_pointArea = pointArea;
 		m_myTeam = myTeam;
+		m_isMVM = mvm;
 
 		// don't select areas that are beyond the point
 		m_incursionFlowLimit = pointArea->GetIncursionDistance( m_myTeam ) + 250.0f;
@@ -302,7 +329,7 @@ public:
 		{
 			// a bit of a hack here to avoid bots choosing to defend in bottom of ravine at stage 3 of dustbowl
 			const float tooLow = 220.0f;
-			if ( m_pointArea->GetCenter().z - area->GetCenter().z < tooLow )
+			if ( m_isMVM || m_pointArea->GetCenter().z - area->GetCenter().z < tooLow )
 			{
 				// valid defense position
 				m_areaVector->AddToTail( area );
@@ -319,10 +346,21 @@ public:
 			return false;
 		}
 
-		if (travelDistanceSoFar > tf_bot_max_capzone_defend_range.GetFloat())
+		if ( m_isMVM )
 		{
-			// too far away
-			return false;
+			if ( travelDistanceSoFar > tf_bot_max_capzone_defend_range_mvm.GetFloat() )
+			{
+				// too far away
+				return false;
+			}
+		}
+		else
+		{
+			if ( travelDistanceSoFar > tf_bot_max_capzone_defend_range.GetFloat() )
+			{
+				// too far away
+				return false;
+			}
 		}
 
 		const float maxHeightChange = 65.0f;
@@ -334,6 +372,7 @@ public:
 	CUtlVector< CTFNavArea* >* m_areaVector;
 	float m_incursionFlowLimit;
 	int m_myTeam;
+	bool m_isMVM;
 };
 
 
@@ -345,14 +384,36 @@ CTFNavArea* CTFBotDefendFlagCapzone::SelectAreaToDefendFrom( CTFBot* me )
 {
 	VPROF_BUDGET( "CTFBotDefendFlagCapzone::SelectAreaToDefendFrom", "NextBot" );
 
+	// decide where we will defend from
+	CUtlVector< CTFNavArea* > defenseAreas;
+
+	// MvM between waves
+	if ( IsMVM() && TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() )
+	{
+		TheTFNavMesh()->CollectSpawnRoomThresholdAreas( &defenseAreas, GetEnemyTeam( me->GetTeamNumber() ) );
+	}
+
+	if ( !IsPointThreatened( me ) || !WillBlockCapture( me ) )
+	{
+		CCaptureFlag* flag = me->GetEnemyFlag();
+		if ( flag && defenseAreas.Count() == 0 )
+		{
+			CNavArea* area = TheTFNavMesh()->GetNearestNavArea( flag );
+			CTFNavArea* pointArea = (CTFNavArea*)area;
+			if ( pointArea )
+			{
+				// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly
+				CSelectDefenseAreaForCapzone defenseScan( pointArea, me->GetTeamNumber(), &defenseAreas, IsMVM() );
+				SearchSurroundingAreas( pointArea, defenseScan );
+			}
+		}
+	}
+
 	CCaptureZone* point = me->GetEnemyFlagCaptureZone();
 	if ( !point )
 	{
 		return NULL;
 	}
-
-	// decide where we will defend from
-	CUtlVector< CTFNavArea* > defenseAreas;
 
 	if ( defenseAreas.Count() == 0 )
 	{
@@ -360,7 +421,7 @@ CTFNavArea* CTFBotDefendFlagCapzone::SelectAreaToDefendFrom( CTFBot* me )
 		if ( pointArea )
 		{
 			// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly
-			CSelectDefenseAreaForCapzone defenseScan( pointArea, me->GetTeamNumber(), &defenseAreas );
+			CSelectDefenseAreaForCapzone defenseScan( pointArea, me->GetTeamNumber(), &defenseAreas, IsMVM() );
 			SearchSurroundingAreas( pointArea, defenseScan );
 		}
 	}
@@ -372,7 +433,7 @@ CTFNavArea* CTFBotDefendFlagCapzone::SelectAreaToDefendFrom( CTFBot* me )
 		if ( pointArea )
 		{
 			// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly
-			CSelectDefenseAreaForCapzone defenseScan( pointArea, me->GetTeamNumber(), &defenseAreas );
+			CSelectDefenseAreaForCapzone defenseScan( pointArea, me->GetTeamNumber(), &defenseAreas, IsMVM() );
 			SearchSurroundingAreas( pointArea, defenseScan );
 		}
 	}
@@ -384,7 +445,14 @@ CTFNavArea* CTFBotDefendFlagCapzone::SelectAreaToDefendFrom( CTFBot* me )
 	}
 
 	// how long will we wait if we don't see any action
-	m_idleTimer.Start( RandomFloat( 10.0f, 20.0f ) );
+	if ( IsMVM() )
+	{
+		m_idleTimer.Start( RandomFloat( 3.0f, 5.0f ) );
+	}
+	else
+	{
+		m_idleTimer.Start( RandomFloat( 10.0f, 20.0f ) );
+	}
 
 	if ( tf_bot_defense_debug.GetBool() )
 	{

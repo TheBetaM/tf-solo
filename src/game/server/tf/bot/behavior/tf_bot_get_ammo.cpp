@@ -472,8 +472,14 @@ bool CTFBotGetAmmo::IsCreditPossible( CTFBot* me )
 
 	int i;
 
+	float range = tf_bot_credits_search_range.GetFloat();
+	if ( me->IsPlayerClass( TF_CLASS_SCOUT ) )
+	{
+		range *= 2.0f;
+	}
+
 	CUtlVector< CNavArea* > nearbyAreaVector;
-	CollectSurroundingAreas( &nearbyAreaVector, me->GetLastKnownArea(), tf_bot_credits_search_range.GetFloat(), me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
+	CollectSurroundingAreas( &nearbyAreaVector, me->GetLastKnownArea(), range, me->GetLocomotionInterface()->GetStepHeight(), me->GetLocomotionInterface()->GetDeathDropHeight() );
 
 	CAmmoFilter ammoFilter( me );
 	ammoFilter.m_credits = true;

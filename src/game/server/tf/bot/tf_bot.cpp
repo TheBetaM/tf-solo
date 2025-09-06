@@ -2267,6 +2267,137 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 	return pClosestFlag;
 }
 
+//-----------------------------------------------------------------------------------------------------
+// Return flag we want to fetch
+CCaptureFlag* CTFBot::GetEnemyFlag( void ) const
+{
+	CUtlVector< CCaptureFlag* > flagsVector;
+	int nCarriedFlags = 0;
+
+	// Collect flags
+	for (int i = 0; i < ICaptureFlagAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureFlag* flag = static_cast< CCaptureFlag *>( ICaptureFlagAutoList::AutoList()[i] );
+
+		//if ( flag->IsDisabled() && !flag->IsReturning() )
+		//	continue;
+
+		// Flag is being used as a workaround
+		if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION && flag->GetPrevOwner() && FClassnameIs( flag->GetPrevOwner(), "worldspawn" ) )
+		{
+			continue;
+		}
+
+		switch ( flag->GetType() )
+		{
+		case TF_FLAGTYPE_CTF:
+		case TF_FLAGTYPE_ROBOT_DESTRUCTION:
+			if ( flag->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) )
+			{
+				flagsVector.AddToTail( flag );
+			}
+			break;
+
+		case TF_FLAGTYPE_ATTACK_DEFEND:
+		case TF_FLAGTYPE_TERRITORY_CONTROL:
+		case TF_FLAGTYPE_INVADE:
+		case TF_FLAGTYPE_RESOURCE_CONTROL:
+		case TF_FLAGTYPE_PLAYER_DESTRUCTION:
+			if ( flag->GetTeamNumber() != GetTeamNumber() )
+			{
+				flagsVector.AddToTail( flag );
+			}
+			break;
+		}
+
+		if ( flag->IsStolen() )
+		{
+			nCarriedFlags++;
+		}
+	}
+
+	CCaptureFlag* pClosestFlag = NULL;
+	float flClosestFlagDist = FLT_MAX;
+	CCaptureFlag* pClosestUncarriedFlag = NULL;
+	float flClosestUncarriedFlagDist = FLT_MAX;
+
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+	{
+		int nMinFollower = INT_MAX;
+
+		FOR_EACH_VEC( flagsVector, i )
+		{
+			CCaptureFlag* pFlag = flagsVector[i];
+			if ( pFlag )
+			{
+				// find the one which needs the most love
+				if ( pFlag->GetNumFollowers() < nMinFollower )
+				{
+					nMinFollower = pFlag->GetNumFollowers();
+
+					pClosestFlag = NULL;
+					flClosestFlagDist = FLT_MAX;
+					pClosestUncarriedFlag = NULL;
+					flClosestUncarriedFlagDist = FLT_MAX;
+				}
+
+				if ( pFlag->GetNumFollowers() == nMinFollower )
+				{
+					// Find the closest
+					float flDist = ( pFlag->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr();
+					if ( flDist < flClosestFlagDist )
+					{
+						pClosestFlag = pFlag;
+						flClosestFlagDist = flDist;
+					}
+
+					// Find the closest uncarried
+					if ( nCarriedFlags < flagsVector.Count() && !pFlag->IsStolen() )
+					{
+						if ( flDist < flClosestUncarriedFlagDist )
+						{
+							pClosestUncarriedFlag = flagsVector[i];
+							flClosestUncarriedFlagDist = flDist;
+						}
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		FOR_EACH_VEC( flagsVector, i )
+		{
+			if ( flagsVector[i] )
+			{
+				// Find the closest
+				float flDist = ( flagsVector[i]->GetAbsOrigin() - GetAbsOrigin()).LengthSqr();
+				if ( flDist < flClosestFlagDist )
+				{
+					pClosestFlag = flagsVector[i];
+					flClosestFlagDist = flDist;
+				}
+
+				// Find the closest uncarried
+				if ( nCarriedFlags < flagsVector.Count() && !flagsVector[i]->IsStolen() ) 
+				{
+					if ( flDist < flClosestUncarriedFlagDist )
+					{
+						pClosestUncarriedFlag = flagsVector[i];
+						flClosestUncarriedFlagDist = flDist;
+					}
+				}
+			}
+		}
+	}
+
+	// If we have an uncarried flag, prioritize
+	if ( pClosestUncarriedFlag )
+		return pClosestUncarriedFlag;
+
+	return pClosestFlag;
+}
+
 
 //-----------------------------------------------------------------------------------------------------
 // Return capture zone for our flag(s)

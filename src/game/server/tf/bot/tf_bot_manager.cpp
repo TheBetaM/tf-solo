@@ -373,13 +373,17 @@ void CTFBotManager::MaintainBotQuota()
 		return;
 
 	// think every quarter second
-	m_flNextPeriodicThink = gpGlobals->curtime + 0.25f;
+	m_flNextPeriodicThink = gpGlobals->curtime + 0.05f;
 
 	// don't add bots until local player has been registered, to make sure he's player ID #1
 	if ( !engine->IsDedicatedServer() )
 	{
 		CBasePlayer *pPlayer = UTIL_GetListenServerHost();
 		if ( !pPlayer )
+			return;
+
+		CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
+		if ( tf_bot_join_after_player.GetBool() && ( !pTFPlayer || pTFPlayer->IsPlayerClass( TF_CLASS_UNDEFINED ) ) )
 			return;
 	}
 
@@ -614,6 +618,11 @@ void CTFBotManager::MaintainBotQuota()
 		{
 			// teams and scores are equal, pick a team at random
 			kickTeam = (RandomInt( 0, 1 ) == 0) ? TF_TEAM_BLUE : TF_TEAM_RED;
+		}
+
+		if ( TFGameRules()->IsMannVsMachineMode() )
+		{
+			kickTeam = TF_TEAM_PVE_DEFENDERS;
 		}
 
 		// attempt to kick a bot from the given team
