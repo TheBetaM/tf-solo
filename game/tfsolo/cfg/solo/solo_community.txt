@@ -1945,7 +1945,6 @@ solo_config
 		}
 		tow_dynamite
 		{
-			disabled 1
 			name "Dynamite"
 			modename "#Gametype_TOW"
 			thumbArt "maps/menu_thumb_tow_dynamite"

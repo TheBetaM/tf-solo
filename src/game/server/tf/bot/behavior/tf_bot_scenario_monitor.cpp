@@ -8,6 +8,7 @@
 
 #include "tf_gamerules.h"
 #include "tf_weapon_pipebomblauncher.h"
+#include "trigger_area_capture.h"
 #include "NextBot/NavMeshEntities/func_nav_prerequisite.h"
 
 #include "bot/tf_bot.h"
@@ -267,6 +268,16 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 			}
 			else if ( me->GetTeamNumber() == TF_TEAM_RED )
 			{
+				for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+				{
+					CTriggerAreaCapture* pArea = static_cast< CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+					if ( pArea && pArea->TeamCanCap( TF_TEAM_RED ) )
+					{
+						// Tug of War
+						return new CTFBotPayloadPush;
+					}
+				}
+
 				// red is blocking
 				return new CTFBotPayloadGuard;
 			}
@@ -314,8 +325,8 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 			}
 		}
 
-		// Arena PLR
-		if ( TFGameRules()->HasMultipleTrains() )
+		// TOW / Arena PLR
+		if ( TFGameRules()->GetPayloadToPush( me->GetTeamNumber() ) || TFGameRules()->HasMultipleTrains() )
 		{
 			return new CTFBotPayloadPush;
 		}
@@ -445,11 +456,11 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 				}
 			}
 
-			// Arena PLR
-			if ( TFGameRules()->HasMultipleTrains() )
+			// TOW / Arena PLR
+			if ( TFGameRules()->GetPayloadToPush( me->GetTeamNumber() ) || TFGameRules()->HasMultipleTrains() )
 			{
 				m_roamer = false;
-				return SuspendFor( new CTFBotPayloadPush, "Found payloads" );
+				return SuspendFor( new CTFBotPayloadPush, "Found payload" );
 			}
 
 			// if we have a point we can capture - do it
