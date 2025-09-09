@@ -33,6 +33,7 @@ tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable
 - Fixed round restart commands not working in Arena mode
 - Fixed mini-rounds without a setup timer being stuck in setup mode
 - Fixed canteens being unusable in Sudden Death/Arena
+- Added #basedir to KeyValues to include all files in a directory
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps
@@ -82,6 +83,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 - TFPlayer: Added PostInventoryApplication(), GetKills(), GetDeaths(), GetSuicides(), GetBuildingsBuilt(), 
 GetDamageDone(), GetCrits(), GetPoints()
 - Moved TFBot.GenerateAndWearItem to TFPlayer and optimized execution time
+- Added IncludeScriptsDir(string, scope) to include all files in a directory
 ## Item changes
 - Shortstop  
 -- Removed 50% reload speed penalty   

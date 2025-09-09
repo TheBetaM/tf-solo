@@ -2307,6 +2307,58 @@ bool KeyValues::LoadFromBuffer( char const *resourceName, CUtlBuffer &buf, IBase
 
 			continue;
 		}
+		else if ( !Q_stricmp( s, "#basedir" ) )
+		{
+			s = ReadToken(buf, wasQuoted, wasConditional);
+			// Name of subdirectory to load is now in s
+
+			if ( !s || *s == 0 )
+			{
+				g_KeyValuesErrorStack.ReportError("#basedir is NULL " );
+			}
+			else
+			{
+				FileFindHandle_t hFind = NULL;
+				char path[ 512 ];
+				Q_strncpy( path, resourceName, sizeof( path ) );
+
+				// Strip off characters back to start or first /
+				int len = Q_strlen( path );
+				for (;;)
+				{
+					if ( len <= 0 )
+					{
+						break;
+					}
+
+					if ( path[len - 1] == '\\' ||
+						path[len - 1] == '/' )
+					{
+						break;
+					}
+
+					// zero it
+					path[len - 1] = 0;
+					--len;
+				}
+
+				char searchpath[ 512 ];
+				char filepath[ 512 ];
+				char dirpath[ 512 ];
+				Q_snprintf( searchpath, sizeof( searchpath ), "%s%s/*.txt", path, V_strdup(s) );
+				Q_snprintf( dirpath, sizeof( dirpath ), "%s", V_strdup(s) );
+				char const* szFileName = g_pFullFileSystem->FindFirstEx( searchpath, "GAME", &hFind );
+				while ( szFileName )
+				{
+					Q_snprintf( filepath, sizeof( filepath ), "%s/%s", dirpath, szFileName );
+					ParseIncludedKeys( resourceName, filepath, pFileSystem, pPathID, baseKeys );
+					szFileName = g_pFullFileSystem->FindNext( hFind );
+				}
+				g_pFullFileSystem->FindClose( hFind );
+			}
+
+			continue;
+		}
 
 		if ( !pCurrentKey )
 		{

@@ -2243,6 +2243,23 @@ bool DoIncludeScript( const char *pszScript, HSCRIPT hScope )
 	return true;
 }
 
+void DoIncludeScriptsDir( const char* pszScriptDir, HSCRIPT hScope )
+{
+	FileFindHandle_t hFind = NULL;
+	const char* pszSearch = CFmtStr( "%s%s/*.nut", "scripts/vscripts/", pszScriptDir );
+	const char* pszRootFolder = CFmtStr( "%s/", pszScriptDir );
+	char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
+	while ( szFileName )
+	{
+		if ( !VScriptRunScript( CFmtStr( "%s/%s", pszScriptDir, szFileName ) , hScope, true ) )
+		{
+			g_pScriptVM->RaiseException( CFmtStr( "Failed to include script \"%s\"", ( szFileName ) ? szFileName : "unknown" ) );
+		}
+		szFileName = g_pFullFileSystem->FindNext( hFind );
+	}
+	g_pFullFileSystem->FindClose( hFind );
+}
+
 int GetDeveloperLevel()
 {
 	return developer.GetInt();
@@ -3074,6 +3091,7 @@ bool VScriptServerInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for a player.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsSubscribedToMap, "IsSubscribedToMap", "Check workshop map ID if it's downloaded. (Pass the ID as a string)");
+				ScriptRegisterFunctionNamed(g_pScriptVM, DoIncludeScriptsDir, "IncludeScriptsDir", "Execute all scripts from a directory");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");
