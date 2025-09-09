@@ -1,0 +1,4 @@
+locale
+{
+	"resource/tfsolo_campaign_2_%language%.txt" "1"
+}

@@ -194,7 +194,20 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 
 	if ( g_pVGuiLocalize )
 	{
-		g_pVGuiLocalize->AddFile( "resource/tfsolo_%language%.txt" );
+		KeyValuesAD locales( "locales" );
+		if ( locales->LoadFromFile( g_pFullFileSystem, "cfg/solo/locale.txt", "GAME" ) )
+		{
+			KeyValues* key = locales->GetFirstSubKey();
+			while ( key )
+			{
+				g_pVGuiLocalize->AddFile( key->GetName() );
+				key = key->GetNextKey();
+			}
+		}
+		else
+		{
+			Msg( "Unable to parse locales.txt into keyvalues.\n" );
+		}
 	}
 
 	ScheduleItemCheck();

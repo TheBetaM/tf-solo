@@ -1,0 +1,6 @@
+#basedir locales
+
+locale
+{
+	"resource/tfsolo_%language%.txt" "1"
+}
