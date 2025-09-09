@@ -165,7 +165,7 @@ CCraftingPanel::CCraftingPanel( vgui::Panel *parent, const char *panelName ) : C
 	m_pPlayerModelPanel = m_pSelectedRecipeContainer->FindControl<CTFPlayerModelPanel>("classmodelpanel", false);
 
 	m_presetsKV = new KeyValues("bot_presets");
-	if (!m_presetsKV->LoadFromFile(g_pFullFileSystem, "cfg/bot_presets.txt", "GAME"))
+	if (!m_presetsKV->LoadFromFile(g_pFullFileSystem, "cfg/solo/bot_presets.txt", "GAME"))
 	{
 		Msg("Unable to parse bot_presets.txt into keyvalues.\n");
 	}
@@ -335,16 +335,13 @@ void CCraftingPanel::UpdateRecipeFilter( void )
 	auto key = m_presetsKV->GetFirstSubKey();
 	while (key)
 	{
-		if (V_strcmp(key->GetName(), "version"))
+		auto rarity = key->GetInt("Rarity", 1);
+		if (rarity == m_iRecipeCategoryFilter)
 		{
-			auto rarity = key->GetInt("Rarity", 1);
-			if (rarity == m_iRecipeCategoryFilter)
-			{
-				//wchar_t	wTemp[256];
-				//g_pVGuiLocalize->ConstructString_safe(wTemp, g_pVGuiLocalize->Find(key->GetString("Name", "Bot")), 1);
-				SetButtonToRecipe(iMatchingRecipes, key->GetName(), key->GetString("Name", "Bot"));
-				iMatchingRecipes++;
-			}
+			//wchar_t	wTemp[256];
+			//g_pVGuiLocalize->ConstructString_safe(wTemp, g_pVGuiLocalize->Find(key->GetString("Name", "Bot")), 1);
+			SetButtonToRecipe(iMatchingRecipes, key->GetName(), key->GetString("Name", "Bot"));
+			iMatchingRecipes++;
 		}
 		key = key->GetNextKey();
 	}
@@ -400,7 +397,7 @@ void CCraftingPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 			m_presetsKV->deleteThis();
 		}
 		m_presetsKV = new KeyValues("bot_presets");
-		if (!m_presetsKV->LoadFromFile(g_pFullFileSystem, "cfg/bot_presets.txt", "GAME"))
+		if (!m_presetsKV->LoadFromFile(g_pFullFileSystem, "cfg/solo/bot_presets.txt", "GAME"))
 		{
 			Msg("Unable to parse bot_presets.txt into keyvalues.\n");
 		}

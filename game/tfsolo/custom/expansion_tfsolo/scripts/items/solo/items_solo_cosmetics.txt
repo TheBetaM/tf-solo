@@ -1,0 +1,7 @@
+"items_game"
+{
+	"items"
+	{
+		
+	}
+}

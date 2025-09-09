@@ -1,0 +1,1011 @@
+maps_config
+{
+	maps
+	{
+		arena_badlands
+		{
+			name "Badlands (Arena)"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_badlands"
+			photosArt "maps/menu_photos_arena_badlands"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				cp_badlands 1
+				koth_badlands 1
+			}
+		}
+		arena_granary
+		{
+			name "Granary (Arena)"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_granary"
+			photosArt "maps/menu_photos_arena_granary"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				cp_granary 1
+			}
+		}
+		arena_lumberyard
+		{
+			name "Lumberyard"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_lumberyard"
+			photosArt "maps/menu_photos_arena_lumberyard"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+				valve 1
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		arena_nucleus
+		{
+			name "Nucleus (Arena)"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_nucleus"
+			photosArt "maps/menu_photos_arena_nucleus"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_spytech 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				koth_nucleus 1
+				vsh_nucleus 1
+			}
+		}
+		arena_ravine
+		{
+			name "Ravine"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_ravine"
+			photosArt "maps/menu_photos_arena_ravine"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+				valve 1
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		arena_sawmill
+		{
+			name "Sawmill (Arena)"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_sawmill"
+			photosArt "maps/menu_photos_arena_sawmill"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				koth_sawmill 1
+				ctf_sawmill 1
+			}
+		}
+		arena_well
+		{
+			name "Well (Arena)"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_well"
+			photosArt "maps/menu_photos_arena_well"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				cp_well 1
+				ctF_well 1
+			}
+		}
+		cp_5gorge
+		{
+			name "Gorge"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_5gorge"
+			photosArt "maps/menu_photos_cp_5gorge"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				cp_gorge 1
+				ctf_gorge 1
+			}
+		}
+		cp_degrootkeep
+		{
+			name "DeGroot Keep"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_degrootkeep"
+			photosArt "maps/menu_photos_cp_degrootkeep"
+			tags
+			{
+				ad 1
+				cp 1
+				mdv 1
+				cp_count 3
+				theme_medieval 1
+				valve 1
+			}
+		}
+		cp_gravelpit
+		{
+			name "Gravelpit"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_gravelpit"
+			photosArt "maps/menu_photos_cp_gravelpit"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_industrial 1
+				valve 1
+			}
+		}
+		cp_well
+		{
+			name "Well"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_well"
+			photosArt "maps/menu_photos_cp_well"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_industrial 1
+				valve 1
+				allow_koth 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_well 1
+				ctF_well 1
+			}
+		}
+		cp_badlands
+		{
+			name "Badlands"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_badlands"
+			photosArt "maps/menu_photos_cp_badlands"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_desert 1
+				valve 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_badlands 1
+				koth_badlands 1
+			}
+		}
+		cp_dustbowl
+		{
+			name "Dustbowl"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_dustbowl"
+			photosArt "maps/menu_photos_cp_dustbowl"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				stages 3
+				theme_desert 1
+				valve 1
+			}
+		}
+		cp_foundry
+		{
+			name "Foundry"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_foundry"
+			photosArt "maps/menu_photos_cp_foundry"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_industrial 1
+				valve 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+			alts
+			{
+				ctf_foundry 1
+			}
+		}
+		cp_gorge
+		{
+			name "Gorge (A/D)"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_gorge"
+			photosArt "maps/menu_photos_cp_gorge"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_alpine 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				cp_5gorge 1
+				ctf_gorge 1
+			}
+		}
+		cp_granary
+		{
+			name "Granary"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_granary"
+			photosArt "maps/menu_photos_cp_granary"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_farm 1
+				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_granary 1
+			}
+		}
+		cp_mercenarypark
+		{
+			name "Mercenary Park"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_mercenarypark"
+			photosArt "maps/menu_photos_cp_mercenarypark"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_jungle 1
+				valve 1
+			}
+		}
+		cp_powerhouse
+		{
+			name "Powerhouse"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_powerhouse"
+			photosArt "maps/menu_photos_cp_powerhouse"
+			tags
+			{
+				cp 1
+				cp_count 3
+				symm 1
+				theme_industrial 1
+				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		ctf_2fort
+		{
+			name "2Fort"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_2fort"
+			photosArt "maps/menu_photos_ctf_2fort"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_farm 1
+				valve 1
+			}
+		}
+		ctf_doublecross
+		{
+			name "Doublecross"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_doublecross"
+			photosArt "maps/menu_photos_ctf_doublecross"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+				valve 1
+			}
+		}
+		ctf_sawmill
+		{
+			name "Sawmill (CTF)"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_sawmill"
+			photosArt "maps/menu_photos_ctf_sawmill"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_swamp 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				koth_sawmill 1
+				arena_sawmill 1
+			}
+		}
+		ctf_well
+		{
+			name "Well (CTF)"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_well"
+			photosArt "maps/menu_photos_ctf_well"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				arena_well 1
+				cp_well 1
+			}
+		}
+		ctf_hellfire
+		{
+			disabled 1
+			name "Hellfire"
+			modename "#GameType_Powerup"
+			thumbArt "maps/menu_thumb_ctf_hellfire"
+			//photosArt ""
+			tags
+			{
+				ctf 1
+				mannpower 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+				valve 1
+			}
+		}
+		ctf_foundry
+		{
+			name "Foundry (CTF)"
+			modename "#GameType_Powerup"
+			thumbArt "maps/menu_thumb_ctf_foundry"
+			//photosArt ""
+			tags
+			{
+				ctf 1
+				mannpower 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				cp_foundry 1
+			}
+		}
+		ctf_gorge
+		{
+			name "Gorge (CTF)"
+			modename "#GameType_Powerup"
+			thumbArt "maps/menu_thumb_ctf_gorge"
+			//photosArt ""
+			tags
+			{
+				ctf 1
+				mannpower 1
+				flag_count 2
+				symm 1
+				theme_alpine 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				cp_gorge 1
+				cp_5gorge 1
+			}
+		}
+		ctf_thundermountain
+		{
+			disabled 1
+			name "Thunder Mountain (CTF)"
+			modename "#Gametype_Powerup"
+			thumbArt "maps/menu_thumb_ctf_thundermountain"
+			//photosArt ""
+			tags
+			{
+				ctf 1
+				mannpower 1
+				flag_count 2
+				symm 1
+				theme_alpine 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				pl_thundermountain 1
+			}
+		}
+		koth_badlands
+		{
+			name "Badlands (KOTH)"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_badlands"
+			photosArt "maps/menu_photos_koth_badlands"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+				valve 1
+				custom_hide 1
+			}
+			alts
+			{
+				arena_badlands 1
+				koth_badlands 1
+			}
+		}
+		koth_nucleus
+		{
+			name "Nucleus"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_nucleus"
+			photosArt "maps/menu_photos_koth_nucleus"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+				valve 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_nucleus 1
+				vsh_nucleus 1
+			}
+		}
+		koth_sawmill
+		{
+			name "Sawmill"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_sawmill"
+			photosArt "maps/menu_photos_koth_sawmill"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+				valve 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_sawmill 1
+				ctf_sawmill 1
+			}
+		}
+		koth_viaduct
+		{
+			name "Viaduct"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_viaduct"
+			photosArt "maps/menu_photos_koth_viaduct"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+				valve 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_harvest_event
+		{
+			name "Harvest Event"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_harvest_event"
+			photosArt "maps/menu_photos_koth_harvest_event"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+				theme_hallow 1
+				valve 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_viaduct_event
+		{
+			name "Eyeaduct"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_viaduct_event"
+			photosArt "maps/menu_photos_koth_viaduct_event"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+				valve 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_lakeside_event
+		{
+			name "Ghost Fort"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_lakeside_event"
+			photosArt "maps/menu_photos_koth_lakeside_event"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+				valve 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		pass_brickyard
+		{
+			disabled 1
+			name "Brickyard"
+			modename "#Gametype_Passtime"
+			thumbArt "maps/menu_thumb_pass_brickyard"
+			//photosArt ""
+			tags
+			{
+				pass 1
+				symm 1
+				theme_industrial 1
+				valve 1
+			}
+		}
+		pass_district
+		{
+			disabled 1
+			name "District"
+			modename "#Gametype_Passtime"
+			thumbArt "maps/menu_thumb_pass_district"
+			//photosArt ""
+			tags
+			{
+				pass 1
+				symm 1
+				theme_city 1
+				valve 1
+			}
+		}
+		pass_timbertown
+		{
+			disabled 1
+			name "Timbertown"
+			modename "#Gametype_Passtime"
+			thumbArt "maps/menu_thumb_pass_timbertown"
+			//photosArt ""
+			tags
+			{
+				pass 1
+				symm 1
+				theme_swamp 1
+				valve 1
+			}
+		}
+		pl_badwater
+		{
+			name "Badwater"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_badwater"
+			photosArt "maps/menu_photos_pl_badwater"
+			tags
+			{
+				pl 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		pl_barnblitz
+		{
+			name "Barnblitz"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_barnblitz"
+			photosArt "maps/menu_photos_pl_barnblitz"
+			tags
+			{
+				pl 1
+				theme_snow 1
+				valve 1
+			}
+		}
+		pl_goldrush
+		{
+			name "Gold Rush"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_goldrush"
+			photosArt "maps/menu_photos_pl_goldrush"
+			tags
+			{
+				pl 1
+				stages 3
+				theme_desert 1
+				valve 1
+			}
+		}
+		pl_thundermountain
+		{
+			name "Thunder Mountain"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_thundermountain"
+			photosArt "maps/menu_photos_pl_thundermountain"
+			tags
+			{
+				pl 1
+				stages 3
+				theme_alpine 1
+				valve 1
+			}
+			alts
+			{
+				ctf_thundermountain 1
+			}
+		}
+		pl_upward
+		{
+			name "Upward"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_upward"
+			photosArt "maps/menu_photos_pl_upward"
+			tags
+			{
+				pl 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		plr_hightower
+		{
+			name "Hightower"
+			modename "#Gametype_EscortRace"
+			thumbArt "maps/menu_thumb_plr_hightower"
+			photosArt "maps/menu_photos_plr_hightower"
+			tags
+			{
+				plr 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		plr_hightower_event
+		{
+			name "Helltower"
+			modename "#Gametype_EscortRace"
+			thumbArt "maps/menu_thumb_plr_hightower_event"
+			photosArt "maps/menu_photos_plr_hightower_event"
+			tags
+			{
+				plr 1
+				theme_hallow 1
+				canon_postwars 1
+				valve 1
+			}
+		}
+		plr_pipeline
+		{
+			name "Pipeline"
+			modename "#Gametype_EscortRace"
+			thumbArt "maps/menu_thumb_plr_pipeline"
+			photosArt "maps/menu_photos_plr_pipeline"
+			tags
+			{
+				plr 1
+				stages 3
+				theme_industrial 1
+				valve 1
+			}
+		}
+		sd_doomsday
+		{
+			name "Doomsday"
+			modename "#Gametype_SD"
+			thumbArt "maps/menu_thumb_sd_doomsday"
+			photosArt "maps/menu_photos_sd_doomsday"
+			tags
+			{
+				sd 1
+				flag_count 1
+				flag_neutral 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		sd_doomsday_event
+		{
+			disabled 1
+			name "Carnival of Carnage"
+			modename "#Gametype_SD"
+			thumbArt "maps/menu_thumb_sd_doomsday_event"
+			photosArt "maps/menu_photos_sd_doomsday_event"
+			tags
+			{
+				sd 1
+				flag_count 1
+				flag_neutral 1
+				theme_hallow 1
+				valve 1
+			}
+		}
+		tc_hydro
+		{
+			name "Hydro"
+			modename "#Gametype_TerritorialControl"
+			thumbArt "maps/menu_thumb_tc_hydro"
+			photosArt "maps/menu_photos_tc_hydro"
+			tags
+			{
+				tc 1
+				cp_count 6
+				theme_desert 1
+				valve 1
+			}
+		}
+		mvm_bigrock
+		{
+			disabled 1
+			name "Bigrock"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_bigrock"
+			photosArt "maps/menu_photos_mvm_bigrock"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		mvm_coaltown
+		{
+			disabled 1
+			name "Coaltown"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_coaltown"
+			photosArt "maps/menu_photos_mvm_coaltown"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		mvm_decoy
+		{
+			disabled 1
+			name "Decoy"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_decoy"
+			photosArt "maps/menu_photos_mvm_decoy"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+				valve 1
+			}
+		}
+		mvm_ghost_town
+		{
+			disabled 1
+			name "Ghost Town"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_ghost_town"
+			photosArt "maps/menu_photos_mvm_ghost_town"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_desert 1
+				theme_hallow 1
+				valve 1
+			}
+		}
+		mvm_mannhattan
+		{
+			disabled 1
+			name "Mannhattan"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_mannhattan"
+			photosArt "maps/menu_photos_mvm_mannhattan"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				cp_count 2
+				theme_industrial 1
+				valve 1
+			}
+		}
+		mvm_mannworks
+		{
+			disabled 1
+			name "Mannworks"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_mannworks"
+			photosArt "maps/menu_photos_mvm_mannworks"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_alpine 1
+				valve 1
+			}
+		}
+		mvm_rottenburg
+		{
+			disabled 1
+			name "Rottenburg"
+			modename "#Gametype_MVM"
+			thumbArt "maps/menu_thumb_mvm_rottenburg"
+			photosArt "maps/menu_photos_mvm_rottenburg"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_castle 1
+				valve 1
+			}
+		}
+		rd_asteroid
+		{
+			disabled 1
+			name "Asteroid"
+			modename "#Gametype_RobotDestruction"
+			thumbArt "maps/menu_thumb_rd_asteroid"
+			photosArt "maps/menu_photos_rd_asteroid"
+			tags
+			{
+				rd 1
+				flag_count 2
+				theme_space 1
+				symm 1
+				valve 1
+			}
+		}
+		pl_cactuscanyon
+		{
+			disabled 1
+			name "Cactus Canyon"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_cactuscanyon"
+			photosArt "maps/menu_photos_pl_cactuscanyon"
+			tags
+			{
+				pl 1
+				stages 3
+				theme_desert 1
+				valve 1
+			}
+		}
+		tr_target
+		{
+			disabled 1
+			name "Target Practice"
+			modename "#Gametype_Training"
+			thumbArt "maps/menu_thumb_tr_target"
+			//photosArt ""
+			tags
+			{
+				theme_indoor 1
+				valve 1
+			}
+		}
+		itemtest
+		{
+			disabled 1
+			name "Item Test"
+			modename ""
+			//thumbArt ""
+			//photosArt ""
+			tags
+			{
+				theme_indoor 1
+				valve 1
+			}
+		}
+		
+		
+	}
+}

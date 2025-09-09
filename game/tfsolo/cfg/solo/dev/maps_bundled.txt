@@ -1,0 +1,56 @@
+maps_config
+{
+	maps
+	{
+		pl_candyland_b2
+		{
+			disabled 1
+			name "Candyland"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_pyroland 1
+			}
+		}
+		koth_tombtown_rc6
+		{
+			disabled 1
+			name "Tomb Town"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		ctf_discover_b59
+		{
+			disabled 1
+			name "Discover"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_mayann 1
+			}
+		}
+		ctf_facility_build55
+		{
+			disabled 1
+			name "Facility"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+			}
+		}
+	}
+}

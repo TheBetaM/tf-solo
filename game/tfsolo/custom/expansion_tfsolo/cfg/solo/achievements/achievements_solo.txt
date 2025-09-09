@@ -1,0 +1,11 @@
+achievements
+{
+	TFSOLO_SOLO_TC_COMPLETE
+	{
+		id 159
+	}
+	TFSOLO_SOLO_MTT_COMPLETE
+	{
+		id 160
+	}
+}

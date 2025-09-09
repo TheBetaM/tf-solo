@@ -1449,6 +1449,7 @@ NavErrorType CNavMesh::GetNavDataFromFile( CUtlBuffer &outBuffer, bool *pNavData
 			isWorkshop = true;
 			szWorkshopFileName = CFmtStr( "maps/workshop/%s", szWorkshopFileName );
 		}
+		filesystem->FindClose( hFind );
 	}
 
 	// nav filename is derived from map filename

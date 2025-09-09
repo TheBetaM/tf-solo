@@ -1,0 +1,12 @@
+"campaigns"
+{
+	"bloodthirst"
+	{
+		"Name" "Bloodthirst"
+		"Desc" "Dracula is waiting!"
+		"Map" "merc_bloodthirst"
+		"ShowProgress" "1"
+		"ProgressKey" "bloodthirst_progress"
+		"BGArt" "campaigns/campaign_bloodthirst"
+	}
+}

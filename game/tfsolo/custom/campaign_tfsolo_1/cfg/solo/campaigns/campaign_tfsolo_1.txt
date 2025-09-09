@@ -1,0 +1,30 @@
+"campaigns"
+{
+	"headhunt"
+	{
+		"Name" "Headhunt"
+		"Desc" "Your own personal origin story!"
+		"Map" "merc_headhunt"
+		"ShowProgress" "1"
+		"ProgressKey" "headhunt_progress"
+		"BGArt" "campaigns/campaign_headhunt"
+	}
+	//"xmas"
+	//{
+	//	"Name" "Xmas"
+	//	"Desc" ""
+	//	"Map" "merc_xmas"
+	//	"ShowProgress" "1"
+	//	"ProgressKey" "xmas_progress"
+	//	"BGArt" "casual/gametype_plr"
+	//}
+	//"deathmetal"
+	//{
+	//	"Name" "Death Metal"
+	//	"Desc" ""
+	//	"Map" "merc_deathmetal"
+	//	"ShowProgress" "1"
+	//	"ProgressKey" "deathmetal_progress"
+	//	"BGArt" "casual/gametype_payload"
+	//}
+}

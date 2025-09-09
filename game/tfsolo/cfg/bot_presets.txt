@@ -1,7 +1,0 @@
-#base solo/bot_presets_solo.txt
-#base solo/bot_presets_live.txt
-#base solo/bot_presets_map.txt
-
-bot_presets
-{
-}

@@ -112,7 +112,7 @@ void CTFBotManager::OnMapLoaded( void )
 	NextBotManager::OnMapLoaded();
 
 	ClearStuckBotData();
-	SetBotPresetsFile("cfg/bot_presets.txt");
+	SetBotPresetsFile("cfg/solo/bot_presets.txt");
 }
 
 
@@ -477,13 +477,10 @@ void CTFBotManager::MaintainBotQuota()
 				auto key = m_presetsKV->GetFirstSubKey();
 				while (key)
 				{
-					if (V_strcmp(key->GetName(), "version"))
+					if (key->GetInt("Rarity", 1) == 1)
 					{
-						if (key->GetInt("Rarity", 1) == 1)
-						{
-							chosen.AddToTail(key);
-							count++;
-						}
+						chosen.AddToTail(key);
+						count++;
 					}
 					key = key->GetNextKey();
 				}

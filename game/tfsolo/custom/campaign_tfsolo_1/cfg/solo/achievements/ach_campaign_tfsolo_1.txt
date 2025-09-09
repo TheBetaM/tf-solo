@@ -1,0 +1,11 @@
+achievements
+{
+	TFSOLO_CAMPAIGN_FIRST_CLEAR
+	{
+		id 151
+	}
+	TFSOLO_CAMPAIGN_FIRST_COMPLETE
+	{
+		id 152
+	}
+}

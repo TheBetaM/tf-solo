@@ -1,4 +1,0 @@
-bot_presets
-{
-	"version" "0"
-}

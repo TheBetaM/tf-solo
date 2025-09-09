@@ -1,5 +1,4 @@
-#base campaigns_solo.txt
-#base campaigns_live.txt
+#basedir campaigns
 
 "campaigns"
 {

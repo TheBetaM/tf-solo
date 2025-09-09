@@ -1,6 +1,6 @@
 printl("[TFSOLO] VGUI Init")
 
-TFSOLO.ConfigKV <- FileToKeyValues("cfg/solo/solo_config.txt")
+TFSOLO.ConfigKV <- FileToKeyValues("cfg/solo/maps_config.txt")
 TFSOLO.FirstOpen <- false
 
 IncludeScript("client/solo/vgui/playerdata.nut")

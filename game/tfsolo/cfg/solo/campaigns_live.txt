@@ -1,4 +1,0 @@
-"campaigns"
-{
-	"version" "0"
-}

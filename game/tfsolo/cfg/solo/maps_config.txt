@@ -1,0 +1,6 @@
+#basedir maps
+
+maps_config
+{
+	
+}

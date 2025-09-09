@@ -33,7 +33,7 @@ DESCRIPTION SERVER_OPTIONS
 	"tf_bot_quota"
 	{
 		"Bot Count"
-		{ NUMBER 0 31 }
+		{ SLIDER 0 31 }
 		{ "23" }
 	}
 	

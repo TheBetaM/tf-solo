@@ -1,0 +1,431 @@
+armory_config
+{
+	"The Shortstop Solo"
+	{
+		Cost 50
+	}
+	"The Soda Popper Solo"
+	{
+		Cost 50
+	}
+	"Baby Face's Blaster Solo"
+	{
+		Cost 50
+	}
+	"The Back Scatter Solo"
+	{
+		Cost 50
+	}
+	"The Winger Solo"
+	{
+		Cost 50
+	}
+	"Pretty Boy's Pocket Pistol Solo"
+	{
+		Cost 50
+	}
+	"The Flying Guillotine Solo"
+	{
+		Cost 50
+	}
+	"Crit-a-Cola Solo"
+	{
+		Cost 50
+	}
+	"Mad Milk Solo"
+	{
+		Cost 50
+	}
+	"The Candy Cane Solo"
+	{
+		Cost 50
+	}
+	"The Boston Basher Solo"
+	{
+		Cost 50
+	}
+	"Sun-on-a-Stick Solo"
+	{
+		Cost 50
+	}
+	"The Fan O'War Solo"
+	{
+		Cost 50
+	}
+	"The Atomizer Solo"
+	{
+		Cost 50
+	}
+	"The Wrap Assassin Solo"
+	{
+		Cost 50
+	}
+	"The Original Solo"
+	{
+		Cost 50
+	}
+	"The Black Box Solo"
+	{
+		Cost 50
+	}
+	"Rocket Jumper Solo"
+	{
+		Cost 50
+	}
+	"The Liberty Launcher Solo"
+	{
+		Cost 50
+	}
+	"The Cow Mangler 5000 Solo"
+	{
+		Cost 50
+	}
+	"The Beggar's Bazooka Solo"
+	{
+		Cost 50
+	}
+	"The Air Strike Solo"
+	{
+		Cost 50
+	}
+	"The Reserve Shooter Solo"
+	{
+		Cost 50
+	}
+	"The Gunboats Solo"
+	{
+		Cost 50
+	}
+	"The Battalion's Backup Solo"
+	{
+		Cost 50
+	}
+	"The Concheror Solo"
+	{
+		Cost 50
+	}
+	"The Mantreads Solo"
+	{
+		Cost 50
+	}
+	"The Righteous Bison Solo"
+	{
+		Cost 50
+	}
+	"The B.A.S.E. Jumper Solo"
+	{
+		Cost 50
+	}
+	"The Pain Train Solo"
+	{
+		Cost 50
+	}
+	"The Disciplinary Action Solo"
+	{
+		Cost 50
+	}
+	"The Market Gardener Solo"
+	{
+		Cost 50
+	}
+	"The Escape Plan Solo"
+	{
+		Cost 50
+	}
+	"The Degreaser Solo"
+	{
+		Cost 50
+	}
+	"The Phlogistinator Solo"
+	{
+		Cost 50
+	}
+	"The Dragon's Fury Solo"
+	{
+		Cost 50
+	}
+	"The Detonator Solo"
+	{
+		Cost 50
+	}
+	"The Manmelter Solo"
+	{
+		Cost 50
+	}
+	"The Scorch Shot Solo"
+	{
+		Cost 50
+	}
+	"Panic Attack Shotgun Solo"
+	{
+		Cost 50
+	}
+	"The Thermal Thruster Solo"
+	{
+		Cost 50
+	}
+	"The Gas Passer Solo"
+	{
+		Cost 50
+	}
+	"The Homewrecker Solo"
+	{
+		Cost 50
+	}
+	"The Powerjack Solo"
+	{
+		Cost 50
+	}
+	"The Back Scratcher Solo"
+	{
+		Cost 50
+	}
+	"Sharpened Volcano Fragment Solo"
+	{
+		Cost 50
+	}
+	"The Third Degree Solo"
+	{
+		Cost 50
+	}
+	"The Neon Annihilator Solo"
+	{
+		Cost 50
+	}
+	"The Hot Hand Solo"
+	{
+		Cost 50
+	}
+	"The Loch-n-Load Solo"
+	{
+		Cost 50
+	}
+	"Ali Baba's Wee Booties Solo"
+	{
+		Cost 50
+	}
+	"The Loose Cannon Solo"
+	{
+		Cost 50
+	}
+	"The Iron Bomber Solo"
+	{
+		Cost 50
+	}
+	"Stickybomb Jumper Solo"
+	{
+		Cost 50
+	}
+	"The Splendid Screen Solo"
+	{
+		Cost 50
+	}
+	"The Tide Turner Solo"
+	{
+		Cost 50
+	}
+	"The Quickiebomb Launcher Solo"
+	{
+		Cost 50
+	}
+	"The Scotsman's Skullcutter Solo"
+	{
+		Cost 50
+	}
+	"The Ullapool Caber Solo"
+	{
+		Cost 50
+	}
+	"The Claidheamohmor Solo"
+	{
+		Cost 50
+	}
+	"The Half-Zatoichi Solo"
+	{
+		Cost 50
+	}
+	"The Persian Persuader Solo"
+	{
+		Cost 50
+	}
+	"The Brass Beast Solo"
+	{
+		Cost 50
+	}
+	"Tomislav Solo"
+	{
+		Cost 50
+	}
+	"The Huo Long Heatmaker Solo"
+	{
+		Cost 50
+	}
+	"The Family Business Solo"
+	{
+		Cost 50
+	}
+	"The Dalokohs Bar Solo"
+	{
+		Cost 50
+	}
+	"The Buffalo Steak Sandvich Solo"
+	{
+		Cost 50
+	}
+	"The Second Banana Solo"
+	{
+		Cost 50
+	}
+	"Gloves of Running Urgently Solo"
+	{
+		Cost 50
+	}
+	"Warrior's Spirit Solo"
+	{
+		Cost 50
+	}
+	"Fists of Steel Solo"
+	{
+		Cost 50
+	}
+	"The Eviction Notice Solo"
+	{
+		Cost 50
+	}
+	"The Holiday Punch Solo"
+	{
+		Cost 50
+	}
+	"The Widowmaker Solo"
+	{
+		Cost 50
+	}
+	"The Pomson 6000 Solo"
+	{
+		Cost 50
+	}
+	"The Rescue Ranger Solo"
+	{
+		Cost 50
+	}
+	"The Short Circuit Solo"
+	{
+		Cost 50
+	}
+	"The Southern Hospitality Solo"
+	{
+		Cost 50
+	}
+	"The Jag Solo"
+	{
+		Cost 50
+	}
+	"The Eureka Effect Solo"
+	{
+		Cost 50
+	}
+	"The Crusader's Crossbow Solo"
+	{
+		Cost 50
+	}
+	"The Overdose Solo"
+	{
+		Cost 50
+	}
+	"The Quick-Fix Solo"
+	{
+		Cost 50
+	}
+	"The Vaccinator Solo"
+	{
+		Cost 50
+	}
+	"The Vita-Saw Solo"
+	{
+		Cost 50
+	}
+	"The Amputator Solo"
+	{
+		Cost 50
+	}
+	"The Solemn Vow Solo"
+	{
+		Cost 50
+	}
+	"The Sydney Sleeper Solo"
+	{
+		Cost 50
+	}
+	"The Bazaar Bargain Solo"
+	{
+		Cost 50
+	}
+	"The Machina Solo"
+	{
+		Cost 50
+	}
+	"The Hitman's Heatmaker Solo"
+	{
+		Cost 50
+	}
+	"The Classic Solo"
+	{
+		Cost 50
+	}
+	"The Cleaner's Carbine Solo"
+	{
+		Cost 50
+	}
+	"Darwin's Danger Shield Solo"
+	{
+		Cost 50
+	}
+	"The Cozy Camper Solo"
+	{
+		Cost 50
+	}
+	"The Tribalman's Shiv Solo"
+	{
+		Cost 50
+	}
+	"The Bushwacka Solo"
+	{
+		Cost 50
+	}
+	"The Shahanshah Solo"
+	{
+		Cost 50
+	}
+	"L'Etranger Solo"
+	{
+		Cost 50
+	}
+	"The Enforcer Solo"
+	{
+		Cost 50
+	}
+	"The Diamondback Solo"
+	{
+		Cost 50
+	}
+	"Your Eternal Reward Solo"
+	{
+		Cost 50
+	}
+	"Conniver's Kunai Solo"
+	{
+		Cost 50
+	}
+	"The Big Earner Solo"
+	{
+		Cost 50
+	}
+	"The Spy-cicle Solo"
+	{
+		Cost 50
+	}
+	"The Red-Tape Recorder Solo"
+	{
+		Cost 50
+	}
+}

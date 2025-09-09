@@ -1,17 +1,4 @@
-#base armory_live.txt
-#base armory_solo_weapons.txt
-//#base armory_solo_standins.txt
-#base armory_solo_cosmetics.txt
-#base armory_solo_taunts.txt
-#base armory_solo_tools.txt
-#base armory_steam.txt
-//#base armory_valve_weapons.txt
-//#base armory_valve_decorated.txt
-//#base armory_valve_cosmetics.txt
-//#base armory_valve_taunts.txt
-//#base armory_community_weapons.txt
-//#base armory_community_cosmetics.txt
-//#base armory_community_taunts.txt
+#basedir armory
 
 armory_config
 {

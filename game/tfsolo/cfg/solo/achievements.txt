@@ -1,4 +1,4 @@
-#base achievements_solo.txt
+#basedir achievements
 
 achievements
 {

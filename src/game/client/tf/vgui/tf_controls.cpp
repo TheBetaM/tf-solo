@@ -2509,7 +2509,7 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 
 #define MOD_CREDITS_FILE "cfg/solo/mod_credits.txt"
 #define TFSOLO_CUSTOM_MATCH_CONFIG_FILE "cfg/solo/custom_match_config.txt"
-#define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/solo_config.txt"
+#define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/maps_config.txt"
 #define TFSOLO_WORKSHOP_CACHE_FILE "workshop_localcache.txt"
 
 //-----------------------------------------------------------------------------
@@ -3584,10 +3584,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 
 	Panel* objParent = m_pListPanel;
 
-	KeyValuesAD config("solo_config");
+	KeyValuesAD config("maps_config");
 	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
 	{
-		Msg("Unable to parse solo_config.txt into keyvalues.\n");
+		Msg("Unable to parse maps_config.txt into keyvalues.\n");
 		return;
 	}
 	KeyValues* maps = config->FindKey("maps");
@@ -4129,10 +4129,10 @@ void CTFCustomMatchMapDialog::CreateControls()
 
 	CUtlVector<CTFCustomMatchMapInfo> mapSort;
 
-	KeyValuesAD config("solo_config");
+	KeyValuesAD config("maps_config");
 	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
 	{
-		Msg("Unable to parse solo_config.txt into keyvalues.\n");
+		Msg("Unable to parse maps_config.txt into keyvalues.\n");
 		return;
 	}
 	KeyValuesAD workshopConfig("workshop");
