@@ -1,0 +1,4 @@
+modcredits
+{
+	"resource/tfsolo_campaign_2_credits.txt" "1"
+}

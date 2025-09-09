@@ -1,0 +1,6 @@
+#basedir credits
+
+modcredits
+{
+	"resource/tfsolo_credits.txt" "1"
+}

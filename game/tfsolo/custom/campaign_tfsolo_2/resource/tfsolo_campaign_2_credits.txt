@@ -1,0 +1,18 @@
+VERSION 1.0
+
+DESCRIPTION INFO_OPTIONS
+{
+	"category3"
+	{
+		"Campaign - Bloodthirst"
+		{ CATEGORY }
+	}
+	
+	"credit3_1"
+	{
+		"Campaign by BetaM"
+		"https://www.youtube.com/BetaM"
+		{ BOOL }
+		{ "1" }
+	}
+}

@@ -2507,7 +2507,7 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 	pSwoop->SetBounds( nX, nY, nWide, nTall );
 }
 
-#define MOD_CREDITS_FILE "cfg/solo/mod_credits.txt"
+#define MOD_CREDITS_FILE "cfg/solo/modcredits.txt"
 #define TFSOLO_CUSTOM_MATCH_CONFIG_FILE "cfg/solo/custom_match_config.txt"
 #define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/maps_config.txt"
 #define TFSOLO_WORKSHOP_CACHE_FILE "workshop_localcache.txt"
@@ -2534,7 +2534,21 @@ CTFModCreditsDialog::CTFModCreditsDialog(vgui::Panel* parent) : BaseClass(NULL, 
 	m_pToolTip->SetTooltipDelay(0);
 
 	m_pDescription = new CInfoDescription();
-	m_pDescription->InitFromFile(MOD_CREDITS_FILE);
+
+	KeyValuesAD creditsKV( "credits" );
+	if ( creditsKV->LoadFromFile( g_pFullFileSystem, MOD_CREDITS_FILE, "GAME" ) )
+	{
+		KeyValues* key = creditsKV->GetFirstSubKey();
+		while ( key )
+		{
+			m_pDescription->InitFromFile( key->GetName() );
+			key = key->GetNextKey();
+		}
+	}
+	else
+	{
+		Msg("Unable to parse modcredits.txt into keyvalues.\n");
+	}
 	m_pDescription->TransferCurrentValues(NULL);
 
 	// 	MoveToCenterOfScreen();

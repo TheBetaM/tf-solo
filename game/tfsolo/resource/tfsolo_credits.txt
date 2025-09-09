@@ -1,0 +1,19 @@
+VERSION 1.0
+
+DESCRIPTION INFO_OPTIONS
+{
+	"category1"
+	{
+		"Team Fortress: Greatest Hits"
+		{ CATEGORY }
+	}
+
+	"credit1_1"
+	{
+		"Mod by BetaM"
+		"https://www.youtube.com/BetaM"
+		{ BOOL }
+		{ "1" }
+	}
+	
+}
