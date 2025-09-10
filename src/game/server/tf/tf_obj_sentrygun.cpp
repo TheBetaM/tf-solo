@@ -25,6 +25,7 @@
 #include "tf_weapon_knife.h"
 #include "tf_logic_robot_destruction.h"
 #include "tf_target_dummy.h"
+#include "solo/propertydamage_prop.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -1030,6 +1031,56 @@ bool CObjectSentrygun::FindTarget()
 		}
 	}
 
+	// Check for Property Damage props
+	if ( pTargetCurrent == NULL )
+	{
+		CUtlVector<CHandle<CBaseEntity>> pdaTargets;
+		for (int i = 0; i < ITFSOLOPropertyDamageProp::AutoList().Count(); ++i)
+		{
+			CTFSOLOPropertyDamageProp* pObj = static_cast<CTFSOLOPropertyDamageProp*>( ITFSOLOPropertyDamageProp::AutoList()[i] );
+			if ( pObj->GetTeamNumber() != GetTeamNumber() )
+			{
+				pdaTargets.AddToTail( pObj );
+			}
+		}
+		for (int i = 0; i < ITFSOLOPropertyDamagePhysicsProp::AutoList().Count(); ++i)
+		{
+			CTFSOLOPropertyDamagePhysicsProp* pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp*>( ITFSOLOPropertyDamagePhysicsProp::AutoList()[i] );
+			if ( pObj->GetTeamNumber() != GetTeamNumber() )
+			{
+				pdaTargets.AddToTail( pObj );
+			}
+		}
+		for (int i = 0; i < ITFSOLOPropertyDamageBrush::AutoList().Count(); ++i)
+		{
+			CTFSOLOPropertyDamageBrush* pObj = static_cast<CTFSOLOPropertyDamageBrush*>( ITFSOLOPropertyDamageBrush::AutoList()[i] );
+			if ( pObj->GetTeamNumber() != GetTeamNumber() )
+			{
+				pdaTargets.AddToTail( pObj );
+			}
+		}
+		if ( pdaTargets.Count() != 0 )
+		{
+			float closePropRangeSq = m_flSentryRange * m_flSentryRange;
+			for ( int b = 0; b < pdaTargets.Count(); ++b )
+			{
+				CBaseEntity* target = pdaTargets[b];
+
+				Vector vecBotTarget = target->WorldSpaceCenter();
+				float rangeSq = (vecBotTarget - vecSentryOrigin).LengthSqr();
+
+				if ( rangeSq < closePropRangeSq )
+				{
+					if ( ValidTargetProp( target, vecSentryOrigin, vecBotTarget ) )
+					{
+						closePropRangeSq = rangeSq;
+						pTargetCurrent = target;
+					}
+				}
+			}
+		}
+	}
+
 	// We have a target.
 	if ( pTargetCurrent )
 	{
@@ -1141,6 +1192,25 @@ bool CObjectSentrygun::ValidTargetBot( CBaseCombatCharacter *pBot, const Vector 
 
 	// Also valid if it's parented to the blocker
 	if ( pBlocker == pBot->GetParent() )
+		return true;
+
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CObjectSentrygun::ValidTargetProp( CBaseEntity* pProp, const Vector& vecStart, const Vector& vecEnd )
+{
+	// Ray trace.
+	CBaseEntity* pBlocker;
+	bool bVisible = FVisible (pProp, MASK_SHOT | CONTENTS_GRATE, &pBlocker );
+
+	if ( bVisible )
+		return true;
+
+	// Also valid if it's parented to the blocker
+	if ( pBlocker == pProp->GetParent() )
 		return true;
 
 	return false;

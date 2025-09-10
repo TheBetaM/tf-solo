@@ -974,6 +974,12 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\shared\tf\tf_progression_description_comp.cpp"
 				$File	"$SRCDIR\game\shared\tf\tf_progression_debug.cpp"
 			}
+
+			$Folder	"TFSOLO"
+			{
+				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.cpp"
+				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
+			}
 		}
 
 		$Folder	"game_controls"

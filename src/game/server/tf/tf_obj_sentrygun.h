@@ -134,6 +134,7 @@ private:
 	bool ValidTargetPlayer( CTFPlayer *pPlayer, const Vector &vecStart, const Vector &vecEnd );
 	bool ValidTargetObject( CBaseObject *pObject, const Vector &vecStart, const Vector &vecEnd );
 	bool ValidTargetBot( CBaseCombatCharacter *pBot, const Vector &vecStart, const Vector &vecEnd );
+	bool ValidTargetProp( CBaseEntity *pProp, const Vector &vecStart, const Vector &vecEnd );
 
 	void FoundTarget( CBaseEntity *pTarget, const Vector &vecSoundCenter, bool bNoSound=false );
 	bool FInViewCone ( CBaseEntity *pEntity );

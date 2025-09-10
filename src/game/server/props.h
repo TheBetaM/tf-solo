@@ -273,7 +273,7 @@ public:
 	void	AnimThink( void );
 	void	PropSetSequence( int nSequence );
 	void	OnRestore( void );
-	bool	OverridePropdata( void );
+	virtual bool	OverridePropdata( void );
 	void	HandleAnimEvent( animevent_t *pEvent );
 
 	// baseentity - watch dynamic hierarchy updates
@@ -341,7 +341,7 @@ public:
 	void Spawn( void );
 	void Precache();
 	bool CreateVPhysics( void );
-	bool OverridePropdata( void );
+	virtual bool OverridePropdata( void );
 
 	virtual void VPhysicsUpdate( IPhysicsObject *pPhysics );
 	virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );

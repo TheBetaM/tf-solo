@@ -583,7 +583,7 @@ void CTFHUDRobotDestruction::OnTick()
 	{
 		int nBlueEscrow = 0, nRedEscrow = 0;
 
-		if ( pRoboLogic->GetType() == CTFRobotDestructionLogic::TYPE_PLAYER_DESTRUCTION )
+		if ( pRoboLogic->GetType() == CTFRobotDestructionLogic::TYPE_PLAYER_DESTRUCTION || pRoboLogic->GetType() == CTFRobotDestructionLogic::TYPE_PROPERTY_DAMAGE )
 		{
 			for ( int i=0; i<ICaptureFlagAutoList::AutoList().Count(); ++i )
 			{
@@ -844,7 +844,7 @@ void CTFHUDRobotDestruction::PaintPDPlayerScore( const CTFPlayer* pPlayer )
 void CTFHUDRobotDestruction::Paint()
 {
 	CTFRobotDestructionLogic* pRoboLogic = CTFRobotDestructionLogic::GetRobotDestructionLogic();
-	if ( pRoboLogic && pRoboLogic->GetType() == CTFRobotDestructionLogic::TYPE_PLAYER_DESTRUCTION )
+	if ( pRoboLogic && pRoboLogic->GetType() != CTFRobotDestructionLogic::TYPE_ROBOT_DESTRUCTION )
 	{
 		CTFPlayerDestructionLogic* pPDLogic = static_cast< CTFPlayerDestructionLogic* >( pRoboLogic );
 		PaintPDPlayerScore( pPDLogic->GetRedTeamLeader() );

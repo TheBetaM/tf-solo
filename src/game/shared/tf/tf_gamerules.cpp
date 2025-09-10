@@ -909,7 +909,7 @@ ConVar tf_maddash_charge_time( "tf_maddash_charge_time", "10.0", FCVAR_REPLICATE
 ConVar tf_maddash_deplete_time( "tf_maddash_deplete_rate", "30.0", FCVAR_REPLICATED, "Base time to fully deplete.\n" );
 ConVar tf_maddash_discharge_time( "tf_maddash_discharge_time", "3.0", FCVAR_REPLICATED, "Flicker time after meter depletes.\n" );
 ConVar tf_maddash_deplete_action( "tf_maddash_deplete_action", "0", FCVAR_REPLICATED, "1 - Instant death on deplete, 2 - Instant fail on deplete\n" );
-ConVar tf_propcontrol_mode( "tf_propcontrol_mode", "0", FCVAR_REPLICATED, "Enable Prop Control gamemode.\n" );
+ConVar tf_propertydamage_mode( "tf_propertydamage_mode", "0", FCVAR_REPLICATED, "Enable Property Damage gamemode.\n" );
 
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;
@@ -3509,7 +3509,6 @@ CTFGameRules::CTFGameRules()
 
 	m_flMadDashMeter.Set( 0.0 );
 	m_hMadDashLogic = NULL;
-	m_hPropControlLogic = NULL;
 
 	for ( int i = 1; i <= MAX_PLAYERS; i++ )
 	{
@@ -4379,6 +4378,11 @@ void CTFGameRules::Activate()
 			m_nGameType.Set( TF_GAMETYPE_RD );
 			tf_beta_content.SetValue( 1 );
 		}
+		else if ( CTFRobotDestructionLogic::GetRobotDestructionLogic()->GetType() == CTFRobotDestructionLogic::TYPE_PROPERTY_DAMAGE )
+		{
+			m_nGameType.Set( TF_GAMETYPE_PD );
+			tf_propertydamage_mode.SetValue( 1 );
+		}
 		else
 		{
 			tf_gamemode_pd.SetValue( 1 );
@@ -4557,13 +4561,6 @@ void CTFGameRules::Activate()
 		m_hMadDashLogic = pLogicMadDash;
 	}
 
-	CLogicPropControl* pLogicPropControl = dynamic_cast<CLogicPropControl* > ( gEntList.FindEntityByClassname( NULL, "tf_logic_propcontrol" ) );
-	tf_propcontrol_mode.SetValue( ( pLogicPropControl && !isOverriden ) ? 1 : 0 );
-	if ( pLogicPropControl )
-	{
-		m_hPropControlLogic = pLogicPropControl;
-	}
-
 	if ( tf_powerup_mode.GetBool() )
 	{
 		if ( !IsPowerupMode() )
@@ -4618,9 +4615,11 @@ void CTFGameRules::Activate()
 	{
 		tf_maddash_mode.SetValue( 1 );
 	}
-	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_PROPCONTROL )
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE )
 	{
-		tf_propcontrol_mode.SetValue( 1 );
+		m_bPlayingRobotDestructionMode.Set( true );
+		tf_propertydamage_mode.SetValue( 1 );
+		m_nGameType.Set( TF_GAMETYPE_PD );
 	}
 }
 
@@ -19861,13 +19860,6 @@ BEGIN_DATADESC( CLogicMadDash )
 	DEFINE_OUTPUT( m_onChargeDischarged, "OnChargeDischarged" ),
 END_DATADESC()
 LINK_ENTITY_TO_CLASS( tf_logic_maddash, CLogicMadDash );
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-BEGIN_DATADESC( CLogicPropControl )
-END_DATADESC()
-LINK_ENTITY_TO_CLASS( tf_logic_propcontrol, CLogicPropControl );
 
 //=============================================================================
 // Training Mode

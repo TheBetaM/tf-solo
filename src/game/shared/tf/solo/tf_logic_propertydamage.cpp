@@ -1,0 +1,113 @@
+#include "cbase.h"
+#include "tf_logic_propertydamage.h"
+
+#ifdef GAME_DLL
+#include "tf_player.h"
+#include "entity_capture_flag.h"
+#include "tf_obj_dispenser.h"
+#include "tf_gamerules.h"
+#include "solo/propertydamage_prop.h"
+#else
+#include "c_tf_player.h"
+#endif // GAME_DLL
+				   
+#ifdef GAME_DLL
+BEGIN_DATADESC( CTFSOLOPropertyDamageLogic )
+DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
+DEFINE_OUTPUT( m_onPropCapturedTeam2, "OnPropCapturedTeam2" ),
+DEFINE_OUTPUT( m_onPropLostTeam1, "OnPropLostTeam1" ),
+DEFINE_OUTPUT( m_onPropLostTeam2, "OnPropLostTeam2" ),
+DEFINE_INPUTFUNC( FIELD_VOID, "LoseRedPoints", InputLoseRedPoints ),
+DEFINE_INPUTFUNC( FIELD_VOID, "LoseBluePoints", InputLoseBluePoints ),
+END_DATADESC()
+#endif
+
+LINK_ENTITY_TO_CLASS( tf_logic_propertydamage, CTFSOLOPropertyDamageLogic );
+IMPLEMENT_NETWORKCLASS_ALIASED( TFSOLOPropertyDamageLogic, DT_TFSOLOPropertyDamageLogic )
+
+BEGIN_NETWORK_TABLE( CTFSOLOPropertyDamageLogic, DT_TFSOLOPropertyDamageLogic )
+END_NETWORK_TABLE()
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+CTFSOLOPropertyDamageLogic::CTFSOLOPropertyDamageLogic()
+{
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+CTFSOLOPropertyDamageLogic* CTFSOLOPropertyDamageLogic::GetPropertyDamageLogic()
+{
+	return assert_cast< CTFSOLOPropertyDamageLogic* >( CTFRobotDestructionLogic::GetRobotDestructionLogic() );
+}
+
+#ifdef GAME_DLL
+void CTFSOLOPropertyDamageLogic::EvaluatePlayerCount()
+{
+	if ( !IsMaxScoreUpdatingAllowed() )
+		return;
+
+	int propCount = 0;
+	int propRedCount = 0;
+	int propBlueCount = 0;
+	propCount += ITFSOLOPropertyDamageProp::AutoList().Count();
+	propCount += ITFSOLOPropertyDamagePhysicsProp::AutoList().Count();
+	propCount += ITFSOLOPropertyDamageBrush::AutoList().Count();
+	for ( int i = 0; i < ITFSOLOPropertyDamageProp::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageProp* pObj = static_cast<CTFSOLOPropertyDamageProp*>( ITFSOLOPropertyDamageProp::AutoList()[i] );
+		if ( pObj->GetTeamNumber() == TF_TEAM_RED )
+		{
+			propRedCount++;
+		}
+		else if ( pObj->GetTeamNumber() == TF_TEAM_BLUE )
+		{
+			propBlueCount++;
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamagePhysicsProp::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamagePhysicsProp* pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp*>(ITFSOLOPropertyDamagePhysicsProp::AutoList()[i]);
+		if ( pObj->GetTeamNumber() == TF_TEAM_RED )
+		{
+			propRedCount++;
+		}
+		else if ( pObj->GetTeamNumber() == TF_TEAM_BLUE )
+		{
+			propBlueCount++;
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamageBrush::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageBrush* pObj = static_cast<CTFSOLOPropertyDamageBrush*>( ITFSOLOPropertyDamageBrush::AutoList()[i] );
+		if ( pObj->GetTeamNumber() == TF_TEAM_RED )
+		{
+			propRedCount++;
+		}
+		else if ( pObj->GetTeamNumber() == TF_TEAM_BLUE )
+		{
+			propBlueCount++;
+		}
+	}
+
+	m_nMaxPoints = Floor2Int( propCount * 0.75f );
+	m_nBlueScore = propBlueCount;
+	m_nBlueTargetPoints = propBlueCount;
+	m_nRedScore = propRedCount;
+	m_nRedTargetPoints = propRedCount;
+}
+
+void CTFSOLOPropertyDamageLogic::InputLoseRedPoints( inputdata_t& inputdata )
+{
+	ScorePoints( TF_TEAM_RED, -1, SCORE_REACTOR_STEAL, NULL );
+}
+
+void CTFSOLOPropertyDamageLogic::InputLoseBluePoints( inputdata_t& inputdata )
+{
+	ScorePoints( TF_TEAM_BLUE, -1, SCORE_REACTOR_STEAL, NULL );
+}
+#endif

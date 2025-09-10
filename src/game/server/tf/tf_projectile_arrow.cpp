@@ -22,6 +22,7 @@
 #include "player_vs_environment/tf_tank_boss.h"
 #include "halloween/halloween_base_boss.h"
 #include "halloween/merasmus/merasmus_trick_or_treat_prop.h"
+#include "solo/propertydamage_prop.h"
 #include "tf_logic_robot_destruction.h"
 
 #include "tf_gamerules.h"
@@ -422,7 +423,7 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 		return false;
 
 	CBaseAnimating *pOtherAnim = dynamic_cast< CBaseAnimating* >(pOther);
-	if ( !pOtherAnim )
+	if ( pBox && !pOtherAnim )
 		return false;
 
 	bool bBreakArrow = IsBreakable() && ( ( dynamic_cast< CTFTankBoss* >( pOther ) != NULL ) || ( dynamic_cast< CHalloweenBaseBoss* >( pOther ) != NULL ) );
@@ -430,7 +431,7 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 	// Position the arrow so its on the bone, within a reasonable region defined by the bbox.
 	if ( !m_bPenetrate && !bBreakArrow )
 	{
-		if ( !PositionArrowOnBone( pBox, pOtherAnim ) )
+		if ( pBox && !PositionArrowOnBone( pBox, pOtherAnim ) )
 		{
 			return false;
 		}
@@ -445,7 +446,7 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 
 	// Are we a headshot?
 	bool bHeadshot = false;
-	if ( pBox->group == HITGROUP_HEAD && CanHeadshot() )
+	if ( pBox && pBox->group == HITGROUP_HEAD && CanHeadshot() )
 	{
 		bHeadshot = true;
 	}
@@ -545,7 +546,7 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 		}
 	}
 
-	if ( !m_bPenetrate && !bBreakArrow )
+	if ( pBox && !m_bPenetrate && !bBreakArrow )
 	{
 		OnArrowImpact( pBox, pOther, pAttacker );
 	}
@@ -761,8 +762,11 @@ void CTFProjectile_Arrow::ArrowTouch( CBaseEntity *pOther )
 	}
 
 	CTFMerasmusTrickOrTreatProp *pMerasmusProp = dynamic_cast< CTFMerasmusTrickOrTreatProp* >( pOther );
+	CTFSOLOPropertyDamageProp* pPDAProp = dynamic_cast< CTFSOLOPropertyDamageProp* >( pOther );
+	CTFSOLOPropertyDamagePhysicsProp* pPDAPhysicsProp = dynamic_cast< CTFSOLOPropertyDamagePhysicsProp* >( pOther );
+	CTFSOLOPropertyDamageBrush* pPDABrush = dynamic_cast< CTFSOLOPropertyDamageBrush* >( pOther );
 	CTFRobotDestruction_Robot *pRobot = dynamic_cast< CTFRobotDestruction_Robot* >( pOther );
-	if ( pOther->IsWorld() || ( !pOtherCombatCharacter && !pPumpkinBomb && !pMerasmusProp && !bShield && !pRobot ) )
+	if ( pOther->IsWorld() || ( !pOtherCombatCharacter && !pPumpkinBomb && !pMerasmusProp && !bShield && !pRobot && !pPDAProp && !pPDAPhysicsProp && !pPDABrush ) )
 	{
 		// Check to see if we struck the skybox.
 		CheckSkyboxImpact( pOther );
@@ -774,6 +778,20 @@ void CTFProjectile_Arrow::ArrowTouch( CBaseEntity *pOther )
 			OnArrowMissAllPlayers();
 		}
 
+		return;
+	}
+
+	if ( pPDABrush )
+	{
+		bool bStrike = StrikeTarget( NULL, pOther );
+		if ( !bStrike || bShield )
+		{
+			BreakArrow();
+		}
+		if ( !m_bPenetrate )
+		{
+			m_bStruckEnemy = true;
+		}
 		return;
 	}
 

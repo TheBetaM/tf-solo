@@ -605,6 +605,10 @@ bool CFlameEntityEnum::EnumEntity( IHandleEntity *pHandleEntity )
 	{
 		m_Targets.AddToTail( pEnt );
 	}
+	else if ( FClassnameIs( pEnt, "tf_propertydamage_prop" ) || FClassnameIs( pEnt, "tf_propertydamage_prop_physics" ) || FClassnameIs( pEnt, "func_propertydamage_brush" ) )
+	{
+		m_Targets.AddToTail( pEnt );
+	}
 
 	return true;
 }
@@ -639,6 +643,10 @@ bool CTFFlameManager::IsValidBurnTarget( CBaseEntity *pEntity ) const
 		return true;
 	}
 	else if ( FClassnameIs( pEntity, "func_breakable" ) || FClassnameIs( pEntity, "tf_pumpkin_bomb" ) || FClassnameIs( pEntity, "tf_merasmus_trick_or_treat_prop" ) || FClassnameIs( pEntity, "tf_generic_bomb" ) )
+	{
+		return true;
+	}
+	else if ( FClassnameIs( pEntity, "tf_propertydamage_prop" ) || FClassnameIs( pEntity, "tf_propertydamage_prop_physics" ) || FClassnameIs( pEntity, "func_propertydamage_brush" ) )
 	{
 		return true;
 	}

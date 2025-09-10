@@ -152,7 +152,7 @@ enum {
 	TF_GAMEMODEOVERRIDE_CTF,
 	TF_GAMEMODEOVERRIDE_PD,
 	TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH,
-	TF_GAMEMODEOVERRIDE_TFSOLO_PROPCONTROL,
+	TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE,
 };
 
 //-----------------------------------------------------------------------------
@@ -192,16 +192,6 @@ private:
 
 #endif
 
-};
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-class CLogicPropControl : public CBaseEntity
-{
-	DECLARE_CLASS( CLogicPropControl, CBaseEntity );
-public:
-	DECLARE_DATADESC();
 };
 
 class CTFGameRulesProxy : public CTeamplayRoundBasedRulesProxy, public CGameEventListener
@@ -1305,7 +1295,6 @@ private:
 
 	CNetworkVar( float, m_flMadDashMeter );
 	CNetworkHandle( CLogicMadDash, m_hMadDashLogic );
-	CNetworkHandle( CLogicPropControl, m_hPropControlLogic );
 
 	float		m_flCTFCaptureBonusTime;
 public:

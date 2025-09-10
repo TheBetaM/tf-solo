@@ -59,6 +59,7 @@ public:
 	int GetPointsOnPlayerDeath( void ){ return m_nPointsOnPlayerDeath; }
 	virtual int GetHealDistance( void ) OVERRIDE { return m_nHealDistance; }
 	virtual void TeamWin( int nTeam ) OVERRIDE;
+	bool IsMaxScoreUpdatingAllowed( void ) { return m_bMaxScoreUpdatingAllowed; }
 
 #endif // GAME_DLL
 
@@ -72,7 +73,7 @@ private:
 	virtual void OnRedScoreChanged() OVERRIDE;
 	virtual void OnBlueScoreChanged() OVERRIDE;
 	
-	void EvaluatePlayerCount();
+	virtual void EvaluatePlayerCount();
 
 	void SetCountdownImage( string_t iszCountdownImage ) { m_iszCountdownImage = iszCountdownImage; }
 

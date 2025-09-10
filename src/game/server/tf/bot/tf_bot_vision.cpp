@@ -12,6 +12,7 @@
 #include "tf_gamerules.h"
 #include "tf_obj_sentrygun.h"
 #include "halloween/merasmus/merasmus_trick_or_treat_prop.h"
+#include "solo/propertydamage_prop.h"
 
 ConVar tf_bot_choose_target_interval( "tf_bot_choose_target_interval", "0.3f", FCVAR_CHEAT, "How often, in seconds, a TFBot can reselect his target" );
 ConVar tf_bot_sniper_choose_target_interval( "tf_bot_sniper_choose_target_interval", "3.0f", FCVAR_CHEAT, "How often, in seconds, a zoomed-in Sniper can reselect his target" );
@@ -153,6 +154,21 @@ void CTFBotVision::UpdatePotentiallyVisibleNPCVector( void )
 		for ( int i = 0; i < ITFMerasmusTrickOrTreatProp::AutoList().Count(); ++i )
 		{
 			CTFMerasmusTrickOrTreatProp *pObj = static_cast<CTFMerasmusTrickOrTreatProp *>( ITFMerasmusTrickOrTreatProp::AutoList()[ i ] );
+			m_potentiallyVisibleObjectVector.AddToTail( pObj );
+		}
+		for ( int i = 0; i < ITFSOLOPropertyDamageProp::AutoList().Count(); ++i )
+		{
+			CTFSOLOPropertyDamageProp *pObj = static_cast<CTFSOLOPropertyDamageProp *>( ITFSOLOPropertyDamageProp::AutoList()[ i ] );
+			m_potentiallyVisibleObjectVector.AddToTail( pObj );
+		}
+		for ( int i = 0; i < ITFSOLOPropertyDamagePhysicsProp::AutoList().Count(); ++i )
+		{
+			CTFSOLOPropertyDamagePhysicsProp *pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp *>( ITFSOLOPropertyDamagePhysicsProp::AutoList()[ i ] );
+			m_potentiallyVisibleObjectVector.AddToTail( pObj );
+		}
+		for ( int i = 0; i < ITFSOLOPropertyDamageBrush::AutoList().Count(); ++i )
+		{
+			CTFSOLOPropertyDamageBrush *pObj = static_cast<CTFSOLOPropertyDamageBrush *>( ITFSOLOPropertyDamageBrush::AutoList()[ i ] );
 			m_potentiallyVisibleObjectVector.AddToTail( pObj );
 		}
 	}

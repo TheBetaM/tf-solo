@@ -168,6 +168,7 @@ public:
 	{
 		TYPE_ROBOT_DESTRUCTION,
 		TYPE_PLAYER_DESTRUCTION,
+		TYPE_PROPERTY_DAMAGE,
 	};
 
 	virtual EType GetType() const { return TYPE_ROBOT_DESTRUCTION; }

@@ -996,6 +996,14 @@ $Project "Server (TF)"
 				$File	"$SRCDIR\game\shared\tf\tf_progression_description_comp.h"
 				$File	"$SRCDIR\game\shared\tf\tf_progression_description_comp.cpp"
 			}
+
+			$Folder	"TFSOLO"
+			{
+				$File	"tf\solo\propertydamage_prop.cpp"
+				$File	"tf\solo\propertydamage_prop.h"
+				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.cpp"
+				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
+			}
 		}
 
 		$Folder "NextBot"

@@ -845,15 +845,31 @@ void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMetho
 
 	Assert( nTeam == TF_TEAM_RED || nTeam == TF_TEAM_BLUE );
 
+	bool isPropertyDamage = GetType() == TYPE_PROPERTY_DAMAGE;
+
 	// Set the target score
 	int nTargetScore = 0;
-	if ( nTeam == TF_TEAM_RED )
+	if ( isPropertyDamage )
 	{
-		nTargetScore = m_nRedTargetPoints = clamp ( m_nRedTargetPoints + nPoints, 0, m_nMaxPoints.Get() );
+		if ( nTeam == TF_TEAM_RED )
+		{
+			nTargetScore = m_nRedTargetPoints = MAX( m_nRedTargetPoints + nPoints, 0 );
+		}
+		else
+		{
+			nTargetScore = m_nBlueTargetPoints = MAX( m_nBlueTargetPoints + nPoints, 0 );
+		}
 	}
 	else
 	{
-		nTargetScore = m_nBlueTargetPoints = clamp ( m_nBlueTargetPoints + nPoints, 0, m_nMaxPoints.Get() );
+		if ( nTeam == TF_TEAM_RED )
+		{
+			nTargetScore = m_nRedTargetPoints = clamp ( m_nRedTargetPoints + nPoints, 0, m_nMaxPoints.Get() );
+		}
+		else
+		{
+			nTargetScore = m_nBlueTargetPoints = clamp ( m_nBlueTargetPoints + nPoints, 0, m_nMaxPoints.Get() );
+		}
 	}
 		
 	if ( GetNextThink( APPROACH_POINTS_THINK ) == TICK_NEVER_THINK )
@@ -864,7 +880,7 @@ void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMetho
 	int nOldScore = nTeam == TF_TEAM_RED ? m_nRedScore.Get() : m_nBlueScore.Get();
 
 	// Can't do anything if we're already at max and adding points
-	if ( nOldScore == m_nMaxPoints && nPoints > 0 )
+	if ( nOldScore == m_nMaxPoints && nPoints > 0 && !isPropertyDamage )
 	{
 		return;
 	}
@@ -882,6 +898,10 @@ void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMetho
 	}
 
 	int nNewScore = Clamp( nOldScore + nPoints, 0, m_nMaxPoints.Get() );
+	if ( isPropertyDamage )
+	{
+		nNewScore = MAX( nOldScore + nPoints, 0 );
+	}
 
 	// We want to play different sounds based on the player's team
 	CUtlVector< CTFPlayer* > vecAllPlayers;
