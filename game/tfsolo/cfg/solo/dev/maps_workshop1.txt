@@ -2750,7 +2750,7 @@ maps_config
 				koth 1
 				cp_count 1
 				symm 1
-				theme_alpine 1
+				theme_egypt 1
 			}
 		}
 		workshop_2946793305
@@ -2925,6 +2925,7 @@ maps_config
 			{
 				ctf 1
 				flag_count 1
+				flag_neutral 1
 				symm 1
 				theme_alpine 1
 			}
@@ -3477,7 +3478,7 @@ maps_config
 			tags
 			{
 				pl 1
-				stages 3
+				stages 2
 				theme_desert 1
 			}
 		}
@@ -3534,7 +3535,7 @@ maps_config
 			tags
 			{
 				koth 1
-				cp_count 1
+				cp_count 2
 				symm 1
 				theme_hallow 1
 			}
@@ -7235,6 +7236,7 @@ maps_config
 			tags
 			{
 				arena_pd 1
+				mdv 1
 				cp_count 1
 				symm 1
 				theme_autumn 1
@@ -7467,6 +7469,7 @@ maps_config
 				cp 1
 				cp_count 2
 				theme_city 1
+				stages 2
 				vip 1
 				vip_mobster 1
 			}
