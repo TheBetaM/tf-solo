@@ -3804,6 +3804,22 @@ void CTFCustomMatchModeDialog::CreateControls()
 		{
 			mapIcon->SetImage("illustrations/gamemode_halloween");
 		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_MD"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_sd");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_PDA"))
+		{
+			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_FORT"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_cp");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_CV"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_payloadrace");
+		}
 		else
 		{
 			mapIcon->SetImage("illustrations/quickplay");
@@ -3906,6 +3922,7 @@ void CTFCustomMatchModeDialog::Deploy( const char* map )
 enum CustomMatchMapCategory
 {
 	MapCategory_Default = 0,
+	MapCategory_TFSOLO,
 
 	MapCategory_CP,
 	MapCategory_KOTH,
@@ -3956,6 +3973,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 
 	m_pCategoryList = new vgui::ComboBox( this, "MapCategoryList", MapCategory_MAX, false );
 	m_pCategoryList->AddItem("#Store_Filter_All", NULL);
+	m_pCategoryList->AddItem("#MapCategory_TFSOLO", NULL);
 
 	m_pCategoryList->AddItem("#Gametype_CP", NULL);
 	m_pCategoryList->AddItem("#Gametype_Koth", NULL);
@@ -4314,6 +4332,15 @@ void CTFCustomMatchMapDialog::CreateControls()
 			case MapCategory_Xmas:
 			{
 				if ( tags->GetInt("theme_xmas") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_TFSOLO:
+			{
+				if ( tags->GetInt("tfsolo") == 0 )
 				{
 					key = key->GetNextKey();
 					continue;

@@ -1,0 +1,83 @@
+maps_config
+{
+	maps
+	{
+		md_surge
+		{
+			name "Surge (DEV)"
+			modename "#GameType_TFSOLO_MD"
+			tags
+			{
+				tfsolo_md 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		pda_map
+		{
+			name "Property Damage Map (DEV)"
+			modename "#GameType_TFSOLO_PDA"
+			tags
+			{
+				tfsolo_pda 1
+				symm 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		fort_map
+		{
+			disabled 1
+			name "Fortified Map (DEV)"
+			modename "#GameType_TFSOLO_FORT"
+			tags
+			{
+				tfsolo_fort 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		convoy_map
+		{
+			disabled 1
+			name "Convoy Map (DEV)"
+			modename "#GameType_TFSOLO_CV"
+			tags
+			{
+				tfsolo_cv 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		mvm_deathmetal
+		{
+			disabled 1
+			name "Death Metal (DEV)"
+			modename "#Gametype_MVM"
+			tags
+			{
+				mvm 1
+				flag_count 1
+				theme_city 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		tc_hydra
+		{
+			disabled 1
+			name "Hydra (DEV)"
+			modename "#Gametype_TerritorialControl"
+			tags
+			{
+				tc 1
+				cp_count 6
+				hybrid 1
+				theme_hallow 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		
+	}
+}

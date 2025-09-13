@@ -1115,7 +1115,7 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 		return;
 
 	// Don't let invulnerable players pickup flags, except in PD
-	if ( pPlayer->m_Shared.IsInvulnerable() && m_nType != TF_FLAGTYPE_PLAYER_DESTRUCTION )
+	if ( pPlayer->m_Shared.IsInvulnerable() && m_nType != TF_FLAGTYPE_PLAYER_DESTRUCTION && !TFGameRules()->IsInMadDashMode() )
 		return;
 
 	// Don't let stealthed spies pickup the flag

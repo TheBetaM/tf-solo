@@ -130,7 +130,7 @@ public:
 		}
 
 		// No invuln players
-		if ( pPlayer->m_Shared.IsInvulnerable() || pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+		if ( ( pPlayer->m_Shared.IsInvulnerable() || pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) ) && !TFGameRules()->IsInMadDashMode() )
 		{
 			return false;
 		}

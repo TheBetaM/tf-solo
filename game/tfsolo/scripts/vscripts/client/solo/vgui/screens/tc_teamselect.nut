@@ -108,7 +108,7 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 			if (TagsKey.FindKey("mvm") != null)
 			{
 			}
-			else if (TagsKey.FindKey("vsh") != null)
+			else if (TagsKey.FindKey("vsh") != null || TagsKey.FindKey("tfsolo_tc_hide") != null)
 			{
 			}
 			else if (TagsKey.FindKey("theme_hallow") != null)

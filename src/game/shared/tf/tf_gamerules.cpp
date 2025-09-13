@@ -906,6 +906,7 @@ ConVar tf_revives_enable( "tf_revives_enable", "0", FCVAR_REPLICATED, "Force ena
 ConVar tf_maddash_mode( "tf_maddash_mode", "0", FCVAR_REPLICATED, "Enable Mad Dash gamemode.\n" );
 ConVar tf_maddash_flipteams( "tf_maddash_flipteams", "0", FCVAR_REPLICATED, "Flip team roles.\n" );
 ConVar tf_maddash_charge_time( "tf_maddash_charge_time", "10.0", FCVAR_REPLICATED, "Base time to fully charge.\n" );
+ConVar tf_maddash_charge_type("tf_maddash_charge_type", "0", FCVAR_REPLICATED, "0 - Uber, 1 - Uber + Crits, 2 - Uber + MiniCrits, 3 - Crits, 4 - MiniCrits\n");
 ConVar tf_maddash_deplete_time( "tf_maddash_deplete_rate", "30.0", FCVAR_REPLICATED, "Base time to fully deplete.\n" );
 ConVar tf_maddash_discharge_time( "tf_maddash_discharge_time", "3.0", FCVAR_REPLICATED, "Flicker time after meter depletes.\n" );
 ConVar tf_maddash_deplete_action( "tf_maddash_deplete_action", "0", FCVAR_REPLICATED, "1 - Instant death on deplete, 2 - Instant fail on deplete\n" );
@@ -1467,6 +1468,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CTFGameRules, DT_TFGameRules )
 
 	RecvPropBool( RECVINFO( m_bRopesHolidayLightsAllowed ) ),
 	RecvPropFloat( RECVINFO( m_flMadDashMeter ) ),
+	RecvPropEHandle( RECVINFO( m_hMadDashLogic ) ),
 #else
 
 	SendPropInt( SENDINFO( m_nGameType ), 4, SPROP_UNSIGNED ),
@@ -1538,6 +1540,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CTFGameRules, DT_TFGameRules )
 
 	SendPropBool( SENDINFO( m_bRopesHolidayLightsAllowed ) ),
 	SendPropFloat( SENDINFO( m_flMadDashMeter ) ),
+	SendPropEHandle( SENDINFO( m_hMadDashLogic ) ),
 #endif
 END_NETWORK_TABLE()
 
@@ -1606,9 +1609,11 @@ BEGIN_DATADESC( CTFGameRulesProxy )
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetRoundRespawnFreezeEnabled", InputSetRoundRespawnFreezeEnabled ),
 	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetMapForcedTruceDuringBossFight", InputSetMapForcedTruceDuringBossFight ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloAddCredits", InputSoloAddCredits ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "SoloSaveDAta", InputSoloSaveData ),
+	DEFINE_INPUTFUNC( FIELD_VOID, "SoloSaveData", InputSoloSaveData ),
 	DEFINE_INPUTFUNC( FIELD_STRING, "SoloUnlockItem", InputSoloUnlockItem ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloUnlockItemID", InputSoloUnlockItemID ),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "SoloAddMadDashMeter", InputSoloAddMadDashMeter ),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "SoloSetMadDashMeter", InputSoloSetMadDashMeter ),
 
 	DEFINE_OUTPUT( m_OnWonByTeam1,	"OnWonByTeam1" ),
 	DEFINE_OUTPUT( m_OnWonByTeam2,	"OnWonByTeam2" ),
@@ -1924,6 +1929,21 @@ void CTFGameRulesProxy::InputSoloUnlockItemID(inputdata_t& inputdata)
 	}
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFGameRulesProxy::InputSoloAddMadDashMeter( inputdata_t& inputdata )
+{
+	TFGameRules()->AddMadDashMeter( inputdata.value.Float() );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFGameRulesProxy::InputSoloSetMadDashMeter( inputdata_t& inputdata )
+{
+	TFGameRules()->SetMadDashMeter( inputdata.value.Float() );
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -3251,6 +3271,14 @@ bool CTFGameRules::IsDefaultGameMode( void )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CTFGameRules::IsInMadDashMode( void )
+{
+	return tf_maddash_mode.GetBool();
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: Allows us to give situational discounts, such as secondary weapons
 //-----------------------------------------------------------------------------
 int CTFGameRules::GetCostForUpgrade( CMannVsMachineUpgrades *pUpgrade, int iItemSlot, int nClass, CTFPlayer *pPurchaser /*= NULL*/ )
@@ -4558,7 +4586,7 @@ void CTFGameRules::Activate()
 	tf_maddash_mode.SetValue( ( pLogicMadDash && !isOverriden ) ? 1 : 0 );
 	if ( pLogicMadDash )
 	{
-		m_hMadDashLogic = pLogicMadDash;
+		m_hMadDashLogic.Set( pLogicMadDash );
 	}
 
 	if ( tf_powerup_mode.GetBool() )
@@ -5038,6 +5066,14 @@ void CTFGameRules::SetupOnRoundStart( void )
 	m_hBlueKothTimer.Set( NULL );
 	m_flMadDashMeter.Set( 0.0f );
 
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_OFF )
+	{
+		CLogicMadDash* pLogicMadDash = dynamic_cast<CLogicMadDash *> ( gEntList.FindEntityByClassname( NULL, "tf_logic_maddash" ) );
+		if ( pLogicMadDash )
+		{
+			m_hMadDashLogic.Set( pLogicMadDash );
+		}
+	}
 	if ( tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_OFF && tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH )
 	{
 		CBaseEntity* pEntity = NULL;
@@ -17427,7 +17463,7 @@ bool CTFGameRules::PlayerMayCapturePoint( CBasePlayer *pPlayer, int iPointIndex,
 		}
 		return false;
 	}
-	if ( ( pTFPlayer->m_Shared.IsInvulnerable() || pTFPlayer->m_Shared.InCond( TF_COND_MEGAHEAL ) ) && !IsMannVsMachineMode() )
+	if ( ( pTFPlayer->m_Shared.IsInvulnerable() || pTFPlayer->m_Shared.InCond( TF_COND_MEGAHEAL ) ) && !IsMannVsMachineMode() && !IsInMadDashMode() )
 	{
 		if ( pszReason )
 		{
@@ -19854,7 +19890,9 @@ BEGIN_DATADESC( CLogicMadDash )
 	DEFINE_KEYFIELD( m_flDepleteTime, FIELD_FLOAT, "deplete_time" ),
 	DEFINE_KEYFIELD( m_flDischargeTime, FIELD_FLOAT, "discharge_time" ),
 	DEFINE_KEYFIELD( m_iDepleteAction, FIELD_INTEGER, "deplete_action" ),
-
+	DEFINE_KEYFIELD( m_iChargeType, FIELD_INTEGER, "charge_type" ),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "AddMeter", InputAddMeter ),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetMeter", InputSetMeter ),
 	DEFINE_OUTPUT( m_onFullCharge, "OnFullCharge" ),
 	DEFINE_OUTPUT( m_onChargeDepleted, "OnChargeDepleted" ),
 	DEFINE_OUTPUT( m_onChargeDischarged, "OnChargeDischarged" ),
@@ -23005,6 +23043,7 @@ void CTFGameRules::MadDashThink( void )
 	bool justCharged = false;
 	bool justDischarged = false;
 	int depleteAction = 1;
+	int chargeType = 0;
 	float chargeRate = 0.001f;
 	float depleteRate = 0.001f;
 	float dischargeTime = 3.0f;
@@ -23013,6 +23052,7 @@ void CTFGameRules::MadDashThink( void )
 	{
 		flipTeams = m_hMadDashLogic->m_bFlipTeams;
 		depleteAction = m_hMadDashLogic->m_iDepleteAction;
+		chargeType = m_hMadDashLogic->m_iChargeType;
 		chargeRate = ( 1.0f / m_hMadDashLogic->m_flChargeTime ) * 0.0075f;
 		depleteRate = ( 1.0f / m_hMadDashLogic->m_flDepleteTime ) * 0.0075f;
 		dischargeTime = m_hMadDashLogic->m_flDischargeTime;
@@ -23021,6 +23061,7 @@ void CTFGameRules::MadDashThink( void )
 	{
 		depleteAction = tf_maddash_deplete_action.GetInt();
 		chargeRate = ( 1.0f / tf_maddash_charge_time.GetFloat() ) * 0.0075f;
+		chargeType = tf_maddash_charge_type.GetInt();
 		depleteRate = ( 1.0f / tf_maddash_deplete_time.GetFloat() ) * 0.0075f;
 		dischargeTime = tf_maddash_discharge_time.GetFloat();
 		flipTeams = tf_maddash_flipteams.GetBool();
@@ -23127,19 +23168,32 @@ void CTFGameRules::MadDashThink( void )
 
 	if ( m_flMadDashMeter >= 1.0f )
 	{
+		// Meter just filled up
 		for ( int a = 0; a < playerVector.Count(); a++ )
 		{
 			CTFPlayer* player = playerVector[a];
 			if ( !player || !player->IsAlive() || player->m_Shared.InCond( TF_COND_INVULNERABLE_USER_BUFF ) )
 				continue;
 
-			player->m_Shared.AddCond( TF_COND_INVULNERABLE_USER_BUFF );
+			if ( chargeType != 3 && chargeType != 4 )
+			{
+				player->m_Shared.AddCond( TF_COND_INVULNERABLE_USER_BUFF );
+			}
+			if ( chargeType == 1 || chargeType == 3 )
+			{
+				player->m_Shared.AddCond( TF_COND_CRITBOOSTED_USER_BUFF );
+			}
+			else if ( chargeType == 2 || chargeType == 4 )
+			{
+				player->m_Shared.AddCond( TF_COND_NOHEALINGDAMAGEBUFF );
+			}
 			player->SpeakConceptIfAllowed( MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED );
 			player->m_Shared.m_bStunNeedsFadeOut = true;
 		}
 	}
 	else if ( justDischarged || m_flMadDashMeter <= 0.0f )
 	{
+		// Meter just depleted, start flickering
 		for ( int a = 0; a < playerVector.Count(); a++ )
 		{
 			CTFPlayer* player = playerVector[a];
@@ -23157,11 +23211,54 @@ void CTFGameRules::MadDashThink( void )
 			}
 
 			player->m_Shared.RemoveCond( TF_COND_INVULNERABLE_USER_BUFF );
+			player->m_Shared.RemoveCond( TF_COND_CRITBOOSTED_USER_BUFF );
+			player->m_Shared.RemoveCond( TF_COND_NOHEALINGDAMAGEBUFF );
 			player->m_Shared.AddCond( TF_COND_INVULNERABLE_USER_BUFF, dischargeTime );
 			player->m_Shared.AddCond( TF_COND_INVULNERABLE_WEARINGOFF, dischargeTime );
 		}
 	}
+	else if ( m_flMadDashMeter > 0.0f )
+	{
+		// Meter was refilled while flickering, back to uber
+		for ( int a = 0; a < playerVector.Count(); a++ )
+		{
+			CTFPlayer* player = playerVector[a];
+			if ( !player )
+			{
+				continue;
+			}
+			if ( !player->IsAlive() || !player->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+			{
+				continue;
+			}
 
+			player->m_Shared.RemoveCond( TF_COND_INVULNERABLE_WEARINGOFF );
+			if ( chargeType != 3 && chargeType != 4 )
+			{
+				player->m_Shared.AddCond( TF_COND_INVULNERABLE_USER_BUFF );
+			}
+			if ( chargeType == 1 || chargeType == 3 )
+			{
+				player->m_Shared.AddCond( TF_COND_CRITBOOSTED_USER_BUFF );
+			}
+			else if ( chargeType == 2 || chargeType == 4 )
+			{
+				player->m_Shared.AddCond( TF_COND_NOHEALINGDAMAGEBUFF );
+			}
+			player->m_Shared.m_bStunNeedsFadeOut = true;
+		}
+	}
+
+}
+
+void CLogicMadDash::InputAddMeter( inputdata_t& inputdata )
+{
+	TFGameRules()->AddMadDashMeter( inputdata.value.Float() );
+}
+
+void CLogicMadDash::InputSetMeter( inputdata_t& inputdata )
+{
+	TFGameRules()->SetMadDashMeter( inputdata.value.Float() );
 }
 
 #define TF_GAMERULES_SCRIPT_FUNC( function, desc ) \
@@ -23238,7 +23335,8 @@ void	ScriptSetRoundToPlayNext( const char* name )
 	}
 }
 float	ScriptGetMadDashMeter()										{ return TFGameRules()->GetMadDashMeter(); }
-void	ScriptSetMadDashMeter( float meter )						{ return TFGameRules()->SetMadDashMeter( meter ); }
+void	ScriptSetMadDashMeter( float meter )						{ TFGameRules()->SetMadDashMeter( meter ); }
+void	ScriptAddMadDashMeter( float meteradd )						{ TFGameRules()->AddMadDashMeter( meteradd ); }
 
 void CTFGameRules::RegisterScriptFunctions()
 {
@@ -23302,6 +23400,7 @@ void CTFGameRules::RegisterScriptFunctions()
 	TF_GAMERULES_SCRIPT_FUNC( SetRoundToPlayNext,						"Set the next round to be selected." );
 	TF_GAMERULES_SCRIPT_FUNC( GetMadDashMeter,							"" );
 	TF_GAMERULES_SCRIPT_FUNC( SetMadDashMeter,							"" );
+	TF_GAMERULES_SCRIPT_FUNC( AddMadDashMeter,							"" );
 
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }

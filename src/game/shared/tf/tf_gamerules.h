@@ -172,17 +172,22 @@ public:
 		m_flDepleteTime = 0.0f;
 		m_flDischargeTime = 0.0f;
 		m_iDepleteAction = 0;
+		m_iChargeType = 0;
 	}
 	virtual int UpdateTransmitState()
 	{
 		return SetTransmitState( FL_EDICT_ALWAYS );
 	}
 
+	void	InputAddMeter(inputdata_t& inputdata);
+	void	InputSetMeter(inputdata_t& inputdata);
+
 	bool m_bFlipTeams;
 	float m_flChargeTime;
 	float m_flDepleteTime;
 	float m_flDischargeTime;
 	int m_iDepleteAction;
+	int m_iChargeType;
 
 private:
 
@@ -230,6 +235,8 @@ public:
 	void	InputSoloSaveData( inputdata_t &inputdata );
 	void	InputSoloUnlockItem( inputdata_t &inputdata );
 	void	InputSoloUnlockItemID( inputdata_t &inputdata );
+	void	InputSoloAddMadDashMeter( inputdata_t &inputdata );
+	void	InputSoloSetMadDashMeter( inputdata_t &inputdata );
 
 	void	TeamPlayerCountChanged( CTFTeam *pTeam );
 	void	PowerupTeamImbalance( int nTeam );
@@ -719,6 +726,7 @@ bool IsCreepWaveMode( void ) const;
 #endif // GAME_DLL
 
 	bool IsDefaultGameMode( void );		// The absence of arena, mvm, tournament mode, etc
+	bool IsInMadDashMode( void );
 
 	// Upgrades
 	int	GetCostForUpgrade( CMannVsMachineUpgrades *pUpgrade, int iItemSlot, int nClass, CTFPlayer *pPurchaser = NULL );
@@ -803,7 +811,8 @@ bool IsCreepWaveMode( void ) const;
 	bool HaveStopWatchWinner( void ) { return m_bStopWatchWinner; }
 
 	float GetMadDashMeter( void ) { return m_flMadDashMeter; }
-	void SetMadDashMeter( float meter ) { m_flMadDashMeter = meter; }
+	void SetMadDashMeter( float meter ) { m_flMadDashMeter = clamp( meter, 0.0f, 1.0f ); }
+	void AddMadDashMeter( float meteradd ) { m_flMadDashMeter = clamp( m_flMadDashMeter + meteradd, 0.0f, 1.0f ); }
 
 	int GetGameTeamForGCTeam( TF_GC_TEAM nGCTeam );
 	TF_GC_TEAM GetGCTeamForGameTeam( int nGameTeam );

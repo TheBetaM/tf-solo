@@ -3079,6 +3079,18 @@ maps_config
 				theme_space 1
 			}
 		}
+		workshop_3031098958
+		{
+			name "Stronghold"
+			modename "#Gametype_ZI"
+			tags
+			{
+				zi 1
+				theme_castle 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
 		workshop_3032677879
 		{
 			name "Digsite"
@@ -7773,18 +7785,7 @@ maps_config
 				theme_swamp 1
 			}
 		}
-		workshop_3031098958
-		{
-			name "Stronghold"
-			modename "#Gametype_ZI"
-			tags
-			{
-				zi 1
-				theme_castle 1
-				theme_hallow 1
-				vscript 1
-			}
-		}
+		
 		workshop_3561250339
 		{
 			name "Futura"
@@ -7794,6 +7795,19 @@ maps_config
 				pl 1
 				theme_space 1
 				theme_dino 1
+			}
+		}
+		workshop_3562259083
+		{
+			name "Thorne"
+			modename "#Gametype_VSH"
+			tags
+			{
+				arena_pd 1
+				vsh 1
+				cp_count 1
+				theme_hallow 1
+				vscript 1
 			}
 		}
 		workshop_3562630084
@@ -7832,6 +7846,20 @@ maps_config
 				theme_hallow 1
 			}
 		}
+		workshop_3564318980
+		{
+			name "Hellsgate"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				flag_invade 1
+				symm 1
+				theme_hallow 1
+			}
+		}
 		workshop_3562630084
 		{
 			name "Sawdusk"
@@ -7845,5 +7873,19 @@ maps_config
 				upgrades 1
 			}
 		}
+		workshop_3565681202
+		{
+			name "Marshlands"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		
 	}
 }

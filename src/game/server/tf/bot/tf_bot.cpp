@@ -3434,7 +3434,7 @@ float CTFBot::GetThreatDanger( CBaseCombatCharacter *who ) const
 		CTFPlayer *player = ToTFPlayer( who );
 
 		// ubers are scary
-		if ( player->m_Shared.IsInvulnerable() )
+		if ( player->m_Shared.IsInvulnerable() && !TFGameRules()->IsInMadDashMode() )
 			return 1.0f;
 
 		switch( player->GetPlayerClass()->GetClassIndex() )

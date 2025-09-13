@@ -1107,6 +1107,19 @@ maps_config
 				theme_dino 1
 			}
 		}
+		workshop_3562259083
+		{
+			name "Thorne"
+			modename "#Gametype_VSH"
+			tags
+			{
+				arena_pd 1
+				vsh 1
+				cp_count 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
 		
 	
 	}

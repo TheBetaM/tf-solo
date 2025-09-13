@@ -428,7 +428,7 @@ bool CCurrencyPackBonus::ValidTouch( CBasePlayer* pPlayer )
 		return false;
 
 	// No invulns
-	if ( pTFPlayer->m_Shared.IsInvulnerable() )
+	if ( pTFPlayer->m_Shared.IsInvulnerable() && !TFGameRules()->IsInMadDashMode() )
 		return false;
 
 	return BaseClass::ValidTouch( pPlayer );

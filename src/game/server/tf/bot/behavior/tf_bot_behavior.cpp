@@ -1312,7 +1312,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 	}
 
 	// if our target is uber'd, most weapons are useless - unless we're in MvM, where invuln tanking is valuable
-	if ( TFGameRules() && !TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules() && !TFGameRules()->IsMannVsMachineMode() && !TFGameRules()->IsInMadDashMode() )
 	{
 		CTFPlayer *playerThreat = ToTFPlayer( threat->GetEntity() );
 		if ( playerThreat && playerThreat->m_Shared.IsInvulnerable() )
