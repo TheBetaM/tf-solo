@@ -205,6 +205,33 @@ public:
 	bool m_bCallerIsProjectile;
 };
 
+class CTraceFilterIgnoreTeamProperty : public CTraceFilterSimple
+{
+public:
+	DECLARE_CLASS( CTraceFilterIgnoreTeamProperty, CTraceFilterSimple );
+
+	CTraceFilterIgnoreTeamProperty(const IHandleEntity* passentity, int collisionGroup, int iIgnoreTeam, bool bIsProjectile = false)
+		: CTraceFilterSimple(passentity, collisionGroup), m_iIgnoreTeam(iIgnoreTeam)
+	{
+	}
+
+	virtual bool ShouldHitEntity(IHandleEntity* pServerEntity, int contentsMask)
+	{
+		CBaseEntity* pEntity = EntityFromEntityHandle(pServerEntity);
+
+		if ( FClassnameIs( pEntity, "tf_propertydamage_prop" ) || 
+			FClassnameIs( pEntity, "tf_propertydamage_prop_physics" ) ||
+			FClassnameIs( pEntity, "func_propertydamage_brush" ) )
+		{
+			return false;
+		}
+
+		return BaseClass::ShouldHitEntity(pServerEntity, contentsMask);
+	}
+
+	int m_iIgnoreTeam;
+};
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------

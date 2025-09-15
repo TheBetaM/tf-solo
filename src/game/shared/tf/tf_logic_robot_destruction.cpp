@@ -698,8 +698,9 @@ float CTFRobotDestructionLogic::GetFinaleWinTime( int nTeam ) const
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::ApproachTargetScoresThink()
 {
+	bool isPropertyDamage = GetType() == TYPE_PROPERTY_DAMAGE;
 	// If the round is not in play, dont do anything with points
-	if ( !TFGameRules()->FlagsMayBeCapped() )
+	if ( !TFGameRules()->FlagsMayBeCapped() && !isPropertyDamage )
 		return;
 
 	// Approach
@@ -836,16 +837,15 @@ int CTFRobotDestructionLogic::ApproachTeamTargetScore( int nTeam, int nApproachS
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMethod_t eMethod, CTFPlayer *pPlayer )
 {
+	bool isPropertyDamage = GetType() == TYPE_PROPERTY_DAMAGE;
 	// If the round is not in play, dont do anything with points
-	if ( !TFGameRules()->FlagsMayBeCapped() )
+	if ( !TFGameRules()->FlagsMayBeCapped() && !isPropertyDamage )
 		return;
 
 	if ( nPoints == 0 )
 		return;
 
 	Assert( nTeam == TF_TEAM_RED || nTeam == TF_TEAM_BLUE );
-
-	bool isPropertyDamage = GetType() == TYPE_PROPERTY_DAMAGE;
 
 	// Set the target score
 	int nTargetScore = 0;

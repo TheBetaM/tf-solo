@@ -9,6 +9,20 @@ maps_config
 			tags
 			{
 				tfsolo_md 1
+				ad 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		inf_map
+		{
+			disabled 1
+			name "Infiltration Map (DEV)"
+			modename "#GameType_TFSOLO_INF"
+			tags
+			{
+				tfsolo_inf 1
+				ad 1
 				tfsolo 1
 				tfsolo_tc_hide 1
 			}
@@ -25,6 +39,19 @@ maps_config
 				tfsolo_tc_hide 1
 			}
 		}
+		pde_map
+		{
+			disabled 1
+			name "Property Defense Map (DEV)"
+			modename "#GameType_TFSOLO_PDE"
+			tags
+			{
+				tfsolo_pde 1
+				ad 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
 		fort_map
 		{
 			disabled 1
@@ -37,7 +64,7 @@ maps_config
 				tfsolo_tc_hide 1
 			}
 		}
-		convoy_map
+		cv_map
 		{
 			disabled 1
 			name "Convoy Map (DEV)"
@@ -45,6 +72,20 @@ maps_config
 			tags
 			{
 				tfsolo_cv 1
+				symm 1
+				tfsolo 1
+				tfsolo_tc_hide 1
+			}
+		}
+		cvr_map
+		{
+			disabled 1
+			name "Convoy Race Map (DEV)"
+			modename "#GameType_TFSOLO_CVR"
+			tags
+			{
+				ad 1
+				tfsolo_cvr 1
 				tfsolo 1
 				tfsolo_tc_hide 1
 			}

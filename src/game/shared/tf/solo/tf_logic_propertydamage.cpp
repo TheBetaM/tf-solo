@@ -13,10 +13,14 @@
 				   
 #ifdef GAME_DLL
 BEGIN_DATADESC( CTFSOLOPropertyDamageLogic )
+DEFINE_KEYFIELD( m_flMaxPointsFraction, FIELD_FLOAT, "max_points_fraction" ),
+DEFINE_KEYFIELD( m_iFixedMaxPoints, FIELD_INTEGER, "fixed_max_points" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam2, "OnPropCapturedTeam2" ),
 DEFINE_OUTPUT( m_onPropLostTeam1, "OnPropLostTeam1" ),
 DEFINE_OUTPUT( m_onPropLostTeam2, "OnPropLostTeam2" ),
+DEFINE_INPUTFUNC( FIELD_VOID, "UpdateMaxPoints", InputUpdateMaxPoints ),
+DEFINE_INPUTFUNC( FIELD_INTEGER, "SetFixedMaxPoints", InputSetFixedMaxPoints ),
 DEFINE_INPUTFUNC( FIELD_VOID, "LoseRedPoints", InputLoseRedPoints ),
 DEFINE_INPUTFUNC( FIELD_VOID, "LoseBluePoints", InputLoseBluePoints ),
 END_DATADESC()
@@ -34,6 +38,10 @@ END_NETWORK_TABLE()
 //-----------------------------------------------------------------------------
 CTFSOLOPropertyDamageLogic::CTFSOLOPropertyDamageLogic()
 {
+#if GAME_DLL
+	m_iFixedMaxPoints = 0;
+	m_flMaxPointsFraction = 0.75f;
+#endif
 }
 
 
@@ -51,6 +59,11 @@ void CTFSOLOPropertyDamageLogic::EvaluatePlayerCount()
 	if ( !IsMaxScoreUpdatingAllowed() )
 		return;
 
+	CalculatePropCount();
+}
+
+void CTFSOLOPropertyDamageLogic::CalculatePropCount()
+{
 	int propCount = 0;
 	int propRedCount = 0;
 	int propBlueCount = 0;
@@ -94,11 +107,18 @@ void CTFSOLOPropertyDamageLogic::EvaluatePlayerCount()
 		}
 	}
 
-	m_nMaxPoints = Floor2Int( propCount * 0.75f );
-	m_nBlueScore = propBlueCount;
-	m_nBlueTargetPoints = propBlueCount;
-	m_nRedScore = propRedCount;
-	m_nRedTargetPoints = propRedCount;
+	if ( m_iFixedMaxPoints != 0 )
+	{
+		m_nMaxPoints = m_iFixedMaxPoints;
+	}
+	else
+	{
+		m_nMaxPoints = Floor2Int( propCount * m_flMaxPointsFraction );
+	}
+	m_nBlueTargetPoints.Set( propBlueCount );
+	m_nBlueScore.Set( propBlueCount );
+	m_nRedTargetPoints.Set( propRedCount );
+	m_nRedScore.Set( propRedCount );
 }
 
 void CTFSOLOPropertyDamageLogic::InputLoseRedPoints( inputdata_t& inputdata )
@@ -109,5 +129,23 @@ void CTFSOLOPropertyDamageLogic::InputLoseRedPoints( inputdata_t& inputdata )
 void CTFSOLOPropertyDamageLogic::InputLoseBluePoints( inputdata_t& inputdata )
 {
 	ScorePoints( TF_TEAM_BLUE, -1, SCORE_REACTOR_STEAL, NULL );
+}
+
+void CTFSOLOPropertyDamageLogic::InputSetFixedMaxPoints( inputdata_t& inputdata )
+{
+	m_iFixedMaxPoints = inputdata.value.Int();
+	if ( m_iFixedMaxPoints != 0 )
+	{
+		m_nMaxPoints = m_iFixedMaxPoints;
+	}
+	else
+	{
+		CalculatePropCount();
+	}
+}
+
+void CTFSOLOPropertyDamageLogic::InputUpdateMaxPoints( inputdata_t& inputdata )
+{
+	CalculatePropCount();
 }
 #endif

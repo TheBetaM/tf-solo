@@ -3,10 +3,37 @@
 
 #include "props.h"
 #include "modelentities.h"
+#include "tf_weapon_wrench.h"
+
+abstract_class ITFSOLOPropertyDamagePropAll
+{
+public:
+	bool			IsDamageable( void ) { return m_bIsDamageable; }
+	bool			IsSappable( void ) { return m_bIsSappable; }
+	bool			IsRepairable( void ) { return m_bIsRepairable; }
+	bool			PropTookDamage( const CTakeDamageInfo& info, int TeamNum, int entindex );
+	bool			OnWrenchHit( CTFPlayer* pPlayer, CTFWrench* pWrench, Vector hitLoc, CBaseEntity* pEnt );
+	void			AfterCapture( int oldteam, CBaseEntity* pEnt, CTFPlayer* pTFPlayer );
+
+	float m_flCurrentDamage;
+	float m_flLastMaxDamage;
+	float m_flFixedDamageAmount;
+	float m_flMaxDamageIncrement;
+	float m_flMaxDamageMult;
+	int m_iCaptureAction;
+	bool m_bIsDamageable;
+	bool m_bIsSappable;
+	bool m_bIsRepairable;
+
+	COutputEvent m_onPropDamaged;
+	COutputEvent m_onPropCaptured;
+	COutputEvent m_onPropCapturedTeam1;
+	COutputEvent m_onPropCapturedTeam2;
+};
 
 DECLARE_AUTO_LIST( ITFSOLOPropertyDamageProp );
 
-class CTFSOLOPropertyDamageProp : public CDynamicProp, public ITFSOLOPropertyDamageProp
+class CTFSOLOPropertyDamageProp : public CDynamicProp, public ITFSOLOPropertyDamageProp, public ITFSOLOPropertyDamagePropAll
 {
 	DECLARE_CLASS( CTFSOLOPropertyDamageProp, CDynamicProp );
 
@@ -20,25 +47,23 @@ public:
 	virtual void	Touch( CBaseEntity *pOther );
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
 	virtual bool	OverridePropdata( void ) OVERRIDE;
+	virtual bool	IsAlive( void ) OVERRIDE { return true; }
 
-	void InputRoundActivate( inputdata_t& inputdata );
+	void InputRoundActivate(inputdata_t& inputdata);
+	void InputSetDamageAmount(inputdata_t& inputdata);
+	void InputSetDamageable(inputdata_t& inputdata);
+	void InputSetSappable(inputdata_t& inputdata);
+	void InputSetRepairable(inputdata_t& inputdata);
 
 	static CTFSOLOPropertyDamageProp* Create( const Vector& vPosition, const QAngle& qAngles );
-
-	float m_flCurrentDamage;
-	float m_flLastMaxDamage;
-	float m_flFixedDamageAmount;
-	int m_iCaptureAction;
+	
 private:
 	DECLARE_DATADESC();
-
-	COutputEvent m_onPropDamaged;
-	COutputEvent m_onPropCaptured;
 };
 
 DECLARE_AUTO_LIST( ITFSOLOPropertyDamagePhysicsProp );
 
-class CTFSOLOPropertyDamagePhysicsProp : public CPhysicsProp, public ITFSOLOPropertyDamagePhysicsProp
+class CTFSOLOPropertyDamagePhysicsProp : public CPhysicsProp, public ITFSOLOPropertyDamagePhysicsProp, public ITFSOLOPropertyDamagePropAll
 {
 	DECLARE_CLASS( CTFSOLOPropertyDamagePhysicsProp, CPhysicsProp );
 
@@ -52,25 +77,23 @@ public:
 	virtual void	Touch( CBaseEntity* pOther );
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
 	virtual bool	OverridePropdata( void ) OVERRIDE;
+	virtual bool	IsAlive( void ) OVERRIDE { return true; }
 
 	void InputRoundActivate( inputdata_t& inputdata );
+	void InputSetDamageAmount( inputdata_t& inputdata );
+	void InputSetDamageable( inputdata_t& inputdata );
+	void InputSetSappable( inputdata_t& inputdata );
+	void InputSetRepairable( inputdata_t& inputdata );
 
 	static CTFSOLOPropertyDamagePhysicsProp* Create( const Vector& vPosition, const QAngle& qAngles );
 
-	float m_flCurrentDamage;
-	float m_flLastMaxDamage;
-	float m_flFixedDamageAmount;
-	int m_iCaptureAction;
 private:
 	DECLARE_DATADESC();
-
-	COutputEvent m_onPropDamaged;
-	COutputEvent m_onPropCaptured;
 };
 
 DECLARE_AUTO_LIST( ITFSOLOPropertyDamageBrush );
 
-class CTFSOLOPropertyDamageBrush : public CFuncBrush, public ITFSOLOPropertyDamageBrush
+class CTFSOLOPropertyDamageBrush : public CFuncBrush, public ITFSOLOPropertyDamageBrush, public ITFSOLOPropertyDamagePropAll
 {
 	DECLARE_CLASS( CTFSOLOPropertyDamageBrush, CFuncBrush );
 public:
@@ -84,18 +107,16 @@ public:
 	virtual int		ShouldTransmit( const CCheckTransmitInfo* pInfo ) { return FL_EDICT_ALWAYS; }
 	virtual bool	ShouldCollide( int collisionGroup, int contentsMask ) const { return true; }
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
+	virtual bool	IsAlive( void ) OVERRIDE { return true; }
 
 	void InputRoundActivate( inputdata_t& inputdata );
+	void InputSetDamageAmount( inputdata_t& inputdata );
+	void InputSetDamageable( inputdata_t& inputdata );
+	void InputSetSappable( inputdata_t& inputdata );
+	void InputSetRepairable( inputdata_t& inputdata );
 
-	float m_flCurrentDamage;
-	float m_flLastMaxDamage;
-	float m_flFixedDamageAmount;
-	int m_iCaptureAction;
 private:
 	DECLARE_DATADESC();
-
-	COutputEvent m_onPropDamaged;
-	COutputEvent m_onPropCaptured;
 };
 
 #endif // TFSOLO_PROPERTY_DAMAGE_PROP_H

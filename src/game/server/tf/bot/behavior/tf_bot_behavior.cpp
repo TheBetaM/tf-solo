@@ -1380,9 +1380,8 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 		{
 			// bounce missiles with compression blast
 			me->PressAltFireButton();
+			return;
 		}
-
-		return;
 	}
 
 	float threatRange = ( threat->GetEntity()->GetAbsOrigin() - me->GetAbsOrigin() ).Length();

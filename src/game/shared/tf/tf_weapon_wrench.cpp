@@ -26,6 +26,7 @@
 	#include "tf_fx.h"
 	#include "tf_obj_sentrygun.h"
 	#include "ilagcompensationmanager.h"
+	#include "solo/propertydamage_prop.h"
 #endif
 
 // Maximum time between robo arm hits to maintain the three-hit-combo
@@ -189,6 +190,52 @@ void CTFWrench::Smack( void )
 		//   Notify the haptics system we just repaired something.
 		if(pPlayer==C_TFPlayer::GetLocalTFPlayer() && haptics)
 			haptics->ProcessHapticEvent(2,"Weapons","tf_weapon_wrench_fix");
+#endif
+	}
+
+	else if ( trace.fraction < 1.0f && trace.m_pEnt 
+		&& FClassnameIs( trace.m_pEnt, "tf_propertydamage_prop" ) && trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
+	{
+#ifdef GAME_DLL
+		auto prop = dynamic_cast<CTFSOLOPropertyDamageProp*>( trace.m_pEnt );
+		if ( prop->OnWrenchHit( pPlayer, this, trace.endpos, trace.m_pEnt ) )
+		{
+			WeaponSound( SPECIAL1 );
+		}
+		else
+		{
+			WeaponSound( SPECIAL2 );
+		}
+#endif
+	}
+	else if ( trace.fraction < 1.0f && trace.m_pEnt 
+		&& FClassnameIs( trace.m_pEnt, "tf_propertydamage_prop_physics" ) && trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
+	{
+#ifdef GAME_DLL
+		auto prop = dynamic_cast<CTFSOLOPropertyDamagePhysicsProp*>( trace.m_pEnt );
+		if ( prop->OnWrenchHit( pPlayer, this, trace.endpos, trace.m_pEnt ) )
+		{
+			WeaponSound( SPECIAL1 );
+		}
+		else
+		{
+			WeaponSound( SPECIAL2 );
+		}
+#endif
+	}
+	else if ( trace.fraction < 1.0f && trace.m_pEnt 
+		&& FClassnameIs( trace.m_pEnt, "func_propertydamage_brush" ) && trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
+	{
+#ifdef GAME_DLL
+		auto prop = dynamic_cast<CTFSOLOPropertyDamageBrush*>( trace.m_pEnt );
+		if ( prop->OnWrenchHit( pPlayer, this, trace.endpos, trace.m_pEnt ) )
+		{
+			WeaponSound( SPECIAL1 );
+		}
+		else
+		{
+			WeaponSound( SPECIAL2 );
+		}
 #endif
 	}
 	else

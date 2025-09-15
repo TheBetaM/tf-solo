@@ -4048,9 +4048,11 @@ bool CTFBot::IsLineOfFireClear( const Vector &from, const Vector &to ) const
 	trace_t trace;
 	NextBotTraceFilterIgnoreActors botFilter( NULL, COLLISION_GROUP_NONE );
 	CTraceFilterIgnoreFriendlyCombatItems ignoreFriendlyCombatFilter( this, COLLISION_GROUP_NONE, GetTeamNumber() );
+	CTraceFilterIgnoreTeamProperty ignoreTeamPropertyFilter( this, COLLISION_GROUP_NONE, GetTeamNumber() );
 	CTraceFilterChain filter( &botFilter, &ignoreFriendlyCombatFilter );
+	CTraceFilterChain filter2( &filter, &ignoreTeamPropertyFilter );
 
-	UTIL_TraceLine( from, to, MASK_SOLID_BRUSHONLY, &filter, &trace );
+	UTIL_TraceLine( from, to, MASK_SOLID_BRUSHONLY, &filter2, &trace );
 
 	return !trace.DidHit();
 }

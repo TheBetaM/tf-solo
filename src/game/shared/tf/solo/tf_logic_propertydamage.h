@@ -26,10 +26,16 @@ public:
 
 #ifdef GAME_DLL
 	virtual void EvaluatePlayerCount() OVERRIDE;
+	void CalculatePropCount();
 
 private:
 	void InputLoseRedPoints( inputdata_t& inputdata );
 	void InputLoseBluePoints( inputdata_t& inputdata );
+	void InputSetFixedMaxPoints( inputdata_t& inputdata );
+	void InputUpdateMaxPoints( inputdata_t& inputdata );
+
+	float m_flMaxPointsFraction;
+	int m_iFixedMaxPoints;
 
 	COutputEvent m_onPropCapturedTeam1;
 	COutputEvent m_onPropCapturedTeam2;
