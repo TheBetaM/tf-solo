@@ -1080,7 +1080,7 @@ static void StartUseActionSlotItem( const CCommand &args )
 		return;
 	}
 
-	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
+	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook( pLocalPlayer->GetTeamNumber() ) )
 	{
 		CTFGrapplingHook *pGrapplingHook = dynamic_cast< CTFGrapplingHook* >( pLocalPlayer->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
 		if ( pGrapplingHook )
@@ -1129,7 +1129,7 @@ static void EndUseActionSlotItem( const CCommand &args )
 
 	pLocalPlayer->SetUsingActionSlot( false );
 
-	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() && pLocalPlayer->GetActiveTFWeapon() )
+	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook( pLocalPlayer->GetTeamNumber() ) && pLocalPlayer->GetActiveTFWeapon() )
 	{
 		// if we're using the hook, switch back to the last weapon
 		if ( pLocalPlayer->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_GRAPPLINGHOOK )

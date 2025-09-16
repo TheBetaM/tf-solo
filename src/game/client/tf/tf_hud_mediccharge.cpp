@@ -29,6 +29,7 @@ using namespace vgui;
 
 extern ConVar weapon_medigun_resist_num_chunks;
 extern ConVar tf_maddash_mode;
+extern ConVar tf_maddash_infiltration;
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -202,6 +203,7 @@ void CHudMedicChargeMeter::OnTick( void )
 		{
 			m_pChargeMeter->SetProgress( flCharge );
 			SetDialogVariable( "charge", (int)( flCharge * 100 ) );
+
 			if ( !m_bCharged )
 			{
 				if ( flCharge >= 1.0 )
@@ -218,21 +220,43 @@ void CHudMedicChargeMeter::OnTick( void )
 					m_bCharged = false;
 				}
 			}
-			if ( flCharge < 0.2f )
+			if ( !tf_maddash_infiltration.GetBool() )
 			{
-				int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
-				int red = 160 + ( color_offset * 10 );
-				m_pChargeMeter->SetFgColor( Color( red, 0, 0, 255 ) );
-			}
-			else if ( flCharge < 0.5f )
-			{
-				int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
-				int yellow = 160 + ( color_offset * 10 );
-				m_pChargeMeter->SetFgColor( Color( yellow, yellow, 0, 255 ) );
+				if ( flCharge < 0.2f )
+				{
+					int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
+					int red = 160 + ( color_offset * 10 );
+					m_pChargeMeter->SetFgColor( Color( red, 0, 0, 255 ) );
+				}
+				else if ( flCharge < 0.5f )
+				{
+					int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
+					int yellow = 160 + ( color_offset * 10 );
+					m_pChargeMeter->SetFgColor( Color( yellow, yellow, 0, 255 ) );
+				}
+				else
+				{
+					m_pChargeMeter->SetFgColor( Color( 255, 255, 255, 255 ) );
+				}
 			}
 			else
 			{
-				m_pChargeMeter->SetFgColor( Color( 255, 255, 255, 255 ) );
+				if ( flCharge > 0.8f )
+				{
+					int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
+					int red = 160 + ( color_offset * 10 );
+					m_pChargeMeter->SetFgColor( Color( red, 0, 0, 255 ) );
+				}
+				else if ( flCharge > 0.5f )
+				{
+					int color_offset = ( (int)( gpGlobals->realtime * 10 ) ) % 10;
+					int yellow = 160 + ( color_offset * 10 );
+					m_pChargeMeter->SetFgColor( Color( yellow, yellow, 0, 255 ) );
+				}
+				else
+				{
+					m_pChargeMeter->SetFgColor( Color( 255, 255, 255, 255 ) );
+				}
 			}
 		}
 

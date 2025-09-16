@@ -42,6 +42,7 @@
 #include "bot/map_entities/tf_bot_hint_entity.h"
 #include "func_passtime_goal.h"
 #include "tf_item_powerup_bottle.h"
+#include "solo/propertydamage_prop.h"
 
 ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a class name, all TFBots will respawn as that class" );
 
@@ -2498,6 +2499,39 @@ CBaseEntity *CTFBot::GetAnyObjective( void ) const
 		if ( pArea->IsActive() )
 		{
 			return pArea;
+		}
+	}
+
+	for ( int i = 0; i < ITFSOLOPropertyDamageNextBot::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageNextBot* pObj = static_cast<CTFSOLOPropertyDamageNextBot *>( ITFSOLOPropertyDamageNextBot::AutoList()[i] );
+		if ( pObj )
+		{
+			return pObj;
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamageBrush::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageBrush* pObj = static_cast<CTFSOLOPropertyDamageBrush *>( ITFSOLOPropertyDamageBrush::AutoList()[i] );
+		if ( pObj )
+		{
+			return pObj;
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamageProp::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageProp* pObj = static_cast<CTFSOLOPropertyDamageProp *>( ITFSOLOPropertyDamageProp::AutoList()[i] );
+		if ( pObj )
+		{
+			return pObj;
+		}
+	}
+	for (int i = 0; i < ITFSOLOPropertyDamagePhysicsProp::AutoList().Count(); ++i)
+	{
+		CTFSOLOPropertyDamagePhysicsProp* pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp *>( ITFSOLOPropertyDamagePhysicsProp::AutoList()[i] );
+		if ( pObj )
+		{
+			return pObj;
 		}
 	}
 

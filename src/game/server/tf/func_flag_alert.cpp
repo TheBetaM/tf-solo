@@ -15,6 +15,8 @@
 
 LINK_ENTITY_TO_CLASS( func_flag_alert, CFuncFlagAlertZone );
 
+IMPLEMENT_AUTO_LIST( ITFFuncFlagAlertAutoList );
+
 BEGIN_DATADESC( CFuncFlagAlertZone )
 
 	DEFINE_KEYFIELD( m_bPlaySound,	FIELD_BOOLEAN,	"playsound" ),

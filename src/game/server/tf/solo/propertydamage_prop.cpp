@@ -11,10 +11,12 @@
 LINK_ENTITY_TO_CLASS( tf_propertydamage_prop, CTFSOLOPropertyDamageProp );
 LINK_ENTITY_TO_CLASS( tf_propertydamage_prop_physics, CTFSOLOPropertyDamagePhysicsProp );
 LINK_ENTITY_TO_CLASS( func_propertydamage_brush, CTFSOLOPropertyDamageBrush );
+LINK_ENTITY_TO_CLASS( tf_propertydamage_nextbot, CTFSOLOPropertyDamageNextBot );
 
 IMPLEMENT_AUTO_LIST( ITFSOLOPropertyDamageProp );
 IMPLEMENT_AUTO_LIST( ITFSOLOPropertyDamagePhysicsProp );
 IMPLEMENT_AUTO_LIST( ITFSOLOPropertyDamageBrush );
+IMPLEMENT_AUTO_LIST( ITFSOLOPropertyDamageNextBot );
 
 BEGIN_DATADESC( CTFSOLOPropertyDamageProp )
 DEFINE_KEYFIELD( m_flFixedDamageAmount, FIELD_FLOAT, "fixed_damage_amount" ),
@@ -57,6 +59,28 @@ DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetRepairable", InputSetRepairable ),
 END_DATADESC()
 
 BEGIN_DATADESC( CTFSOLOPropertyDamageBrush )
+DEFINE_KEYFIELD( m_flFixedDamageAmount, FIELD_FLOAT, "fixed_damage_amount" ),
+DEFINE_KEYFIELD( m_flLastMaxDamage, FIELD_FLOAT, "starting_damage_amount" ),
+DEFINE_KEYFIELD( m_flMaxDamageIncrement, FIELD_FLOAT, "max_damage_increment" ),
+DEFINE_KEYFIELD( m_flMaxDamageMult, FIELD_FLOAT, "max_damage_mult" ),
+DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
+DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
+DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
+DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
+DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
+DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
+DEFINE_OUTPUT( m_onPropCapturedTeam2, "OnPropCapturedTeam2" ),
+DEFINE_INPUTFUNC( FIELD_VOID, "RoundActivate", InputRoundActivate ),
+DEFINE_INPUTFUNC( FIELD_FLOAT, "SetDamageAmount", InputSetDamageAmount ),
+DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetDamageable", InputSetDamageable ),
+DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetSappable", InputSetSappable ),
+DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetRepairable", InputSetRepairable ),
+END_DATADESC()
+
+BEGIN_DATADESC( CTFSOLOPropertyDamageNextBot )
+DEFINE_KEYFIELD( m_bMovementCollide, FIELD_BOOLEAN, "movement_collide" ),
+
 DEFINE_KEYFIELD( m_flFixedDamageAmount, FIELD_FLOAT, "fixed_damage_amount" ),
 DEFINE_KEYFIELD( m_flLastMaxDamage, FIELD_FLOAT, "starting_damage_amount" ),
 DEFINE_KEYFIELD( m_flMaxDamageIncrement, FIELD_FLOAT, "max_damage_increment" ),
@@ -622,5 +646,142 @@ int CTFSOLOPropertyDamageBrush::OnTakeDamage( const CTakeDamageInfo& info )
 	CTakeDamageInfo newinfo = info;
 	newinfo.SetDamage( 0.0f );
 	return BaseClass::OnTakeDamage( newinfo );
+}
+
+//=========================================================================//
+
+CTFSOLOPropertyDamageNextBot::CTFSOLOPropertyDamageNextBot()
+{
+	m_flCurrentDamage = 0.0f;
+	m_flLastMaxDamage = 0.0f;
+	m_flFixedDamageAmount = 0.0f;
+	m_iCaptureAction = 0;
+	m_flMaxDamageIncrement = 1.0f;
+	m_flMaxDamageMult = 1.0f;
+	m_bIsDamageable = true;
+	m_bIsSappable = true;
+	m_bIsRepairable = true;
+	m_bMovementCollide = false;
+}
+
+void CTFSOLOPropertyDamageNextBot::Spawn()
+{
+	BaseClass::Spawn();
+	m_takedamage = DAMAGE_YES;
+	m_lifeState = LIFE_ALIVE;
+	SetMaxHealth( 99999 );
+	SetHealth( 99999 );
+	if ( m_iCaptureAction == 1 )
+	{
+		if ( GetTeamNumber() == TF_TEAM_RED )
+		{
+			SetRenderColor(189, 59, 59);
+		}
+		else if ( GetTeamNumber() == TF_TEAM_BLUE )
+		{
+			SetRenderColor(125, 168, 196);
+		}
+	}
+	else if ( m_iCaptureAction == 2 )
+	{
+		SetSkin( GetTeamNumber() );
+	}
+}
+
+void CTFSOLOPropertyDamageNextBot::InputRoundActivate( inputdata_t& inputdata )
+{
+	if ( m_iCaptureAction == 1 )
+	{
+		if ( GetTeamNumber() == TF_TEAM_RED )
+		{
+			SetRenderColor(189, 59, 59);
+		}
+		else if ( GetTeamNumber() == TF_TEAM_BLUE )
+		{
+			SetRenderColor(125, 168, 196);
+		}
+	}
+	else if ( m_iCaptureAction == 2 )
+	{
+		SetSkin( GetTeamNumber() );
+	}
+}
+
+void CTFSOLOPropertyDamageNextBot::InputSetDamageAmount( inputdata_t& inputdata )
+{
+	m_flCurrentDamage = inputdata.value.Float();
+}
+
+void CTFSOLOPropertyDamageNextBot::InputSetDamageable( inputdata_t& inputdata )
+{
+	m_bIsDamageable = inputdata.value.Bool();
+}
+
+void CTFSOLOPropertyDamageNextBot::InputSetSappable( inputdata_t& inputdata )
+{
+	m_bIsSappable = inputdata.value.Bool();
+}
+
+void CTFSOLOPropertyDamageNextBot::InputSetRepairable( inputdata_t& inputdata )
+{
+	m_bIsRepairable = inputdata.value.Bool();
+}
+
+int CTFSOLOPropertyDamageNextBot::OnTakeDamage( const CTakeDamageInfo& info )
+{
+	CTFPlayer* pTFPlayer = ToTFPlayer( info.GetAttacker() );
+	if ( pTFPlayer && pTFPlayer->GetTeamNumber() != GetTeamNumber() )
+	{
+		FireNamedOutput( "OnPropDamaged", variant_t(), this, pTFPlayer );
+	}
+	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), entindex() ) )
+	{
+		if ( pTFPlayer )
+		{
+			int oldTeam = GetTeamNumber();
+			ChangeTeam( pTFPlayer->GetTeamNumber() );
+			if ( m_iCaptureAction == 1 )
+			{
+				if ( pTFPlayer->GetTeamNumber() == TF_TEAM_RED )
+				{
+					SetRenderColor(189, 59, 59);
+				}
+				else if ( pTFPlayer->GetTeamNumber() == TF_TEAM_BLUE )
+				{
+					SetRenderColor(125, 168, 196);
+				}
+				else
+				{
+					SetRenderColor(255, 255, 255);
+				}
+			}
+			else if ( m_iCaptureAction == 2 )
+			{
+				SetSkin( pTFPlayer->GetTeamNumber() );
+			}
+			AfterCapture( oldTeam, this, pTFPlayer );
+		}
+	}
+
+	CTakeDamageInfo newinfo = info;
+	newinfo.SetDamage( 0.0f );
+	return BaseClass::OnTakeDamage( newinfo );
+}
+
+int CTFSOLOPropertyDamageNextBot::OnTakeDamage_Alive( const CTakeDamageInfo& info )
+{
+	CTakeDamageInfo newinfo = info;
+	newinfo.SetDamage( 0.0f );
+	return BaseClass::BaseClass::OnTakeDamage_Alive( newinfo );
+}
+
+bool CTFSOLOPropertyDamageNextBot::ShouldCollide( int collisionGroup, int contentsMask ) const
+{
+	if ( collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT && !m_bMovementCollide )
+	{
+		return false;
+	}
+
+	return BaseClass::ShouldCollide( collisionGroup, contentsMask );
 }
 

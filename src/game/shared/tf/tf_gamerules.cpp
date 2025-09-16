@@ -129,6 +129,7 @@
 	#include "player_voice_listener.h"
 	#include "eventqueue.h"
 	#include "func_respawnroom.h"
+	#include "func_flag_alert.h"
 #endif
 
 #include "tf_mann_vs_machine_stats.h"
@@ -910,6 +911,9 @@ ConVar tf_maddash_charge_type("tf_maddash_charge_type", "0", FCVAR_REPLICATED, "
 ConVar tf_maddash_deplete_time( "tf_maddash_deplete_rate", "30.0", FCVAR_REPLICATED, "Base time to fully deplete.\n" );
 ConVar tf_maddash_discharge_time( "tf_maddash_discharge_time", "3.0", FCVAR_REPLICATED, "Flicker time after meter depletes.\n" );
 ConVar tf_maddash_deplete_action( "tf_maddash_deplete_action", "0", FCVAR_REPLICATED, "1 - Instant death on deplete, 2 - Instant fail on deplete\n" );
+ConVar tf_maddash_grapplinghook( "tf_maddash_grapplinghook", "0", FCVAR_REPLICATED, "1 - Grappling hook for courier, 2 - Grappling hook for defenders, 3 - Grappling hook for all\n" );
+ConVar tf_maddash_override( "tf_maddash_override", "0", FCVAR_REPLICATED, "Override map parameters with cvars.\n" );
+ConVar tf_maddash_infiltration( "tf_maddash_infiltration", "0", FCVAR_REPLICATED, "Enable Infiltration variant mode.\n" );
 ConVar tf_propertydamage_mode( "tf_propertydamage_mode", "0", FCVAR_REPLICATED, "Enable Property Damage gamemode.\n" );
 
 #ifdef GAME_DLL
@@ -1084,7 +1088,7 @@ ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FC
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - Force KOTH\n4 - Force CTF\n5 - Force PD\n6 - Force Mad Dash\n7 - Force Prop Control" );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - KOTH\n4 - CTF\n5 - PD\n6 - Mad Dash\n7 - Property Damage\n8 - Property Defense\n9 - Infiltration" );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
@@ -3786,9 +3790,35 @@ bool CTFGameRules::IsUsingSpells( void ) const
 }
 
 //-----------------------------------------------------------------------------
-bool CTFGameRules::IsUsingGrapplingHook( void ) const
+bool CTFGameRules::IsUsingGrapplingHook( int team ) const
 {
-	return tf_grapplinghook_enable.GetBool();
+	if ( tf_grapplinghook_enable.GetBool() || tf_maddash_grapplinghook.GetInt() == 3 )
+		return true;
+
+	if ( tf_maddash_grapplinghook.GetInt() == 1 )
+	{
+		if ( !tf_maddash_flipteams.GetBool() )
+		{
+			return ( team == TF_TEAM_BLUE );
+		}
+		else
+		{
+			return ( team == TF_TEAM_RED );
+		}
+	}
+	else if ( tf_maddash_grapplinghook.GetInt() == 2 )
+	{
+		if ( !tf_maddash_flipteams.GetBool() )
+		{
+			return ( team == TF_TEAM_RED );
+		}
+		else
+		{
+			return ( team == TF_TEAM_BLUE );
+		}
+	}
+
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -4587,6 +4617,11 @@ void CTFGameRules::Activate()
 	if ( pLogicMadDash )
 	{
 		m_hMadDashLogic.Set( pLogicMadDash );
+		tf_maddash_grapplinghook.SetValue( pLogicMadDash->m_iGrapplingHookType );
+		if ( pLogicMadDash->m_iGamemodeType == 1 )
+		{
+			tf_maddash_infiltration.SetValue( 1 );
+		}
 	}
 
 	if ( tf_powerup_mode.GetBool() )
@@ -4639,11 +4674,15 @@ void CTFGameRules::Activate()
 		tf_gamemode_pd.SetValue( 1 );
 		m_nGameType.Set( TF_GAMETYPE_PD );
 	}
-	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH )
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH || overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION )
 	{
 		tf_maddash_mode.SetValue( 1 );
+		if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION )
+		{
+			tf_maddash_infiltration.SetValue( 1 );
+		}
 	}
-	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE )
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE || overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDEFENSE )
 	{
 		m_bPlayingRobotDestructionMode.Set( true );
 		tf_propertydamage_mode.SetValue( 1 );
@@ -5072,6 +5111,11 @@ void CTFGameRules::SetupOnRoundStart( void )
 		if ( pLogicMadDash )
 		{
 			m_hMadDashLogic.Set( pLogicMadDash );
+			tf_maddash_grapplinghook.SetValue( pLogicMadDash->m_iGrapplingHookType );
+			if ( pLogicMadDash->m_iGamemodeType == 1 )
+			{
+				tf_maddash_infiltration.SetValue( 1 );
+			}
 		}
 	}
 	if ( tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_OFF && tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH )
@@ -19885,12 +19929,14 @@ LINK_ENTITY_TO_CLASS( tf_logic_mannpower, CLogicMannPower );
 // Purpose: 
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CLogicMadDash )
+	DEFINE_KEYFIELD( m_iGamemodeType, FIELD_INTEGER, "gamemode_type" ),
 	DEFINE_KEYFIELD( m_bFlipTeams, FIELD_BOOLEAN, "flip_teams" ),
 	DEFINE_KEYFIELD( m_flChargeTime, FIELD_FLOAT, "charge_time" ),
 	DEFINE_KEYFIELD( m_flDepleteTime, FIELD_FLOAT, "deplete_time" ),
 	DEFINE_KEYFIELD( m_flDischargeTime, FIELD_FLOAT, "discharge_time" ),
 	DEFINE_KEYFIELD( m_iDepleteAction, FIELD_INTEGER, "deplete_action" ),
 	DEFINE_KEYFIELD( m_iChargeType, FIELD_INTEGER, "charge_type" ),
+	DEFINE_KEYFIELD( m_iGrapplingHookType, FIELD_INTEGER, "grappling_type" ),
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "AddMeter", InputAddMeter ),
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetMeter", InputSetMeter ),
 	DEFINE_OUTPUT( m_onFullCharge, "OnFullCharge" ),
@@ -23036,6 +23082,12 @@ void CTFGameRules::MadDashThink( void )
 	if ( State_Get() == GR_STATE_TEAM_WIN )
 		return;
 
+	if ( tf_maddash_infiltration.GetBool() )
+	{
+		InfiltrationThink();
+		return;
+	}
+
 	int team_courier = TF_TEAM_BLUE;
 	int team_defense = TF_TEAM_RED;
 	bool isCharging = true;
@@ -23048,7 +23100,7 @@ void CTFGameRules::MadDashThink( void )
 	float depleteRate = 0.001f;
 	float dischargeTime = 3.0f;
 	bool flipTeams = false;
-	if ( m_hMadDashLogic )
+	if ( m_hMadDashLogic && !tf_maddash_override.GetBool() )
 	{
 		flipTeams = m_hMadDashLogic->m_bFlipTeams;
 		depleteAction = m_hMadDashLogic->m_iDepleteAction;
@@ -23251,6 +23303,155 @@ void CTFGameRules::MadDashThink( void )
 
 }
 
+void CTFGameRules::InfiltrationThink( void )
+{
+	int team_courier = TF_TEAM_BLUE;
+	int team_defense = TF_TEAM_RED;
+	bool isCharging = false;
+	bool inSetup = InSetup();
+	bool justCharged = false;
+	bool justDischarged = false;
+	int depleteAction = 1;
+	int chargeType = 0;
+	float chargeRate = 0.001f;
+	float depleteRate = 0.001f;
+	float dischargeTime = 3.0f;
+	bool flipTeams = false;
+	if ( m_hMadDashLogic && !tf_maddash_override.GetBool() )
+	{
+		flipTeams = m_hMadDashLogic->m_bFlipTeams;
+		depleteAction = m_hMadDashLogic->m_iDepleteAction;
+		chargeType = m_hMadDashLogic->m_iChargeType;
+		chargeRate = ( 1.0f / m_hMadDashLogic->m_flChargeTime ) * 0.0075f;
+		depleteRate = ( 1.0f / m_hMadDashLogic->m_flDepleteTime ) * 0.0075f;
+		dischargeTime = m_hMadDashLogic->m_flDischargeTime;
+	}
+	else
+	{
+		depleteAction = tf_maddash_deplete_action.GetInt();
+		chargeRate = ( 1.0f / tf_maddash_charge_time.GetFloat() ) * 0.0075f;
+		chargeType = tf_maddash_charge_type.GetInt();
+		depleteRate = ( 1.0f / tf_maddash_deplete_time.GetFloat() ) * 0.0075f;
+		dischargeTime = tf_maddash_discharge_time.GetFloat();
+		flipTeams = tf_maddash_flipteams.GetBool();
+	}
+
+	if ( flipTeams )
+	{
+		team_courier = TF_TEAM_RED;
+		team_defense = TF_TEAM_BLUE;
+	}
+	if ( !inSetup )
+	{
+		chargeRate *= 4.0f;
+	}
+
+	CUtlVector<CTFPlayer* > playerVector;
+	CollectPlayers( &playerVector, team_courier, COLLECT_ONLY_LIVING_PLAYERS );
+
+	if ( playerVector.Count() == 0 )
+	{
+		isCharging = false;
+	}
+
+	for ( int a = 0; a < playerVector.Count(); a++ )
+	{
+		CTFPlayer* player = playerVector[a];
+		if ( !player )
+			continue;
+
+		if ( !player->IsAlive() )
+		{
+			isCharging = false;
+			continue;
+		}
+
+		bool inSpawn = false;
+
+		for ( int i = 0; i < IFuncRespawnRoomAutoList::AutoList().Count(); ++i )
+		{
+			CFuncRespawnRoom* pRespawnRoom = static_cast<CFuncRespawnRoom*>( IFuncRespawnRoomAutoList::AutoList()[i] );
+			if ( pRespawnRoom->GetActive() )
+			{
+				if ( pRespawnRoom->PointIsWithin( player->GetAbsOrigin() ) )
+				{
+					inSpawn = true;
+				}
+			}
+		}
+
+		if ( !player->m_Shared.IsFullyInvisible() )
+		{
+			for ( int i = 0; i < ITFFuncFlagAlertAutoList::AutoList().Count(); ++i )
+			{
+				CFuncFlagAlertZone* pAlertZone = static_cast<CFuncFlagAlertZone*>( ITFFuncFlagAlertAutoList::AutoList()[i] );
+				if ( !pAlertZone->m_bDisabled )
+				{
+					if ( pAlertZone->PointIsWithin( player->GetAbsOrigin() ) )
+					{
+						isCharging = true;
+					}
+				}
+			}
+		}
+
+		if ( inSpawn )
+		{
+			isCharging = false;
+		}
+
+		if ( !inSetup && !inSpawn && m_flMadDashMeter >= 1.0f )
+		{
+			if ( m_hMadDashLogic )
+			{
+				m_hMadDashLogic->FireNamedOutput( "OnChargeDischarged", variant_t(), player, player );
+			}
+			if ( depleteAction == 1 )
+			{
+				// Alert level full - instant death
+				CTakeDamageInfo info( player, player, 900.0f, DMG_BULLET, TF_DMG_CUSTOM_HEADSHOT );
+				player->TakeDamage( info );
+			}
+			else if ( depleteAction == 2 )
+			{
+				// Alert level full - instant fail
+				SetWinningTeam( team_defense, WINREASON_DEFEND_UNTIL_TIME_LIMIT );
+			}
+		}
+	}
+
+	if ( isCharging )
+	{
+		float target = m_flMadDashMeter + chargeRate;
+		if ( m_flMadDashMeter != 1.0f && target >= 1.0f )
+		{
+			justCharged = true;
+			TFGameRules()->BroadcastSound( 255, "TFPlayer.InvulnerableOn" );
+			if ( m_hMadDashLogic )
+			{
+				m_hMadDashLogic->FireNamedOutput( "OnFullCharge", variant_t(), NULL, NULL );
+			}
+		}
+		m_flMadDashMeter = MIN( target, 1.0f );
+	}
+	else
+	{
+		float target = m_flMadDashMeter - depleteRate;
+		if ( m_flMadDashMeter != 0.0f && target <= 0.0f )
+		{
+			justDischarged = true;
+			TFGameRules()->BroadcastSound( 255, "TFPlayer.InvulnerableOff" );
+			if ( m_hMadDashLogic )
+			{
+				m_hMadDashLogic->FireNamedOutput( "OnChargeDepleted", variant_t(), NULL, NULL );
+			}
+		}
+		m_flMadDashMeter = MAX( target, 0.0f );
+	}
+
+
+}
+
 void CLogicMadDash::InputAddMeter( inputdata_t& inputdata )
 {
 	TFGameRules()->AddMadDashMeter( inputdata.value.Float() );
@@ -23307,7 +23508,7 @@ void	ScriptSetPlayersInHell( bool bInHell )						{ return TFGameRules()->SetPlay
 bool	ScriptArePlayersInHell()									{ return TFGameRules()->ArePlayersInHell(); }
 void	ScriptSetUsingSpells( bool bUsingSpells )					{ return TFGameRules()->SetUsingSpells( bUsingSpells ); }
 bool	ScriptIsUsingSpells()										{ return TFGameRules()->IsUsingSpells(); }
-bool	ScriptIsUsingGrapplingHook()								{ return TFGameRules()->IsUsingGrapplingHook(); }
+bool	ScriptIsUsingGrapplingHook()								{ return TFGameRules()->IsUsingGrapplingHook( TF_TEAM_BLUE ); }
 bool	ScriptIsTruceActive()										{ return TFGameRules()->IsTruceActive(); }
 bool	ScriptMapHasMatchSummaryStage()								{ return TFGameRules()->MapHasMatchSummaryStage(); }
 bool	ScriptPlayersAreOnMatchSummaryStage()						{ return TFGameRules()->PlayersAreOnMatchSummaryStage(); }

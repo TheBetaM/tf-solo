@@ -153,6 +153,8 @@ enum {
 	TF_GAMEMODEOVERRIDE_PD,
 	TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH,
 	TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE,
+	TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDEFENSE,
+	TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION,
 };
 
 //-----------------------------------------------------------------------------
@@ -173,6 +175,8 @@ public:
 		m_flDischargeTime = 0.0f;
 		m_iDepleteAction = 0;
 		m_iChargeType = 0;
+		m_iGrapplingHookType = 0;
+		m_iGamemodeType = 0;
 	}
 	virtual int UpdateTransmitState()
 	{
@@ -188,6 +192,8 @@ public:
 	float m_flDischargeTime;
 	int m_iDepleteAction;
 	int m_iChargeType;
+	int m_iGrapplingHookType;
+	int m_iGamemodeType;
 
 private:
 
@@ -799,7 +805,7 @@ bool IsCreepWaveMode( void ) const;
 	}
 
 	bool IsUsingSpells( void ) const;
-	bool IsUsingGrapplingHook( void ) const;
+	bool IsUsingGrapplingHook( int team ) const;
 
 	bool IsTruceActive( void ) const; 
 
@@ -1475,6 +1481,7 @@ private:
 	Vector m_zombieSpawnSpot;
 
 	void MadDashThink( void );
+	void InfiltrationThink( void );
 
 public:
 	void BeginHaunting( int nDesiredCount, float flMinDuration, float flMaxDuration );

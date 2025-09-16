@@ -1,0 +1,204 @@
+@PointClass base(Targetname) = tf_gamerules : "Proxy entity for TF Gamerules"
+[	
+	hud_type(choices) : "Hud Type" : 0 : "Override the HUD type clients should display." =
+	[
+		0 : "Default"
+		1 : "CTF HUD"
+		2 : "CP HUD"
+		3 : "Payload HUD"
+	]
+	
+	ctf_overtime(choices) : "CTF Overtime" : 1 : "Allow Overtime for CTF maps." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	ropes_holiday_lights_allowed(choices) : "Holiday Ropes" : 1 : "Allow ropes with holiday lights during the holiday event." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	input SetRedTeamRespawnWaveTime(float) : "Set the RED team's respawn wave time"
+	input SetBlueTeamRespawnWaveTime(float) : "Set the BLU team's respawn wave time"
+	input AddRedTeamRespawnWaveTime(float) : "Add to the RED team's respawn wave time"
+	input AddBlueTeamRespawnWaveTime(float) : "Add to the BLU team's respawn wave time"
+	input SetRedTeamGoalString(string) : "Set the RED team's goal string to show in the hud"
+	input SetBlueTeamGoalString(string) : "Set the BLU team's goal string to show in the hud"
+	input SetRedTeamRole(integer) : "Set RED team role, 0=none, 1=defenders, 2=attackers"
+	input SetBlueTeamRole(integer) : "Set BLU team role, 0=none, 1=defenders, 2=attackers"
+	input SetRequiredObserverTarget(string) : "Sets the given entity (by name) to be the required observer target for all spectators. Must be cleared to allow spectators to cycle through targets normally again."
+	input AddRedTeamScore(integer) : "Add to the RED team score (can be a negative number)"
+	input AddBlueTeamScore(integer) : "Add to the BLU team score (can be a negative number)"
+	input SetStalemateOnTimelimit(bool) : "Determines whether mp_timelimit can end the match in the middle of a round."
+	input SetRedKothClockActive(void) : "Set the RED team clock active for KOTH maps."
+	input SetBlueKothClockActive(void) : "Set the BLU team clock active for KOTH maps."
+	input SetCTFCaptureBonusTime(float) : "Set the length (in seconds) of team crit time for CTF captures. 0 = none"
+	input PlayVORed(string) : "Play the given sound entry via the VO channel" 
+	input PlayVOBlue(string) : "Play the given sound entry via the VO channel"
+	input PlayVO(string) : "Play the given sound entry via the VO channel"
+	input HandleMapEvent(string) : "Handles map events. This will be different events for different maps."
+	input SetCustomUpgradesFile(string) : "Specifies the path relative to the game directory to the upgrades file to be used."
+	input SetRoundRespawnFreezeEnabled(integer) : "Enable/disable the player movement freeze period after a round begins."
+	input SetMapForcedTruceDuringBossFight(bool) : "Enable/disable truce between the teams during a fight with Monoculus or Merasmus."
+	
+	output OnWonByTeam1(void) : "Sent when RED wins the round."
+	output OnWonByTeam2(void) : "Sent when BLUE wins the round."
+	output Team1PlayersChanged(integer) : "Sent when RED team player count changes, due to a player joining or leaving the team."
+	output Team2PlayersChanged(integer) : "Sent when BLUE team player count changes, due to a player joining or leaving the team."
+	output OnPowerupImbalanceTeam1(void) : "Sent when BLUE team has a powerup kill advantage over the RED team. Initiate RED team assist measures now."
+	output OnPowerupImbalanceTeam2(void) : "Sent when RED team has a powerup kill advantage over the BLUE team. Initiate BLUE team assist measures now."
+	output OnPowerupImbalanceMeasuresOver(void) : "Sent when powerup imbalance measures should be stopped"
+	output OnStateEnterBetweenRounds(void) : "Fired when entering the between-rounds state (MvM and Competitive)."
+	output OnStateEnterPreRound(void) : "Fired when entering the pre-round state (just before round running)."
+	output OnStateExitPreRound(void) : "Fired when exiting the pre-round state (just before round running)."
+	output OnStateEnterRoundRunning(void) : "Fired when entering the round-running state."
+	output OnMatchSummaryStart(void) : "Fired when the match summary begins and players are spawned on stage."
+	output OnTruceStart(void) : "Sent when a truce starts."
+	output OnTruceEnd(void) : "Sent when a truce ends."
+
+	// TFSOLO
+	input SoloAddCredits(integer) : "Add armory credits to all players."
+	input SoloSaveData(integer) : "Initiate solo save data to all players."
+	input SoloUnlockItem(string) : "Unlock item by name for all players."
+	input SoloUnlockItemID(integer) : "Unlock item by ID for all players."
+	input SoloAddMadDashMeter(float) : "Add/subtract Mad Dash meter."
+	input SoloSetMadDashMeter(float) : "Set Mad Dash meter to value (0.0-1.0)."
+]
+
+@PointClass base(Targetname) = tf_logic_maddash : "Mad Dash Gamemode Logic Entity."
+[	
+	gamemode_type(choices) : "Gamemode Type" : 0 : "Gamemode Type" =
+	[
+		0 : "Mad Dash"
+		1 : "Infiltration"
+	]
+	charge_time(float) : "Time to fully charge (in seconds)" : 10 : "Length of the time that it takes to fully charge the meter."
+	charge_type(choices) : "Charge Type" : 1 : "Charge Type" =
+	[
+		0 : "Uber"
+		1 : "Uber + Crits"
+		2 : "Uber + Mini-Crits"
+		3 : "Crits"
+		4 : "Mini-Crits"
+	]
+	deplete_time(float) : "Time to fully deplete (in seconds)" : 30 : "Length of the time that it takes to fully deplete the meter."
+	discharge_time(float) : "Grace period time (in seconds)" : 3 : "Length of the grace period after meter is depleted."
+	deplete_action(choices) : "Deplete Action" : 1 : "Deplete Action" =
+	[
+		0 : "None"
+		1 : "Instant Death"
+		2 : "Instant Fail"
+	]
+	grappling_type(choices) : "Grappling Hook" : 0 : "Grappling Hook" =
+	[
+		0 : "Disabled"
+		1 : "Attackers only"
+		2 : "Defenders only"
+		3 : "Enabled for all"
+	]
+	flip_teams(choices) : "Flip Team Roles" : 0 : "Flip Team Roles" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	input AddMeter(float) : "Add/subtract Mad Dash meter."
+	input SetMeter(float) : "Set Mad Dash meter to value (0.0-1.0)."
+	
+	// Outputs
+	output OnFullCharge(void) : "Sent when the meter is full."
+	output OnChargeDepleted(void) : "Sent when the meter is empty."	
+	output OnChargeDischarged(void) : "Sent when the discharge grace time ends."	
+]
+
+@PointClass base(tf_logic_player_destruction) = tf_logic_propertydamage : "Property Damage Gamemode Logic Entity."
+[	
+	gamemode_type(choices) : "Gamemode Type" : 0 : "Gamemode Type" =
+	[
+		0 : "Property Damage"
+		1 : "Property Defense"
+	]
+	res_file(string) : "HUD Res File" : "resource/UI/Solo/HudObjectivePropertyDamage.res" : "What res file to use for the HUD"
+	fixed_max_score(integer) : "Fixed Max Points" : 0 : "If non-zero, use this number as the max points to reach."
+	max_points_fraction(float) : "Max Points Fraction" : "0.75" : "Use this fraction of all the Property Damage props to calculate max points."	
+	flip_teams(choices) : "Flip Team Roles" : 0 : "Flip Team Roles (Property Defense)" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	input UpdateMaxPoints(void) : "Recalculate max points and update player HUD."
+	input SetFixedMaxPoints(integer) : "Set fixed max points to this amount."
+	input LoseRedPoints(void) : "Takes away 1 point from red team."
+	input LoseBluePoints(void) : "Takes away 1 point from blue team."
+
+	// Outputs
+	output OnPropCapturedTeam1(void) : "Sent when red team captures a prop."
+	output OnPropCapturedTeam2(void) : "Sent when blue team captures a prop."
+	output OnPropLostTeam1(void) : "Sent when red team loses a prop."
+	output OnPropLostTeam2(void) : "Sent when blue team loses a prop."
+]
+
+@BaseClass = propertydamage_prop
+[
+	starting_damage_amount(float) : "Starting Damage Amount" : 0 : "The starting amount of damage needed to capture the prop."
+	fixed_damage_amount(float) : "Fixed Damage Amount" : 0 : "If non-zero, prop will always use this fixed amount of damage instead of dynamic."
+	max_damage_increment(float) : "Max Damage Increment" : 1 : "If dynamic, increment the max damage by this amount (plus any damage over the max) after each capture."
+	max_damage_mult(float) : "Max Damage Multiplier" : 1 : "If dynamic, multiply the max damage by this amount after each capture."
+	capture_action(choices) : "Capture Action" : 0 : "Capture Action" =
+	[
+		0 : "Nothing"
+		1 : "Recolor Prop"
+		2 : "Change Skin To Team Number"
+	]
+	is_damageable(integer) : "Starts Damageable" : 1 : "Boolean value (0 or 1)."
+	is_sappable(integer) : "Is Sappable" : 1 : "Boolean value (0 or 1)."
+	is_repairable(integer) : "Is Repairable" : 1 : "Boolean value (0 or 1)."
+	
+	input SetDamageAmount(float) : "Set the prop's current damage amount taken."
+	input SetDamageable(bool) : "Set whether the prop is damageable."
+	input SetSappable(bool) : "Set whether the prop is sappable."
+	input SetRepairable(bool) : "Set whether the prop is repairable."
+
+	// Outputs
+	output OnPropDamaged(void) : "Sent when the prop is damaged."
+	output OnPropCaptured(void) : "Sent when the prop is captured."
+	output OnPropCapturedTeam1(void) : "Sent when the prop is captured by red team."
+	output OnPropCapturedTeam2(void) : "Sent when the prop is captured by blue team."
+]
+
+@PointClass base(prop_dynamic_override, TeamNum, propertydamage_prop) studioprop() = tf_propertydamage_prop :
+	"Property Damage gamemode prop."
+[
+	
+]
+
+@PointClass base(prop_physics_override, TeamNum, propertydamage_prop) studioprop() = tf_propertydamage_prop_physics :
+	"Property Damage gamemode physics prop."
+[
+	
+]
+
+@SolidClass base(func_brush, TeamNum, propertydamage_prop) = func_propertydamage_brush :
+	"Property Damage gamemode brush prop."
+[
+	
+]
+
+@PointClass base(Targetname,Studiomodel,Origin,Angles,TeamNum,propertydamage_prop) studioprop() = tf_propertydamage_nextbot :
+	"Property Damage gamemode NextBot."
+[
+	movement_collide(integer) : "Collide With Player Movement" : 1 : "Boolean value (0 or 1)."
+]
+
+@PointClass base(Targetname) = tf_logic_fortify : "Fortify Gamemode Logic Entity."
+[	
+		
+]
+
+@PointClass base(Targetname) = tf_logic_convoy : "Convoy Gamemode Logic Entity."
+[	
+		
+]

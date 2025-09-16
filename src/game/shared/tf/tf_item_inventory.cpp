@@ -794,7 +794,7 @@ bool CTFInventoryManager::SlotContainsBaseItems( EEquipType_t eType, int iSlot )
 		if ( TFGameRules() && TFGameRules()->IsUsingSpells() )
 			return true;
 
-		if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
+		if ( TFGameRules() && ( TFGameRules()->IsUsingGrapplingHook( TF_TEAM_RED ) || TFGameRules()->IsUsingGrapplingHook( TF_TEAM_BLUE ) ) )
 			return true;
 	}
 	// Normal game
@@ -831,7 +831,7 @@ CEconItemView *CTFInventoryManager::GetBaseItemForClass( int iClass, int iSlot )
 		}
 
 		static CSchemaItemDefHandle pItemDef_GrapplingHook( "TF_WEAPON_GRAPPLINGHOOK" );
-		if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() && pItemDef_GrapplingHook )
+		if ( TFGameRules() && ( TFGameRules()->IsUsingGrapplingHook( TF_TEAM_BLUE ) || TFGameRules()->IsUsingGrapplingHook( TF_TEAM_RED ) ) && pItemDef_GrapplingHook )
 		{
 			stockActionItemDefIndices.AddToTail( pItemDef_GrapplingHook->GetDefinitionIndex() );
 		}

@@ -4,6 +4,7 @@
 #include "props.h"
 #include "modelentities.h"
 #include "tf_weapon_wrench.h"
+#include "tf/player_vs_environment/tf_base_boss.h"
 
 abstract_class ITFSOLOPropertyDamagePropAll
 {
@@ -114,6 +115,35 @@ public:
 	void InputSetDamageable( inputdata_t& inputdata );
 	void InputSetSappable( inputdata_t& inputdata );
 	void InputSetRepairable( inputdata_t& inputdata );
+
+private:
+	DECLARE_DATADESC();
+};
+
+DECLARE_AUTO_LIST( ITFSOLOPropertyDamageNextBot );
+
+class CTFSOLOPropertyDamageNextBot : public CTFBaseBoss, public ITFSOLOPropertyDamageNextBot, public ITFSOLOPropertyDamagePropAll
+{
+	DECLARE_CLASS( CTFSOLOPropertyDamageNextBot, CTFBaseBoss );
+public:
+
+	CTFSOLOPropertyDamageNextBot();
+
+	virtual void Spawn( void );
+	virtual int OnTakeDamage( const CTakeDamageInfo& info ) OVERRIDE;
+	virtual int OnTakeDamage_Alive( const CTakeDamageInfo& info ) OVERRIDE;
+	virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const OVERRIDE;
+
+	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
+	virtual bool	IsAlive( void ) OVERRIDE { return true; }
+
+	void InputRoundActivate( inputdata_t& inputdata );
+	void InputSetDamageAmount( inputdata_t& inputdata );
+	void InputSetDamageable( inputdata_t& inputdata );
+	void InputSetSappable( inputdata_t& inputdata );
+	void InputSetRepairable( inputdata_t& inputdata );
+
+	bool m_bMovementCollide;
 
 private:
 	DECLARE_DATADESC();

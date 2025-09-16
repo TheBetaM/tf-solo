@@ -36,6 +36,8 @@ private:
 
 	float m_flMaxPointsFraction;
 	int m_iFixedMaxPoints;
+	int m_iGamemodeType;
+	bool m_bFlipTeams;
 
 	COutputEvent m_onPropCapturedTeam1;
 	COutputEvent m_onPropCapturedTeam2;

@@ -10971,7 +10971,7 @@ void C_TFPlayer::FireGameEvent( IGameEvent *event )
 				}
 			}
 			// ADD EconNotification to equip grapplinghook here
-			else if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
+			else if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook( GetTeamNumber() ) )
 			{
 				int iCount = NotificationQueue_Count( &CEquipGrapplingHookNotification::IsNotificationType );
 				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( event->GetInt( "class"), LOADOUT_POSITION_ACTION );

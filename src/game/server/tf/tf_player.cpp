@@ -1340,7 +1340,7 @@ void CTFPlayer::TFPlayerThink()
 		}
 	}
 
-	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
+	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook( GetTeamNumber() ) )
 	{
 		if ( IsUsingActionSlot() && GetActiveTFWeapon() && GetActiveTFWeapon()->GetWeaponID() != TF_WEAPON_GRAPPLINGHOOK )
 		{
@@ -5024,7 +5024,7 @@ void CTFPlayer::UseActionSlotItemPressed( void )
 		return;
 	}
 
-	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
+	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook( GetTeamNumber() ) )
 	{
 		CTFGrapplingHook *pGrapplingHook = dynamic_cast< CTFGrapplingHook* >( pActionSlotEntity );
 		if ( pGrapplingHook )
@@ -5042,7 +5042,7 @@ void CTFPlayer::UseActionSlotItemReleased( void )
 {
 	m_bUsingActionSlot = false;
 
-	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
+	if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook( GetTeamNumber() ) )
 	{
 		// if we're using the hook, switch back to the last weapon
 		if ( GetActiveTFWeapon() && GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_GRAPPLINGHOOK )

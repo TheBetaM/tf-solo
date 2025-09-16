@@ -238,6 +238,21 @@ void CTFWrench::Smack( void )
 		}
 #endif
 	}
+	else if ( trace.fraction < 1.0f && trace.m_pEnt
+		&& FClassnameIs( trace.m_pEnt, "tf_propertydamage_nextbot" ) && trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
+	{
+#ifdef GAME_DLL
+		auto prop = dynamic_cast<CTFSOLOPropertyDamageNextBot*>( trace.m_pEnt );
+		if ( prop->OnWrenchHit( pPlayer, this, trace.endpos, trace.m_pEnt ) )
+		{
+			WeaponSound( SPECIAL1 );
+		}
+		else
+		{
+			WeaponSound( SPECIAL2 );
+		}
+#endif
+	}
 	else
 	{
 		// if we cannot, Smack as usual for player hits

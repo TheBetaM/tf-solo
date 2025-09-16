@@ -13,10 +13,12 @@
 #include "triggers.h"
 #include "tf_shareddefs.h"
 
+DECLARE_AUTO_LIST( ITFFuncFlagAlertAutoList );
+
 //-----------------------------------------------------------------------------
 // Purpose: Designates an area that triggers an alert when a player carrying a flag starts touching the area
 //-----------------------------------------------------------------------------
-class CFuncFlagAlertZone : public CBaseTrigger
+class CFuncFlagAlertZone : public CBaseTrigger, public ITFFuncFlagAlertAutoList
 {
 	DECLARE_CLASS( CFuncFlagAlertZone, CBaseTrigger );
 

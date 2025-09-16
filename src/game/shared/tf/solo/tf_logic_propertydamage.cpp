@@ -13,6 +13,7 @@
 				   
 #ifdef GAME_DLL
 BEGIN_DATADESC( CTFSOLOPropertyDamageLogic )
+DEFINE_KEYFIELD( m_iGamemodeType, FIELD_INTEGER, "gamemode_type" ),
 DEFINE_KEYFIELD( m_flMaxPointsFraction, FIELD_FLOAT, "max_points_fraction" ),
 DEFINE_KEYFIELD( m_iFixedMaxPoints, FIELD_INTEGER, "fixed_max_points" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
@@ -41,6 +42,8 @@ CTFSOLOPropertyDamageLogic::CTFSOLOPropertyDamageLogic()
 #if GAME_DLL
 	m_iFixedMaxPoints = 0;
 	m_flMaxPointsFraction = 0.75f;
+	m_iGamemodeType = 0;
+	m_bFlipTeams = false;
 #endif
 }
 
@@ -70,6 +73,7 @@ void CTFSOLOPropertyDamageLogic::CalculatePropCount()
 	propCount += ITFSOLOPropertyDamageProp::AutoList().Count();
 	propCount += ITFSOLOPropertyDamagePhysicsProp::AutoList().Count();
 	propCount += ITFSOLOPropertyDamageBrush::AutoList().Count();
+	propCount += ITFSOLOPropertyDamageNextBot::AutoList().Count();
 	for ( int i = 0; i < ITFSOLOPropertyDamageProp::AutoList().Count(); ++i )
 	{
 		CTFSOLOPropertyDamageProp* pObj = static_cast<CTFSOLOPropertyDamageProp*>( ITFSOLOPropertyDamageProp::AutoList()[i] );
@@ -84,7 +88,7 @@ void CTFSOLOPropertyDamageLogic::CalculatePropCount()
 	}
 	for ( int i = 0; i < ITFSOLOPropertyDamagePhysicsProp::AutoList().Count(); ++i )
 	{
-		CTFSOLOPropertyDamagePhysicsProp* pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp*>(ITFSOLOPropertyDamagePhysicsProp::AutoList()[i]);
+		CTFSOLOPropertyDamagePhysicsProp* pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp*>( ITFSOLOPropertyDamagePhysicsProp::AutoList()[i] );
 		if ( pObj->GetTeamNumber() == TF_TEAM_RED )
 		{
 			propRedCount++;
@@ -97,6 +101,18 @@ void CTFSOLOPropertyDamageLogic::CalculatePropCount()
 	for ( int i = 0; i < ITFSOLOPropertyDamageBrush::AutoList().Count(); ++i )
 	{
 		CTFSOLOPropertyDamageBrush* pObj = static_cast<CTFSOLOPropertyDamageBrush*>( ITFSOLOPropertyDamageBrush::AutoList()[i] );
+		if ( pObj->GetTeamNumber() == TF_TEAM_RED )
+		{
+			propRedCount++;
+		}
+		else if ( pObj->GetTeamNumber() == TF_TEAM_BLUE )
+		{
+			propBlueCount++;
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamageNextBot::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageNextBot* pObj = static_cast<CTFSOLOPropertyDamageNextBot*>( ITFSOLOPropertyDamageNextBot::AutoList()[i] );
 		if ( pObj->GetTeamNumber() == TF_TEAM_RED )
 		{
 			propRedCount++;
