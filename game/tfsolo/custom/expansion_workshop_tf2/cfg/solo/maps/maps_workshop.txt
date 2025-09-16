@@ -1120,6 +1120,58 @@ maps_config
 				vscript 1
 			}
 		}
+		workshop_3322540619
+		{
+			name "Rural"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				theme_farm 1
+				vscript 1
+			}
+		}
+		workshop_3360981389
+		{
+			name "Himalaya"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_alpine 1
+			}
+		}
+		workshop_3361186611
+		{
+			name "Slaughter"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_indoor 1
+			}
+		}
+		workshop_3361557780
+		{
+			name "Melchior"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_indoor 1
+			}
+		}
 		
 	
 	}

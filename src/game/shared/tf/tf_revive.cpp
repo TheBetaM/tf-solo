@@ -260,11 +260,11 @@ void CTFReviveMarker::ReviveThink( void )
 		return;
 	}
 
-	// PvP revives fix
-	if ( m_hOwner && !m_hOwner->GetReviveMarker() )
-	{
-		m_hOwner->SetReviveMarkerEnt( this );
-	}
+	// PvP revives fix for Perks (re-evaluate, breaks VScript Freeze Tag and Rural)
+	//if ( m_hOwner && !m_hOwner->GetReviveMarker() )
+	//{
+	//	m_hOwner->SetReviveMarkerEnt( this );
+	//}
 
 	if ( tf_revives_enable.GetInt() == 2 && m_hOwner )
 	{
@@ -419,7 +419,7 @@ void CTFReviveMarker::SetOwner( CTFPlayer *pPlayer )
 
 	m_hOwner = pPlayer;
 	ChangeTeam( m_hOwner->GetTeamNumber() );
-	if ( m_hOwner->GetTeamNumber() == TF_TEAM_BLUE )
+	if ( tf_revives_enable.GetInt() != 0 && m_hOwner->GetTeamNumber() == TF_TEAM_BLUE )
 	{
 		SetModel( MARKER_MODEL_BLUE );
 	}

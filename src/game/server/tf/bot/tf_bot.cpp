@@ -2151,9 +2151,12 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		}
 
 		// Flag is being used as a workaround
-		if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION && flag->GetPrevOwner() && FClassnameIs( flag->GetPrevOwner(), "worldspawn" ) )
+		if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION )
 		{
-			continue;
+			if ( flag->GetPrevOwner() && FClassnameIs( flag->GetPrevOwner(), "worldspawn" ) )
+				continue;
+			if ( !V_strcmp( STRING( flag->GetModelName() ), "models/empty.mdl" ) )
+				continue;
 		}
 
 		switch( flag->GetType() )
