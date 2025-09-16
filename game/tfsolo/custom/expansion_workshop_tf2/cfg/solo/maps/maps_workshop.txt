@@ -1172,6 +1172,28 @@ maps_config
 				theme_indoor 1
 			}
 		}
+		workshop_3473871809
+		{
+			name "Petrichor"
+			modename "#Gametype_TOW"
+			tags
+			{
+				tow 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3473896803
+		{
+			name "Strait"
+			modename "#Gametype_TOW"
+			tags
+			{
+				tow 1
+				symm 1
+				theme_alpine 1
+			}
+		}
 		
 	
 	}

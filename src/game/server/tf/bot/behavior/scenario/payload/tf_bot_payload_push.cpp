@@ -58,22 +58,38 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 	}
 
 	CBaseEntity *cart = trainWatcher->GetTrainEntity();
-	if ( !cart )
-	{
-		return Continue();
-	}
 
 	if ( !trainWatcher->IsHandlingTrainMovement() )
 	{
-		for (int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i)
+		bool bFoundCapzone = false;
+		for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
 		{
 			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
 			if ( pArea->IsActive() && !pArea->IsBlocked() && pArea->TeamCanCap( me->GetTeamNumber() ) )
 			{
 				cart = pArea;
+				bFoundCapzone = true;
 				break;
 			}
 		}
+		if ( !bFoundCapzone )
+		{
+			for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+			{
+				CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture*>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+				if ( pArea->TeamCanCap(me->GetTeamNumber() ) )
+				{
+					cart = pArea;
+					bFoundCapzone = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if ( !cart )
+	{
+		return Continue();
 	}
 
 	// move toward the point, periodically repathing to account for changing situation
