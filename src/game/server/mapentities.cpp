@@ -19,10 +19,12 @@
 #include "world.h"
 #include "toolframework/iserverenginetools.h"
 #include "vscript_server.h"
+#include "filesystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+extern ConVar sv_mapentities_override;
 
 struct HierarchicalSpawnMapData_t
 {
@@ -330,6 +332,18 @@ void MapEntity_ParseAllEntities(const char *pMapData, IMapEntityFilter *pFilter,
 	if ( serverenginetools )
 	{
 		pMapData = serverenginetools->GetEntityData( pMapData );
+	}
+
+	// Override entities from file
+	const char* overrideFile = sv_mapentities_override.GetString();
+	if ( overrideFile && overrideFile[0] )
+	{
+		CUtlBuffer buf;
+		if ( g_pFullFileSystem->ReadFile( overrideFile, "GAME", buf ) )
+		{
+			CUtlBuffer bufText( buf.Base(), buf.TellPut(), CUtlBuffer::READ_ONLY | CUtlBuffer::TEXT_BUFFER );
+			pMapData = V_strdup( (char*)bufText.Base() );
+		}
 	}
 
 	//  Loop through all entities in the map data, creating each.

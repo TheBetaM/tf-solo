@@ -13,6 +13,7 @@
 #include "c_te_effect_dispatch.h"
 #include "datacache/imdlcache.h"
 #include "view.h"
+#include "filesystem.h"
 #include "tier0/vprof.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -26,6 +27,8 @@ ConVar	r_propsmaxdist( "r_propsmaxdist", "1200", 0, "Maximum visible distance" )
 ConVar	cl_phys_props_enable( "cl_phys_props_enable", "1", 0, "Disable clientside physics props (must be set before loading a level)." );
 ConVar	cl_phys_props_respawndist( "cl_phys_props_respawndist", "1500", 0, "Minimum distance from the player that a clientside prop must be before it's allowed to respawn." );
 ConVar	cl_phys_props_respawnrate( "cl_phys_props_respawnrate", "60", 0, "Time, in seconds, between clientside prop respawns." );
+
+extern ConVar sv_mapentities_override;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -670,6 +673,17 @@ void C_PhysPropClientside::ParseAllEntities(const char *pMapData)
 	int nEntities = 0;
 
 	char szTokenBuffer[MAPKEY_MAXLENGTH];
+
+	const char* overrideFile = sv_mapentities_override.GetString();
+	if ( overrideFile && overrideFile[0] )
+	{
+		CUtlBuffer buf;
+		if ( g_pFullFileSystem->ReadFile( overrideFile, "GAME", buf ) )
+		{
+			CUtlBuffer bufText( buf.Base(), buf.TellPut(), CUtlBuffer::READ_ONLY | CUtlBuffer::TEXT_BUFFER );
+			pMapData = V_strdup( (char*)bufText.Base() );
+		}
+	}
 
 	//
 	//  Loop through all entities in the map data, creating each.
