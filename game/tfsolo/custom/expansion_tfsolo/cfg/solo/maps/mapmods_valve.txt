@@ -1,0 +1,17 @@
+maps_config
+{
+	maps
+	{
+		koth_viaduct
+		{
+			mods
+			{
+				pda
+				{
+					modename "#GameType_TFSOLO_PDA"
+					modfile "scripts/mapmods/koth_viaduct_pda.txt"
+				}
+			}
+		}
+	}
+}

@@ -7,11 +7,11 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 	CounterMap = null
 	MapTeam = 0
 	Type = 0
-	SaveKeyNames = ["tc","tc_hallow","tc_xmas"]
-	BGImageTypes = ["cyoa/cyoa_bg_icon_globe","cyoa/cyoa_icon_sf_pumpkin","cyoa/cyoa_icon_yetipark"]
-	BGImageWide = ["350","200","200"]
-	NodeCountsMin = [13,8,4]
-	NodeCountsMax = [15,10,5]
+	SaveKeyNames = ["tc","tc_hallow","tc_xmas","tc_mvm"]
+	BGImageTypes = ["cyoa/cyoa_bg_icon_globe","cyoa/cyoa_icon_sf_pumpkin","cyoa/cyoa_icon_yetipark","cyoa/cyoa_bg_icon_globe"]
+	BGImageWide = ["350","200","200","350"]
+	NodeCountsMin = [13,8,4,4]
+	NodeCountsMax = [15,10,5,5]
 	PlayerClassNames = [
 		"civilian",
 		"scout",
@@ -152,6 +152,22 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 			{
 				GameModes.push("ctf")
 			}
+			if ( CheckMapTags(TagsKey, ["allow_tfsolo_md"]) )
+			{
+				GameModes.push("tfsolo_md")
+			}
+			if ( CheckMapTags(TagsKey, ["allow_tfsolo_pda"]) )
+			{
+				GameModes.push("tfsolo_pda")
+			}
+			if ( CheckMapTags(TagsKey, ["allow_tfsolo_pde"]) )
+			{
+				GameModes.push("tfsolo_pde")
+			}
+			if ( CheckMapTags(TagsKey, ["allow_tfsolo_inf"]) )
+			{
+				GameModes.push("tfsolo_inf")
+			}
 			
 			local AllowClassLock = true
 			if (GameModes.len() != 0)
@@ -180,6 +196,28 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 				{
 					Node.Tooltip = LocalizeString("#Gametype_CTF")
 					Node.Settings.CvarGamemodeOverride <- 4
+				}
+				else if (mode == "tfsolo_md")
+				{
+					Node.Tooltip = LocalizeString("#Gametype_TFSOLO_MD")
+					Node.Settings.CvarGamemodeOverride <- 6
+					AllowClassLock = false
+				}
+				else if (mode == "tfsolo_pda")
+				{
+					Node.Tooltip = LocalizeString("#Gametype_TFSOLO_PDA")
+					Node.Settings.CvarGamemodeOverride <- 7
+				}
+				else if (mode == "tfsolo_pde")
+				{
+					Node.Tooltip = LocalizeString("#Gametype_TFSOLO_PDE")
+					Node.Settings.CvarGamemodeOverride <- 8
+				}
+				else if (mode == "tfsolo_inf")
+				{
+					Node.Tooltip = LocalizeString("#Gametype_TFSOLO_INF")
+					Node.Settings.CvarGamemodeOverride <- 9
+					AllowClassLock = false
 				}
 				
 				Node.Name = Node.Name + "*"
@@ -263,6 +301,10 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 			local pass = false
 			if (TagsKey.FindKey("mvm") != null)
 			{
+				if (Type == 3)
+				{
+					pass = true
+				}
 			}
 			else if (TagsKey.FindKey("vsh") != null || TagsKey.FindKey("tfsolo_tc_hide") != null)
 			{
@@ -280,12 +322,6 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 				{
 					pass = true
 				}
-			}
-			else if (TagsKey.FindKey("theme_invasion") != null)
-			{
-			}
-			else if (TagsKey.FindKey("theme_bread") != null)
-			{
 			}
 			else 
 			{
@@ -411,7 +447,10 @@ TFSOLO.WorldMaps.TCClass <- class extends TFSOLO.WorldMap
 		else if (Type == 2)
 		{
 			TFSOLO.Screens.TC_Xmas_TeamSelect.Enter()
-			
+		}
+		else if (Type == 3)
+		{
+			TFSOLO.Screens.TC_MVM_TeamSelect.Enter()
 		}
 		else
 		{
@@ -445,3 +484,8 @@ TFSOLO.WorldMaps.TC_Xmas_RED.MapTeam = 2
 TFSOLO.WorldMaps.TC_Xmas_BLU.CounterMap = TFSOLO.WorldMaps.TC_Xmas_RED
 TFSOLO.WorldMaps.TC_Xmas_BLU.Name = "BLU Control"
 TFSOLO.WorldMaps.TC_Xmas_BLU.MapTeam = 3
+
+TFSOLO.WorldMaps.TC_MVM_RED <- TFSOLO.WorldMaps.TCClass(3)
+TFSOLO.WorldMaps.TC_MVM_RED.CounterMap = null
+TFSOLO.WorldMaps.TC_MVM_RED.Name = "Mann Control"
+TFSOLO.WorldMaps.TC_MVM_RED.MapTeam = 2

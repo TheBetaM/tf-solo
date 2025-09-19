@@ -262,10 +262,12 @@ public:
 	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
 	virtual void	ApplySettings(KeyValues* pResourceData);
 
-	void	Deploy( const char* map, int mode );
+	void	Deploy( const char* map, int mode, const char* mapmod, const char* mapoverride );
 
 	const char* m_iszRequestedMap;
 	int m_iRequestedMode;
+	const char* m_iszRequestedMapMod;
+	const char* m_iszRequestedMapOverride;
 
 private:
 
@@ -310,6 +312,8 @@ public:
 
 	const char* m_iszRequestedMap;
 	int m_iRequestedMode;
+	const char* m_iszRequestedMapMod;
+	const char* m_iszRequestedMapOverride;
 	vgui::Panel* m_SelectedModePanel;
 
 private:
@@ -327,6 +331,17 @@ private:
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
 	CExLabel* m_TitleLabel;
+
+	struct ModeOption
+	{
+		int ModeOverride;
+		const char* MapAlt;
+		const char* ModeName;
+		const char* MapMod;
+		const char* MapOverride;
+	};
+
+	CUtlVector<ModeOption> MapMods;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");

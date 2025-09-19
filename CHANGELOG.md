@@ -1,11 +1,16 @@
 # 1.0.0
 ## General
+- Added new gamemodes:  
+-- Mad Dash  
+-- Property Damage  
+- Added new maps  
 - Added a new main menu interface for selecting maps to play, and in new ways!
 -- Arena Mode - Now playable on any map  
 -- King of the Hill - Now playable on any symmetrical point map  
 -- Capture the Flag - Now playable on any symmetrical multi-point map  
 -- Player Destruction - Now playable on any map  
 -- Mirror Mode - The entire world flipped, it's like having two maps in one!  
+-- Map Mods - Any map can be modded to suit new gamemodes or other changes  
 - Added Campaigns:  
 -- Headhunt, enhanced from the original Workshop release!  
 -- Bloodthirst, a new campaign featuring Dracula!  
@@ -22,7 +27,8 @@ tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>,
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
 cl_default_networking_off, nav_save_compressed, tf_bot_spells, 
-tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable    
+tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable, 
+sv_mapentities_override, sv_mapentities_mod  
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

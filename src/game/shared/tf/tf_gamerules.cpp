@@ -5105,7 +5105,7 @@ void CTFGameRules::SetupOnRoundStart( void )
 	m_hBlueKothTimer.Set( NULL );
 	m_flMadDashMeter.Set( 0.0f );
 
-	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_OFF )
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_OFF || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION )
 	{
 		CLogicMadDash* pLogicMadDash = dynamic_cast<CLogicMadDash *> ( gEntList.FindEntityByClassname( NULL, "tf_logic_maddash" ) );
 		if ( pLogicMadDash )
@@ -5118,7 +5118,7 @@ void CTFGameRules::SetupOnRoundStart( void )
 			}
 		}
 	}
-	if ( tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_OFF && tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH )
+	if ( tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_OFF && tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH && tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION )
 	{
 		CBaseEntity* pEntity = NULL;
 		while ( ( pEntity = gEntList.FindEntityByClassname( pEntity, "team_round_timer" ) ) != NULL )

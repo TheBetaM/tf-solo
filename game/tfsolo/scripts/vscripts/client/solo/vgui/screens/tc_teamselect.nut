@@ -2,8 +2,8 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 {
 	Name = "TC_TeamSelect"
 	Type = 0
-	TitleNames = ["Territorial Control", "Terrifying Control", "Smissmas Control"]
-	SaveKeyNames = ["tc","tc_hallow","tc_xmas"]
+	TitleNames = ["Territorial Control", "Terrifying Control", "Smissmas Control", "Terabyte Control"]
+	SaveKeyNames = ["tc","tc_hallow","tc_xmas","tc_mvm"]
 	constructor(t) { 
 		Type = t
 		Name = TitleNames[t]
@@ -67,7 +67,10 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 			sound_released =	"UI/buttonclickrelease.wav",
 		}
 		kv2["default"] <- "0"
-		SoloPanel.CreatePanelRoot(kv2)
+		if (Type != 3)
+		{
+			SoloPanel.CreatePanelRoot(kv2)
+		}
 		
 		local kv3 = {
 			ControlName	="Label"
@@ -107,6 +110,10 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 			local pass = false
 			if (TagsKey.FindKey("mvm") != null)
 			{
+				if (Type == 3)
+				{
+					pass = true
+				}
 			}
 			else if (TagsKey.FindKey("vsh") != null || TagsKey.FindKey("tfsolo_tc_hide") != null)
 			{
@@ -124,12 +131,6 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 				{
 					pass = true
 				}
-			}
-			else if (TagsKey.FindKey("theme_invasion") != null)
-			{
-			}
-			else if (TagsKey.FindKey("theme_bread") != null)
-			{
 			}
 			else
 			{
@@ -169,7 +170,7 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 		local ControlBLU = MapCount_BLU//(MapCount_BLU / MapCount) * 100
 		local ControlNONE = MapCount_NONE//(MapCount_NONE / MapCount) * 100
 		
-		if (MapCount_NONE <= 0)
+		if (MapCount_NONE <= 0 && Type == 0)
 		{
 			AwardAchievement(159, 1) // TFSOLO_SOLO_TC_COMPLETE
 		}
@@ -218,7 +219,10 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 			paintbackground		="0"
 			fgcolor_override = "HUDBlueTeam"
 		}
-		SoloPanel.CreatePanelRoot(kv5)
+		if (Type != 3)
+		{
+			SoloPanel.CreatePanelRoot(kv5)
+		}
 		
 		local kv6 = {
 			ControlName	="Label"
@@ -276,6 +280,7 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 TFSOLO.Screens.TC_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(0)
 TFSOLO.Screens.TC_Hallow_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(1)
 TFSOLO.Screens.TC_Xmas_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(2)
+TFSOLO.Screens.TC_MVM_TeamSelect <- TFSOLO.Screens.TC_TeamSelectClass(3)
 
 TFSOLO.TC_TeamSelectEventTag <- UniqueString()
 getroottable()[TFSOLO.TC_TeamSelectEventTag] <- {
@@ -316,6 +321,10 @@ getroottable()[TFSOLO.TC_TeamSelectEventTag] <- {
 			else if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_Xmas_TeamSelect)
 			{
 				TFSOLO.WorldMaps.TC_Xmas_RED.Enter()
+			}
+			else if (TFSOLO.Screens.Active == TFSOLO.Screens.TC_MVM_TeamSelect)
+			{
+				TFSOLO.WorldMaps.TC_MVM_RED.Enter()
 			}
 		}
 		else if (params.command == "map_back")

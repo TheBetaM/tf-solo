@@ -3273,10 +3273,26 @@ void CTFCustomMatchSettingsDialog::DestroyControls()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFCustomMatchSettingsDialog::Deploy( const char* map, int mode )
+void CTFCustomMatchSettingsDialog::Deploy( const char* map, int mode, const char* mapmod, const char* mapoverride )
 {
 	m_iszRequestedMap = V_strdup(map);
 	m_iRequestedMode = mode;
+	if ( mapmod && mapmod[0] )
+	{
+		m_iszRequestedMapMod = V_strdup( mapmod );
+	}
+	else
+	{
+		m_iszRequestedMapMod = NULL;
+	}
+	if ( mapoverride && mapoverride[0] )
+	{
+		m_iszRequestedMapOverride = V_strdup( mapoverride );
+	}
+	else
+	{
+		m_iszRequestedMapOverride = NULL;
+	}
 
 	SetVisible(true);
 	MakePopup();
@@ -3423,6 +3439,21 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		"tf_gamemode_override %u\n", m_iRequestedMode
 	);
 	engine->ClientCmd_Unrestricted( fmtModeCommand.Access() );
+	if ( m_iszRequestedMapMod && m_iszRequestedMapMod[0] )
+	{
+		CFmtStr1024 fmtMapModCommand(
+			"sv_mapentities_mod %s\n", m_iszRequestedMapMod
+		);
+		engine->ClientCmd_Unrestricted( fmtMapModCommand.Access() );
+	}
+	if ( m_iszRequestedMapOverride && m_iszRequestedMapOverride[0] )
+	{
+		CFmtStr1024 fmtMapModCommand(
+			"sv_mapentities_override %s\n", m_iszRequestedMapOverride
+		);
+		engine->ClientCmd_Unrestricted( fmtMapModCommand.Access() );
+	}
+
 	CFmtStr1024 fmtMapCommand(
 		"wait\nwait\nmaxplayers 33\n\nprogress_enable\nmap %s\n", mapFile
 	);
@@ -3453,6 +3484,8 @@ CTFCustomMatchModeDialog::CTFCustomMatchModeDialog(vgui::Panel* parent) : BaseCl
 
 	m_iszRequestedMap = "";
 	m_iRequestedMode = 0;
+	m_iszRequestedMapMod = NULL;
+	m_iszRequestedMapOverride = NULL;
 
 	// 	MoveToCenterOfScreen();
 	// 	SetSizeable( false );
@@ -3531,12 +3564,12 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
 		}
-		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode );
+		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
 		OnClose();
 		return;
 	}
-	else if ( !V_strnicmp( command, "mode$", 4 ) )
+	else if ( !V_strnicmp( command, "mode$", 5 ) )
 	{
 		CUtlStringList outStr;
 		V_SplitString( command, "$", outStr );
@@ -3546,13 +3579,39 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
 		}
-		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode );
+		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
+
+		OnClose();
+		return;
+	}
+	else if ( !V_strnicmp( command, "mod$", 4 ) )
+	{
+		CUtlStringList outStr;
+		V_SplitString( command, "$", outStr );
+		int modID = V_atoi( outStr[1] );
+		auto mod = MapMods[modID];
+		m_iRequestedMode = mod.ModeOverride;
+		m_iszRequestedMap = V_strdup( mod.MapAlt );
+		if ( mod.MapMod && mod.MapMod[0] )
+		{
+			m_iszRequestedMapMod = V_strdup( mod.MapMod );
+		}
+		if ( mod.MapOverride && mod.MapOverride[0] )
+		{
+			m_iszRequestedMapOverride = V_strdup( mod.MapOverride );
+		}
+
+		if ( g_pTFCustomMatchSettingsDialog.Get() == NULL )
+		{
+			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
+		}
+		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
 		OnClose();
 		return;
 	}
 
-	BaseClass::OnCommand(command);
+	BaseClass::OnCommand( command );
 }
 
 void CTFCustomMatchModeDialog::OnKeyCodeTyped(KeyCode code)
@@ -3621,14 +3680,9 @@ void CTFCustomMatchModeDialog::CreateControls()
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color textColor = Color(255, 255, 255, 255);
 	Color textShadowColor = Color(0, 0, 0, 255);
-	Color textAltColor = Color(0, 255, 0, 255);
+	Color textGreenColor = Color(0, 255, 0, 255);
+	Color textYellowColor = Color(255, 255, 0, 255);
 
-	struct ModeOption
-	{
-		int ModeOverride;
-		const char* MapAlt;
-		const char* ModeName;
-	};
 	enum
 	{
 		OVERRIDE_OFF = 0,
@@ -3637,6 +3691,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 		OVERRIDE_KOTH,
 		OVERRIDE_CTF,
 		OVERRIDE_PD,
+		OVERRIDE_TFSOLO_MADDASH,
+		OVERRIDE_TFSOLO_PROPERTYDAMAGE,
+		OVERRIDE_TFSOLO_PROPERTYDEFENSE,
+		OVERRIDE_TFSOLO_INFILTRATION,
 	};
 
 	if ( m_TitleLabel )
@@ -3651,13 +3709,16 @@ void CTFCustomMatchModeDialog::CreateControls()
 	mode0.ModeOverride = OVERRIDE_OFF;
 	mode0.MapAlt = NULL_STRING;
 	mode0.ModeName = map->GetString("modename");
+	mode0.MapMod = NULL;
+	mode0.MapOverride = NULL;
 	possibleModes.AddToTail( mode0 );
+	MapMods.AddToTail( mode0 );
 
 	KeyValues* alts = map->FindKey( "alts" );
 	if ( alts )
 	{
 		KeyValues* key = alts->GetFirstSubKey();
-		while (key)
+		while ( key )
 		{
 			KeyValues* altmap = maps->FindKey( key->GetName() );
 			if ( !altmap )
@@ -3670,8 +3731,31 @@ void CTFCustomMatchModeDialog::CreateControls()
 			modemap.ModeOverride = 0;
 			modemap.MapAlt = V_strdup( key->GetName() );
 			modemap.ModeName = V_strdup( altmap->GetString("modename") );
+			modemap.MapMod = NULL;
+			modemap.MapOverride = NULL;
 
 			possibleModes.AddToTail( modemap );
+			MapMods.AddToTail( modemap );
+
+			key = key->GetNextKey();
+		}
+	}
+
+	KeyValues* mods = map->FindKey("mods");
+	if ( mods )
+	{
+		KeyValues* key = mods->GetFirstSubKey();
+		while ( key )
+		{
+			ModeOption modemap;
+			modemap.ModeOverride = key->GetInt( "modeoverride" );
+			modemap.MapAlt = V_strdup( key->GetString( "mapreplace", m_iszRequestedMap ) );
+			modemap.ModeName = V_strdup( key->GetString( "modename", map->GetString( "modename" ) ) );
+			modemap.MapMod = V_strdup( key->GetString( "modfile" ) );
+			modemap.MapOverride = V_strdup( key->GetString( "overridefile" ) );
+
+			possibleModes.AddToTail( modemap );
+			MapMods.AddToTail( modemap );
 
 			key = key->GetNextKey();
 		}
@@ -3686,7 +3770,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode2.ModeOverride = OVERRIDE_ARENA;
 			mode2.MapAlt = NULL_STRING;
 			mode2.ModeName = "#Gametype_Arena";
+			mode2.MapMod = NULL;
+			mode2.MapOverride = NULL;
 			possibleModes.AddToTail( mode2 );
+			MapMods.AddToTail( mode2 );
 		}
 		if ( tags->GetInt( "allow_koth" ) == 1 )
 		{
@@ -3694,7 +3781,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode3.ModeOverride = OVERRIDE_KOTH;
 			mode3.MapAlt = NULL_STRING;
 			mode3.ModeName = "#Gametype_Koth";
+			mode3.MapMod = NULL;
+			mode3.MapOverride = NULL;
 			possibleModes.AddToTail( mode3 );
+			MapMods.AddToTail( mode3 );
 		}
 		if ( tags->GetInt( "allow_ctf" ) == 1 )
 		{
@@ -3702,7 +3792,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode4.ModeOverride = OVERRIDE_CTF;
 			mode4.MapAlt = NULL_STRING;
 			mode4.ModeName = "#Gametype_CTF";
+			mode4.MapMod = NULL;
+			mode4.MapOverride = NULL;
 			possibleModes.AddToTail( mode4 );
+			MapMods.AddToTail( mode4 );
 		}
 		if ( tags->GetInt( "allow_pd" ) == 1 )
 		{
@@ -3710,15 +3803,67 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode5.ModeOverride = OVERRIDE_PD;
 			mode5.MapAlt = NULL_STRING;
 			mode5.ModeName = "#Gametype_PlayerDestruction";
+			mode5.MapMod = NULL;
+			mode5.MapOverride = NULL;
 			possibleModes.AddToTail( mode5 );
+			MapMods.AddToTail( mode5 );
+		}
+		if ( tags->GetInt( "allow_tfsolo_md" ) == 1 )
+		{
+			ModeOption mode6;
+			mode6.ModeOverride = OVERRIDE_TFSOLO_MADDASH;
+			mode6.MapAlt = NULL_STRING;
+			mode6.ModeName = "#GameType_TFSOLO_MD";
+			mode6.MapMod = NULL;
+			mode6.MapOverride = NULL;
+			possibleModes.AddToTail( mode6 );
+			MapMods.AddToTail( mode6 );
+		}
+		if ( tags->GetInt( "allow_tfsolo_inf" ) == 1 )
+		{
+			ModeOption mode7;
+			mode7.ModeOverride = OVERRIDE_TFSOLO_INFILTRATION;
+			mode7.MapAlt = NULL_STRING;
+			mode7.ModeName = "#GameType_TFSOLO_INF";
+			mode7.MapMod = NULL;
+			mode7.MapOverride = NULL;
+			possibleModes.AddToTail( mode7 );
+			MapMods.AddToTail( mode7 );
+		}
+		if ( tags->GetInt( "allow_tfsolo_pda" ) == 1 )
+		{
+			ModeOption mode8;
+			mode8.ModeOverride = OVERRIDE_TFSOLO_PROPERTYDAMAGE;
+			mode8.MapAlt = NULL_STRING;
+			mode8.ModeName = "#GameType_TFSOLO_PDA";
+			mode8.MapMod = NULL;
+			mode8.MapOverride = NULL;
+			possibleModes.AddToTail( mode8 );
+			MapMods.AddToTail( mode8 );
+		}
+		if ( tags->GetInt( "allow_tfsolo_pde" ) == 1 )
+		{
+			ModeOption mode9;
+			mode9.ModeOverride = OVERRIDE_TFSOLO_PROPERTYDEFENSE;
+			mode9.MapAlt = NULL_STRING;
+			mode9.ModeName = "#GameType_TFSOLO_PDE";
+			mode9.MapMod = NULL;
+			mode9.MapOverride = NULL;
+			possibleModes.AddToTail( mode9 );
+			MapMods.AddToTail( mode9 );
+		}
+		if ( tags->GetInt( "allow_tfsolo_explore" ) == 1 )
+		{
+			ModeOption mode10;
+			mode10.ModeOverride = OVERRIDE_NOMODE;
+			mode10.MapAlt = NULL_STRING;
+			mode10.ModeName = "#GameType_TFSOLO_Explore";
+			mode10.MapMod = NULL;
+			mode10.MapOverride = NULL;
+			possibleModes.AddToTail( mode10 );
+			MapMods.AddToTail( mode10 );
 		}
 	}
-
-	ModeOption mode1;
-	mode1.ModeOverride = OVERRIDE_NOMODE;
-	mode1.MapAlt = NULL_STRING;
-	mode1.ModeName = "#TFSOLO_CustomMatch_NoMode";
-	possibleModes.AddToTail( mode1 );
 
 	FOR_EACH_VEC( possibleModes, a )
 	{
@@ -3808,7 +3953,15 @@ void CTFCustomMatchModeDialog::CreateControls()
 		{
 			mapIcon->SetImage("illustrations/gamemode_sd");
 		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_INF"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_sd");
+		}
 		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_PDA"))
+		{
+			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_PDE"))
 		{
 			mapIcon->SetImage("illustrations/training_offlinepractice");
 		}
@@ -3817,6 +3970,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapIcon->SetImage("illustrations/gamemode_cp");
 		}
 		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_CV"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_payload");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_CVR"))
 		{
 			mapIcon->SetImage("illustrations/gamemode_payloadrace");
 		}
@@ -3857,10 +4014,25 @@ void CTFCustomMatchModeDialog::CreateControls()
 
 		if ( mode.ModeOverride == 0 )
 		{
-			label->SetFgColor( textAltColor );
+			label->SetFgColor( textGreenColor );
+		}
+		if ( ( mode.MapMod && mode.MapMod[0] ) || ( mode.MapOverride && mode.MapOverride[0] ) )
+		{
+			label->SetFgColor( textYellowColor );
 		}
 
-		if ( mode.ModeOverride == 0 && mode.MapAlt && V_strlen(mode.MapAlt) > 1 )
+		if ( ( mode.MapMod && mode.MapMod[0] ) || ( mode.MapOverride && mode.MapOverride[0] ) )
+		{
+			CFmtStr1024 fmtModeCommand(
+				"mod$%u", a
+			);
+			CExButton* mapButton = new CExButton(holder, "ModeButton", "", this, fmtModeCommand);
+			mapButton->SetSize(256, 256);
+			mapButton->SetZPos(3);
+			mapButton->AddActionSignalTarget(this);
+			mapButton->SetVisible(true);
+		}
+		else if ( mode.ModeOverride == 0 && mode.MapAlt && mode.MapAlt[0] )
 		{
 			CFmtStr1024 fmtModeCommand(
 				"map$%s", mode.MapAlt
@@ -4250,7 +4422,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			}
 			case MapCategory_CTF:
 			{
-				if ( tags->GetInt("ctf") == 0 )
+				if ( tags->GetInt("ctf") == 0 && tags->GetInt("rd") == 0 && tags->GetInt("sd") == 0 )
 				{
 					key = key->GetNextKey();
 					continue;
@@ -4268,7 +4440,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			}
 			case MapCategory_PLR:
 			{
-				if ( tags->GetInt("plr") == 0 )
+				if ( tags->GetInt("plr") == 0 && tags->GetInt("tow") == 0 )
 				{
 					key = key->GetNextKey();
 					continue;
