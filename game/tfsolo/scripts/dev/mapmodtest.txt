@@ -1,0 +1,62 @@
+mapmod
+{
+filter
+{
+	f1
+	{
+		"classname" "info_particle_system"
+	}
+}
+
+mod
+{
+	m1
+	{
+		find
+		{
+			"classname" "worldspawn"
+		}
+		replace
+		{
+			"skyname" "sky_nightfall_01"
+		}	
+	}
+	
+	m2
+	{
+		find
+		{
+			"classname" "logic_auto"
+			"origin" "-1232 -320 456"
+		}
+		insert
+		{
+			"OnMultiNewRound#1" "tf_logic_koth,SetBlueTimer,600,0,-1"
+			"OnMultiNewRound#2" "tf_logic_koth,SetRedTimer,300,0,-1"
+		}
+		delete
+		{
+			"OnMapSpawn" "tf_gamerules,SetRedTeamRespawnWaveTime,6,0,-1"
+			"OnMapSpawn*" "tf_gamerules,SetBlueTeamRespawnWaveTime,6,0,-1"
+		}
+	}
+}
+
+insert
+{
+e1
+{
+"origin" "-1244 -250 340"
+"StartDisabled" "0"
+"minfalloff" "-1"
+"maxweight" "1.0"
+"maxfalloff" "-1"
+"filename" "tfhallway.raw"
+"fadeOutDuration" "0.0"
+"fadeInDuration" "0.0"
+"classname" "color_correction"
+"hammerid" "2072668"
+}
+}
+
+}

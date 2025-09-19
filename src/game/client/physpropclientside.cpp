@@ -29,6 +29,7 @@ ConVar	cl_phys_props_respawndist( "cl_phys_props_respawndist", "1500", 0, "Minim
 ConVar	cl_phys_props_respawnrate( "cl_phys_props_respawnrate", "60", 0, "Time, in seconds, between clientside prop respawns." );
 
 extern ConVar sv_mapentities_override;
+extern ConVar sv_mapentities_mod;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -664,6 +665,46 @@ const char *C_PhysPropClientside::ParseEntity( const char *pEntData )
 	return entData.CurrentBufferPosition();
 }
 
+FORCEINLINE bool MapModNamesMatch( const char* pszQuery, string_t nameToMatch )
+{
+	if ( IDENT_STRINGS( pszQuery, nameToMatch ) )
+		return true;
+
+	if ( nameToMatch == NULL_STRING )
+		return ( !pszQuery || *pszQuery == 0 || *pszQuery == '*' );
+
+	const char* pszNameToMatch = STRING( nameToMatch );
+
+	// If the pointers are identical, we're identical
+	if ( pszNameToMatch == pszQuery )
+		return true;
+
+	while ( *pszNameToMatch && *pszQuery )
+	{
+		unsigned char cName = *pszNameToMatch;
+		unsigned char cQuery = *pszQuery;
+		// simple ascii case conversion
+		if ( cName == cQuery )
+			;
+		else if ( cName - 'A' <= (unsigned char)'Z' - 'A' && cName - 'A' + 'a' == cQuery )
+			;
+		else if ( cName - 'a' <= (unsigned char)'z' - 'a' && cName - 'a' + 'A' == cQuery )
+			;
+		else
+			break;
+		++pszNameToMatch;
+		++pszQuery;
+	}
+
+	if ( *pszQuery == 0 && *pszNameToMatch == 0 )
+		return true;
+
+	if ( *pszQuery == '*' )
+		return true;
+
+	return false;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Only called on BSP load. Parses and spawns all the entities in the BSP.
 // Input  : pMapData - Pointer to the entity data block to parse.
@@ -674,6 +715,7 @@ void C_PhysPropClientside::ParseAllEntities(const char *pMapData)
 
 	char szTokenBuffer[MAPKEY_MAXLENGTH];
 
+	// Override entities from file
 	const char* overrideFile = sv_mapentities_override.GetString();
 	if ( overrideFile && overrideFile[0] )
 	{
@@ -682,6 +724,330 @@ void C_PhysPropClientside::ParseAllEntities(const char *pMapData)
 		{
 			CUtlBuffer bufText( buf.Base(), buf.TellPut(), CUtlBuffer::READ_ONLY | CUtlBuffer::TEXT_BUFFER );
 			pMapData = V_strdup( (char*)bufText.Base() );
+		}
+	}
+	
+	// Modify entities string using KV file
+	const char* modFile = sv_mapentities_mod.GetString();
+	if ( modFile && modFile[0] )
+	{
+		KeyValuesAD modKV( "mapmod" );
+		if ( modKV->LoadFromFile( g_pFullFileSystem, modFile, "GAME" ) )
+		{
+			KeyValues* keyFilters = modKV->FindKey( "filter" );
+			KeyValues* keyMods = modKV->FindKey( "mod" );
+			KeyValues* keyInserts = modKV->FindKey( "insert" );
+			CUtlStringBuilder mapData( pMapData );
+			char szTokenBuf[MAPKEY_MAXLENGTH];
+			const char* pMapPtr = mapData.Access();
+			const char* pMapStart = pMapPtr;
+
+			CUtlVector<int> filterCounts;
+			CUtlVector<int> modCounts;
+			CUtlVector<int> filterPasses;
+			CUtlVector<int> modPasses;
+			CUtlVector<bool> filterSkip;
+			CUtlVector<bool> modSkip;
+			int filterSkipCount;
+			int modSkipCount;
+			if ( keyFilters )
+			{
+				for ( KeyValues* pFilter = keyFilters->GetFirstSubKey(); pFilter != NULL; pFilter = pFilter->GetNextKey() )
+				{
+					int iter = 0;
+					for ( KeyValues* pFilt = pFilter->GetFirstSubKey(); pFilt != NULL; pFilt = pFilt->GetNextKey() )
+					{
+						iter++;
+					}
+					filterCounts.AddToTail( iter );
+					filterPasses.AddToTail( 0 );
+					filterSkip.AddToTail( false );
+				}
+			}
+			if ( keyMods )
+			{
+				for ( KeyValues* pModHolder = keyMods->GetFirstSubKey(); pModHolder != NULL; pModHolder = pModHolder->GetNextKey() )
+				{
+					KeyValues* pModFind = pModHolder->FindKey( "find" );
+					int iter = 0;
+					for ( KeyValues* pFilt = pModFind->GetFirstSubKey(); pFilt != NULL; pFilt = pFilt->GetNextKey() )
+					{
+						iter++;
+					}
+					modCounts.AddToTail( iter );
+					modPasses.AddToTail( 0 );
+					modSkip.AddToTail( false );
+				}
+			}
+
+			// Per entity
+			while ( keyFilters || keyMods )
+			{
+				char token[MAPKEY_MAXLENGTH];
+				const char* pEntStart = pMapPtr;
+				pMapPtr = MapEntity_ParseToken( pMapPtr, token );
+				if ( !pMapPtr )
+					break;
+				if ( token[0] != '{' )
+				{
+					Error( "MapEntity_ParseAllEntities: found %s when expecting {", token );
+					continue;
+				}
+				const char* pEntEnd = MapEntity_SkipToNextEntity( pMapPtr, szTokenBuf );
+
+				bool bFiltered = false;
+				bool bModPassed = false;
+				if ( keyFilters || keyMods )
+				{
+					const char* pPropStart = MapEntity_ParseToken( pMapPtr, token );
+					FOR_EACH_VEC( filterPasses, a )
+					{
+						filterPasses[a] = 0;
+						filterSkip[a] = false;
+					}
+					FOR_EACH_VEC( modPasses, a )
+					{
+						modPasses[a] = 0;
+						modSkip[a] = false;
+					}
+					filterSkipCount = 0;
+					modSkipCount = 0;
+
+					// Iterating all KeyValues of the entity
+					while ( token && token[0] != '}' && !bFiltered )
+					{
+						const char* KeyName = V_strdup( token );
+						pPropStart = MapEntity_ParseToken( pPropStart, token );
+						const char* KeyValue = V_strdup( token );
+						if ( keyFilters )
+						{
+							int iter = 0;
+							for ( KeyValues* pFilter = keyFilters->GetFirstSubKey(); pFilter != NULL && filterSkipCount < filterSkip.Count(); pFilter = pFilter->GetNextKey() )
+							{
+								int filterPass = 0;
+								for ( KeyValues* pFilt = pFilter->GetFirstSubKey(); pFilt != NULL && !filterSkip[iter]; pFilt = pFilt->GetNextKey() )
+								{
+									if ( MapModNamesMatch( pFilt->GetName(), MAKE_STRING( KeyName ) ) )
+									{
+										if ( MapModNamesMatch( pFilter->GetString( pFilt->GetName() ), MAKE_STRING( KeyValue ) ) )
+										{
+											filterPass++;
+										}
+										else
+										{
+											filterSkip[iter] = true;
+											filterSkipCount++;
+											break;
+										}
+									}
+								}
+								if ( !filterSkip[iter] )
+								{
+									filterPasses[iter] += filterPass;
+								}
+								if ( filterPasses[iter] >= filterCounts[iter] )
+								{
+									bFiltered = true;
+									break;
+								}
+								iter++;
+							}
+						}
+						if ( keyMods && !bFiltered )
+						{
+							int iter = 0;
+							for ( KeyValues* pModHolder = keyMods->GetFirstSubKey(); pModHolder != NULL && modSkipCount < modSkip.Count(); pModHolder = pModHolder->GetNextKey() )
+							{
+								KeyValues* pModFind = pModHolder->FindKey( "find" );
+								int modPass = 0;
+								for ( KeyValues* pFilt = pModFind->GetFirstSubKey(); pFilt != NULL && !modSkip[iter]; pFilt = pFilt->GetNextKey() )
+								{
+									if ( MapModNamesMatch( pFilt->GetName(), MAKE_STRING( KeyName ) ) )
+									{
+										if ( MapModNamesMatch( pModFind->GetString( pFilt->GetName() ), MAKE_STRING( KeyValue ) ) )
+										{
+											modPass++;
+										}
+										else
+										{
+											modSkip[iter] = true;
+											modSkipCount++;
+											break;
+										}
+									}
+								}
+								if ( !modSkip[iter] )
+								{
+									modPasses[iter] += modPass;
+								}
+								if ( modPasses[iter] >= modCounts[iter] )
+								{
+									modSkip[iter] = true;
+									modSkipCount++;
+									bModPassed = true;
+								}
+								iter++;
+							}
+						}
+						pPropStart = MapEntity_ParseToken( pPropStart, token );
+					}
+
+					// Apply mods to entity
+					if ( keyMods && !bFiltered && bModPassed )
+					{
+						pPropStart = MapEntity_ParseToken( pMapPtr, token );
+						const char* pPropStartSingle = pMapPtr;
+						while ( token && token[0] != '}' )
+						{
+							const char* KeyName = V_strdup( token );
+							pPropStart = MapEntity_ParseToken( pPropStart, token );
+							const char* KeyValue = V_strdup( token );
+							int iter = 0;
+							for ( KeyValues* pModHolder = keyMods->GetFirstSubKey(); pModHolder != NULL; pModHolder = pModHolder->GetNextKey() )
+							{
+								if ( modPasses[iter] < modCounts[iter] )
+								{
+									iter++;
+									continue;
+								}
+								KeyValues* pModReplace = pModHolder->FindKey( "replace" );
+								KeyValues* pModDelete = pModHolder->FindKey( "delete" );
+								bool bReplaced = false;
+								if ( pModReplace )
+								{
+									for ( KeyValues* pFilt = pModReplace->GetFirstSubKey(); pFilt != NULL; pFilt = pFilt->GetNextKey() )
+									{
+										if ( MapModNamesMatch( pFilt->GetName(), MAKE_STRING( KeyName ) ) )
+										{
+											// replace
+											CUtlStringBuilder kvLine;
+											kvLine.Append( "\n\"" );
+											if ( FStrEq( pFilt->GetName(), "ClassName" ) )
+											{
+												kvLine.Append( "classname" );
+											}
+											else
+											{
+												kvLine.Append( pFilt->GetName() );
+											}
+											kvLine.Append( "\" \"" );
+											kvLine.Append( pModReplace->GetString( pFilt->GetName() ) );
+											kvLine.Append( "\"" );
+											const char* kvLineOut = V_strdup( kvLine.String() );
+											int kvLineLen = V_strlen( kvLineOut );
+
+											auto len = (ptrdiff_t)pPropStart - (ptrdiff_t)pPropStartSingle;
+											mapData.ReplaceAt( (ptrdiff_t)pPropStartSingle - (ptrdiff_t)pMapStart, len, kvLineOut, kvLineLen );
+											pPropStart -= len;
+											pPropStartSingle -= len;
+											pPropStart += kvLineLen;
+											pPropStartSingle += kvLineLen;
+											bReplaced = true;
+										}
+									}
+								}
+								if ( pModDelete && !bReplaced )
+								{
+									for ( KeyValues* pFilt = pModDelete->GetFirstSubKey(); pFilt != NULL; pFilt = pFilt->GetNextKey() )
+									{
+										if ( MapModNamesMatch( pFilt->GetName(), MAKE_STRING( KeyName ) ) )
+										{
+											if ( MapModNamesMatch( pModDelete->GetString( pFilt->GetName() ), MAKE_STRING( KeyValue ) ) )
+											{
+												auto len = (ptrdiff_t)pPropStart - (ptrdiff_t)pPropStartSingle;
+												mapData.ReplaceAt( (ptrdiff_t)pPropStartSingle - (ptrdiff_t)pMapStart, len, NULL, 0 );
+												pPropStart -= len;
+												pPropStartSingle -= len;
+											}
+										}
+									}
+								}
+								iter++;
+							}
+							pPropStartSingle = pPropStart;
+							pPropStart = MapEntity_ParseToken( pPropStart, token );
+						}
+						const char* pPropEnd = pPropStart;
+						pPropEnd--;
+
+						int moditer = 0;
+						for ( KeyValues* pModHolder = keyMods->GetFirstSubKey(); pModHolder != NULL; pModHolder = pModHolder->GetNextKey() )
+						{
+							if ( modPasses[moditer] < modCounts[moditer] )
+							{
+								moditer++;
+								continue;
+							}
+							KeyValues* pModInsert = pModHolder->FindKey( "insert" );
+							if ( pModInsert )
+							{
+								for ( KeyValues* pKVProp = pModInsert->GetFirstSubKey(); pKVProp != NULL; pKVProp = pKVProp->GetNextKey() )
+								{
+									CUtlStringBuilder kvPropLine;
+									kvPropLine.Append( "\"" );
+									if ( FStrEq( pKVProp->GetName(), "ClassName" ) )
+									{
+										kvPropLine.Append( "classname" );
+									}
+									else
+									{
+										kvPropLine.Append( pKVProp->GetName() );
+									}
+									kvPropLine.Append( "\" \"" );
+									kvPropLine.Append( pModInsert->GetString( pKVProp->GetName() ) );
+									kvPropLine.Append( "\"\n" );
+									const char* kvLineOut = V_strdup( kvPropLine.String() );
+									int kvLineLen = V_strlen( kvLineOut );
+									mapData.ReplaceAt( (ptrdiff_t)pPropEnd - (ptrdiff_t)pMapStart, 0, kvLineOut, kvLineLen );
+									pPropEnd += kvLineLen;
+								}
+							}
+							moditer++;
+						}
+					}
+
+					// Filter out
+					if ( bFiltered )
+					{
+						mapData.ReplaceAt( (ptrdiff_t)pEntStart - (ptrdiff_t)pMapStart, (ptrdiff_t)pEntEnd - (ptrdiff_t)pEntStart, NULL, 0 );
+					}
+				}
+				if ( !bFiltered )
+				{
+					pMapPtr = MapEntity_SkipToNextEntity( pMapPtr, szTokenBuf );
+				}
+				else
+				{
+					pMapPtr--;
+				}
+			}
+
+			// Insert entities at the end
+			if ( keyInserts )
+			{
+				for ( KeyValues* pEnt = keyInserts->GetFirstSubKey(); pEnt != NULL; pEnt = pEnt->GetNextKey() )
+				{
+					mapData.Append( "{\n" );
+					for ( KeyValues* pProp = pEnt->GetFirstSubKey(); pProp != NULL; pProp = pProp->GetNextKey() )
+					{
+						mapData.Append( "\"" );
+						if ( FStrEq( pProp->GetName(), "ClassName" ) )
+						{
+							mapData.Append( "classname" );
+						}
+						else
+						{
+							mapData.Append( pProp->GetName() );
+						}
+						mapData.Append( "\" \"" );
+						mapData.Append( pEnt->GetString( pProp->GetName() ) );
+						mapData.Append( "\"\n" );
+					}
+					mapData.Append( "}\n" );
+				}
+			}
+
+			pMapData = V_strdup( mapData.String() );
 		}
 	}
 
