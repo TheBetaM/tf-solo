@@ -342,6 +342,7 @@ DEFINE_SCRIPTFUNC(GetScreenHeight, "")
 DEFINE_SCRIPTFUNC(ClearNodePaths, "")
 DEFINE_SCRIPTFUNC(AddNodePath, "")
 DEFINE_SCRIPTFUNC(ApplyPanelSettings, "")
+DEFINE_SCRIPTFUNC(SetTooltip, "")
 
 END_SCRIPTDESC();
 
@@ -376,6 +377,8 @@ DEFINE_SCRIPTFUNC(SetAlpha, "")
 DEFINE_SCRIPTFUNC(GetAlpha, "")
 DEFINE_SCRIPTFUNC(SetVisible, "")
 DEFINE_SCRIPTFUNC(IsVisible, "")
+DEFINE_SCRIPTFUNC(SetEnabled, "")
+DEFINE_SCRIPTFUNC(IsEnabled, "")
 
 DEFINE_SCRIPTFUNC(IsWithin, "")
 
@@ -588,6 +591,16 @@ void CSoloPanel::ApplyPanelSettings(HSCRIPT hPanelHandle, HSCRIPT hTable)
 	if (!hPanel) return;
 	KeyValues* hKV = ScriptTableToKeyValues(g_pScriptVM, "PanelSettings", hTable);
 	hPanel->ApplySettings(hKV);
+}
+
+void CSoloPanel::SetTooltip(HSCRIPT hPanelHandle, const char* tip)
+{
+	auto hPanel = (Panel*)g_pScriptVM->GetInstanceValue(hPanelHandle, GetScriptDescForClass(Panel));
+	if (!hPanel) return;
+	if ( m_pToolTip )
+	{
+		hPanel->SetTooltip( m_pToolTip, tip );
+	}
 }
 
 HSCRIPT CSoloPanel::CreatePanelInternal(HSCRIPT hTable, Panel* hParentTarget)

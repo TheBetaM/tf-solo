@@ -72,6 +72,7 @@ sv_mapentities_override, sv_mapentities_mod
 - Fixed bots not moving during setup in symmetrical capture point maps
 - Fixed bots trying to use resupply lockers in Sudden Death/Arena
 - Fixed players/bots firing weapons never affecting bot behavior in Sudden Death/Arena
+- Nav mesh blocked state now also updates after tf_logic_cp_timer countdown ends
 ## VScript updates
 - Added Client VScript functionality
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

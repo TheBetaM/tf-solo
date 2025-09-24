@@ -310,6 +310,7 @@ maps_config
 				cp 1
 				cp_count 2
 				theme_jungle 1
+				theme_tropiccrisis 1
 			}
 		}
 		cp_process_final
@@ -961,6 +962,7 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_jungle 1
+				theme_tropiccrisis 1
 				allow_arena 1
 				allow_pd 1
 			}
@@ -1515,7 +1517,7 @@ maps_config
 		}
 		pl_breadspace
 		{
-			name "Breadspace"
+			name "Bread Space"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_breadspace"
 			photosArt "maps/menu_photos_pl_breadspace"
@@ -1637,6 +1639,7 @@ maps_config
 				pl 1
 				theme_town 1
 				vscript 1
+				theme_tropiccrisis 1
 			}
 		}
 		pl_phoenix
@@ -1874,6 +1877,7 @@ maps_config
 				pl 1
 				stages 3
 				theme_forest 1
+				theme_tropiccrisis 1
 			}
 		}
 		plr_nightfall_final

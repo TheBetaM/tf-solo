@@ -2,7 +2,7 @@ TFSOLO.Screens.TC_TeamSelectClass <- class extends TFSOLO.Screen
 {
 	Name = "TC_TeamSelect"
 	Type = 0
-	TitleNames = ["Territorial Control", "Terrifying Control", "Smissmas Control", "Terabyte Control"]
+	TitleNames = ["Territory Control", "Terrifying Control", "Smissmas Control", "Terabyte Control"]
 	SaveKeyNames = ["tc","tc_hallow","tc_xmas","tc_mvm"]
 	constructor(t) { 
 		Type = t

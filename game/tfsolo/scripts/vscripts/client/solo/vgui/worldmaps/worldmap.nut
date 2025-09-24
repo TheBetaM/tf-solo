@@ -171,6 +171,7 @@ TFSOLO.WorldMap <- class
 IncludeScript("client/solo/vgui/worldmaps/test.nut")
 IncludeScript("client/solo/vgui/worldmaps/tc_worldmap.nut")
 IncludeScript("client/solo/vgui/worldmaps/mtt.nut")
+IncludeScript("client/solo/vgui/worldmaps/war_demo_soldier.nut")
 
 
 TFSOLO.WorldMapEventTag <- UniqueString()

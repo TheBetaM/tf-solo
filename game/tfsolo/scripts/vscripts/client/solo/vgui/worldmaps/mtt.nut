@@ -74,9 +74,9 @@ TFSOLO.WorldMaps.MTTClass <- class extends TFSOLO.WorldMap
 			MissionScript = "solo/mission/mtt/engineer.nut"
 		}
 		Node7.Settings = {
-			Map = "koth_viaduct"
+			Map = "pl_badwater"
 			PlayerClass = "medic"
-			TeamSelected = 0
+			TeamSelected = 1
 			MissionScript = "solo/mission/mtt/medic.nut"
 			CvarGamemodeOverride = 2
 		}

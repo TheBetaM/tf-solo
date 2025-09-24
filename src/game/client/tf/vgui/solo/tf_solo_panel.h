@@ -60,6 +60,7 @@ public:
 	virtual HSCRIPT CreatePanel(HSCRIPT hTable, const char* hParent);
 	virtual HSCRIPT CreatePanelRoot(HSCRIPT hTable);
 	void ApplyPanelSettings(HSCRIPT hPanelHandle, HSCRIPT hTable);
+	void SetTooltip(HSCRIPT hPanelHandle, const char* tip);
 	virtual HSCRIPT CreatePanelInternal(HSCRIPT hTable, Panel* hParent);
 	virtual HSCRIPT FindPanelRoot(const char* hPanel);
 	virtual HSCRIPT FindPanel(HSCRIPT hPanelRoot, const char* hPanel);
