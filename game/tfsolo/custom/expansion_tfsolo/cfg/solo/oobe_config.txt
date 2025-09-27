@@ -1,0 +1,51 @@
+VERSION 1.0
+
+DESCRIPTION INFO_OPTIONS
+{
+	"category1"
+	{
+		"#TFSOLO_OOBE_Text"
+		{ CATEGORY }
+	}
+	
+	"tf_oobe_modern_controls"
+	{
+		"#TFSOLO_OOBE_ModernControls"
+		"#TFSOLO_OOBE_ModernControls_Desc"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"tf_oobe_modern_defaults"
+	{
+		"#TFSOLO_OOBE_ModernDefaults"
+		"#TFSOLO_OOBE_ModernDefaults_Desc"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"tf_oobe_hints_base"
+	{
+		"#TFSOLO_OOBE_TutorialHints"
+		"#TFSOLO_OOBE_TutorialHints_Desc"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"tf_oobe_hints_mod"
+	{
+		"#TFSOLO_OOBE_TFSOLOHints"
+		"#TFSOLO_OOBE_TFSOLOHints_Desc"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"tf_oobe_multiplayer"
+	{
+		"#TFSOLO_OOBE_Multiplayer"
+		"#TFSOLO_OOBE_Multiplayer_Desc"
+		{ BOOL }
+		{ "0" }
+	}
+	
+}

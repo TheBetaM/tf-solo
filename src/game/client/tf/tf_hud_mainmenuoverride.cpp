@@ -112,6 +112,12 @@ ConVar cl_mainmenu_updateglow( "cl_mainmenu_updateglow", "1", FCVAR_ARCHIVE | FC
 ConVar tf_mainmenu_match_panel_type( "tf_mainmenu_match_panel_type", "7", FCVAR_ARCHIVE | FCVAR_HIDDEN, "The match group data to show on the main menu", cc_tf_mainmenu_match_panel_type );
 ConVar cl_default_networking_off("cl_default_networking_off", "0", FCVAR_ARCHIVE, "Disable Steam Networking on boot by default." );
 ConVar cl_show_disabled_maps( "cl_show_disabled_maps", "0", FCVAR_NONE, "Show disabled maps in custom match dialog." );
+ConVar tf_oobe_viewed( "tf_oobe_viewed", "0", FCVAR_ARCHIVE );
+ConVar tf_oobe_modern_controls( "tf_oobe_modern_controls", "0", FCVAR_ARCHIVE );
+ConVar tf_oobe_modern_defaults( "tf_oobe_modern_defaults", "0", FCVAR_ARCHIVE );
+ConVar tf_oobe_hints_base( "tf_oobe_hints_base", "0", FCVAR_ARCHIVE );
+ConVar tf_oobe_hints_mod( "tf_oobe_hints_mod", "0", FCVAR_ARCHIVE );
+ConVar tf_oobe_multiplayer( "tf_oobe_multiplayer", "0", FCVAR_ARCHIVE );
 
 void cc_promotional_codes_button_changed( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -1231,6 +1237,11 @@ void CHudMainMenuOverride::OnMainMenuStabilized()
 	if ( cl_default_networking_off.GetBool() )
 	{
 		engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
+	}
+	if ( !tf_oobe_viewed.GetBool() )
+	{
+		tf_oobe_viewed.SetValue( 1 );
+		engine->ClientCmd_Unrestricted( "opentf2oobe" );
 	}
 }
 
