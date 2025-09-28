@@ -440,7 +440,7 @@ ActionResult< CTFBot >	CTFBotEngineerMoveToBuild::Update( CTFBot *me, float inte
 				}
 			}
 
-			if ( shouldBuildExit )
+			if ( shouldBuildExit && TFGameRules()->State_Get() != GR_STATE_STALEMATE )
 			{
 				// no exit yet - need to place one
 				// when we see the enemy, retreat to cover and build the exit there

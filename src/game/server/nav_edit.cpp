@@ -362,6 +362,11 @@ bool CNavMesh::FindActiveNavArea( void )
 					m_climbableSurface = false; // don't try to build ladders on flat ground
 				}
 			}
+
+			if ( IsEditMode( CREATING_LADDER ) )
+			{
+				m_climbableSurface = true;
+			}
 		}
 
 		if ( ( m_climbableSurface && !IsEditMode( CREATING_LADDER ) ) || !IsEditMode( CREATING_AREA ) )
@@ -547,7 +552,7 @@ void StepAlongClimbableSurface( Vector &pos, const Vector &increment, const Vect
 //--------------------------------------------------------------------------------------------------------------
 void CNavMesh::CommandNavBuildLadder( void )
 {
-	if ( !IsEditMode( NORMAL ) || !m_climbableSurface )
+	if ( !IsEditMode( NORMAL ) )//|| !m_climbableSurface )
 	{
 		return;
 	}
@@ -2708,7 +2713,7 @@ void CNavMesh::CommandNavUnmark( void )
 
 
 //--------------------------------------------------------------------------------------------------------------
-void CNavMesh::CommandNavBeginArea( void )
+void CNavMesh::CommandNavBeginArea( bool forceLadder )
 {
 	CBasePlayer *player = UTIL_GetListenServerHost();
 	if (player == NULL)
@@ -2732,7 +2737,7 @@ void CNavMesh::CommandNavBeginArea( void )
 		SetEditMode( NORMAL );
 		player->EmitSound( "EDIT_BEGIN_AREA.Creating" );
 	}
-	else if ( m_climbableSurface )
+	else if ( m_climbableSurface || forceLadder )
 	{
 		player->EmitSound( "EDIT_BEGIN_AREA.NotCreating" );
 		
@@ -2861,7 +2866,7 @@ void CNavMesh::CommandNavEndArea( void )
 		player->EmitSound( "EDIT_END_AREA.Creating" );
 
 		Vector corner1, corner2, corner3;
-		if ( m_climbableSurface && FindLadderCorners( &corner1, &corner2, &corner3 ) )
+		if ( FindLadderCorners( &corner1, &corner2, &corner3 ) )
 		{
 			// m_ladderAnchor and corner2 are at the same Z, and corner1 & corner3 share Z.
 			Vector top = (m_ladderAnchor + corner2) * 0.5f;

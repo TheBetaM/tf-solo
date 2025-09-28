@@ -3616,6 +3616,21 @@ float CTFBot::GetDesiredAttackRange( void ) const
 // If we're required to equip a specific weapon, do it.
 bool CTFBot::EquipRequiredWeapon( void )
 {
+	if ( GetLocomotionInterface()->IsUsingLadder() )
+	{
+		if ( TFGameRules()->IsUsingGrapplingHook( GetTeamNumber() ) )
+		{
+			// Mannpower - using grappling hook to climb ladder areas
+			Weapon_Switch( Weapon_GetSlot( TF_WPN_TYPE_ITEM1 ) );
+		}
+		else
+		{
+			// Versus Saxton Hale (Community) - using Brave Jump or melee hits to climb ladder areas
+			Weapon_Switch( Weapon_GetSlot( TF_WPN_TYPE_MELEE ) );
+		}
+		return true;
+	}
+
 	// if we have a required weapon on our stack, it takes precedence (items, etc)
 	if ( m_requiredWeaponStack.Count() )
 	{

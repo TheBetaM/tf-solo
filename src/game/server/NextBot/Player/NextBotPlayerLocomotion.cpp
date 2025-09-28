@@ -125,7 +125,7 @@ PlayerLocomotion::LadderState PlayerLocomotion::ApproachAscendingLadder( void )
 	// it is important to approach precisely, so use a very large weight to wash out all other Approaches
 	Approach( m_ladderInfo->m_bottom, 9999999.9f );
 
-	if ( GetBot()->GetEntity()->GetMoveType() == MOVETYPE_LADDER )
+	if ( GetBot()->GetEntity()->GetMoveType() == MOVETYPE_LADDER || ( CanClimbFakeLadders() && IsCloseEnoughToLadderBottom() ) )
 	{
 		// we're on the ladder
 		return ASCENDING_LADDER;
@@ -226,7 +226,7 @@ PlayerLocomotion::LadderState PlayerLocomotion::AscendLadder( void )
 		return NO_LADDER;
 	}
 
-	if ( GetBot()->GetEntity()->GetMoveType() != MOVETYPE_LADDER )
+	if ( GetBot()->GetEntity()->GetMoveType() != MOVETYPE_LADDER && ( !CanClimbFakeLadders() || !IsCloseEnoughToLadder() ) )
 	{
 		// slipped off ladder
 		m_ladderInfo = NULL;
@@ -242,6 +242,10 @@ PlayerLocomotion::LadderState PlayerLocomotion::AscendLadder( void )
 
 	// climb up this ladder - look up
 	Vector goal = GetFeet() + 100.0f * ( -m_ladderInfo->GetNormal() + Vector( 0, 0, 2 ) );
+	if ( CanClimbFakeLadders() )
+	{
+		goal = GetFeet() + 100.0f * ( -m_ladderInfo->GetNormal() );
+	}
 
 	GetBot()->GetBodyInterface()->AimHeadTowards( goal, IBody::MANDATORY, 0.1f, NULL, "Ladder" );
 
@@ -777,6 +781,48 @@ bool PlayerLocomotion::IsUsingLadder( void ) const
 	return ( m_ladderState != NO_LADDER );
 }
 
+//----------------------------------------------------------------------------------------------------
+bool PlayerLocomotion::IsCloseEnoughToLadderBottom( void ) const
+{
+	if ( !m_ladderInfo )
+		return false;
+
+	float dist = ( GetFeet()- m_ladderInfo->m_bottom ).Length();
+	return dist < GetBot()->GetBodyInterface()->GetHullWidth() * 2.0f * GetBot()->GetEntity()->GetModelScale();
+}
+
+//----------------------------------------------------------------------------------------------------
+bool PlayerLocomotion::IsCloseEnoughToLadderTop( void ) const
+{
+	if ( !m_ladderInfo )
+		return false;
+
+	float dist = ( GetFeet() - m_ladderInfo->m_top ).Length();
+	return dist < GetBot()->GetBodyInterface()->GetHullWidth() * 2.0f * GetBot()->GetEntity()->GetModelScale();
+}
+
+//----------------------------------------------------------------------------------------------------
+bool PlayerLocomotion::IsCloseEnoughToLadder( void ) const
+{
+	if ( !m_ladderInfo )
+		return false;
+
+	auto area = TheNavMesh->GetNearestNavArea( GetBot()->GetEntity()->EyePosition(), true, 10000.0f, false, false, -2 );
+	if ( !area )
+		return false;
+
+	if ( ( m_ladderInfo->m_bottomArea && area->GetID() == m_ladderInfo->m_bottomArea->GetID() ) ||
+		( m_ladderInfo->m_topBehindArea && area->GetID() == m_ladderInfo->m_topBehindArea->GetID() ) ||
+		( m_ladderInfo->m_topForwardArea && area->GetID() == m_ladderInfo->m_topForwardArea->GetID() ) ||
+		( m_ladderInfo->m_topLeftArea && area->GetID() == m_ladderInfo->m_topLeftArea->GetID() ) ||
+		( m_ladderInfo->m_topRightArea && area->GetID() == m_ladderInfo->m_topRightArea->GetID() ) )
+		return true;
+
+	if ( m_ladderDismountGoal && m_ladderDismountGoal->GetID() == area->GetID() )
+		return true;
+
+	return false;
+}
 
 //----------------------------------------------------------------------------------------------------
 /**

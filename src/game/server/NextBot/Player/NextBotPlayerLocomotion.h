@@ -58,6 +58,10 @@ public:
 	virtual bool IsUsingLadder( void ) const;
 	virtual bool IsAscendingOrDescendingLadder( void ) const;	// we are actually on the ladder right now, either climbing up or down
 	virtual bool IsAbleToAutoCenterOnLadder( void ) const;
+	virtual bool IsCloseEnoughToLadderBottom( void ) const;
+	virtual bool IsCloseEnoughToLadderTop( void ) const;
+	virtual bool IsCloseEnoughToLadder( void ) const;
+	virtual bool CanClimbFakeLadders( void ) const		{ return false; }
 
 	virtual void FaceTowards( const Vector &target );		// rotate body to face towards "target"
 

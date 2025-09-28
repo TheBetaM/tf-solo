@@ -260,7 +260,7 @@ void CTFReviveMarker::ReviveThink( void )
 		return;
 	}
 
-	// PvP revives fix for Perks (re-evaluate, breaks VScript Freeze Tag and Rural)
+	// PvP revives fix for Perks (re-evaluate, breaks VScript Freeze Tag)
 	//if ( m_hOwner && !m_hOwner->GetReviveMarker() )
 	//{
 	//	m_hOwner->SetReviveMarkerEnt( this );

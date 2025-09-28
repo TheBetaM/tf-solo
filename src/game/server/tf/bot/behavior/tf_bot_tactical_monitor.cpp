@@ -204,6 +204,34 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		}
 	}
 
+	auto activeWeapon = me->GetActiveTFWeapon();
+	if ( me->GetLocomotionInterface()->IsUsingLadder() && activeWeapon )
+	{
+		if ( TFGameRules()->IsUsingGrapplingHook( me->GetTeamNumber() ) )
+		{
+			// Mannpower
+			if ( activeWeapon->GetSlot() == TF_WPN_TYPE_ITEM1 )
+			{
+				// todo
+			}
+		}
+		else if ( activeWeapon->GetSlot() == TF_WPN_TYPE_MELEE )
+		{
+			float flHealthMult = 1.0f;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( activeWeapon, flHealthMult, mult_health_frompacks );
+			if ( flHealthMult <= 0.0f )
+			{
+				// Versus Saxton Hale (Community) Hale - Do a Brave Jump
+				me->GetLocomotionInterface()->Jump();
+			}
+			else
+			{
+				// Versus Saxton Hale (Community) Mercs - Keep hitting the wall (ladder)
+				me->PressFireButton();
+			}
+		}
+	}
+
 	if ( TFGameRules()->State_Get() == GR_STATE_PREROUND )
 	{
 		// clear stuck monitor so we dont jump when the preround elapses

@@ -2107,7 +2107,7 @@ void CommandNavBeginArea( void )
 	if ( !UTIL_IsCommandIssuedByServerAdmin() )
 		return;
 
-	TheNavMesh->CommandNavBeginArea();
+	TheNavMesh->CommandNavBeginArea( false );
 }
 static ConCommand nav_begin_area( "nav_begin_area", CommandNavBeginArea, "Defines a corner of a new Area or Ladder. To complete the Area or Ladder, drag the opposite corner to the desired location and issue a 'nav_end_area' command.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
@@ -2122,6 +2122,15 @@ void CommandNavEndArea( void )
 }
 static ConCommand nav_end_area( "nav_end_area", CommandNavEndArea, "Defines the second corner of a new Area or Ladder and creates it.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
+//--------------------------------------------------------------------------------------------------------------
+void CommandNavBeginLadder( void )
+{
+	if ( !UTIL_IsCommandIssuedByServerAdmin() )
+		return;
+
+	TheNavMesh->CommandNavBeginArea( true );
+}
+static ConCommand nav_begin_ladder( "nav_begin_ladder", CommandNavBeginLadder, "Defines a corner of a new Ladder. To complete the Ladder, drag the opposite corner to the desired location and issue a 'nav_end_area' command.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
 //--------------------------------------------------------------------------------------------------------------
 void CommandNavConnect( void )

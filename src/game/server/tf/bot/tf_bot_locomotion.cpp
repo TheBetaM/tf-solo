@@ -21,6 +21,23 @@ void CTFBotLocomotion::Update( void )
 		return;
 	}
 
+	if ( IsUsingLadder() )
+	{
+		me->ReleaseCrouchButton();
+		return;
+	}
+	auto activeWeapon = me->GetActiveTFWeapon();
+	float flHealthMult = 1.0f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( activeWeapon, flHealthMult, mult_health_frompacks );
+	int iZombieFists = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( me, iZombieFists, zombiezombiezombiezombie );
+	if ( flHealthMult <= 0.0f && iZombieFists <= 0 )
+	{
+		// Versus Saxton Hale (Community) Hale
+		me->ReleaseCrouchButton();
+		return;
+	}
+
 	// always 'crouch jump'
 	if ( IsOnGround() )
 	{

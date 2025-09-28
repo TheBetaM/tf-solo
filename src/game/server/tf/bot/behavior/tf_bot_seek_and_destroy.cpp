@@ -204,8 +204,8 @@ CTFNavArea *CTFBotSeekAndDestroy::ChooseGoalArea( CTFBot *me )
 	}
 
 	// Go somewhere already
-	int count = TheTFNavMesh()->GetNavAreaCount();
-	auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
+	int count = TheNavAreas.Count();
+	auto carea = TheNavAreas[ RandomInt( 0, count - 1 ) ];
 	if ( carea )
 	{
 		CTFNavArea* area = static_cast<CTFNavArea*>( carea );

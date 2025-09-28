@@ -414,7 +414,7 @@ public:
 	void CommandNavMark( const CCommand &args );						// mark an area for further operations
 	void CommandNavUnmark( void );										// removes the mark
 
-	void CommandNavBeginArea( void );									// begin creating a new nav area
+	void CommandNavBeginArea( bool forceLadder );						// begin creating a new nav area
 	void CommandNavEndArea( void );										// end creation of the new nav area
 
 	void CommandNavBeginShiftXY( void );								// begin shifting selected set in the XY plane

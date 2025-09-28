@@ -994,25 +994,28 @@ public:
 			}
 
 
-			// check height change
-			float deltaZ = fromArea->ComputeAdjacentConnectionHeightChange( area );
-
-			if ( deltaZ >= m_stepHeight )
+			if ( !ladder )
 			{
-				if ( deltaZ >= m_maxJumpHeight )
+				// check height change
+				float deltaZ = fromArea->ComputeAdjacentConnectionHeightChange( area );
+
+				if ( deltaZ >= m_stepHeight )
 				{
-					// too high to reach
+					if ( deltaZ >= m_maxJumpHeight )
+					{
+						// too high to reach
+						return -1.0f;
+					}
+
+					// jumping is slower than flat ground
+					const float jumpPenalty = 2.0f;
+					dist *= jumpPenalty;
+				}
+				else if ( deltaZ < -m_maxDropHeight )
+				{
+					// too far to drop
 					return -1.0f;
 				}
-
-				// jumping is slower than flat ground
-				const float jumpPenalty = 2.0f;
-				dist *= jumpPenalty;
-			}
-			else if ( deltaZ < -m_maxDropHeight )
-			{
-				// too far to drop
-				return -1.0f;
 			}
 
 			// add a random penalty unique to this character so they choose different routes to the same place
