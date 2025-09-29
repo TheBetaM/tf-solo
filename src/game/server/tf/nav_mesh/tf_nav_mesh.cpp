@@ -893,6 +893,17 @@ void CTFNavMesh::CollectControlPointAreas( void )
 				m_controlPointCenterAreaVector[ point->GetPointIndex() ] = NULL;
 				float closeRangeSq = FLT_MAX;
 
+				// Fallback for Carrier
+				if ( pointAreaVector->Count() <= 0 )
+				{
+					auto area = TheNavMesh->GetNearestNavArea( point );
+					if ( area )
+					{
+						CTFNavArea* tfarea = (CTFNavArea*)area;
+						pointAreaVector->AddToTail( tfarea );
+					}
+				}
+
 				for( int i=0; i<pointAreaVector->Count(); ++i )
 				{
 					CTFNavArea *area = pointAreaVector->Element(i);
