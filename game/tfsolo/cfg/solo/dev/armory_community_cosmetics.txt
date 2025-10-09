@@ -6064,4 +6064,112 @@ armory_config
 	{
 		Cost 100
 	}
+	"Heat Shield"
+	{
+		Cost 100
+	}
+	"Technician's Tunic"
+	{
+		Cost 100
+	}
+	"Service Satchel"
+	{
+		Cost 100
+	}
+	"Cigarillo Caballero"
+	{
+		Cost 100
+	}
+	"El Gigante's Gunbelt"
+	{
+		Cost 100
+	}
+	"Poncho del Pesado"
+	{
+		Cost 100
+	}
+	"Air Exchanger"
+	{
+		Cost 100
+	}
+	"Industrial Insurgent"
+	{
+		Cost 100
+	}
+	"Hellscape"
+	{
+		Cost 100
+	}
+	"Fused Plates"
+	{
+		Cost 100
+	}
+	"Feathered Villain"
+	{
+		Cost 100
+	}
+	"Velveteen Villain"
+	{
+		Cost 100
+	}
+	"Pantaloons of Unabashed Villainy"
+	{
+		Cost 100
+	}
+	"Buzz Kill"
+	{
+		Cost 100
+	}
+	"Torn Terror"
+	{
+		Cost 100
+	}
+	"Ripped Runts"
+	{
+		Cost 100
+	}
+	"Seamann's Stubble"
+	{
+		Cost 100
+	}
+	"The Misdirector"
+	{
+		Cost 100
+	}
+	"Sleight of Hand"
+	{
+		Cost 100
+	}
+	"Vanishing Act"
+	{
+		Cost 100
+	}
+	"Professor Photon"
+	{
+		Cost 100
+	}
+	"Mad Drip"
+	{
+		Cost 100
+	}
+	"Viscera Visor"
+	{
+		Cost 100
+	}
+	"Pyromantic Plumage"
+	{
+		Cost 100
+	}
+	"One-Man Convoy"
+	{
+		Cost 100
+	}
+	"Face Lift"
+	{
+		Cost 100
+	}
+	"Zepheniah's Shroud"
+	{
+		Cost 100
+	}
 }

@@ -2298,8 +2298,7 @@ maps_config
 		
 		cp_cowerhouse
 		{
-			disabled 1
-			name "Powerhouse"
+			name "Cowerhouse"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_cowerhouse"
 			photosArt "maps/menu_photos_cp_cowerhouse"
@@ -2313,7 +2312,6 @@ maps_config
 		}
 		koth_dusker
 		{
-			disabled 1
 			name "Dusker"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_dusker"
@@ -2328,7 +2326,6 @@ maps_config
 		}
 		arena_afterlife
 		{
-			disabled 1
 			name "Afterlife"
 			modename "#Gametype_Arena"
 			thumbArt "maps/menu_thumb_arena_afterlife"
@@ -2342,13 +2339,12 @@ maps_config
 				vscript 1
 			}
 		}
-		ctf_devilcross
+		ctf_doublecross_event
 		{
-			disabled 1
 			name "Devilcross"
 			modename "#Gametype_CTF"
-			thumbArt "maps/menu_thumb_ctf_doublecross"
-			photosArt "maps/menu_photos_ctf_doublecross"
+			thumbArt "maps/menu_thumb_ctf_doublecross_event"
+			photosArt "maps/menu_photos_ctf_doublecross_event"
 			tags
 			{
 				ctf 1
@@ -2357,13 +2353,12 @@ maps_config
 				theme_hallow 1
 			}
 		}
-		ctf_marshlands
+		sd_marshlands
 		{
-			disabled 1
 			name "Marshlands"
-			modename "#Gametype_CTF"
-			thumbArt "maps/menu_thumb_ctf_marshlands"
-			photosArt "maps/menu_photos_ctf_marshlands"
+			modename "#GameType_HTF"
+			thumbArt "maps/menu_thumb_sd_marshlands"
+			photosArt "maps/menu_photos_sd_marshlands"
 			tags
 			{
 				ctf 1

@@ -324,4 +324,16 @@ armory_config
 	{
 		Cost 100
 	}
+	"Taunt: Heartbreaker"
+	{
+		Cost 100
+	}
+	"Taunt: Healthcare Hog"
+	{
+		Cost 100
+	}
+	"Taunt: Ring King"
+	{
+		Cost 100
+	}
 }
