@@ -112,7 +112,7 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Manmelter  
 -- Removed flaming particle effect  
 - Panic Attack  
--- Reverted the weapon to its original functionality  
+-- Reverted the weapon to its original functionality/stats  
 -- +50% reload speed  
 -- +30% firing speed  
 - Gas Passer  
@@ -126,16 +126,20 @@ GetDamageDone(), GetCrits(), GetPoints()
 -- No critical hits vs non-burning players  
   
 - Loch-n-Load  
+-- Reverted to older stats:  
 -- Replaced +20% damage to buildings with +20% damage bonus   
 - Stickybomb Jumper  
+-- Reverted to older stats:  
 -- Removed max sticky active penalty  
 - Ullapool Caber  
+-- Reverted to older stats:  
 -- Increased base explosion damage from 75 to 100  
 -- Removed firing speed penalty  
 -- Removed deploy speed penalty  
 -- Added: -45% damage penalty  
   
 - Gloves of Running Urgently  
+-- Reverted to older stats:  
 -- Removed maximum health drain  
 -- Added: Marked For Death while active  
 -- Added: -25% damage penalty  
@@ -146,10 +150,12 @@ GetDamageDone(), GetCrits(), GetPoints()
 -- Added projectile penetration  
   
 - Sydney Sleeper  
+-- Reverted to older stats:  
 -- Removed Scoped Hit requirement and variable Jarate time  
 -- Added On Hit: 8 seconds of Jarate on target  
   
 - Ambassador  
+-- Reverted to older stats:  
 -- Removed critical damage falloff  
 - Your Eternal Reward  
 -- Removed cloak drain penalty  

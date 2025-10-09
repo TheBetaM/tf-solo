@@ -974,7 +974,7 @@ maps_config
 			tags
 			{
 				pl 1
-				stages 3
+				stages 2
 				theme_desert 1
 				valve 1
 			}

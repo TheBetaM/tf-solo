@@ -2295,5 +2295,84 @@ maps_config
 				vscript 1
 			}
 		}
+		
+		cp_cowerhouse
+		{
+			disabled 1
+			name "Powerhouse"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_cowerhouse"
+			photosArt "maps/menu_photos_cp_cowerhouse"
+			tags
+			{
+				cp 1
+				cp_count 3
+				symm 1
+				theme_hallow 1
+			}
+		}
+		koth_dusker
+		{
+			disabled 1
+			name "Dusker"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_dusker"
+			photosArt "maps/menu_photos_koth_dusker"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		arena_afterlife
+		{
+			disabled 1
+			name "Afterlife"
+			modename "#Gametype_Arena"
+			thumbArt "maps/menu_thumb_arena_afterlife"
+			photosArt "maps/menu_photos_arena_afterlife"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
+		ctf_devilcross
+		{
+			disabled 1
+			name "Devilcross"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_doublecross"
+			photosArt "maps/menu_photos_ctf_doublecross"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_hallow 1
+			}
+		}
+		ctf_marshlands
+		{
+			disabled 1
+			name "Marshlands"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_marshlands"
+			photosArt "maps/menu_photos_ctf_marshlands"
+			tags
+			{
+				ctf 1
+				flag_count 1
+				flag_neutral 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		
 	}
 }

@@ -7810,18 +7810,6 @@ maps_config
 				vscript 1
 			}
 		}
-		workshop_3562630084
-		{
-			name "Dusker"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_hallow 1
-			}
-		}
 		workshop_3563085348
 		{
 			name "Medusa"
@@ -7871,19 +7859,6 @@ maps_config
 				symm 1
 				theme_hallow 1
 				upgrades 1
-			}
-		}
-		workshop_3565681202
-		{
-			name "Marshlands"
-			modename "#Gametype_CTF"
-			tags
-			{
-				ctf 1
-				flag_count 1
-				flag_neutral 1
-				symm 1
-				theme_hallow 1
 			}
 		}
 		
