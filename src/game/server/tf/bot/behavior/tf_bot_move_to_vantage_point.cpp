@@ -76,7 +76,7 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float inter
 		}
 	}
 
-	if ( m_isEscaping && !me->m_Shared.InCond( TF_COND_PURGATORY ) && !me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) )
+	if ( m_isEscaping && !me->m_Shared.InCond( TF_COND_PURGATORY ) && !me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) && V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay" ) )
 	{
 		return Done( "I've escaped" );
 	}

@@ -2298,6 +2298,7 @@ maps_config
 		
 		cp_cowerhouse
 		{
+			disabled 1
 			name "Cowerhouse"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_cowerhouse"
@@ -2308,6 +2309,7 @@ maps_config
 				cp_count 3
 				symm 1
 				theme_hallow 1
+				vscript 1
 			}
 		}
 		koth_dusker
@@ -2322,6 +2324,7 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_hallow 1
+				vscript 1
 			}
 		}
 		arena_afterlife

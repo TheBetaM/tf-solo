@@ -437,7 +437,7 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 			return Continue();
 		}
 
-		if ( me->m_Shared.InCond( TF_COND_PURGATORY ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL) )
+		if ( me->m_Shared.InCond( TF_COND_PURGATORY ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) || !V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay" ) )
 		{
 			return SuspendFor( new CTFBotMoveToVantagePoint( -1.0f, true ), "I gotta get out of here" );
 		}
