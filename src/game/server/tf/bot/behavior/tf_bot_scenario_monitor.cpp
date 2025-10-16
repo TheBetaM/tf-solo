@@ -49,6 +49,8 @@
 #include "bot/behavior/tf_bot_escort.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_fetch_flag.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_deliver_flag.h"
+#include "bot/behavior/scenario/passtime/tf_bot_passtime_ball.h"
+#include "bot/behavior/scenario/passtime/tf_bot_passtime_roam.h"
 #include "bot/behavior/tf_bot_move_to_vantage_point.h"
 
 #include "bot/behavior/missions/tf_bot_mission_suicide_bomber.h"
@@ -388,6 +390,13 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 		return SuspendFor( new CTFBotDeliverFlag, "I've picked up the flag! Running it in..." );
 	}
 
+	// PASS Time Scenario
+	if ( me->m_Shared.HasPasstimeBall() )
+	{
+		// we just picked up the ball - drop what we're doing and take it in
+		return SuspendFor( new CTFBotDeliverBall, "I've picked up the ball! Running it in..." );
+	}
+
 	if ( me->HasMission( CTFBot::NO_MISSION ) )
 	{
 		if ( m_ignoreLostFlagTimer.IsElapsed() && me->IsAllowedToPickUpFlag() )
@@ -430,6 +439,22 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 					}
 				}
 			}
+
+			CPasstimeBall* ball = me->GetBallToFetch();
+			if ( ball && !me->MedicGetHealTarget() && me->IsAllowedToPickUpFlag() && ball->GetBallState() == 1 )
+			{
+				if ( !m_lostFlagTimer.HasStarted() )
+				{
+					m_lostFlagTimer.Start( RandomFloat( 1.0f, 3.0f ) );
+				}
+				else if ( m_lostFlagTimer.IsElapsed() )
+				{
+					m_lostFlagTimer.Invalidate();
+
+					// we better go get the ball
+					return SuspendFor( new CTFBotFetchBall( TEMPORARY_FLAG_FETCH ), "Fetching lost ball..." );
+				}
+			}
 		}
 
 		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
@@ -454,6 +479,14 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 					// we better go get the flag
 					return SuspendFor( new CTFBotFetchFlag( TEMPORARY_FLAG_FETCH ), "Fetching lost flag..." );
 				}
+			}
+
+			CPasstimeBall* ball = me->GetBallToFetch();
+
+			if ( ball && !me->MedicGetHealTarget() && me->IsAllowedToPickUpFlag() && ball->GetBallState() == 1 )
+			{
+				// we better go get the ball
+				return SuspendFor( new CTFBotFetchBall( TEMPORARY_FLAG_FETCH ), "Fetching lost ball..." );
 			}
 
 			// TOW / Arena PLR

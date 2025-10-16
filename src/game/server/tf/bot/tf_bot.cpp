@@ -41,6 +41,7 @@
 #include "bot/map_entities/tf_bot_generator.h"
 #include "bot/map_entities/tf_bot_hint_entity.h"
 #include "func_passtime_goal.h"
+#include "tf_passtime_ball.h"
 #include "tf_item_powerup_bottle.h"
 #include "solo/propertydamage_prop.h"
 
@@ -2444,6 +2445,20 @@ CFuncPasstimeGoal* CTFBot::GetBallCaptureZone( void ) const
 		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) ) )
 		{
 			return zone;
+		}
+	}
+
+	return NULL;
+}
+
+CPasstimeBall* CTFBot::GetBallToFetch( void ) const
+{
+	for ( int i = 0; i < IPasstimeBallList::AutoList().Count(); ++i )
+	{
+		CPasstimeBall* ball = static_cast<CPasstimeBall *>( IPasstimeBallList::AutoList()[i] );
+		if ( !ball->BOutOfPlay() )
+		{
+			return ball;
 		}
 	}
 

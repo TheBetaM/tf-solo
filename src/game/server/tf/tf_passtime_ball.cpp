@@ -30,6 +30,7 @@ static const float s_flPickupDist = 1000.f;
 static const float s_flBlockDist = 30.0f;
 static const float s_flClearDist = 50.0f;
 static const char *s_pHalloweenBallModel = "models/passtime/ball/passtime_ball_halloween.mdl";
+IMPLEMENT_AUTO_LIST( IPasstimeBallList );
 
 //-----------------------------------------------------------------------------
 static objectparams_t SBallVPhysicsObjectParams()

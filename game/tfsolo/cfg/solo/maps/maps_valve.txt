@@ -641,7 +641,6 @@ maps_config
 		}
 		pass_brickyard
 		{
-			disabled 1
 			name "Brickyard"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_brickyard"
@@ -656,7 +655,6 @@ maps_config
 		}
 		pass_district
 		{
-			disabled 1
 			name "District"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_district"
@@ -671,7 +669,6 @@ maps_config
 		}
 		pass_timbertown
 		{
-			disabled 1
 			name "Timbertown"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_timbertown"

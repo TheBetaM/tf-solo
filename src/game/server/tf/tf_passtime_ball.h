@@ -17,10 +17,12 @@
 #include "baseanimating.h"
 #include "utllinkedlist.h"
 
+DECLARE_AUTO_LIST( IPasstimeBallList );
+
 class CSpriteTrail;
 class CBallPlayerToucher;
 //-----------------------------------------------------------------------------
-class CPasstimeBall : public CBaseAnimating
+class CPasstimeBall : public CBaseAnimating, public IPasstimeBallList
 {
 public:
 	DECLARE_CLASS( CPasstimeBall, CBaseAnimating );
@@ -44,6 +46,7 @@ public:
 	CTFPlayer *GetThrower() const;
 	int GetCollisionCount() const;
 	int GetCarryDuration() const;
+	int GetBallState() const { return m_eState; };
 
 	void ResetTrail();
 	void HideTrail();

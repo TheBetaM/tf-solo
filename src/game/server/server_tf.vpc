@@ -602,6 +602,14 @@ $Project "Server (TF)"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_attack_flag_defenders.cpp"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_attack_flag_defenders.h"
 						}
+
+						$Folder	"PassTime"
+						{
+							$File	"tf\bot\behavior\scenario\passtime\tf_bot_passtime_ball.cpp"
+							$File	"tf\bot\behavior\scenario\passtime\tf_bot_passtime_ball.h"
+							$File	"tf\bot\behavior\scenario\passtime\tf_bot_passtime_roam.cpp"
+							$File	"tf\bot\behavior\scenario\passtime\tf_bot_passtime_roam.h"
+						}
 					}
 					
 					$Folder	"Engineer"
