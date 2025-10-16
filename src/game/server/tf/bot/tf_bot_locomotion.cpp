@@ -164,3 +164,13 @@ void CTFBotLocomotion::Jump( void )
 		}
 	}
 }
+
+int CTFBotLocomotion::GetRemainingAirJumps( void )
+{
+	CTFBot* me = ToTFBot( GetBot()->GetEntity() );
+	if ( !me )
+	{
+		return 0;
+	}
+	return me->CanAirDash() ? 1 : 0;
+}

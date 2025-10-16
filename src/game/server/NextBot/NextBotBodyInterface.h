@@ -128,6 +128,8 @@ public:
 
 	virtual unsigned int GetSolidMask( void ) const;					// return the bot's collision mask (hack until we get a general hull trace abstraction here or in the locomotion interface)
 	virtual unsigned int GetCollisionGroup( void ) const;
+
+	virtual float GetBodyScale( void ) { return 1.0f; }
 };
 
 

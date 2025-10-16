@@ -222,7 +222,11 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 			if ( flHealthMult <= 0.0f )
 			{
 				// Versus Saxton Hale (Community) Hale - Do a Brave Jump
-				me->GetLocomotionInterface()->Jump();
+				if ( !m_braveJumpTimer.HasStarted() || m_braveJumpTimer.IsElapsed() )
+				{
+					m_braveJumpTimer.Start( 0.1f );
+					me->PressJumpButton();
+				}
 			}
 			else
 			{

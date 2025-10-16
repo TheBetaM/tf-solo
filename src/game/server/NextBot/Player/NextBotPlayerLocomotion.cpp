@@ -788,7 +788,7 @@ bool PlayerLocomotion::IsCloseEnoughToLadderBottom( void ) const
 		return false;
 
 	float dist = ( GetFeet()- m_ladderInfo->m_bottom ).Length();
-	return dist < GetBot()->GetBodyInterface()->GetHullWidth() * 2.0f * GetBot()->GetEntity()->GetModelScale();
+	return dist < GetBot()->GetBodyInterface()->GetHullWidth() * 2.0f * GetBot()->GetBodyInterface()->GetBodyScale();
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -798,7 +798,7 @@ bool PlayerLocomotion::IsCloseEnoughToLadderTop( void ) const
 		return false;
 
 	float dist = ( GetFeet() - m_ladderInfo->m_top ).Length();
-	return dist < GetBot()->GetBodyInterface()->GetHullWidth() * 2.0f * GetBot()->GetEntity()->GetModelScale();
+	return dist < GetBot()->GetBodyInterface()->GetHullWidth() * 2.0f * GetBot()->GetBodyInterface()->GetBodyScale();
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -868,5 +868,12 @@ float PlayerLocomotion::GetRunSpeed( void ) const
 float PlayerLocomotion::GetWalkSpeed( void ) const
 {
 	return 0.5f * m_player->MaxSpeed();
+}
+
+
+//-----------------------------------------------------------------------------------------------------
+int PlayerLocomotion::GetRemainingAirJumps( void )
+{
+	return 0;
 }
 

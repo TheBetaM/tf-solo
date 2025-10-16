@@ -40,3 +40,14 @@ float CTFBotBody::GetHeadAimTrackingInterval( void ) const
 
 	return 0.0f;
 }
+
+float CTFBotBody::GetBodyScale( void )
+{
+	CTFBot* me = (CTFBot *)GetBot();
+	if ( !me )
+	{
+		return 1.0f;
+	}
+
+	return me->GetModelScale();
+}

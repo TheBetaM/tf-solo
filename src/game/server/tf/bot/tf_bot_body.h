@@ -19,6 +19,8 @@ public:
 	virtual ~CTFBotBody() { }
 
 	virtual float GetHeadAimTrackingInterval( void ) const;			// return how often we should sample our target's position and velocity to update our aim tracking, to allow realistic slop in tracking
+
+	virtual float GetBodyScale( void ) OVERRIDE;
 };
 
 #endif // TF_BOT_BODY_H

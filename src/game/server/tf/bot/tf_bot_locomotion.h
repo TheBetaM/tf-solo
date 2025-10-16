@@ -38,6 +38,7 @@ public:
 	virtual void Jump( void ) OVERRIDE;								// initiate a simple undirected jump in the air
 
 	virtual bool CanClimbFakeLadders( void ) const OVERRIDE { return true; }
+	virtual int GetRemainingAirJumps( void ) OVERRIDE;
 
 protected:
 	virtual void AdjustPosture( const Vector &moveGoal ) { }	// never crouch to navigate

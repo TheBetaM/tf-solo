@@ -328,7 +328,7 @@ bool PathFollower::LadderUpdate( INextBot *bot )
 	
 
 	// start using the ladder
-	const float mountRange = 25.0f;
+	const float mountRange = 25.0f * body->GetBodyScale();
 
 	if ( m_goal->how == GO_LADDER_UP )
 	{
@@ -350,7 +350,7 @@ bool PathFollower::LadderUpdate( INextBot *bot )
 							  "Mounting upward ladder" );
 
 		float range = to.NormalizeInPlace();
-		if ( range < NextBotLadderAlignRange.GetFloat() )
+		if ( range < NextBotLadderAlignRange.GetFloat() * body->GetBodyScale() )
 		{
 			// getting close - line up
 			Vector2D ladderNormal2D = m_goal->ladder->GetNormal().AsVector2D();
@@ -376,7 +376,7 @@ bool PathFollower::LadderUpdate( INextBot *bot )
 
 				Vector goal = m_goal->ladder->m_bottom;
 				
-				float alignRange = NextBotLadderAlignRange.GetFloat();
+				float alignRange = NextBotLadderAlignRange.GetFloat() * body->GetBodyScale();
 				
 				if ( dot < 0.0f )
 				{

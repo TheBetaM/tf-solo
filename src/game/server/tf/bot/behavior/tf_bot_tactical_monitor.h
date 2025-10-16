@@ -39,6 +39,7 @@ private:
 	bool ShouldOpportunisticallyTeleport( CTFBot *me ) const;
 	CObjectTeleporter *FindNearbyTeleporter( CTFBot *me );
 	CountdownTimer m_findTeleporterTimer;
+	CountdownTimer m_braveJumpTimer;
 
 	bool ShouldOpportunisticallyCollectCrumpkins( CTFBot* me ) const;
 	bool ShouldOpportunisticallyCollectSpell( CTFBot* me ) const;
