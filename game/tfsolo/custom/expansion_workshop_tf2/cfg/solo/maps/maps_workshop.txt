@@ -1172,6 +1172,39 @@ maps_config
 				theme_alpine 1
 			}
 		}
+		workshop_3475904158
+		{
+			name "Gigantic"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_forest 1
+			}
+		}
+		workshop_2663540708
+		{
+			name "Gridiron"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_2512066947
+		{
+			name "Smalltime"
+			modename "#Gametype_Passtime"
+			tags
+			{
+				pass 1
+				symm 1
+				theme_desert 1
+			}
+		}
 		
 	
 	}
