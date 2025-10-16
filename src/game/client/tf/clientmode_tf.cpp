@@ -311,7 +311,7 @@ IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
 // CTFModeManager implementation.
 // --------------------------------------------------------------------------------- //
 
-#define SCREEN_FILE		"scripts/vgui_screens.txt"
+#define SCREEN_FILE		"scripts/vgui_screens_tfsolo.txt"
 
 void CTFModeManager::Init()
 {

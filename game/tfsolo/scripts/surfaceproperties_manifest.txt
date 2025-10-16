@@ -1,0 +1,9 @@
+#basedir surfaceproperties
+
+surfaceproperties_manifest
+{
+	"file"		"scripts/surfaceproperties.txt"
+	"file"		"scripts/surfaceproperties_hl2.txt"
+	"file"		"scripts/surfaceproperties_tf.txt"
+}
+

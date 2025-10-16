@@ -1,0 +1,6 @@
+#basedir modtextures
+
+"sprites/640_hud"
+{
+
+}

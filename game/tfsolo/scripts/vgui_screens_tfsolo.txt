@@ -1,0 +1,7 @@
+#base vgui_screens.txt
+#basedir vguiscreens
+
+"VGUI_Screens"
+{
+
+}
