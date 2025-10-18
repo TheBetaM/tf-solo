@@ -21,6 +21,8 @@
 	#include "prediction.h"
 	#include "haptics/ihaptics.h"
 	#include "c_tf_gamestats.h"
+
+	ConVar tf_flamethrower_oldeffects( "tf_flamethrower_oldeffects", "1", FCVAR_ARCHIVE, "Use the old flame particle effects." );
 #else
 
 	#include "explode.h"
@@ -2558,6 +2560,32 @@ const char* CTFFlameThrower::FlameEffectName( bool bIsFirstPersonView )
 	if ( !pOwner )
 		return NULL;
 
+	if ( tf_flamethrower_oldeffects.GetBool() )
+	{
+		if ( m_bHasHalloweenSpell )
+		{
+			return "flamethrower_halloween";
+		}
+		
+		switch ( GetFlameThrowerMode() )
+		{
+		case TF_FLAMETHROWER_MODE_PHLOG:	return "drg_phlo_stream";
+		case TF_FLAMETHROWER_MODE_GIANT:	return "flamethrower_giant_mvm";
+		//case TF_FLAMETHROWER_MODE_RAINBOW:	return "flamethrower_rainbow";
+		default:
+		{
+			if ( pOwner->GetTeamNumber() == TF_TEAM_RED )
+			{
+				return "flamethrower";
+			}
+			else
+			{
+				return "flamethrower_blue";
+			}
+		}
+		}
+	}
+
 	// Halloween Spell
 	if ( m_bHasHalloweenSpell )
 	{
@@ -2584,6 +2612,32 @@ const char* CTFFlameThrower::FlameCritEffectName( bool bIsFirstPersonView )
 	CTFPlayer *pOwner = GetTFPlayerOwner();
 	if ( !pOwner )
 		return NULL;
+
+	if ( tf_flamethrower_oldeffects.GetBool() )
+	{
+		if ( m_bHasHalloweenSpell )
+		{
+			return ( pOwner->GetTeamNumber() == TF_TEAM_BLUE ? "flamethrower_halloween_crit_blue" : "flamethrower_halloween_crit_red" );
+		}
+
+		switch ( GetFlameThrowerMode() )
+		{
+		case TF_FLAMETHROWER_MODE_PHLOG:	return "drg_phlo_stream_crit";
+		case TF_FLAMETHROWER_MODE_GIANT:	return "flamethrower_crit_giant_mvm";
+		//case TF_FLAMETHROWER_MODE_RAINBOW:	return "flamethrower_rainbow";
+		default:
+		{
+			if ( pOwner->GetTeamNumber() == TF_TEAM_RED )
+			{
+				return "flamethrower_crit_red";
+			}
+			else
+			{
+				return "flamethrower_crit_blue";
+			}
+		}
+		}
+	}
 
 	// Halloween Spell
 	if ( m_bHasHalloweenSpell )
