@@ -22,6 +22,7 @@
 #include "tier0/memdbgon.h"
 
 #define PARTICLES_MANIFEST_FILE				"particles/particles_manifest.txt"
+#define PARTICLES_MANIFEST_FILE_TFSOLO		"particles/particles_manifest_tfsolo.txt"
 
 // How many particle manifests can your map reference.  Was being used to drop bogus manifests into download directory
 // to DoS rival community maps because we can't just be cool.
@@ -85,6 +86,15 @@ void GetParticleManifest( CUtlVector<CUtlString>& list )
 	}
 
 	manifest->deleteThis();
+
+	KeyValuesAD manifestMod( "particles_manifest_tfsolo" );
+	if ( manifestMod->LoadFromFile( filesystem, PARTICLES_MANIFEST_FILE_TFSOLO, "GAME" ) )
+	{
+		for ( KeyValues* sub = manifestMod->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey() )
+		{
+			list.AddToTail( sub->GetName() );
+		}
+	}
 }
 
 
@@ -188,6 +198,26 @@ void ParseParticleEffectsMap( const char *pMapName, bool bLoadSheets )
 
 	KeyValuesAD manifest( szMapManifestFilename );
 
+	ConVarRef sv_mapentities_mod( "sv_mapentities_mod" );
+	const char* modFile = sv_mapentities_mod.GetString();
+	int modFileCount = 0;
+	if ( modFile && modFile[0] )
+	{
+		KeyValuesAD modKV( "mapmod" );
+		if ( modKV->LoadFromFile( g_pFullFileSystem, modFile, "GAME" ) )
+		{
+			KeyValues* keyImports = modKV->FindKey( "particles" );
+			if ( keyImports )
+			{
+				for ( KeyValues* pFileKey = keyImports->GetFirstSubKey(); pFileKey != NULL; pFileKey = pFileKey->GetNextKey() )
+				{
+					files.AddToTail( V_strdup( pFileKey->GetName() ) );
+					modFileCount++;
+				}
+			}
+		}
+	}
+
 	// In order:
 	//  - particles.txt within the map BSP
 	//  - mapname_particles.txt within the map BSP
@@ -202,7 +232,7 @@ void ParseParticleEffectsMap( const char *pMapName, bool bLoadSheets )
 		DevMsg( "Successfully loaded particle effects manifest '%s' for map '%s'\n", szMapManifestFilename, pMapName );
 		for ( KeyValues *sub = manifest->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey() )
 		{
-			if ( files.Count() >= PARTICLES_MANIFEST_MAX_MAP_ENTRIES )
+			if ( files.Count() - modFileCount >= PARTICLES_MANIFEST_MAX_MAP_ENTRIES )
 			{
 				Warning( "CParticleMgr::LevelInit:  Map particles manifest '%s' specifies more than %d entries.\n",
 				         szMapManifestFilename, PARTICLES_MANIFEST_MAX_MAP_ENTRIES );
@@ -231,11 +261,6 @@ void ParseParticleEffectsMap( const char *pMapName, bool bLoadSheets )
 				Warning( "CParticleMgr::LevelInit:  Manifest '%s' with bogus file type '%s', expecting 'file'\n", szMapManifestFilename, sub->GetName() );
 			}
 		}
-	}
-	else
-	{
-		// Don't print a warning, and don't proceed any further if the file doesn't exist!
-		return;
 	}
 
 	int nCount = files.Count();

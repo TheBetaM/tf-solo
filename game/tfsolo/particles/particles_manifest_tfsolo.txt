@@ -1,0 +1,6 @@
+#basedir lists
+
+particles_manifest
+{
+	//"!particles/rockettrail.pcf" 1
+}

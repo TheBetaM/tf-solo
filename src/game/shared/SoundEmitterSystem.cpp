@@ -304,6 +304,23 @@ public:
 				soundemitterbase->AddSoundOverrides( scriptfile );
 			}
 		}
+		ConVarRef sv_mapentities_mod( "sv_mapentities_mod" );
+		const char* modFile = sv_mapentities_mod.GetString();
+		if ( modFile && modFile[0] )
+		{
+			KeyValuesAD modKV( "mapmod" );
+			if ( modKV->LoadFromFile( filesystem, modFile, "GAME" ) )
+			{
+				KeyValues* keyImports = modKV->FindKey( "sounds" );
+				if ( keyImports )
+				{
+					for ( KeyValues* pFileKey = keyImports->GetFirstSubKey(); pFileKey != NULL; pFileKey = pFileKey->GetNextKey() )
+					{
+						soundemitterbase->AddSoundOverrides( pFileKey->GetName(), pFileKey->GetInt( pFileKey->GetName(), 0 ) != 0 );
+					}
+				}
+			}
+		}
 #else
 		Q_StripExtension( pszCleanMapName, scriptfile, sizeof( scriptfile ) );
 		Q_strncat( scriptfile, "_level_sounds.txt", sizeof( scriptfile ), COPY_ALL_CHARACTERS );

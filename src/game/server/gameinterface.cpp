@@ -99,9 +99,13 @@
 #include "tf_gamerules.h"
 #include "player_vs_environment/tf_population_manager.h"
 #include "workshop/maps_workshop.h"
+#include "bsp_utils.h"
 
 extern ConVar tf_mm_trusted;
 extern ConVar tf_mm_servermode;
+extern ConVar sv_mapentities_mod;
+extern int g_bspCacheJobsRunning;
+CUtlVector<const char*> g_bspCacheMapMemoryFiles;
 #endif
 
 #ifdef USE_NAV_MESH
@@ -1421,6 +1425,14 @@ void CServerGameDLL::LevelShutdown( void )
 	}
 #endif
 #endif
+	
+#ifdef TF_DLL
+	FOR_EACH_VEC( g_bspCacheMapMemoryFiles, i )
+	{
+		BSP_RemoveAssetFromCache( g_bspCacheMapMemoryFiles[i] );
+	}
+	g_bspCacheMapMemoryFiles.Purge();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1967,6 +1979,63 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
                                             /* in/out */ char *pszMapFile, size_t nMapFileSize )
 {
 #ifdef TF_DLL
+	
+	// Check for map mod imports
+	const char* modFile = sv_mapentities_mod.GetString();
+	if ( modFile && modFile[0] )
+	{
+		KeyValuesAD modKV( "mapmod" );
+		if ( modKV->LoadFromFile( g_pFullFileSystem, modFile, "GAME" ) )
+		{
+			KeyValues* keyImports = modKV->FindKey( "cache" );
+			if ( keyImports )
+			{
+				int nMaps = 0;
+				int nFiles = 0;
+				for ( KeyValues* pMap = keyImports->GetFirstSubKey(); pMap != NULL; pMap = pMap->GetNextKey() )
+				{
+					KeyValues* pItem = pMap->GetFirstSubKey();
+					if ( pItem )
+					{
+						const char* pszKeyName = V_strdup( pItem->GetName() );
+						BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread( pszKeyName );
+						pItem = pItem->GetNextKey();
+						for ( ; pItem != NULL; pItem = pItem->GetNextKey() )
+						{
+							const char* pszKeyValue = pMap->GetString( pItem->GetName() );
+							if ( pszKeyValue && pszKeyValue[0] )
+							{
+								thread->AddFile( V_strdup( pItem->GetName() ), V_strdup( pMap->GetString( pItem->GetName() ) ) );
+								g_bspCacheMapMemoryFiles.AddToTail( V_strdup( pMap->GetString( pItem->GetName() ) ) );
+							}
+							else
+							{
+								thread->AddFile( V_strdup( pItem->GetName() ), V_strdup( pItem->GetName() ) );
+								g_bspCacheMapMemoryFiles.AddToTail( V_strdup( pItem->GetName() ) );
+							}
+							nFiles++;
+						}
+						thread->Start();
+						nMaps++;
+					}
+				}
+				Msg( "Started cache jobs for %d files in %d maps.\n", nFiles, nMaps );
+			}
+		}
+	}
+
+	while ( g_bspCacheJobsRunning > 0 )
+	{
+		ThreadSleep( 10 );
+		if ( engine->IsDedicatedServer() )
+		{
+			SteamGameServer_RunCallbacks();
+		}
+		else
+		{
+			SteamAPI_RunCallbacks();
+		}
+	}
 	TFMapsWorkshop()->PrepareLevelResources( pszMapName, nMapNameSize, pszMapFile, nMapFileSize );
 #endif // TF_DLL
 }

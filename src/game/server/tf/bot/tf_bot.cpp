@@ -1797,6 +1797,16 @@ void CTFBot::FireGameEvent( IGameEvent *event )
 		m_bHasUpgradedAfterSpawn = false;
 		m_checkUpgradesTimer.Start( RandomFloat( 2.0f, 5.0f ) );
 	}
+	else if ( FStrEq( eventName, "teamplay_round_win" ) )
+	{
+		// Zombie Infection (Community) zombies / Versus Saxton Hale (Community) Hale
+		float flHealthMult = 1.0f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( this, flHealthMult, mult_health_frompacks );
+		if ( flHealthMult <= 0.0f )
+		{
+			ClearWeaponRestrictions();
+		}
+	}
 }
 
 	

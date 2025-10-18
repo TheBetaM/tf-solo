@@ -488,6 +488,7 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	IZip::ReleaseZip(zip);
 	Msg("Successfully cached %s\n", pszInputMapFile);
 	g_BspPackLock = false;
+	g_bspCacheJobsRunning--;
 	return true;
 }
 

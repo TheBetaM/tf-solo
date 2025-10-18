@@ -62,7 +62,6 @@ public:
 				Warning("Map %s cache thread failed :(\n", m_strInput);
 			}
 
-			g_bspCacheJobsRunning--;
 			// AutoGameSystem deregisters itself on destruction, we're done
 			delete this;
 		}
