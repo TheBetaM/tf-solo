@@ -316,7 +316,7 @@ public:
 				{
 					for ( KeyValues* pFileKey = keyImports->GetFirstSubKey(); pFileKey != NULL; pFileKey = pFileKey->GetNextKey() )
 					{
-						soundemitterbase->AddSoundOverrides( pFileKey->GetName(), pFileKey->GetInt( pFileKey->GetName(), 0 ) != 0 );
+						soundemitterbase->AddSoundOverrides( pFileKey->GetName(), pFileKey->GetInt() != 0 );
 					}
 				}
 			}

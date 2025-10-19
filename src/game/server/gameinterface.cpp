@@ -106,6 +106,7 @@ extern ConVar tf_mm_servermode;
 extern ConVar sv_mapentities_mod;
 extern int g_bspCacheJobsRunning;
 CUtlVector<const char*> g_bspCacheMapMemoryFiles;
+CUtlVector<const char*> g_mapModSearchPaths;
 #endif
 
 #ifdef USE_NAV_MESH
@@ -1432,6 +1433,11 @@ void CServerGameDLL::LevelShutdown( void )
 		BSP_RemoveAssetFromCache( g_bspCacheMapMemoryFiles[i] );
 	}
 	g_bspCacheMapMemoryFiles.Purge();
+	FOR_EACH_VEC(g_mapModSearchPaths, i)
+	{
+		g_pFullFileSystem->RemoveSearchPath( g_mapModSearchPaths[i], "GAME" );
+	}
+	g_mapModSearchPaths.Purge();
 #endif
 }
 
@@ -1980,7 +1986,7 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 {
 #ifdef TF_DLL
 	
-	// Check for map mod imports
+	// Check for map mod imports and mounts
 	const char* modFile = sv_mapentities_mod.GetString();
 	if ( modFile && modFile[0] )
 	{
@@ -1988,6 +1994,23 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 		if ( modKV->LoadFromFile( g_pFullFileSystem, modFile, "GAME" ) )
 		{
 			KeyValues* keyImports = modKV->FindKey( "cache" );
+			KeyValues* keyMounts = modKV->FindKey( "mount" );
+			if ( keyMounts )
+			{
+				int nMounts = 0;
+				static char szMountDirPath[1024] = {};
+				const char* pGameDir = CommandLine()->ParmValue( "-game", "hl2" );
+				V_snprintf( szMountDirPath, sizeof( szMountDirPath ), "%s%s", pGameDir, "/mount/" );
+				for ( KeyValues* pItem = keyMounts->GetFirstSubKey(); pItem != NULL; pItem = pItem->GetNextKey() )
+				{
+					char szMountPath[1024] = {};
+					V_snprintf( szMountPath, sizeof( szMountPath ), "%s%s", szMountDirPath, pItem->GetName() );
+					g_pFullFileSystem->AddSearchPath( szMountPath, "GAME", pItem->GetInt() == 1 ? PATH_ADD_TO_TAIL : PATH_ADD_TO_HEAD );
+					g_mapModSearchPaths.AddToTail( V_strdup( szMountPath ) );
+					nMounts++;
+				}
+				Msg( "Mounted %d search paths for this map mod.\n", nMounts );
+			}
 			if ( keyImports )
 			{
 				int nMaps = 0;
@@ -2005,8 +2028,8 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 							const char* pszKeyValue = pMap->GetString( pItem->GetName() );
 							if ( pszKeyValue && pszKeyValue[0] )
 							{
-								thread->AddFile( V_strdup( pItem->GetName() ), V_strdup( pMap->GetString( pItem->GetName() ) ) );
-								g_bspCacheMapMemoryFiles.AddToTail( V_strdup( pMap->GetString( pItem->GetName() ) ) );
+								thread->AddFile( V_strdup( pItem->GetName() ), V_strdup( pItem->GetString() ) );
+								g_bspCacheMapMemoryFiles.AddToTail( V_strdup( pItem->GetString() ) );
 							}
 							else
 							{
@@ -2036,6 +2059,7 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 			SteamAPI_RunCallbacks();
 		}
 	}
+
 	TFMapsWorkshop()->PrepareLevelResources( pszMapName, nMapNameSize, pszMapFile, nMapFileSize );
 #endif // TF_DLL
 }
