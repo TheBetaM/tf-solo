@@ -1,0 +1,79 @@
+#base import_ft.txt
+#base filter_generic.txt
+
+mapmod
+{
+
+filter
+{
+	ft_f1
+	{
+		"classname" "func_regenerate"
+	}
+	ft_f2
+	{
+		"classname" "prop_dynamic"
+		"model" "models/props_gameplay/resupply_locker.mdl"
+	}
+	ft_f3
+	{
+		"classname" "func_respawnroomvisualizer"
+	}
+	ft_f4
+	{
+		"classname" "func_respawnroom"
+	}
+	ft_f5
+	{
+		"classname" "logic_script"
+	}
+}
+
+insert
+{
+
+ft_e1
+{
+"origin" "0 0 0"
+"vscripts" "gamemodes/freeze_tag/core.nut"
+"thinkfunction" "Think"
+"targetname" "scripter"
+"classname" "logic_script"
+"hammerid" "67159"
+}
+ft_e2
+{
+"origin" "0 0 0"
+"blue_respawn_time" "8"
+"finale_length" "0"
+"flag_reset_delay" "60"
+"heal_distance" "450"
+"max_points" "0"
+"min_points" "3"
+"points_per_player" "0"
+"prop_model_name" "models/flag/flag.mdl"
+"red_respawn_time" "8"
+"res_file" "resource/ui/hudobjectivefreezetag.res"
+"targetname" "pd_logic"
+"classname" "tf_logic_player_destruction"
+"hammerid" "67160"
+}
+ft_e3
+{
+"origin" "0 0 0"
+"targetname" "game_forcerespawn"
+"classname" "game_forcerespawn"
+"hammerid" "67161"
+}
+ft_e4
+{
+"origin" "0 0 0"
+"vscripts" "mapmods/workshop/ft_respawnfix.nut"
+"targetname" "ft_respawnfix"
+"classname" "logic_script"
+"hammerid" "67162"
+}
+
+}
+
+}

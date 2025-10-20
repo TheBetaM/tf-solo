@@ -1,0 +1,7 @@
+maps_config
+{
+	maps
+	{
+		
+	}
+}

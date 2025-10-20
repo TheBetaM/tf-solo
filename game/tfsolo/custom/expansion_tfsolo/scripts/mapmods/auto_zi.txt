@@ -1,6 +1,7 @@
 #base import_zi.txt
 #base filter_generic.txt
 #base filter_points.txt
+#base filter_flags.txt
 
 mapmod
 {

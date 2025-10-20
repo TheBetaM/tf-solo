@@ -1,0 +1,12 @@
+mapmod
+{
+
+filter
+{
+	flags_f1
+	{
+		"classname" "item_teamflag"
+	}
+}
+
+}

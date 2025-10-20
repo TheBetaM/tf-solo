@@ -1,0 +1,102 @@
+mapmod
+{
+
+cache
+{
+	import_ft
+	{
+"workshop/3360981389" ""
+"maps/arena_himalaya_ft_b3_level_sounds.txt" ""
+"particles/ft_fx.pcf" ""
+"scripts/vscripts/gamemodes/freeze_tag/arena.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/core.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/error_handler.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/freeze.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/freeze_model.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/freeze_points.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/regen.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/spectate.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/thaw.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/thaw_meter.nut" ""
+"scripts/vscripts/gamemodes/freeze_tag/util.nut" ""
+"resource/ui/hudobjectivefreezetag.res" ""
+"models/freezetag/player/demo_frozen.mdl" ""
+"models/freezetag/player/demo_frozen.phy" ""
+"models/freezetag/player/demo_frozen.vvd" ""
+"models/freezetag/player/demo_frozen.dx80.vtx" ""
+"models/freezetag/player/demo_frozen.dx90.vtx" ""
+"models/freezetag/player/demo_frozen.sw.vtx" ""
+"models/freezetag/player/engineer_frozen.mdl" ""
+"models/freezetag/player/engineer_frozen.phy" ""
+"models/freezetag/player/engineer_frozen.vvd" ""
+"models/freezetag/player/engineer_frozen.dx80.vtx" ""
+"models/freezetag/player/engineer_frozen.dx90.vtx" ""
+"models/freezetag/player/engineer_frozen.sw.vtx" ""
+"models/freezetag/player/heavy_frozen.mdl" ""
+"models/freezetag/player/heavy_frozen.phy" ""
+"models/freezetag/player/heavy_frozen.vvd" ""
+"models/freezetag/player/heavy_frozen.dx80.vtx" ""
+"models/freezetag/player/heavy_frozen.dx90.vtx" ""
+"models/freezetag/player/heavy_frozen.sw.vtx" ""
+"models/freezetag/player/medic_frozen.mdl" ""
+"models/freezetag/player/medic_frozen.phy" ""
+"models/freezetag/player/medic_frozen.vvd" ""
+"models/freezetag/player/medic_frozen.dx80.vtx" ""
+"models/freezetag/player/medic_frozen.dx90.vtx" ""
+"models/freezetag/player/medic_frozen.sw.vtx" ""
+"models/freezetag/player/pyro_frozen.mdl" ""
+"models/freezetag/player/pyro_frozen.phy" ""
+"models/freezetag/player/pyro_frozen.vvd" ""
+"models/freezetag/player/pyro_frozen.dx80.vtx" ""
+"models/freezetag/player/pyro_frozen.dx90.vtx" ""
+"models/freezetag/player/pyro_frozen.sw.vtx" ""
+"models/freezetag/player/scout_frozen.mdl" ""
+"models/freezetag/player/scout_frozen.phy" ""
+"models/freezetag/player/scout_frozen.vvd" ""
+"models/freezetag/player/scout_frozen.dx80.vtx" ""
+"models/freezetag/player/scout_frozen.dx90.vtx" ""
+"models/freezetag/player/scout_frozen.sw.vtx" ""
+"models/freezetag/player/sniper_frozen.mdl" ""
+"models/freezetag/player/sniper_frozen.phy" ""
+"models/freezetag/player/sniper_frozen.vvd" ""
+"models/freezetag/player/sniper_frozen.dx80.vtx" ""
+"models/freezetag/player/sniper_frozen.dx90.vtx" ""
+"models/freezetag/player/sniper_frozen.sw.vtx" ""
+"models/freezetag/player/soldier_frozen.mdl" ""
+"models/freezetag/player/soldier_frozen.phy" ""
+"models/freezetag/player/soldier_frozen.vvd" ""
+"models/freezetag/player/soldier_frozen.dx80.vtx" ""
+"models/freezetag/player/soldier_frozen.dx90.vtx" ""
+"models/freezetag/player/soldier_frozen.sw.vtx" ""
+"models/freezetag/player/spy_frozen.mdl" ""
+"models/freezetag/player/spy_frozen.phy" ""
+"models/freezetag/player/spy_frozen.vvd" ""
+"models/freezetag/player/spy_frozen.dx80.vtx" ""
+"models/freezetag/player/spy_frozen.dx90.vtx" ""
+"models/freezetag/player/spy_frozen.sw.vtx" ""
+"materials/effects/freezetag/circlecap.vmt" ""
+"materials/effects/freezetag/circleglow.vmt" ""
+"materials/effects/freezetag/circletexture.vmt" ""
+"materials/freeze_tag/dead_ringer_icon_blu.vmt" ""
+"materials/freeze_tag/dead_ringer_icon_blu.vtf" ""
+"materials/freeze_tag/dead_ringer_icon_red.vmt" ""
+"materials/freeze_tag/dead_ringer_icon_red.vtf" ""
+"materials/freeze_tag/revive_bar.vmt" ""
+"materials/freeze_tag/revive_bar.vtf" ""
+"materials/hud/objectives_arenahybrid_trophy.vmt" ""
+"materials/hud/objectives_arenahybrid_trophy.vtf" ""
+"materials/test/teamtest.vmt" ""
+	}
+}
+
+particles
+{
+	"!particles/ft_fx.pcf" 1
+}
+
+sounds
+{
+	"maps/arena_himalaya_ft_b3_level_sounds.txt" 1
+}
+
+}

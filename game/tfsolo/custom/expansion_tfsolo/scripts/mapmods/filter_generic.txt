@@ -7,10 +7,6 @@ filter
 	{
 		"classname" "tf_logic_koth"
 	}
-	generic_f2
-	{
-		"classname" "item_teamflag"
-	}
 	generic_f3
 	{
 		"classname" "func_capturezone"

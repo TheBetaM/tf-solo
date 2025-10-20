@@ -1205,6 +1205,30 @@ maps_config
 				theme_desert 1
 			}
 		}
+		workshop_3474004562
+		{
+			name "Naphtha"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_offshore 1
+			}
+		}
+		workshop_3583270358
+		{
+			name "Briskside"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_xmas 1
+			}
+		}
 		
 	
 	}

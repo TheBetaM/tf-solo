@@ -1,5 +1,6 @@
 #base import_vsh.txt
 #base filter_generic.txt
+#base filter_flags.txt
 
 mapmod
 {
