@@ -1,0 +1,80 @@
+mapmod
+{
+
+filter
+{
+	generic_f1
+	{
+		"classname" "tf_logic_koth"
+	}
+	generic_f2
+	{
+		"classname" "item_teamflag"
+	}
+	generic_f3
+	{
+		"classname" "func_capturezone"
+	}
+	generic_f4
+	{
+		"classname" "team_train_watcher"
+	}
+	generic_f5
+	{
+		"classname" "tf_logic_mann_vs_machine"
+	}
+	generic_f6
+	{
+		"classname" "tf_logic_arena"
+	}
+	generic_f7
+	{
+		"classname" "tf_logic_medieval"
+	}
+	generic_f8
+	{
+		"classname" "tf_logic_multiple_escort"
+	}
+	generic_f9
+	{
+		"classname" "tf_logic_player_destruction"
+	}
+	generic_f10
+	{
+		"classname" "tf_logic_robot_destruction"
+	}
+	generic_f11
+	{
+		"classname" "team_round_timer"
+	}
+	generic_f12
+	{
+		"classname" "passtime_logic"
+	}
+	generic_f13
+	{
+		"classname" "tf_logic_mannpower"
+	}
+	generic_f14
+	{
+		"classname" "tf_logic_maddash"
+	}
+	generic_f15
+	{
+		"classname" "tf_logic_propertydamage"
+	}
+	generic_f16
+	{
+		"classname" "tf_propertydamage_prop*"
+	}
+	generic_f17
+	{
+		"classname" "func_propertydamage_brush"
+	}
+	generic_f18
+	{
+		"classname" "tf_propertydamage_nextbot"
+	}
+}
+
+}

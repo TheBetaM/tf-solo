@@ -46,6 +46,22 @@ TFSOLO.StartMission <- function()
 	}
 	SendToConsole("tf_gamemode_override " + data.CvarGamemodeOverride)
 	SendToConsole("tf_mvm_popfile_requested " + data.PopFile)
+	if (data.MapEntOverride == null || data.MapEntOverride.len() == 0)
+	{
+		SendToConsole("sv_mapentities_override \"\"")
+	}
+	else
+	{
+		SendToConsole("sv_mapentities_override " + data.MapEntOverride)
+	}
+	if (data.MapMod == null || data.MapMod.len() == 0)
+	{
+		SendToConsole("sv_mapentities_mod \"\"")
+	}
+	else
+	{
+		SendToConsole("sv_mapentities_mod " + data.MapMod)
+	}
 	
 	local MapFile = data.Map
 	if (MapFile.find("workshop_") != null)

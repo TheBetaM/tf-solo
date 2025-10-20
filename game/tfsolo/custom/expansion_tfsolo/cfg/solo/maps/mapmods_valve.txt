@@ -2,6 +2,17 @@ maps_config
 {
 	maps
 	{
+		koth_harvest_event
+		{
+			mods
+			{
+				zi
+				{
+					modename "#GameType_ZI"
+					modfile "scripts/mapmods/auto_zi.txt"
+				}
+			}
+		}
 		koth_viaduct
 		{
 			mods

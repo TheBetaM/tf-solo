@@ -1,0 +1,84 @@
+#base import_zi.txt
+#base filter_generic.txt
+#base filter_points.txt
+
+mapmod
+{
+
+filter
+{
+	zi_f1
+	{
+		"classname" "func_regenerate"
+	}
+	zi_f2
+	{
+		"classname" "prop_dynamic"
+		"model" "models/props_gameplay/resupply_locker.mdl"
+	}
+	zi_f3
+	{
+		"classname" "func_respawnroomvisualizer"
+	}
+	zi_f4
+	{
+		"classname" "func_respawnroom"
+	}
+	zi_f5
+	{
+		"classname" "logic_script"
+	}
+}
+
+insert
+{
+
+zi_e1
+{
+"origin" "0 0 0"
+"targetname" "infection_timer"
+"timer_length" "210"
+"thinkfunction" "ent_round_timer"
+"start_paused" "0"
+"show_time_remaining" "1"
+"show_in_hud" "1"
+"setup_length" "30"
+"reset_time" "1"
+"max_length" "210"
+"auto_countdown" "1"
+"classname" "team_round_timer"
+"hammerid" "67157"
+"OnFinished" "win_time_end,RoundWin,,0,-1"
+}
+zi_e2
+{
+"origin" "0 0 0"
+"TeamNum" "3"
+"targetname" "win_red_dead"
+"switch_teams" "0"
+"force_map_reset" "1"
+"classname" "game_round_win"
+"hammerid" "67155"
+}
+zi_e3
+{
+"origin" "0 0 0"
+"TeamNum" "2"
+"targetname" "win_time_end"
+"force_map_reset" "1"
+"classname" "game_round_win"
+"hammerid" "67161"
+"OnUser1" "!self,RoundWin,,0,-1"
+}
+zi_e4
+{
+"origin" "0 0 0"
+"vscripts" "infection/infection.nut"
+"targetname" "zombiemode_script"
+"classname" "logic_script"
+"hammerid" "67159"
+}
+
+}
+
+}

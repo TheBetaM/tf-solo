@@ -1,0 +1,17 @@
+maps_config
+{
+	maps
+	{
+		koth_megaton
+		{
+			mods
+			{
+				vsh
+				{
+					modename "#GameType_VSH"
+					modfile "scripts/mapmods/auto_vsh.txt"
+				}
+			}
+		}
+	}
+}

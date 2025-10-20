@@ -1,0 +1,47 @@
+#base import_vsh.txt
+#base filter_generic.txt
+
+mapmod
+{
+
+filter
+{
+	vsh_f1
+	{
+		"classname" "func_regenerate"
+	}
+	vsh_f2
+	{
+		"classname" "prop_dynamic"
+		"model" "models/props_gameplay/resupply_locker.mdl"
+	}
+	vsh_f3
+	{
+		"classname" "func_respawnroomvisualizer"
+	}
+	vsh_f4
+	{
+		"classname" "func_respawnroom"
+	}
+	vsh_f5
+	{
+		"classname" "logic_script"
+	}
+}
+
+insert
+{
+
+vsh_e1
+{
+"origin" "0 0 0"
+"vscripts" "vssaxtonhale/vsh.nut"
+"thinkfunction" "Tick"
+"targetname" "logic_script_vsh"
+"classname" "logic_script"
+"hammerid" "67159"
+}
+
+}
+
+}

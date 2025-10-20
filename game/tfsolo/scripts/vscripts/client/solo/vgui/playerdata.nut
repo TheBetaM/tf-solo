@@ -11,6 +11,8 @@ TFSOLO.PlayerData <- {
 	BotMode = "standard"
 	Medieval = 0
 	MissionScript = ""
+	MapEntOverride = ""
+	MapMod = ""
 	
 	// Persistent data
 	Seed = 0
@@ -29,6 +31,8 @@ TFSOLO.ResetMissionSettings <- function()
 	TFSOLO.PlayerData.BotMode = "standard"
 	TFSOLO.PlayerData.Medieval = 0
 	TFSOLO.PlayerData.MissionScript = ""
+	TFSOLO.PlayerData.MapEntOverride = ""
+	TFSOLO.PlayerData.MapMod = ""
 }
 
 TFSOLO.LoadPersistentData <- function()

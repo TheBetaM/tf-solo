@@ -1,0 +1,17 @@
+mapmod
+{
+
+filter
+{
+	points_f1
+	{
+		"classname" "team_control_point*"
+	}
+	points_f2
+	{
+		"classname" "prop_dynamic"
+		"targetname" "prop_cap_1"
+	}
+}
+
+}
