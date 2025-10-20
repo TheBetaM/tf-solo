@@ -7,6 +7,10 @@ filter
 	{
 		"classname" "tf_logic_koth"
 	}
+	generic_f2
+	{
+		"classname" "game_round_win"
+	}
 	generic_f3
 	{
 		"classname" "func_capturezone"

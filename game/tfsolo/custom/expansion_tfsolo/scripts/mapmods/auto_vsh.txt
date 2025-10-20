@@ -42,6 +42,14 @@ vsh_e1
 "classname" "logic_script"
 "hammerid" "67159"
 }
+vsh_e2
+{
+"origin" "0 0 0"
+"vscripts" "mapmods/vsh_respawnfix.nut"
+"targetname" "vsh_respawnfix"
+"classname" "logic_script"
+"hammerid" "67160"
+}
 
 }
 
