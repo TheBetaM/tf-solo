@@ -23,6 +23,9 @@
 #include "c_basetempentity.h"
 #include "tier0/vprof.h"
 
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_blood;
+
 //-----------------------------------------------------------------------------
 // Purpose: Intercepts the blood spray message.
 //-----------------------------------------------------------------------------
@@ -45,6 +48,10 @@ void TFBloodSprayCallback( Vector vecOrigin, Vector vecNormal, ClientEntityHandl
 	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
 	{
 		bPyroVision = true;
+		if ( tf_vision_custom.GetBool() )
+		{
+			bPyroVision = tf_vision_custom_blood.GetBool();
+		}
 	}
 #endif
 	 

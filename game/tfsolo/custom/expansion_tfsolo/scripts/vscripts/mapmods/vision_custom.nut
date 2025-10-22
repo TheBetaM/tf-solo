@@ -1,0 +1,1 @@
+Convars.SetValue("tf_vision_custom", 1)

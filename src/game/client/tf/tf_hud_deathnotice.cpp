@@ -58,6 +58,9 @@ const int STREAK_MIN = 5;
 const int STREAK_MIN_MVM = 20;
 const int STREAK_MIN_DUCKS = 10;
 
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_assister;
+
 static int MinStreakForType( CTFPlayerShared::ETFStreak eStreakType )
 {
 	bool bIsMvM = TFGameRules() && TFGameRules()->IsMannVsMachineMode();
@@ -787,7 +790,11 @@ bool CTFHudDeathNotice::EventIsPlayerDeath( const char* eventName )
 //-----------------------------------------------------------------------------
 void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 {
-	const bool bIsSillyPyroVision = IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO );
+	bool bIsSillyPyroVision = IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO );
+	if ( bIsSillyPyroVision && tf_vision_custom.GetBool() )
+	{
+		bIsSillyPyroVision = tf_vision_custom_assister.GetBool();
+	}
 
 	const char *pszEventName = event->GetName();
 

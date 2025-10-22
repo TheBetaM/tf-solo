@@ -1,0 +1,25 @@
+// Badlands hallow vision test
+
+mapmod
+{
+
+mount
+{
+	"vision_hallow/" 0
+}
+
+insert
+{
+
+e1
+{
+"origin" "0 0 0"
+"vscripts" "mapmods/vision_custom_force.nut"
+"targetname" "vision_script"
+"classname" "logic_script"
+"hammerid" "67159"
+}
+
+}
+
+}

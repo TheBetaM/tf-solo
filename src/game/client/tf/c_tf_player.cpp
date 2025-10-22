@@ -191,6 +191,9 @@ extern ConVar tf_halloween_kart_boost_duration;
 
 extern ConVar cl_thirdperson;
 
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_gibs;
+extern ConVar tf_vision_custom_voice;
 
 ConVar tf_sheen_framerate( "tf_sheen_framerate", "25", FCVAR_NONE | FCVAR_HIDDEN, "Set Sheen Frame Rate" );
 
@@ -7291,7 +7294,13 @@ void C_TFPlayer::InitPlayerGibs( void )
 void C_TFPlayer::CheckAndUpdateGibType( void )
 {
 	// check the first gib, if it's different copy them all over
-	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) || ( TFGameRules() && TFGameRules()->UseSillyGibs() ) )
+	bool bPyrovisionGibs = IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO );
+	if ( bPyrovisionGibs && tf_vision_custom.GetBool() )
+	{
+		bPyrovisionGibs = tf_vision_custom_gibs.GetBool();
+	}
+
+	if ( bPyrovisionGibs || ( TFGameRules() && TFGameRules()->UseSillyGibs() ) )
 	{
 		if ( Q_strcmp( m_aGibs[0].modelName, g_pszBDayGibs[ m_aSillyGibs[0] ]) != 0 )
 		{
@@ -11607,7 +11616,13 @@ void C_TFPlayer::ClientAdjustStartSoundParams( StartSoundParams_t& params )
 void C_TFPlayer::ClientAdjustVOPitch( int& pitch )
 {
 	// Use high-pitched voices for other players if the local player has an item that allows them to hear it (Pyro Goggles)
-	if ( !IsLocalPlayer() && IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+	bool bPyrovisionVoice = IsLocalPlayerUsingVisionFilterFlags(TF_VISION_FILTER_PYRO);
+	if ( bPyrovisionVoice && tf_vision_custom.GetBool() )
+	{
+		bPyrovisionVoice = tf_vision_custom_voice.GetBool();
+	}
+
+	if ( !IsLocalPlayer() && bPyrovisionVoice )
 	{
 		pitch *= 1.3f;
 	}

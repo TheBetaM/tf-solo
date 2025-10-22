@@ -99,6 +99,11 @@ static unsigned short g_iAbsRecomputationStackPos = 0;
 static CUtlLinkedList<C_BaseEntity*, unsigned short> g_InterpolationList;
 static CUtlLinkedList<C_BaseEntity*, unsigned short> g_TeleportList;
 
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_models;
+#endif
+
 #if !defined( NO_ENTITY_PREDICTION )
 //-----------------------------------------------------------------------------
 // Purpose: Maintains a list of predicted or client created entities
@@ -2502,7 +2507,7 @@ void C_BaseEntity::ValidateModelIndex( void )
 		}
 	}
 		
-	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) && ( !tf_vision_custom.GetBool() || tf_vision_custom_models.GetBool() ) )
 	{
 		if ( m_nModelIndexOverrides[VISION_MODE_PYRO] > 0 )
 		{

@@ -41,6 +41,7 @@ tf_flamethrower_oldeffects
 - Fixed mini-rounds without a setup timer being stuck in setup mode
 - Fixed canteens being unusable in Sudden Death/Arena
 - Added #basedir to KeyValues to include all files in a directory
+- Added functionality to change Pyrovision into any custom vision
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps

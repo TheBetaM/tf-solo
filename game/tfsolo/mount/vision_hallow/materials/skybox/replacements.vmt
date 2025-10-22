@@ -1,0 +1,121 @@
+replacements
+{
+	templates
+	{
+		sky_badlands_01rt
+		{
+			"sky"
+			{
+				"sky"
+				{
+					$hdrbasetexture 	"skybox/sky_harvest_night_01rt"
+					$basetexture 		"skybox/sky_harvest_night_01rt"
+					$nofog				"$nofog"
+       				$ignorez			"$ignorez"
+       				$basetexturetransform	"$basetexturetransform"
+				}
+			}
+		}
+		sky_badlands_01ft
+		{
+			"sky"
+			{
+				"sky"
+				{
+					$hdrbasetexture		"skybox/sky_harvest_night_01ft"
+					$basetexture 		"skybox/sky_harvest_night_01ft"
+					$nofog				"$nofog"
+       				$ignorez			"$ignorez"
+       				$basetexturetransform	"$basetexturetransform"
+				}
+			}
+		}
+		sky_badlands_01lf
+		{
+			"sky"
+			{
+				"sky"
+				{
+					$hdrbasetexture 	"skybox/sky_harvest_night_01lf"
+					$basetexture 		"skybox/sky_harvest_night_01lf"
+					$nofog				"$nofog"
+       				$ignorez			"$ignorez"
+       				$basetexturetransform	"$basetexturetransform"
+				}
+			}
+		}
+		sky_badlands_01bk
+		{
+			"sky"
+			{
+				"sky"
+				{
+					$hdrbasetexture 	"skybox/sky_harvest_night_01bk"
+					$basetexture 		"skybox/sky_harvest_night_01bk"
+					$nofog				"$nofog"
+       				$ignorez			"$ignorez"
+       				$basetexturetransform	"$basetexturetransform"
+				}
+			}
+		}
+		sky_badlands_01up
+		{
+			"sky"
+			{
+				"sky"
+				{
+					$hdrbasetexture 	"skybox/sky_harvest_night_01up"
+					$basetexture 		"skybox/sky_harvest_night_01up"
+					$nofog				"$nofog"
+       				$ignorez			"$ignorez"
+       				$basetexturetransform	"$basetexturetransform"
+				}
+			}
+		}
+		sky_badlands_01dn
+		{
+			"sky"
+			{
+				"sky"
+				{
+					$hdrbasetexture 	"skybox/sky_harvest_night_01dn"
+					$basetexture 		"skybox/sky_harvest_night_01dn"
+					$nofog				"$nofog"
+       				$ignorez			"$ignorez"
+       				$basetexturetransform	"$basetexturetransform"
+				}
+			}
+		}
+	}
+
+	patterns
+	{
+		sky_badlands_01rt
+		{
+			template	"sky_badlands_01rt"
+		}
+		sky_badlands_01ft
+		{
+			template	"sky_badlands_01ft"
+		}
+		sky_badlands_01lf
+		{
+			template	"sky_badlands_01lf"
+		}
+		sky_badlands_01bk
+		{
+			template	"sky_badlands_01bk"
+		}
+		sky_badlands_01up
+		{
+			template	"sky_badlands_01up"
+		}
+		sky_badlands_01dn
+		{
+			template	"sky_badlands_01dn"
+		}
+	}
+}
+
+
+

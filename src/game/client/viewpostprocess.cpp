@@ -85,6 +85,11 @@ ConVar mat_tonemap_min_avglum( "mat_tonemap_min_avglum", "3.0", FCVAR_CHEAT );
 ConVar mat_fullbright( "mat_fullbright", "0", FCVAR_CHEAT );
 
 extern ConVar localplayer_visionflags;
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_vignette;
+#endif // TF_CLIENT_DLL
+
 
 enum PostProcessingCondition {
 	PPP_ALWAYS,
@@ -2513,8 +2518,15 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
 					}
 
 					bool bVisionOverride = ( localplayer_visionflags.GetInt() & ( 0x01 ) ); // Pyro-vision Goggles
+					bool bVignetteAllowed = pyro_vignette.GetInt() > 0;
+#ifdef TF_CLIENT_DLL
+					if ( tf_vision_custom.GetBool() )
+					{
+						bVignetteAllowed = tf_vision_custom_vignette.GetBool();
+					}
+#endif // TF_CLIENT_DLL
 
-					if ( bVisionOverride && g_pMaterialSystemHardwareConfig->SupportsPixelShaders_2_0() && pyro_vignette.GetInt() > 0 )
+					if ( bVisionOverride && g_pMaterialSystemHardwareConfig->SupportsPixelShaders_2_0() && bVignetteAllowed )
 					{
 						if ( bFBUpdated )
 						{

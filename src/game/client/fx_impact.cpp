@@ -23,6 +23,10 @@
 
 static ConVar  r_drawflecks( "r_drawflecks", "1", FCVAR_ALLOWED_IN_COMPETITIVE );
 extern ConVar r_drawmodeldecals;
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_blood;
+#endif
 
 ImpactSoundRouteFn g_pImpactSoundRouteFn = NULL;
 
@@ -135,7 +139,13 @@ bool Impact( Vector &vecOrigin, Vector &vecStart, int iMaterial, int iDamageType
 
 #ifdef TF_CLIENT_DLL
 		// Don't show blood decals if we're filtering them out (Pyro Goggles)
-		if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) || UTIL_IsLowViolence() || ( TFGameRules() && TFGameRules()->IsTruceActive() ) )
+		bool bPyrovisionBlood = IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO );
+		if ( bPyrovisionBlood && tf_vision_custom.GetBool() )
+		{
+			bPyrovisionBlood = tf_vision_custom_blood.GetBool();
+		}
+
+		if ( bPyrovisionBlood || UTIL_IsLowViolence() || ( TFGameRules() && TFGameRules()->IsTruceActive() ) )
 		{
 			if ( V_strstr( pchDecalName, "Flesh" ) )
 			{

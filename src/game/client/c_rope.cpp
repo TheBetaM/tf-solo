@@ -104,6 +104,11 @@ static CCycleCount	g_RopeDrawTicks;
 static CCycleCount	g_RopeSimulateTicks;
 static int			g_nRopePointsSimulated;
 
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_ropes;
+#endif
+
 // Active ropes.
 CUtlLinkedList<C_RopeKeyframe*, int> g_Ropes;
 
@@ -667,7 +672,7 @@ bool CRopeManager::IsHolidayLightMode( void )
 
 #ifdef TF_CLIENT_DLL
 	// Turn them on in Pyro-vision too
-	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) && ( !tf_vision_custom.GetBool() || tf_vision_custom_ropes.GetBool() ) )
 	{
 		bDrawHolidayLights = true;
 		m_nHolidayLightsStyle = 1;

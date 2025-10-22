@@ -903,6 +903,17 @@ ConVar tf_grapplinghook_enable( "tf_grapplinghook_enable", "0", FCVAR_REPLICATED
 ConVar tf_roundstarttalk_disable("tf_roundstarttalk_disable", "0", FCVAR_REPLICATED, "Disable forced talking at the start of a round.\n");
 ConVar tf_mirrormode( "tf_mirrormode", "0", FCVAR_REPLICATED, "Flip everyone's viewmodels, world and controls.\n" );
 ConVar tf_vision_force( "tf_vision_force", "0", FCVAR_REPLICATED, "Force a specific vision mode on all players.\n" );
+ConVar tf_vision_custom( "tf_vision_custom", "0", FCVAR_REPLICATED, "Disable Pyrovision specific features to make it generic.\n" );
+ConVar tf_vision_custom_dof( "tf_vision_custom_dof", "0", FCVAR_REPLICATED, "Depth-of-field effect.\n" );
+ConVar tf_vision_custom_vignette( "tf_vision_custom_vignette", "0", FCVAR_REPLICATED, "Pyrovision vignette.\n" );
+ConVar tf_vision_custom_particles( "tf_vision_custom_particles", "0", FCVAR_REPLICATED, "Pyrovision particles.\n" );
+ConVar tf_vision_custom_models( "tf_vision_custom_models", "0", FCVAR_REPLICATED, "Pyrovision models.\n" );
+ConVar tf_vision_custom_ropes( "tf_vision_custom_ropes", "0", FCVAR_REPLICATED, "Pyrovision ropes.\n" );
+ConVar tf_vision_custom_blood( "tf_vision_custom_blood", "0", FCVAR_REPLICATED, "Pyrovision no blood.\n" );
+ConVar tf_vision_custom_gibs( "tf_vision_custom_gibs", "0", FCVAR_REPLICATED, "Pyrovision silly gibs.\n" );
+ConVar tf_vision_custom_voice( "tf_vision_custom_voice", "0", FCVAR_REPLICATED, "Pyrovision voice pitch.\n" );
+ConVar tf_vision_custom_assister( "tf_vision_custom_assister", "0", FCVAR_REPLICATED, "Pyrovision assister.\n" );
+ConVar tf_vision_custom_sounds( "tf_vision_custom_sounds", "0", FCVAR_REPLICATED, "Pyrovision sounds.\n" );
 ConVar tf_revives_enable( "tf_revives_enable", "0", FCVAR_REPLICATED, "Force enable revives. 1 - Medic only, 2 - Freeze Tag style\n");
 ConVar tf_maddash_mode( "tf_maddash_mode", "0", FCVAR_REPLICATED, "Enable Mad Dash gamemode.\n" );
 ConVar tf_maddash_flipteams( "tf_maddash_flipteams", "0", FCVAR_REPLICATED, "Flip team roles.\n" );
@@ -17751,7 +17762,7 @@ bool CTFGameRules::IsBirthdayOrPyroVision( void ) const
 
 #ifdef CLIENT_DLL
 	// Use birthday fun if the local player has an item that allows them to see it (Pyro Goggles)
-	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) && !tf_vision_custom.GetBool() )
 	{
 		return true;
 	}
@@ -18091,7 +18102,7 @@ void CTFGameRules::SetUpVisionFilterKeyValues( void )
 bool CTFGameRules::UseSillyGibs( void )
 {
 	// Use silly gibs if the local player has an item that allows them to see it (Pyro Goggles)
-	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) && ( !tf_vision_custom.GetBool() || tf_vision_custom_gibs.GetBool() ) )
 		return true;
 	if ( UTIL_IsLowViolence() )
 		return true;
@@ -18142,7 +18153,10 @@ const char* CTFGameRules::TranslateEffectForVisionFilter( const char *pchEffectT
 
 	// Swap the effect if the local player has an item that allows them to see it (Pyro Goggles)
 	bool bWeaponsOnly = FStrEq( pchEffectType, "weapons" );
+	bool bSoundsOnly = FStrEq( pchEffectType, "sounds" );
+	bool bParticlesOnly = FStrEq( pchEffectType, "particles" );
 	int nVisionOptInFlags = GetLocalPlayerVisionFilterFlags( bWeaponsOnly );
+	bool bPyroVision = ( nVisionOptInFlags & TF_VISION_FILTER_PYRO ) != 0;
 
 	KeyValues *pkvParticles = m_pkvVisionFilterTranslations->FindKey( pchEffectType );
 	if ( pkvParticles )
@@ -18157,8 +18171,18 @@ const char* CTFGameRules::TranslateEffectForVisionFilter( const char *pchEffectT
 			{
 				// We either have this vision flag or we have no flags and this is the no flag block
 				const char *pchTranslatedString = pkvFlag->GetString( pchEffectName, NULL );
+				bool bPass = true;
+				if ( nFlag != 0 && bPyroVision && tf_vision_custom.GetBool() )
+				{
+					if ( bWeaponsOnly && !tf_vision_custom_models.GetBool() )
+						bPass = false;
+					if ( bSoundsOnly && !tf_vision_custom_sounds.GetBool() )
+						bPass = false;
+					if ( bParticlesOnly && !tf_vision_custom_particles.GetBool() )
+						bPass = false;
+				}
 
-				if ( pchTranslatedString )
+				if ( pchTranslatedString && bPass )
 				{
 					vecNames.AddToHead( pchTranslatedString );
 				}

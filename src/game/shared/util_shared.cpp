@@ -828,8 +828,10 @@ bool UTIL_IsLowViolence( void )
 		return true;
 
 #ifdef TF_CLIENT_DLL
+	ConVarRef tf_vision_custom( "tf_vision_custom" );
+	ConVarRef tf_vision_custom_blood( "tf_vision_custom_blood" );
 	// Use low violence if the local player has an item that allows them to see it (Pyro Goggles)
-	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+	if ( IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) && ( !tf_vision_custom.GetBool() || tf_vision_custom_blood.GetBool() ) )
 	{
 		return true;
 	}

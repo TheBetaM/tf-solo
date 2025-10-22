@@ -702,6 +702,17 @@ vscript_convar_allowlist
     tf_useparticletracers                                             allowed
     tf_vaccinator_uber_charge_rate_modifier                           allowed
     tf_vision_force                                                   allowed
+    tf_vision_custom                                                  allowed
+    tf_vision_custom_dof                                              allowed
+    tf_vision_custom_vignette                                         allowed
+    tf_vision_custom_particles                                        allowed
+    tf_vision_custom_models                                           allowed
+    tf_vision_custom_ropes                                            allowed
+    tf_vision_custom_blood                                            allowed
+    tf_vision_custom_gibs                                             allowed
+    tf_vision_custom_voice                                            allowed
+    tf_vision_custom_assister                                         allowed
+    tf_vision_custom_sounds                                           allowed
     tf_weapon_criticals                                               allowed
     tf_weapon_criticals_bucket_bottom                                 allowed
     tf_weapon_criticals_bucket_cap                                    allowed

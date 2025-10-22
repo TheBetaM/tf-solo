@@ -171,6 +171,8 @@ static ConVar r_eyewaterepsilon( "r_eyewaterepsilon", "10.0f", FCVAR_CHEAT );
 #ifdef TF_CLIENT_DLL
 static ConVar pyro_dof( "pyro_dof", "1", FCVAR_ARCHIVE );
 extern ConVar tf_mirrormode;
+extern ConVar tf_vision_custom;
+extern ConVar tf_vision_custom_dof;
 #endif
 
 extern ConVar cl_leveloverview;
@@ -5492,8 +5494,13 @@ void CBaseWorldView::DrawSetup( float waterHeight, int nSetupFlags, float waterZ
 
 #ifdef TF_CLIENT_DLL
 	bool bVisionOverride = ( localplayer_visionflags.GetInt() & ( 0x01 ) ); // Pyro-vision Goggles
+	bool bDofAllowed = pyro_dof.GetBool();
+	if ( tf_vision_custom.GetBool() )
+	{
+		bDofAllowed = tf_vision_custom_dof.GetBool();
+	}
 
-	if ( savedViewID == VIEW_MAIN && bVisionOverride && pyro_dof.GetBool() )
+	if ( savedViewID == VIEW_MAIN && bVisionOverride && bDofAllowed )
 	{
 		SSAO_DepthPass();
 	}
@@ -5578,8 +5585,13 @@ void CBaseWorldView::DrawExecute( float waterHeight, view_id_t viewID, float wat
 
 #ifdef TF_CLIENT_DLL
 		bool bVisionOverride = ( localplayer_visionflags.GetInt() & ( 0x01 ) ); // Pyro-vision Goggles
+		bool bDofAllowed = pyro_dof.GetBool();
+		if ( tf_vision_custom.GetBool() )
+		{
+			bDofAllowed = tf_vision_custom_dof.GetBool();
+		}
 
-		if ( g_CurrentViewID == VIEW_MAIN && bVisionOverride && pyro_dof.GetBool() ) // Pyro-vision Goggles
+		if ( g_CurrentViewID == VIEW_MAIN && bVisionOverride && bDofAllowed ) // Pyro-vision Goggles
 		{
 			DrawDepthOfField();
 		}
@@ -5593,8 +5605,13 @@ void CBaseWorldView::DrawExecute( float waterHeight, view_id_t viewID, float wat
 
 #ifdef TF_CLIENT_DLL
 		bool bVisionOverride = ( localplayer_visionflags.GetInt() & ( 0x01 ) ); // Pyro-vision Goggles
+		bool bDofAllowed = pyro_dof.GetBool();
+		if ( tf_vision_custom.GetBool() )
+		{
+			bDofAllowed = tf_vision_custom_dof.GetBool();
+		}
 
-		if ( g_CurrentViewID == VIEW_MAIN && bVisionOverride && pyro_dof.GetBool() ) // Pyro-vision Goggles
+		if ( g_CurrentViewID == VIEW_MAIN && bVisionOverride && bDofAllowed ) // Pyro-vision Goggles
 		{
 			DrawDepthOfField();
 		}
