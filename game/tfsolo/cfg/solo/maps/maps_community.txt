@@ -2325,6 +2325,8 @@ maps_config
 				symm 1
 				theme_hallow 1
 				vscript 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		arena_afterlife

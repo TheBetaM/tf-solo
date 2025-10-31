@@ -1229,6 +1229,22 @@ maps_config
 				theme_xmas 1
 			}
 		}
+		workshop_3595987419
+		{
+			name "Stormbreaker"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 3
+				symm 1
+				theme_alpine 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
 		
 	
 	}
