@@ -2073,6 +2073,7 @@ maps_config
 		}
 		zi_murky
 		{
+			disabled 1
 			name "Murky"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_murky"
@@ -2101,7 +2102,6 @@ maps_config
 		}
 		zi_atoll
 		{
-			disabled 1
 			name "Atoll"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_atoll"
@@ -2130,7 +2130,6 @@ maps_config
 		}
 		zi_woods
 		{
-			disabled 1
 			name "Woods"
 			modename "#Gametype_ZI"
 			thumbArt "maps/menu_thumb_zi_woods"
