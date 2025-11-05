@@ -48,6 +48,7 @@
 // Client specific.
 #else
 #include "c_tf_player.h"
+#include "c_baseviewmodel.h"
 #include "tf_viewmodel.h"
 #include "hud_crosshair.h"
 #include "c_tf_playerresource.h"
@@ -5603,7 +5604,7 @@ bool CTFWeaponBase::IsViewModelFlipped( void )
 		return true;
 	}
 #else
-	bool isFlipped = cl_flipviewmodels.GetBool();
+	bool isFlipped = TeamFortress_ShouldFlipClientViewModel();
 	if ( tf_mirrormode.GetBool() )
 	{
 		isFlipped = !isFlipped;
@@ -6789,7 +6790,7 @@ void CTFWeaponBase::AddStatTrakModel( CEconItemView *pItem, int nStatTrakType, A
 				pStatTrakEnt->m_nSkin = nSkin;
 				m_viewmodelStatTrakAddon = pStatTrakEnt;
 				
-				bool isFlipped = cl_flipviewmodels.GetBool();
+				bool isFlipped = TeamFortress_ShouldFlipClientViewModel();
 				if ( tf_mirrormode.GetBool() )
 				{
 					isFlipped = !isFlipped;

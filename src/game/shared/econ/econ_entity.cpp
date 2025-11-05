@@ -20,6 +20,7 @@
 
 #if defined(TF_CLIENT_DLL)
 #include "c_tf_player.h"
+#include "c_baseviewmodel.h"
 #include "tf_gamerules.h"
 #include "c_playerresource.h"
 #include "tf_shareddefs.h"
@@ -858,7 +859,7 @@ int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
 {
 #ifdef TF_CLIENT_DLL
 	CMatRenderContextPtr pRenderContext( materials );
-	bool isFlipped = cl_flipviewmodels.GetBool();
+	bool isFlipped = TeamFortress_ShouldFlipClientViewModel();
 	if ( tf_mirrormode.GetBool() )
 	{
 		isFlipped = !isFlipped;
