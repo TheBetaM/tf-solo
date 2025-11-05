@@ -150,7 +150,7 @@
 
 #if defined( TF_CLIENT_DLL )
 #include "econ/tool_items/custom_texture_cache.h"
-
+#include "../patch/patch_singleplayer.h"
 #endif
 
 
@@ -1201,6 +1201,8 @@ void CHLClient::PostInit()
 		r_lightmap_bicubic.SetValue( info.m_nMaxDXSupportLevel >= 95 || ( info.m_nMaxDXSupportLevel >= 90 && IsLinux() ) );
 		r_lightmap_bicubic_set.SetValue( true );
 	}
+
+	TFSOLO_Patch_Singleplayer();
 }
 
 //-----------------------------------------------------------------------------

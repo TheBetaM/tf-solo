@@ -3517,7 +3517,7 @@ void CBasePlayer::ClientSettingsChanged()
 #if !defined( NO_ENTITY_PREDICTION )
 	bool usePrediction = Q_atoi( QUICKGETCVARVALUE("cl_predict")) != 0;
 
-	if ( usePrediction )
+	if ( usePrediction && gpGlobals->maxClients != 1 )
 	{
 		this->m_bRequestPredict  = true;
 		this->m_bPredictWeapons  = Q_atoi( QUICKGETCVARVALUE("cl_predictweapons")) != 0;

@@ -1073,7 +1073,7 @@ void CTFPlayerInventory::UpdateRealTFLoadoutItems()
 #endif
 void CTFPlayerInventory::LoadLocalLoadout()
 {
-	if (GetOwner() != steamapicontext->SteamUser()->GetSteamID())
+	if (GetOwner() != steamapicontext->SteamUser()->GetSteamID() && gpGlobals->maxClients != 1)
 		return;
 
 	if (!g_pFullFileSystem) {
@@ -1156,7 +1156,7 @@ void CTFPlayerInventory::LoadLocalLoadout()
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 {
-	if (GetOwner() != steamapicontext->SteamUser()->GetSteamID())
+	if (GetOwner() != steamapicontext->SteamUser()->GetSteamID() && gpGlobals->maxClients != 1)
 		return;
 
 	if (!g_pFullFileSystem) {
@@ -2122,7 +2122,7 @@ void CTFPlayerInventory::VerifyChangedLoadoutsAreValid()
     // remove the problematic items, but the inventory manager is a global for the local player. This means that another
     // played connected with an invalid inventory can cause changes in your inventory because we don't distinguish
     // self/other state past this point.
-    if ( GetOwner() != steamapicontext->SteamUser()->GetSteamID() )
+    if ( GetOwner() != steamapicontext->SteamUser()->GetSteamID() && gpGlobals->maxClients != 1 )
         return;
 
 	// We maybe changed equip state for an item and it's possible if we're sending bad messages and/or

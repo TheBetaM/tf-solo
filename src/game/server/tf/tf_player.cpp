@@ -3500,7 +3500,7 @@ void CTFPlayer::VerifySOCache()
 	CSteamID steamIDForPlayer;
 	GetSteamID( &steamIDForPlayer );
 
-	if( steamIDForPlayer.BIndividualAccount() )
+	if( steamIDForPlayer.BIndividualAccount() || gpGlobals->maxClients == 1 )
 	{
 		// if we didn't find an inventory ask the GC to refresh us
 		GCSDK::CGCMsg<MsgGCVerifyCacheSubscription_t> msgVerifyCache( k_EMsgGCVerifyCacheSubscription );

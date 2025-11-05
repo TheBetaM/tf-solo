@@ -4298,7 +4298,11 @@ void CTFGCServerSystem::OnWebapiEquipmentReceived( CSteamID steamID, HTTPRequest
 
 	// Parse the inventory message
 	CSteamID resultSteamID( pValues->GetChildUInt64Value( "steamID" ) );
-	if ( resultSteamID != steamID )
+	if ( gpGlobals->maxClients == 1 )
+	{
+		steamID = resultSteamID;
+	}
+	else if ( resultSteamID != steamID )
 	{
 		Warning( "Equipment response has bad owner steam id (%s, expected %s)\n", resultSteamID.Render(), steamID.Render() );
 		return;

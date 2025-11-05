@@ -979,6 +979,8 @@ $Project "Client (TF)"
 			{
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.cpp"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
+				$File	"$SRCDIR\patch\patch_singleplayer.cpp"
+				$File	"$SRCDIR\patch\patch_singleplayer.h"
 			}
 		}
 

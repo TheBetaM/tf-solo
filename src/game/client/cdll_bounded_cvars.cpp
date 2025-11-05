@@ -38,6 +38,9 @@ public:
 		  if ( g_bForceCLPredictOff )
 			  return 0;
 
+		  if ( gpGlobals->maxClients == 1 )
+			  return 0;
+
 		  static const ConVar *pClientPredict = g_pCVar->FindVar( "sv_client_predict" );
 		  if ( pClientPredict && pClientPredict->GetInt() != -1 )
 		  {
