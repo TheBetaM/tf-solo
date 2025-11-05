@@ -1,6 +1,6 @@
 # Team Fortress: Greatest Hits
-A singleplayer focused extension mod for Team Fortress 2.  
-Check out the [Changelog](https://github.com/TheBetaM/tf-solo/blob/solo/CHANGELOG.md) for a list of changes.  
+A singleplayer expansion mod for Team Fortress 2.  
+Check out the [Changelog](https://github.com/TheBetaM/tf-solo/blob/solo/CHANGELOG.md) for a list of changes and additions.  
 Check out the [Credits](https://github.com/TheBetaM/tf-solo/blob/solo/CREDITS.md) for a list of credits.  
 
 ## License
