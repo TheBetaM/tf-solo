@@ -54,6 +54,9 @@ extern ConVar cl_pitchdown;
 extern ConVar cl_pitchup;
 extern const ConVar *sv_cheats;
 
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
+
 class ConVar_m_pitch : public ConVar_ServerBounded
 {
 public:
@@ -393,6 +396,8 @@ void CInput::GetAccumulatedMouseDeltasAndResetAccumulators( float *mx, float *my
 	*mx = m_flAccumulatedMouseXMovement;
 	*my = m_flAccumulatedMouseYMovement;
 
+	float screenWidth = ScreenWidth();
+	float screenHeight = ScreenHeight();
 	if ( m_rawinput.GetBool() )
 	{
 		int rawMouseX, rawMouseY;
@@ -400,7 +405,27 @@ void CInput::GetAccumulatedMouseDeltasAndResetAccumulators( float *mx, float *my
 		{
 			*mx = (float)rawMouseX;
 			*my = (float)rawMouseY;
+			if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+			{
+				m_flLockViewOffsetX = clamp( ( m_flLockViewOffsetX * screenWidth ) + (float)rawMouseX, -screenWidth / 2, screenWidth / 2 ) / screenWidth;
+				m_flLockViewOffsetY = clamp( ( m_flLockViewOffsetY * screenHeight ) + (float)rawMouseY, -screenHeight / 2, screenHeight / 2 ) / screenHeight;
+			}
+			else
+			{
+				m_flLockViewOffsetX = 0;
+				m_flLockViewOffsetY = 0;
+			}
 		}
+	}
+	else if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		m_flLockViewOffsetX = clamp( ( m_flLockViewOffsetX * screenWidth ) + m_flAccumulatedMouseXMovement, -screenWidth / 2, screenWidth / 2 ) / screenWidth;
+		m_flLockViewOffsetY = clamp( ( m_flLockViewOffsetY * screenHeight ) + m_flAccumulatedMouseYMovement, -screenHeight / 2, screenHeight / 2 ) / screenHeight;
+	}
+	else
+	{
+		m_flLockViewOffsetX = 0;
+		m_flLockViewOffsetY = 0;
 	}
 	
 	m_flAccumulatedMouseXMovement = 0;
@@ -614,6 +639,12 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 	// NOTE:  Does rounding to int cause any issues?  ywb 1/17/04
 	cmd->mousedx = (int)mouse_x;
 	cmd->mousedy = (int)mouse_y;
+
+	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		cmd->mousedx = m_flLockViewOffsetX * 65535;
+		cmd->mousedy = m_flLockViewOffsetY * 65535;
+	}
 }
 
 //-----------------------------------------------------------------------------

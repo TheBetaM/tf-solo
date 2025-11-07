@@ -117,6 +117,8 @@ public:
 	virtual	bool		EnableJoystickMode() = 0;
 
 	virtual bool		IsSteamControllerActive() = 0;
+
+	virtual	void		GetLockViewOffsets( float& x, float& y ) = 0;
 };
 
 extern ::IInput *input;

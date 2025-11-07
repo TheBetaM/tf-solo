@@ -128,6 +128,8 @@ public:
 
 	virtual bool IsSteamControllerActive();
 
+	virtual void		GetLockViewOffsets( float& x, float& y ) { x = m_flLockViewOffsetX; y = m_flLockViewOffsetY; }
+
 // Private Implementation
 protected:
 	// Implementation specific initialization
@@ -268,6 +270,9 @@ private:
 	float m_flPreviousJoystickSide;
 	float m_flPreviousJoystickPitch;
 	float m_flPreviousJoystickYaw;
+
+	float		m_flLockViewOffsetX;
+	float		m_flLockViewOffsetY;
 
 	// Steam controller stuff
 	int m_nControllerType[MAX_JOYSTICKS + MAX_STEAM_CONTROLLERS];

@@ -13,6 +13,7 @@
 #include "prediction.h"
 #include "client_virtualreality.h"
 #include "sourcevr/isourcevirtualreality.h"
+#include "iinput.h"
 #else
 #include "vguiscreen.h"
 #endif
@@ -32,6 +33,15 @@ extern ConVar in_forceuser;
 
 #define VIEWMODEL_ANIMATION_PARITY_BITS 3
 #define SCREEN_OVERLAY_MATERIAL "vgui/screens/vgui_overlay"
+
+#ifdef CLIENT_DLL
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
+ConVar cl_lockview_vm_x("cl_lockview_vm_x", "-100.0", 0);
+ConVar cl_lockview_vm_y("cl_lockview_vm_y", "-40.0", 0);
+ConVar cl_lockview_vm_angx("cl_lockview_vm_angx", "-100.0", 0);
+ConVar cl_lockview_vm_angy("cl_lockview_vm_angy", "-40.0", 0);
+#endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -389,6 +399,21 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 	QAngle vmangoriginal = eyeAngles;
 	QAngle vmangles = eyeAngles;
 	Vector vmorigin = eyePosition;
+
+	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		float lockx = 0;
+		float locky = 0;
+		::input->GetLockViewOffsets( lockx, locky );
+		Vector rightVector, upVector;
+		AngleVectors( vmangles, NULL, &rightVector, &upVector );
+		vmorigin += lockx * cl_lockview_vm_x.GetFloat() * rightVector;
+		vmorigin += -locky * cl_lockview_vm_y.GetFloat() * upVector;
+		vmangles.y += lockx * cl_lockview_vm_angx.GetFloat();
+		vmangles.x += -locky * cl_lockview_vm_angy.GetFloat();
+		vmangoriginal.y += lockx * cl_lockview_vm_angx.GetFloat();
+		vmangoriginal.x += -locky * cl_lockview_vm_angy.GetFloat();
+	}
 
 	CBaseCombatWeapon *pWeapon = m_hWeapon.Get();
 	//Allow weapon lagging

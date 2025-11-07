@@ -85,9 +85,12 @@ ConVar in_joystick( "joystick","0", FCVAR_ARCHIVE );
 ConVar thirdperson_platformer( "thirdperson_platformer", "0", 0, "Player will aim in the direction they are moving." );
 ConVar thirdperson_screenspace( "thirdperson_screenspace", "0", 0, "Movement will be relative to the camera, eg: left means screen-left" );
 
+ConVar cl_lockview( "cl_lockview", "0", FCVAR_USERINFO, "Locks view and enables moving crosshair around the screen." );
+
 ConVar sv_noclipduringpause( "sv_noclipduringpause", "0", FCVAR_REPLICATED | FCVAR_CHEAT, "If cheats are enabled, then you can noclip with the game paused (for doing screenshots, etc.)." );
 
 extern ConVar cl_mouselook;
+extern ConVar sv_lockview_force;
 
 #ifdef TF_CLIENT_DLL
 extern ConVar tf_mirrormode;

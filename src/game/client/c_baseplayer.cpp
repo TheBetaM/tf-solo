@@ -74,6 +74,8 @@ int g_nKillCamTarget1 = 0;
 int g_nKillCamTarget2 = 0;
 
 extern ConVar mp_forcecamera; // in gamevars_shared.h
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 
 #define FLASHLIGHT_DISTANCE		1000
 #define MAX_VGUI_INPUT_MODE_SPEED 30
@@ -1212,7 +1214,8 @@ bool C_BasePlayer::CreateMove( float flInputSampleTime, CUserCmd *pCmd )
 	}
 
 	// If the frozen flag is set, prevent view movement (server prevents the rest of the movement)
-	if ( GetFlags() & FL_FROZEN )
+	if ( ( GetFlags() & FL_FROZEN ) || 
+		( IsLocalPlayer() && ( cl_lockview.GetBool() || sv_lockview_force.GetBool() ) ) )
 	{
 		// Don't stomp the first time we get frozen
 		if ( m_bWasFrozen )

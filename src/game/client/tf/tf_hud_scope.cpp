@@ -32,6 +32,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 
 //-----------------------------------------------------------------------------
 // Purpose: Figure out where the sniper scope should be drawn.
@@ -214,6 +216,19 @@ void CHudScopeCharge::Paint( void )
 		GetHudSize(UiScreenWide, UiScreenTall);
 		x -= ( UiScreenWide / 2 );
 		y -= ( UiScreenTall / 2 );
+	}
+
+	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		float lockx = 0;
+		float locky = 0;
+		::input->GetLockViewOffsets( lockx, locky );
+		int vx, vy, vw, vh;
+		vgui::surface()->GetFullscreenViewport( vx, vy, vw, vh );
+		int screenWide = vw;
+		int screenTall = vh;
+		x = lockx * screenWide;
+		y = locky * screenTall;
 	}
 
 	if( bDisableClipping )
@@ -436,6 +451,15 @@ void CHudScope::Paint( void )
 
 		bDisableClipping = true;
 		WhereToDrawSniperScope ( &xMid, &yMid, screenWide, screenTall );
+	}
+
+	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		float lockx = 0;
+		float locky = 0;
+		::input->GetLockViewOffsets( lockx, locky );
+		xMid = (screenWide / 2) + (lockx * screenWide);
+		yMid = (screenTall / 2) + (locky * screenTall);
 	}
 
 	int xLeft = xMid - wide/2;

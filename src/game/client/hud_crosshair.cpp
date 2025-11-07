@@ -17,6 +17,7 @@
 #include "VGuiMatSurface/IMatSystemSurface.h"
 #include "client_virtualreality.h"
 #include "sourcevr/isourcevirtualreality.h"
+#include "iinput.h"
 
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
@@ -31,6 +32,9 @@
 
 ConVar crosshair( "crosshair", "1", FCVAR_ARCHIVE );
 ConVar cl_observercrosshair( "cl_observercrosshair", "1", FCVAR_ARCHIVE );
+
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 
 using namespace vgui;
 
@@ -202,6 +206,14 @@ void CHudCrosshair::GetDrawPosition ( float *pX, float *pY, bool *pbBehindCamera
 
 			x = 0.5f * ( 1.0f + screen[0] ) * screenWidth + 0.5f;
 			y = 0.5f * ( 1.0f - screen[1] ) * screenHeight + 0.5f;
+		}
+
+		if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+		{
+			float lockx, locky;
+			::input->GetLockViewOffsets( lockx, locky );
+			x = 0.5f * screenWidth + ( lockx * screenWidth );
+			y = 0.5f * screenHeight + ( locky * screenHeight );
 		}
 	}
 
