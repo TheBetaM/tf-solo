@@ -296,7 +296,7 @@ void CArmoryPanel::JumpToItem( int iItemDef, armory_filters_t nFilter )
 		// Default behavior - select first item on first page
 		m_iFilterPage = 0;
 		SetSelectedItem( m_FilteredItemList[0] );
-	}
+		}
 
 	UpdateItemList();
 	UpdateSelectedItem();
@@ -344,61 +344,61 @@ void CArmoryPanel::OnClosing()
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnCommand( const char *command )
 {
-	if (!Q_stricmp(command, "prevpage"))
+	if ( !Q_stricmp( command, "prevpage" ) )
 	{
-		if (m_iFilterPage > 0)
+		if ( m_iFilterPage > 0 )
 		{
 			m_iFilterPage--;
 		}
 		else
 		{
-			m_iFilterPage = ceil(m_FilteredItemList.Count() / (float)(m_iThumbnailRows * m_iThumbnailColumns)) - 1;
+			m_iFilterPage = ceil( m_FilteredItemList.Count() / (float)( m_iThumbnailRows * m_iThumbnailColumns ) ) - 1;
 		}
 		UpdateItemList();
 		UpdateSelectedItem();
 	}
-	else if (!Q_stricmp(command, "prevpageskip"))
+	else if ( !Q_stricmp( command, "prevpageskip" ) )
 	{
-		for (int i = 0; i < tf_armory_page_skip.GetInt(); i++)
+		for ( int i = 0; i < tf_armory_page_skip.GetInt(); i++ )
 		{
-			if (m_iFilterPage > 0)
+			if ( m_iFilterPage > 0 )
 			{
 				m_iFilterPage--;
 			}
 			else
 			{
-				m_iFilterPage = ceil(m_FilteredItemList.Count() / (float)(m_iThumbnailRows * m_iThumbnailColumns)) - 1;
+				m_iFilterPage = ceil( m_FilteredItemList.Count() / (float)( m_iThumbnailRows * m_iThumbnailColumns ) ) - 1;
 			}
 		}
 		UpdateItemList();
 		UpdateSelectedItem();
 	}
-	else if (!Q_stricmp(command, "skiptostart"))
+	else if ( !Q_stricmp( command, "skiptostart" ) )
 	{
 		m_iFilterPage = 0;
 		UpdateItemList();
 		UpdateSelectedItem();
 	}
-	else if (!Q_stricmp(command, "nextpage"))
+	else if ( !Q_stricmp( command, "nextpage" ) )
 	{
 		m_iFilterPage++;
-		if (m_iFilterPage > ceil(m_FilteredItemList.Count() / (float)(m_iThumbnailRows * m_iThumbnailColumns)) - 1)
+		if ( m_iFilterPage > ceil( m_FilteredItemList.Count() / (float)( m_iThumbnailRows * m_iThumbnailColumns ) ) - 1 )
 		{
 			m_iFilterPage = 0;
 		}
 		UpdateItemList();
 		UpdateSelectedItem();
 	}
-	else if (!Q_stricmp(command, "nextpageskip"))
+	else if ( !Q_stricmp( command, "nextpageskip" ) )
 	{
-		uint32 unNumPages = ceil(m_FilteredItemList.Count() / (float)(m_iThumbnailRows * m_iThumbnailColumns));
-		m_iFilterPage = ((m_iFilterPage + tf_armory_page_skip.GetInt()) % unNumPages);
+		uint32 unNumPages = ceil( m_FilteredItemList.Count() / (float)( m_iThumbnailRows * m_iThumbnailColumns ) );
+		m_iFilterPage = ( ( m_iFilterPage + tf_armory_page_skip.GetInt() ) % unNumPages );
 		UpdateItemList();
 		UpdateSelectedItem();
 	}
-	else if (!Q_stricmp(command, "skiptoend"))
+	else if ( !Q_stricmp( command, "skiptoend" ) )
 	{
-		m_iFilterPage = ceil(m_FilteredItemList.Count() / (float)(m_iThumbnailRows * m_iThumbnailColumns)) - 1;
+		m_iFilterPage = ceil( m_FilteredItemList.Count() / (float)( m_iThumbnailRows * m_iThumbnailColumns ) ) - 1;
 		UpdateItemList();
 		UpdateSelectedItem();
 	}

@@ -11627,6 +11627,7 @@ void C_TFPlayer::ClientAdjustVOPitch( int& pitch )
 	{
 		pitch *= 1.3f;
 	}
+
 	// Halloween voice futzery?
 	float flVoicePitchScale = 1.f;
 	CALL_ATTRIB_HOOK_FLOAT( flVoicePitchScale, voice_pitch_scale );

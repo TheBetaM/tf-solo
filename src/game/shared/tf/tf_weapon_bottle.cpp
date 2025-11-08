@@ -306,10 +306,10 @@ void CTFStickBomb::Smack( void )
 			CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg );
 
 			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, flDamage, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
-			
+
 			float flRadius = 100.f;
 			CALL_ATTRIB_HOOK_FLOAT( flRadius, mult_explosion_radius );
-			
+
 			CTFRadiusDamageInfo radiusinfo( &info, explosion, flRadius );
 			TFGameRules()->RadiusDamage( radiusinfo );
 		}
