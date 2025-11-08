@@ -89,7 +89,13 @@
 
 #ifdef CLIENT_DLL
 ConVar mp_usehwmmodels( "mp_usehwmmodels", "0", NULL, "Enable the use of the hw morph models. (-1 = never, 1 = always, 0 = based upon GPU)" ); // -1 = never, 0 = if hasfastvertextextures, 1 = always
+extern ConVar cl_lockview;
 #endif
+extern ConVar sv_lockview_force;
+ConVar sv_lockview_out_x( "sv_lockview_out_x", "-100.0", FCVAR_REPLICATED );
+ConVar sv_lockview_out_y( "sv_lockview_out_y", "0.0", FCVAR_REPLICATED );
+ConVar sv_lockview_out_angx( "sv_lockview_out_angx", "50.0", FCVAR_REPLICATED );
+ConVar sv_lockview_out_angy( "sv_lockview_out_angy", "20.0", FCVAR_REPLICATED );
 
 bool UseHWMorphModels()
 {
@@ -816,6 +822,22 @@ void CBasePlayer::SetStepSoundTime( stepsoundtimes_t iStepSoundTime, bool bWalki
 
 Vector CBasePlayer::Weapon_ShootPosition( )
 {
+#ifdef CLIENT_DLL
+	if ( ( IsLocalPlayer() && cl_lockview.GetBool() ) || sv_lockview_force.GetBool() )
+#else
+	if ( !IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
+#endif
+	{
+		Vector targetPos = EyePosition();
+		float lockx = m_Local.m_flLockViewOffsetX;
+		float locky = m_Local.m_flLockViewOffsetY;
+		Vector rightVector, upVector;
+		AngleVectors( pl.v_angle, NULL, &rightVector, &upVector );
+		targetPos += rightVector * lockx * sv_lockview_out_x.GetFloat();
+		targetPos += upVector * -locky * sv_lockview_out_y.GetFloat();
+		return targetPos;
+	}
+
 	return EyePosition();
 }
 

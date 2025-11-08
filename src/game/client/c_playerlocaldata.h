@@ -35,6 +35,8 @@ public:
 		m_flFOVRate = 0;
 		m_bForceLocalPlayerDraw = false;
 		m_bPrevForceLocalPlayerDraw = false;
+		m_flLockViewOffsetX = 0;
+		m_flLockViewOffsetY = 0;
 
 		m_szScriptOverlayMaterial.GetForModify()[0] = '\0';
 	}
@@ -72,6 +74,8 @@ public:
 	bool					m_bPrevForceLocalPlayerDraw;
 	float					m_flStepSize;
 	bool					m_bAllowAutoMovement;
+	float					m_flLockViewOffsetX;
+	float					m_flLockViewOffsetY;
 
 	// 3d skybox
 	sky3dparams_t			m_skybox3d;

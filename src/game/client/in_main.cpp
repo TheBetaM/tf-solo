@@ -1284,6 +1284,12 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 
 	m_flLastForwardMove = cmd->forwardmove;
 
+	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		cmd->mousedx = m_flLockViewOffsetX * 65535;
+		cmd->mousedy = m_flLockViewOffsetY * 65535;
+	}
+
 	cmd->random_seed = MD5_PseudoRandom( sequence_number ) & 0x7fffffff;
 
 	HLTVCamera()->CreateMove( cmd );

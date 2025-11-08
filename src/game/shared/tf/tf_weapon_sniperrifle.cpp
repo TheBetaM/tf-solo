@@ -47,6 +47,8 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 
 #ifdef CLIENT_DLL
 ConVar tf_sniper_fullcharge_bell( "tf_sniper_fullcharge_bell", "0", FCVAR_ARCHIVE );
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 #endif
 
 //=============================================================================
@@ -1196,7 +1198,7 @@ void CTFSniperRifle::ExplosiveHeadShot( CTFPlayer *pAttacker, CTFPlayer *pVictim
 		// Shoot a beam at them
 		CPVSFilter filter( pTFPlayer->WorldSpaceCenter() );
 		Vector vStart = pVictim->EyePosition();
-		Vector vEnd = pTFPlayer->EyePosition();
+		Vector vEnd = pTFPlayer->Weapon_ShootPosition();
 		te_tf_particle_effects_control_point_t controlPoint = { PATTACH_ABSORIGIN, vEnd };
 		TE_TFParticleEffectComplex( filter, 0.0f, "dxhr_arm_muzzleflash", vStart, QAngle( 0, 0, 0 ), NULL, &controlPoint, pTFPlayer, PATTACH_CUSTOMORIGIN );
 
@@ -1534,6 +1536,11 @@ bool CSniperDot::GetRenderingPositions( C_TFPlayer *pPlayer, Vector &vecAttachme
 			vecAttachment = CurrentViewOrigin();
 			vecDir = CurrentViewForward();
 
+			if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+			{
+				vecAttachment = pPlayer->Weapon_ShootPosition();
+			}
+
 			// Clamp the forward distance for the sniper's firstperson
 			flDist = c_fMaxSizeDistVR;
 			flSize = 2.0;
@@ -1559,7 +1566,7 @@ bool CSniperDot::GetRenderingPositions( C_TFPlayer *pPlayer, Vector &vecAttachme
 		else
 		{
 			// Take the owning player eye position and direction.
-			vecAttachment = pPlayer->EyePosition();
+			vecAttachment = pPlayer->Weapon_ShootPosition();
 			QAngle anglesEye = pPlayer->EyeAngles();
 			AngleVectors( anglesEye, &vecDir );
 		}

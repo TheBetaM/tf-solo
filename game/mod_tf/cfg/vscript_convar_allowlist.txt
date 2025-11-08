@@ -91,6 +91,7 @@ vscript_convar_allowlist
     sv_footsteps                                                      allowed
     sv_Friction                                                       allowed
     sv_gravity                                                        allowed
+    sv_lockview_force                                                 allowed
     sv_mapentities_mod                                                allowed
     sv_mapentities_override                                           allowed
     sv_maxspeed                                                       allowed

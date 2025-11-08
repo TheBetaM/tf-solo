@@ -183,6 +183,9 @@ BEGIN_RECV_TABLE_NOBASE( CPlayerLocalData, DT_Local )
 	RecvPropFloat	(RECVINFO(m_flStepSize)),
 	RecvPropInt		(RECVINFO(m_bAllowAutoMovement)),
 
+	RecvPropFloat	(RECVINFO(m_flLockViewOffsetX)),
+	RecvPropFloat	(RECVINFO(m_flLockViewOffsetY)),
+
 	// 3d skybox data
 	RecvPropInt(RECVINFO(m_skybox3d.scale)),
 	RecvPropVector(RECVINFO(m_skybox3d.origin)),
@@ -356,6 +359,9 @@ BEGIN_PREDICTION_DATA_NO_BASE( CPlayerLocalData )
 	DEFINE_FIELD( m_flOldForwardMove, FIELD_FLOAT ),
 	DEFINE_PRED_FIELD( m_flStepSize, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
 	DEFINE_FIELD( m_flFOVRate, FIELD_FLOAT ),
+
+	DEFINE_PRED_FIELD( m_flLockViewOffsetX, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD( m_flLockViewOffsetY, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
 
 END_PREDICTION_DATA()	
 

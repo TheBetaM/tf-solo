@@ -257,7 +257,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
 		}
 // 		Vector vecSrc = pOwner->Weapon_ShootPosition();
 // 		vecSrc = vecSrc + ( vecUp * -9.0f ) + ( vecRight * 7.0f ) + ( vecForward * 3.0f );
-		Vector vecSrc = pOwner->EyePosition()
+		Vector vecSrc = pOwner->Weapon_ShootPosition()
 			+ ( vecForward * 40.f )
 			+ ( vecRight * 15.f )
 			+ ( vecUp * -10.f );
@@ -265,7 +265,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
 		QAngle angForward = pOwner->EyeAngles();
 
 		trace_t trace;
-		Vector vecEye = pOwner->EyePosition();
+		Vector vecEye = pOwner->Weapon_ShootPosition();
 		CTraceFilterSimple traceFilter( this, COLLISION_GROUP_PROJECTILE );
 		UTIL_TraceHull( vecEye, vecSrc, -Vector( 8.f, 8.f, 8.f ), Vector( 8.f, 8.f, 8.f ), MASK_SOLID_BRUSHONLY, &traceFilter, &trace );
 		if ( !trace.DidHit() )
@@ -391,8 +391,8 @@ void CTFMechanicalArm::UpdateParticleBeam()
 		trace_t tr;
 		Vector vecAiming;
 		pFiringPlayer->EyeVectors( &vecAiming );
-		Vector vecEnd = pFiringPlayer->EyePosition() + vecAiming * 256.0f;
-		UTIL_TraceLine( pFiringPlayer->EyePosition(), vecEnd, ( MASK_SHOT & ~CONTENTS_HITBOX ), pFiringPlayer, DMG_GENERIC, &tr );
+		Vector vecEnd = pFiringPlayer->Weapon_ShootPosition() + vecAiming * 256.0f;
+		UTIL_TraceLine( pFiringPlayer->Weapon_ShootPosition(), vecEnd, ( MASK_SHOT & ~CONTENTS_HITBOX ), pFiringPlayer, DMG_GENERIC, &tr );
 
 		// Line laser
 		if ( !m_pParticleBeamEffect )

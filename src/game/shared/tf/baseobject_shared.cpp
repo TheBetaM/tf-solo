@@ -26,6 +26,11 @@
 
 ConVar tf_obj_build_rotation_speed( "tf_obj_build_rotation_speed", "250", FCVAR_REPLICATED | FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Degrees per second to rotate building when player alt-fires during placement." );
 
+#ifdef CLIENT_DLL
+extern ConVar cl_lockview;
+#endif
+extern ConVar sv_lockview_force;
+
 //-----------------------------------------------------------------------------
 // Purpose: Parse our model and create the buildpoints in it
 //-----------------------------------------------------------------------------
@@ -542,6 +547,22 @@ bool CBaseObject::CalculatePlacementPos( void )
 	m_flBuildDistance = vecObjectRadius.Length() + vecPlayerRadius.Length() + 4; // small safety buffer
 	Vector vecBuildOrigin = pPlayer->WorldSpaceCenter() + m_vecBuildForward * m_flBuildDistance;
 
+	bool bLockView = false;
+#ifdef CLIENT_DLL
+	if ( ( pPlayer->IsLocalPlayer() && cl_lockview.GetBool() ) || sv_lockview_force.GetBool() )
+	{
+#else
+	if ( !pPlayer->IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( pPlayer->entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
+	{
+#endif
+		bLockView = true;
+	}
+
+	if ( bLockView )
+	{
+		vecBuildOrigin = pPlayer->Weapon_ShootPosition() + m_vecBuildForward * m_flBuildDistance;
+	}
+
 	m_vecBuildOrigin = vecBuildOrigin;
 	Vector vErrorOrigin = vecBuildOrigin - (m_vecBuildMaxs - m_vecBuildMins) * 0.5f - m_vecBuildMins;
 
@@ -560,6 +581,12 @@ bool CBaseObject::CalculatePlacementPos( void )
 	Vector vHalfPlayerDims = (pPlayer->WorldAlignMaxs() - pPlayer->WorldAlignMins()) * 0.5f;
 	float flBoxTopZ = pPlayer->WorldSpaceCenter().z + vHalfPlayerDims.z + vBuildDims.z;
 	float flBoxBottomZ = pPlayer->WorldSpaceCenter().z - vHalfPlayerDims.z - vBuildDims.z;
+
+	if ( bLockView )
+	{
+		flBoxTopZ = pPlayer->Weapon_ShootPosition().z + vHalfPlayerDims.z + vBuildDims.z;
+		flBoxBottomZ = pPlayer->Weapon_ShootPosition().z - vHalfPlayerDims.z - vBuildDims.z;
+	}
 
 	// First, find the ground (ie: where the bottom of the box goes).
 	trace_t tr;

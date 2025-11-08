@@ -107,6 +107,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_stun_ball );
 ConVar tf_scout_stunball_base_duration( "tf_scout_stunball_base_duration", "6.0", FCVAR_DEVELOPMENTONLY );
 ConVar tf_scout_stunball_base_speed( "tf_scout_stunball_base_speed", "3000", FCVAR_DEVELOPMENTONLY );
 ConVar sv_proj_stunball_damage( "sv_proj_stunball_damage", "15", FCVAR_DEVELOPMENTONLY );
+extern ConVar sv_lockview_force;
 #endif
 // -- TFStunBall
 
@@ -235,6 +236,11 @@ void CTFBat_Wood::GetBallDynamics( Vector& vecLoc, QAngle& vecAngles, Vector& ve
 	AngleVectors( pPlayer->EyeAngles(), &vecForward, NULL, &vecUp );
 	vecLoc    = pPlayer->GetAbsOrigin() + pPlayer->GetModelScale() * ( Vector( 0, 0, 50 ) + vecForward * 32.f );
 	vecAngles = pPlayer->GetAbsAngles();
+
+	if ( !pPlayer->IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( pPlayer->entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
+	{
+		vecLoc = pPlayer->Weapon_ShootPosition();
+	}
 
 	// Calculate the initial impulse on the item.
 	vecVelocity = Vector( 0.0f, 0.0f, 0.0f );

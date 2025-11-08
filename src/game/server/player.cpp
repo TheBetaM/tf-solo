@@ -3817,6 +3817,9 @@ void CBasePlayer::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 			}
 		}
 	}
+
+	m_Local.m_flLockViewOffsetX = ucmd->mousedx / 32767.0f;
+	m_Local.m_flLockViewOffsetY = ucmd->mousedy / 32767.0f;
 	
 	PlayerMove()->RunCommand(this, ucmd, moveHelper);
 }

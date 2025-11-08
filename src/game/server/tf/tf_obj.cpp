@@ -938,7 +938,7 @@ bool CBaseObject::FindNearestBuildPoint( CBaseEntity *pEntity, CBasePlayer *pBui
 						continue;
 
 					// Do a trace to make sure we don't place attachments through things (players, world, etc...)
-					Vector vecStart = pBuilder->EyePosition();
+					Vector vecStart = pBuilder->Weapon_ShootPosition();
 					trace_t trace;
 					CTraceFilterNoNPCsOrPlayer ignorePlayersFilter( pBuilder, COLLISION_GROUP_NONE );
 					UTIL_TraceLine( vecStart, vecBPOrigin, MASK_SOLID, &ignorePlayersFilter, &trace );

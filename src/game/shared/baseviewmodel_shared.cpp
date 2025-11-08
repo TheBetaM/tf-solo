@@ -400,6 +400,8 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 	QAngle vmangles = eyeAngles;
 	Vector vmorigin = eyePosition;
 
+	CBaseCombatWeapon* pWeapon = m_hWeapon.Get();
+
 	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
 	{
 		float lockx = 0;
@@ -407,6 +409,11 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 		::input->GetLockViewOffsets( lockx, locky );
 		Vector rightVector, upVector;
 		AngleVectors( vmangles, NULL, &rightVector, &upVector );
+		if ( pWeapon != NULL && FStrEq( pWeapon->GetClassname(), "tf_weapon_compound_bow" ) )
+		{
+			// Huntsman viewmodel is flipped
+			lockx = -lockx;
+		}
 		vmorigin += lockx * cl_lockview_vm_x.GetFloat() * rightVector;
 		vmorigin += -locky * cl_lockview_vm_y.GetFloat() * upVector;
 		vmangles.y += lockx * cl_lockview_vm_angx.GetFloat();
@@ -415,7 +422,6 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 		vmangoriginal.x += -locky * cl_lockview_vm_angy.GetFloat();
 	}
 
-	CBaseCombatWeapon *pWeapon = m_hWeapon.Get();
 	//Allow weapon lagging
 	if ( pWeapon != NULL )
 	{

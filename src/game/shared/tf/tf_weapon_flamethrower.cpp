@@ -2128,7 +2128,7 @@ Vector CTFFlameThrower::GetMuzzlePosHelper( bool bVisualPos )
 			UTIL_StringToVector( vecOffset.Base(), tf_flamethrower_new_flame_offset.GetString() );
 
 			vecOffset *= pOwner->GetModelScale();
-			vecMuzzlePos = pOwner->EyePosition() + vecOffset.x * vecForward + vecOffset.y * vecRight + vecOffset.z * vecUp;
+			vecMuzzlePos = pOwner->Weapon_ShootPosition() + vecOffset.x * vecForward + vecOffset.y * vecRight + vecOffset.z * vecUp;
 		}
 	}
 	return vecMuzzlePos;

@@ -12503,7 +12503,7 @@ bool CTFPlayer::TryToPickupBuilding()
 		iPickUpRange = TF_BUILDING_RESCUE_MAX_RANGE;
 	}
 	
-	const Vector vecStart = EyePosition();
+	const Vector vecStart = Weapon_ShootPosition();
 	const Vector vecEnd   = vecStart + vecForward * iPickUpRange;
 
 	// Create a ray a see if any of my objects touch it
@@ -12532,7 +12532,7 @@ bool CTFPlayer::TryToPickupBuilding()
 			{
 				CTargetOnlyFilter penetrateFilter( this, pObj );
 				trace_t pTraceToUse;
-				UTIL_TraceLine( EyePosition(), EyePosition() + vecForward * iPickUpRange, ( MASK_SOLID | CONTENTS_HITBOX ), &penetrateFilter, &pTraceToUse );
+				UTIL_TraceLine( Weapon_ShootPosition(), Weapon_ShootPosition() + vecForward * iPickUpRange, ( MASK_SOLID | CONTENTS_HITBOX ), &penetrateFilter, &pTraceToUse );
 				if ( pTraceToUse.m_pEnt == pObj )
 				{
 					pPickupObject = pObj;
@@ -12569,7 +12569,7 @@ bool CTFPlayer::TryToPickupBuilding()
 		// remove rage for long range
 		if ( iIncreasedRangeCost )
 		{
-			int nSqrDist = (EyePosition() - pPickupObject->GetAbsOrigin()).LengthSqr();
+			int nSqrDist = (Weapon_ShootPosition() - pPickupObject->GetAbsOrigin()).LengthSqr();
 			if ( nSqrDist > TF_BUILDING_RESCUE_MIN_RANGE_SQ )
 			{
 				RemoveAmmo( iIncreasedRangeCost, TF_AMMO_METAL );

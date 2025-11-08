@@ -639,12 +639,6 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 	// NOTE:  Does rounding to int cause any issues?  ywb 1/17/04
 	cmd->mousedx = (int)mouse_x;
 	cmd->mousedy = (int)mouse_y;
-
-	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
-	{
-		cmd->mousedx = m_flLockViewOffsetX * 65535;
-		cmd->mousedy = m_flLockViewOffsetY * 65535;
-	}
 }
 
 //-----------------------------------------------------------------------------

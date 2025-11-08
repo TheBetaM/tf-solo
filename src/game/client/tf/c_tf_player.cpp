@@ -194,6 +194,8 @@ extern ConVar cl_thirdperson;
 extern ConVar tf_vision_custom;
 extern ConVar tf_vision_custom_gibs;
 extern ConVar tf_vision_custom_voice;
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 
 ConVar tf_sheen_framerate( "tf_sheen_framerate", "25", FCVAR_NONE | FCVAR_HIDDEN, "Set Sheen Frame Rate" );
 
@@ -6983,6 +6985,12 @@ void C_TFPlayer::UpdateIDTarget()
 	Vector vecStart, vecEnd;
 	VectorMA( MainViewOrigin(), MAX_TRACE_LENGTH, MainViewForward(), vecEnd );
 	VectorMA( MainViewOrigin(), 10,   MainViewForward(), vecStart );
+
+	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
+	{
+		VectorMA( Weapon_ShootPosition(), MAX_TRACE_LENGTH, MainViewForward(), vecEnd );
+		VectorMA( Weapon_ShootPosition(), 10, MainViewForward(), vecStart );
+	}
 
 	// If we're in observer mode, ignore our observer target. Otherwise, ignore ourselves.
 	if ( IsObserver() )

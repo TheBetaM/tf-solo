@@ -76,6 +76,8 @@ public:
 	CNetworkVar( bool, m_bForceLocalPlayerDraw );
 	CNetworkVar( float, m_flStepSize );
 	CNetworkVar( bool, m_bAllowAutoMovement );
+	CNetworkVar( float, m_flLockViewOffsetX );
+	CNetworkVar( float, m_flLockViewOffsetY );
 
 	// 3d skybox
 	CNetworkVarEmbedded( sky3dparams_t, m_skybox3d );
