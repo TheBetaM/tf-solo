@@ -97,6 +97,10 @@ ConVar sv_lockview_out_y( "sv_lockview_out_y", "0.0", FCVAR_REPLICATED );
 ConVar sv_lockview_out_angx( "sv_lockview_out_angx", "-60.0", FCVAR_REPLICATED );
 ConVar sv_lockview_out_angy( "sv_lockview_out_angy", "-40.0", FCVAR_REPLICATED );
 
+#if defined( TF_CLIENT_DLL ) || defined( TF_DLL )
+extern ConVar tf_mirrormode;
+#endif
+
 bool UseHWMorphModels()
 {
 // #ifdef CLIENT_DLL 
@@ -831,6 +835,12 @@ Vector CBasePlayer::Weapon_ShootPosition( )
 		Vector targetPos = EyePosition();
 		float lockx = m_Local.m_flLockViewOffsetX;
 		float locky = m_Local.m_flLockViewOffsetY;
+#if defined( TF_CLIENT_DLL ) || defined( TF_DLL )
+		if ( tf_mirrormode.GetBool() )
+		{
+			lockx = -lockx;
+		}
+#endif
 		Vector rightVector, upVector;
 		AngleVectors( pl.v_angle, NULL, &rightVector, &upVector );
 		targetPos += rightVector * lockx * sv_lockview_out_x.GetFloat();
@@ -852,6 +862,12 @@ QAngle CBasePlayer::Weapon_ShootAngles()
 		QAngle targetAng = QAngle( EyeAngles() );
 		float lockx = m_Local.m_flLockViewOffsetX;
 		float locky = m_Local.m_flLockViewOffsetY;
+#if defined( TF_CLIENT_DLL ) || defined( TF_DLL )
+		if ( tf_mirrormode.GetBool() )
+		{
+			lockx = -lockx;
+		}
+#endif
 		targetAng.y += lockx * sv_lockview_out_angx.GetFloat();
 		targetAng.x += -locky * sv_lockview_out_angy.GetFloat();
 		return targetAng;

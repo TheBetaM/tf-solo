@@ -37,6 +37,7 @@ extern ConVar in_forceuser;
 #ifdef CLIENT_DLL
 extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
+extern ConVar cl_flipviewmodels;
 ConVar cl_lockview_vm_x("cl_lockview_vm_x", "-100.0", 0);
 ConVar cl_lockview_vm_y("cl_lockview_vm_y", "-40.0", 0);
 ConVar cl_lockview_vm_angx("cl_lockview_vm_angx", "-100.0", 0);
@@ -412,6 +413,10 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 		if ( pWeapon != NULL && FStrEq( pWeapon->GetClassname(), "tf_weapon_compound_bow" ) )
 		{
 			// Huntsman viewmodel is flipped
+			lockx = -lockx;
+		}
+		if ( cl_flipviewmodels.GetBool() )
+		{
 			lockx = -lockx;
 		}
 		vmorigin += lockx * cl_lockview_vm_x.GetFloat() * rightVector;
