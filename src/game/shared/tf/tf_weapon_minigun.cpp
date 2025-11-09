@@ -576,9 +576,16 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 	float flRechargeTime = 0.1f;
 
 	// Pos
-	const Vector &vecGunPos = ( pPlayer->IsMiniBoss() ) ? pPlayer->Weapon_ShootPosition() : pPlayer->EyePosition();
+	const Vector &vecGunPos = pPlayer->Weapon_ShootPosition();
 	Vector vecForward;
-	AngleVectors( GetAbsAngles(), &vecForward );
+	if ( pPlayer->IsMiniBoss() )
+	{
+		AngleVectors( GetAbsAngles(), &vecForward );
+	}
+	else
+	{
+		AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, NULL, NULL );
+	}
 	Vector vecGunAimEnd = vecGunPos + vecForward * (float)nSweepDist;
 
 	bool bDebug = false;

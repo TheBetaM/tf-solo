@@ -518,9 +518,20 @@ bool CBaseObject::CalculatePlacementPos( void )
 	if ( !pPlayer )
 		return false;
 
+	bool bLockView = false;
+#ifdef CLIENT_DLL
+	if ( ( pPlayer->IsLocalPlayer() && cl_lockview.GetBool()) || sv_lockview_force.GetBool() )
+	{
+#else
+	if ( !pPlayer->IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( pPlayer->entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
+	{
+#endif
+		bLockView = true;
+	}
+
 	// Calculate build angles
 	QAngle vecAngles = vec3_angle;
-	vecAngles.y = pPlayer->EyeAngles().y;
+	vecAngles.y = pPlayer->Weapon_ShootAngles().y;
 
 	QAngle objAngles = vecAngles;
 
@@ -546,17 +557,6 @@ bool CBaseObject::CalculatePlacementPos( void )
 
 	m_flBuildDistance = vecObjectRadius.Length() + vecPlayerRadius.Length() + 4; // small safety buffer
 	Vector vecBuildOrigin = pPlayer->WorldSpaceCenter() + m_vecBuildForward * m_flBuildDistance;
-
-	bool bLockView = false;
-#ifdef CLIENT_DLL
-	if ( ( pPlayer->IsLocalPlayer() && cl_lockview.GetBool() ) || sv_lockview_force.GetBool() )
-	{
-#else
-	if ( !pPlayer->IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( pPlayer->entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
-	{
-#endif
-		bLockView = true;
-	}
 
 	if ( bLockView )
 	{

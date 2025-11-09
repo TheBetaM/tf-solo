@@ -94,8 +94,8 @@ extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
 ConVar sv_lockview_out_x( "sv_lockview_out_x", "-100.0", FCVAR_REPLICATED );
 ConVar sv_lockview_out_y( "sv_lockview_out_y", "0.0", FCVAR_REPLICATED );
-ConVar sv_lockview_out_angx( "sv_lockview_out_angx", "50.0", FCVAR_REPLICATED );
-ConVar sv_lockview_out_angy( "sv_lockview_out_angy", "20.0", FCVAR_REPLICATED );
+ConVar sv_lockview_out_angx( "sv_lockview_out_angx", "-60.0", FCVAR_REPLICATED );
+ConVar sv_lockview_out_angy( "sv_lockview_out_angy", "-40.0", FCVAR_REPLICATED );
 
 bool UseHWMorphModels()
 {
@@ -839,6 +839,25 @@ Vector CBasePlayer::Weapon_ShootPosition( )
 	}
 
 	return EyePosition();
+}
+
+QAngle CBasePlayer::Weapon_ShootAngles()
+{
+#ifdef CLIENT_DLL
+	if ( ( IsLocalPlayer() && cl_lockview.GetBool() ) || sv_lockview_force.GetBool() )
+#else
+	if ( !IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
+#endif
+	{
+		QAngle targetAng = QAngle( EyeAngles() );
+		float lockx = m_Local.m_flLockViewOffsetX;
+		float locky = m_Local.m_flLockViewOffsetY;
+		targetAng.y += lockx * sv_lockview_out_angx.GetFloat();
+		targetAng.x += -locky * sv_lockview_out_angy.GetFloat();
+		return targetAng;
+	}
+
+	return EyeAngles();
 }
 
 void CBasePlayer::SetAnimationExtension( const char *pExtension )

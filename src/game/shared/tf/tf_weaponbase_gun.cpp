@@ -497,7 +497,7 @@ void CTFWeaponBaseGun::FireBullet( CTFPlayer *pPlayer )
 		this,
 		pPlayer->entindex(),
 		pPlayer->Weapon_ShootPosition(),
-		pPlayer->EyeAngles() + pPlayer->GetPunchAngle(),
+		pPlayer->Weapon_ShootAngles() + pPlayer->GetPunchAngle(),
 		GetWeaponID(),
 		m_iWeaponMode,
 		CBaseEntity::GetPredictionRandomSeed( UseServerRandomSeed() ) & 255,
@@ -649,7 +649,7 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 	PlayWeaponShootSound();
 
 #ifdef GAME_DLL
-	QAngle angEyes = pPlayer->EyeAngles();
+	QAngle angEyes = pPlayer->Weapon_ShootAngles();
 
 	float flSpreadAngle = 0.0f; 
 	CALL_ATTRIB_HOOK_FLOAT( flSpreadAngle, projectile_spread_angle );

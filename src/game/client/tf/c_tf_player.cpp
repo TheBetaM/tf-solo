@@ -6988,8 +6988,10 @@ void C_TFPlayer::UpdateIDTarget()
 
 	if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
 	{
-		VectorMA( Weapon_ShootPosition(), MAX_TRACE_LENGTH, MainViewForward(), vecEnd );
-		VectorMA( Weapon_ShootPosition(), 10, MainViewForward(), vecStart );
+		Vector forwardVector;
+		AngleVectors( Weapon_ShootAngles(), &forwardVector, NULL, NULL );
+		VectorMA( Weapon_ShootPosition(), MAX_TRACE_LENGTH, forwardVector, vecEnd );
+		VectorMA( Weapon_ShootPosition(), 10, forwardVector, vecStart );
 	}
 
 	// If we're in observer mode, ignore our observer target. Otherwise, ignore ourselves.

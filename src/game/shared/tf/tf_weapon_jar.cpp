@@ -171,7 +171,7 @@ void CTFJar::TossJarThink( void )
 #ifdef GAME_DLL
 
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( pPlayer->EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
 	float fRight = 8.f;
 	if ( IsViewModelFlipped() )
@@ -192,7 +192,7 @@ void CTFJar::TossJarThink( void )
 
 	Vector vecVelocity = GetVelocityVector( vecForward, vecRight, vecUp );
 
-	CTFProjectile_Jar *pProjectile = CreateJarProjectile( trace.endpos, pPlayer->EyeAngles(), vecVelocity, 
+	CTFProjectile_Jar *pProjectile = CreateJarProjectile( trace.endpos, pPlayer->Weapon_ShootAngles(), vecVelocity,
 		GetAngularImpulse(), pPlayer, GetTFWpnData() );
 
 	if ( pProjectile )

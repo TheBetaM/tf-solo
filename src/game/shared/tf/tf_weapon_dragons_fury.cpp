@@ -145,7 +145,7 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 
 #ifdef GAME_DLL
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( pPlayer->EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
 	float fRight = 8.f;
 	if ( IsViewModelFlipped() )
@@ -156,7 +156,7 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 	// Shoot from the right location
 	vecSrc = vecSrc + (vecUp * -9.0f) + (vecRight * 7.0f) + (vecForward * 3.0f);
 
-	QAngle angForward = pPlayer->EyeAngles();
+	QAngle angForward = pPlayer->Weapon_ShootAngles();
 
 	trace_t trace;	
 	Vector vecEye = pPlayer->EyePosition();

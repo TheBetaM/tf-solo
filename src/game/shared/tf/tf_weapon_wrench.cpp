@@ -161,7 +161,7 @@ void CTFWrench::Smack( void )
 
 	// Setup the swing range.
 	Vector vecForward; 
-	AngleVectors( pPlayer->EyeAngles(), &vecForward );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward );
 	Vector vecSwingStart = pPlayer->Weapon_ShootPosition();
 	Vector vecSwingEnd = vecSwingStart + vecForward * 70;
 

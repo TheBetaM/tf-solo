@@ -423,6 +423,7 @@ public:
 
 	// Weapon stuff
 	virtual Vector			Weapon_ShootPosition( );
+	virtual QAngle			Weapon_ShootAngles();
 	virtual bool			Weapon_CanUse( CBaseCombatWeapon *pWeapon );
 	virtual void			Weapon_Equip( CBaseCombatWeapon *pWeapon );
 	virtual	void			Weapon_Drop( CBaseCombatWeapon *pWeapon, const Vector *pvecTarget /* = NULL */, const Vector *pVelocity /* = NULL */ );

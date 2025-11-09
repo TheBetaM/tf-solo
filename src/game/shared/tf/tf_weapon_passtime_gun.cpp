@@ -989,7 +989,8 @@ CPasstimeGun::LaunchParams
 CPasstimeGun::LaunchParams::Default( CTFPlayer *pPlayer )
 {
 	LaunchParams p;
-	pPlayer->EyePositionAndVectors( &p.eyePos, &p.viewFwd, &p.viewRight, &p.viewUp );
+	VectorCopy( pPlayer->Weapon_ShootPosition(), p.eyePos );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &p.viewFwd, &p.viewRight, &p.viewUp );
 	const float size = tf_passtime_ball_sphere_radius.GetFloat() / 3.0f;
 	p.traceHullSize = Vector( size, size, size );
 	p.traceHullDistance = 8;

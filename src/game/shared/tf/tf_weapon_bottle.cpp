@@ -276,7 +276,7 @@ void CTFStickBomb::Smack( void )
 		if ( pTFPlayer )
 		{
 			Vector vecForward; 
-			AngleVectors( pTFPlayer->EyeAngles(), &vecForward );
+			AngleVectors( pTFPlayer->Weapon_ShootAngles(), &vecForward );
 			Vector vecSwingStart = pTFPlayer->Weapon_ShootPosition();
 			Vector vecSwingEnd = vecSwingStart + vecForward * GetSwingRange();
 

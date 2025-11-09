@@ -937,7 +937,7 @@ void CTFSpellBook::TossJarThink( void )
 	}
 
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( pPlayer->EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
 	float fRight = 7.f;
 	if ( IsViewModelFlipped() )
@@ -949,7 +949,7 @@ void CTFSpellBook::TossJarThink( void )
 	vecSrc = vecSrc + ( vecUp * -9.0f ) + ( vecRight * fRight ) + ( vecForward * 3.0f );
 
 	Vector vecVelocity = GetVelocityVector( vecForward, vecRight, vecUp ) * pSpellData->m_flSpeedScale;
-	QAngle angForward = pPlayer->EyeAngles();
+	QAngle angForward = pPlayer->Weapon_ShootAngles();
 
 	// Halloween Hack
 	// Eye Angles slighty higher

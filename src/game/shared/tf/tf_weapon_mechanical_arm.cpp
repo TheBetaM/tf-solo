@@ -248,7 +248,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
 		WeaponSound( SPECIAL3 );
 #ifdef GAME_DLL
 		Vector vecForward, vecRight, vecUp;
-		AngleVectors( pOwner->EyeAngles(), &vecForward, &vecRight, &vecUp );
+		AngleVectors( pOwner->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
 		float fRight = 8.f;
 		if ( IsViewModelFlipped() )
@@ -262,7 +262,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
 			+ ( vecRight * 15.f )
 			+ ( vecUp * -10.f );
 
-		QAngle angForward = pOwner->EyeAngles();
+		QAngle angForward = pOwner->Weapon_ShootAngles();
 
 		trace_t trace;
 		Vector vecEye = pOwner->Weapon_ShootPosition();
@@ -390,7 +390,7 @@ void CTFMechanicalArm::UpdateParticleBeam()
 	{
 		trace_t tr;
 		Vector vecAiming;
-		pFiringPlayer->EyeVectors( &vecAiming );
+		AngleVectors( pFiringPlayer->Weapon_ShootAngles(), &vecAiming, NULL, NULL );
 		Vector vecEnd = pFiringPlayer->Weapon_ShootPosition() + vecAiming * 256.0f;
 		UTIL_TraceLine( pFiringPlayer->Weapon_ShootPosition(), vecEnd, ( MASK_SHOT & ~CONTENTS_HITBOX ), pFiringPlayer, DMG_GENERIC, &tr );
 

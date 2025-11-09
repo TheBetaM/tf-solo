@@ -282,7 +282,7 @@ Vector CTFFlameManager::GetInitialVelocity() const
 		CTFPlayer *pTFPlayer = ToTFPlayer( m_hAttacker );
 		if ( pTFPlayer )
 		{
-			QAngle angFlame = pTFPlayer->EyeAngles();
+			QAngle angFlame = pTFPlayer->Weapon_ShootAngles();
 #ifdef WATERFALL_FLAMETHROWER_TEST
 			if ( m_iWaterfallMode && m_iStreamIndex >= 0 )
 			{

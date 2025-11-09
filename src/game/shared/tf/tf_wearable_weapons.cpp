@@ -151,7 +151,7 @@ void CTFWearableDemoShield::ShieldBash( CTFPlayer *pPlayer, float flCurrentCharg
 
 	// Setup the swing range.
 	Vector vecForward; 
-	AngleVectors( pOwner->EyeAngles(), &vecForward );
+	AngleVectors( pOwner->Weapon_ShootAngles(), &vecForward );
 	Vector vecStart = pOwner->Weapon_ShootPosition();
 	Vector vecEnd = vecStart + vecForward * 48;
 

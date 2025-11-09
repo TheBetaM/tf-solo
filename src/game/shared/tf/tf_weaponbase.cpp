@@ -5731,7 +5731,7 @@ QAngle CTFWeaponBase::GetSpreadAngles( void )
 	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
 	Assert( pOwner );
 
-	QAngle angEyes = pOwner->EyeAngles();
+	QAngle angEyes = pOwner->Weapon_ShootAngles();
 
 	float flSpreadAngle = 0.0f; 
 	CALL_ATTRIB_HOOK_FLOAT( flSpreadAngle, projectile_spread_angle );

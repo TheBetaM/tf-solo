@@ -295,7 +295,7 @@ void CTFLaserPointer::UpdateLaserDot( void )
 
 	Vector vecMuzzlePos = pPlayer->Weapon_ShootPosition();
 	Vector forward;
-	pPlayer->EyeVectors( &forward );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &forward, NULL, NULL );
 	Vector vecEndPos = vecMuzzlePos + ( forward * MAX_TRACE_LENGTH );
 
 	trace_t	trace;

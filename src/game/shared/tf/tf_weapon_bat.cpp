@@ -240,6 +240,8 @@ void CTFBat_Wood::GetBallDynamics( Vector& vecLoc, QAngle& vecAngles, Vector& ve
 	if ( !pPlayer->IsFakeClient() && ( FStrEq( engine->GetClientConVarValue( pPlayer->entindex(), "cl_lockview" ), "1" ) || sv_lockview_force.GetBool() ) )
 	{
 		vecLoc = pPlayer->Weapon_ShootPosition();
+		vecAngles = pPlayer->Weapon_ShootAngles();
+		AngleVectors( vecAngles, &vecForward, NULL, &vecUp );
 	}
 
 	// Calculate the initial impulse on the item.

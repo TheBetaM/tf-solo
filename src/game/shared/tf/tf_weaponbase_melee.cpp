@@ -420,7 +420,7 @@ bool CTFWeaponBaseMelee::DoSwingTraceInternal( trace_t &trace, bool bCleave, CUt
 	CALL_ATTRIB_HOOK_FLOAT( fSwingRange, melee_range_multiplier );
 
 	Vector vecForward; 
-	AngleVectors( pPlayer->EyeAngles(), &vecForward );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward );
 	Vector vecSwingStart = pPlayer->Weapon_ShootPosition();
 	Vector vecSwingEnd = vecSwingStart + vecForward * fSwingRange;
 
@@ -807,7 +807,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 		return;
 
 	Vector vecForward; 
-	AngleVectors( pPlayer->EyeAngles(), &vecForward );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward );
 	Vector vecSwingStart = pPlayer->Weapon_ShootPosition();
 	Vector vecSwingEnd = vecSwingStart + vecForward * 48;
 

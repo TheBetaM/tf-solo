@@ -7131,7 +7131,7 @@ void CBasePlayer::GetAutoaimVector( autoaim_params_t &params )
 	if ( ( ShouldAutoaim() == false ) || ( params.m_fScale == AUTOAIM_SCALE_DIRECT_ONLY ) )
 	{
 		Vector	forward;
-		AngleVectors( EyeAngles() + m_Local.m_vecPunchAngle, &forward );
+		AngleVectors( Weapon_ShootAngles() + m_Local.m_vecPunchAngle, &forward );
 
 		params.m_vecAutoAimDir = forward;
 		params.m_hAutoAimEntity.Set(NULL);
@@ -7173,13 +7173,13 @@ void CBasePlayer::GetAutoaimVector( autoaim_params_t &params )
 	if( IsInAVehicle() && g_pGameRules->GetAutoAimMode() == AUTOAIM_ON_CONSOLE )
 	{
 		m_vecAutoAim = angles;
-		AngleVectors( EyeAngles() + m_vecAutoAim, &forward );
+		AngleVectors( Weapon_ShootAngles() + m_vecAutoAim, &forward );
 	}
 	else
 	{
 		// always use non-sticky autoaim
 		m_vecAutoAim = angles * 0.9f;
-		AngleVectors( EyeAngles() + m_Local.m_vecPunchAngle + m_vecAutoAim, &forward );
+		AngleVectors( Weapon_ShootAngles() + m_Local.m_vecPunchAngle + m_vecAutoAim, &forward );
 	}
 
 	params.m_vecAutoAimDir = forward;

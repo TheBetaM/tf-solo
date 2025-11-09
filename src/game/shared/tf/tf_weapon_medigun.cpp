@@ -703,7 +703,7 @@ void CWeaponMedigun::MaintainTargetInSlot()
 		CMedigunFilter drainFilter( pOwner );
 
 		Vector vecAiming;
-		pOwner->EyeVectors( &vecAiming );
+		AngleVectors( pOwner->Weapon_ShootAngles(), &vecAiming, NULL, NULL );
 
 		Vector vecEnd = vecSrc + vecAiming * GetTargetRange();
 		UTIL_TraceLine( vecSrc, vecEnd, (MASK_SHOT & ~CONTENTS_HITBOX), pOwner, DMG_GENERIC, &tr );
@@ -748,7 +748,7 @@ void CWeaponMedigun::FindNewTargetForSlot()
 
 	// In Normal mode, we heal players under our crosshair
 	Vector vecAiming;
-	pOwner->EyeVectors( &vecAiming );
+	AngleVectors( pOwner->Weapon_ShootAngles(), &vecAiming, NULL, NULL );
 
 	// Find a player in range of this player, and make sure they're healable.
 	Vector vecEnd = vecSrc + vecAiming * GetTargetRange();

@@ -311,7 +311,7 @@ CTFProjectile_Throwable *CTFThrowable::FireProjectileInternal( void )
 		return NULL;
 
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( pPlayer->EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
 	float fRight = 8.f;
 	if ( IsViewModelFlipped() )
@@ -335,7 +335,7 @@ CTFProjectile_Throwable *CTFThrowable::FireProjectileInternal( void )
 	CalcIsAttackCritical();
 
 	// Create the Grenade and Intialize it appropriately
-	CTFProjectile_Throwable *pGrenade = static_cast<CTFProjectile_Throwable*>( CBaseEntity::CreateNoSpawn( attrProjectileEntityName.value().c_str(), trace.endpos, pPlayer->EyeAngles(), pPlayer ) );
+	CTFProjectile_Throwable *pGrenade = static_cast<CTFProjectile_Throwable*>( CBaseEntity::CreateNoSpawn( attrProjectileEntityName.value().c_str(), trace.endpos, pPlayer->Weapon_ShootAngles(), pPlayer ) );
 	if ( pGrenade )
 	{
 		// Set the pipebomb mode before calling spawn, so the model & associated vphysics get setup properly.

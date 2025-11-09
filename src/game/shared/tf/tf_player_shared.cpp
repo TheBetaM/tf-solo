@@ -12492,7 +12492,7 @@ bool CTFPlayer::TryToPickupBuilding()
 
 	// Check to see if a building we own is in front of us.
 	Vector vecForward;
-	AngleVectors( EyeAngles(), &vecForward, NULL, NULL );
+	AngleVectors( Weapon_ShootAngles(), &vecForward, NULL, NULL );
 
 	int iPickUpRange = TF_BUILDING_PICKUP_RANGE;
 	int iIncreasedRangeCost = 0;

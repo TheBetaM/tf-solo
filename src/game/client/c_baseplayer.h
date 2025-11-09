@@ -124,6 +124,7 @@ public:
 	bool					IsPlayerUnderwater( void ) { return m_bPlayerUnderwater; }
 
 	virtual Vector			Weapon_ShootPosition();
+	virtual QAngle			Weapon_ShootAngles();
 	virtual void			Weapon_DropPrimary( void ) {}
 
 	virtual Vector			GetAutoaimVector( float flScale );

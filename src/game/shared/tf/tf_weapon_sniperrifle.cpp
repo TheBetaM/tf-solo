@@ -650,7 +650,7 @@ void CTFSniperRifle::ApplyChargeSpeedModifications( float &flBaseRef )
 	if ( pPlayer )
 	{
 		Vector vForward;
-		AngleVectors( pPlayer->EyeAngles() + pPlayer->GetPunchAngle(), &vForward );
+		AngleVectors( pPlayer->Weapon_ShootAngles() + pPlayer->GetPunchAngle(), &vForward );
 
 		Vector vShootPos = pPlayer->Weapon_ShootPosition();
 		trace_t tr;
@@ -980,7 +980,7 @@ void CTFSniperRifle::UpdateSniperDot( void )
 	// Get the start and endpoints.
 	Vector vecMuzzlePos = pPlayer->Weapon_ShootPosition();
 	Vector forward;
-	pPlayer->EyeVectors( &forward );
+	AngleVectors( pPlayer->Weapon_ShootAngles(), &forward, NULL, NULL );
 	Vector vecEndPos = vecMuzzlePos + ( forward * MAX_TRACE_LENGTH );
 
 	trace_t	trace;
@@ -1539,6 +1539,9 @@ bool CSniperDot::GetRenderingPositions( C_TFPlayer *pPlayer, Vector &vecAttachme
 			if ( cl_lockview.GetBool() || sv_lockview_force.GetBool() )
 			{
 				vecAttachment = pPlayer->Weapon_ShootPosition();
+				Vector forwardVector;
+				AngleVectors( pPlayer->Weapon_ShootAngles(), &forwardVector, NULL, NULL );
+				vecDir = forwardVector;
 			}
 
 			// Clamp the forward distance for the sniper's firstperson
@@ -1567,7 +1570,7 @@ bool CSniperDot::GetRenderingPositions( C_TFPlayer *pPlayer, Vector &vecAttachme
 		{
 			// Take the owning player eye position and direction.
 			vecAttachment = pPlayer->Weapon_ShootPosition();
-			QAngle anglesEye = pPlayer->EyeAngles();
+			QAngle anglesEye = pPlayer->Weapon_ShootAngles();
 			AngleVectors( anglesEye, &vecDir );
 		}
 
