@@ -12,6 +12,7 @@
 #include "cam_thirdperson.h"
 
 extern ConVar		thirdperson_platformer;
+extern ConVar		sv_thirdperson_platformer_force;
 extern ConVar		cam_idealyaw;
 extern ConVar		cl_yawspeed;
 extern kbutton_t	in_left;
@@ -109,7 +110,7 @@ void CTFInput::AdjustYaw( float speed, QAngle& viewangles )
 
 	if ( CAM_IsThirdPerson() )
 	{
-		if ( thirdperson_platformer.GetInt() )
+		if ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() )
 		{
 			float side = KeyState(&in_moveleft) - KeyState(&in_moveright);
 			float forward = KeyState(&in_forward) - KeyState(&in_back);

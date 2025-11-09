@@ -91,6 +91,7 @@ ConVar sv_noclipduringpause( "sv_noclipduringpause", "0", FCVAR_REPLICATED | FCV
 
 extern ConVar cl_mouselook;
 extern ConVar sv_lockview_force;
+extern ConVar sv_thirdperson_platformer_force;
 
 #ifdef TF_CLIENT_DLL
 extern ConVar tf_mirrormode;
@@ -690,7 +691,7 @@ void CInput::AdjustYaw( float speed, QAngle& viewangles )
 
 	// thirdperson platformer mode
 	// use movement keys to aim the player relative to the thirdperson camera
-	if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 	{
 		float side = KeyState(&in_moveleft) - KeyState(&in_moveright);
 		float forward = KeyState(&in_forward) - KeyState(&in_back);
@@ -812,7 +813,7 @@ ComputeSideMove
 void CInput::ComputeSideMove( CUserCmd *cmd )
 {
 	// thirdperson platformer movement
-	if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 	{
 		// no sideways movement in this mode
 		return;
@@ -876,7 +877,7 @@ ComputeForwardMove
 void CInput::ComputeForwardMove( CUserCmd *cmd )
 {
 	// thirdperson platformer movement
-	if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 	{
 		// movement is always forward in this mode
 		float movement = KeyState(&in_forward)

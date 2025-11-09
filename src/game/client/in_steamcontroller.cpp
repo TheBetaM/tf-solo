@@ -51,6 +51,7 @@ extern const ConVar *sv_cheats;
 extern ConVar cam_idealyaw;
 extern ConVar cam_idealpitch;
 extern ConVar thirdperson_platformer;
+extern ConVar sv_thirdperson_platformer_force;
 
 extern ConVar cl_forwardspeed;
 extern ConVar cl_backspeed;
@@ -98,7 +99,7 @@ void CInput::ApplySteamControllerCameraMove( QAngle& viewangles, CUserCmd *cmd, 
 		viewangles[YAW] -= yaw;
 	}
 
-	if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 	{
 		if ( vecPosition.y )
 		{

@@ -105,6 +105,7 @@ vscript_convar_allowlist
     sv_specspeed                                                      allowed
     sv_stepsize                                                       allowed
     sv_stopspeed                                                      allowed
+    sv_thirdperson_platformer_force                                   allowed
     sv_turbophysics                                                   allowed
     sv_wateraccelerate                                                allowed
     sv_waterdist                                                      allowed

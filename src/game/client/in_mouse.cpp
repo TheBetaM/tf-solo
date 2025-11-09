@@ -87,6 +87,7 @@ ConVar_ServerBounded *m_pitch = &cvar_m_pitch;
 extern ConVar cam_idealyaw;
 extern ConVar cam_idealpitch;
 extern ConVar thirdperson_platformer;
+extern ConVar sv_thirdperson_platformer_force;
 
 static ConVar m_filter( "m_filter","0", FCVAR_ARCHIVE, "Mouse filtering (set this to 1 to average the mouse over 2 frames)." );
 ConVar sensitivity( "sensitivity","3", FCVAR_ARCHIVE, "Mouse sensitivity.", true, 0.0001f, true, 10000000 );
@@ -538,7 +539,7 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 		else
 #endif //#ifdef PORTAL
 		{
-			if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+			if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 			{
 				if ( mouse_x )
 				{
@@ -589,7 +590,7 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 		else
 #endif //#ifdef PORTAL
 		{
-			if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+			if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 			{
 				if ( mouse_y )
 				{

@@ -190,12 +190,16 @@ extern ConVar tf_halloween_kart_boost_recharge;
 extern ConVar tf_halloween_kart_boost_duration;
 
 extern ConVar cl_thirdperson;
+extern ConVar cam_idealdist;
+extern ConVar cam_idealdistright;
+extern ConVar cam_idealdistup;
 
 extern ConVar tf_vision_custom;
 extern ConVar tf_vision_custom_gibs;
 extern ConVar tf_vision_custom_voice;
 extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
+extern ConVar sv_thirdperson_platformer_force;
 
 ConVar tf_sheen_framerate( "tf_sheen_framerate", "25", FCVAR_NONE | FCVAR_HIDDEN, "Set Sheen Frame Rate" );
 
@@ -5475,6 +5479,19 @@ void C_TFPlayer::TurnOnTauntCam( void )
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
 		return;
 
+	if ( sv_thirdperson_platformer_force.GetBool() )
+	{
+		if ( !::input->CAM_IsThirdPerson() )
+		{
+			g_ThirdPersonManager.SetDesiredCameraOffset( Vector( cam_idealdist.GetFloat(), cam_idealdistright.GetFloat(), cam_idealdistup.GetFloat() ) );
+			g_ThirdPersonManager.SetOverridingThirdPerson( true );
+			::input->CAM_ToThirdPerson();
+			ThirdPersonSwitch( true );
+			UpdateKillStreakEffects( m_Shared.GetStreak( CTFPlayerShared::kTFStreak_Kills ) );
+		}
+		return;
+	}
+
 	m_flTauntCamTargetDist = ( m_flTauntCamTargetDist != 0.0f ) ? m_flTauntCamTargetDist : tf_tauntcam_dist.GetFloat();
 	m_flTauntCamTargetDistUp = ( m_flTauntCamTargetDistUp != 0.0f ) ? m_flTauntCamTargetDistUp : 0.f;
 
@@ -5529,6 +5546,9 @@ void C_TFPlayer::TurnOffTauntCam( void )
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
 		return;
 
+	if ( sv_thirdperson_platformer_force.GetBool() )
+		return;
+
 	// We want to interpolate back into the guy's head.
 	if ( g_ThirdPersonManager.GetForcedThirdPerson() == false )
 	{
@@ -5553,6 +5573,9 @@ void C_TFPlayer::TurnOffTauntCam_Finish( void )
 		return;	
 
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
+		return;
+
+	if ( sv_thirdperson_platformer_force.GetBool() )
 		return;
 
 	const Vector& vecOffset = g_ThirdPersonManager.GetCameraOffsetAngles();

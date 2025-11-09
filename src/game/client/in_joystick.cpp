@@ -123,6 +123,7 @@ extern ConVar cam_idealpitch;
 extern ConVar cam_idealyaw;
 extern ConVar thirdperson_platformer;
 extern ConVar thirdperson_screenspace;
+extern ConVar sv_thirdperson_platformer_force;
 
 //-----------------------------------------------------------------
 // Purpose: Returns true if there's an active joystick connected.
@@ -773,7 +774,7 @@ void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 	}
 
 	// drive yaw, pitch and move like a screen relative platformer game
-	if ( CAM_IsThirdPerson() && thirdperson_platformer.GetInt() )
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 	{
 		if ( m_flPreviousJoystickForward || m_flPreviousJoystickSide )
 		{
