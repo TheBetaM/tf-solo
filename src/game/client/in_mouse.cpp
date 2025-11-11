@@ -28,6 +28,7 @@
 #include "tier1/convar_serverbounded.h"
 #include "cam_thirdperson.h"
 #include "inputsystem/iinputsystem.h"
+#include "in_buttons.h"
 
 #if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
@@ -56,6 +57,8 @@ extern const ConVar *sv_cheats;
 
 extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
+extern ConVar c_minpitch;
+extern ConVar c_maxpitch;
 
 class ConVar_m_pitch : public ConVar_ServerBounded
 {
@@ -88,6 +91,8 @@ extern ConVar cam_idealyaw;
 extern ConVar cam_idealpitch;
 extern ConVar thirdperson_platformer;
 extern ConVar sv_thirdperson_platformer_force;
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 
 static ConVar m_filter( "m_filter","0", FCVAR_ARCHIVE, "Mouse filtering (set this to 1 to average the mouse over 2 frames)." );
 ConVar sensitivity( "sensitivity","3", FCVAR_ARCHIVE, "Mouse sensitivity.", true, 0.0001f, true, 10000000 );
@@ -529,6 +534,9 @@ void CInput::ScaleMouse( float *x, float *y )
 //-----------------------------------------------------------------------------
 void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float mouse_y )
 {
+	int buttons = GetButtonBits(0);
+	bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
+
 	if ( !((in_strafe.state & 1) || lookstrafe.GetInt()) )
 	{
 #ifdef PORTAL
@@ -541,12 +549,22 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 		{
 			if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
 			{
-				if ( mouse_x )
+				if ( mouse_x && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
 				{
 					Vector vTempOffset = g_ThirdPersonManager.GetCameraOffsetAngles();
 
 					// use the mouse to orbit the camera around the player, and update the idealAngle
-					vTempOffset[ YAW ] -= m_yaw.GetFloat() * mouse_x;
+#ifdef TF_CLIENT_DLL
+					if ( tf_mirrormode.GetBool() )
+					{
+						vTempOffset[ YAW ] += m_yaw.GetFloat() * mouse_x;
+					}
+					else
+#endif
+					{
+						vTempOffset[ YAW ] -= m_yaw.GetFloat() * mouse_x;
+					}
+
 					cam_idealyaw.SetValue( vTempOffset[ YAW ] - viewangles[ YAW ] );
 
 					g_ThirdPersonManager.SetCameraOffsetAngles( vTempOffset );
@@ -590,20 +608,28 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 		else
 #endif //#ifdef PORTAL
 		{
-			if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
+			if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() )  )
 			{
-				if ( mouse_y )
+				Vector vTempOffset = g_ThirdPersonManager.GetCameraOffsetAngles();
+				if ( mouse_y && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
 				{
-					Vector vTempOffset = g_ThirdPersonManager.GetCameraOffsetAngles();
-
 					// use the mouse to orbit the camera around the player, and update the idealAngle
 					vTempOffset[ PITCH ] += m_pitch->GetFloat() * mouse_y;
-					cam_idealpitch.SetValue( vTempOffset[ PITCH ] - viewangles[ PITCH ] );
+
+					if ( !bInteracting )
+					{
+						cam_idealpitch.SetValue( vTempOffset[ PITCH ] - viewangles[ PITCH ] );
+					}
 
 					g_ThirdPersonManager.SetCameraOffsetAngles( vTempOffset );
 
 					// why doesn't this work??? CInput::AdjustYaw is why
 					//cam_idealpitch.SetValue( cam_idealpitch.GetFloat() + m_pitch->GetFloat() * mouse_y );
+				}
+				if ( bInteracting && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
+				{
+					viewangles[PITCH] = vTempOffset[PITCH];
+					cam_idealpitch.Revert();
 				}
 			}
 			else

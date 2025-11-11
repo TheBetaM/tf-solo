@@ -43,6 +43,7 @@ sv_thirdperson_platformer_force
 - Fixed canteens being unusable in Sudden Death/Arena
 - Added #basedir to KeyValues to include all files in a directory
 - Added functionality to change Pyrovision into any custom vision
+- Improved thirdperson_platformer, now allows firing in the direction you're aiming
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps

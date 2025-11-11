@@ -40,6 +40,7 @@ ConVar g_Language( "g_Language", "0", FCVAR_REPLICATED );
 ConVar sk_autoaim_mode( "sk_autoaim_mode", "1", FCVAR_ARCHIVE | FCVAR_REPLICATED );
 ConVar sv_lockview_force( "sv_lockview_force", "0", FCVAR_REPLICATED, "Force all players into locked view and moving crosshair around the screen." );
 ConVar sv_thirdperson_platformer_force( "sv_thirdperson_platformer_force", "0", FCVAR_REPLICATED, "Forces thirdperson_platformer on all players." );
+ConVar sv_thirdperson_platformer_distright( "sv_thirdperson_platformer_distright", "20", FCVAR_REPLICATED, "" );
 
 #ifndef CLIENT_DLL
 ConVar log_verbose_enable( "log_verbose_enable", "0", FCVAR_GAMEDLL, "Set to 1 to enable verbose server log on the server." );

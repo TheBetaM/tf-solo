@@ -29,6 +29,7 @@
 #include "tier1/convar_serverbounded.h"
 #include "cam_thirdperson.h"
 #include "ienginevgui.h"
+#include "in_buttons.h"
 
 #if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
@@ -52,6 +53,8 @@ extern ConVar cam_idealyaw;
 extern ConVar cam_idealpitch;
 extern ConVar thirdperson_platformer;
 extern ConVar sv_thirdperson_platformer_force;
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
 
 extern ConVar cl_forwardspeed;
 extern ConVar cl_backspeed;
@@ -99,7 +102,10 @@ void CInput::ApplySteamControllerCameraMove( QAngle& viewangles, CUserCmd *cmd, 
 		viewangles[YAW] -= yaw;
 	}
 
-	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
+	int buttons = GetButtonBits(0);
+	bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) 
+		&& !bInteracting && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
 	{
 		if ( vecPosition.y )
 		{

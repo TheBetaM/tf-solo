@@ -28,6 +28,7 @@
 #include "math.h"
 #include "tier1/convar_serverbounded.h"
 #include "cam_thirdperson.h"
+#include "in_buttons.h"
 
 #if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
@@ -124,6 +125,12 @@ extern ConVar cam_idealyaw;
 extern ConVar thirdperson_platformer;
 extern ConVar thirdperson_screenspace;
 extern ConVar sv_thirdperson_platformer_force;
+extern ConVar cl_lockview;
+extern ConVar sv_lockview_force;
+
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_mirrormode;
+#endif
 
 //-----------------------------------------------------------------
 // Purpose: Returns true if there's an active joystick connected.
@@ -773,8 +780,19 @@ void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 		m_flPreviousJoystickPitch *= -1.0f;
 	}
 
+#ifdef TF_CLIENT_DLL
+	if ( tf_mirrormode.GetBool() )
+	{
+		m_flPreviousJoystickYaw *= -1.0f;
+		m_flPreviousJoystickSide *= -1.0f;
+	}
+#endif
+
+	int buttons = GetButtonBits(0);
+	bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
 	// drive yaw, pitch and move like a screen relative platformer game
-	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) 
+		&& !bInteracting && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
 	{
 		if ( m_flPreviousJoystickForward || m_flPreviousJoystickSide )
 		{
@@ -906,6 +924,17 @@ void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 		{
 			KeyUp( &in_joyspeed, NULL );
 		}
+	}
+
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) && bInteracting )
+	{
+		Vector vTempOffset = g_ThirdPersonManager.GetCameraOffsetAngles();
+		if ( m_flPreviousJoystickPitch )
+		{
+			vTempOffset[PITCH] += m_flPreviousJoystickPitch * joy_pitchsensitivity.GetFloat();
+			g_ThirdPersonManager.SetCameraOffsetAngles( vTempOffset );
+		}
+		viewangles[PITCH] = vTempOffset[PITCH];
 	}
 
 	// Bound pitch

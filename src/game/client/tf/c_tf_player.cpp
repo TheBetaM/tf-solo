@@ -193,6 +193,7 @@ extern ConVar cl_thirdperson;
 extern ConVar cam_idealdist;
 extern ConVar cam_idealdistright;
 extern ConVar cam_idealdistup;
+extern ConVar sv_thirdperson_platformer_distright;
 
 extern ConVar tf_vision_custom;
 extern ConVar tf_vision_custom_gibs;
@@ -200,6 +201,8 @@ extern ConVar tf_vision_custom_voice;
 extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
 extern ConVar sv_thirdperson_platformer_force;
+extern ConVar tf_mirrormode;
+extern ConVar cl_flipviewmodels;
 
 ConVar tf_sheen_framerate( "tf_sheen_framerate", "25", FCVAR_NONE | FCVAR_HIDDEN, "Set Sheen Frame Rate" );
 
@@ -5483,7 +5486,16 @@ void C_TFPlayer::TurnOnTauntCam( void )
 	{
 		if ( !::input->CAM_IsThirdPerson() )
 		{
-			g_ThirdPersonManager.SetDesiredCameraOffset( Vector( cam_idealdist.GetFloat(), cam_idealdistright.GetFloat(), cam_idealdistup.GetFloat() ) );
+			float distright = sv_thirdperson_platformer_distright.GetFloat();
+			if ( tf_mirrormode.GetBool() )
+			{
+				distright = -distright;
+			}
+			if ( cl_flipviewmodels.GetBool() )
+			{
+				distright = -distright;
+			}
+			g_ThirdPersonManager.SetDesiredCameraOffset( Vector( cam_idealdist.GetFloat(), distright, cam_idealdistup.GetFloat() ) );
 			g_ThirdPersonManager.SetOverridingThirdPerson( true );
 			::input->CAM_ToThirdPerson();
 			ThirdPersonSwitch( true );

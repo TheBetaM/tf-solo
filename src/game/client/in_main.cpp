@@ -696,13 +696,29 @@ void CInput::AdjustYaw( float speed, QAngle& viewangles )
 		float side = KeyState(&in_moveleft) - KeyState(&in_moveright);
 		float forward = KeyState(&in_forward) - KeyState(&in_back);
 
-		if ( side || forward )
+		int buttons = GetButtonBits(0);
+		bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
+		if ( bInteracting || cl_lockview.GetBool() || sv_lockview_force.GetBool() )
 		{
-			viewangles[YAW] = RAD2DEG(atan2(side, forward)) + g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ];
+			viewangles[YAW] = g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ];
+			cam_idealyaw.Revert();
 		}
-		if ( side || forward || KeyState (&in_right) || KeyState (&in_left) )
+		else
 		{
-			cam_idealyaw.SetValue( g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ] - viewangles[ YAW ] );
+#ifdef TF_CLIENT_DLL
+			if ( side && tf_mirrormode.GetBool() )
+			{
+				side = -side;
+			}
+#endif
+			if ( side || forward )
+			{
+				viewangles[YAW] = RAD2DEG(atan2(side, forward)) + g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ];
+			}
+			if ( side || forward || KeyState (&in_right) || KeyState (&in_left) )
+			{
+				cam_idealyaw.SetValue( g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ] - viewangles[ YAW ] );
+			}
 		}
 	}
 }
@@ -813,7 +829,10 @@ ComputeSideMove
 void CInput::ComputeSideMove( CUserCmd *cmd )
 {
 	// thirdperson platformer movement
-	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
+	int buttons = GetButtonBits(0);
+	bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) 
+		&& !bInteracting && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
 	{
 		// no sideways movement in this mode
 		return;
@@ -877,7 +896,10 @@ ComputeForwardMove
 void CInput::ComputeForwardMove( CUserCmd *cmd )
 {
 	// thirdperson platformer movement
-	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) )
+	int buttons = GetButtonBits(0);
+	bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
+	if ( CAM_IsThirdPerson() && ( thirdperson_platformer.GetInt() || sv_thirdperson_platformer_force.GetBool() ) 
+		&& !bInteracting && !cl_lockview.GetBool() && !sv_lockview_force.GetBool() )
 	{
 		// movement is always forward in this mode
 		float movement = KeyState(&in_forward)

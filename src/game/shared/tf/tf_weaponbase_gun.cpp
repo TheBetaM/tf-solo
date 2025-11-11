@@ -33,7 +33,15 @@
 	#include "c_tf_player.h"
 	#include "c_te_effect_dispatch.h"
 	#include "c_tf_gamestats.h"
+	#include "cam_thirdperson.h"
 
+extern ConVar cam_idealdist;
+extern ConVar cam_idealdistup;
+extern ConVar cam_idealdistright;
+extern ConVar sv_thirdperson_platformer_distright;
+extern ConVar sv_thirdperson_platformer_force;
+extern ConVar tf_mirrormode;
+extern ConVar cl_flipviewmodels;
 #endif
 
 //=============================================================================
@@ -1061,6 +1069,11 @@ void CTFWeaponBaseGun::ZoomIn( void )
 	pPlayer->m_Shared.AddCond( TF_COND_ZOOMED );
 
 #if defined( CLIENT_DLL )
+	if ( pPlayer->IsLocalPlayer() )
+	{
+		g_ThirdPersonManager.SetDesiredCameraOffset( Vector( cam_idealdist.GetFloat(), 0, cam_idealdistup.GetFloat() ) );
+	}
+
 	// Doing this allows us to show/hide the player viewmodel/localmodel
 	pPlayer->UpdateVisibility();
 #endif
@@ -1084,6 +1097,24 @@ void CTFWeaponBaseGun::ZoomOut( void )
 	}
 
 #if defined( CLIENT_DLL )
+	if ( pPlayer->IsLocalPlayer() )
+	{
+		float distright = cam_idealdistright.GetFloat();
+		if ( sv_thirdperson_platformer_force.GetBool() )
+		{
+			distright = sv_thirdperson_platformer_distright.GetFloat();
+		}
+		if ( tf_mirrormode.GetBool() )
+		{
+			distright = -distright;
+		}
+		if ( cl_flipviewmodels.GetBool() )
+		{
+			distright = -distright;
+		}
+		g_ThirdPersonManager.SetDesiredCameraOffset( Vector( cam_idealdist.GetFloat(), distright, cam_idealdistup.GetFloat() ) );
+	}
+
 	// Doing this allows us to show/hide the player viewmodel/localmodel
 	pPlayer->UpdateVisibility();
 #endif

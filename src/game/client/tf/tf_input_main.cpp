@@ -7,6 +7,7 @@
 #include "cbase.h"
 #include "kbutton.h"
 #include "input.h"
+#include "in_buttons.h"
 
 #include "c_tf_player.h"
 #include "cam_thirdperson.h"
@@ -18,6 +19,10 @@ extern ConVar		cl_yawspeed;
 extern kbutton_t	in_left;
 extern kbutton_t	in_right;
 extern CThirdPersonManager g_ThirdPersonManager;
+
+extern ConVar		cl_lockview;
+extern ConVar		sv_lockview_force;
+extern ConVar		tf_mirrormode;
 
 //-----------------------------------------------------------------------------
 // Purpose: TF Input interface
@@ -114,14 +119,33 @@ void CTFInput::AdjustYaw( float speed, QAngle& viewangles )
 		{
 			float side = KeyState(&in_moveleft) - KeyState(&in_moveright);
 			float forward = KeyState(&in_forward) - KeyState(&in_back);
-
-			if ( side || forward )
+				
+			int buttons = GetButtonBits(0);
+			bool bInteracting = (buttons & IN_ATTACK) || (buttons & IN_ATTACK2) || (buttons & IN_ATTACK3) || (buttons & IN_USE) || (buttons & IN_RELOAD);
+			CTFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
+			if ( pPlayer && pPlayer->IsUsingActionSlot() )
 			{
-				viewangles[YAW] = RAD2DEG(atan2(side, forward)) + g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ];
+				bInteracting = true;
 			}
-			if ( side || forward || KeyState (&in_right) || KeyState (&in_left) )
+			if ( bInteracting || cl_lockview.GetBool() || sv_lockview_force.GetBool() )
 			{
-				cam_idealyaw.SetValue( g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ] - viewangles[ YAW ] );
+				viewangles[YAW] = g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ];
+				cam_idealyaw.Revert();
+			}
+			else
+			{
+				if ( side && tf_mirrormode.GetBool() )
+				{
+					side = -side;
+				}
+				if ( side || forward )
+				{
+					viewangles[YAW] = RAD2DEG(atan2(side, forward)) + g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ];
+				}
+				if ( side || forward || KeyState (&in_right) || KeyState (&in_left) )
+				{
+					cam_idealyaw.SetValue( g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ] - viewangles[ YAW ] );
+				}
 			}
 		}
 	}
