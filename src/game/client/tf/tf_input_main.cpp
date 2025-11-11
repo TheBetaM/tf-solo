@@ -11,6 +11,7 @@
 
 #include "c_tf_player.h"
 #include "cam_thirdperson.h"
+#include "tf_shareddefs.h"
 
 extern ConVar		thirdperson_platformer;
 extern ConVar		sv_thirdperson_platformer_force;
@@ -23,6 +24,10 @@ extern CThirdPersonManager g_ThirdPersonManager;
 extern ConVar		cl_lockview;
 extern ConVar		sv_lockview_force;
 extern ConVar		tf_mirrormode;
+extern ConVar		fov_desired;
+
+ConVar tf_cam_altzoom( "tf_cam_altzoom", "1", FCVAR_ARCHIVE, "In thirdperson_platformer mode, hold alt-fire to zoom in." );
+ConVar tf_cam_altzoom_fov( "tf_cam_altzoom_fov", "50", FCVAR_ARCHIVE, "" );
 
 //-----------------------------------------------------------------------------
 // Purpose: TF Input interface
@@ -145,6 +150,72 @@ void CTFInput::AdjustYaw( float speed, QAngle& viewangles )
 				if ( side || forward || KeyState (&in_right) || KeyState (&in_left) )
 				{
 					cam_idealyaw.SetValue( g_ThirdPersonManager.GetCameraOffsetAngles()[ YAW ] - viewangles[ YAW ] );
+				}
+			}
+
+			if ( tf_cam_altzoom.GetBool() && pPlayer )
+			{
+				if ( (buttons & IN_ATTACK2) && pPlayer->GetFOV() == fov_desired.GetInt() )
+				{
+					C_TFWeaponBase* weapon = pPlayer->GetActiveTFWeapon();
+					if ( weapon )
+					{
+						bool bAllowZoom = false;
+						switch ( weapon->GetSlot() )
+						{
+							case TF_WPN_TYPE_PRIMARY:
+							case TF_WPN_TYPE_SECONDARY:
+							{
+								bAllowZoom = true;
+								break;
+							}
+							default:
+							{
+								break;
+							}
+						}
+						switch ( weapon->GetWeaponID() )
+						{
+							case TF_WEAPON_SNIPERRIFLE:
+							case TF_WEAPON_FLAMETHROWER:
+							case TF_WEAPON_MEDIGUN:
+							case TF_WEAPON_LUNCHBOX:
+							case TF_WEAPON_COMPOUND_BOW:
+							case TF_WEAPON_LASER_POINTER:
+							case TF_WEAPON_SODA_POPPER:
+							case TF_WEAPON_SNIPERRIFLE_DECAP:
+							case TF_WEAPON_MECHANICAL_ARM:
+							case TF_WEAPON_SHOTGUN_BUILDING_RESCUE:
+							case TF_WEAPON_SNIPERRIFLE_CLASSIC:
+							case TF_WEAPON_PARTICLE_CANNON:
+							case TF_WEAPON_CLEAVER:
+							case TF_WEAPON_ROCKETPACK:
+							case TF_WEAPON_FLAME_BALL:
+							case TF_WEAPON_CROSSBOW:
+							case TF_WEAPON_RAYGUN:
+							{
+								bAllowZoom = false;
+								break;
+							}
+							default:
+							{
+								break;
+							}
+						}
+						if ( pPlayer->IsPlayerClass( TF_CLASS_DEMOMAN ) || pPlayer->IsPlayerClass( TF_CLASS_SPY ) )
+						{
+							bAllowZoom = false;
+						}
+
+						if ( bAllowZoom )
+						{
+							pPlayer->SetFOV( pPlayer, tf_cam_altzoom_fov.GetInt() );
+						}
+					}
+				}
+				else if ( pPlayer->GetFOV() == tf_cam_altzoom_fov.GetInt() )
+				{
+					pPlayer->SetFOV( pPlayer, 0, 0.1f );
 				}
 			}
 		}

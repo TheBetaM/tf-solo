@@ -18,6 +18,7 @@
 #include "client_virtualreality.h"
 #include "sourcevr/isourcevirtualreality.h"
 #include "iinput.h"
+#include "cam_thirdperson.h"
 
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
@@ -35,6 +36,12 @@ ConVar cl_observercrosshair( "cl_observercrosshair", "1", FCVAR_ARCHIVE );
 
 extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
+extern ConVar sv_thirdperson_platformer_force;
+extern ConVar sv_thirdperson_platformer_distright;
+extern ConVar cl_flipviewmodels;
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_mirrormode;
+#endif // TF_CLIENT_DLL
 
 using namespace vgui;
 
@@ -214,6 +221,24 @@ void CHudCrosshair::GetDrawPosition ( float *pX, float *pY, bool *pbBehindCamera
 			::input->GetLockViewOffsets( lockx, locky );
 			x = 0.5f * screenWidth + ( lockx * screenWidth );
 			y = 0.5f * screenHeight + ( locky * screenHeight );
+		}
+		else if ( sv_thirdperson_platformer_force.GetBool() && g_ThirdPersonManager.IsOverridingThirdPerson() )
+		{
+			float offset = sv_thirdperson_platformer_distright.GetFloat();
+			if ( offset != 0 )
+			{
+				if ( tf_mirrormode.GetBool() )
+				{
+					offset = -offset;
+				}
+#ifdef TF_CLIENT_DLL
+				if ( cl_flipviewmodels.GetBool() )
+				{
+					offset = -offset;
+				}
+#endif // TF_CLIENT_DLL
+				x = 0.5f * screenWidth - (offset * 1.25f);
+			}
 		}
 	}
 
