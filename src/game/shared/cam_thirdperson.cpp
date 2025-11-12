@@ -20,6 +20,7 @@ static Vector CAM_HULL_MAX( CAM_HULL_OFFSET, CAM_HULL_OFFSET, CAM_HULL_OFFSET);
 
 
 extern const ConVar *sv_cheats;
+extern ConVar sv_thirdperson_platformer_force;
 
 void CAM_ToThirdPerson(void);
 void CAM_ToFirstPerson(void);
@@ -79,7 +80,7 @@ void CThirdPersonManager::Update( void )
 	}
 
 	// If cheats have been disabled, pull us back out of third-person view.
-	if ( sv_cheats && !sv_cheats->GetBool() && GameRules() && GameRules()->AllowThirdPersonCamera() == false )
+	if ( sv_cheats && !sv_cheats->GetBool() && GameRules() && GameRules()->AllowThirdPersonCamera() == false && !sv_thirdperson_platformer_force.GetBool() )
 	{
 		if ( (bool)input->CAM_IsThirdPerson() == true )
 		{
