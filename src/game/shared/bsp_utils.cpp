@@ -15,6 +15,7 @@
 #include "workshop/ugc_utils.h"
 #include "../public/zip_utils.h"
 #include "../public/zip_utils.cpp"
+#include "bspfile.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -405,28 +406,26 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	}
 	g_BspPackLock = true;
 
-	// load the bsppack dll
-	IBSPPack* libBSPPack = NULL;
-	CSysModule* pModule = g_pFullFileSystem->LoadModule("bsppack");
-	if (pModule)
+	// read the file
+	FileHandle_t file = g_pFullFileSystem->Open(pszInputMapFile, "rb");
+	if (!file)
 	{
-		CreateInterfaceFn BSPPackFactory = Sys_GetFactory(pModule);
-		if (BSPPackFactory)
-		{
-			libBSPPack = (IBSPPack*)BSPPackFactory(IBSPPACK_VERSION_STRING, NULL);
-		}
-	}
-	if (!libBSPPack)
-	{
-		Warning("BSP cache failed: Can't load bsppack library\n");
-		g_bspCacheJobsRunning--;
-		g_BspPackLock = false;
+		Warning("BSP cache failed: Can't open map file\n");
 		return false;
 	}
-
-	void* pakData;
-	int pakSize;
-	libBSPPack->GetPakFileLump(g_pFullFileSystem, pszInputMapFile, &pakData, &pakSize);
+	g_pFullFileSystem->Seek(file, 8 + (sizeof(lump_t) * LUMP_PAKFILE), FILESYSTEM_SEEK_HEAD);
+	lump_t lumpHeader;
+	g_pFullFileSystem->Read(&lumpHeader, sizeof(lump_t), file);
+	g_pFullFileSystem->Seek(file, lumpHeader.fileofs, FILESYSTEM_SEEK_HEAD);
+	byte* pakData = new unsigned char[lumpHeader.filelen];
+	int pakSize = lumpHeader.filelen;
+	if (pakSize == 0)
+	{
+		Warning("BSP cache failed: No files inside map\n");
+		return false;
+	}
+	g_pFullFileSystem->Read(pakData, pakSize, file);
+	g_pFullFileSystem->Close(file);
 
 	// Get file from lump
 	auto zip = IZip::CreateZip();
