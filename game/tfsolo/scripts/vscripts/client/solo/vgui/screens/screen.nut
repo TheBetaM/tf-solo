@@ -10,10 +10,6 @@ getroottable()[TFSOLO.Screens.EventTag] <- {
 			if (TFSOLO.Screens.Active == null)
 			{
 				printl("Spawning VGUI")
-				if (!IsInGame())
-				{
-					SendToConsole("stopsound")
-				}
 				TFSOLO.Screens.WorldMapSelect.Enter()
 			}
 		}

@@ -5,6 +5,7 @@ TFSOLO.Cutscene <- class
 {
 	function Enter()
 	{
+		Music.Stop()
 		TFSOLO.Cutscenes.Active = this
 		Coroutine = ::newthread(CutsceneRun)
 		TFSOLO.Screens.Cutscene.Enter()

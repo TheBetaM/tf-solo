@@ -693,6 +693,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	GetMMDashboard();
 	GetCompRanksTooltip();
+	engine->ClientCmd_Unrestricted("stopsound");
 }
 
 void ConfirmModProgressReset(bool bConfirmed, void* pContext)
@@ -1218,7 +1219,7 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 	{
 		if ( !m_bStabilizedInitialLayout )
 		{
-			PostMessage( this, new KeyValues( "MainMenuStabilized" ), 2.f );
+			PostMessage( this, new KeyValues( "MainMenuStabilized" ), 0.05f );
 		}
 
 		m_bStabilizedInitialLayout = true;
@@ -2187,6 +2188,21 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	else if (!Q_stricmp(command, "showmodachievements"))
 	{
 		engine->ClientCmd_Unrestricted( "openachievements" );
+	}
+	else if (FStrEq("create_server", command))
+	{
+		GetMMDashboard()->OnCreateServer();
+		return;
+	}
+	else if (FStrEq("open_campaigns", command))
+	{
+		GetMMDashboard()->OnOpenCampaigns();
+		return;
+	}
+	else if (FStrEq("open_solo", command))
+	{
+		GetMMDashboard()->OnPlayTraining();
+		return;
 	}
 	else
 	{

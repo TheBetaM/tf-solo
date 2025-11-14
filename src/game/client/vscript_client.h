@@ -105,6 +105,11 @@ public:
 		RunScriptHook("LevelShutdownPostEntity", NULL);
 	}
 
+	virtual void LevelDisconnect(void)
+	{
+		RunScriptHook("LevelDisconnect", NULL);
+	}
+
 	virtual void Update(float frametime)
 	{
 		if (g_pScriptVM)

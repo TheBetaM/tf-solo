@@ -15,5 +15,19 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
+
+	"category1a"
+	{
+		"Additional Credits"
+		{ CATEGORY }
+	}
+
+	"credit1a_1"
+	{
+		"Jaycie - Music"
+		"https://www.youtube.com/@Jaycie0"
+		{ BOOL }
+		{ "1" }
+	}
 	
 }

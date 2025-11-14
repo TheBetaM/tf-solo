@@ -30,6 +30,7 @@
 #include "tf_matchmaking_dashboard_mvm_criteria.h"
 #include "tf_statsummary.h"
 #include "vscript_client.h"
+#include "solo/tf_solo_panel.h"
 
 using namespace vgui;
 using namespace GCSDK;
@@ -100,7 +101,7 @@ Panel* GetBackgroundDimmer()
 			SetKeyBoardInputEnabled( false ); // This can never be true
 			SetVisible( true );
 			SetProportional( true );
-			SetBounds( 0, 0, g_pClientMode->GetViewport()->GetWide(), g_pClientMode->GetViewport()->GetTall() - YRES( 59 ) ); // Magically touch the top of the footer
+			SetBounds( 0, 0, g_pClientMode->GetViewport()->GetWide(), g_pClientMode->GetViewport()->GetTall() );//- YRES( 59 ) ); // Magically touch the top of the footer
 			SetZPos( 1000 );
 			Color black( 0, 0, 0, 255 );
 			SetDefaultColor( black, black );
@@ -410,7 +411,11 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	}
 	else if ( FStrEq( command, "quit" ) )
 	{
-		if ( engine->IsInGame() )
+		if ( GetSoloPanel()->IsVisible() )
+		{
+			GetSoloPanel()->SetVisible( false );
+		}
+		else if ( engine->IsInGame() )
 		{
 			PromptOrFireCommand( "disconnect" );
 		}
@@ -1320,8 +1325,8 @@ void CTFMatchmakingDashboard::UpdateDisconnectAndResume()
 {
 	bool bInGame = engine->IsInGame();
 
-	m_pResumeButton->SetVisible( bInGame && !BInEndOfMatch() );
-	m_pRestartButton->SetVisible( bInGame && !BInEndOfMatch() );
+	m_pResumeButton->SetVisible( bInGame && !BInEndOfMatch() && !GetSoloPanel()->IsVisible() );
+	m_pRestartButton->SetVisible( bInGame && !BInEndOfMatch() && !GetSoloPanel()->IsVisible() );
 
 	m_pTopBar->SetControlVisible( "DisconnectButton", bInGame );
 	m_pTopBar->SetControlVisible( "QuitButton", !bInGame );

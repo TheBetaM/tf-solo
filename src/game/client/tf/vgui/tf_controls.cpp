@@ -3696,7 +3696,8 @@ void CTFCustomMatchModeDialog::CreateControls()
 	{
 		m_TitleLabel->SetText( map->GetString("name") );
 	}
-	m_pListPanel->SetNumColumns( 4 );
+	int column = (ScreenWidth() - 40) / 256;
+	m_pListPanel->SetNumColumns( column );
 
 	CUtlVector<ModeOption> possibleModes;
 
@@ -4546,7 +4547,8 @@ void CTFCustomMatchMapDialog::CreateControls()
 	}
 
 	mapSort.Sort( TFCustomMatchMapSort );
-	m_pListPanel->SetNumColumns( 4 );
+	int column = (ScreenWidth() - 40) / 256;
+	m_pListPanel->SetNumColumns( column );
 
 	bool bFirstItem = false;
 
@@ -5451,6 +5453,16 @@ void CTFOOBEDialog::SaveValues()
 	if ( m_pDescription )
 	{
 		m_pDescription->WriteToConfig();
+	}
+
+	ConVarRef tf_oobe_modern_defaults( "tf_oobe_modern_defaults" );
+	if ( tf_oobe_modern_defaults.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults_off" );
 	}
 
 	ConVarRef tf_oobe_viewed( "tf_oobe_viewed" );

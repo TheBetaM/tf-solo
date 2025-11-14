@@ -93,6 +93,7 @@
 
 #include "hud_vote.h"
 #include "c_tf_notification.h"
+#include "vscript_client.h"
 
 #if !defined( _X360 ) && !defined( NO_STEAM )
 #include "steam/isteamtimeline.h"
@@ -106,6 +107,7 @@ extern ConVar cl_steamscreenshots;
 #endif
 
 extern ISoundEmitterSystemBase *soundemitterbase;
+extern CVScriptGameSystem g_VScriptGameSystem;
 
 static Color colorEyeballBossText( 134, 80, 172, 255 );
 static Color colorMerasmusText( 112, 176, 74, 255 );
@@ -1976,6 +1978,8 @@ void ClientModeTFNormal::Update()
 			pVar->Revert();
 
 			m_lastServerConnectTime = 0;
+
+			g_VScriptGameSystem.LevelDisconnect();
 		}
 	}
 	else

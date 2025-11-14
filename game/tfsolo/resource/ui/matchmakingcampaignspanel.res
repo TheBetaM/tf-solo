@@ -6,10 +6,10 @@
 	{
 		"fieldName"		"CampaignsPanel"
 		"xpos"			"-300"
-		"ypos"			"10"
+		"ypos"			"0"
 		"zpos"			"1001"
 		"wide"			"300"
-		"tall"			"f70"
+		"tall"			"f0"
 		"visible"		"1"
 		"proportionaltoparent"	"1"
 
@@ -25,7 +25,7 @@
 		"ypos"			"0"
 		"zpos"			"-1"
 		"wide"			"f0"
-		"tall"			"f-50"
+		"tall"			"f0"
 		"visible"		"1"
 		"PaintBackgroundType"	"2"
 		"border"		"MainMenuBGBorder"
@@ -36,7 +36,7 @@
 	{
 		"ControlName"		"Label"
 		"fieldName"		"Title"
-		"xpos"		"13"
+		"xpos"		"30"
 		"ypos"		"20"
 		"zpos"		"99"
 		"wide"		"f0"
@@ -50,99 +50,15 @@
 		"mouseinputenabled"	"0"
 	}
 
-	"InviteModeLabel"
-	{
-		"ControlName"		"Label"
-		"fieldName"		"InviteModeLabel"
-		"xpos"		"26"
-		"ypos"		"45"
-		"zpos"		"3"
-		"wide"		"208"
-		"tall"		"20"
-		"proportionaltoparent"	"1"
-		"labeltext"		"#TF_MM_InviteMode"
-		"textAlignment"	"west"
-		"font"			"HudFontSmallestBold"
-		"smallcheckimage"	"1"
-		"fgcolor_override"	"TanDark"
-
-		"sound_depressed"	"UI/buttonclickrelease.wav"	
-		"button_activation_type"	"1"
-	}
-
-	"InviteModeComboBox"
-	{
-		"fieldName"		"InviteModeComboBox"
-		"xpos"			"26"
-		"ypos"			"66"
-		"zpos"			"1"
-		"wide"			"200"
-		"tall"			"15"
-		"textAlignment"	"west"
-		"font"			"HudFontSmallestBold"
-		"keyboardinputenabled"	"0"
-
-		"editable"		"0"
-		"bgcolor_override"	"0 0 0 255"
-		"fgcolor_override"	"235 226 202 255"
-		"disabledFgColor_override" "235 226 202 255"
-		"disabledBgColor_override" "0 0 0 0"
-		"selectionColor_override" "0 0 0 0"
-		"selectionTextColor_override" "235 226 202 255"
-		"defaultSelectionBG2Color_override" "0 0 0 0"
-	}
-
-	"IgnorePartyInvites"
-	{
-		"ControlName"		"CvarToggleCheckButton"
-		"fieldName"		"IgnorePartyInvites"
-		"xpos"		"23"
-		"ypos"		"80"
-		"zpos"		"3"
-		"wide"		"208"
-		"tall"		"20"
-		"proportionaltoparent"	"1"
-		"labeltext"		"#TF_MM_IgnoreInvites"
-		"textAlignment"	"west"
-		"font"			"HudFontSmallestBold"
-		"smallcheckimage"	"1"
-
-		"sound_depressed"	"UI/buttonclickrelease.wav"	
-		"button_activation_type"	"1"
-
-		"cvar_name" "tf_party_ignore_invites"
-	}
-	
-	"UseSteamNetworkingButton"
-	{
-		"ControlName"		"CvarToggleCheckButton"
-		"fieldName"		"UseSteamNetworking"
-		"xpos"		"23"
-		"ypos"		"100"
-		"zpos"		"3"
-		"wide"		"208"
-		"tall"		"20"
-		"proportionaltoparent"	"1"
-		"labeltext"		"#Start_Server_SteamNetworking"
-		"textAlignment"	"west"
-		"font"			"HudFontSmallestBold"
-		"smallcheckimage"	"1"
-
-		"sound_depressed"	"UI/buttonclickrelease.wav"	
-		"button_activation_type"	"1"
-
-		"cvar_name" "sv_use_steam_networking"
-	}
-
 	"DataCenterContainer"
 	{
 		"ControlName"	"EditablePanel"
 		"fieldName"		"DataCenterContainer"
 		"xpos"			"rs1-10"
-		"ypos"			"200"
+		"ypos"			"50"
 		"zpos"			"100"
 		"wide"			"f37"
-		"tall"			"f220"
+		"tall"			"f120"
 		"autoResize"	"0"
 		"pinCorner"		"0"
 		"visible"		"1"

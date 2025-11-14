@@ -176,7 +176,7 @@ IncludeScript("client/solo/vgui/worldmaps/war_demo_soldier.nut")
 
 TFSOLO.WorldMapEventTag <- UniqueString()
 getroottable()[TFSOLO.WorldMapEventTag] <- {
-	OnScriptHook_LevelShutdownPostEntity = function(params)
+	OnScriptHook_LevelDisconnect = function(params)
 	{
 		if (TFSOLO.WorldMaps.Ingame)
 		{

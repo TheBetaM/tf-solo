@@ -775,6 +775,24 @@ void Script_VGUI_EmitSound( const char* file )
 	C_RecipientFilter filter;
 	C_BaseEntity::EmitSound( filter, -2, es ); //SOUND_FROM_UI_PANEL
 }
+void Script_VGUI_StopMusic( const char* file )
+{
+	C_BaseEntity::StopSound( -2, CHAN_AUTO, file );
+}
+void Script_VGUI_EmitMusic( const char* file )
+{
+	soundlevel_t iSoundlevel = SNDLVL_NONE;
+	EmitSound_t es;
+	es.m_nChannel = CHAN_AUTO;
+	es.m_flVolume = 1;
+	es.m_SoundLevel = iSoundlevel;
+	es.m_flSoundTime = gpGlobals->curtime;
+	es.m_bEmitCloseCaption = false;
+	es.m_pSoundName = file;
+
+	C_RecipientFilter filter;
+	C_BaseEntity::EmitSound( filter, -2, es ); //SOUND_FROM_UI_PANEL
+}
 
 bool Script_IsServer()
 {
@@ -1324,6 +1342,8 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySound, "VGUI_PlaySound", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_PlaySoundEntry, "VGUI_PlaySoundEntry", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_EmitSound, "EmitSound", "");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_StopMusic, "StopMusic", "");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_EmitMusic, "EmitMusic", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for the local player.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, DoIncludeScriptsDir, "IncludeScriptsDir", "Execute all scripts from a directory");
