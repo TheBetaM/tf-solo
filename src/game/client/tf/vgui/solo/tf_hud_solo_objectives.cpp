@@ -60,11 +60,13 @@ void CTFHUDSoloObjectives::ReinitializeEverything()
 {
 	ClearAllScriptPanels();
 
+	/*
 	while (vgui::ipanel()->GetChildCount(GetVPanel()))
 	{
 		VPANEL child = vgui::ipanel()->GetChild(GetVPanel(), 0);
 		vgui::ipanel()->DeletePanel(child);
 	}
+	*/
 }
 
 void CTFHUDSoloObjectives::ApplySchemeSettings( IScheme *pScheme )
@@ -121,6 +123,25 @@ void CTFHUDSoloObjectives::FireGameEvent( IGameEvent * pEvent )
 		ResetResFile();
 		RunScriptHook( "solohud_init", NULL );
 	}
+}
+
+void CTFHUDSoloObjectives::OnCommand( const char* pCommand )
+{
+	if ( ScriptHookEnabled( "solohud_command" ) )
+	{
+		IScriptVM* pVM = g_pScriptVM;
+		ScriptVariant_t varTable;
+		pVM->CreateTable( varTable );
+		pVM->SetValue( varTable, "command", pCommand );
+		pVM->SetValue( varTable, "early_out", false );
+		if ( RunScriptHook( "solohud_command", varTable ) )
+		{
+			if ( pVM->Get<bool>( varTable, "early_out" ) )
+				return;
+		}
+	}
+
+	BaseClass::OnCommand( pCommand );
 }
 
 void CTFHUDSoloObjectives::SetResFile(const char* file)

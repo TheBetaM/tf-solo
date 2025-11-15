@@ -389,6 +389,12 @@ DEFINE_SCRIPTFUNC(SetAutoDelete, "")
 DEFINE_SCRIPTFUNC(IsAutoDeleteSet, "")
 DEFINE_SCRIPTFUNC(DeletePanel, "")
 
+DEFINE_SCRIPTFUNC(MakePopup, "")
+DEFINE_SCRIPTFUNC(MoveToFront, "")
+DEFINE_SCRIPTFUNC(SetKeyBoardInputEnabled, "")
+DEFINE_SCRIPTFUNC(SetMouseInputEnabled, "")
+DEFINE_SCRIPTFUNC(RequestFocus, "")
+
 DEFINE_SCRIPTFUNC(InvalidateLayout, "")
 
 

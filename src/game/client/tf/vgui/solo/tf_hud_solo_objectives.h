@@ -26,6 +26,7 @@ public:
 	virtual void Paint() OVERRIDE;
 
 	virtual void FireGameEvent( IGameEvent *pEvent ) OVERRIDE;
+	virtual void OnCommand( const char* pCommand ) OVERRIDE;
 
 	void ReinitializeEverything();
 
