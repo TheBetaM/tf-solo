@@ -80,13 +80,14 @@ sv_thirdperson_platformer_force
 - Fixed players/bots firing weapons never affecting bot behavior in Sudden Death/Arena
 - Nav mesh blocked state now also updates after tf_logic_cp_timer countdown ends
 ## VScript updates
-- Added Client VScript functionality
+- Added Client VScript functionality for main menu UI and ingame HUD elements
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 
 ItemDefIDExists(int), ItemDefName(int), ItemDefID(string)  
-- Added script hooks: team_round_respawn, team_round_cleanup, team_round_activate
+- Added server script hooks: team_round_respawn, team_round_cleanup, team_round_activate, OnClientScriptTable
 - Global scope: Added SetBotPresetsFile(string), FileExists(string), FileToKeyValues(string), 
 SetSoloObjectivesResFile(string), SetRoundToPlayNext(string), LocalizeString(string), 
-ScriptTableToFile(table, string), FileToScriptTable(string)
+ScriptTableToFile(table, string), FileToScriptTable(string), BroadcastTable(table), 
+BroadcastTablePlayer(int, table)
 - Clientside/Singleplayer dynamic asset loading from map files: BSP_CacheStartSingle, BSP_CacheStartArray, 
 BSP_CacheStartRemap, BSP_GetCacheJobsRunning, BSP_CacheRemove, BSP_CacheRemoveArray, BSP_CacheClear  
 - KeyValues: Added GetKey(string, bool), GetKeyName/GetName, GetInt/GetFloat/GetBool/GetString,
@@ -107,6 +108,7 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Righteous Bison  
 -- Allow the projectile to deal damage every tick, instead of every 2 ticks  
 - B.A.S.E. Jumper  
+-- Reverted to its original functionality:  
 -- Restored re-deploy in mid-air  
 -- Restored air control to before the 50% decrease   
   
@@ -117,7 +119,7 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Manmelter  
 -- Removed flaming particle effect  
 - Panic Attack  
--- Reverted the weapon to its original functionality/stats  
+-- Reverted to its original functionality/older stats:  
 -- +50% reload speed  
 -- +30% firing speed  
 - Gas Passer  

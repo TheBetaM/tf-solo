@@ -97,6 +97,7 @@ vscript_convar_allowlist
     sv_maxspeed                                                       allowed
     sv_maxvelocity                                                    allowed
     sv_noclipaccelerate                                               allowed
+    sv_pausable                                                       allowed
     sv_proj_stunball_damage                                           allowed
     sv_rollangle                                                      allowed
     sv_rollspeed                                                      allowed

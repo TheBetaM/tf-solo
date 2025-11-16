@@ -3377,6 +3377,14 @@ void MessageWriteByte( int iValue)
 	g_pMsgBuffer->WriteByte( iValue );
 }
 
+void MessageWriteBytes( const void* pBuf, int iSize )
+{
+	if (!g_pMsgBuffer)
+		Error( "WRITE_BYTES called with no active message\n" );
+
+	g_pMsgBuffer->WriteBytes( pBuf, iSize );
+}
+
 void MessageWriteChar( int iValue)
 {
 	if (!g_pMsgBuffer)

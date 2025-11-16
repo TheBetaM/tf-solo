@@ -2247,7 +2247,6 @@ void DoIncludeScriptsDir( const char* pszScriptDir, HSCRIPT hScope )
 {
 	FileFindHandle_t hFind = NULL;
 	const char* pszSearch = CFmtStr( "%s%s/*.nut", "scripts/vscripts/", pszScriptDir );
-	const char* pszRootFolder = CFmtStr( "%s/", pszScriptDir );
 	char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
 	while ( szFileName )
 	{
@@ -2856,6 +2855,46 @@ static void Script_AwardAchievement( int iPlayerIndex, int achID, int achCount )
 
 }
 
+static void Script_BroadcastTable( HSCRIPT hTable )
+{
+	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, "MSG", hTable );
+	CUtlBuffer buffer;
+	hKV->WriteAsBinary( buffer );
+	int size = buffer.TellPut();
+
+	CReliableBroadcastRecipientFilter filter;
+	UserMessageBegin( filter, "VScriptMessage" );
+	WRITE_BYTES( buffer.Base(), size );
+	MessageEnd();
+}
+
+static void Script_BroadcastTablePlayer( int iPlayerIndex, HSCRIPT hTable )
+{
+	if ( iPlayerIndex < 0 )
+	{
+		DevWarning( "BroadcastTablePlayer called with invalid player index!\n" );
+		return;
+	}
+
+	CBasePlayer* pPlayer = NULL;
+	pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
+	if ( !pPlayer || pPlayer->IsFakeClient() )
+	{
+		DevWarning( "BroadcastTablePlayer: Not valid player!\n" );
+		return;
+	}
+
+	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, "MSG", hTable );
+	CUtlBuffer buffer;
+	hKV->WriteAsBinary( buffer );
+	int size = buffer.TellPut();
+
+	CSingleUserRecipientFilter filter( pPlayer );
+	UserMessageBegin( filter, "VScriptMessage" );
+	WRITE_BYTES( buffer.Base(), size );
+	MessageEnd();
+}
+
 #ifdef TF_DLL
 static bool Script_IsSubscribedToMap( const char* pszLongMapID )
 {
@@ -3090,6 +3129,8 @@ bool VScriptServerInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for a player.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BroadcastTable, "BroadcastTable", "Send a table to all players to recieve in client VScript with the OnServerScriptTable hook.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BroadcastTablePlayer, "BroadcastTablePlayer", "Send a table to a specific player (unreliable).");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsSubscribedToMap, "IsSubscribedToMap", "Check workshop map ID if it's downloaded. (Pass the ID as a string)");
 				ScriptRegisterFunctionNamed(g_pScriptVM, DoIncludeScriptsDir, "IncludeScriptsDir", "Execute all scripts from a directory");
 

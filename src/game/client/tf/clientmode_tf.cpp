@@ -94,6 +94,7 @@
 #include "hud_vote.h"
 #include "c_tf_notification.h"
 #include "vscript_client.h"
+#include "vscript_utils.h"
 
 #if !defined( _X360 ) && !defined( NO_STEAM )
 #include "steam/isteamtimeline.h"
@@ -2531,6 +2532,24 @@ USER_MESSAGE( BuiltObject )
 USER_MESSAGE( SdkRequestEquipment )
 {
 	GTFGCClientSystem()->ServerRequestEquipment();
+}
+
+USER_MESSAGE( VScriptMessage )
+{
+	if ( ScriptHookEnabled( "OnServerScriptTable" ) )
+	{
+		CUtlBuffer buffer;
+		int size = msg.GetNumBytesLeft();
+		buffer.EnsureCapacity( size );
+		char* pBuffer = new char[size];
+		msg.ReadBytes( pBuffer, size );
+		buffer.Put( pBuffer, size );
+		buffer.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
+		KeyValues* pKV = new KeyValues( "MSG" );
+		pKV->ReadAsBinary( buffer );
+		HSCRIPT hScriptInstance = ScriptTableFromKeyValues( g_pScriptVM, pKV );
+		RunScriptHook( "OnServerScriptTable", hScriptInstance );
+	}
 }
 
 float PlaySoundEntry( const char* pszSoundEntryName )

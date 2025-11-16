@@ -130,6 +130,7 @@
 	#include "eventqueue.h"
 	#include "func_respawnroom.h"
 	#include "func_flag_alert.h"
+	#include "vscript_utils.h"
 #endif
 
 #include "tf_mann_vs_machine_stats.h"
@@ -15796,7 +15797,15 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 	char const *pszCommand = pKeyValues->GetName();
 	if ( pszCommand && pszCommand[0] )
 	{
-		if ( FStrEq( pszCommand, "FreezeCamTaunt" ) )
+		if ( FStrEq( pszCommand, "ScriptTable" ) )
+		{
+			if ( ScriptHookEnabled( "OnClientScriptTable" ) )
+			{
+				HSCRIPT hScriptInstance = ScriptTableFromKeyValues( g_pScriptVM, pKeyValues );
+				RunScriptHook( "OnClientScriptTable", hScriptInstance );
+			}
+		}
+		else if ( FStrEq( pszCommand, "FreezeCamTaunt" ) )
 		{
 			CTFPlayer *pAchiever = ToTFPlayer( UTIL_PlayerByUserId( pKeyValues->GetInt( "achiever" ) ) );
 			if ( pAchiever )

@@ -134,7 +134,6 @@ void DoIncludeScriptsDir( const char* pszScriptDir, HSCRIPT hScope )
 {
 	FileFindHandle_t hFind = NULL;
 	const char* pszSearch = CFmtStr( "%s%s/*.nut", "scripts/vscripts/", pszScriptDir );
-	const char* pszRootFolder = CFmtStr( "%s/", pszScriptDir );
 	char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
 	while ( szFileName )
 	{
@@ -1124,6 +1123,23 @@ static void Script_AwardAchievement( int achID, int achCount )
 	pAchievementMgr->OnAchievementEvent( achID, achCount );
 }
 
+static void Script_ServerCmd( const char* pszCmd )
+{
+	engine->ServerCmd( pszCmd, true );
+}
+
+static void Script_ServerCmdTable( HSCRIPT hTable )
+{
+	KeyValues* hKV = ScriptTableToKeyValues(g_pScriptVM, "ScriptTable", hTable);
+	engine->ServerCmdKeyValues( hKV );
+}
+
+static void Script_ServerCmdKeyValues( const char* pszName, HSCRIPT hTable )
+{
+	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, pszName, hTable );
+	engine->ServerCmdKeyValues( hKV );
+}
+
 #ifdef TF_CLIENT_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -1346,6 +1362,9 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_VGUI_EmitMusic, "EmitMusic", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for the local player.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ServerCmd, "ServerCmd", "Send a server command.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ServerCmdTable, "ServerCmdTable", "Send a table as a KeyValues command to pass-through to server VScript using the OnClientScriptTable hook.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ServerCmdKeyValues, "ServerCmdKeyValues", "Send a table as a KeyValues command.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, DoIncludeScriptsDir, "IncludeScriptsDir", "Execute all scripts from a directory");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");

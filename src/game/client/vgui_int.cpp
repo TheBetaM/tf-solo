@@ -251,7 +251,7 @@ void VGui_Shutdown()
 	vgui::ivgui()->RunFrame();
 }
 
-static ConVar cl_showpausedimage( "cl_showpausedimage", "1", 0, "Show the 'Paused' image when game is paused." );
+static ConVar cl_showpausedimage( "cl_showpausedimage", "0", 0, "Show the 'Paused' image when game is paused." );
 
 //-----------------------------------------------------------------------------
 // Things to do before rendering vgui stuff...
