@@ -1,3 +1,12 @@
+/*
+Client UI access through:
+- SoloPanel - Scenarios menu
+- SoloHUD - Ingame HUD overlay layer, both non-interactive and interactive
+- MainMenu - Main/Pause menu
+- MainDashboard - Currently not setup for anything beyond what EditablePanel can do
+*/
+
+
 function IncludeScript( name, scope = null )
 {
 	if ( scope == null )

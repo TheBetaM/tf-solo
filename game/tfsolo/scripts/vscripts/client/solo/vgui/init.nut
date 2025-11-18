@@ -11,6 +11,7 @@ IncludeScript("client/solo/vgui/cutscenes/cutscene.nut")
 IncludeScript("client/solo/vgui/worldmaps/worldmap.nut")
 IncludeScript("client/solo/vgui/missionstart.nut")
 IncludeScript("client/solo/vgui/hud/hudinit.nut")
+IncludeScript("client/solo/vgui/mainmenu/mainmenu.nut")
 
 TFSOLO.VguiEventTag <- UniqueString()
 getroottable()[TFSOLO.VguiEventTag] <- {

@@ -29,6 +29,7 @@
 #include "store/tf_store.h"
 #include "tf_matchmaking_dashboard.h"
 #include "tf_controls.h"
+#include "vscript_client.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -328,6 +329,7 @@ void CCharacterInfoPanel::OnCommand( const char *command )
 		if ( bAtClosePanel || bAtBaseLoadoutPage )
 		{
 			Close();
+			RunScriptHook( "EconUIClosed", NULL );
 		}
 		// In the item selection panel?
 		else if ( bIsInSelectionPanel )
@@ -510,6 +512,7 @@ void CCharacterInfoPanel::CloseEconUI( void )
 	{
 		ShowPanel( false );
 		NotifyListenersOfCloseEvent();
+		RunScriptHook( "EconUIClosed", NULL );
 	}
 }
 

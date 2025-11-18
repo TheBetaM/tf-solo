@@ -250,6 +250,8 @@ public:
 	void ServerRequestEquipment();
 	void LocalInventoryChanged();
 
+	bool m_bFirstBoot;
+
 protected:
 
 	// CGCClientSystem

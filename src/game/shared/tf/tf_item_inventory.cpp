@@ -2421,7 +2421,8 @@ void CTFInventoryManager::LoadSaveData()
 	if (!save->LoadFromFile(g_pFullFileSystem, path, "GAME"))
 	{
 		Msg("Unable to parse solo save data into keyvalues.\n");
-		engine->ClientCmd_Unrestricted("clear_loadout\n");
+		//engine->ClientCmd_Unrestricted("clear_loadout\n");
+		GTFGCClientSystem()->m_bFirstBoot = true;
 	}
 	else
 	{
@@ -2456,7 +2457,7 @@ void CTFInventoryManager::ResetSaveData()
 	g_VScriptGameSystem.Reload();
 	WriteSaveData();
 	LoadSaveData();
-	engine->ClientCmd_Unrestricted("clear_loadout\n");
+	engine->ClientCmd_Unrestricted("reset_loadout\n");
 }
 
 CON_COMMAND(tfsolo_save, "Save mod progress.", FCVAR_GAME)

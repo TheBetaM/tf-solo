@@ -37,6 +37,7 @@ public:
 
 	int		AddCarriedItem( CEconItemView *pItem );
 	void	ClearCarriedItems( void );
+	bool	AutoAddPlayerCarriedItems( int iClass );
 
 	void	PlayVCD( const char *pszVCD, const char *pszWeaponEntityRequired = NULL, bool bLoopVCD = true, bool bFileNameOnly = true );
 

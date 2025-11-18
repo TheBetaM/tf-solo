@@ -810,6 +810,18 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 	// We were successful, clear backoff timers
 	//state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_InventoryReceived;
+
+	if ( m_bFirstBoot )
+	{
+		m_bFirstBoot = false;
+		CTFPlayerInventory* pInventory = TFInventoryManager()->GetInventoryForPlayer( userSteamID );
+		if ( pInventory )
+		{
+			pInventory->SaveLocalLoadout( true, true );
+			pInventory->LoadLocalLoadout();
+		}
+	}
+	RunScriptHook( "PostInventoryReceived", NULL );
 }
 
 void CTFGCClientSystem::SDK_SelectItemsToSendToServer( CMsgAuthorizeServerItemRetrieval* pMsg, CGCClientSharedObjectCache* pSOCache )

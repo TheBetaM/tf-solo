@@ -10,10 +10,10 @@ TFSOLO.InitSaveData <- function()
 	
 	// Start with 100 credits.
 	kv.SetInt("Credits", 100)
-	// Start without base game weapons, taunts and cosmetics. Unlock the ability to equip them in the Armory.
+	// Start without base game weapons. Unlock the ability to equip them in the Armory.
 	genericKV.SetInt("BaseGameWeapons", 0)
-	genericKV.SetInt("BaseGameTaunts", 0)
-	genericKV.SetInt("BaseGameCosmetics", 0)
+	genericKV.SetInt("BaseGameTaunts", 1)
+	genericKV.SetInt("BaseGameCosmetics", 1)
 }
 
 TFSOLO.AddCredits <- function(amount)

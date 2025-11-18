@@ -1142,6 +1142,44 @@ void CTFPlayerModelPanel::ClearCarriedItems( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+bool CTFPlayerModelPanel::AutoAddPlayerCarriedItems( int iClass )
+{
+	static CSchemaAttributeDefHandle pAttrDef_DisableFancyLoadoutAnim("disable fancy class select anim");
+	bool bCanUseFancyClassSelectAnimation = true;
+
+	//static CSchemaAttributeDefHandle pAttrDef_ClassSelectOverrideVCD("class select override vcd");
+	//CAttribute_String attrClassSelectOverrideVCD;
+
+	for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
+	{
+		CEconItemView* pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i );
+		if ( pItemData && pItemData->IsValid() )
+		{
+			AddCarriedItem( pItemData );
+
+			// Certain items have different shapes and would interfere with our class select animations.
+			bCanUseFancyClassSelectAnimation = bCanUseFancyClassSelectAnimation
+				&& !pItemData->FindAttribute( pAttrDef_DisableFancyLoadoutAnim );
+
+			// Some items want to override the class select VCD
+			/*
+			if (pItemData->FindAttribute(pAttrDef_ClassSelectOverrideVCD, &attrClassSelectOverrideVCD))
+			{
+				const char* pszClassSelectOverrideVCD = attrClassSelectOverrideVCD.value().c_str();
+				if (pszClassSelectOverrideVCD && *pszClassSelectOverrideVCD)
+				{
+					pszVCD = pszClassSelectOverrideVCD;
+				}
+			}
+			*/
+		}
+	}
+	return bCanUseFancyClassSelectAnimation;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::RemoveAdditionalModels( void )
 {
 	ClearMergeMDLs();

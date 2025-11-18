@@ -29,6 +29,8 @@
 #include "quest_log_panel.h"
 #include "local_steam_shared_object_listener.h"
 #include "tf_vgui_video.h"
+#include "vscript_client.h"
+#include "vscript_utils.h"
 
 
 #include "mute_player_dialog.h"
@@ -126,6 +128,7 @@ public:
 	MESSAGE_FUNC( OnUpdateMenu, "UpdateMenu" );
 	MESSAGE_FUNC_PARAMS( OnConfirm, "ConfirmDlgResult", data );
 	MESSAGE_FUNC( OnMainMenuStabilized, "MainMenuStabilized" );
+	MESSAGE_FUNC( OnModProgressResetComplete, "ModProgressResetComplete" );
 
 	void		ScheduleTrainingCheck( bool bWasInTraining ) { m_flCheckTrainingAt = (engine->Time() + 1.5); m_bWasInTraining = bWasInTraining; }
 	void		ScheduleItemCheck( void ) { m_flCheckUnclaimedItems = (engine->Time() + 1.5); }
@@ -142,6 +145,18 @@ public:
 
 	void UpdateRankPanelType();
 
+	void ClearAllScriptPanels();
+	void HideMainTooltip();
+	void RunAnimationScript(const char* pszScript, bool bCanBeCancelled);
+	virtual HSCRIPT CreatePanel(HSCRIPT hTable, const char* hParent);
+	virtual HSCRIPT CreatePanelRoot(HSCRIPT hTable);
+	void ApplyPanelSettings(HSCRIPT hPanelHandle, HSCRIPT hTable);
+	void SetTooltip(HSCRIPT hPanelHandle, const char* tip);
+	virtual HSCRIPT CreatePanelInternal(HSCRIPT hTable, Panel* hParent);
+	virtual HSCRIPT FindPanelRoot(const char* hPanel);
+	virtual HSCRIPT FindPanel(HSCRIPT hPanelRoot, const char* hPanel);
+	virtual void AddActionSignalTargetForPanel(HSCRIPT hPanel);
+	virtual void DeleteSubPanel(const char* hPanel);
 
 protected:
 	virtual void PaintTraverse( bool Repaint, bool allowForce = true ) OVERRIDE;
@@ -253,6 +268,15 @@ private:
 	vgui::Menu*		m_pRankTypeMenu = NULL;
 
 	CTFVideoPanel*  m_pTFBackgroundVideo;
+
+	struct ScriptPanelData
+	{
+		HSCRIPT m_Handle;
+		Panel* m_Panel;
+		bool m_RootChild;
+	};
+
+	CUtlVector< ScriptPanelData > m_scriptPanels;
 
 	CPanelAnimationVarAliasType( int, m_iButtonXOffset, "button_x_offset", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iButtonY, "button_y", "0", "proportional_int" );

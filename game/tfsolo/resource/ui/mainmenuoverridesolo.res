@@ -211,7 +211,7 @@
 		// "ControlName"	"ImagePanel"
 		"fieldName"		"TFCharacterImage"
 		"xpos"			"c-300"
-		"ypos"			"-80"
+		"ypos"			"-8000"
 		"zpos"			"-98"
 		"wide"			"600"
 		"tall"			"600"
@@ -221,30 +221,29 @@
 		"mouseinputenabled"	"0"
 		"keyboardinputenabled" "0"
 	}
-	"VideoPanel"
-	{
-		"ControlName"	"CTFVideoPanel"
-		"fieldName"		"VideoPanel"
-		"xpos"			"cs-0.5"
-		"ypos"			"0"//"26"
-		"zpos"			"-99"
-		"wide"			"f0"
-		"tall"			"f0"//"f84"
-		"proportionaltoparent"	"1"
-		"loop"			"1"
-		"visible"		"1"
-		"enabled"		"1"
-		"mouseinputenabled"	"0"
-		"keyboardinputenabled" "0"
-		//"blackbg"		"1"
-		"ignoreaudio"	"1"
-		"stretchvideo"	"1"
-		"forceloop"		"1"
-		"clips"
-		{
-			"media/tfsolo_menu_test1" "1"
-		}
-	}
+	//"VideoPanel"
+	//{
+	//	"ControlName"	"CTFVideoPanel"
+	//	"fieldName"		"VideoPanel"
+	//	"xpos"			"cs-0.5"
+	//	"ypos"			"0"//"26"
+	//	"zpos"			"-99"
+	//	"wide"			"f0"
+	//	"tall"			"f0"//"f84"
+	//	"proportionaltoparent"	"1"
+	//	"loop"			"1"
+	//	"visible"		"0"
+	//	"enabled"		"0"
+	//	"mouseinputenabled"	"0"
+	//	"keyboardinputenabled" "0"
+	//	"ignoreaudio"	"1"
+	//	"stretchvideo"	"1"
+	//	"forceloop"		"1"
+	//	"clips"
+	//	{
+	//		"media/tfsolo_menu_test1" "1"
+	//	}
+	//}
 
 	"RankModelPanel"
 	{

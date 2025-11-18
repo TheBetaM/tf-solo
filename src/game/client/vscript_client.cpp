@@ -1140,6 +1140,15 @@ static void Script_ServerCmdKeyValues( const char* pszName, HSCRIPT hTable )
 	engine->ServerCmdKeyValues( hKV );
 }
 
+int Script_ScreenWidth()
+{
+	return ScreenWidth();
+}
+int Script_ScreenHeight()
+{
+	return ScreenHeight();
+}
+
 #ifdef TF_CLIENT_DLL
 // ----------------------------------------------------------------------------
 // Solo access
@@ -1365,6 +1374,8 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ServerCmd, "ServerCmd", "Send a server command.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ServerCmdTable, "ServerCmdTable", "Send a table as a KeyValues command to pass-through to server VScript using the OnClientScriptTable hook.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ServerCmdKeyValues, "ServerCmdKeyValues", "Send a table as a KeyValues command.");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ScreenWidth, "ScreenWidth", "");
+				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ScreenHeight, "ScreenHeight", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, DoIncludeScriptsDir, "IncludeScriptsDir", "Execute all scripts from a directory");
 
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");

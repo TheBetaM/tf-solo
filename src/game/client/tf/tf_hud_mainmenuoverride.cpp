@@ -64,6 +64,7 @@
 #include "vscript_client.h"
 #include "vgui/solo/tf_solo_panel.h"
 #include "tf_vgui_video.h"
+#include "tf_playermodelpanel.h"
 
 
 #include "c_tf_gamestats.h"
@@ -704,7 +705,7 @@ void ConfirmModProgressReset(bool bConfirmed, void* pContext)
 		IViewPortPanel* pMMOverride = (gViewPortInterface->FindPanelByName(PANEL_MAINMENUOVERRIDE));
 		if (pMMOverride)
 		{
-			((CHudMainMenuOverride*)pMMOverride)->OnMainMenuStabilized();
+			((CHudMainMenuOverride*)pMMOverride)->PostMessage( (CHudMainMenuOverride*)pMMOverride, new KeyValues("ModProgressResetComplete"), 0.1f );
 		}
 	}
 }
@@ -1231,8 +1232,8 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 
 void CHudMainMenuOverride::OnMainMenuStabilized()
 {
-	g_pScriptVM->RegisterInstance(this, "MainMenu");
-	g_pScriptVM->RegisterInstance(GetMMDashboard(), "MainDashboard");
+	g_pScriptVM->RegisterInstance( this, "MainMenu" );
+	g_pScriptVM->RegisterInstance( GetMMDashboard(), "MainDashboard" );
 	IGameEvent *event = gameeventmanager->CreateEvent( "mainmenu_stabilized" );
 	if ( event )
 	{
@@ -1246,6 +1247,15 @@ void CHudMainMenuOverride::OnMainMenuStabilized()
 	{
 		tf_oobe_viewed.SetValue( 1 );
 		engine->ClientCmd_Unrestricted( "opentf2oobe" );
+	}
+}
+
+void CHudMainMenuOverride::OnModProgressResetComplete()
+{
+	OnMainMenuStabilized();
+	if ( steamapicontext != NULL && steamapicontext->SteamUser() != NULL && steamapicontext->SteamUser()->BLoggedOn() )
+	{
+		RunScriptHook( "PostInventoryReceived", NULL );
 	}
 }
 
@@ -2572,10 +2582,309 @@ void CMainMenuToolTip::SetText(const char *pszText)
 	}
 }
 
+void CHudMainMenuOverride::HideMainTooltip()
+{
+	m_pToolTip->HideTooltip();
+}
+
+void CHudMainMenuOverride::RunAnimationScript( const char* pszScript, bool bCanBeCancelled )
+{
+	g_pClientMode->GetViewportAnimationController()->RunScript( pszScript, this, bCanBeCancelled );
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Reload the .res file
 //-----------------------------------------------------------------------------
 
 BEGIN_SCRIPTDESC_ROOT(CHudMainMenuOverride, SCRIPT_SINGLETON "Used to access the main menu interface")
 	DEFINE_SCRIPTFUNC(Reset, "")
+	DEFINE_SCRIPTFUNC(CreatePanel, "")
+	DEFINE_SCRIPTFUNC(CreatePanelRoot, "")
+	DEFINE_SCRIPTFUNC(DeleteSubPanel, "")
+	DEFINE_SCRIPTFUNC(ClearAllScriptPanels, "")
+	DEFINE_SCRIPTFUNC(RunAnimationScript, "")
+	DEFINE_SCRIPTFUNC(HideMainTooltip, "")
+	DEFINE_SCRIPTFUNC(FindPanelRoot, "")
+	DEFINE_SCRIPTFUNC(FindPanel, "")
+	DEFINE_SCRIPTFUNC(AddActionSignalTargetForPanel, "")
+	DEFINE_SCRIPTFUNC(ApplyPanelSettings, "")
+	DEFINE_SCRIPTFUNC(SetTooltip, "")
 END_SCRIPTDESC();
+
+void CHudMainMenuOverride::ClearAllScriptPanels()
+{
+	FOR_EACH_VEC( m_scriptPanels, pIter )
+	{
+		ScriptPanelData item = m_scriptPanels[pIter];
+		g_pScriptVM->RemoveInstance( item.m_Handle );
+		if ( !item.m_RootChild )
+		{
+			item.m_Panel->SetAutoDelete( true );
+		}
+	}
+	FOR_EACH_VEC( m_scriptPanels, pIter )
+	{
+		ScriptPanelData item = m_scriptPanels[pIter];
+		if ( item.m_RootChild )
+		{
+			item.m_Panel->DeletePanel();
+		}
+	}
+	m_scriptPanels.Purge();
+}
+
+void CHudMainMenuOverride::DeleteSubPanel( const char* hPanel )
+{
+	FOR_EACH_VEC( m_scriptPanels, pIter )
+	{
+		ScriptPanelData item = m_scriptPanels[pIter];
+		if ( FStrEq( item.m_Panel->GetName(), hPanel ) )
+		{
+			g_pScriptVM->RemoveInstance( item.m_Handle );
+			item.m_Panel->DeletePanel();
+			return;
+		}
+	}
+}
+
+HSCRIPT CHudMainMenuOverride::CreatePanel( HSCRIPT hTable, const char* hParentTarget )
+{
+	FOR_EACH_VEC( m_scriptPanels, pIter )
+	{
+		ScriptPanelData item = m_scriptPanels[pIter];
+		if ( FStrEq( item.m_Panel->GetName(), hParentTarget ) )
+		{
+			return CreatePanelInternal( hTable, item.m_Panel );
+		}
+	}
+	return NULL;
+}
+
+HSCRIPT CHudMainMenuOverride::CreatePanelRoot( HSCRIPT hTable )
+{
+	return CreatePanelInternal(hTable, NULL);
+}
+
+HSCRIPT CHudMainMenuOverride::FindPanelRoot( const char* hTarget )
+{
+	Panel* pPanel = FindChildByName( hTarget, true );
+	if (pPanel)
+	{
+		return PanelToScriptHandle( pPanel );
+	}
+	return NULL;
+}
+HSCRIPT CHudMainMenuOverride::FindPanel( HSCRIPT hPanelRootHandle, const char* hTarget )
+{
+	auto hPanelRoot = (Panel*)g_pScriptVM->GetInstanceValue( hPanelRootHandle, GetScriptDescForClass(Panel) );
+	if ( hPanelRoot )
+	{
+		Panel* pPanel = hPanelRoot->FindChildByName( hTarget, true );
+		if ( pPanel )
+		{
+			return PanelToScriptHandle( pPanel );
+		}
+	}
+	return NULL;
+}
+void CHudMainMenuOverride::AddActionSignalTargetForPanel( HSCRIPT hPanel )
+{
+	auto hPanelRoot = (Panel*)g_pScriptVM->GetInstanceValue( hPanel, GetScriptDescForClass(Panel) );
+	if ( hPanelRoot )
+	{
+		hPanelRoot->AddActionSignalTarget( this );
+	}
+}
+
+void CHudMainMenuOverride::ApplyPanelSettings( HSCRIPT hPanelHandle, HSCRIPT hTable )
+{
+	auto hPanel = (Panel*)g_pScriptVM->GetInstanceValue( hPanelHandle, GetScriptDescForClass(Panel) );
+	if (!hPanel) return;
+	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, "PanelSettings", hTable );
+	hPanel->ApplySettings( hKV );
+}
+
+void CHudMainMenuOverride::SetTooltip( HSCRIPT hPanelHandle, const char* tip )
+{
+	auto hPanel = (Panel*)g_pScriptVM->GetInstanceValue( hPanelHandle, GetScriptDescForClass(Panel) );
+	if ( !hPanel ) return;
+	if ( m_pToolTip )
+	{
+		hPanel->SetTooltip( m_pToolTip, tip );
+	}
+}
+
+HSCRIPT CHudMainMenuOverride::CreatePanelInternal( HSCRIPT hTable, Panel* hParentTarget )
+{
+	KeyValues* hKV = ScriptTableToKeyValues(g_pScriptVM, "PanelSettings", hTable);
+	const char* pszPanelType = hKV->GetString("ControlName", "Panel");
+	if (!pszPanelType)
+	{
+		return NULL;
+	}
+	Panel* hParent = this;
+	if (hParentTarget)
+	{
+		hParent = hParentTarget;
+	}
+
+	Panel* pPanel;
+	EditablePanel* pEditPanel = NULL;
+	ScriptClassDesc_t* pDesc = GetScriptDescForClass(Panel);
+	const char* pszControlName = hKV->GetString("fieldName", "NoName");
+	if (FStrEq(pszPanelType, "EditablePanel"))
+	{
+		EditablePanel* pBasePanel = new EditablePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(EditablePanel);
+	}
+	else if (FStrEq(pszPanelType, "Panel"))
+	{
+		Panel* pBasePanel = new Panel(hParent, pszControlName);
+		pPanel = pBasePanel;
+	}
+	else if (FStrEq(pszPanelType, "CExScrollingEditablePanel"))
+	{
+		CExScrollingEditablePanel* pBasePanel = new CExScrollingEditablePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CExScrollingEditablePanel);
+	}
+	else if (FStrEq(pszPanelType, "ScrollBar"))
+	{
+		int isVertical = hKV->GetInt("isVertical");
+		ScrollBar* pBasePanel = new ScrollBar(hParent, pszControlName, isVertical != 0);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(ScrollBar);
+	}
+	else if (FStrEq(pszPanelType, "CExLabel"))
+	{
+		CExLabel* pBasePanel = new CExLabel(hParent, pszControlName, (const char*)NULL);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CExLabel);
+	}
+	else if (FStrEq(pszPanelType, "CExImageButton"))
+	{
+		CExImageButton* pBasePanel = new CExImageButton(hParent, pszControlName, (const char*)NULL, this);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CExImageButton);
+	}
+	else if (FStrEq(pszPanelType, "ImagePanel"))
+	{
+		ImagePanel* pBasePanel = new ImagePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(ImagePanel);
+	}
+	else if (FStrEq(pszPanelType, "ScalableImagePanel"))
+	{
+		ScalableImagePanel* pBasePanel = new ScalableImagePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(ScalableImagePanel);
+	}
+	else if (FStrEq(pszPanelType, "CTFImagePanel"))
+	{
+		CTFImagePanel* pBasePanel = new CTFImagePanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CTFImagePanel);
+	}
+	else if (FStrEq(pszPanelType, "CBaseModelPanel"))
+	{
+		CBaseModelPanel* pBasePanel = new CBaseModelPanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CBaseModelPanel);
+	}
+	else if (FStrEq(pszPanelType, "CItemModelPanel"))
+	{
+		CItemModelPanel* pBasePanel = new CItemModelPanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CItemModelPanel);
+	}
+	else if (FStrEq(pszPanelType, "CTFPlayerModelPanel"))
+	{
+		CTFPlayerModelPanel* pBasePanel = new CTFPlayerModelPanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CTFPlayerModelPanel);
+	}
+	else if (FStrEq(pszPanelType, "VideoPanel"))
+	{
+		CTFVideoPanel* pBasePanel = new CTFVideoPanel(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CTFVideoPanel);
+	}
+	else if (FStrEq(pszPanelType, "CExRichText"))
+	{
+		CExRichText* pBasePanel = new CExRichText(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CExRichText);
+	}
+	else if (FStrEq(pszPanelType, "CRichTextWithScrollbarBorders"))
+	{
+		CRichTextWithScrollbarBorders* pBasePanel = new CRichTextWithScrollbarBorders(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CRichTextWithScrollbarBorders);
+	}
+	else if (FStrEq(pszPanelType, "Label"))
+	{
+		Label* pBasePanel = new Label(hParent, pszControlName, (const char*)NULL);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(Label);
+	}
+	else if (FStrEq(pszPanelType, "CEconItemDetailsRichText"))
+	{
+		CEconItemDetailsRichText* pBasePanel = new CEconItemDetailsRichText(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pEditPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(CEconItemDetailsRichText);
+	}
+	else if (FStrEq(pszPanelType, "Button"))
+	{
+		Button* pBasePanel = new Button(hParent, pszControlName, (const char*)NULL, this);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(Button);
+	}
+	else if (FStrEq(pszPanelType, "Frame"))
+	{
+		Frame* pBasePanel = new Frame(hParent, pszControlName);
+		pPanel = pBasePanel;
+		pDesc = GetScriptDescForClass(Frame);
+	}
+	else
+	{
+		// Panel not found!
+		Assert( false );
+	}
+
+	if (hKV->FindKey("ControlSettings") != NULL && pEditPanel)
+	{
+		pEditPanel->MakeReadyForUse();
+		pEditPanel->LoadControlSettings(hKV->GetString("ControlSettings"));
+	}
+	pPanel->ApplySettings(hKV);
+
+	char szName[1024];
+	g_pScriptVM->GenerateUniqueKey((pszControlName != NULL_STRING) ? STRING(pszControlName) : pszPanelType, szName, 1024);
+	string_t m_iszScriptId = AllocPooledString(szName);
+
+	HSCRIPT m_hScriptInstance = g_pScriptVM->RegisterInstance(pDesc, pPanel);
+	g_pScriptVM->SetInstanceUniqeId(m_hScriptInstance, STRING(m_iszScriptId));
+
+	ScriptPanelData PanelData;
+	PanelData.m_Handle = m_hScriptInstance;
+	PanelData.m_Panel = pPanel;
+	PanelData.m_RootChild = true;
+	if (hParent != this)
+	{
+		PanelData.m_RootChild = false;
+	}
+
+	m_scriptPanels.AddToTail(PanelData);
+
+	return m_hScriptInstance;
+}
