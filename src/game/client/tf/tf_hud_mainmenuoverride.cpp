@@ -110,7 +110,6 @@ ConVar cl_mainmenu_operation_motd_reset( "cl_mainmenu_operation_motd_reset", "0"
 ConVar cl_mainmenu_safemode( "cl_mainmenu_safemode", "0", FCVAR_NONE, "Enable safe mode", cc_tf_safemode_toggle );
 ConVar cl_mainmenu_updateglow( "cl_mainmenu_updateglow", "1", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 ConVar tf_mainmenu_match_panel_type( "tf_mainmenu_match_panel_type", "7", FCVAR_ARCHIVE | FCVAR_HIDDEN, "The match group data to show on the main menu", cc_tf_mainmenu_match_panel_type );
-ConVar cl_default_networking_off("cl_default_networking_off", "0", FCVAR_ARCHIVE, "Disable Steam Networking on boot by default." );
 ConVar cl_show_disabled_maps( "cl_show_disabled_maps", "0", FCVAR_NONE, "Show disabled maps in custom match dialog." );
 ConVar tf_oobe_viewed( "tf_oobe_viewed", "0", FCVAR_ARCHIVE );
 ConVar tf_oobe_modern_controls( "tf_oobe_modern_controls", "0", FCVAR_ARCHIVE );
@@ -1011,10 +1010,14 @@ void CHudMainMenuOverride::PerformLayout( void )
 
 	UpdateRankPanelVisibility();
 
-	ConVarRef r_drawfriendslist("r_drawfriendslist");
-	if ( !r_drawfriendslist.GetBool() )
+	ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
+	if ( !tf_oobe_multiplayer.GetBool() )
 	{
 		SetControlVisible( "ToggleChatButton", false, true );
+	}
+	else
+	{
+		SetControlVisible( "ToggleChatButton", true, true );
 	}
 	if ( m_pTFBackgroundVideo && !engine->IsInGame() )
 	{
@@ -1235,9 +1238,9 @@ void CHudMainMenuOverride::OnMainMenuStabilized()
 	{
 		gameeventmanager->FireEventClientSide( event );
 	}
-	if ( cl_default_networking_off.GetBool() )
+	if ( !tf_oobe_multiplayer.GetBool() )
 	{
-		engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
+		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 0" );
 	}
 	if ( !tf_oobe_viewed.GetBool() )
 	{

@@ -19,7 +19,6 @@
 using namespace vgui;
 using namespace GCSDK;
 
-static ConVar r_drawfriendslist("r_drawfriendslist", "0", FCVAR_ARCHIVE, "Display Steam Friends in the main menu.");
 
 bool BSteamIDIsPlayingTF2( const CSteamID& steamID )
 {
@@ -285,9 +284,9 @@ void CSteamFriendsListPanel::OnThink()
 	if ( !enginevgui->IsGameUIVisible() )
 		return;
 
-	if (!r_drawfriendslist.GetBool())
+	if ( IsVisible() )
 	{
-		this->GetParent()->SetVisible(false);
+		this->GetParent()->SetVisible( false );
 		return;
 	}
 

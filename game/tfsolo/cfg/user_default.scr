@@ -864,18 +864,34 @@ DESCRIPTION INFO_OPTIONS
 		{ CATEGORY }
 	}
 
-	"r_drawfriendslist"
+	"tf_oobe_modern_controls"
 	{
-		"Display Steam Friends List"
-		"Show your Steam Friends List on the main menu. (requires restart)"
+		"#TFSOLO_OOBE_ModernControls"
+		"#TFSOLO_OOBE_ModernControls_Desc"
 		{ BOOL }
 		{ "0" }
 	}
-
-	"cl_default_networking_off"
+	
+	"tf_oobe_hints_base"
 	{
-		"Disable Steam Networking By Default"
-		"Start the game with Steam Networking disabled."
+		"#TFSOLO_OOBE_TutorialHints"
+		"#TFSOLO_OOBE_TutorialHints_Desc"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	"tf_oobe_hints_mod"
+	{
+		"#TFSOLO_OOBE_TFSOLOHints"
+		"#TFSOLO_OOBE_TFSOLOHints_Desc"
+		{ BOOL }
+		{ "0" }
+	}
+	
+	"tf_oobe_multiplayer"
+	{
+		"#TFSOLO_OOBE_Multiplayer"
+		"#TFSOLO_OOBE_Multiplayer_Desc"
 		{ BOOL }
 		{ "0" }
 	}

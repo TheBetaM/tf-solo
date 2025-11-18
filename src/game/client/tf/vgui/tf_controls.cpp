@@ -1156,6 +1156,16 @@ void CTFAdvancedOptionsDialog::SaveValues()
 			g_pFullFileSystem->Close( fp );
 		}
 
+		ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
+		if ( tf_oobe_multiplayer.GetBool() )
+		{
+			engine->ClientCmd_Unrestricted( "sv_use_steam_networking 1" );
+		}
+		else
+		{
+			engine->ClientCmd_Unrestricted( "sv_use_steam_networking 0" );
+		}
+
 		engine->ClientCmd_Unrestricted( "host_writeconfig" );
 	}
 }
@@ -5463,6 +5473,16 @@ void CTFOOBEDialog::SaveValues()
 	else
 	{
 		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults_off" );
+	}
+
+	ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
+	if ( tf_oobe_multiplayer.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 1" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 0" );
 	}
 
 	ConVarRef tf_oobe_viewed( "tf_oobe_viewed" );

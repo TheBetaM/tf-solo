@@ -245,10 +245,14 @@ void CDashboardPartyMember::PerformLayout()
 		m_pInteractButton->SetTooltip( GetDashboardTooltip( k_eSmallFont ), strTipText );
 	}
 
-	ConVarRef r_drawfriendslist("r_drawfriendslist");
-	if ( !r_drawfriendslist.GetBool() )
+	ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
+	if ( !tf_oobe_multiplayer.GetBool() )
 	{
 		SetVisible( false );
+	}
+	else
+	{
+		SetVisible( true );
 	}
 }
 
@@ -267,6 +271,16 @@ void CDashboardPartyMember::PostChildPaint()
 		Vertex_t vtxEnd( Vector2D( GetWide() - nXInset, GetTall() - nYInset ), Vector2D( 0, 0 ) );
 
 		SoftLine::DrawPolygonLine( vtxStart, vtxEnd, 2 ); 
+	}
+
+	ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
+	if ( !tf_oobe_multiplayer.GetBool() )
+	{
+		SetVisible( false );
+	}
+	else
+	{
+		SetVisible( true );
 	}
 }
 
