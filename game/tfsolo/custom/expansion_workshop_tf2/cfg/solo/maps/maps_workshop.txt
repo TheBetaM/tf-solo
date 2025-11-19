@@ -1009,6 +1009,7 @@ maps_config
 		}
 		workshop_3362948939
 		{
+			disabled 1
 			name "Gavle"
 			modename "#Gametype_CP"
 			tags
@@ -1075,7 +1076,7 @@ maps_config
 		}
 		workshop_3561250339
 		{
-			name "Futura"
+			name "Futura Town"
 			modename "#Gametype_Escort"
 			tags
 			{

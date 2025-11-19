@@ -7787,7 +7787,7 @@ maps_config
 		}
 		workshop_3561250339
 		{
-			name "Futura"
+			name "Futura Town"
 			modename "#Gametype_Escort"
 			tags
 			{
@@ -7915,6 +7915,87 @@ maps_config
 				cp_count 3
 				symm 1
 				theme_alpine 1
+			}
+		}
+		workshop_3596869047
+		{
+			name "Mackintosh"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_snow 1
+				theme_city 1
+			}
+		}
+		workshop_3597952906
+		{
+			name "Candyland"
+			modename "#Gametype_Escort"
+			tags
+			{
+				stages 3
+				pl 1
+				theme_pyroland 1
+			}
+		}
+		workshop_3599730332
+		{
+			name "Permafrost"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_snow 1
+			}
+		}
+		workshop_3599991981
+		{
+			name "Snowdust"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3600958434
+		{
+			name "Oldwood"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3603406052
+		{
+			name "Abbey"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 2
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3604045821
+		{
+			name "Imperious"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
 			}
 		}
 		
