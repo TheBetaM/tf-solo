@@ -144,6 +144,7 @@ CTFPlayerModelPanel::CTFPlayerModelPanel( vgui::Panel *pParent, const char *pNam
 	m_bForceNoItems = false;
 	m_pszForceSequenceName = "";
 	m_bForceSequenceLoop = false;
+	m_bFreezeScene = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -2426,9 +2427,12 @@ void CTFPlayerModelPanel::SetupFlexWeights( void )
 			m_flLastTickTime = m_RootMDL.m_MDL.m_flTime - SCENE_LERP_TIME;
 		}
 
-		m_flSceneTime += (m_RootMDL.m_MDL.m_flTime - m_flLastTickTime);
-		m_flSceneTime = Max( m_flSceneTime, -SCENE_LERP_TIME );
-		m_flLastTickTime = m_RootMDL.m_MDL.m_flTime;
+		if ( !m_bFreezeScene )
+		{
+			m_flSceneTime += (m_RootMDL.m_MDL.m_flTime - m_flLastTickTime);
+			m_flSceneTime = Max( m_flSceneTime, -SCENE_LERP_TIME );
+			m_flLastTickTime = m_RootMDL.m_MDL.m_flTime;
+		}
 
 		if ( m_flSceneEndTime > FLT_EPSILON && m_flSceneTime > m_flSceneEndTime )
 		{

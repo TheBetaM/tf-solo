@@ -30,4 +30,12 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
+	"credit1a_2"
+	{
+		"Shcookius - Class Lineup poses"
+		"https://steamcommunity.com/sharedfiles/filedetails/?id=2215907262"
+		{ BOOL }
+		{ "1" }
+	}
+	
 }
