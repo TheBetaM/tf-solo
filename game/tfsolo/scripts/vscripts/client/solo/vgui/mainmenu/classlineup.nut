@@ -67,14 +67,14 @@ SoloMainMenu.ClassLineupOffsetZ <-
 SoloMainMenu.ClassLineupSlots <-
 [
 	0,
-	2,//0
+	0
 	0,
 	0,
-	1,//0
-	2,//1
+	0
+	1
 	0,
 	0,
-	1,//2,
+	2,
 	2,
 	2,
 ]
@@ -135,9 +135,16 @@ SoloMainMenu.InitClassLineup <- function()
 		SoloMainMenu.ActorPanels[i].SetToPlayerClass(i, true, null)
 		SoloMainMenu.ActorPanels[i].SetTeam(team)
 		SoloMainMenu.ActorPanels[i].SetDisableSpeak(true)
-		SoloMainMenu.ActorPanels[i].SetFreezeScene(true)
+		//SoloMainMenu.ActorPanels[i].SetFreezeScene(true)
 		local bAnim = SoloMainMenu.ActorPanels[i].AutoAddPlayerCarriedItems(i)
-		SoloMainMenu.ActorPanels[i].PlayVCD("scripts/anim/pose_classlineup_" + SoloMainMenu.ClassLineupNames[i] + ".vcd", null, true, false)
+		if (bAnim)
+		{
+			SoloMainMenu.ActorPanels[i].PlayVCD("scenes/player/" + SoloMainMenu.ClassLineupNames[i] + "/low/class_select.vcd", null, true, false)
+		}
+		else
+		{
+			SoloMainMenu.ActorPanels[i].PlayVCD("scenes/player/" + SoloMainMenu.ClassLineupNames[i] + "/low/idle.vcd", null, true, false)
+		}
 		SoloMainMenu.ActorPanels[i].HoldItemInSlot(SoloMainMenu.ClassLineupSlots[i])
 	}
 }
@@ -148,7 +155,14 @@ SoloMainMenu.UpdateClassLineup <- function()
 	{
 		SoloMainMenu.ActorPanels[i].ClearCarriedItems()
 		local bAnim = SoloMainMenu.ActorPanels[i].AutoAddPlayerCarriedItems(i)
-		SoloMainMenu.ActorPanels[i].PlayVCD("scripts/anim/pose_classlineup_" + SoloMainMenu.ClassLineupNames[i] + ".vcd", null, true, false)
+		if (bAnim)
+		{
+			SoloMainMenu.ActorPanels[i].PlayVCD("scenes/player/" + SoloMainMenu.ClassLineupNames[i] + "/low/class_select.vcd", null, true, false)
+		}
+		else
+		{
+			SoloMainMenu.ActorPanels[i].PlayVCD("scenes/player/" + SoloMainMenu.ClassLineupNames[i] + "/low/idle.vcd", null, true, false)
+		}
 		SoloMainMenu.ActorPanels[i].HoldItemInSlot(SoloMainMenu.ClassLineupSlots[i])
 	}
 }
