@@ -28,6 +28,7 @@
 #include "bone_setup.h"
 #include "halloween/tf_weapon_spellbook.h"
 #include "matsys_controls/matsyscontrols.h"
+#include "filesystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -418,13 +419,28 @@ CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCa
 	char *pBuffer = NULL;
 	size_t bufsize = scenefilecache->GetSceneBufferSize( loadfile );
 	if ( bufsize <= 0 )
-		return NULL;
-
-	pBuffer = new char[ bufsize ];
-	if ( !scenefilecache->GetSceneData( filename, (byte *)pBuffer, bufsize ) )
 	{
-		delete[] pBuffer;
-		return NULL;
+		if ( g_pFullFileSystem->FileExists( filename ) )
+		{
+			FileHandle_t file = g_pFullFileSystem->Open( filename, "rb" );
+			int size = g_pFullFileSystem->Size( file );
+			pBuffer = new char[ size ];
+			g_pFullFileSystem->Read( pBuffer, size, file );
+			g_pFullFileSystem->Close( file );
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	else
+	{
+		pBuffer = new char[ bufsize ];
+		if ( !scenefilecache->GetSceneData( filename, (byte *)pBuffer, bufsize ) )
+		{
+			delete[] pBuffer;
+			return NULL;
+		}
 	}
 
 	CChoreoScene *pScene;
