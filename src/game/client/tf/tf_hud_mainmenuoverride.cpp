@@ -65,6 +65,7 @@
 #include "vgui/solo/tf_solo_panel.h"
 #include "tf_vgui_video.h"
 #include "tf_playermodelpanel.h"
+#include "engine/IEngineSound.h"
 
 
 #include "c_tf_gamestats.h"
@@ -693,7 +694,6 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	GetMMDashboard();
 	GetCompRanksTooltip();
-	engine->ClientCmd_Unrestricted("stopsound");
 }
 
 void ConfirmModProgressReset(bool bConfirmed, void* pContext)
@@ -1223,6 +1223,7 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 	{
 		if ( !m_bStabilizedInitialLayout )
 		{
+			enginesound->StopAllSounds( true );
 			PostMessage( this, new KeyValues( "MainMenuStabilized" ), 0.05f );
 		}
 
