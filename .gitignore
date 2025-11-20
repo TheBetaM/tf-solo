@@ -505,3 +505,9 @@ FodyWeavers.xsd
 
 # TF-SOLO
 game/mod_tf/
+game/tfgreatesthits/
+game/platform/
+game/steam_appid.txt
+game/mod_tf*.exe
+game/tfsolo*.exe
+game/tfgreatesthits*.exe

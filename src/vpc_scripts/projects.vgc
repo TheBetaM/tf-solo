@@ -60,6 +60,11 @@ $Project "launcher_main"
 	"launcher_main\launcher_main_mod_tf.vpc" [$TF]
 }
 
+$Project "launcher_shipping"
+{
+	"launcher_main\launcher_main_tfsolo.vpc" [$TF]
+}
+
 $Project "mathlib"
 {
 	"mathlib\mathlib.vpc"

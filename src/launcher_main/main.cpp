@@ -86,6 +86,7 @@ static void *Launcher_GetProcAddress( void *pHandle, const char *pszName )
 #define MessageBox( x, text, title, y) SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, title, text, NULL )
 #endif
 
+static const AppId_t k_unTF2AppId = 440;
 static const AppId_t k_unSDK2013MPAppId = 243750;
 
 #ifdef MOD_LAUNCHER
@@ -221,14 +222,29 @@ static bool GetGameInstallDir( const char *pRootDir, char *pszBuf, int nBufSize 
 	{
 		unLength = pSteamApps->GetAppInstallDir( k_unSDK2013MPAppId, pszBuf, nBufSize );
 	}
+#ifdef MOD_LAUNCHER
+	uint32_t unLength2 = 0;
+	if ( pSteamApps->BIsAppInstalled( k_unTF2AppId ) )
+	{
+		unLength2 = pSteamApps->GetAppInstallDir( k_unTF2AppId, pszBuf, nBufSize );
+	}
+#endif
 
 	UnloadSteam();
 
+#ifdef MOD_LAUNCHER
+	if ( unLength2 == 0 )
+	{
+		MessageBox( 0, "Team Fortress 2 must be installed to launch this mod.", "Launcher Error", MB_OK );
+		return false;
+	}
+#else
 	if ( unLength == 0 )
 	{
 		MessageBox( 0, "Source SDK 2013 Multiplayer (243750) must be installed to launch this mod.", "Launcher Error", MB_OK );
 		return false;
 	}
+#endif
 
 	return true;
 }

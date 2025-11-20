@@ -1,7 +1,0 @@
-To install the mod:
-1) Make sure you have Team Fortress 2 installed on Steam
-2) Install Source SDK Base 2013 Multiplayer (it should be in the Tools section in your Steam library)
-3) If you already have it set-up, make sure it's not on any beta branch
-4) Place the folder that these instructions are inside into your steam installation's "sourcemods" folder
-5) Restart Steam and the mod should appear in your library ready to play
-
