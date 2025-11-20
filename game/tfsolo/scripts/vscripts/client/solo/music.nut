@@ -22,7 +22,7 @@ TFSOLO.MusicEventTag <- UniqueString()
 getroottable()[TFSOLO.MusicEventTag] <- {
 	OnGameEvent_mainmenu_stabilized = function(params)
 	{
-		Music.Play("*#music/tfsolo/jaycie_brass.mp3")
+		Music.Play("*#ui/gamestartup1.mp3")
 	}
 	
 	OnScriptHook_LevelInitPreEntity = function(params)
@@ -32,7 +32,7 @@ getroottable()[TFSOLO.MusicEventTag] <- {
 	
 	OnScriptHook_LevelDisconnect = function(params)
 	{
-		Music.Play("*#music/tfsolo/jaycie_brass.mp3")
+		Music.Play("*#ui/gamestartup1.mp3")
 	}
 }
 TFSOLO.MusicEventTable <- getroottable()[TFSOLO.MusicEventTag]
