@@ -173,7 +173,7 @@
 			"item_logname"	"spineyard_tommygun"
 			"item_iconname"	"spineyard_tommygun"
 			"item_type_name"	"SMG"
-			"item_name"			"Tommygun"
+			"item_name"			"The Mob Warrior"
 			"image_inventory"	"backpack/weapons/w_models/w_smg"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
@@ -264,7 +264,7 @@
 		{
 			"prefab"	"valve weapon_scout_drink"
 			"first_sale_date"	"2010/09/29"
-			"item_name"	"Critee Cool"
+			"item_name"	"Critee Cool!"
 			"item_description"	""
 			"image_inventory"	"backpack/weapons/c_models/c_energy_drink/c_energy_drink"
 			"inspect_panel_dist" 			"20"
@@ -318,7 +318,7 @@
 			"image_inventory"	"backpack/weapons/w_models/w_rocketlauncher"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"	"models/weapons/solo/c_rocketlauncher_center.mdl"
+			"model_player"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
 			"attach_to_hands" "1"
 			"used_by_classes"
 			{
@@ -327,8 +327,6 @@
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"10 0 -5"	
-				"weapon_allow_inspect" "1"
-				"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
@@ -390,7 +388,7 @@
 			"image_inventory"	"backpack/weapons/w_models/w_rocketlauncher"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"	"models/weapons/solo/c_rocketlauncher_training.mdl"
+			"model_player"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
 			"attach_to_hands" "1"
 			"used_by_classes"
 			{
@@ -399,8 +397,6 @@
 			"static_attrs"
 			{
 				"min_viewmodel_offset"		"10 -3 -10"		
-				"weapon_allow_inspect" "1"
-				"use_model_cache_icon" "1"
 			}
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"
@@ -459,7 +455,7 @@
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 			"50"
-			"model_player"	"models/weapons/solo/c_stickybomb_launcher_training.mdl"
+			"model_player"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher.mdl"
 			"attach_to_hands"	"1"
 			"used_by_classes"
 			{
@@ -468,8 +464,6 @@
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"10 0 -10"
-				"weapon_allow_inspect" "1"
-				"use_model_cache_icon" "1"
 			}
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"
@@ -601,7 +595,7 @@
 			}
 			"show_in_armory"	"1"
 			"item_type_name"	"Melee Weapon"
-			"item_name"	"Barbell"
+			"item_name"	"The Workout Routine"
 			"item_description"	""
 			"item_slot"	"melee"
 			"item_quality"	"unique"
@@ -676,7 +670,7 @@
 			}
 			"show_in_armory"	"1"
 			"item_type_name"	"#TF_Weapon_SledgeHammer"
-			"item_name"	"Hammer"
+			"item_name"	"The Demolition Junior"
 			"item_slot"	"melee"
 			"image_inventory"	"backpack/weapons/c_models/c_fireaxe_pyro/c_fireaxe_pyro"
 			"image_inventory_size_w"		"128"
@@ -734,7 +728,7 @@
 				"can_deal_damage"			"1"
 				"can_deal_taunt_damage"		"1"
 			}
-			"item_name"	"Backstabber"
+			"item_name"	"The Successor"
 			"propername"	"0"
 			"image_inventory"	"backpack/weapons/w_models/w_knife"
 			"model_player"	"models/weapons/solo/c_backstabber.mdl"
@@ -775,6 +769,75 @@
 				{
 					"attribute_class"	"mod_disguise_consumes_cloak"
 					"value"				"1"
+				}
+			}
+		}
+		"weapon_unarmed"
+		{
+			"item_class"	"saxxy"
+			"prefab"	"weapon_melee_allclass"
+			"soloitem" "1"
+			"craft_class"			"" 
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+				"can_craft_count"	"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_be_equipped_by_soldier_or_demo"	"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_taunt_damage"		"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"Melee Weapon"
+			"item_name"	"Unarmed"
+			"item_description"	""
+			"item_slot"	"melee"
+			"item_quality"	"normal"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			"propername"	"0"
+			"attach_to_hands"	"1"
+			"image_inventory"	"backpack/weapons/v_models/v_fist_heavy"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 				"80"			
+			//"model_player"	"models/weapons/solo/c_barbell.mdl"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"scout"	"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"	"1"
+				"heavy"	"1"
+				"spy" "1"
+				"engineer" "1"
+				"pyro" "1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"10 0 -7"			
+			}
+			"visuals"
+			{
+				"sound_melee_miss"	"Weapon_BoxingGloves.Miss"
+				"sound_melee_hit"	"Weapon_BoxingGloves.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
+				"sound_burst"	"Weapon_BoxingGloves.MissCrit"
+			}
+			"mouse_pressed_sound" 	"ui/item_boxing_gloves_pickup.wav"
+			"drop_sound" 		"ui/item_boxing_gloves_drop.wav"
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.5"
 				}
 			}
 		}
@@ -830,6 +893,11 @@
 		{
 			"name" "Solo Backstabber"
 			"prefab" "weapon_backstabber"
+		}
+		"20110"
+		{
+			"name" "Solo Unarmed"
+			"prefab" "weapon_unarmed"
 		}
 	}
 }
