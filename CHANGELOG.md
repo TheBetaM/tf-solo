@@ -44,6 +44,8 @@ sv_thirdperson_platformer_force
 - Added #basedir to KeyValues to include all files in a directory
 - Added functionality to change Pyrovision into any custom vision
 - Improved thirdperson_platformer, now allows firing in the direction you're aiming
+- Increased maximum FoV to 140
+- Changed tf_airblast_cray default value to 0 (restoring old airblast mechanics)
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps

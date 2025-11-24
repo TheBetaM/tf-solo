@@ -144,7 +144,7 @@ static CVoxManager s_VoxManager;
 // --------------------------------------------------------------------------------- //
 #endif // VOICE_VOX_ENABLE
 
-CON_COMMAND( hud_reloadscheme, "Reloads hud layout and animation scripts." )
+CON_COMMAND( hud_breaksvscript_reloadscheme, "Breaks VScript panels!! Reloads hud layout and animation scripts." )
 {
 	ClientModeShared *mode = ( ClientModeShared * )GetClientModeNormal();
 	if ( !mode )
