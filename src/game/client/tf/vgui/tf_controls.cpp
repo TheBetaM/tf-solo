@@ -4119,6 +4119,8 @@ enum CustomMatchMapCategory
 	MapCategory_Xmas,
 
 	MapCategory_Workshop,
+	MapCategory_Workshop_TF2,
+	MapCategory_Workshop_TF2GR,
 
 	MapCategory_MAX,
 
@@ -4169,6 +4171,11 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
 	m_pCategoryList->AddItem("#MMenu_SteamWorkshop", NULL);
+	m_pCategoryList->AddItem("TF2 Workshop (Installed/Subscribed)", NULL);
+	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
+	{
+		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Installed/Subscribed)", NULL);
+	}
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );
 
@@ -4526,7 +4533,25 @@ void CTFCustomMatchMapDialog::CreateControls()
 			}
 			case MapCategory_Workshop:
 			{
-				if ( !isWorkshop )
+				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_Workshop_TF2:
+			{
+				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") != 0 || tags->GetInt("workshop_tf2gr") != 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_Workshop_TF2GR:
+			{
+				if ( !isWorkshop || tags->GetInt("workshop_tf2gr") == 0 )
 				{
 					key = key->GetNextKey();
 					continue;
