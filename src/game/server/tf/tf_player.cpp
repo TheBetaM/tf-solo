@@ -723,6 +723,8 @@ BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer , "Team Fortress 2 Playe
 
 	DEFINE_SCRIPTFUNC_WRAPPED( GenerateAndWearItem, "Give me an item!" )
 	DEFINE_SCRIPTFUNC( PostInventoryApplication, "" )
+	DEFINE_SCRIPTFUNC_WRAPPED( GetSubClass, "" )
+	DEFINE_SCRIPTFUNC_WRAPPED( SetSubClass, "" )
 END_SCRIPTDESC();
 
 
@@ -2898,6 +2900,24 @@ void CTFPlayer::PrecachePlayerModels( void )
 		}
 */
 	}
+
+	for ( i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+	{
+		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( i );
+
+		const char* pszModel = subclass->m_szModelName;
+		if ( pszModel && pszModel[0] )
+		{
+			int iModel = PrecacheModel( pszModel );
+			PrecacheGibsForModel( iModel );
+		}
+
+		pszModel = subclass->m_szHandModelName;
+		if ( pszModel && pszModel[0] )
+		{
+			PrecacheModel( pszModel );
+		}
+	}
 	
 	// Always precache the silly gibs.
 	for ( i = 4; i < ARRAYSIZE( g_pszBDayGibs ); ++i )
@@ -2931,6 +2951,14 @@ void CTFPlayer::PrecachePlayerModels( void )
 		}
 	}
 
+	for ( i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+	{
+		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( i );
+		for ( int i = 0; i < ARRAYSIZE( subclass->m_szDeathSound ); ++i )
+		{
+			PrecacheScriptSound( subclass->m_szDeathSound[i] );
+		}
+	}
 
 	COMPILE_TIME_ASSERT( TF_CALLING_CARD_MODEL_COUNT == ARRAYSIZE( g_pszDeathCallingCardModels ) );
 	// Precache, Deliberatly skipping zero
@@ -4170,11 +4198,20 @@ void CTFPlayer::Regenerate( bool bRefillHealthAndAmmo /*= true*/ )
 //-----------------------------------------------------------------------------
 void CTFPlayer::InitClass( void )
 {
-	SetArmorValue( GetPlayerClass()->GetMaxArmor() );
-
 	// Init the anim movement vars
-	m_PlayerAnimState->SetRunSpeed( GetPlayerClass()->GetMaxSpeed() );
-	m_PlayerAnimState->SetWalkSpeed( GetPlayerClass()->GetMaxSpeed() * 0.5 );
+	if ( m_Shared.IsSubClass() )
+	{
+		auto subclass = m_Shared.GetSubClassData();
+		SetArmorValue( subclass->m_nMaxArmor );
+		m_PlayerAnimState->SetRunSpeed( subclass->m_flMaxSpeed );
+		m_PlayerAnimState->SetWalkSpeed( subclass->m_flMaxSpeed * 0.5 );
+	}
+	else
+	{
+		SetArmorValue( GetPlayerClass()->GetMaxArmor() );
+		m_PlayerAnimState->SetRunSpeed( GetPlayerClass()->GetMaxSpeed() );
+		m_PlayerAnimState->SetWalkSpeed( GetPlayerClass()->GetMaxSpeed() * 0.5 );
+	}
 
 	// Give default items for class.
 	GiveDefaultItems();
@@ -4251,6 +4288,10 @@ void CTFPlayer::GiveDefaultItems()
 {
 	// Get the player class data.
 	TFPlayerClassData_t *pData = m_PlayerClass.GetData();
+	if ( m_Shared.IsSubClass() )
+	{
+		pData = m_Shared.GetSubClassData();
+	}
 	if ( GetTeamNumber() == TEAM_SPECTATOR )
 	{
 		RemoveAllWeapons();
@@ -4302,7 +4343,25 @@ void CTFPlayer::ManageBuilderWeapons( TFPlayerClassData_t *pData )
 	// Go through each object and see if we need to create or remove builders
 	for ( int i = 0; i < OBJ_LAST; ++i )
 	{
-		if ( !GetPlayerClass()->CanBuildObject( i ) )
+		if ( m_Shared.IsSubClass() )
+		{
+			auto pData = m_Shared.GetSubClassData();
+			int id;
+			bool bFound = false;
+			for ( id = 0; id < TF_PLAYER_BLUEPRINT_COUNT; id++ )
+			{
+				if ( i == pData->m_aBuildable[id] )
+				{
+					bFound = true;
+					break;
+				}
+			}
+			if ( !bFound )
+			{
+				continue;
+			}
+		}
+		else if ( !GetPlayerClass()->CanBuildObject( i ) )
 			continue;
 
 		// TODO:  Need to add support for "n" builders, rather hard-wired for two.
@@ -6707,9 +6766,13 @@ void CTFPlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAu
 
 		ResetPlayerClass();
 	}
-	if ( !IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	if ( !IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED )
 	{
-		SetDesiredPlayerClassIndex(TFGameRules()->GetAssignedHumanClass());
+		SetDesiredPlayerClassIndex( TFGameRules()->GetAssignedHumanClass() );
+		if ( TFGameRules()->GetAssignedHumanSubClass() )
+		{
+			ScriptSetSubClass( TFGameRules()->GetAssignedHumanSubClass() );
+		}
 	}
 
 	RemoveNemesisRelationships();
@@ -6789,9 +6852,9 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	{
 		return;
 	}
-	if (!IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	if ( !IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED )
 	{
-		if (stricmp(pClassName, GetPlayerClassData(TFGameRules()->GetAssignedHumanClass())->m_szClassName))
+		if ( stricmp( pClassName, GetPlayerClassData( TFGameRules()->GetAssignedHumanClass() )->m_szClassName ) )
 		{
 			ClientPrint(this, HUD_PRINTCENTER, "#TF_CantChangeClassNow");
 			return;
@@ -7106,11 +7169,25 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	{
 		if( IsAlive() )
 		{
-			ClientPrint(this, HUD_PRINTTALK, "#game_respawn_as", GetPlayerClassData( iClass )->m_szLocalizableName );
+			if ( m_Shared.IsSubClass() )
+			{
+				ClientPrint(this, HUD_PRINTTALK, "#game_respawn_as", m_Shared.GetSubClassData()->m_szLocalizableName );
+			}
+			else
+			{
+				ClientPrint(this, HUD_PRINTTALK, "#game_respawn_as", GetPlayerClassData( iClass )->m_szLocalizableName );
+			}
 		}
 		else
 		{
-			ClientPrint(this, HUD_PRINTTALK, "#game_spawn_as", GetPlayerClassData( iClass )->m_szLocalizableName );
+			if ( m_Shared.IsSubClass() )
+			{
+				ClientPrint(this, HUD_PRINTTALK, "#game_spawn_as", m_Shared.GetSubClassData()->m_szLocalizableName );
+			}
+			else
+			{
+				ClientPrint(this, HUD_PRINTTALK, "#game_spawn_as", GetPlayerClassData( iClass )->m_szLocalizableName );
+			}
 		}
 	}
 
@@ -13356,7 +13433,14 @@ void CTFPlayer::ClientHearVox( const char *pSentence )
 //-----------------------------------------------------------------------------
 void CTFPlayer::UpdateModel( void )
 {
-	SetModel( GetPlayerClass()->GetModelName() );
+	if ( m_Shared.IsSubClass() )
+	{
+		SetModel( m_Shared.GetSubClassData()->GetModelName() );
+	}
+	else
+	{
+		SetModel( GetPlayerClass()->GetModelName() );
+	}
 
 	// Immediately reset our collision bounds - our collision bounds will be set to the model's bounds.
 	SetCollisionBounds( GetPlayerMins(), GetPlayerMaxs() );
@@ -13810,17 +13894,21 @@ void CTFPlayer::StateThinkWELCOME( void )
 		}
 		else
 		{
-			if (nav_generate_auto.GetBool() && TheNavMesh->IsGenerating())
+			if ( nav_generate_auto.GetBool() && TheNavMesh->IsGenerating() )
 				return;
-			if (TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED && (TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam()))
+			if ( TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED && ( TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam() ) )
 			{
 				int team = TFGameRules()->GetAssignedHumanTeam();
-				if (ShouldForceAutoTeam())
+				if ( ShouldForceAutoTeam() )
 				{
 					team = GetAutoTeam();
 				}
-				ChangeTeam(team, false, true);
-				SetDesiredPlayerClassIndex(TFGameRules()->GetAssignedHumanClass());
+				ChangeTeam( team, false, true );
+				SetDesiredPlayerClassIndex( TFGameRules()->GetAssignedHumanClass() );
+				if ( TFGameRules()->GetAssignedHumanSubClass() )
+				{
+					ScriptSetSubClass( TFGameRules()->GetAssignedHumanSubClass() );
+				}
 				ForceRespawn();
 			}
 		}
@@ -14401,6 +14489,10 @@ void CTFPlayer::ResetMaxHealthDrain( void )
 int CTFPlayer::GetMaxHealthForBuffing()
 {
 	int iMax = m_PlayerClass.GetMaxHealth();
+	if ( m_Shared.IsSubClass() )
+	{
+		iMax = m_Shared.GetSubClassData()->m_nMaxHealth;
+	}
 	CALL_ATTRIB_HOOK_INT( iMax, add_maxhealth );
 
 	CTFWeaponBase *pWeapon = GetActiveTFWeapon();
@@ -14757,9 +14849,13 @@ void CTFPlayer::ForceRespawn( void )
 		} while( iDesiredClass == GetPlayerClass()->GetClassIndex() );
 	}
 
-	if (!IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	if ( !IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED )
 	{
 		iDesiredClass = TFGameRules()->GetAssignedHumanClass();
+		if ( TFGameRules()->GetAssignedHumanSubClass() )
+		{
+			ScriptSetSubClass( TFGameRules()->GetAssignedHumanSubClass() );
+		}
 	}
 
 	if ( HasTheFlag() )
@@ -15294,6 +15390,10 @@ void CTFPlayer::PainSound( const CTakeDamageInfo &info )
 		if ( !( pGround && pGround->IsPlayer() && m_Shared.CanFallStomp() ) )
 		{
 			TFPlayerClassData_t *pData = GetPlayerClass()->GetData();
+			if ( m_Shared.IsSubClass() )
+			{
+				pData = m_Shared.GetSubClassData();
+			}
 			if ( pData )
 			{
 				EmitSound( pData->GetDeathSound( DEATH_SOUND_GENERIC ) );
@@ -15375,6 +15475,11 @@ void CTFPlayer::DeathSound( const CTakeDamageInfo &info )
 	TFPlayerClassData_t *pData = GetPlayerClass()->GetData();
 	if ( !pData )
 		return;
+
+	if ( m_Shared.IsSubClass() )
+	{
+		pData = m_Shared.GetSubClassData();
+	}
 
 	if ( m_bGoingFeignDeath  )
 	{
@@ -23309,4 +23414,14 @@ void CTFPlayer::ScriptEquipWearableViewModel( HSCRIPT hWearableViewModel )
 void CTFPlayer::ScriptStunPlayer( float flTime, float flReductionAmount, int iStunFlags /* = TF_STUN_MOVEMENT */, HSCRIPT hAttacker /* = NULL */ )
 {
 	m_Shared.StunPlayer( flTime, flReductionAmount, iStunFlags, ScriptToEntClass< CTFPlayer >( hAttacker ) );
+}
+
+const char* CTFPlayer::ScriptGetSubClass()
+{
+	return m_Shared.GetSubClass();
+}
+
+void CTFPlayer::ScriptSetSubClass( const char* pszTarget )
+{
+	m_Shared.SetSubClass( pszTarget );
 }

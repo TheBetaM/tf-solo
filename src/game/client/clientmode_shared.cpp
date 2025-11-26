@@ -831,10 +831,10 @@ vgui::Panel *ClientModeShared::GetMessagePanel()
 void ClientModeShared::StartMessageMode( int iMessageModeType )
 {
 	// Can only show chat UI in multiplayer!!!
-	if ( gpGlobals->maxClients == 1 )
-	{
-		return;
-	}
+	//if ( gpGlobals->maxClients == 1 )
+	//{
+	//	return;
+	//}
 	
 #if defined( TF_CLIENT_DLL )
 	if ( iMessageModeType == MM_SAY || iMessageModeType == MM_SAY_TEAM )

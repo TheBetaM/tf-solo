@@ -412,7 +412,8 @@ public:
 
 	virtual bool	PointsMayBeCaptured( void ) OVERRIDE;
 
-	int				GetAssignedHumanClass(void);
+	int				GetAssignedHumanClass( void );
+	const char*		GetAssignedHumanSubClass( void );
 
 #ifdef GAME_DLL
 public:

@@ -58,6 +58,10 @@ bool CArmor::MyTouch( CBasePlayer *pPlayer )
 		if ( pCTFPlayer )
 		{
 			int iMaxArmor = pCTFPlayer->GetPlayerClass()->GetMaxArmor();
+			if ( pCTFPlayer->m_Shared.IsSubClass() )
+			{
+				iMaxArmor = pCTFPlayer->m_Shared.GetSubClassData()->m_nMaxArmor;
+			}
 			int iCurrentArmor = pCTFPlayer->ArmorValue();
 
 			if ( iCurrentArmor < iMaxArmor )

@@ -893,6 +893,9 @@ public:
 
 	void ScriptStunPlayer( float flTime, float flReductionAmount, int iStunFlags = TF_STUN_MOVEMENT, HSCRIPT hAttacker = NULL );
 
+	const char* ScriptGetSubClass();
+	void ScriptSetSubClass( const char* target );
+
 private:
 	void				GetReadyToTauntWithPartner( void );
 	void				CancelTauntWithPartner( void );

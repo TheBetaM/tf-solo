@@ -7,6 +7,7 @@
 #include "cbase.h"
 #include "tf_shareddefs.h"
 #include "tf_classdata.h"
+#include "filesystem.h"
 
 extern bool UseHWMorphModels();
 
@@ -52,6 +53,7 @@ TFPlayerClassData_t::TFPlayerClassData_t()
 	m_szHWMModelName[0] = '\0';
 	m_szHandModelName[0] = '\0';
 	m_szLocalizableName[0] = '\0';
+	m_szBaseClassName[0] = '\0';
 	m_flMaxSpeed = 0.0f;
 	m_nMaxHealth = 0;
 	m_nMaxArmor = 0;
@@ -92,6 +94,7 @@ TFPlayerClassData_t::TFPlayerClassData_t()
 const char *TFPlayerClassData_t::GetModelName() const
 {
 #ifdef CLIENT_DLL
+	/*
 	if ( UseHWMorphModels() )
 	{
 		if ( m_szHWMModelName[0] != '\0' )
@@ -99,6 +102,7 @@ const char *TFPlayerClassData_t::GetModelName() const
 			return m_szHWMModelName;
 		}
 	}
+	*/
 
 	return m_szModelName;
 #else
@@ -200,6 +204,8 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	Q_strncpy( m_szDeathSound[ DEATH_SOUND_EXPLOSION ], pKeyValuesData->GetString( "sound_explosion_death", "Player.ExplosionDeath" ), MAX_PLAYERCLASS_SOUND_LENGTH );
 #endif
 
+	Q_strncpy( m_szBaseClassName, pKeyValuesData->GetString( "baseclass", "scout" ), TF_NAME_LENGTH );
+
 	// The file has been parsed.
 	m_bParsed = true;
 }
@@ -226,6 +232,8 @@ CTFPlayerClassDataMgr::CTFPlayerClassDataMgr()
 
 }
 
+#define PLAYERSUBCLASSES_FILE "scripts/playersubclasses.txt"
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -247,6 +255,26 @@ bool CTFPlayerClassDataMgr::Init( void )
 		pClassData->Parse( s_aPlayerClassFiles[iClass] );
 	}
 
+	m_TFPlayerSubClasses.SetLessFunc( DefLessFunc( const char* ) );
+	m_TFPlayerSubClasses.Purge();
+
+	KeyValuesAD config( "subclasses" );
+	if ( !config->LoadFromFile( g_pFullFileSystem, PLAYERSUBCLASSES_FILE, "GAME" ) )
+	{
+		Msg( "Unable to parse playersubclasses.txt into keyvalues.\n" );
+		return true;
+	}
+
+	KeyValues* key = config->GetFirstSubKey();
+	while ( key )
+	{
+		const char* cName = key->GetName();
+		TFPlayerClassData_t* subclass = new TFPlayerClassData_t();
+		subclass->ParseData( key );
+		m_TFPlayerSubClasses.InsertOrReplace( cName, subclass );
+		key = key->GetNextKey();
+	}
+
 	return true;
 }
 
@@ -260,11 +288,32 @@ TFPlayerClassData_t *CTFPlayerClassDataMgr::Get( unsigned int iClass )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Helper function to get player class data.
+//-----------------------------------------------------------------------------
+TFPlayerClassData_t* CTFPlayerClassDataMgr::GetSub( const char* pszSubClass )
+{
+	int i = m_TFPlayerSubClasses.Find( pszSubClass );
+	if ( i >= 0 )
+	{
+		return m_TFPlayerSubClasses.Element( i );
+	}
+	return NULL;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 TFPlayerClassData_t *GetPlayerClassData( unsigned int iClass )
 {
 	return g_pTFPlayerClassDataMgr->Get( iClass );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+TFPlayerClassData_t* GetPlayerSubClassData( const char* pszSubClass )
+{
+	return g_pTFPlayerClassDataMgr->GetSub( pszSubClass );
 }
 
 //-----------------------------------------------------------------------------

@@ -400,7 +400,14 @@ void CEconEntity::UpdateModelToClass( void )
 	// If we attach to hands, we need to use the hand models
 	if ( pItem->GetStaticData()->ShouldAttachToHands() )
 	{
-		pszModel = pPlayer->GetPlayerClass()->GetHandModelName( 0 );
+		if ( pPlayer->m_Shared.IsSubClass() )
+		{
+			pszModel = pPlayer->m_Shared.GetSubClassData()->m_szHandModelName;
+		}
+		else
+		{
+			pszModel = pPlayer->GetPlayerClass()->GetHandModelName( 0 );
+		}
 	}
 	else
 	{

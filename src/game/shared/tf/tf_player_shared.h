@@ -15,6 +15,7 @@
 #include "basegrenade_shared.h"
 #include "SpriteTrail.h"
 #include "tf_condition.h"
+#include "tf_classdata.h"
 
 // Client specific.
 #ifdef CLIENT_DLL
@@ -1278,6 +1279,13 @@ public:
 
 	float m_flCYOAPDAAnimStateTime;
 	TFCYOAPDAAnimState_t m_iCYOAPDAAnimState;
+
+	CNetworkString( m_strSubClass, 256 );
+
+	const char* GetSubClass( void ) const { return m_strSubClass.Get(); }
+	bool IsSubClass( void ) const { return GetSubClass() && GetSubClass()[0] && GetPlayerSubClassData( GetSubClass() ); }
+	TFPlayerClassData_t* GetSubClassData( void ) const { return IsSubClass() ? GetPlayerSubClassData( GetSubClass() ) : NULL; }
+	void SetSubClass( const char* target ) { Q_strncpy( m_strSubClass.GetForModify(), target, 256 );  }
 
 private:
 	CNetworkVar( bool, m_bHasPasstimeBall );

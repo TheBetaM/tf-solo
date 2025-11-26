@@ -69,6 +69,8 @@ struct TFPlayerClassData_t
 	char		m_szDeathSound[ DEATH_SOUND_TOTAL ][MAX_PLAYERCLASS_SOUND_LENGTH];
 #endif
 
+	char		m_szBaseClassName[TF_NAME_LENGTH];
+
 	TFPlayerClassData_t();
 	const char *GetModelName() const;
 
@@ -90,6 +92,10 @@ public:
 	virtual bool Init( void );	
 	TFPlayerClassData_t *Get( unsigned int iClass );
 	void AddAdditionalPlayerDeathSounds( void );
+
+	TFPlayerClassData_t* GetSub( const char* pszSubClass );
+
+	CUtlMap< const char*, TFPlayerClassData_t* > m_TFPlayerSubClasses;
 private:
 
 	TFPlayerClassData_t m_aTFPlayerClassData[TF_CLASS_COUNT_ALL];
@@ -99,5 +105,7 @@ extern CTFPlayerClassDataMgr *g_pTFPlayerClassDataMgr;
 
 // Legacy.
 TFPlayerClassData_t *GetPlayerClassData( unsigned int iClass );
+
+TFPlayerClassData_t *GetPlayerSubClassData( const char* pszSubClass );
 
 #endif // TF_CLASSDATA_H

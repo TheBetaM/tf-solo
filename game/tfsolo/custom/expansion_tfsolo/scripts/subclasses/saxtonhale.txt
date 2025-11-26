@@ -1,0 +1,36 @@
+PlayerSubClass
+{
+	saxtonhale
+	{
+		baseclass		"heavyweapons"
+		model 			"models/vsh/player/saxton_hale.mdl"
+		model_hwm		"models/vsh/player/saxton_hale.mdl"
+		model_hands		"models/vsh/weapons/c_models/c_saxton_hale_arms.mdl"
+		localize_name	"Saxton Hale"
+		speed_max		"300"
+		health_max		"300"
+		armor_max		"0"
+
+		grenade1		"TF_WEAPON_GRENADE_NORMAL"
+		
+		weapon1			"TF_WEAPON_FISTS"
+		
+		cameraoffset_forward	"85"
+		cameraoffset_right		"25"
+		cameraoffset_up			"0"
+		
+		AmmoMax
+		{
+			tf_ammo_primary		"25"
+			tf_ammo_secondary	"75"
+			tf_ammo_metal		"100"
+			tf_ammo_grenades1	"1"
+			tf_ammo_grenades2	"0"
+		}	
+		
+		sound_death 			"Sniper.Death"
+		sound_crit_death 		"Sniper.CritDeath"
+		sound_melee_death 		"Sniper.MeleeDeath"
+		sound_explosion_death 	"Sniper.ExplosionDeath"
+	}
+}

@@ -439,6 +439,8 @@ BEGIN_RECV_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
 
 	RecvPropFloat( RECVINFO( m_flHolsterAnimTime ) ),
 	RecvPropEHandle( RECVINFO( m_hSwitchTo ) ),
+
+	RecvPropString( RECVINFO( m_strSubClass ) ),
 END_RECV_TABLE()
 
 BEGIN_PREDICTION_DATA_NO_BASE( CTFPlayerShared )
@@ -615,6 +617,8 @@ BEGIN_SEND_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
 	
 	SendPropFloat( SENDINFO( m_flHolsterAnimTime ) ),
 	SendPropEHandle( SENDINFO( m_hSwitchTo ) ),
+
+	SendPropString( SENDINFO( m_strSubClass ) ),
 END_SEND_TABLE()
 
 #endif
@@ -910,6 +914,8 @@ CTFPlayerShared::CTFPlayerShared()
 
 	// make sure we have all conditions in the list
 	m_ConditionData.EnsureCount( TF_COND_LAST );
+
+	m_strSubClass.GetForModify()[0] = '\0';
 }
 
 //-----------------------------------------------------------------------------
@@ -10779,6 +10785,10 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 
 	// First, get their max class speed
 	float default_speed = GetPlayerClassData( playerclass )->m_flMaxSpeed;
+	if ( m_Shared.IsSubClass() )
+	{
+		default_speed = m_Shared.GetSubClassData()->m_flMaxSpeed;
+	}
 
 	// Avoid re-entering and calculating our velocity while we're calculating our velocity.
 	// This can happen if we have two characters trying to match each other's velocity, for
@@ -11274,9 +11284,30 @@ int CTFPlayer::CanBuild( int iObjectType, int iObjectMode )
 #ifndef CLIENT_DLL
 	CTFPlayerClass *pCls = GetPlayerClass();
 
-	if ( !bHasSubType && pCls && pCls->CanBuildObject( iObjectType ) == false )
+	if ( !bHasSubType && pCls )
 	{
-		return CB_CANNOT_BUILD;
+		if ( m_Shared.IsSubClass() )
+		{
+			auto pData = m_Shared.GetSubClassData();
+			int i;
+			bool bFound = false;
+			for ( i = 0; i < TF_PLAYER_BLUEPRINT_COUNT; i++ )
+			{
+				if ( iObjectType == pData->m_aBuildable[i] )
+				{
+					bFound = true;
+					break;
+				}
+			}
+			if ( !bFound )
+			{
+				return CB_CANNOT_BUILD;
+			}
+		}
+		else if ( pCls->CanBuildObject( iObjectType ) == false )
+		{
+			return CB_CANNOT_BUILD;
+		}
 	}
 #endif
 
@@ -12925,7 +12956,16 @@ bool CTFPlayer::CanDisguise_OnKill( void )
 //-----------------------------------------------------------------------------
 int	CTFPlayer::GetMaxAmmo( int iAmmoIndex, int iClassIndex /*= -1*/ )
 {
-	int iMax = ( iClassIndex == -1 ) ? m_PlayerClass.GetData()->m_aAmmoMax[iAmmoIndex] : GetPlayerClassData( iClassIndex )->m_aAmmoMax[iAmmoIndex];
+	int iMax = m_PlayerClass.GetData()->m_aAmmoMax[ iAmmoIndex ];
+	if ( iClassIndex != -1 )
+	{
+		iMax = GetPlayerClassData( iClassIndex )->m_aAmmoMax[ iAmmoIndex ];
+	}
+	if ( m_Shared.IsSubClass() )
+	{
+		iMax = m_Shared.GetSubClassData()->m_aAmmoMax[ iAmmoIndex ];
+	}
+
 	if ( iAmmoIndex == TF_AMMO_PRIMARY )
 	{
 		CALL_ATTRIB_HOOK_INT( iMax, mult_maxammo_primary );

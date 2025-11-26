@@ -1,0 +1,6 @@
+#basedir subclasses
+
+PlayerSubClass
+{
+	
+}

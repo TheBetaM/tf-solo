@@ -668,6 +668,10 @@ const char *CTFWeaponBase::GetViewModel( int iViewModel ) const
 		// Should always be valid, because players without classes shouldn't be carrying items
 		const char *pszHandModel = pPlayer->GetPlayerClass()->GetHandModelName( iHandModelIndex );
 		Assert( pszHandModel );
+		if ( pPlayer->m_Shared.IsSubClass() )
+		{
+			pszHandModel = pPlayer->m_Shared.GetSubClassData()->m_szHandModelName;
+		}
 
 		return pszHandModel;
 	}

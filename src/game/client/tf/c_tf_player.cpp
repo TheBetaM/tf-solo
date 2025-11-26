@@ -696,7 +696,14 @@ void C_TFRagdoll::CreateTFRagdoll()
 
 	if ( pPlayer && pPlayer->GetPlayerClass() && !pPlayer->ShouldDrawSpyAsDisguised() )
 	{
-		nModelIndex = modelinfo->GetModelIndex( pPlayer->GetPlayerClass()->GetModelName() );
+		if ( pPlayer->m_Shared.IsSubClass() )
+		{
+			nModelIndex = modelinfo->GetModelIndex( pPlayer->m_Shared.GetSubClassData()->GetModelName() );
+		}
+		else
+		{
+			nModelIndex = modelinfo->GetModelIndex( pPlayer->GetPlayerClass()->GetModelName() );
+		}
 	}
 	else
 	{
@@ -1410,7 +1417,7 @@ void C_TFRagdoll::ClientThink( void )
 	C_TFPlayer *pPlayer = GetPlayer();
 	bool bBombinomicon = ( pPlayer && pPlayer->HasBombinomiconEffectOnDeath() );
 
-	if ( !m_bGib )
+	if ( !m_bGib || pPlayer->m_Shared.IsSubClass() )
 	{
 		if ( m_bDissolving )
 		{
@@ -5186,8 +5193,17 @@ void C_TFPlayer::UpdateRuneIcon( bool bForceStop /*= false */ )
 void C_TFPlayer::OnPlayerClassChange( void )
 {
 	// Init the anim movement vars
-	m_PlayerAnimState->SetRunSpeed( GetPlayerClass()->GetMaxSpeed() );
-	m_PlayerAnimState->SetWalkSpeed( GetPlayerClass()->GetMaxSpeed() * 0.5 );
+	if ( m_Shared.IsSubClass() )
+	{
+		auto subclass = m_Shared.GetSubClassData();
+		m_PlayerAnimState->SetRunSpeed( subclass->m_flMaxSpeed );
+		m_PlayerAnimState->SetWalkSpeed( subclass->m_flMaxSpeed * 0.5 );
+	}
+	else
+	{
+		m_PlayerAnimState->SetRunSpeed( GetPlayerClass()->GetMaxSpeed() );
+		m_PlayerAnimState->SetWalkSpeed( GetPlayerClass()->GetMaxSpeed() * 0.5 );
+	}
 
 	if ( IsLocalPlayer() )
 	{
@@ -8368,6 +8384,10 @@ void C_TFPlayer::OverrideView( CViewSetup *pSetup )
 	BaseClass::OverrideView( pSetup );
 
 	TFPlayerClassData_t *pData = GetPlayerClass()->GetData();
+	if ( m_Shared.IsSubClass() )
+	{
+		pData = m_Shared.GetSubClassData();
+	}
 
 	if ( pData  && g_ThirdPersonManager.WantToUseGameThirdPerson() )
 	{
@@ -8969,7 +8989,11 @@ void C_TFPlayer::ValidateModelIndex( void )
 	else
 	{
 		C_TFPlayerClass *pClass = GetPlayerClass();
-		if ( pClass )
+		if ( m_Shared.IsSubClass() )
+		{
+			m_nModelIndex = modelinfo->GetModelIndex( m_Shared.GetSubClassData()->GetModelName() );
+		}
+		else if ( pClass )
 		{
 			m_nModelIndex = modelinfo->GetModelIndex( pClass->GetModelName() );
 		}

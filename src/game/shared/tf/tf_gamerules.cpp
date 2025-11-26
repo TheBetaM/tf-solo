@@ -835,6 +835,7 @@ ConVar tf_autobalance_force_candidates_maxtime( "tf_autobalance_force_candidates
 ConVar tf_autobalance_xp_bonus( "tf_autobalance_xp_bonus", "500", FCVAR_REPLICATED );
 
 ConVar mp_humans_must_join_class("mp_humans_must_join_class", "any", FCVAR_REPLICATED, "Restricts human players to a single class {any, scout, soldier, etc.}");
+ConVar mp_humans_must_join_subclass("mp_humans_must_join_subclass", "any", FCVAR_REPLICATED, "Restricts human players to a single subclass {any, saxton, merasmus, etc.}, auto forces parent class");
 #ifdef GAME_DLL
 
 static const float g_flStrangeEventBatchProcessInterval = 30.0f;
@@ -23684,21 +23685,59 @@ void CTFGameRules::RegisterScriptFunctions()
 //-----------------------------------------------------------------------------
 // Purpose: Restrict class human players can join
 //-----------------------------------------------------------------------------
-int CTFGameRules::GetAssignedHumanClass(void)
+int CTFGameRules::GetAssignedHumanClass( void )
 {
+	const char* SubClass = GetAssignedHumanSubClass();
+	if ( SubClass )
+	{
+		auto SubClassData = GetPlayerSubClassData( SubClass );
+		const char* SubClassBase = SubClassData->m_szBaseClassName;
+		for ( int i = TF_CLASS_SCOUT; i < TF_CLASS_COUNT_ALL; ++i )
+		{
+			if ( !stricmp( SubClassBase, GetPlayerClassData( i )->m_szClassName ) )
+			{
+				return i;
+			}
+		}
+		return TF_CLASS_SCOUT;
+	}
+
 	auto cvar = mp_humans_must_join_class.GetString();
-	if (!cvar)
+	if ( !cvar )
 	{
 		return TF_CLASS_UNDEFINED;
 	}
 
-	for (int i = TF_CLASS_SCOUT; i < TF_CLASS_COUNT_ALL; ++i)
+	for ( int i = TF_CLASS_SCOUT; i < TF_CLASS_COUNT_ALL; ++i )
 	{
-		if (!stricmp(cvar, GetPlayerClassData(i)->m_szClassName))
+		if ( !stricmp( cvar, GetPlayerClassData( i )->m_szClassName ) )
 		{
 			return i;
 		}
 	}
 
 	return TF_CLASS_UNDEFINED;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Restrict subclass human players can join
+//-----------------------------------------------------------------------------
+const char* CTFGameRules::GetAssignedHumanSubClass( void )
+{
+	auto cvar = mp_humans_must_join_subclass.GetString();
+	if ( !cvar )
+	{
+		return NULL;
+	}
+	if ( FStrEq( cvar, "any" ) )
+	{
+		return NULL;
+	}
+
+	if ( g_pTFPlayerClassDataMgr->GetSub( cvar ) )
+	{
+		return cvar;
+	}
+
+	return NULL;
 }

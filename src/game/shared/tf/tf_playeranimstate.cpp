@@ -1441,6 +1441,10 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 		
 	// Handle air walking before handling jumping - air walking supersedes jump
 	TFPlayerClassData_t *pData = m_pTFPlayer->GetPlayerClass()->GetData();
+	if ( m_pTFPlayer->m_Shared.IsSubClass() )
+	{
+		pData = m_pTFPlayer->m_Shared.GetSubClassData();
+	}
 	bool bValidAirWalkClass = ( pData && pData->m_bDontDoAirwalk == false );
 
 	if ( bValidAirWalkClass && ( vecVelocity.z > 300.0f || m_bInAirWalk || m_pTFPlayer->GetGrapplingHookTarget() != NULL ) && !bInDuck )
@@ -1479,6 +1483,10 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 		{
 			// Remove me once all classes are doing the new jump
 			TFPlayerClassData_t *pDataJump = m_pTFPlayer->GetPlayerClass()->GetData();
+			if ( m_pTFPlayer->m_Shared.IsSubClass() )
+			{
+				pDataJump = m_pTFPlayer->m_Shared.GetSubClassData();
+			}
 			bool bNewJump = (pDataJump && pDataJump->m_bDontDoNewJump == false );
 
 			if ( m_bFirstJumpFrame )
