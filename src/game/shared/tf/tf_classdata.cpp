@@ -85,6 +85,11 @@ TFPlayerClassData_t::TFPlayerClassData_t()
 		m_aBuildable[iBuildable] = OBJ_LAST;
 	}
 
+	for ( int i = 0; i < ARRAYSIZE( m_szBaseWeapons ); ++i )
+	{
+		m_szBaseWeapons[i][0] = '\0';
+	}
+
 	m_bParsed = false;
 }
 
@@ -164,6 +169,7 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	{
 		Q_snprintf( buf, sizeof(buf), "weapon%d", i+1 );		
 		m_aWeapons[i] = GetWeaponId( pKeyValuesData->GetString( buf ) );
+		Q_strncpy( m_szBaseWeapons[i], pKeyValuesData->GetString( buf ), 256 );
 	}
 
 	// Grenades.

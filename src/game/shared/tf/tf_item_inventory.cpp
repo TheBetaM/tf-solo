@@ -804,7 +804,7 @@ bool CTFInventoryManager::SlotContainsBaseItems( EEquipType_t eType, int iSlot )
 //-----------------------------------------------------------------------------
 // Purpose: Returns the item data for the base item in the loadout slot for a given class
 //-----------------------------------------------------------------------------
-CEconItemView *CTFInventoryManager::GetBaseItemForClass( int iClass, int iSlot )
+CEconItemView *CTFInventoryManager::GetBaseItemForClass( int iClass, int iSlot, const char* pszSubClass )
 {
 	// There is no base account item
 	if ( iClass == GEconItemSchema().GetAccountIndex() )
@@ -855,6 +855,35 @@ CEconItemView *CTFInventoryManager::GetBaseItemForClass( int iClass, int iSlot )
 
 	if ( iSlot >= LOADOUT_POSITION_HEAD )
 		return m_pDefaultItem;
+
+	if ( pszSubClass && pszSubClass[0] )
+	{
+		auto subclass = GetPlayerSubClassData( pszSubClass );
+		if ( subclass )
+		{
+			for (int i = 0; i < TF_PLAYER_WEAPON_COUNT; i++)
+			{
+				const char* WepName = subclass->m_szBaseWeapons[i];
+				auto def = GetItemSchema()->GetItemDefinitionByName( WepName );
+				if ( def )
+				{
+					FOR_EACH_VEC( m_pBaseLoadoutItems, iItem )
+					{
+						if ( m_pBaseLoadoutItems[iItem]->GetItemDefinition()->GetDefaultLoadoutSlot() == iSlot &&
+							m_pBaseLoadoutItems[iItem]->GetItemDefinition()->GetDefinitionIndex() == def->GetDefinitionIndex() )
+							return m_pBaseLoadoutItems[iItem];
+					}
+					FOR_EACH_VEC( m_pSoloLoadoutItems, iItem )
+					{
+						if ( m_pSoloLoadoutItems[iItem]->GetItemDefinition()->GetDefaultLoadoutSlot() == iSlot &&
+							m_pSoloLoadoutItems[iItem]->GetItemDefinition()->GetDefinitionIndex() == def->GetDefinitionIndex() )
+							return m_pSoloLoadoutItems[iItem];
+					}
+				}
+			}
+		}
+		return m_pDefaultItem;
+	}
 
 	// Traverse List
 	FOR_EACH_VEC( m_pBaseLoadoutItems, iItem )
@@ -1672,12 +1701,12 @@ CEconItemView *CTFPlayerInventory::GetFirstItemOfItemDef( item_definition_index_
 //-----------------------------------------------------------------------------
 // Purpose: Returns the item in the specified loadout slot for a given class
 //-----------------------------------------------------------------------------
-CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
+CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot, const char* pszSubClass )
 {
 	if ( iSlot < 0 || iSlot >= CLASS_LOADOUT_POSITION_COUNT )
 		return NULL;
 
-	if (!m_bOfflineLoaded)
+	if ( !m_bOfflineLoaded )
 	{
 		m_bOfflineLoaded = true;
 		LoadLocalLoadout();
@@ -1692,6 +1721,11 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 		if ( iClass < TF_FIRST_NORMAL_CLASS || iClass >= TF_LAST_NORMAL_CLASS  )
 			return NULL;
 
+		if ( pszSubClass && pszSubClass[0] )
+		{
+			return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, pszSubClass );
+		}
+
 		// If we don't have an item in the loadout at that slot, we return the base item
 		if ( m_LoadoutItems[iClass][iSlot] != LOADOUT_SLOT_USE_BASE_ITEM )
 		{
@@ -1699,7 +1733,7 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 
 			// To protect against users lying to the backend about the position of their items,
 			// we need to validate their position on the server when we retrieve them.
-			if (pItem && AreSlotsConsideredIdentical(pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot(iClass), iSlot))
+			if ( pItem && AreSlotsConsideredIdentical( pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot( iClass ), iSlot ) )
 			{
 				if ( !tf_disable_base_econ_items.GetBool() && TFInventoryManager()->CheckAllowItemEquip( iClass, iSlot ) )
 				{
@@ -1707,23 +1741,23 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 				}
 				else
 				{
-					return TFInventoryManager()->GetBaseItemForClass(iClass, iSlot);
+					return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot );
 				}
 			}
 
-			if (m_LoadoutItems[iClass][iSlot] < LOCAL_LOADOUT_RESERVE)
+			if ( m_LoadoutItems[iClass][iSlot] < LOCAL_LOADOUT_RESERVE )
 			{
 				int count = TFInventoryManager()->GetSoloItemCount();
 				for (int i = 0; i < count; i++)
 				{
 					CEconItemView* pItem = TFInventoryManager()->GetSoloItem(i);
-					if (pItem && pItem->GetItemDefIndex() == m_LoadoutItems[iClass][iSlot])
+					if ( pItem && pItem->GetItemDefIndex() == m_LoadoutItems[iClass][iSlot] )
 					{
-						if (pItem && AreSlotsConsideredIdentical(pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot(iClass), iSlot))
+						if ( pItem && AreSlotsConsideredIdentical( pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot (iClass ), iSlot ) )
 							return pItem;
 					}
 				}
-				return TFInventoryManager()->AddSoloItem(m_LoadoutItems[iClass][iSlot]);
+				return TFInventoryManager()->AddSoloItem( m_LoadoutItems[iClass][iSlot] );
 			}
 		}
 	}

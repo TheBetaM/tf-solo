@@ -4984,7 +4984,7 @@ CEconItemView *CTFPlayer::GetLoadoutItem( int iClass, int iSlot, bool bReportWhi
 		return pInventoryManager->GetBaseItemForClass( iClass, iSlot );
 	}
 
-	CEconItemView *pItem = m_Inventory.GetItemInLoadout( iClass, iSlot );
+	CEconItemView *pItem = m_Inventory.GetItemInLoadout( iClass, iSlot, ScriptGetSubClass() );
 
 	// Check to see if this item passes the tournament rules (in whitelist/or normal quality).
 	// If it doesn't, we fall back to the base item for the loadout slot.

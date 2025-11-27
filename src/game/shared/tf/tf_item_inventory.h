@@ -42,7 +42,7 @@ public:
 	CTFPlayerInventory();
 	virtual ~CTFPlayerInventory();
 
-	virtual CEconItemView	*GetItemInLoadout( int iClass, int iSlot );
+	virtual CEconItemView	*GetItemInLoadout( int iClass, int iSlot, const char* pszSubClass = NULL );
 
 #ifdef CLIENT_DLL
 	// Removes any item in a loadout slot. If the slot has a base item,
@@ -197,7 +197,7 @@ public:
 #endif
 
 	// Returns the item data for the base item in the loadout slot for a given class
-	CEconItemView		*GetBaseItemForClass( int iClass, int iSlot );
+	CEconItemView		*GetBaseItemForClass( int iClass, int iSlot, const char* pszSubClass = NULL );
 	void				GenerateBaseItems( void );
 	CEconItemView		*AddSoloItem( int id );
 
