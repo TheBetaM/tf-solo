@@ -19484,7 +19484,11 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 	}
 	else
 	{
-		if ( GetPlayerClass() )
+		if ( m_Shared.IsSubClass() )
+		{
+			criteriaSet.AppendCriteria( "playerclass", m_Shared.GetSubClassData()->m_szResponseClassName );
+		}
+		else if ( GetPlayerClass() )
 		{
 			criteriaSet.AppendCriteria( "playerclass", g_aPlayerClassNames_NonLocalized[ GetPlayerClass()->GetClassIndex() ] );
 		}
@@ -20119,7 +20123,7 @@ IResponseSystem *CTFPlayer::GetResponseSystem()
 	Assert( bValidClass );
 	Assert( bValidConcept );
 
-	if ( !bValidClass || !bValidConcept )
+	if ( !bValidClass || !bValidConcept || m_Shared.IsSubClass() )
 	{
 		return BaseClass::GetResponseSystem();
 	}

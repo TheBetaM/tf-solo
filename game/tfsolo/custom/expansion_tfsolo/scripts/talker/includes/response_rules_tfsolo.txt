@@ -1,0 +1,4 @@
+ResponseIncludes
+{
+	"scripts/talker/includes/tfsolo/saxtonhale.txt" 1
+}

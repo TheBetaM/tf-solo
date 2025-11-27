@@ -3,6 +3,8 @@ PlayerSubClass
 	saxtonhale
 	{
 		baseclass		"heavyweapons"
+		responseclassname "saxtonhale"
+		
 		model 			"models/vsh/player/saxton_hale.mdl"
 		model_hwm		"models/vsh/player/saxton_hale.mdl"
 		model_hands		"models/vsh/weapons/c_models/c_saxton_hale_arms.mdl"

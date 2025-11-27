@@ -1,0 +1,29 @@
+
+Criterion "IsSaxtonHale" "playerclass" "saxtonhale" "required"
+
+Criterion "IsNotSaxtonHale" "playerclass" "!=saxtonhale" "required" 
+
+Response KilledPlayerMeleeSaxtonHale
+{
+	scene "scenes/Player/Heavy/low/272.vcd" 
+	scene "scenes/Player/Heavy/low/273.vcd" 
+}
+Rule KilledPlayerMeleeSaxtonHale
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay IsWeaponMelee IsSaxtonHale
+	Response KilledPlayerMeleeSaxtonHale
+}
+
+Response SaxtonHaleSwingFists
+{
+	scene "scenes/player/heavy/low/2272.vcd"
+	scene "scenes/player/heavy/low/2273.vcd"
+	scene "scenes/player/heavy/low/2274.vcd"
+	scene "scenes/player/heavy/low/1978.vcd"
+	scene "scenes/player/heavy/low/1979.vcd"
+}
+Rule SaxtonHaleSwingFists
+{
+	criteria ConceptFireWeapon IsWeaponMelee IsSaxtonHale
+	Response SaxtonHaleSwingFists
+}

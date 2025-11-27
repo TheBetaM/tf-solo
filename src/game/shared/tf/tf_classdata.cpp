@@ -211,6 +211,7 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 #endif
 
 	Q_strncpy( m_szBaseClassName, pKeyValuesData->GetString( "baseclass", "scout" ), TF_NAME_LENGTH );
+	Q_strncpy( m_szResponseClassName, pKeyValuesData->GetString( "responseclassname", "scout" ), TF_NAME_LENGTH );
 
 	// The file has been parsed.
 	m_bParsed = true;

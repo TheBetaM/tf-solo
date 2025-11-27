@@ -3305,6 +3305,31 @@ bool CDefaultResponseSystem::Init()
 
 	LoadRuleSet( basescript );
 
+	KeyValuesAD config( "response_includes" );
+	if ( config->LoadFromFile( g_pFullFileSystem, "scripts/talker/response_includes.txt", "GAME" ) )
+	{
+		KeyValues* key = config->GetFirstSubKey();
+		CStringPool includedFiles;
+		while ( key )
+		{
+			CUtlBuffer buf;
+			if ( filesystem->ReadFile( key->GetName(), "GAME", buf ) )
+			{
+				LoadFromBuffer( key->GetName(), (const char*)buf.PeekGet(), includedFiles );
+			}
+			else
+			{
+				DevMsg( "Unable to load #included script %s\n", key->GetName() );
+			}
+
+			key = key->GetNextKey();
+		}
+	}
+	else
+	{
+		DevMsg( "Unable to parse response_includes.txt into keyvalues.\n" );
+	}
+
 	return true;
 }
 

@@ -71,6 +71,7 @@ struct TFPlayerClassData_t
 
 	char		m_szBaseClassName[TF_NAME_LENGTH];
 	char		m_szBaseWeapons[ TF_PLAYER_WEAPON_COUNT ][ 256 ];
+	char		m_szResponseClassName[TF_NAME_LENGTH];
 
 	TFPlayerClassData_t();
 	const char *GetModelName() const;

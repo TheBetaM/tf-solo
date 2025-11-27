@@ -3,6 +3,8 @@ PlayerSubClass
 	merasmus
 	{
 		baseclass		"sniper"
+		responseclassname "merasmus"
+		
 		model 			"models/bots/merasmus/merasmus.mdl"
 		model_hwm		"models/bots/merasmus/merasmus.mdl"
 		model_hands		"models/weapons/c_models/c_sniper_arms.mdl"
