@@ -1243,6 +1243,20 @@ void CHudMainMenuOverride::OnMainMenuStabilized()
 	if ( !tf_oobe_multiplayer.GetBool() )
 	{
 		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 0" );
+		engine->ClientCmd_Unrestricted( "sv_lan 1" );
+		engine->ClientCmd_Unrestricted( "tf_party_ignore_invites 1" );
+		engine->ClientCmd_Unrestricted( "tf_party_join_request_mode 2" );
+		engine->ClientCmd_Unrestricted( "sv_friends_only 1" );
+		engine->ClientCmd_Unrestricted( "sv_allow_server_adverisement_to_master_server 0" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 1" );
+		engine->ClientCmd_Unrestricted( "sv_lan 0" );
+		engine->ClientCmd_Unrestricted( "tf_party_ignore_invites 0" );
+		engine->ClientCmd_Unrestricted( "tf_party_join_request_mode -1" );
+		engine->ClientCmd_Unrestricted( "sv_friends_only 1" );
+		engine->ClientCmd_Unrestricted( "sv_allow_server_adverisement_to_master_server 0" );
 	}
 	if ( !tf_oobe_viewed.GetBool() )
 	{
