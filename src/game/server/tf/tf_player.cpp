@@ -1141,6 +1141,8 @@ CTFPlayer::CTFPlayer()
 	m_bRespawning = false;
 
 	m_bAlreadyUsedExtendFreezeThisDeath = false;
+
+	m_bSwitchedSubClass = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -3632,11 +3634,13 @@ void CTFPlayer::Spawn()
 	{
 		m_Shared.SetSubClass( m_Shared.m_strDesiredSubClass.Get() );
 		m_Shared.m_strDesiredSubClass.GetForModify()[0] = '\0';
+		m_bSwitchedSubClass = true;
 	}
 	if ( m_Shared.m_bSubClassReset )
 	{
 		m_Shared.SetSubClass( "" );
 		m_Shared.m_bSubClassReset = false;
+		m_bSwitchedSubClass = true;
 	}
 
 	SetModelScale( 1.0f );
@@ -7037,6 +7041,7 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		{
 			m_Shared.m_bSubClassReset = true;
 		}
+		m_bSwitchedSubClass = true;
 		if ( !IsAlive() )
 		{
 			ResetPlayerClass();
@@ -14939,10 +14944,11 @@ void CTFPlayer::ForceRespawn( void )
 		DropFlag();
 	}
 
-	if ( GetPlayerClass()->GetClassIndex() != iDesiredClass )
+	if ( GetPlayerClass()->GetClassIndex() != iDesiredClass || m_bSwitchedSubClass )
 	{
 		// clean up any pipebombs/buildings in the world (no explosions)
 		m_bSwitchedClass = true;
+		m_bSwitchedSubClass = false;
 
 		RemoveAllOwnedEntitiesFromWorld();
 

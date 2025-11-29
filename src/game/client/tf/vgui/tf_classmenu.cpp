@@ -875,7 +875,7 @@ void CTFClassMenu::SelectSubClass( const char* pszSubClass )
 	}
 	else
 	{
-		m_pTFPlayerModelPanel->SetToPlayerClass( m_iCurrentClassIndex, bClassWasRandom, GetPlayerSubClassData( m_pszCurrentSubClass )->GetModelName() );
+		m_pTFPlayerModelPanel->SetToPlayerSubClass( m_pszCurrentSubClass, bClassWasRandom );
 
 		m_pEditLoadoutButton->SetVisible( true );
 		if ( m_pEditLoadoutHintIcon )

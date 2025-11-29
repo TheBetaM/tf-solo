@@ -1263,6 +1263,7 @@ private:
 
 	bool				m_bPlayedFreezeCamSound;
 	bool				m_bSwitchedClass;
+	bool				m_bSwitchedSubClass;
 	bool				m_bRememberLastWeapon;
 	bool				m_bRememberActiveWeapon;
 	int					m_iActiveWeaponTypePriorToDeath;

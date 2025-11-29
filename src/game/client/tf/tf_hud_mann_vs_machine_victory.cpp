@@ -1328,7 +1328,14 @@ bool CMvMVictoryMannUpEntry::SetModelPanelInfo( C_TFPlayer* pPlayer )
 	CEconItemView *pWeapon = TFInventoryManager()->GetItemInLoadoutForClass( nClass, nLoadoutSlot, &steamID );
 
 	m_pPlayerModelPanel->ClearCarriedItems();
-	m_pPlayerModelPanel->SetToPlayerClass( nClass, true );
+	if ( pPlayer->m_Shared.IsSubClass() )
+	{
+		m_pPlayerModelPanel->SetToPlayerSubClass( pPlayer->m_Shared.GetSubClass(), true );
+	}
+	else
+	{
+		m_pPlayerModelPanel->SetToPlayerClass( nClass, true );
+	}
 	m_pPlayerModelPanel->SetTeam( nTeam );
 
 	for ( int wbl = pPlayer->GetNumWearables()-1; wbl >= 0; wbl-- )

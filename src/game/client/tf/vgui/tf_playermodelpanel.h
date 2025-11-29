@@ -29,6 +29,7 @@ public:
 	void	ApplySettings( KeyValues *inResourceData );
 
 	void	SetToPlayerClass( int iClass, bool bForceRefresh = false, const char *pszPlayerModelOverride = NULL );
+	void	SetToPlayerSubClass( const char* pszSubClass, bool bForceRefresh = false, const char *pszPlayerModelOverride = NULL );
 	bool	HoldItemInSlot( int iSlot );
 	bool	HoldItem( int iItemNumber );
 	void	SwitchHeldItemTo( CEconItemView *pItem );
@@ -224,6 +225,7 @@ private:
 	const char* m_pszForceSequenceName;
 	bool m_bForceSequenceLoop;
 	bool m_bFreezeScene;
+	const char* m_pszCurrentSubClass;
 
 	CPanelAnimationVar( bool, m_bDisableSpeakEvent, "disable_speak_event", "0" );
 

@@ -429,6 +429,7 @@ BEGIN_SCRIPTDESC(CItemModelPanel, EditablePanel, "")
 END_SCRIPTDESC();
 BEGIN_SCRIPTDESC(CTFPlayerModelPanel, EditablePanel, "")
 DEFINE_SCRIPTFUNC(SetToPlayerClass, "")
+DEFINE_SCRIPTFUNC(SetToPlayerSubClass, "")
 DEFINE_SCRIPTFUNC(HoldItemInSlot, "")
 DEFINE_SCRIPTFUNC(HoldItem, "")
 DEFINE_SCRIPTFUNC(ClearCarriedItems, "")

@@ -145,6 +145,7 @@ CTFPlayerModelPanel::CTFPlayerModelPanel( vgui::Panel *pParent, const char *pNam
 	m_pszForceSequenceName = "";
 	m_bForceSequenceLoop = false;
 	m_bFreezeScene = false;
+	m_pszCurrentSubClass = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -208,7 +209,7 @@ void CTFPlayerModelPanel::SetToPlayerClass( int iClass, bool bForceRefresh /*= f
 		m_strPlayerModelOverride = pszPlayerModelOverride ? pszPlayerModelOverride : "";
 	}
 
-	if ( m_iCurrentClassIndex == iClass && !bForceRefresh )
+	if ( m_iCurrentClassIndex == iClass && !bForceRefresh && !m_pszCurrentSubClass )
 		return;
 
 	if ( m_bZoomedToHead )
@@ -216,6 +217,7 @@ void CTFPlayerModelPanel::SetToPlayerClass( int iClass, bool bForceRefresh /*= f
 		ToggleZoom();
 	}
 
+	m_pszCurrentSubClass = NULL;
 	m_iCurrentClassIndex = iClass;
 	ClearScene();
 
@@ -228,6 +230,71 @@ void CTFPlayerModelPanel::SetToPlayerClass( int iClass, bool bForceRefresh /*= f
 		else
 		{
 			TFPlayerClassData_t *pData = GetPlayerClassData( m_iCurrentClassIndex );
+			SetMDL( pData->GetModelName() );
+			HoldFirstValidItem();
+		}
+
+		// set custom class data
+		if ( m_customClassData.IsValidIndex( m_iCurrentClassIndex ) )
+		{
+			SetCameraFOV( m_customClassData[m_iCurrentClassIndex].m_flFOV );
+			m_vecPlayerPos = m_customClassData[m_iCurrentClassIndex].m_vPosition;
+			m_angPlayer = m_customClassData[m_iCurrentClassIndex].m_vAngles;
+		}
+		else
+		{
+			m_angPlayer = m_angPlayerOrg;
+		}
+	}
+	else
+	{
+		SetMDL( MDLHANDLE_INVALID );
+		RemoveAdditionalModels();
+	}
+
+	InitPhonemeMappings();
+
+	SetTeam( TF_TEAM_RED );
+
+	m_nBody = 0;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerModelPanel::SetToPlayerSubClass( const char* pszSubClass, bool bForceRefresh /*= false*/, const char* pszPlayerModelOverride /*= NULL*/ )
+{
+	if ( !m_strPlayerModelOverride.IsEqual_CaseInsensitive( pszPlayerModelOverride ) )
+	{
+		bForceRefresh = true;
+		m_strPlayerModelOverride = pszPlayerModelOverride ? pszPlayerModelOverride : "";
+	}
+
+	TFPlayerClassData_t* pData = GetPlayerSubClassData( pszSubClass );
+
+	if ( !pData )
+		return;
+
+	if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] && FStrEq( m_pszCurrentSubClass, pszSubClass ) && !bForceRefresh )
+		return;
+
+	if ( m_bZoomedToHead )
+	{
+		ToggleZoom();
+	}
+
+	m_pszCurrentSubClass = V_strdup( pszSubClass );
+	m_iCurrentClassIndex = GetClassIndexFromString( pData->m_szBaseClassName );
+	ClearScene();
+
+	if ( IsValidTFPlayerClass( m_iCurrentClassIndex ) )
+	{
+		if ( !m_strPlayerModelOverride.IsEmpty() )
+		{
+			SetMDL( m_strPlayerModelOverride.Get() );
+		}
+		else
+		{
 			SetMDL( pData->GetModelName() );
 			HoldFirstValidItem();
 		}
@@ -299,11 +366,16 @@ void CTFPlayerModelPanel::HoldFirstValidItem( void )
 	}
 
 	// If we didn't find a weapon to wield, we wield the class's base primary weapon
-	CEconItemView *pItem = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, LOADOUT_POSITION_PRIMARY );
+	CEconItemView *pItem = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, LOADOUT_POSITION_PRIMARY, m_pszCurrentSubClass );
 	if ( !pItem || !pItem->IsValid() )
 	{
 		// Some classes only have secondary weapons. Fall back to that.
-		pItem = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, LOADOUT_POSITION_SECONDARY );
+		pItem = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, LOADOUT_POSITION_SECONDARY, m_pszCurrentSubClass );
+	}
+	if ( !pItem || !pItem->IsValid() )
+	{
+		// Some classes only have melee weapons. Fall back to that.
+		pItem = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, LOADOUT_POSITION_MELEE, m_pszCurrentSubClass );
 	}
 
 	if ( pItem && pItem->IsValid() )
@@ -551,14 +623,29 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 	bool bYeti = false;
 	if ( m_pHeldItem )
 	{
-		if ( m_pHeldItem->GetItemDefinition()->GetDefinitionIndex() == 1183 )
+		if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
 		{
-			SetToPlayerClass( m_iCurrentClassIndex, false, "models/player/items/taunts/yeti/yeti.mdl" );
-			bYeti = true;
+			if ( m_pHeldItem->GetItemDefinition()->GetDefinitionIndex() == 1183 )
+			{
+				SetToPlayerSubClass( m_pszCurrentSubClass, false, "models/player/items/taunts/yeti/yeti.mdl" );
+				bYeti = true;
+			}
+			else
+			{
+				SetToPlayerSubClass( m_pszCurrentSubClass, false, m_strPlayerModelOverride );
+			}
 		}
 		else
 		{
-			SetToPlayerClass( m_iCurrentClassIndex, false, m_strPlayerModelOverride );
+			if ( m_pHeldItem->GetItemDefinition()->GetDefinitionIndex() == 1183 )
+			{
+				SetToPlayerClass( m_iCurrentClassIndex, false, "models/player/items/taunts/yeti/yeti.mdl" );
+				bYeti = true;
+			}
+			else
+			{
+				SetToPlayerClass( m_iCurrentClassIndex, false, m_strPlayerModelOverride );
+			}
 		}
 	}
 

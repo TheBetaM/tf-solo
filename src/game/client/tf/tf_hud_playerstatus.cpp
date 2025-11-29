@@ -477,7 +477,14 @@ void CTFHudPlayerClass::UpdateModelPanel()
 		}
 
 		m_pPlayerModelPanel->ClearCarriedItems();
-		m_pPlayerModelPanel->SetToPlayerClass( nClass );
+		if ( pPlayer->m_Shared.IsSubClass() )
+		{
+			m_pPlayerModelPanel->SetToPlayerSubClass( pPlayer->m_Shared.GetSubClass() );
+		}
+		else
+		{
+			m_pPlayerModelPanel->SetToPlayerClass( nClass );
+		}
 		m_pPlayerModelPanel->SetTeam( nTeam );
 
 		if ( pWeapon )
