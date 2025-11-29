@@ -12,6 +12,7 @@
 #include "tf_weapon_medigun.h"
 #include "tf_tank_boss.h"
 #include "bot/behavior/engineer/mvm_engineer/tf_bot_mvm_engineer_idle.h"
+#include "bot/tf_bot_manager.h"
 
 #include "etwprof.h"
 
@@ -444,6 +445,8 @@ CTFBotSpawner::CTFBotSpawner( IPopulator *populator ) : IPopulationSpawner( popu
 {
 	m_class = TF_CLASS_UNDEFINED;
 	m_iszClassIcon = NULL_STRING;
+	m_iszSubClass = NULL_STRING;
+	m_iszPreset = NULL_STRING;
 
 	m_health = -1; // default health
 	m_scale = -1.0f; // default scale
@@ -790,6 +793,8 @@ bool CTFBotSpawner::Parse( KeyValues *values )
 	// Reset All values
 	m_class = TF_CLASS_UNDEFINED;
 	m_iszClassIcon = NULL_STRING;
+	m_iszPreset = NULL_STRING;
+	m_iszSubClass = NULL_STRING;
 	
 	m_health = -1; // default health
 	m_scale = -1.0f; // default scale
@@ -838,6 +843,53 @@ bool CTFBotSpawner::Parse( KeyValues *values )
 			{
 				Warning( "TFBotSpawner: Invalid class '%s'\n", value );
 				return false;
+			}
+			if ( m_name.IsEmpty() )
+			{
+				m_name = value;
+			}
+		}
+		else if ( !Q_stricmp( name, "SubClass" ) )
+		{
+			m_iszSubClass = AllocPooledString( value );
+			auto subclass = GetPlayerSubClassData( m_iszSubClass.ToCStr() );
+			if ( !subclass )
+			{
+				Warning("TFBotSpawner: Invalid subclass '%s'\n", value);
+				return false;
+			}
+			m_class = GetClassIndexFromString( subclass->m_szBaseClassName );
+			if ( m_name.IsEmpty() )
+			{
+				m_name = V_strdup( subclass->m_szLocalizableName );
+			}
+		}
+		else if ( !Q_stricmp( name, "Preset" ) )
+		{
+			m_iszPreset = AllocPooledString( value );
+			auto presetKey = TheTFBots().m_presetsKV->FindKey( m_iszPreset.ToCStr() );
+			if ( presetKey )
+			{
+				if ( presetKey->FindKey( "Name" ) )
+				{
+					if ( m_name.IsEmpty() )
+					{
+						m_name = presetKey->GetString( "Name" );
+					}
+				}
+				if ( presetKey->FindKey( "Class" ) )
+				{
+					m_class = GetClassIndexFromString( presetKey->GetString( "Class" ) );
+				}
+				else if ( presetKey->FindKey( "SubClass" ) )
+				{
+					auto subclass = GetPlayerSubClassData( presetKey->GetString( "SubClass" ) );
+					if ( subclass )
+					{
+						m_class = GetClassIndexFromString( subclass->m_szBaseClassName );
+						m_iszSubClass = AllocPooledString( presetKey->GetString( "SubClass" ) );
+					}
+				}
 			}
 			if ( m_name.IsEmpty() )
 			{
@@ -1112,10 +1164,51 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 			team = TF_TEAM_PVE_INVADERS;
 		}
 
+		if ( m_iszPreset != NULL_STRING && m_iszPreset.ToCStr()[0] )
+		{
+			newBot->SetPreset( V_strdup( m_iszPreset.ToCStr() ) );
+			auto presetKey = TheTFBots().m_presetsKV->FindKey( m_iszPreset.ToCStr() );
+			if ( presetKey )
+			{
+				if ( presetKey->FindKey( "Name" ) )
+				{
+					engine->SetFakeClientConVarValue( newBot->edict(), "name", presetKey->GetString("Name") );
+				}
+				if ( presetKey->FindKey( "Class" ) )
+				{
+					m_class = GetClassIndexFromString( presetKey->GetString( "Class" ) );
+				}
+				else if ( presetKey->FindKey( "SubClass" ) )
+				{
+					auto subclass = GetPlayerSubClassData(presetKey->GetString("SubClass"));
+					if ( subclass )
+					{
+						m_class = GetClassIndexFromString( subclass->m_szBaseClassName );
+						m_iszSubClass = AllocPooledString( presetKey->GetString( "SubClass" ) );
+					}
+				}
+			}
+		}
+		else
+		{
+			newBot->SetPreset( "" );
+		}
+
 		newBot->ChangeTeam( team, false, true );
 
 		newBot->AllowInstantSpawn();
-		newBot->HandleCommand_JoinClass( GetPlayerClassData( m_class )->m_szClassName );
+		if ( m_iszSubClass != NULL_STRING && m_iszSubClass.ToCStr()[0] )
+		{
+			newBot->HandleCommand_JoinClass( GetPlayerSubClassData( m_iszSubClass.ToCStr() )->m_szBaseClassName, true, true, m_iszSubClass.ToCStr() );
+		}
+		else if ( newBot->m_Shared.IsSubClass() )
+		{
+			newBot->HandleCommand_JoinClass( GetPlayerClassData( m_class )->m_szClassName, true, true );
+		}
+		else
+		{
+			newBot->HandleCommand_JoinClass( GetPlayerClassData( m_class )->m_szClassName );
+		}
 		newBot->GetPlayerClass()->SetClassIconName( GetClassIcon() );
 
 		newBot->ClearEventChangeAttributes();

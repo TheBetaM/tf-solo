@@ -48,6 +48,8 @@ private:
 	int m_maxActiveCount;
 	float m_spawnInterval;
 	string_t m_className;
+	string_t m_subClassName;
+	string_t m_preset;
 	string_t m_teamName;
 	string_t m_actionPointName;
 	string_t m_initialCommand;

@@ -27,6 +27,8 @@ BEGIN_DATADESC( CTFBotGenerator )
 	DEFINE_KEYFIELD( m_maxActiveCount,	FIELD_INTEGER,	"maxActive" ),
 	DEFINE_KEYFIELD( m_spawnInterval,	FIELD_FLOAT,	"interval" ),
 	DEFINE_KEYFIELD( m_className,		FIELD_STRING,	"class" ),
+	DEFINE_KEYFIELD( m_subClassName,	FIELD_STRING,	"subclass" ),
+	DEFINE_KEYFIELD( m_preset,			FIELD_STRING,	"preset" ),
 	DEFINE_KEYFIELD( m_teamName,		FIELD_STRING,	"team" ),
 	DEFINE_KEYFIELD( m_actionPointName,	FIELD_STRING,	"action_point" ),
 	DEFINE_KEYFIELD( m_initialCommand,	FIELD_STRING,	"initial_command" ),
@@ -363,10 +365,51 @@ void CTFBotGenerator::SpawnBot( void )
 
 		bot->SetActionPoint( dynamic_cast<CTFBotActionPoint *>( m_moveGoal.Get() ) );
 
+		const char* pClassName = m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
+		int iTeam = TEAM_UNASSIGNED;
+		bool bSetTeam = false;
+
+		if ( m_preset != NULL_STRING && m_preset.ToCStr()[0] )
+		{
+			bot->SetPreset( V_strdup( m_preset.ToCStr() ) );
+			auto presetKey = TheTFBots().m_presetsKV->FindKey( m_preset.ToCStr() );
+			if ( presetKey )
+			{
+				if ( presetKey->FindKey( "Name" ) )
+				{
+					engine->SetFakeClientConVarValue( bot->edict(), "name", presetKey->GetString( "Name" ) );
+				}
+				if ( presetKey->FindKey( "Class" ) )
+				{
+					pClassName = presetKey->GetString( "Class" );
+				}
+				else if ( presetKey->FindKey( "SubClass" ) )
+				{
+					auto subclass = GetPlayerSubClassData( presetKey->GetString( "SubClass" ) );
+					if ( subclass )
+					{
+						pClassName = subclass->m_szBaseClassName;
+						m_subClassName = AllocPooledString( presetKey->GetString( "SubClass" ) );
+					}
+				}
+				if ( presetKey->FindKey( "Team" ) )
+				{
+					iTeam = presetKey->GetInt( "Team" );
+					bSetTeam = true;
+				}
+			}
+		}
+		else
+		{
+			bot->SetPreset( "" );
+		}
+
 		// pick a team and force the team change
 		// HandleCommand_JoinTeam() may fail, but this should always succeed
-		int iTeam = TEAM_UNASSIGNED;
-		if ( FStrEq( m_teamName.ToCStr(), "auto" ) )
+		if ( bSetTeam )
+		{
+		}
+		else if ( FStrEq( m_teamName.ToCStr(), "auto" ) )
 		{
 			iTeam = bot->GetAutoTeam();
 		}
@@ -392,8 +435,30 @@ void CTFBotGenerator::SpawnBot( void )
 		}
 		bot->ChangeTeam( iTeam, false, false );
 		
-		const char* pClassName =  m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
-		bot->HandleCommand_JoinClass( pClassName );
+		if ( m_subClassName != NULL_STRING && m_subClassName.ToCStr()[0] )
+		{
+			auto subclass = GetPlayerSubClassData( m_subClassName.ToCStr() );
+			if ( subclass )
+			{
+				bot->HandleCommand_JoinClass( subclass->m_szBaseClassName, true, true, m_subClassName.ToCStr() );
+			}
+			else if ( bot->m_Shared.IsSubClass() )
+			{
+				bot->HandleCommand_JoinClass( pClassName, true, true );
+			}
+			else
+			{
+				bot->HandleCommand_JoinClass( pClassName );
+			}
+		}
+		else if ( bot->m_Shared.IsSubClass() )
+		{
+			bot->HandleCommand_JoinClass( pClassName, true, true );
+		}
+		else
+		{
+			bot->HandleCommand_JoinClass( pClassName );
+		}
 
 		// in training, reset the after the bot joins the class
 		if ( TFGameRules()->IsInTraining() )

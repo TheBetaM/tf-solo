@@ -176,6 +176,8 @@ public:
 
 	int m_class;
 	string_t m_iszClassIcon;
+	string_t m_iszPreset;
+	string_t m_iszSubClass;
 
 	int m_health;
 	float m_scale;
