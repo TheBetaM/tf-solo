@@ -44,12 +44,12 @@ public:
 	CTFClassTipsItemPanel( Panel *parent, const char *pszName, int iListItemID );
 	~CTFClassTipsItemPanel();
 
-	void			SetClassTip( const wchar_t *pwszText, const char *pszIcon );
+	void			SetClassTip( const char *pwszText, const char *pszIcon, const char* pszCmd, Panel* pRootPanel );
 	virtual void	ApplySchemeSettings( IScheme *pScheme );
 
 private:
 	vgui::ImagePanel		*m_pTipIcon;
-	CExLabel				*m_pTipLabel;
+	CExButton				*m_pTipLabel;
 };
 
 //-----------------------------------------------------------------------------
@@ -72,12 +72,14 @@ public:
 
 	MESSAGE_FUNC_PTR_CHARPTR( OnShowPage, "ShowPage", panel, page );
 	CON_COMMAND_MEMBER_F( CTFClassMenu, "join_class", Join_Class, "Send a joinclass command", 0 );
+	CON_COMMAND_MEMBER_F( CTFClassMenu, "join_sub", Join_SubClass, "Send a joinsub command", 0 );
 
 	virtual void OnCommand( const char *command );
 	virtual void OnClose();
 	virtual void ShowPanel( bool bShow );
 	virtual void UpdateClassCounts( void ){}
 	void		 SelectClass( int iClass );
+	void		 SelectSubClass( const char* pszSubClass );
 
 	virtual int GetTeamNumber( void ) = 0;
 
@@ -85,8 +87,11 @@ public:
 	virtual void FireGameEvent( IGameEvent *event );
 
 	MESSAGE_FUNC( OnEconUIClosed, "EconUIClosed" );			// If the econ UI was opened (for editing loadout), we'll get notified when the user's done.
+	MESSAGE_FUNC_PARAMS( OnCursorEntered, "CursorEntered", data );
 
 	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_IN_GAME_HUD; }
+
+	int				m_iCurrentClassIndex;
 
 protected:
 	virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -125,10 +130,11 @@ private:
 #endif
 
 	ButtonCode_t	m_iClassMenuKey;
-	int				m_iCurrentClassIndex;
 	vgui::CKeyRepeatHandler	m_KeyRepeat;
 
 	int				m_nBaseMusicGuid;
+
+	const char*		m_pszCurrentSubClass;
 
 #ifndef _X360
 	CTFImagePanel *m_ClassCountImages[CLASS_COUNT_IMAGES];

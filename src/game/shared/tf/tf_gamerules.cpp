@@ -962,6 +962,7 @@ ConVar tf_maddash_grapplinghook( "tf_maddash_grapplinghook", "0", FCVAR_REPLICAT
 ConVar tf_maddash_override( "tf_maddash_override", "0", FCVAR_REPLICATED, "Override map parameters with cvars.\n" );
 ConVar tf_maddash_infiltration( "tf_maddash_infiltration", "0", FCVAR_REPLICATED, "Enable Infiltration variant mode.\n" );
 ConVar tf_propertydamage_mode( "tf_propertydamage_mode", "0", FCVAR_REPLICATED, "Enable Property Damage gamemode.\n" );
+ConVar tf_subclass_allow( "tf_subclass_allow", "0", FCVAR_REPLICATED, "1 - Allow human players to change into any available subclass.\n" );
 
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;

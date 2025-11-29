@@ -264,6 +264,10 @@ void CExButton::OnCursorEntered()
 	if ( m_hMouseTickTarget && m_bbCursorEnterExitEvent )
 	{
 		KeyValues *pMessage = new KeyValues("CursorEntered");
+		if ( GetCommand() )
+		{
+			pMessage->SetString( "command", GetCommand()->GetString( "command" ) );
+		}
 		vgui::ipanel()->SendMessage( m_hMouseTickTarget, pMessage, GetVPanel());
 		pMessage->deleteThis();
 	}

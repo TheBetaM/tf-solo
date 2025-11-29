@@ -484,7 +484,7 @@ int	CTFInventoryManager::GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVe
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-CEconItemView *CTFInventoryManager::GetItemInLoadoutForClass( int iClass, int iSlot, CSteamID *pID )
+CEconItemView *CTFInventoryManager::GetItemInLoadoutForClass( int iClass, int iSlot, CSteamID *pID, const char* pszSubClass )
 {
 #ifdef CLIENT_DLL
 	CSteamID localSteamID;
@@ -501,9 +501,9 @@ CEconItemView *CTFInventoryManager::GetItemInLoadoutForClass( int iClass, int iS
 
 	CTFPlayerInventory *pInv = GetInventoryForPlayer( *pID );
 	if ( !pInv )
-		return GetBaseItemForClass( iClass, iSlot );
+		return GetBaseItemForClass( iClass, iSlot, pszSubClass );
 
-	return pInv->GetItemInLoadout( iClass, iSlot );
+	return pInv->GetItemInLoadout( iClass, iSlot, pszSubClass );
 }
 
 CEconItemView *CTFInventoryManager::GetItemInLoadoutForAccount( int iSlot, CSteamID *pID )

@@ -69,9 +69,17 @@ struct TFPlayerClassData_t
 	char		m_szDeathSound[ DEATH_SOUND_TOTAL ][MAX_PLAYERCLASS_SOUND_LENGTH];
 #endif
 
+	// TFSOLO Subclasses
 	char		m_szBaseClassName[TF_NAME_LENGTH];
 	char		m_szBaseWeapons[ TF_PLAYER_WEAPON_COUNT ][ 256 ];
 	char		m_szResponseClassName[TF_NAME_LENGTH];
+	bool		m_bHideInClassSelect;
+	bool		m_bHideInLoadout;
+	bool		m_bNoCustomLoadout;
+	bool		m_bThirdPersonViewModel;
+	bool		m_bThirdPersonCameraOnly;
+	char		m_szUnlockSaveFlag[256];
+	char		m_szVisibleSaveFlag[256];
 
 	TFPlayerClassData_t();
 	const char *GetModelName() const;

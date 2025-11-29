@@ -165,7 +165,7 @@ public:
 	virtual void		ResetPerRoundStats( void );
 
 	void				HandleCommand_JoinTeam( const char *pTeamName );
-	void				HandleCommand_JoinClass( const char *pClassName, bool bAllowSpawn = true );
+	void				HandleCommand_JoinClass( const char *pClassName, bool bAllowSpawn = true, bool bResetSubclass = false, const char* pszSubClass = NULL );
 	void				HandleCommand_JoinTeam_NoMenus( const char *pTeamName );
 
 	void				CreateViewModel( int iViewModel = 0 );

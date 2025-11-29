@@ -170,6 +170,7 @@ extern ConVar	tf_bot_quota;
 extern ConVar	halloween_starting_souls;
 extern ConVar	nav_generate_auto;
 extern ConVar	tf_revives_enable;
+extern ConVar	tf_subclass_allow;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -3627,6 +3628,17 @@ void CTFPlayer::Spawn()
 
 	m_flSpawnTime = gpGlobals->curtime;
 
+	if ( m_Shared.m_strDesiredSubClass && m_Shared.m_strDesiredSubClass.Get() && m_Shared.m_strDesiredSubClass.Get()[0] )
+	{
+		m_Shared.SetSubClass( m_Shared.m_strDesiredSubClass.Get() );
+		m_Shared.m_strDesiredSubClass.GetForModify()[0] = '\0';
+	}
+	if ( m_Shared.m_bSubClassReset )
+	{
+		m_Shared.SetSubClass( "" );
+		m_Shared.m_bSubClassReset = false;
+	}
+
 	SetModelScale( 1.0f );
 	UpdateModel();
 
@@ -6845,7 +6857,7 @@ void CTFPlayer::ResetPlayerClass( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpawn /* = true */ )
+void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpawn /* = true */, bool bResetSubclass /* = false */, const char* pszSubClass /* = NULL */ )
 {
 	VPROF_BUDGET( "CTFPlayer::HandleCommand_JoinClass", VPROF_BUDGETGROUP_PLAYER );
 	if ( TFGameRules()->State_Get() == GR_STATE_GAME_OVER )
@@ -7013,6 +7025,24 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		iClass = iClasses[ random->RandomInt( 0, iChoices - 1 ) ];
 	}
 
+	m_Shared.m_strDesiredSubClass.GetForModify()[0] = '\0';
+	m_Shared.m_bSubClassReset = false;
+	if ( bResetSubclass )
+	{
+		if ( pszSubClass && pszSubClass[0] )
+		{
+			m_Shared.SetDesiredSubClass( V_strdup( pszSubClass ) );
+		}
+		else
+		{
+			m_Shared.m_bSubClassReset = true;
+		}
+		if ( !IsAlive() )
+		{
+			ResetPlayerClass();
+		}
+	}
+
 	if ( TFGameRules() && TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
 	{
 		// Bit field of classes played during the game
@@ -7052,7 +7082,10 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		{
 			ForceRespawn();
 		}
-		return;
+		if ( !bResetSubclass )
+		{
+			return;
+		}
 	}
 
 	if ( TFGameRules()->IsInArenaMode() && tf_arena_use_queue.GetBool() == true && GetTeamNumber() <= LAST_SHARED_TEAM )
@@ -7088,7 +7121,10 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		{
 			ForceRespawn();
 		}
-		return;
+		if ( !bResetSubclass )
+		{
+			return;
+		}
 	}
 
 	// We can respawn instantly if:
@@ -7169,9 +7205,9 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	{
 		if( IsAlive() )
 		{
-			if ( m_Shared.IsSubClass() )
+			if ( m_Shared.GetDesiredSubClass() && m_Shared.GetDesiredSubClass()[0] )
 			{
-				ClientPrint(this, HUD_PRINTTALK, "#game_respawn_as", m_Shared.GetSubClassData()->m_szLocalizableName );
+				ClientPrint(this, HUD_PRINTTALK, "#game_respawn_as", GetPlayerSubClassData( m_Shared.GetDesiredSubClass() )->m_szLocalizableName );
 			}
 			else
 			{
@@ -7180,9 +7216,9 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		}
 		else
 		{
-			if ( m_Shared.IsSubClass() )
+			if ( m_Shared.GetDesiredSubClass() && m_Shared.GetDesiredSubClass()[0] )
 			{
-				ClientPrint(this, HUD_PRINTTALK, "#game_spawn_as", m_Shared.GetSubClassData()->m_szLocalizableName );
+				ClientPrint(this, HUD_PRINTTALK, "#game_spawn_as", GetPlayerSubClassData( m_Shared.GetDesiredSubClass() )->m_szLocalizableName );
 			}
 			else
 			{
@@ -7548,7 +7584,7 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 		{
 			if ( args.ArgC() >= 2 )
 			{
-				HandleCommand_JoinClass( args[1] );
+				HandleCommand_JoinClass( args[1], true, tf_subclass_allow.GetInt() != 0 && m_Shared.IsSubClass() );
 			}
 		}
 		return true;
@@ -7564,6 +7600,46 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 
 			ResetPlayerClass();
 			ShowViewPortPanel( ( GetTeamNumber() == TF_TEAM_RED ) ? PANEL_CLASS_RED : PANEL_CLASS_BLUE );
+		}
+
+		return true;
+	}
+	else if ( FStrEq( pcmd, "joinsub" ) )
+	{
+		if ( tf_subclass_allow.GetInt() == 0 )
+			return true;
+
+		// don't let them spam the server with changes
+		if ( GetNextChangeClassTime() > gpGlobals->curtime )
+			return true;
+
+		SetNextChangeClassTime( gpGlobals->curtime + 0.5 );  // limit to one change every 0.5 secs
+
+		if ( args.ArgC() >= 2 )
+		{
+			const char* subclass = V_strdup( args[1] );
+			if ( !GetPlayerSubClassData( subclass ) )
+			{
+				return true;
+			}
+			if ( m_Shared.GetDesiredSubClass() && m_Shared.GetDesiredSubClass()[0] )
+			{
+				if ( FStrEq( m_Shared.GetDesiredSubClass(), subclass ) )
+				{
+					return true;
+				}
+			}
+			if ( m_Shared.IsSubClass() )
+			{
+				if ( !FStrEq( m_Shared.GetSubClass(), subclass ) )
+				{
+					HandleCommand_JoinClass( GetPlayerSubClassData( subclass )->m_szBaseClassName, true, true, V_strdup( args[1] ) );
+				}
+			}
+			else
+			{
+				HandleCommand_JoinClass( GetPlayerSubClassData( subclass )->m_szBaseClassName, true, true, V_strdup( args[1] ) );
+			}
 		}
 
 		return true;

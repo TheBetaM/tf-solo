@@ -205,7 +205,7 @@ public:
 	CTFPlayerInventory	*GetInventoryForPlayer( const CSteamID &playerID );
 
 	// Returns the item in the specified loadout slot for a given class
-	CEconItemView		*GetItemInLoadoutForClass( int iClass, int iSlot, CSteamID *pID = NULL );
+	CEconItemView		*GetItemInLoadoutForClass( int iClass, int iSlot, CSteamID *pID = NULL, const char* pszSubClass = NULL );
 	
 	CEconItemView		*GetItemInLoadoutForAccount( int nSlot, CSteamID *pID = NULL );
 

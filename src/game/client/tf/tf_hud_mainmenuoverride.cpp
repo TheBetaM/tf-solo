@@ -118,7 +118,7 @@ ConVar tf_oobe_modern_controls( "tf_oobe_modern_controls", "0", FCVAR_ARCHIVE );
 ConVar tf_oobe_modern_defaults( "tf_oobe_modern_defaults", "0", FCVAR_ARCHIVE );
 ConVar tf_oobe_hints_base( "tf_oobe_hints_base", "0", FCVAR_ARCHIVE );
 ConVar tf_oobe_hints_mod( "tf_oobe_hints_mod", "0", FCVAR_ARCHIVE );
-ConVar tf_oobe_multiplayer( "tf_oobe_multiplayer", "0", FCVAR_ARCHIVE );
+ConVar tf_oobe_multiplayer( "tf_oobe_multiplayer", "0", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 
 void cc_promotional_codes_button_changed( IConVar *pConVar, const char *pOldString, float flOldValue )
 {

@@ -39,13 +39,4 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
-	
-	"tf_oobe_multiplayer"
-	{
-		"#TFSOLO_OOBE_Multiplayer"
-		"#TFSOLO_OOBE_Multiplayer_Desc"
-		{ BOOL }
-		{ "0" }
-	}
-	
 }

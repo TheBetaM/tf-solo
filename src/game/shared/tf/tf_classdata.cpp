@@ -54,6 +54,8 @@ TFPlayerClassData_t::TFPlayerClassData_t()
 	m_szHandModelName[0] = '\0';
 	m_szLocalizableName[0] = '\0';
 	m_szBaseClassName[0] = '\0';
+	m_szUnlockSaveFlag[0] = '\0';
+	m_szVisibleSaveFlag[0] = '\0';
 	m_flMaxSpeed = 0.0f;
 	m_nMaxHealth = 0;
 	m_nMaxArmor = 0;
@@ -210,8 +212,16 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	Q_strncpy( m_szDeathSound[ DEATH_SOUND_EXPLOSION ], pKeyValuesData->GetString( "sound_explosion_death", "Player.ExplosionDeath" ), MAX_PLAYERCLASS_SOUND_LENGTH );
 #endif
 
+	// TFSOLO Subclasses
 	Q_strncpy( m_szBaseClassName, pKeyValuesData->GetString( "baseclass", "scout" ), TF_NAME_LENGTH );
 	Q_strncpy( m_szResponseClassName, pKeyValuesData->GetString( "responseclassname", "scout" ), TF_NAME_LENGTH );
+	m_bHideInClassSelect = ( pKeyValuesData->GetInt( "HideInClassSelect", 0 ) > 0 );
+	m_bHideInLoadout = ( pKeyValuesData->GetInt( "HideInLoadout", 0 ) > 0 );
+	m_bNoCustomLoadout = ( pKeyValuesData->GetInt( "NoCustomLoadout", 0 ) > 0 );
+	m_bThirdPersonViewModel = ( pKeyValuesData->GetInt( "ThirdPersonViewModel", 0 ) > 0 );
+	m_bThirdPersonCameraOnly = ( pKeyValuesData->GetInt( "ThirdPersonCameraOnly", 0 ) > 0 );
+	Q_strncpy( m_szUnlockSaveFlag, pKeyValuesData->GetString( "UnlockSaveFlag" ), 256 );
+	Q_strncpy( m_szVisibleSaveFlag, pKeyValuesData->GetString( "VisibleSaveFlag" ), 256 );
 
 	// The file has been parsed.
 	m_bParsed = true;
@@ -278,6 +288,7 @@ bool CTFPlayerClassDataMgr::Init( void )
 		const char* cName = key->GetName();
 		TFPlayerClassData_t* subclass = new TFPlayerClassData_t();
 		subclass->ParseData( key );
+		Q_strncpy( subclass->m_szClassName, cName, TF_NAME_LENGTH );
 		m_TFPlayerSubClasses.InsertOrReplace( cName, subclass );
 		key = key->GetNextKey();
 	}

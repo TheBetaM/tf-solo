@@ -40,13 +40,15 @@ ConVar replay_replaywelcomedlgcount( "replay_replaywelcomedlgcount", "0", FCVAR_
 
 ConVar tf_mvm_classupgradehelpcount( "tf_mvm_classupgradehelpcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the player upgrade help dialog has displayed." );
 
+extern ConVar	tf_subclass_allow;
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
 CTFClassTipsItemPanel::CTFClassTipsItemPanel( Panel *parent, const char *name, int iListItemID ) : BaseClass( parent, name )
 {
 	m_pTipIcon = new vgui::ImagePanel( this, "TipIcon" );
-	m_pTipLabel = new CExLabel( this, "TipLabel", "" );
+	m_pTipLabel = new CExButton( this, "TipLabel", "" );
 
 // 	m_pTipIcon = dynamic_cast<vgui::ImagePanel*>( FindChildByName( "TipIcon" ) );
 // 	m_pTipLabel = dynamic_cast<CExLabel*>( FindChildByName( "TipLabel" ) );
@@ -59,7 +61,7 @@ CTFClassTipsItemPanel::~CTFClassTipsItemPanel()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFClassTipsItemPanel::SetClassTip( const wchar_t *pwszText, const char *pszIcon )
+void CTFClassTipsItemPanel::SetClassTip( const char* pszText, const char *pszIcon, const char* pszCmd, Panel* pRootPanel )
 {
 	// Set tf_english string and .res icon path
 	if ( m_pTipLabel && m_pTipIcon )
@@ -76,7 +78,10 @@ void CTFClassTipsItemPanel::SetClassTip( const wchar_t *pwszText, const char *ps
 // 			int nIconWidth = m_pTipIcon->GetWide();
 // 			m_pTipLabel->SetPos( ( iX - nIconWidth ), iY );
 		}
-		m_pTipLabel->SetText( pwszText );
+		m_pTipLabel->SetText( pszText );
+		m_pTipLabel->SetCommand( pszCmd );
+		m_pTipLabel->AddActionSignalTarget( pRootPanel );
+		m_pTipLabel->PassMouseTicksTo( pRootPanel, true );
 	}
 
 	InvalidateLayout( true, true );
@@ -89,7 +94,7 @@ void CTFClassTipsItemPanel::ApplySchemeSettings( IScheme* pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/UI/ClassTipsItem.res" );
+	LoadControlSettings( "Resource/UI/SubClassListItem.res" );
 }
 
 //-----------------------------------------------------------------------------
@@ -358,62 +363,45 @@ public:
 	//-----------------------------------------------------------------------------
 	void SetClass( int iClass )
 	{
-		const char *pPathID = IsX360() ? "MOD" : "GAME";
-		m_fmtResFilename.sprintf( "classes/%s.res", g_aRawPlayerClassNames[ iClass ] );
-		if ( !g_pFullFileSystem->FileExists( m_fmtResFilename.Access(), pPathID ) &&
-			g_pFullFileSystem->FileExists( "classes/default.res", pPathID ) )
-		{
-			m_fmtResFilename.sprintf( "classes/default.res" );
-		}
-
 		if ( m_pClassTipsListPanel )
 		{
 			m_pClassTipsListPanel->DeleteAllItems();
+			
+			if ( tf_subclass_allow.GetInt() == 0 || m_pClassMenu->m_iCurrentClassIndex == TF_CLASS_RANDOM || m_pClassMenu->m_iCurrentClassIndex == TF_CLASS_UNDEFINED )
+			{
+				InvalidateLayout( true, true );
+				return;
+			}
 
 			int nScrollToItem = 0;
 
-			// Get tip count
-			const wchar_t *wzTipCount = g_pVGuiLocalize->Find( CFmtStr( "ClassTips_%d_Count", iClass ) );
-			int nTipCount = wzTipCount ? _wtoi( wzTipCount ) : 0;
-			for ( int iTip = 1; iTip < nTipCount+1; ++iTip )
+			wchar_t* pwszIcon = g_pVGuiLocalize->Find( CFmtStr( "ClassTips_%d_%d_Icon", iClass, 1 ) );
+			char szIcon[MAX_PATH];
+			szIcon[0] = 0;
+			if ( pwszIcon )
 			{
-				const wchar_t *pwszText = g_pVGuiLocalize->Find( CFmtStr( "#ClassTips_%d_%d", iClass, iTip ) );
-				const wchar_t *pwszTextMvM = g_pVGuiLocalize->Find( CFmtStr( "#ClassTips_%d_%d_MvM", iClass, iTip ) );
-				wchar_t *pwszIcon = g_pVGuiLocalize->Find( CFmtStr( "ClassTips_%d_%d_Icon", iClass, iTip ) );
-				char szIcon[MAX_PATH];
+				g_pVGuiLocalize->ConvertUnicodeToANSI( pwszIcon, szIcon, sizeof( szIcon ) );
+			}
 
-				szIcon[0] = 0;
-				if ( pwszIcon )
-				{
-					g_pVGuiLocalize->ConvertUnicodeToANSI( pwszIcon, szIcon, sizeof( szIcon ) );
-				}
+			auto mainclass = GetPlayerClassData( m_pClassMenu->m_iCurrentClassIndex );
+			CTFClassTipsItemPanel* pMainClassTipsItemPanel = new CTFClassTipsItemPanel( this, "ClassTipsItemPanel", 0);
+			pMainClassTipsItemPanel->SetClassTip( g_pVGuiLocalize->FindAsUTF8( mainclass->m_szLocalizableName ), szIcon, "reset", m_pClassMenu );
+			m_pClassTipsListPanel->AddItem( NULL, pMainClassTipsItemPanel );
 
-				// Don't load MvM tips outside the mode
-				if ( pwszTextMvM )
-				{
-					if ( !TFGameRules()->IsMannVsMachineMode() )
-						continue;
+			for ( int i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+			{
+				auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element(i);
 
-					// If we're MvM mode, remember first MvM tip
-					if ( !nScrollToItem )
-						nScrollToItem = iTip;
-				}
+				if ( !FStrEq( subclass->m_szBaseClassName, g_aRawPlayerClassNames[iClass] ) )
+					continue;
 
-				// Create a TipsItemPanel for each tip
-				if ( pwszText || pwszTextMvM )
-				{
-					CTFClassTipsItemPanel *pClassTipsItemPanel = new CTFClassTipsItemPanel( this, "ClassTipsItemPanel", iTip );
-					if ( pwszText )
-					{
-						pClassTipsItemPanel->SetClassTip( pwszText, szIcon );
-					}
-					else if ( pwszTextMvM )
-					{
-						pClassTipsItemPanel->SetClassTip( pwszTextMvM, szIcon );
-					}
+				if ( subclass->m_bHideInClassSelect )
+					continue;
 
-					m_pClassTipsListPanel->AddItem( NULL, pClassTipsItemPanel );
-				}
+				CFmtStr1024 fmtCommand( "sub %s", subclass->m_szClassName );
+				CTFClassTipsItemPanel* pClassTipsItemPanel = new CTFClassTipsItemPanel( this, "ClassTipsItemPanel", i + 1 );
+				pClassTipsItemPanel->SetClassTip( subclass->m_szLocalizableName, szIcon, fmtCommand.Access(), m_pClassMenu );
+				m_pClassTipsListPanel->AddItem( NULL, pClassTipsItemPanel );
 			}
 
 			if ( m_pClassTipsListPanel->GetItemCount() > 0 )
@@ -425,6 +413,8 @@ public:
 
 		InvalidateLayout( true, true );
 	}
+
+	CTFClassMenu			*m_pClassMenu;
 
 private:
 
@@ -439,8 +429,7 @@ private:
 	}
 
 	CTFClassTipsListPanel	*m_pClassTipsListPanel;
-
-	CFmtStr					m_fmtResFilename;
+	
 };
 
 //-----------------------------------------------------------------------------
@@ -464,6 +453,7 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 	m_pSelectAClassLabel = NULL;
 
 	m_pClassTipsPanel = new CTFClassTipsPanel( this, "ClassTipsPanel" );
+	m_pClassTipsPanel->m_pClassMenu = this;
 
 	Q_memset( m_pClassButtons, 0, sizeof( m_pClassButtons ) );
 
@@ -495,6 +485,7 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 
 	m_pEditLoadoutButton = NULL;
 	m_nBaseMusicGuid = -1;
+	m_pszCurrentSubClass = '\0';
 
 	ListenForGameEvent( "localplayer_changeteam" );
 	ListenForGameEvent( "show_match_summary" );
@@ -757,6 +748,7 @@ void CTFClassMenu::SelectClass( int iClass )
 
 	// Cache current player class
 	m_iCurrentClassIndex = iClass;
+	m_pszCurrentSubClass = '\0';
 
 	UpdateButtonSelectionStates( iClass );
 
@@ -821,8 +813,101 @@ void CTFClassMenu::SelectClass( int iClass )
 	}
 	CBaseEntity::EmitSound( filter, SOUND_FROM_UI_PANEL, nClassMusicStr );
 	m_nBaseMusicGuid = enginesound->GetGuidForLastSoundEmitted();
-	
+}
 
+void CTFClassMenu::SelectSubClass( const char* pszSubClass )
+{
+	if ( !engine->IsInGame() )
+		return;
+
+	if ( !m_pTFPlayerModelPanel )
+		return;
+
+	if ( !m_pClassTipsPanel )
+		return;
+
+	if ( !m_pEditLoadoutButton )
+		return;
+
+	// Update select hint icon for Steam Controller
+	for ( int i = 0; i < TF_CLASS_MENU_BUTTONS; i++ )
+	{
+		if ( m_pClassHintIcons[i] )
+		{
+			m_pClassHintIcons[i]->SetVisible( i == m_iCurrentClassIndex );
+		}
+	}
+
+	// Were we random? If so, we'll force our class to refresh later to prevent the
+	// model panel thinking the class hasn't changed.
+	const bool bClassWasRandom = m_iCurrentClassIndex == TF_CLASS_RANDOM;
+
+	// Cache current player class
+	m_pszCurrentSubClass = V_strdup( pszSubClass );
+
+	UpdateButtonSelectionStates( m_iCurrentClassIndex );
+
+	bool bRandomClass = m_iCurrentClassIndex == TF_CLASS_RANDOM;
+	if ( !IsValidTFPlayerClass( m_iCurrentClassIndex ) && !bRandomClass )
+	{
+		m_pTFPlayerModelPanel->SetVisible( false );
+		m_pTFPlayerModelPanel->ClearCarriedItems();
+		return;
+	}
+
+	m_pTFPlayerModelPanel->SetVisible( true );
+	m_pTFPlayerModelPanel->ClearCarriedItems();
+
+	if ( bRandomClass )
+	{
+		m_pEditLoadoutButton->SetVisible( false );
+		if ( m_pEditLoadoutHintIcon )
+		{
+			m_pEditLoadoutHintIcon->SetVisible( false );
+		}
+
+		MDLHandle_t hModel = mdlcache->FindMDL( "models/class_menu/random_class_icon.mdl" );
+		m_pTFPlayerModelPanel->SetMDL( hModel );
+		m_pTFPlayerModelPanel->SetSequence( ACT_IDLE );
+		m_pTFPlayerModelPanel->InvalidateLayout( true, true ); // Updates position
+		m_pTFPlayerModelPanel->SetSkin( GetTeamNumber() == TF_TEAM_RED ? 0 : 1 );
+		mdlcache->Release( hModel ); // counterbalance addref from within FindMDL
+	}
+	else
+	{
+		m_pTFPlayerModelPanel->SetToPlayerClass( m_iCurrentClassIndex, bClassWasRandom, GetPlayerSubClassData( m_pszCurrentSubClass )->GetModelName() );
+
+		m_pEditLoadoutButton->SetVisible( true );
+		if ( m_pEditLoadoutHintIcon )
+		{
+			m_pEditLoadoutHintIcon->SetVisible( true );
+		}
+
+		C_BasePlayer* pLocalPlayer = C_BasePlayer::GetLocalPlayer();
+		if ( pLocalPlayer )
+		{
+			int iTeam = GetTeamNumber();
+			m_pTFPlayerModelPanel->SetTeam( iTeam );
+		}
+
+		LoadItems();
+	}
+
+	//m_pClassTipsPanel->SetClass(iClass);
+
+	enginesound->StopSoundByGuid( m_nBaseMusicGuid );
+	CBroadcastRecipientFilter filter;
+	char nClassMusicStr[64];
+	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+	{
+		sprintf( nClassMusicStr, "music.mvm_class_menu_0%i", m_iCurrentClassIndex );
+	}
+	else
+	{
+		sprintf( nClassMusicStr, "music.class_menu_0%i", m_iCurrentClassIndex );
+	}
+	CBaseEntity::EmitSound( filter, SOUND_FROM_UI_PANEL, nClassMusicStr );
+	m_nBaseMusicGuid = enginesound->GetGuidForLastSoundEmitted();
 }
 
 //-----------------------------------------------------------------------------
@@ -841,32 +926,52 @@ void CTFClassMenu::LoadItems()
 	CAttribute_String attrClassSelectOverrideVCD;
 
 	const char *pszVCD = "class_select";
+	int iSlot = g_iLegacyClassSelectWeaponSlots[iClass];
 
-	for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
+	if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
 	{
-		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i );
-		if ( pItemData && pItemData->IsValid() )
+		auto subclass = GetPlayerSubClassData( m_pszCurrentSubClass );
+		bCanUseFancyClassSelectAnimation = false;
+		for ( int i = 0; i < TF_PLAYER_WEAPON_COUNT; i++ )
 		{
-			m_pTFPlayerModelPanel->AddCarriedItem( pItemData );
+			if ( !subclass->m_szBaseWeapons[i] || !subclass->m_szBaseWeapons[i][0] )
+				continue;
 
-			// Certain items have different shapes and would interfere with our class select animations.
-			bCanUseFancyClassSelectAnimation = bCanUseFancyClassSelectAnimation
-											&& !pItemData->FindAttribute( pAttrDef_DisableFancyLoadoutAnim );
-
-			// Some items want to override the class select VCD
-			if ( pItemData->FindAttribute( pAttrDef_ClassSelectOverrideVCD, &attrClassSelectOverrideVCD ) )
+			auto pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, NULL, m_pszCurrentSubClass );
+			if ( pItemData )
 			{
-				const char *pszClassSelectOverrideVCD = attrClassSelectOverrideVCD.value().c_str();
-				if ( pszClassSelectOverrideVCD && *pszClassSelectOverrideVCD )
+				m_pTFPlayerModelPanel->AddCarriedItem( pItemData );
+			}
+		}
+	}
+	else
+	{
+		for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
+		{
+			CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i );
+			if ( pItemData && pItemData->IsValid() )
+			{
+				m_pTFPlayerModelPanel->AddCarriedItem( pItemData );
+
+				// Certain items have different shapes and would interfere with our class select animations.
+				bCanUseFancyClassSelectAnimation = bCanUseFancyClassSelectAnimation
+												&& !pItemData->FindAttribute( pAttrDef_DisableFancyLoadoutAnim );
+
+				// Some items want to override the class select VCD
+				if ( pItemData->FindAttribute( pAttrDef_ClassSelectOverrideVCD, &attrClassSelectOverrideVCD ) )
 				{
-					pszVCD = pszClassSelectOverrideVCD;
+					const char *pszClassSelectOverrideVCD = attrClassSelectOverrideVCD.value().c_str();
+					if ( pszClassSelectOverrideVCD && *pszClassSelectOverrideVCD )
+					{
+						pszVCD = pszClassSelectOverrideVCD;
+					}
 				}
 			}
 		}
 	}
 
 	m_pTFPlayerModelPanel->PlayVCD( bCanUseFancyClassSelectAnimation ? pszVCD : NULL, g_pszLegacyClassSelectVCDWeapons[iClass] );
-	m_pTFPlayerModelPanel->HoldItemInSlot( g_iLegacyClassSelectWeaponSlots[iClass] );
+	m_pTFPlayerModelPanel->HoldItemInSlot( iSlot );
 }
 
 //-----------------------------------------------------------------------------
@@ -1257,7 +1362,14 @@ void CTFClassMenu::Go()
 	g_pClientReplayContext->OnPlayerClassChanged();
 
 	// Change class
-	BaseClass::OnCommand( CFmtStr( "joinclass %s", g_aRawPlayerClassNames[ iClass ] ).Access() );
+	if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+	{
+		BaseClass::OnCommand( CFmtStr( "joinsub %s", m_pszCurrentSubClass ).Access() );
+	}
+	else
+	{
+		BaseClass::OnCommand( CFmtStr( "joinclass %s", g_aRawPlayerClassNames[ iClass ] ).Access() );
+	}
 
 	CBroadcastRecipientFilter filter;
 
@@ -1294,6 +1406,22 @@ void CTFClassMenu::OnCommand( const char *command )
 
 		Go();
 	}
+	else if ( !V_strnicmp( command, "sub", 3 ) )
+	{
+		const char* pSubClass = command + 4;
+		// Avoid restarting the animation if the user selected on the same class
+		if ( !FStrEq( pSubClass, m_pszCurrentSubClass ) )
+		{
+			SelectSubClass( pSubClass );
+		}
+		else
+		{
+			// Ensure selection states, in case the user clicks a button and drags away
+			UpdateButtonSelectionStates( m_iCurrentClassIndex );
+		}
+
+		Go();
+	}
 	else if ( !V_strnicmp( command, "resetclass", 10 ) )
 	{
 		if ( TFGameRules() && !TFGameRules()->IsInHighlanderMode() )
@@ -1321,6 +1449,30 @@ void CTFClassMenu::OnCommand( const char *command )
 	}
 }
 
+void CTFClassMenu::OnCursorEntered( KeyValues* pParams )
+{
+	const char* pCmd = pParams->GetString( "command" );
+	if ( pCmd && pCmd[0] )
+	{
+		if ( !V_strnicmp( pCmd, "sub", 3 ) )
+		{
+			const char* pSubClass = pCmd + 4;
+			// Avoid restarting the animation if the user selected on the same class
+			if ( !m_pszCurrentSubClass || !m_pszCurrentSubClass[0] || !FStrEq( pSubClass, m_pszCurrentSubClass ) )
+			{
+				SelectSubClass( pSubClass );
+			}
+		}
+		else if ( !V_strnicmp( pCmd, "reset", 5 ) )
+		{
+			if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+			{
+				SelectClass( m_iCurrentClassIndex );
+			}
+		}
+	}
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Console command to select a class
 //-----------------------------------------------------------------------------
@@ -1330,6 +1482,17 @@ void CTFClassMenu::Join_Class( const CCommand &args )
 	{
 		char cmd[256];
 		Q_snprintf( cmd, sizeof( cmd ), "joinclass %s", args.Arg( 1 ) );
+		OnCommand( cmd );
+		ShowPanel( false );
+	}
+}
+
+void CTFClassMenu::Join_SubClass( const CCommand& args )
+{
+	if ( args.ArgC() > 1 )
+	{
+		char cmd[256];
+		Q_snprintf( cmd, sizeof( cmd ), "joinsub %s", args.Arg( 1 ) );
 		OnCommand( cmd );
 		ShowPanel( false );
 	}

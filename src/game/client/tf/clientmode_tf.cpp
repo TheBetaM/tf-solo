@@ -680,7 +680,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 	else if ( FStrEq( "localplayer_changeclass", eventname ) )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer && pLocalPlayer->GetPlayerClass() )
+		if ( pLocalPlayer && pLocalPlayer->GetPlayerClass() && !pLocalPlayer->m_Shared.IsSubClass() )
 		{
 			int iClass = pLocalPlayer->GetPlayerClass()->GetClassIndex();
 

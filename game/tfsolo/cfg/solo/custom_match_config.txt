@@ -75,6 +75,13 @@ DESCRIPTION SERVER_OPTIONS
 		}
 		{ "0" }
 	}
+	
+	"tf_subclass_allow"
+	{
+		"Allow Class Substitute Characters"
+		{ BOOL }
+		{ "1" }
+	}
 
 	"mp_disable_respawn_times"
 	{

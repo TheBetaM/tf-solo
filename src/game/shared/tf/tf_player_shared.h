@@ -1281,11 +1281,15 @@ public:
 	TFCYOAPDAAnimState_t m_iCYOAPDAAnimState;
 
 	CNetworkString( m_strSubClass, 256 );
+	CNetworkString( m_strDesiredSubClass, 256 );
+	CNetworkVar( bool, m_bSubClassReset );
 
 	const char* GetSubClass( void ) const { return m_strSubClass.Get(); }
+	const char* GetDesiredSubClass( void ) const { return m_strDesiredSubClass.Get(); }
 	bool IsSubClass( void ) const { return GetSubClass() && GetSubClass()[0] && GetPlayerSubClassData( GetSubClass() ); }
 	TFPlayerClassData_t* GetSubClassData( void ) const { return IsSubClass() ? GetPlayerSubClassData( GetSubClass() ) : NULL; }
 	void SetSubClass( const char* target ) { Q_strncpy( m_strSubClass.GetForModify(), target, 256 );  }
+	void SetDesiredSubClass( const char* target ) { Q_strncpy( m_strDesiredSubClass.GetForModify(), target, 256 );  }
 
 private:
 	CNetworkVar( bool, m_bHasPasstimeBall );

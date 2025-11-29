@@ -441,6 +441,8 @@ BEGIN_RECV_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
 	RecvPropEHandle( RECVINFO( m_hSwitchTo ) ),
 
 	RecvPropString( RECVINFO( m_strSubClass ) ),
+	RecvPropString( RECVINFO( m_strDesiredSubClass ) ),
+	RecvPropBool( RECVINFO( m_bSubClassReset ) ),
 END_RECV_TABLE()
 
 BEGIN_PREDICTION_DATA_NO_BASE( CTFPlayerShared )
@@ -619,6 +621,8 @@ BEGIN_SEND_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
 	SendPropEHandle( SENDINFO( m_hSwitchTo ) ),
 
 	SendPropString( SENDINFO( m_strSubClass ) ),
+	SendPropString( SENDINFO( m_strDesiredSubClass ) ),
+	SendPropBool( SENDINFO( m_bSubClassReset ) ),
 END_SEND_TABLE()
 
 #endif
@@ -916,6 +920,8 @@ CTFPlayerShared::CTFPlayerShared()
 	m_ConditionData.EnsureCount( TF_COND_LAST );
 
 	m_strSubClass.GetForModify()[0] = '\0';
+	m_strDesiredSubClass.GetForModify()[0] = '\0';
+	m_bSubClassReset = false;
 }
 
 //-----------------------------------------------------------------------------
