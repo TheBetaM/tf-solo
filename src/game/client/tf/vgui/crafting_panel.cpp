@@ -512,6 +512,14 @@ void CCraftingPanel::UpdatePlayerModelPanel(void)
 			m_pPlayerModelPanel->SetToPlayerClass(iClassIndex, true);
 		}
 	}
+	else if (key->FindKey("SubClass"))
+	{
+		auto subclass = GetPlayerSubClassData(key->GetString("SubClass"));
+		if (subclass)
+		{
+			m_pPlayerModelPanel->SetToPlayerSubClass(key->GetString("SubClass"), true);
+		}
+	}
 	if (key->FindKey("Team"))
 	{
 		m_pPlayerModelPanel->SetTeam(key->GetInt("Team"));

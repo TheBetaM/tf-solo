@@ -409,6 +409,8 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 		skill = CTFBot::EASY;
 	}
 
+	bool bIsSubClass = false;
+	const char* subclassname = NULL;
 	if (preset != NULL)
 	{
 		auto presetKey = TheTFBots().m_presetsKV->FindKey(preset);
@@ -422,6 +424,22 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			{
 				iClassIndex = GetClassIndexFromString(presetKey->GetString("Class"));
 				classname = presetKey->GetString("Class");
+			}
+			else if (presetKey->FindKey("SubClass"))
+			{
+				auto subclass = GetPlayerSubClassData(presetKey->GetString("SubClass"));
+				if (subclass)
+				{
+					bIsSubClass = true;
+					iClassIndex = GetClassIndexFromString(subclass->m_szBaseClassName);
+					classname = subclass->m_szBaseClassName;
+					subclassname = V_strdup(presetKey->GetString("SubClass"));
+				}
+				else
+				{
+					iClassIndex = GetClassIndexFromString("scout");
+					classname = NULL;
+				}
 			}
 			if (presetKey->FindKey("Team"))
 			{
@@ -482,7 +500,14 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 
 			// if no class is set, auto-select one
 			const char* thisClassname = classname ? classname : pBot->GetNextSpawnClassname();
-			pBot->HandleCommand_JoinClass(thisClassname);
+			if (bIsSubClass && subclassname)
+			{
+				pBot->HandleCommand_JoinClass(thisClassname, true, true, subclassname);
+			}
+			else
+			{
+				pBot->HandleCommand_JoinClass(thisClassname);
+			}
 
 			if (preset != NULL)
 			{
@@ -6056,8 +6081,24 @@ void CTFBot::SpawnCustom()
 	int iClassIndex = 0;
 	if (preset->FindKey("Class"))
 	{
-		HandleCommand_JoinClass(preset->GetString("Class"));
 		iClassIndex = GetClassIndexFromString(preset->GetString("Class"));
+		if (m_Shared.IsSubClass())
+		{
+			HandleCommand_JoinClass(preset->GetString("Class"), true, true);
+		}
+		else if (GetPlayerClass()->GetClassIndex() != iClassIndex)
+		{
+			HandleCommand_JoinClass(preset->GetString("Class"));
+		}
+	}
+	else if (preset->FindKey("SubClass"))
+	{
+		auto subclass = GetPlayerSubClassData(preset->GetString("SubClass"));
+		if ( subclass && ( !m_Shared.IsSubClass() || !FStrEq( preset->GetString("SubClass"), m_Shared.GetSubClass() ) ) )
+		{
+			iClassIndex = GetClassIndexFromString(subclass->m_szBaseClassName);
+			HandleCommand_JoinClass(subclass->m_szBaseClassName, true, true, preset->GetString("SubClass"));
+		}
 	}
 	if (preset->FindKey("Team"))
 	{

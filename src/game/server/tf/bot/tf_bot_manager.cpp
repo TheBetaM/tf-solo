@@ -529,6 +529,19 @@ void CTFBotManager::MaintainBotQuota()
 					{
 						pBot->HandleCommand_JoinClass(presetKey->GetString("Class"));
 					}
+					else if (presetKey->FindKey("SubClass"))
+					{
+						auto subclass = GetPlayerSubClassData(presetKey->GetString("SubClass"));
+						if (subclass)
+						{
+							int iClassIndex = GetClassIndexFromString(subclass->m_szBaseClassName);
+							pBot->HandleCommand_JoinClass(subclass->m_szBaseClassName, true, true, presetKey->GetString("SubClass"));
+						}
+						else
+						{
+							pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
+						}
+					}
 					else
 					{
 						pBot->HandleCommand_JoinClass(pBot->GetNextSpawnClassname());
