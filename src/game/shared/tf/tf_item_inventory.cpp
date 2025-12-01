@@ -1980,6 +1980,7 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot, cons
 		itemid_t itemID = m_LoadoutItems[iClass][iSlot];
 		if ( pszSubClass && pszSubClass[0] )
 		{
+			itemID = LOADOUT_SLOT_USE_BASE_ITEM;
 			if ( m_LoadoutItemsSub.HasElement( pszSubClass ) )
 			{
 				int id = m_LoadoutItemsSub.Find( pszSubClass );

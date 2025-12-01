@@ -21,6 +21,7 @@
 #include "tier1/utlvector.h"
 #include "tier1/utlstring.h"
 #include "icvar.h"
+#include "color.h"
 
 #ifdef _WIN32
 #define FORCEINLINE_CVAR FORCEINLINE
@@ -358,6 +359,7 @@ public:
 	FORCEINLINE_CVAR int			GetInt( void ) const;
 	FORCEINLINE_CVAR bool			GetBool() const {  return !!GetInt(); }
 	FORCEINLINE_CVAR char const	   *GetString( void ) const;
+	FORCEINLINE_CVAR Color			GetColor( void ) const;
 
 	// Any function that allocates/frees memory needs to be virtual or else you'll have crashes
 	//  from alloc/free across dll/exe boundaries.
@@ -470,6 +472,15 @@ FORCEINLINE_CVAR int ConVar::GetInt( void ) const
 	return m_pParent->m_nValue;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: Return ConVar value as a color
+// Output : Color
+//-----------------------------------------------------------------------------
+FORCEINLINE_CVAR Color ConVar::GetColor( void ) const 
+{
+	unsigned char *pColorElement = ((unsigned char *)&m_pParent->m_nValue);
+	return Color( pColorElement[0], pColorElement[1], pColorElement[2], pColorElement[3] );
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Return ConVar value as a string, return "" for bogus string pointer, etc.

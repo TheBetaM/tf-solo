@@ -22,6 +22,10 @@
 - Added new weapon and taunt items
 - Added Bestiary - browse enemies encountered in the game
 - Added Subs - class substitute playable characters
+- Added the Game Instructor feature from Alien Swarm:  
+-- Optional context-sensitive tutorials for base TF2 mechanics  
+-- Optional context-sensitive tutorials for new mechanics  
+-- Plus additional flavor text  
 - Added new achievements
 - Added console commands: mp_humans_must_join_class, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 

@@ -981,6 +981,12 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
 				$File	"$SRCDIR\patch\patch_singleplayer.cpp"
 				$File	"$SRCDIR\patch\patch_singleplayer.h"
+				$File	"$SRCDIR\game\client\c_baselesson.cpp"
+				$File	"$SRCDIR\game\client\c_baselesson.h"
+				$File	"$SRCDIR\game\client\c_gameinstructor.cpp"
+				$File	"$SRCDIR\game\client\c_gameinstructor.h"
+				$File	"$SRCDIR\game\client\hud_locator_target.cpp"
+				$File	"$SRCDIR\game\client\hud_locator_target.h"
 			}
 		}
 
