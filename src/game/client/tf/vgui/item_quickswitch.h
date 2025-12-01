@@ -52,6 +52,7 @@ private:
 	int								m_iClass;		// Class of the player we're selecting an item for
 	int								m_iSlot;		// Slot on the player that we're selecting an item for
 	bool							m_bLoadoutHasChanged;
+	const char						*m_pszSubClass;
 
 	vgui::EditablePanel				*m_pItemContainer;
 	vgui::ScrollableEditablePanel	*m_pItemContainerScroller;

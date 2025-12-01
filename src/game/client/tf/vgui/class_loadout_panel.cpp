@@ -204,6 +204,7 @@ CLoadoutItemOptionsPanel::CLoadoutItemOptionsPanel( Panel *parent, const char *p
 
 	m_iCurrentClassIndex = -1;
 	m_eItemSlot = LOADOUT_POSITION_INVALID;
+	m_pszSubClass = NULL;
 
 	m_pListPanel = new vgui::PanelListPanel( this, "PanelListPanel" );
 	m_pListPanel->SetFirstColumnWidth( 0 );
@@ -240,7 +241,7 @@ void CLoadoutItemOptionsPanel::OnCommand( const char *command )
 	else if ( FStrEq( command, "particle_use_head_clicked" ) )
 	{
 		// Grab current hat
-		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
+		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot, NULL, m_pszSubClass );
 		if ( !pHat )
 			return;
 
@@ -259,7 +260,7 @@ void CLoadoutItemOptionsPanel::OnCommand( const char *command )
 	}
 	else if ( FStrEq( command, "set_style" ) )
 	{
-		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
+		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot, NULL, m_pszSubClass );
 		CStyleSelectDialog *pStyle = vgui::SETUP_PANEL( new CStyleSelectDialog( GetParent(), pHat ) );
 		if ( pStyle )
 		{
@@ -280,10 +281,18 @@ void CLoadoutItemOptionsPanel::OnMessage( const KeyValues* pParams, vgui::VPANEL
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::SetItemSlot( loadout_positions_t eItemSlot, int iClassIndex )
+void CLoadoutItemOptionsPanel::SetItemSlot( loadout_positions_t eItemSlot, int iClassIndex, const char* pszSubClass )
 {
 	m_eItemSlot = eItemSlot;
 	m_iCurrentClassIndex = iClassIndex;
+	if ( pszSubClass && pszSubClass[0] )
+	{
+		m_pszSubClass = V_strdup( pszSubClass );
+	}
+	else
+	{
+		m_pszSubClass = NULL;
+	}
 	// Init the Slider based on the slot
 	const char * pszConVarName = NULL;
 
@@ -349,7 +358,7 @@ void CLoadoutItemOptionsPanel::AddControlsParticleEffect( void ) const
 	m_pHatParticleUseHeadButton->SetVisible( false );
 	m_pHatParticleSlider->SetVisible( false );
 
-	CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
+	CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot, NULL, m_pszSubClass );
 	if ( pItem )
 	{
 		// does this hat even have a particle effect
@@ -404,7 +413,7 @@ void CLoadoutItemOptionsPanel::AddControlsSetStyle( void ) const
 //-----------------------------------------------------------------------------
 CEconItemView* CLoadoutItemOptionsPanel::GetItem( void ) const
 { 
-	return TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
+	return TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot, NULL, m_pszSubClass );
 }
 
 CClassLoadoutPanel *g_pClassLoadoutPanel = NULL;
@@ -418,6 +427,7 @@ CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 	m_iCurrentClassIndex = TF_CLASS_UNDEFINED;
 	m_iCurrentTeamIndex = TF_TEAM_RED;
 	m_iCurrentSlotIndex = -1;
+	m_pszCurrentSubClass = NULL;
 	m_pPlayerModelPanel = NULL;
 	m_pSelectionPanel = NULL;
 	m_pTauntHintLabel = NULL;
@@ -437,6 +447,11 @@ CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 	g_pClassLoadoutPanel = this;
 
 	m_pItemOptionPanel = new CLoadoutItemOptionsPanel( this, "ItemOptionsPanel" );
+
+	m_pSubClassList = new vgui::ComboBox( this, "SubClassList", 1, false );
+	m_pSubClassList->AddItem( "Default", NULL );
+	m_pSubClassList->SilentActivateItemByRow( 0 );
+	m_pSubClassList->AddActionSignalTarget( this );
 }
 
 CClassLoadoutPanel::~CClassLoadoutPanel()
@@ -453,12 +468,12 @@ CClassLoadoutPanel::~CClassLoadoutPanel()
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-	LoadControlSettings( "Resource/UI/ClassLoadoutPanel.res" );
+	LoadControlSettings( "Resource/UI/ClassLoadoutPanelSolo.res" );
 
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	m_pPlayerModelPanel = dynamic_cast<CTFPlayerModelPanel*>( FindChildByName("classmodelpanel") );
-	m_pTauntHintLabel = dynamic_cast<vgui::Label*>( FindChildByName("TauntHintLabel") );
+	//m_pTauntHintLabel = dynamic_cast<vgui::Label*>( FindChildByName("TauntHintLabel") );
 	m_pTauntLabel = dynamic_cast<CExLabel*>( FindChildByName("TauntLabel") );
 	m_pTauntCaratLabel = dynamic_cast<CExLabel*>( FindChildByName("TauntCaratLabel") );
 	m_pBuildablesButton = dynamic_cast<CExButton*>( FindChildByName("BuildablesButton") );
@@ -470,8 +485,8 @@ void CClassLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		m_pLoadoutPresetPanel->SetClassLoadoutPanel(this);
 	}
-	m_pPresetsExplanationPopup = dynamic_cast<CExplanationPopup*>( FindChildByName( "PresetsExplanation" ) );
-	m_pTauntsExplanationPopup = dynamic_cast<CExplanationPopup*>( FindChildByName( "TauntsExplanation" ) );
+	//m_pPresetsExplanationPopup = dynamic_cast<CExplanationPopup*>( FindChildByName( "PresetsExplanation" ) );
+	//m_pTauntsExplanationPopup = dynamic_cast<CExplanationPopup*>( FindChildByName( "TauntsExplanation" ) );
 	m_pTopLinePanel = FindChildByName( "TopLine" );
 	if ( m_pPassiveAttribsLabel )
 	{
@@ -572,7 +587,40 @@ void CClassLoadoutPanel::PerformLayout( void )
 		}
 
 		int iButtonPos = 0;
-		if ( m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
+		if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+		{
+			iButtonPos = g_DefaultLoadoutPanelPositioning.m_iPos[i];
+			auto subclass = GetPlayerSubClassData( m_pszCurrentSubClass );
+			if ( i == LOADOUT_POSITION_HEAD && subclass->m_nCosmeticSlots <= 0 )
+			{
+				iButtonPos = 0;
+			}
+			else if ( i == LOADOUT_POSITION_MISC && subclass->m_nCosmeticSlots <= 1 )
+			{
+				iButtonPos = 0;
+			}
+			else if ( i == LOADOUT_POSITION_MISC2 && subclass->m_nCosmeticSlots <= 2 )
+			{
+				iButtonPos = 0;
+			}
+			else if ( i == LOADOUT_POSITION_MELEE && subclass->m_aWeapons[0] == TF_WEAPON_NONE )
+			{
+				iButtonPos = 0;
+			}
+			else if ( i == LOADOUT_POSITION_SECONDARY && subclass->m_aWeapons[1] == TF_WEAPON_NONE )
+			{
+				iButtonPos = 0;
+			}
+			else if ( i == LOADOUT_POSITION_PRIMARY && subclass->m_aWeapons[2] == TF_WEAPON_NONE )
+			{
+				iButtonPos = 0;
+			}
+			if ( m_bInTauntLoadoutMode && !subclass->m_bAllowTauntItems )
+			{
+				iButtonPos = 0;
+			}
+		}
+		else if ( m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
 		{
 			iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[i];
 		}
@@ -620,7 +668,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 								 : iXPos;
 				pItemOptionsPanel->SetPos( iOptionsXPos, iYPos );
 
-				CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
+				CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i, NULL, m_pszCurrentSubClass );
 				// Enable or disable the item options button for this item model panel
 				pItemOptionsPanel->SetVisible( !m_bInTauntLoadoutMode && AnyOptionsAvailableForItem( pItemData ) );
 				pItemOptionsPanel->SetCommand( CFmtStr( "options%d", i ) );
@@ -759,6 +807,27 @@ void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 		}
 
 		ClearItemOptionsMenu();
+
+		m_pSubClassList->DeleteAllItems();
+		if ( m_iCurrentClassIndex == TF_CLASS_UNDEFINED )
+			return;
+
+		auto mainclass = GetPlayerClassData( m_iCurrentClassIndex );
+		m_pSubClassList->AddItem( g_pVGuiLocalize->Find( mainclass->m_szLocalizableName ), NULL );
+		m_pSubClassList->SilentActivateItemByRow( 0 );
+
+		for ( uint i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+		{
+			auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( i );
+			if ( subclass->m_bHideInLoadout )
+				continue;
+			const char* pszClassName = subclass->m_szClassName;
+			int iClassIndex = GetClassIndexFromString( subclass->m_szBaseClassName );
+			if ( iClassIndex != m_iCurrentClassIndex )
+				continue;
+			m_pSubClassList->AddItem( subclass->m_szLocalizableName, NULL );
+		}
+		m_pSubClassList->SetNumberOfEditLines( m_pSubClassList->GetItemCount() );
 	}
 	else
 	{
@@ -793,10 +862,24 @@ void CClassLoadoutPanel::PostShowPanel( bool bVisible )
 void CClassLoadoutPanel::SetClass( int iClass )
 {
 	m_iCurrentClassIndex = iClass;
+	m_pszCurrentSubClass = NULL;
 
 	if ( m_pLoadoutPresetPanel )
 	{
 		m_pLoadoutPresetPanel->SetClass( m_iCurrentClassIndex );
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CClassLoadoutPanel::SetSubClass( const char* pszSubClass )
+{
+	m_pszCurrentSubClass = V_strdup( pszSubClass );
+
+	if ( m_pLoadoutPresetPanel )
+	{
+		m_pLoadoutPresetPanel->SetSubClass( m_pszCurrentSubClass );
 	}
 }
 
@@ -873,14 +956,21 @@ void CClassLoadoutPanel::UpdateModelPanels( void )
 	if ( m_pPlayerModelPanel )
 	{
 		m_pPlayerModelPanel->ClearCarriedItems();
-		m_pPlayerModelPanel->SetToPlayerClass( m_iCurrentClassIndex );
+		if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+		{
+			m_pPlayerModelPanel->SetToPlayerSubClass( m_pszCurrentSubClass, true );
+		}
+		else
+		{
+			m_pPlayerModelPanel->SetToPlayerClass( m_iCurrentClassIndex, true );
+		}
 		m_pPlayerModelPanel->SetTeam( m_iCurrentTeamIndex );
 	}
 
 	// For now, fill them out with the local player's currently wielded items
 	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
 	{
-		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
+		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i, NULL, m_pszCurrentSubClass );
 		m_pItemModelPanels[i]->SetItem( pItemData );
 		m_pItemModelPanels[i]->SetShowQuantity( true );
 		m_pItemModelPanels[i]->SetSelected( false );
@@ -942,7 +1032,7 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 		// ulIndex implies do nothing (escape key)
 		if ( ulIndex != 0 )
 		{
-			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
+			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex, m_pszCurrentSubClass );
 			C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
 			if (pPlayer)
 			{
@@ -1111,7 +1201,7 @@ void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMo
 void CClassLoadoutPanel::ClearItemOptionsMenu( void )
 {
 	SetOptionsButtonText( m_pItemOptionPanel->GetItemSlot(), "+" );
-	m_pItemOptionPanel->SetItemSlot( LOADOUT_POSITION_INVALID, m_iCurrentClassIndex );
+	m_pItemOptionPanel->SetItemSlot( LOADOUT_POSITION_INVALID, m_iCurrentClassIndex, m_pszCurrentSubClass );
 	m_pItemOptionPanel->SetVisible( false );
 }
 
@@ -1204,7 +1294,7 @@ void CClassLoadoutPanel::OnCommand( const char *command )
 				}
 
 				// Create the selection screen. It removes itself on close.
-				m_pSelectionPanel = new CEquipSlotItemSelectionPanel( this, m_iCurrentClassIndex, iSlot );
+				m_pSelectionPanel = new CEquipSlotItemSelectionPanel( this, m_iCurrentClassIndex, iSlot, m_pszCurrentSubClass );
 				m_pSelectionPanel->ShowPanel( 0, true );
 
 				if ( m_pPlayerModelPanel )
@@ -1246,7 +1336,7 @@ void CClassLoadoutPanel::OnCommand( const char *command )
 				else
 				{
 					// Set the options panel to have the data for this slot
-					m_pItemOptionPanel->SetItemSlot( (loadout_positions_t)iSlot, m_iCurrentClassIndex );
+					m_pItemOptionPanel->SetItemSlot( (loadout_positions_t)iSlot, m_iCurrentClassIndex, m_pszCurrentSubClass );
 					m_pItemOptionPanel->SetVisible( true );
 					// Figure out if this is on the left or right
 					int iColumnHeight = 4;
@@ -1255,6 +1345,10 @@ void CClassLoadoutPanel::OnCommand( const char *command )
 					PinCorner_e siblingCornerPinTo = iColumn == 0 ? PIN_TOPRIGHT : PIN_TOPLEFT;
 					// Pin to the appropriate side
 					int iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[ iSlot ] - 1;
+					if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+					{
+						iButtonPos = g_DefaultLoadoutPanelPositioning.m_iPos[ iSlot ] - 1;;
+					}
 					m_pItemOptionPanel->PinToSibling( m_vecItemOptionButtons[ iButtonPos ]->GetName(), myCornerToPin, siblingCornerPinTo );
 					m_pItemOptionPanel->UpdateItemOptionsUI();
 				}
@@ -1272,6 +1366,60 @@ void CClassLoadoutPanel::OnCommand( const char *command )
 void CClassLoadoutPanel::OnMessage( const KeyValues* pParams, vgui::VPANEL hFromPanel )
 {
 	BaseClass::OnMessage( pParams, hFromPanel );
+}
+
+void CClassLoadoutPanel::OnTextChanged( KeyValues* data )
+{
+	Panel* pPanel = reinterpret_cast<vgui::Panel*>( data->GetPtr( "panel" ) );
+	vgui::ComboBox* pComboBox = dynamic_cast<vgui::ComboBox*>( pPanel );
+	if ( pComboBox && m_pSubClassList )
+	{
+		int nItem = pComboBox->GetActiveItem();
+		if ( nItem <= 0 )
+		{
+			SetClass( m_iCurrentClassIndex );
+		}
+		else
+		{
+			int iIter = 1;
+			for ( uint i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+			{
+				auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element(i);
+				if ( subclass->m_bHideInLoadout )
+					continue;
+				const char* pszClassName = subclass->m_szClassName;
+				int iClassIndex = GetClassIndexFromString( subclass->m_szBaseClassName );
+				if ( iClassIndex != m_iCurrentClassIndex )
+					continue;
+				if ( nItem == iIter )
+				{
+					SetSubClass( pszClassName );
+					break;
+				}
+				iIter++;
+			}
+		}
+		
+		// clear items from panels to make sure that items get invalidate on show panel
+		FOR_EACH_VEC(m_pItemModelPanels, i)
+		{
+			m_pItemModelPanels[i]->SetItem(NULL);
+		}
+
+		HideMouseOverPanel();
+
+		CreateItemPanels();
+
+		UpdateModelPanels();
+
+		// make the first slot be selected so controller input will work
+		static ConVarRef joystick("joystick");
+		if (joystick.IsValid() && joystick.GetBool() && m_pItemModelPanels.Count() && m_pItemModelPanels[0])
+		{
+			m_pItemModelPanels[0]->SetSelected(true);
+			m_pItemModelPanels[0]->RequestFocus();
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1358,7 +1506,7 @@ void CClassLoadoutPanel::UpdatePassiveAttributes( void )
 	// Loop through all equipped items
 	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
 	{
-		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
+		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i, NULL, m_pszCurrentSubClass );
 		if ( pItemData && pItemData->IsValid() )
 		{
 			CAttributeIterator_AddPassiveAttribsToPassiveList attrItPassives( &vecAttribsToPrint, false );
@@ -1371,7 +1519,7 @@ void CClassLoadoutPanel::UpdatePassiveAttributes( void )
 	{
 		CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
 		CUtlVector<const CEconItemSetDefinition *> pActiveSets;
-		TFInventoryManager()->GetActiveSets( &pActiveSets, localSteamID, m_iCurrentClassIndex );
+		TFInventoryManager()->GetActiveSets( &pActiveSets, localSteamID, m_iCurrentClassIndex, m_pszCurrentSubClass );
 
 		FOR_EACH_VEC( pActiveSets, set )
 		{

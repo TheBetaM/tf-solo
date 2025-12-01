@@ -1962,6 +1962,17 @@ void C_BasePlayer::ThirdPersonSwitch( bool bThirdperson )
 {
 	if ( !UseVR() )
 	{
+#ifdef TF_CLIENT_DLL
+		C_BasePlayer* pLocalPlayer = C_BasePlayer::GetLocalPlayer();
+		if ( pLocalPlayer )
+		{
+			CTFPlayer* pTFPlayer = ToTFPlayer( pLocalPlayer );
+			if ( pTFPlayer && pTFPlayer->m_Shared.IsSubClass() )
+			{
+				return !LocalPlayerInFirstPersonView() || cl_first_person_uses_world_model.GetBool() || GetPlayerSubClassData( pTFPlayer->m_Shared.GetSubClass() )->m_bThirdPersonViewModel;
+			}
+		}
+#endif
 		return !LocalPlayerInFirstPersonView() || cl_first_person_uses_world_model.GetBool();
 	}
 
@@ -2016,6 +2027,13 @@ bool C_BasePlayer::ShouldDrawThisPlayer()
 			return true;
 		}
 	}
+#ifdef TF_CLIENT_DLL
+	CTFPlayer* pTFPlayer = ToTFPlayer(this);
+	if ( pTFPlayer && pTFPlayer->m_Shared.IsSubClass() )
+	{
+		return GetPlayerSubClassData( pTFPlayer->m_Shared.GetSubClass() )->m_bThirdPersonViewModel;
+	}
+#endif
 	return false;
 }
 

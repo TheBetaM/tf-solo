@@ -388,7 +388,7 @@ public:
 			pMainClassTipsItemPanel->SetClassTip( g_pVGuiLocalize->FindAsUTF8( mainclass->m_szLocalizableName ), szIcon, "reset", m_pClassMenu );
 			m_pClassTipsListPanel->AddItem( NULL, pMainClassTipsItemPanel );
 
-			for ( int i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+			for ( uint i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
 			{
 				auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element(i);
 
@@ -875,7 +875,7 @@ void CTFClassMenu::SelectSubClass( const char* pszSubClass )
 	}
 	else
 	{
-		m_pTFPlayerModelPanel->SetToPlayerSubClass( m_pszCurrentSubClass, bClassWasRandom );
+		m_pTFPlayerModelPanel->SetToPlayerSubClass( m_pszCurrentSubClass, true );
 
 		m_pEditLoadoutButton->SetVisible( true );
 		if ( m_pEditLoadoutHintIcon )
@@ -927,47 +927,31 @@ void CTFClassMenu::LoadItems()
 
 	const char *pszVCD = "class_select";
 	int iSlot = g_iLegacyClassSelectWeaponSlots[iClass];
-
-	if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+	for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
 	{
-		auto subclass = GetPlayerSubClassData( m_pszCurrentSubClass );
-		bCanUseFancyClassSelectAnimation = false;
-		for ( int i = 0; i < TF_PLAYER_WEAPON_COUNT; i++ )
+		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, NULL, m_pszCurrentSubClass );
+		if ( pItemData && pItemData->IsValid() )
 		{
-			if ( !subclass->m_szBaseWeapons[i] || !subclass->m_szBaseWeapons[i][0] )
-				continue;
+			m_pTFPlayerModelPanel->AddCarriedItem( pItemData );
 
-			auto pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, NULL, m_pszCurrentSubClass );
-			if ( pItemData )
+			// Certain items have different shapes and would interfere with our class select animations.
+			bCanUseFancyClassSelectAnimation = bCanUseFancyClassSelectAnimation
+											&& !pItemData->FindAttribute( pAttrDef_DisableFancyLoadoutAnim );
+
+			// Some items want to override the class select VCD
+			if ( pItemData->FindAttribute( pAttrDef_ClassSelectOverrideVCD, &attrClassSelectOverrideVCD ) )
 			{
-				m_pTFPlayerModelPanel->AddCarriedItem( pItemData );
-			}
-		}
-	}
-	else
-	{
-		for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
-		{
-			CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i );
-			if ( pItemData && pItemData->IsValid() )
-			{
-				m_pTFPlayerModelPanel->AddCarriedItem( pItemData );
-
-				// Certain items have different shapes and would interfere with our class select animations.
-				bCanUseFancyClassSelectAnimation = bCanUseFancyClassSelectAnimation
-												&& !pItemData->FindAttribute( pAttrDef_DisableFancyLoadoutAnim );
-
-				// Some items want to override the class select VCD
-				if ( pItemData->FindAttribute( pAttrDef_ClassSelectOverrideVCD, &attrClassSelectOverrideVCD ) )
+				const char *pszClassSelectOverrideVCD = attrClassSelectOverrideVCD.value().c_str();
+				if ( pszClassSelectOverrideVCD && *pszClassSelectOverrideVCD )
 				{
-					const char *pszClassSelectOverrideVCD = attrClassSelectOverrideVCD.value().c_str();
-					if ( pszClassSelectOverrideVCD && *pszClassSelectOverrideVCD )
-					{
-						pszVCD = pszClassSelectOverrideVCD;
-					}
+					pszVCD = pszClassSelectOverrideVCD;
 				}
 			}
 		}
+	}
+	if ( m_pszCurrentSubClass && m_pszCurrentSubClass[0] )
+	{
+		bCanUseFancyClassSelectAnimation = false;
 	}
 
 	m_pTFPlayerModelPanel->PlayVCD( bCanUseFancyClassSelectAnimation ? pszVCD : NULL, g_pszLegacyClassSelectVCDWeapons[iClass] );

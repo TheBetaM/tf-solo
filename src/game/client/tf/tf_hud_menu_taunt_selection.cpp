@@ -311,6 +311,11 @@ void CHudMenuTauntSelection::UpdateItemModelPanels()
 	bool bSteamController = ::input->IsSteamControllerActive();
 
 	int iClass = pPlayer->GetPlayerClass()->GetClassIndex();
+	const char* pszSubClass = NULL;
+	if ( pPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pPlayer->m_Shared.GetSubClass();
+	}
 	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
 
 	for ( int i=0; i<ARRAYSIZE( m_pItemModelPanels ); ++i )
@@ -319,7 +324,7 @@ void CHudMenuTauntSelection::UpdateItemModelPanels()
 
 		CItemModelPanel *pItemModelPanel = m_pItemModelPanels[i];
 
-		CEconItemView *pOwnedItemInSlot = pPlayer->Inventory()->GetItemInLoadout( iClass, iTauntSlot );
+		CEconItemView *pOwnedItemInSlot = pPlayer->Inventory()->GetItemInLoadout( iClass, iTauntSlot, pszSubClass );
 		pItemModelPanel->SetItem( pOwnedItemInSlot );
 		pItemModelPanel->SetNoItemText( "#Hud_Menu_Taunt_NoItem" );
 
@@ -439,13 +444,18 @@ static void OpenTauntSelectionUI()
 	}
 
 	int iClass = pPlayer->GetPlayerClass()->GetClassIndex();
+	const char* pszSubClass = NULL;
+	if ( pPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pPlayer->m_Shared.GetSubClass();
+	}
 	bool bHasAnyTauntEquipped = false;
 	CTFPlayerInventory *pInv = pPlayer->Inventory();
 	if ( pInv )
 	{
 		for ( int iTauntSlot = LOADOUT_POSITION_TAUNT; iTauntSlot <= LOADOUT_POSITION_TAUNT8; ++iTauntSlot )
 		{
-			CEconItemView *pItem = pInv->GetItemInLoadout( iClass, iTauntSlot );
+			CEconItemView *pItem = pInv->GetItemInLoadout( iClass, iTauntSlot, pszSubClass );
 			if ( pItem && pItem->IsValid() )
 			{
 				bHasAnyTauntEquipped = true;

@@ -506,7 +506,7 @@ public:
 	typedef CUtlMap<struct item_stack_type_t, int>	DuplicateCountMap_t;
 	typedef CUtlVector<CEquippableResult>			EquippableResultsVec_t;
 
-	CEquippableItemsForSlotGenerator( int iClass, int iSlot, equip_region_mask_t unUsedEquipRegionMask, unsigned int unFlags );
+	CEquippableItemsForSlotGenerator( int iClass, int iSlot, equip_region_mask_t unUsedEquipRegionMask, unsigned int unFlags, const char* pszSubClass );
 
 	const EquippableResultsVec_t&	GetDisplayItems() const { return m_vecDisplayItems; }
 	CEconItemView				   *GetEquippedItem() const { return m_pEquippedItemView; }

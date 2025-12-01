@@ -1977,6 +1977,11 @@ bool CHudUpgradePanel::QuickEquipBottle( void )
 		return false;
 
 	int nClass = m_hPlayer->GetPlayerClass()->GetClassIndex();
+	const char* pszSubClass = NULL;
+	if ( m_hPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = m_hPlayer->m_Shared.GetSubClass();
+	}
 
 	CEconItemView *pBottle = GetLocalPlayerBottleFromInventory();
 	if ( !pBottle )
@@ -1993,7 +1998,7 @@ bool CHudUpgradePanel::QuickEquipBottle( void )
 	m_bInspectMode = false;
 	m_hPlayer = NULL;
 
-	TFInventoryManager()->EquipItemInLoadout( nClass, LOADOUT_POSITION_ACTION, iItemId );
+	TFInventoryManager()->EquipItemInLoadout( nClass, LOADOUT_POSITION_ACTION, iItemId, pszSubClass );
 
 	// Tell the GC to tell server that we should respawn if we're in a respawn room
 

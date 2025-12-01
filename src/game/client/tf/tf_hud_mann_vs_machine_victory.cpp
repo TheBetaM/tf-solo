@@ -1324,8 +1324,13 @@ bool CMvMVictoryMannUpEntry::SetModelPanelInfo( C_TFPlayer* pPlayer )
 
 	int nClass = pPlayer->GetPlayerClass()->GetClassIndex();
 	int nTeam = pPlayer->GetTeamNumber();
+	const char* pszSubClass = NULL;
+	if ( pPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pPlayer->m_Shared.GetSubClass();
+	}
 	int nLoadoutSlot = g_iLegacyClassSelectWeaponSlots[nClass];	// We want to mirror the class select panel
-	CEconItemView *pWeapon = TFInventoryManager()->GetItemInLoadoutForClass( nClass, nLoadoutSlot, &steamID );
+	CEconItemView *pWeapon = TFInventoryManager()->GetItemInLoadoutForClass( nClass, nLoadoutSlot, &steamID, pszSubClass );
 
 	m_pPlayerModelPanel->ClearCarriedItems();
 	if ( pPlayer->m_Shared.IsSubClass() )

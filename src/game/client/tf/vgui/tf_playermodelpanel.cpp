@@ -932,7 +932,7 @@ void CTFPlayerModelPanel::EquipRequiredLoadoutSlot( int iRequiredLoadoutSlot )
 		else
 		{
 			// If we didn't find a weapon in the appropriate slot, get the base item
-			CEconItemView *pWeapon = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, iRequiredLoadoutSlot );
+			CEconItemView *pWeapon = TFInventoryManager()->GetBaseItemForClass( m_iCurrentClassIndex, iRequiredLoadoutSlot, m_pszCurrentSubClass );
 			if ( pWeapon && pWeapon->IsValid() )
 			{
 				EquipItem( pWeapon );
@@ -1015,7 +1015,7 @@ void CTFPlayerModelPanel::UpdateHiddenBodyGroups( CEconItemView* pItem )
 //-----------------------------------------------------------------------------
 CEconItemView *CTFPlayerModelPanel::GetItemInSlot( int iSlot )
 {
-	CEconItemView *pOwnedItemInSlot = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, iSlot );
+	CEconItemView *pOwnedItemInSlot = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, iSlot, NULL, m_pszCurrentSubClass );
 
 	FOR_EACH_VEC( m_ItemsToCarry, i )
 	{
@@ -1256,7 +1256,7 @@ bool CTFPlayerModelPanel::AutoAddPlayerCarriedItems( int iClass )
 
 	for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
 	{
-		CEconItemView* pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i );
+		CEconItemView* pItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, NULL, m_pszCurrentSubClass );
 		if ( pItemData && pItemData->IsValid() )
 		{
 			AddCarriedItem( pItemData );

@@ -4,6 +4,8 @@ PlayerSubClass
 	{
 		baseclass		"heavyweapons"
 		responseclassname "saxtonhale"
+		CosmeticSlots	1
+		AllowTauntItems	1
 		
 		model 			"models/vsh/player/saxton_hale.mdl"
 		model_hwm		"models/vsh/player/saxton_hale.mdl"

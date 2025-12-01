@@ -591,6 +591,11 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 
 	int iClass = pOwner->GetPlayerClass()->GetClassIndex();
 	int iTeam = pOwner->GetTeamNumber();
+	const char* pszSubClass = NULL;
+	if ( pOwner->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pOwner->m_Shared.GetSubClass();
+	}
 
 	// Allow all weapons parented to the local player
 	if ( pOwner == C_BasePlayer::GetLocalPlayer() )
@@ -663,7 +668,7 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 	{
 		const char* pszCustomTauntProp = NULL;
 		int iClassTaunt = pOwner->GetPlayerClass()->GetClassIndex();
-		CEconItemView *pMiscItemView = pInv->GetItemInLoadout( iClassTaunt, pOwner->GetActiveTauntSlot() );
+		CEconItemView *pMiscItemView = pInv->GetItemInLoadout( iClassTaunt, pOwner->GetActiveTauntSlot(), pszSubClass );
 		if ( pMiscItemView && pMiscItemView->IsValid() )
 		{
 			if ( pMiscItemView->GetStaticData()->GetTauntData() )
@@ -699,7 +704,7 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 
 			for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
 			{
-				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, &steamIDForPlayer );
+				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, &steamIDForPlayer, pszSubClass );
 				if ( pItem && pItem->IsValid() )
 				{
 					const char *pszAttached = pItem->GetExtraWearableModel();
@@ -730,7 +735,7 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 	if ( !pInv->GetInventoryItemByItemID( pScriptItem->GetItemID() ) && !bSkipInventoryCheck )
 	{
 		// If it's a base item, we allow it.
-		CEconItemView *pBaseItem = TFInventoryManager()->GetBaseItemForClass( iClass, pScriptItem->GetStaticData()->GetLoadoutSlot(iClass) );
+		CEconItemView *pBaseItem = TFInventoryManager()->GetBaseItemForClass( iClass, pScriptItem->GetStaticData()->GetLoadoutSlot(iClass), pszSubClass );
 		if ( *pScriptItem != *pBaseItem )
 		{
 			const wchar_t *pwzItemName = pScriptItem->GetItemName();

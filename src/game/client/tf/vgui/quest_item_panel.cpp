@@ -1504,7 +1504,7 @@ void CQuestItemPanel::OnConfirmEquipLoaners( bool bConfirm )
 					if ( pItem->GetStaticData()->CanBeUsedByClass( iClass ) )
 					{
 						int iSlot = pItem->GetStaticData()->GetLoadoutSlot( iClass );
-						TFInventoryManager()->EquipItemInLoadout( iClass, iSlot, pItem->GetItemID() );
+						TFInventoryManager()->EquipItemInLoadout( iClass, iSlot, pItem->GetItemID(), NULL );
 						
 						// take the player to character loadout page
 						engine->ClientCmd_Unrestricted( CFmtStr( "open_charinfo_direct %d", iClass ) );

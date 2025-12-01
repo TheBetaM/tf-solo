@@ -662,10 +662,15 @@ void CItemSelectionPanel::PostMessageSelectionReturned( itemid_t ulItemID )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-CEquipSlotItemSelectionPanel::CEquipSlotItemSelectionPanel(Panel *parent, int iClass, int iSlot) : CItemSelectionPanel( parent )
+CEquipSlotItemSelectionPanel::CEquipSlotItemSelectionPanel(Panel *parent, int iClass, int iSlot, const char* pszSubClass) : CItemSelectionPanel( parent )
 {
 	m_iClass = iClass;
 	m_iSlot = iSlot;
+	m_pszSubClass = NULL;
+	if ( pszSubClass && pszSubClass[0] )
+	{
+		m_pszSubClass = V_strdup( pszSubClass );
+	}
 
 	m_pWeaponLabel = NULL;
 
@@ -683,8 +688,16 @@ void CEquipSlotItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	m_pWeaponLabel = dynamic_cast<vgui::Label*>( FindChildByName("ItemSlotLabel") );
 
-	TFPlayerClassData_t *pData = GetPlayerClassData( m_iClass );
-	SetDialogVariable( "loadoutclass", g_pVGuiLocalize->Find( pData->m_szLocalizableName ) );
+	if ( m_pszSubClass && m_pszSubClass[0] )
+	{
+		TFPlayerClassData_t* pData = GetPlayerSubClassData( m_pszSubClass );
+		SetDialogVariable( "loadoutclass", pData->m_szLocalizableName );
+	}
+	else
+	{
+		TFPlayerClassData_t* pData = GetPlayerClassData( m_iClass );
+		SetDialogVariable( "loadoutclass", g_pVGuiLocalize->Find( pData->m_szLocalizableName ) );
+	}
 
 	if ( m_pWeaponLabel )
 	{
@@ -816,7 +829,7 @@ static int SortRarityEconIdKeysDate( const CEquippableItemsForSlotGenerator::CEq
 // Purpose: figure out what items should be displayed to the user for a specific
 //			loadout and what order they should appear in.
 //-----------------------------------------------------------------------------
-CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, int iSlot, equip_region_mask_t unUsedEquipRegionMask, unsigned int unFlags )
+CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, int iSlot, equip_region_mask_t unUsedEquipRegionMask, unsigned int unFlags, const char* pszSubClass )
 	: m_pEquippedItemView( NULL )
 {
 	m_DuplicateCountsMap.SetLessFunc( DefLessFunc( DuplicateCountMap_t::KeyType_t ) );
@@ -852,7 +865,7 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 	// To start with, generate a list of all potentially-useable items that we want to consider for
 	// the UI. We'll strip this down based on duplicates/gameplay restrictions and sort it at the end.
 	CUtlVector<CEconItemView*> vecItems;
-	int iNumItems = TFInventoryManager()->GetAllUsableItemsForSlot( iClass, iSearchSlot, &vecItems );
+	int iNumItems = TFInventoryManager()->GetAllUsableItemsForSlot( iClass, iSearchSlot, &vecItems, pszSubClass );
 
 	CEconItemView *pEquippedItem = NULL;
 	
@@ -884,7 +897,7 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 		}
 
 		// Track whether this is our currently-equipped item.
-		CEconItemView *pCurItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, iSlot );
+		CEconItemView *pCurItemData = TFInventoryManager()->GetItemInLoadoutForClass( iClass, iSlot, NULL, pszSubClass );
 		if ( pCurItemData && pCurItemData->GetItemID() && pCurItemData->GetItemID() == pItem->GetItemID() )
 		{
 			pEquippedItem = pItem;
@@ -942,7 +955,7 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 
 	// Always leave a base item in the list. We don't have to worry about level changes or other weird overlaps
 	// for base weapons. If we don't have an equipped item, this must be the equipped item.
-	CEconItemView *pBaseItem = TFInventoryManager()->GetBaseItemForClass( iClass, iSlot );
+	CEconItemView *pBaseItem = TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, pszSubClass );
 	if ( pBaseItem && pBaseItem->IsValid() )
 	{
 		if ( !pEquippedItem )
@@ -983,7 +996,7 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, int iIgnoreSlot )
+equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, int iIgnoreSlot, const char* pszSubClass )
 {
 	Assert( iUpToSlot <= CLASS_LOADOUT_POSITION_COUNT );
 
@@ -993,7 +1006,7 @@ equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, 
 		if ( i == iIgnoreSlot )
 			continue;
 
-		const CEconItemView *pEquippedItemView = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i );
+		const CEconItemView *pEquippedItemView = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, NULL, pszSubClass );
 		if ( !pEquippedItemView )
 			continue;
 
@@ -1017,12 +1030,13 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 
 	// Generate a mask that is "every equip region we're using except for whatever is in this current slot" and use
 	// that to generate a list of everything we could possibly equip for this current slot.
-	const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, CLASS_LOADOUT_POSITION_COUNT, m_iSlot );
+	const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, CLASS_LOADOUT_POSITION_COUNT, m_iSlot, m_pszSubClass );
 
 	CEquippableItemsForSlotGenerator equippableItems( m_iClass,
 													m_iSlot,
 													unUsedEquipRegionMask,
-													bShowEquippedItemFirst ? CEquippableItemsForSlotGenerator::kSlotGenerator_EquippedSpecialHandling : CEquippableItemsForSlotGenerator::kSlotGenerator_None );
+													bShowEquippedItemFirst ? CEquippableItemsForSlotGenerator::kSlotGenerator_EquippedSpecialHandling : CEquippableItemsForSlotGenerator::kSlotGenerator_None,
+													m_pszSubClass );
 
 
 	if( m_bShowingEntireBackpack )
@@ -1165,7 +1179,7 @@ const char *CEquipSlotItemSelectionPanel::GetItemNotSelectableReason( const CEco
 
 	// Should we gray out this item? This will happen if we're coming from the loadout and we have equip region
 	// conflicts of some kind.
-	const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, CLASS_LOADOUT_POSITION_COUNT, m_iSlot );
+	const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, CLASS_LOADOUT_POSITION_COUNT, m_iSlot, m_pszSubClass );
 	if ( pItemData->GetEquipRegionMask() & unUsedEquipRegionMask )
 		return "#Econ_GreyOutReason_EquipRegionConflict";
 
@@ -1450,7 +1464,7 @@ const char *CCraftingItemSelectionPanel::GetItemNotSelectableReason( const CEcon
 // Purpose: 
 //-----------------------------------------------------------------------------
 CAccountSlotItemSelectionPanel::CAccountSlotItemSelectionPanel( Panel *pParent, int iSlot, const char *pszTitleToken ) 
-	: CEquipSlotItemSelectionPanel( pParent, GEconItemSchema().GetAccountIndex(), iSlot )
+	: CEquipSlotItemSelectionPanel( pParent, GEconItemSchema().GetAccountIndex(), iSlot, NULL )
 	, m_pszTitleToken( pszTitleToken )
 {}
 

@@ -80,6 +80,8 @@ struct TFPlayerClassData_t
 	bool		m_bThirdPersonCameraOnly;
 	char		m_szUnlockSaveFlag[256];
 	char		m_szVisibleSaveFlag[256];
+	int			m_nCosmeticSlots;
+	bool		m_bAllowTauntItems;
 
 	TFPlayerClassData_t();
 	const char *GetModelName() const;

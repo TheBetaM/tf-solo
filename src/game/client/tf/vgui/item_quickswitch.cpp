@@ -242,6 +242,7 @@ CItemQuickSwitchPanel::CItemQuickSwitchPanel( const char *pElementName ) : CHudE
 	m_pLoadoutPresetPanel = NULL;
 	m_iClass = TF_CLASS_UNDEFINED;
 	m_iSlot = 0;
+	m_pszSubClass = NULL;
 
 	SetVisible( false );
 
@@ -298,6 +299,10 @@ int	CItemQuickSwitchPanel::HudElementKeyInput( int down, ButtonCode_t keynum, co
 	if ( iSlot > 0 )
 	{
 		int iLoadoutSlot = g_SlotsToLoadoutSlotsPerClass[m_iClass][iSlot];
+		if ( m_pszSubClass && m_pszSubClass[0] )
+		{
+			iLoadoutSlot = g_SlotsToLoadoutSlotsPerClass[1][iSlot];
+		}
 		if ( iLoadoutSlot != LOADOUT_POSITION_INVALID )
 		{
 			// is it the slot we're already viewing?
@@ -338,12 +343,21 @@ bool CItemQuickSwitchPanel::CalculateClassAndSlot( void )
 
 	// Get the current class
 	m_iClass = pPlayer->GetPlayerClass()->GetClassIndex();
+	m_pszSubClass = NULL;
+	if ( pPlayer->m_Shared.IsSubClass() )
+	{
+		m_pszSubClass = V_strdup( pPlayer->m_Shared.GetSubClass() );
+	}
 	if ( m_iClass < TF_FIRST_NORMAL_CLASS || m_iClass >= TF_LAST_NORMAL_CLASS )
 		return false;
 
 	if ( m_pLoadoutPresetPanel )
 	{
 		m_pLoadoutPresetPanel->SetClass( m_iClass );
+		if ( pPlayer->m_Shared.IsSubClass() )
+		{
+			m_pLoadoutPresetPanel->SetSubClass( pPlayer->m_Shared.GetSubClass() );
+		}
 	}
 
 	if ( pPlayer->IsAlive() )
@@ -360,7 +374,15 @@ bool CItemQuickSwitchPanel::CalculateClassAndSlot( void )
 	else
 	{
 		m_iClass = pPlayer->m_Shared.GetDesiredPlayerClassIndex();
+		if ( pPlayer->m_Shared.GetDesiredSubClass() && pPlayer->m_Shared.GetDesiredSubClass()[0] )
+		{
+			m_pszSubClass = V_strdup( pPlayer->m_Shared.GetDesiredSubClass() );
+		}
 		m_iSlot = g_SlotsToLoadoutSlotsPerClass[m_iClass][1]; // use the first slot if we're dead
+		if ( m_pszSubClass && m_pszSubClass[0] )
+		{
+			m_iSlot = g_SlotsToLoadoutSlotsPerClass[1][1];
+		}
 	}
 
 	return true;
@@ -433,7 +455,7 @@ void CItemQuickSwitchPanel::CloseQS( void )
 		}
 
 		// Send the preset panel a msg so it can save the change
-		CEconItemView *pCurItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iClass, m_iSlot );
+		CEconItemView *pCurItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iClass, m_iSlot, NULL, m_pszSubClass );
 		if ( pCurItemData )
 		{
 			KeyValues *pLoadoutChangedMsg = new KeyValues( "LoadoutChanged" );
@@ -568,7 +590,7 @@ void CItemQuickSwitchPanel::UpdateEquippedItem( void )
 
 	bool bEquipped = false;
 
-	CEconItemView *pCurItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iClass, m_iSlot );
+	CEconItemView *pCurItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iClass, m_iSlot, NULL, m_pszSubClass );
 	if ( pCurItemData )
 	{
 		if ( pCurItemData->IsValid() )
@@ -617,8 +639,16 @@ void CItemQuickSwitchPanel::UpdateModelPanels( void )
 	if ( !IsValid() )
 		return;
 
-	TFPlayerClassData_t *pData = GetPlayerClassData( m_iClass );
-	SetDialogVariable( "loadoutclass", g_pVGuiLocalize->Find( pData->m_szLocalizableName ) );
+	if ( m_pszSubClass && m_pszSubClass[0] )
+	{
+		TFPlayerClassData_t* pData = GetPlayerSubClassData( m_pszSubClass );
+		SetDialogVariable( "loadoutclass", pData->m_szLocalizableName );
+	}
+	else
+	{
+		TFPlayerClassData_t *pData = GetPlayerClassData( m_iClass );
+		SetDialogVariable( "loadoutclass", g_pVGuiLocalize->Find( pData->m_szLocalizableName ) );
+	}
 
 	if ( m_pWeaponLabel )
 	{
@@ -626,10 +656,10 @@ void CItemQuickSwitchPanel::UpdateModelPanels( void )
 	}
 
 	// What items can go in this slot?
-	extern equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, int iIgnoreSlot );
-	const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, m_iSlot, LOADOUT_POSITION_INVALID );
+	extern equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, int iIgnoreSlot, const char* pszSubClass );
+	const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, m_iSlot, LOADOUT_POSITION_INVALID, m_pszSubClass );
 
-	CEquippableItemsForSlotGenerator equippableItems( m_iClass, m_iSlot, unUsedEquipRegionMask, CEquippableItemsForSlotGenerator::kSlotGenerator_None );
+	CEquippableItemsForSlotGenerator equippableItems( m_iClass, m_iSlot, unUsedEquipRegionMask, CEquippableItemsForSlotGenerator::kSlotGenerator_None, m_pszSubClass );
 
 	int iButton = 0;
 	FOR_EACH_VEC( equippableItems.GetDisplayItems(), i )
@@ -739,7 +769,7 @@ void CItemQuickSwitchPanel::OnIPMouseReleased( vgui::Panel *panel )
 		iIndex = pItemData->GetItemID();
 	}
 
-	TFInventoryManager()->EquipItemInLoadout( m_iClass, m_iSlot, iIndex );
+	TFInventoryManager()->EquipItemInLoadout( m_iClass, m_iSlot, iIndex, m_pszSubClass );
 
 	m_bLoadoutHasChanged = true;
 

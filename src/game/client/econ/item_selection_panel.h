@@ -133,7 +133,7 @@ class CEquipSlotItemSelectionPanel : public CItemSelectionPanel
 public:
 	DECLARE_CLASS_SIMPLE( CEquipSlotItemSelectionPanel, CItemSelectionPanel );
 public:
-	CEquipSlotItemSelectionPanel(Panel *parent, int iClass, int iSlot);
+	CEquipSlotItemSelectionPanel(Panel *parent, int iClass, int iSlot, const char* pszSubClass);
 
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void	PerformLayout( void );
@@ -150,6 +150,7 @@ public:
 protected:
 	int								m_iClass;		// Class of the player we're selecting an item for
 	int								m_iSlot;		// Slot on the player that we're selecting an item for
+	const char						*m_pszSubClass;
 
 	itemid_t						m_iCurrentItemID;
 

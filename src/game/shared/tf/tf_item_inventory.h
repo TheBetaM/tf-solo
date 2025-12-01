@@ -42,13 +42,13 @@ public:
 	CTFPlayerInventory();
 	virtual ~CTFPlayerInventory();
 
-	virtual CEconItemView	*GetItemInLoadout( int iClass, int iSlot, const char* pszSubClass = NULL );
+	virtual CEconItemView	*GetItemInLoadout( int iClass, int iSlot, const char* pszSubClass );
 
 #ifdef CLIENT_DLL
 	// Removes any item in a loadout slot. If the slot has a base item,
 	// the player essentially returns to using that item.
 	// NOTE: This can fail if the player has no backpack space to contain the equipped item.
-	bool				ClearLoadoutSlot( int iClass, int iSlot );
+	bool				ClearLoadoutSlot( int iClass, int iSlot, const char* pszSubClass = NULL );
 	CEconItemView		*GetCacheServerItemInLoadout( int iClass, int iSlot );
 
 	void				UpdateWeaponSkinRequest();
@@ -78,10 +78,20 @@ public:
 
 	void				SaveLocalLoadout( bool bReset=false, bool bDefaultToGC=false );
 	bool				EquipLocalPreset(equipped_class_t unClass, equipped_preset_t unPreset);
+	bool				EquipLocalPresetSub(equipped_class_t unClass, const char* pszSubClass, equipped_preset_t unPreset);
 	int					GetActiveLocalPreset(equipped_class_t unClass) { return m_ActivePreset[unClass]; }
+	int					GetActiveLocalPresetSub( const char* pszSubClass ) 
+	{ 
+		if ( m_ActivePresetSub.HasElement( pszSubClass ) )
+		{
+			return m_ActivePresetSub[ m_ActivePresetSub.Find( pszSubClass ) ];
+		}
+		return 0; 
+	}
 
 #endif
-	void				EquipLocal(uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot);
+	void				EquipLocal(uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass);
+	void				EquipLocalSub(uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass);
 	void				UnequipLocal(uint64 ulItemID);
 
 	void				OnHasNewQuest();
@@ -146,12 +156,26 @@ protected:
 	itemid_t		m_RealTFLoadoutItems[ TF_CLASS_COUNT ][ CLASS_LOADOUT_POSITION_COUNT ];
 #endif
 
+	struct SubClassItems_t
+	{
+		itemid_t Items[CEconItemSchema::kMaxItemPresetCount][CLASS_LOADOUT_POSITION_COUNT];
+	};
+
+	CUtlMap< const char*, SubClassItems_t* >	m_PresetItemsSub;
+	
 #endif // CLIENT_DLL
 	itemid_t		m_LoadoutItems[ TF_CLASS_COUNT ][ CLASS_LOADOUT_POSITION_COUNT ];
 	bool			m_bLoadoutChanged[ TF_CLASS_COUNT ];
 	itemid_t		m_AccountLoadoutItems[ ACCOUNT_LOADOUT_POSITION_COUNT ];
 	int				m_ActivePreset[TF_CLASS_COUNT];
 	bool			m_bOfflineLoaded;
+	CUtlMap< const char*, int >					m_ActivePresetSub;
+
+	struct SubClassLoadoutItems_t
+	{
+		itemid_t Items[CLASS_LOADOUT_POSITION_COUNT];
+	};
+	CUtlMap< const char*, SubClassLoadoutItems_t* >	m_LoadoutItemsSub;
 
 	friend class CTFInventoryManager;
 };
@@ -194,10 +218,11 @@ public:
 	virtual void		Update( float frametime ) OVERRIDE;
 
 	virtual bool		LoadPreset(equipped_class_t unClass, equipped_preset_t unPreset);
+	virtual bool		LoadPresetSub(equipped_class_t unClass, const char* pszSubClass, equipped_preset_t unPreset);
 #endif
 
 	// Returns the item data for the base item in the loadout slot for a given class
-	CEconItemView		*GetBaseItemForClass( int iClass, int iSlot, const char* pszSubClass = NULL );
+	CEconItemView		*GetBaseItemForClass( int iClass, int iSlot, const char* pszSubClass );
 	void				GenerateBaseItems( void );
 	CEconItemView		*AddSoloItem( int id );
 
@@ -210,7 +235,7 @@ public:
 	CEconItemView		*GetItemInLoadoutForAccount( int nSlot, CSteamID *pID = NULL );
 
 	// Fills out the vector with the sets that are currently active on the specified player & class
-	void				GetActiveSets( CUtlVector<const CEconItemSetDefinition *> *pItemSets, CSteamID steamIDForPlayer, int iClass );
+	void				GetActiveSets( CUtlVector<const CEconItemSetDefinition *> *pItemSets, CSteamID steamIDForPlayer, int iClass, const char* pszSubClass );
 
 	// We're generating a base item. We need to add the game-specific keys to the criteria so that it'll find the right base item.
 	virtual void		AddBaseItemCriteria( baseitemcriteria_t *pCriteria, CItemSelectionCriteria *pSelectionCriteria );
@@ -253,14 +278,14 @@ public:
 	CTFPlayerInventory	*GetLocalTFInventory( void );
 
 	// Try and equip the specified item in the specified class's loadout slot
-	bool				EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID );
+	bool				EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID, const char* pszSubClass );
 
 	// Fills out pList with all inventory items that could fit into the specified loadout slot for a given class
-	int					GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVector<CEconItemView*> *pList );
+	int					GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVector<CEconItemView*> *pList, const char* pszSubClass );
 
 	virtual int			GetBackpackPositionFromBackend( uint32 iBackendPosition ) { return ExtractBackpackPositionFromBackend(iBackendPosition); }
 
-	virtual void		UpdateInventoryEquippedState(CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot);
+	virtual void		UpdateInventoryEquippedState(CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass);
 
 private:
 	CTFPlayerInventory	m_LocalInventory;

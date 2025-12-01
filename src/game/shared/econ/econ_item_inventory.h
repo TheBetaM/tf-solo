@@ -236,7 +236,7 @@ public:
 
 #ifdef CLIENT_DLL
 	// Must be implemented by derived class
-	virtual bool		EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID ) = 0;
+	virtual bool		EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID, const char* pszSubClass ) = 0;
 
 	virtual CPlayerInventory *GeneratePlayerInventoryObject() const { return new CPlayerInventory; }
 
@@ -292,7 +292,7 @@ public:
 	// Tell the backend to move an item to a specified backend position
 	virtual void		UpdateInventoryPosition( CPlayerInventory *pInventory, uint64 ulItemID, uint32 unNewInventoryPos );
 
-	virtual void		UpdateInventoryEquippedState( CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot );
+	virtual void		UpdateInventoryEquippedState( CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass );
 
 
 	//-----------------------------------------------------------------------

@@ -33,7 +33,7 @@ public:
 	virtual void OnCommand( const char *command );
 	virtual void OnMessage( const KeyValues* pParams, vgui::VPANEL hFromPanel );
 
-	void SetItemSlot( loadout_positions_t eItemSlot, int iClassIndex );
+	void SetItemSlot( loadout_positions_t eItemSlot, int iClassIndex, const char* pszSubClass );
 	loadout_positions_t GetItemSlot() const { return m_eItemSlot; }
 	void UpdateItemOptionsUI();
 
@@ -49,6 +49,7 @@ private:
 	vgui::CheckButton			*m_pHatParticleUseHeadButton;
 
 	int						m_iCurrentClassIndex;
+	const char				*m_pszSubClass;
 	loadout_positions_t		m_eItemSlot;
 };
 
@@ -78,6 +79,7 @@ public:
 	virtual void OnNavigateFrom( const char* panelName ) OVERRIDE;
 
 	void		 SetClass( int iClass );
+	void		 SetSubClass( const char* pszSubClass );
 	void		 SetTeam( int iTeam );
 
 	int			 GetNumRelevantSlots() const;
@@ -89,6 +91,7 @@ public:
 	MESSAGE_FUNC( OnClosing, "Closing" );
 	virtual void OnCommand( const char *command );
 	virtual void OnMessage( const KeyValues* pParams, vgui::VPANEL hFromPanel );
+	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
 
 	void		SetSelectionPanel( CEquipSlotItemSelectionPanel *pPanel ) { m_pSelectionPanel = pPanel; }
 	void		UpdatePassiveAttributes( void );
@@ -117,6 +120,7 @@ protected:
 	int						m_iCurrentClassIndex;
 	int						m_iCurrentTeamIndex;
 	int						m_iCurrentSlotIndex;
+	const char*				m_pszCurrentSubClass;
 	bool					m_bLoadoutHasChanged;
 	bool					m_bInTauntLoadoutMode;
 	CTFPlayerModelPanel		*m_pPlayerModelPanel;
@@ -139,6 +143,8 @@ protected:
 	KeyValues				*m_pItemOptionPanelKVs;
 	CUtlVector< CExButton * > m_vecItemOptionButtons;
 	CLoadoutItemOptionsPanel *m_pItemOptionPanel;
+
+	vgui::ComboBox			*m_pSubClassList;
 
 private:
 	void UpdatePageButtonColor( CExImageButton *pPageButton, bool bIsActive );

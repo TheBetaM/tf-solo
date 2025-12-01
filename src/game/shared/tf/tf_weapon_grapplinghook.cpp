@@ -816,13 +816,19 @@ void CEquipGrapplingHookNotification::Accept()
 	{
 		iItemId = pGrapplingHook->GetItemID();
 	}*/
+
+	const char* pszSubClass = NULL;
+	if ( pLocalPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pLocalPlayer->m_Shared.GetSubClass();
+	}
 	
 	if ( iItemId == INVALID_ITEM_ID )
 	{
 		iItemId = 0;
 
 		static CSchemaItemDefHandle pItemDef_Grapple( "TF_WEAPON_GRAPPLINGHOOK" );
-		CEconItemView *pDefaultGrapple = TFInventoryManager()->GetBaseItemForClass( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION );
+		CEconItemView *pDefaultGrapple = TFInventoryManager()->GetBaseItemForClass( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, pszSubClass );
 		if ( pDefaultGrapple )
 		{
 			if ( pDefaultGrapple->GetItemDefinition() == pItemDef_Grapple )
@@ -832,7 +838,7 @@ void CEquipGrapplingHookNotification::Accept()
 		}
 	}
 
-	TFInventoryManager()->EquipItemInLoadout( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, iItemId );
+	TFInventoryManager()->EquipItemInLoadout( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, iItemId, pszSubClass );
 	
 	// Tell the GC to tell server that we should respawn if we're in a respawn room
 

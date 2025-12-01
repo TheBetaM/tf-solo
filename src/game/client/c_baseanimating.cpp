@@ -3404,7 +3404,12 @@ int C_BaseAnimating::InternalDrawModel( int flags )
 			if ( pOwner->m_Shared.InCond( TF_COND_TAUNTING ) )
 			{
 				int iClass = pOwner->GetPlayerClass()->GetClassIndex();
-				CEconItemView *pMiscItemView = pInv->GetItemInLoadout( iClass, pOwner->GetActiveTauntSlot() );
+				const char* pszSubClass = NULL;
+				if ( pOwner->m_Shared.IsSubClass() )
+				{
+					pszSubClass = pOwner->m_Shared.GetSubClass();
+				}
+				CEconItemView *pMiscItemView = pInv->GetItemInLoadout( iClass, pOwner->GetActiveTauntSlot(), pszSubClass );
 				if ( pMiscItemView && pMiscItemView->IsValid() )
 				{
 					if ( pMiscItemView->GetStaticData()->GetTauntData() )

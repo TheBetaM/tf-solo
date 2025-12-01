@@ -222,6 +222,8 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	m_bThirdPersonCameraOnly = ( pKeyValuesData->GetInt( "ThirdPersonCameraOnly", 0 ) > 0 );
 	Q_strncpy( m_szUnlockSaveFlag, pKeyValuesData->GetString( "UnlockSaveFlag" ), 256 );
 	Q_strncpy( m_szVisibleSaveFlag, pKeyValuesData->GetString( "VisibleSaveFlag" ), 256 );
+	m_nCosmeticSlots = pKeyValuesData->GetInt( "CosmeticSlots" );
+	m_bAllowTauntItems = ( pKeyValuesData->GetInt( "AllowTauntItems", 0 ) > 0 );
 
 	// The file has been parsed.
 	m_bParsed = true;

@@ -4392,7 +4392,7 @@ void CTFGCServerSystem::SDK_ApplyLocalLoadout(CGCClientSharedObjectCache* pCache
 			CEconItem soIndex;
 			soIndex.SetItemID(uItemId);
 
-			pTFInventory->EquipLocal(uItemId, iClass, iSlot);
+			pTFInventory->EquipLocal(uItemId, iClass, iSlot, NULL);
 			/*
 			CEconItem* pItem = (CEconItem*) pItemCache->FindSharedObject(soIndex);
 			if (pItem) {

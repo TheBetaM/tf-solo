@@ -773,7 +773,7 @@ void CInventoryManager::Update( float frametime )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CInventoryManager::UpdateInventoryEquippedState( CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot )
+void CInventoryManager::UpdateInventoryEquippedState( CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass )
 {
 	// passing in INVALID_ITEM_ID means "unequip from this slot"
 	if ( ulItemID != INVALID_ITEM_ID )

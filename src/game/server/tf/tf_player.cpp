@@ -2904,9 +2904,9 @@ void CTFPlayer::PrecachePlayerModels( void )
 */
 	}
 
-	for ( i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+	for ( uint a = 0; a < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); a++ )
 	{
-		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( i );
+		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( a );
 
 		const char* pszModel = subclass->m_szModelName;
 		if ( pszModel && pszModel[0] )
@@ -2954,12 +2954,12 @@ void CTFPlayer::PrecachePlayerModels( void )
 		}
 	}
 
-	for ( i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++ )
+	for ( uint a = 0; a < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); a++ )
 	{
-		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( i );
-		for ( int i = 0; i < ARRAYSIZE( subclass->m_szDeathSound ); ++i )
+		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element( a );
+		for ( int b = 0; b < ARRAYSIZE( subclass->m_szDeathSound ); ++b )
 		{
-			PrecacheScriptSound( subclass->m_szDeathSound[i] );
+			PrecacheScriptSound( subclass->m_szDeathSound[b] );
 		}
 	}
 
@@ -4997,7 +4997,7 @@ CEconItemView *CTFPlayer::GetLoadoutItem( int iClass, int iSlot, bool bReportWhi
 	if ( TFGameRules()->IsInTraining() || TFGameRules()->IsInItemTestingMode() )
 	{
 		CTFInventoryManager *pInventoryManager = TFInventoryManager();
-		return pInventoryManager->GetBaseItemForClass( iClass, iSlot );
+		return pInventoryManager->GetBaseItemForClass( iClass, iSlot, NULL );
 	}
 
 	CEconItemView *pItem = m_Inventory.GetItemInLoadout( iClass, iSlot, ScriptGetSubClass() );
@@ -5011,7 +5011,7 @@ CEconItemView *CTFPlayer::GetLoadoutItem( int iClass, int iSlot, bool bReportWhi
 			ClientPrint( this, HUD_PRINTNOTIFY, "#Item_BlacklistedInMatch", pItem->GetStaticData()->GetItemBaseName() );
 		}
 
-		pItem = TFInventoryManager()->GetBaseItemForClass( iClass, iSlot );
+		pItem = TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, ScriptGetSubClass() );
 	}
 
 	return pItem;
@@ -5364,6 +5364,12 @@ void CTFPlayer::ValidateWearables( TFPlayerClassData_t *pData )
 	CSteamID steamIDForPlayer;
 	GetSteamID( &steamIDForPlayer );
 
+	const char* pszSubClass = NULL;
+	if ( m_Shared.IsSubClass() )
+	{
+		pszSubClass = m_Shared.GetSubClass();
+	}
+
 	bool bIsDisguisedSpy = IsPlayerClass( TF_CLASS_SPY ) && m_Shared.InCond( TF_COND_DISGUISED );
 
 	// Need to move backwards because we'll be removing them as we find them.
@@ -5393,7 +5399,7 @@ void CTFPlayer::ValidateWearables( TFPlayerClassData_t *pData )
 			int iLoadoutSlot = pWeapon->GetAttributeContainer()->GetItem()->GetStaticData()->GetLoadoutSlot( GetPlayerClass()->GetClassIndex() );
 			if (iLoadoutSlot >= 0 )
 			{
-				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), iLoadoutSlot, &steamIDForPlayer );
+				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), iLoadoutSlot, &steamIDForPlayer, pszSubClass );
 				itemMatch |= ItemsMatch( pData, pWeapon->GetAttributeContainer()->GetItem(), pItem );
 			}
 		}
@@ -5403,7 +5409,7 @@ void CTFPlayer::ValidateWearables( TFPlayerClassData_t *pData )
 			int iLoadoutSlot = pWearable->GetAttributeContainer()->GetItem()->GetStaticData()->GetLoadoutSlot( GetPlayerClass()->GetClassIndex() );
 			if ( iLoadoutSlot >= 0 )
 			{
-				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), iLoadoutSlot, &steamIDForPlayer );
+				CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), iLoadoutSlot, &steamIDForPlayer, pszSubClass );
 				itemMatch |= ItemsMatch( pData, pWearable->GetAttributeContainer()->GetItem(), pItem );
 
 				// Item says what slot it wants to be in, but Misc's and Taunts can be in multiple places, check against all
@@ -5415,7 +5421,7 @@ void CTFPlayer::ValidateWearables( TFPlayerClassData_t *pData )
 					{
 						if ( ( bLoadoutMisc && IsMiscSlot( i ) ) || ( bLoadoutTaunt && IsTauntSlot( i ) ) )
 						{
-							pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), i, &steamIDForPlayer );
+							pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), i, &steamIDForPlayer, pszSubClass );
 							itemMatch |= ItemsMatch( pData, pWearable->GetAttributeContainer()->GetItem(), pItem );
 						}
 					}
@@ -5493,6 +5499,12 @@ void CTFPlayer::ManageRegularWeaponsLegacy( TFPlayerClassData_t *pData )
 	CSteamID steamIDForPlayer;
 	GetSteamID( &steamIDForPlayer );
 
+	const char* pszSubClass = NULL;
+	if ( m_Shared.IsSubClass() )
+	{
+		pszSubClass = m_Shared.GetSubClass();
+	}
+
 	for ( int iWeapon = 0; iWeapon < TF_PLAYER_WEAPON_COUNT; ++iWeapon )
 	{
 		if ( pData->m_aWeapons[iWeapon] != TF_WEAPON_NONE )
@@ -5515,7 +5527,7 @@ void CTFPlayer::ManageRegularWeaponsLegacy( TFPlayerClassData_t *pData )
 
 
 			// Do we have a custom weapon in this slot?
-			CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), iLoadoutSlot, &steamIDForPlayer );
+			CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( GetPlayerClass()->GetClassIndex(), iLoadoutSlot, &steamIDForPlayer, pszSubClass );
 			bool bHasNonBaseWeapon = pItem ? pItem->GetItemQuality() != AE_NORMAL : false;
 
 			if ( pWeapon )

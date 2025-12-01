@@ -28,6 +28,7 @@ CLoadoutPresetPanel::CLoadoutPresetPanel( vgui::Panel *pParent, const char *pNam
 	V_memset( m_pPresetButtons, 0, sizeof( m_pPresetButtons ) );
 
 	m_iClass = TF_CLASS_UNDEFINED;
+	m_pszSubClass = NULL;
 	m_pPresetButtonKv = NULL;
 	m_bDisplayVertical = false;
 
@@ -130,8 +131,22 @@ void CLoadoutPresetPanel::PerformLayout()
 void CLoadoutPresetPanel::SetClass( int iClass )
 {
 	m_iClass = iClass;
+	m_pszSubClass = NULL;
 
 	if ( iClass != TF_CLASS_UNDEFINED )
+	{
+		UpdatePresetButtonStates();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CLoadoutPresetPanel::SetSubClass( const char* pszSubClass )
+{
+	m_pszSubClass = V_strdup( pszSubClass );
+
+	if ( m_pszSubClass && m_pszSubClass[0] )
 	{
 		UpdatePresetButtonStates();
 	}
@@ -150,7 +165,14 @@ void CLoadoutPresetPanel::EnableVerticalDisplay( bool bVertical )
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::LoadPreset( int iPresetIndex )
 {
-	TFInventoryManager()->LoadPreset( m_iClass, iPresetIndex );
+	if ( m_pszSubClass && m_pszSubClass[0] )
+	{
+		TFInventoryManager()->LoadPresetSub( m_iClass, m_pszSubClass, iPresetIndex );
+	}
+	else
+	{
+		TFInventoryManager()->LoadPreset( m_iClass, iPresetIndex );
+	}
 
 	if (m_pClassLoadoutPanel)
 	{
@@ -215,6 +237,11 @@ equipped_preset_t CLoadoutPresetPanel::GetSelectedPresetID() const
 	if ( !InventoryManager()->GetLocalInventory() )
 		return INVALID_PRESET_INDEX;
 
+	if ( m_pszSubClass && m_pszSubClass[0] )
+	{
+		return TFInventoryManager()->GetLocalTFInventory()->GetActiveLocalPresetSub( m_pszSubClass );
+	}
+
 	const uint32 unAccountID = InventoryManager()->GetLocalInventory()->GetOwner().GetAccountID();
 	const CEconItemPerClassPresetData soSearch( unAccountID, m_iClass );
 
@@ -241,8 +268,16 @@ void CLoadoutPresetPanel::UpdatePresetButtonStates()
 
 	CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
 	CTFPlayerInventory *pInv = TFInventoryManager()->GetInventoryForPlayer(localSteamID);
-	if (pInv) {
-		unEquippedPresetID = pInv->GetActiveLocalPreset(m_iClass);
+	if (pInv) 
+	{
+		if (m_pszSubClass && m_pszSubClass[0])
+		{
+			unEquippedPresetID = pInv->GetActiveLocalPresetSub(m_pszSubClass);
+		}
+		else
+		{
+			unEquippedPresetID = pInv->GetActiveLocalPreset(m_iClass);
+		}
 	}
 
 	for ( int i = 0; i < MAX_PRESETS; ++i )

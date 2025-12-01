@@ -26,6 +26,7 @@ public:
 	CLoadoutPresetPanel( vgui::Panel *pParent, const char *pName );	// name is ignored but needed for DECLARE_BUILD_FACTORY()
 
 	void			SetClass( int iClass );
+	void			SetSubClass( const char* SubClass );
 	void			EnableVerticalDisplay( bool bVertical );
 
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -55,6 +56,7 @@ private:
 	CExButton				*m_pPresetButtons[ MAX_PRESETS ];
 	bool					m_bDisplayVertical;
 	CClassLoadoutPanel*		m_pClassLoadoutPanel;
+	const char				*m_pszSubClass;
 
 	enum PresetButtonColors_t
 	{

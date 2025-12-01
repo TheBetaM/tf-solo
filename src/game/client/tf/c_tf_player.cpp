@@ -446,6 +446,30 @@ void SetAppropriateCamera( C_TFPlayer *pPlayer )
 
 		pPlayer->ThirdPersonSwitch( true );
 	}
+	else if ( pPlayer->m_Shared.IsSubClass() && pPlayer->m_Shared.GetSubClassData()->m_bThirdPersonCameraOnly )
+	{
+		g_ThirdPersonManager.SetForcedThirdPerson( true );
+		float distright = cam_idealdistright.GetFloat();
+		float dist = cam_idealdist.GetFloat();
+		float distup = cam_idealdistup.GetFloat();
+		if ( sv_thirdperson_platformer_force.GetBool() )
+		{
+			distright = sv_thirdperson_platformer_distright.GetFloat();
+			dist = cam_idealdist.GetFloat();
+			distup = cam_idealdistup.GetFloat();
+		}
+		if ( tf_mirrormode.GetBool() )
+		{
+			distright = -distright;
+		}
+		if ( cl_flipviewmodels.GetBool() )
+		{
+			distright = -distright;
+		}
+		g_ThirdPersonManager.SetDesiredCameraOffset( Vector( dist, distright, distup ) );
+		::input->CAM_ToThirdPerson();
+		pPlayer->ThirdPersonSwitch( true );
+	}
 	else
 	{
 		g_ThirdPersonManager.SetForcedThirdPerson( false );
@@ -4856,8 +4880,13 @@ void C_TFPlayer::UpdateTauntItem()
 	else
 	{
 		int iClass = GetPlayerClass()->GetClassIndex();
+		const char* pszSubClass = NULL;
+		if ( m_Shared.IsSubClass() )
+		{
+			pszSubClass = m_Shared.GetSubClass();
+		}
 
-		CEconItemView *pMiscItemView = Inventory() ? Inventory()->GetItemInLoadout( iClass, m_nActiveTauntSlot ) : NULL;
+		CEconItemView *pMiscItemView = Inventory() ? Inventory()->GetItemInLoadout( iClass, m_nActiveTauntSlot, pszSubClass ) : NULL;
 		if ( pMiscItemView )
 		{
 			m_TauntEconItemView = *pMiscItemView;
@@ -11758,6 +11787,11 @@ static void cc_taunt_by_name( const CCommand &args )
 	const char *pszTauntItemName = args.ArgS();
 
 	int iClass = pPlayer->GetPlayerClass()->GetClassIndex();
+	const char* pszSubClass = NULL;
+	if ( pPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pPlayer->m_Shared.GetSubClass();
+	}
 
 	CTFPlayerInventory *pInv = pPlayer->Inventory();
 	if ( !pInv )
@@ -11766,7 +11800,7 @@ static void cc_taunt_by_name( const CCommand &args )
 	CUtlStringList strTauntList;
 	for ( int iSlot = LOADOUT_POSITION_TAUNT; iSlot<= LOADOUT_POSITION_TAUNT8; ++iSlot )
 	{
-		CEconItemView *pItem = pInv->GetItemInLoadout( iClass, iSlot );
+		CEconItemView *pItem = pInv->GetItemInLoadout( iClass, iSlot, pszSubClass );
 		if ( !pItem || !pItem->IsValid() )
 			continue;
 

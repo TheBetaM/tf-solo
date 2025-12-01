@@ -902,7 +902,7 @@ void CCharInfoLoadoutSubPanel::UpdateLabelFromClass( int nClass )
 	}
 
 	CUtlVector<CEconItemView*> pList;
-	int iNumItems = TFInventoryManager()->GetAllUsableItemsForSlot( nClass, -1, &pList );
+	int iNumItems = TFInventoryManager()->GetAllUsableItemsForSlot( nClass, -1, &pList, NULL ); // TODO: Subclass?
 
 	if ( !iNumItems )
 	{

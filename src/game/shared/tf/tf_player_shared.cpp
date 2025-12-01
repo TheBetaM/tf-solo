@@ -13080,7 +13080,13 @@ void CTFPlayer::GetActiveSets( CUtlVector<const CEconItemSetDefinition *> *pItem
 	CSteamID steamIDForPlayer;
 	GetSteamID( &steamIDForPlayer );
 
-	TFInventoryManager()->GetActiveSets( pItemSets, steamIDForPlayer, GetPlayerClass()->GetClassIndex() );
+	const char* pszSubClass = NULL;
+	if ( m_Shared.IsSubClass() )
+	{
+		pszSubClass = m_Shared.GetSubClass();
+	}
+
+	TFInventoryManager()->GetActiveSets( pItemSets, steamIDForPlayer, GetPlayerClass()->GetClassIndex(), pszSubClass );
 }
 
 

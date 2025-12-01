@@ -742,7 +742,13 @@ void CEquipMvMCanteenNotification::Accept()
 		iItemId = pCanteen->GetItemID();
 	}
 
-	TFInventoryManager()->EquipItemInLoadout( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, iItemId );
+	const char* pszSubClass = NULL;
+	if ( pLocalPlayer->m_Shared.IsSubClass() )
+	{
+		pszSubClass = pLocalPlayer->m_Shared.GetSubClass();
+	}
+
+	TFInventoryManager()->EquipItemInLoadout( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, iItemId, pszSubClass );
 
 	// Tell the GC to tell server that we should respawn if we're in a respawn room
 

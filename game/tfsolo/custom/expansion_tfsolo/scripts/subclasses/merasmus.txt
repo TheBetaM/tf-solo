@@ -4,6 +4,7 @@ PlayerSubClass
 	{
 		baseclass		"sniper"
 		responseclassname "merasmus"
+		AllowTauntItems	0
 		
 		model 			"models/bots/merasmus/merasmus.mdl"
 		model_hwm		"models/bots/merasmus/merasmus.mdl"
@@ -16,6 +17,7 @@ PlayerSubClass
 		grenade1		"TF_WEAPON_GRENADE_NORMAL"
 		
 		weapon1			"TF_WEAPON_CLUB"
+		weapon2			"TF_WEAPON_SPELLBOOK"
 		
 		cameraoffset_forward	"85"
 		cameraoffset_right		"25"

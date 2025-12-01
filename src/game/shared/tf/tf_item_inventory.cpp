@@ -49,7 +49,7 @@
 
 using namespace GCSDK;
 
-#define LOCAL_LOADOUT_FILE		"cfg/local_loadout"
+#define LOCAL_LOADOUT_FILE		"cfg/local_loadout.txt"
 #define LOCAL_LOADOUT_RESERVE   65536
 
 ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "0", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
@@ -358,14 +358,14 @@ void CTFInventoryManager::GenerateBaseItems( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID )
+bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID, const char* pszSubClass )
 {
 	if ( !steamapicontext || !steamapicontext->SteamUser() )
 		return false;
 
 	// If they pass in a INVALID_ITEM_ID item id, we're just clearing the loadout slot
 	if ( iItemID == INVALID_ITEM_ID )
-		return m_LocalInventory.ClearLoadoutSlot( iClass, iSlot );
+		return m_LocalInventory.ClearLoadoutSlot( iClass, iSlot, pszSubClass );
 
 	CEconItemView* pItem = m_LocalInventory.GetInventoryItemByItemID(iItemID);
 	if (iItemID < LOCAL_LOADOUT_RESERVE)
@@ -373,9 +373,10 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 		int count = TFInventoryManager()->GetSoloItemCount();
 		for (int i = 0; i < count; i++)
 		{
-			pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetItemDefIndex() == iItemID)
+			CEconItemView* pEItem = TFInventoryManager()->GetSoloItem(i);
+			if (pEItem && pEItem->GetItemDefIndex() == iItemID)
 			{
+				pItem = pEItem;
 				break;
 			}
 		}
@@ -405,7 +406,7 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 	}
 
 	// Equip the new item
-	UpdateInventoryEquippedState( &m_LocalInventory, iItemID, iClass, iSlot );
+	UpdateInventoryEquippedState( &m_LocalInventory, iItemID, iClass, iSlot, pszSubClass );
 
 	// TODO: Prediction
 	// Item has been moved, so update our loadout.
@@ -416,7 +417,7 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 //-----------------------------------------------------------------------------
 // Purpose: Fills out pList with all inventory items that could fit into the specified loadout slot for a given class
 //-----------------------------------------------------------------------------
-int	CTFInventoryManager::GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVector<CEconItemView*> *pList )
+int	CTFInventoryManager::GetAllUsableItemsForSlot( int iClass, int iSlot, CUtlVector<CEconItemView*> *pList, const char* pszSubClass )
 {
 	bool bIsAccountIndex = iClass == GEconItemSchema().GetAccountIndex();
 	if ( bIsAccountIndex )
@@ -524,7 +525,7 @@ CEconItemView *CTFInventoryManager::GetItemInLoadoutForAccount( int iSlot, CStea
 	if ( !pInv )
 		return NULL;
 
-	return pInv->GetItemInLoadout( GEconItemSchema().GetAccountIndex(), iSlot );
+	return pInv->GetItemInLoadout( GEconItemSchema().GetAccountIndex(), iSlot, NULL );
 }
 
 //-----------------------------------------------------------------------------
@@ -898,7 +899,7 @@ CEconItemView *CTFInventoryManager::GetBaseItemForClass( int iClass, int iSlot, 
 //-----------------------------------------------------------------------------
 // Purpose: Fills out the vector with the sets that are currently active on the specified player & class
 //-----------------------------------------------------------------------------
-void CTFInventoryManager::GetActiveSets( CUtlVector<const CEconItemSetDefinition *> *pItemSets, CSteamID steamIDForPlayer, int iClass )
+void CTFInventoryManager::GetActiveSets( CUtlVector<const CEconItemSetDefinition *> *pItemSets, CSteamID steamIDForPlayer, int iClass, const char* pszSubClass )
 {
 	pItemSets->Purge();
 
@@ -922,7 +923,7 @@ void CTFInventoryManager::GetActiveSets( CUtlVector<const CEconItemSetDefinition
 			pItem = pPlayer->GetEquippedItemForLoadoutSlot( i );
 		}
 #else
-		pItem = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, &steamIDForPlayer );
+		pItem = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, &steamIDForPlayer, pszSubClass );
 #endif		
 
 		if ( !pItem )
@@ -1045,7 +1046,13 @@ CTFPlayerInventory::CTFPlayerInventory()
 
 	memset(m_ActivePreset, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(m_ActivePreset));
 	memset(m_PresetItems, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(m_PresetItems));
+	m_PresetItemsSub.SetLessFunc( DefLessFunc( const char* ) );
+	m_PresetItemsSub.Purge();
 #endif
+	m_ActivePresetSub.SetLessFunc( DefLessFunc( const char* ) );
+	m_ActivePresetSub.Purge();
+	m_LoadoutItemsSub.SetLessFunc( DefLessFunc( const char* ) );
+	m_LoadoutItemsSub.Purge();
 
 	memset( m_LoadoutItems, LOADOUT_SLOT_USE_BASE_ITEM, sizeof( m_LoadoutItems ) );
 	memset( m_AccountLoadoutItems, LOADOUT_SLOT_USE_BASE_ITEM, sizeof( m_AccountLoadoutItems ) );
@@ -1109,16 +1116,13 @@ void CTFPlayerInventory::LoadLocalLoadout()
 		return;
 	}
 
-	CUtlString path;
-	path.Append(LOCAL_LOADOUT_FILE);
-	path.Append(CFmtStr("_%d.txt", steamapicontext->SteamUser()->GetSteamID().GetAccountID()));
 	KeyValues *pLoadoutKV = new KeyValues("local_loadout");
-	if (!pLoadoutKV->LoadFromFile(g_pFullFileSystem, path, "MOD"))
+	if (!pLoadoutKV->LoadFromFile(g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD"))
 	{
 #ifdef CLIENT_DLL
 		SaveLocalLoadout( true, true );
 
-		if ( !pLoadoutKV->LoadFromFile( g_pFullFileSystem, path, "MOD" ) )
+		if ( !pLoadoutKV->LoadFromFile( g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD" ) )
 #endif
 		{
 			Warning( "Unable to parse local_loadout.txt into keyvalues.\n" );
@@ -1134,6 +1138,20 @@ void CTFPlayerInventory::LoadLocalLoadout()
 			const char* pszClassName = g_aPlayerClassNames_NonLocalized[iClass];
 			int activePreset = pActivePresetKV->GetInt(pszClassName);
 			m_ActivePreset[iClass] = activePreset;
+		}
+	}
+
+	KeyValues* pActivePresetSubKV = pLoadoutKV->FindKey("active_preset_sub");
+	if (pActivePresetSubKV)
+	{
+		for (uint i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++)
+		{
+			auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element(i);
+			if (subclass->m_bHideInLoadout)
+				continue;
+			const char* pszClassName = subclass->m_szClassName;
+			int activePreset = pActivePresetSubKV->GetInt(pszClassName);
+			m_ActivePresetSub.InsertOrReplace(pszClassName, activePreset);
 		}
 	}
 
@@ -1172,6 +1190,70 @@ void CTFPlayerInventory::LoadLocalLoadout()
 		}
 	}
 
+	KeyValues* pPresetItemsSubKV = pLoadoutKV->FindKey("sub");
+	if (pPresetItemsSubKV)
+	{
+		for (int iPreset = 0; iPreset < numPresets; ++iPreset)
+		{
+			char szPreset[256];
+			V_snprintf(szPreset, sizeof(szPreset), "%i", iPreset);
+			KeyValues* pPresetKV = pPresetItemsSubKV->FindKey(szPreset);
+			if (!pPresetKV)
+				continue;
+
+			FOR_EACH_TRUE_SUBKEY(pPresetKV, pClassKey)
+			{
+				const char* pszClassName = pClassKey->GetName();
+#ifdef CLIENT_DLL
+				if (!m_PresetItemsSub.HasElement(pszClassName))
+				{
+					SubClassItems_t* subItems = new SubClassItems_t();
+					memset(subItems->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(subItems->Items));
+					m_PresetItemsSub.InsertOrReplace(pszClassName, subItems);
+				}
+#endif
+
+				int activePreset = 0;
+				if (m_ActivePresetSub.HasElement(pszClassName))
+				{
+					activePreset = m_ActivePresetSub[m_ActivePresetSub.Find(pszClassName)];
+				}
+
+				FOR_EACH_SUBKEY(pClassKey, pLoadoutEntry)
+				{
+					const int iSlot = V_atoi(pLoadoutEntry->GetName());
+					const itemid_t uItemId = pLoadoutEntry->GetUint64();
+
+#ifdef CLIENT_DLL
+					int presetID = m_PresetItemsSub.Find(pszClassName);
+					m_PresetItemsSub[presetID]->Items[iPreset][iSlot] = uItemId;
+#endif // CLIENT_DLL
+
+					if (iPreset == activePreset) {
+
+						if (!m_LoadoutItemsSub.HasElement(pszClassName))
+						{
+							SubClassLoadoutItems_t* items = new SubClassLoadoutItems_t();
+							memset(items->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(items->Items));
+							items->Items[iSlot] = uItemId;
+							m_LoadoutItemsSub.InsertOrReplace(pszClassName, items);
+						}
+						else
+						{
+							int id = m_LoadoutItemsSub.Find(pszClassName);
+							m_LoadoutItemsSub[id]->Items[iSlot] = uItemId;
+						}
+
+						//CEconItemView* pItem = GetInventoryItemByItemID(uItemId);
+						//if (pItem) {
+						//	pItem->GetSOCData()->Equip(iClass, iSlot);
+						//}
+					}
+				}
+			}
+		}
+	}
+
 	pLoadoutKV->deleteThis();
 
 #ifdef CLIENT_DLL
@@ -1201,6 +1283,26 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 		pActivePresetKV->SetInt(pszClassName, m_ActivePreset[iClass]);
 	}
 	pLoadoutKV->AddSubKey(pActivePresetKV);
+
+	KeyValues* pActivePresetSubKV = new KeyValues("active_preset_sub");
+	for (uint i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++)
+	{
+		auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element(i);
+		if (subclass->m_bHideInLoadout)
+			continue;
+		const char* pszClassName = subclass->m_szClassName;
+		if (m_ActivePresetSub.HasElement(pszClassName))
+		{
+			int id = m_ActivePresetSub.Find(pszClassName);
+			pActivePresetSubKV->SetInt(pszClassName, m_ActivePresetSub[id]);
+		}
+		else
+		{
+			m_ActivePresetSub.InsertOrReplace(pszClassName, 0);
+			pActivePresetSubKV->SetInt(pszClassName, 0);
+		}
+	}
+	pLoadoutKV->AddSubKey(pActivePresetSubKV);
 
 	int numPresets = static_cast<int>(GetItemSchema()->GetNumAllowedItemPresets());
 	for (int iPreset = 0; iPreset < numPresets; ++iPreset)
@@ -1238,10 +1340,57 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 		}
 	}
 
-	CUtlString path;
-	path.Append(LOCAL_LOADOUT_FILE);
-	path.Append(CFmtStr("_%d.txt", steamapicontext->SteamUser()->GetSteamID().GetAccountID()));
-	pLoadoutKV->SaveToFile(g_pFullFileSystem, path, "MOD");
+	KeyValues* pLoadoutSubKV = new KeyValues("sub");
+	for (int iPreset = 0; iPreset < numPresets; ++iPreset)
+	{
+		char szPreset[256];
+		V_snprintf(szPreset, sizeof(szPreset), "%i", iPreset);
+		KeyValues* pPresetKV = new KeyValues(szPreset);
+		pLoadoutSubKV->AddSubKey(pPresetKV);
+
+		for (uint i = 0; i < g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Count(); i++)
+		{
+			auto subclass = g_pTFPlayerClassDataMgr->m_TFPlayerSubClasses.Element(i);
+			if (subclass->m_bHideInLoadout)
+				continue;
+			const char* pszClassName = subclass->m_szClassName;
+			
+			KeyValues* pClassKV = new KeyValues(pszClassName);
+			pPresetKV->AddSubKey(pClassKV);
+
+			if (!m_PresetItemsSub.HasElement(pszClassName))
+			{
+				SubClassItems_t* subItems = new SubClassItems_t();
+				memset(subItems->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(subItems->Items));
+				m_PresetItemsSub.InsertOrReplace(pszClassName, subItems);
+			}
+
+			int id = m_PresetItemsSub.Find(pszClassName);
+			auto subclassItems = m_PresetItemsSub[id]->Items;
+
+			for (int iSlot = 0; iSlot < CLASS_LOADOUT_POSITION_COUNT; ++iSlot)
+			{
+				char szSlot[256];
+				V_snprintf(szSlot, sizeof(szSlot), "%i", iSlot);
+
+				itemid_t uItemId = subclassItems[iPreset][iSlot];
+				//itemid_t uItemId = m_LoadoutItems[iClass][iSlot];
+				if (bReset) {
+					uItemId = 0;
+				}
+
+				if (uItemId >= LOCAL_LOADOUT_RESERVE && !TFInventoryManager()->CheckAllowItemEquip(0, iSlot))
+				{
+					uItemId = 0;
+				}
+
+				pClassKV->SetUint64(szSlot, uItemId);
+			}
+		}
+	}
+	pLoadoutKV->AddSubKey(pLoadoutSubKV);
+
+	pLoadoutKV->SaveToFile(g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD");
 
 	pLoadoutKV->deleteThis();
 }
@@ -1252,10 +1401,16 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 //-----------------------------------------------------------------------------
 // Purpose: If we are in mod mode, we track loadout changes locally.
 //-----------------------------------------------------------------------------
-void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot)
+void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass)
 {
 	// These interactions normally result from a round-trip with the GC.
 	// We will never get those messages, so we do everything locally.
+
+	if (pszSubClass && pszSubClass[0])
+	{
+		EquipLocalSub(ulItemID, unClass, unSlot, pszSubClass);
+		return;
+	}
 
 	// Unequip whatever was previously in the slot.
 	itemid_t ulPreviousItem = m_LoadoutItems[unClass][unSlot];
@@ -1283,7 +1438,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	if (ulItemID < LOCAL_LOADOUT_RESERVE)
 	{
 		int count = TFInventoryManager()->GetSoloItemCount();
-		CEconItemView* pItem;
+		CEconItemView* pItem = NULL;
 		for (int i = 0; i < count; i++)
 		{
 			pItem = TFInventoryManager()->GetSoloItem(i);
@@ -1293,7 +1448,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 				break;
 			}
 		}
-		if (!pItem)
+		if (ulItemID != 0 && !pItem)
 		{
 			pItem = TFInventoryManager()->AddSoloItem(ulItemID);
 			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulItemID)
@@ -1334,6 +1489,106 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	}
 }
 
+void CTFPlayerInventory::EquipLocalSub(uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass)
+{
+	// These interactions normally result from a round-trip with the GC.
+	// We will never get those messages, so we do everything locally.
+
+	// Equip the new item and add it to our loadout.
+	if (ulItemID < LOCAL_LOADOUT_RESERVE)
+	{
+		if (!m_LoadoutItemsSub.HasElement(pszSubClass))
+		{
+			SubClassLoadoutItems_t* items = new SubClassLoadoutItems_t();
+			memset(items->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(items->Items));
+			items->Items[unSlot] = ulItemID;
+			m_LoadoutItemsSub.InsertOrReplace(pszSubClass, items);
+		}
+		else
+		{
+			int id = m_LoadoutItemsSub.Find(pszSubClass);
+			m_LoadoutItemsSub[id]->Items[unSlot] = ulItemID;
+		}
+
+#ifdef CLIENT_DLL
+		int activePreset = 0;
+		if (!m_ActivePresetSub.HasElement(pszSubClass))
+		{
+			m_ActivePresetSub.InsertOrReplace(pszSubClass, 0);
+		}
+		else
+		{
+			int id = m_ActivePresetSub.Find(pszSubClass);
+			activePreset = m_ActivePresetSub[id];
+		}
+
+		if (!m_PresetItemsSub.HasElement(pszSubClass))
+		{
+			SubClassItems_t* items = new SubClassItems_t();
+			memset(items->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(items->Items));
+			items->Items[activePreset][unSlot] = ulItemID;
+			m_PresetItemsSub.InsertOrReplace(pszSubClass, items);
+		}
+		else
+		{
+			int id = m_PresetItemsSub.Find(pszSubClass);
+			m_PresetItemsSub[id]->Items[activePreset][unSlot] = ulItemID;
+		}
+
+		GTFGCClientSystem()->LocalInventoryChanged();
+#endif
+	}
+	else if (!tf_disable_base_econ_items.GetBool())
+	{
+		CEconItemView* pItem = GetInventoryItemByItemID(ulItemID);
+		if (pItem && !TFInventoryManager()->CheckAllowItemEquip(unClass, unSlot))
+		{
+			return;
+		}
+
+		if (!m_LoadoutItemsSub.HasElement(pszSubClass))
+		{
+			SubClassLoadoutItems_t* items = new SubClassLoadoutItems_t();
+			memset(items->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(items->Items));
+			items->Items[unSlot] = ulItemID;
+			m_LoadoutItemsSub.InsertOrReplace(pszSubClass, items);
+		}
+		else
+		{
+			int id = m_LoadoutItemsSub.Find(pszSubClass);
+			m_LoadoutItemsSub[id]->Items[unSlot] = ulItemID;
+		}
+
+#ifdef CLIENT_DLL
+		int activePreset = 0;
+		if (!m_ActivePresetSub.HasElement(pszSubClass))
+		{
+			m_ActivePresetSub.InsertOrReplace(pszSubClass, 0);
+		}
+		else
+		{
+			int id = m_ActivePresetSub.Find(pszSubClass);
+			activePreset = m_ActivePresetSub[id];
+		}
+
+		if (!m_PresetItemsSub.HasElement(pszSubClass))
+		{
+			SubClassItems_t* items = new SubClassItems_t();
+			memset(items->Items, LOADOUT_SLOT_USE_BASE_ITEM, sizeof(items->Items));
+			items->Items[activePreset][unSlot] = ulItemID;
+			m_PresetItemsSub.InsertOrReplace(pszSubClass, items);
+		}
+		else
+		{
+			int id = m_PresetItemsSub.Find(pszSubClass);
+			m_PresetItemsSub[id]->Items[activePreset][unSlot] = ulItemID;
+		}
+
+		GTFGCClientSystem()->LocalInventoryChanged();
+#endif
+	}
+}
+
 void CTFPlayerInventory::UnequipLocal(uint64 ulItemID)
 {
 	for (int iClass = 1; iClass < TF_CLASS_COUNT_ALL; ++iClass)
@@ -1345,6 +1600,7 @@ void CTFPlayerInventory::UnequipLocal(uint64 ulItemID)
 			}
 		}
 	}
+	m_LoadoutItemsSub.Purge();
 }
 
 //-----------------------------------------------------------------------------
@@ -1479,7 +1735,7 @@ void CTFPlayerInventory::ValidateInventoryPositions( void )
 				 pEconItemView->IsEquippedForClass( j ) )
 			{
 				// Unequip this item from this class.
-				InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, j, pEconItemView->GetEquippedPositionForClass( j ) );
+				InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, j, pEconItemView->GetEquippedPositionForClass( j ), NULL );
 			}
 		}
 	}
@@ -1721,15 +1977,20 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot, cons
 		if ( iClass < TF_FIRST_NORMAL_CLASS || iClass >= TF_LAST_NORMAL_CLASS  )
 			return NULL;
 
+		itemid_t itemID = m_LoadoutItems[iClass][iSlot];
 		if ( pszSubClass && pszSubClass[0] )
 		{
-			return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, pszSubClass );
+			if ( m_LoadoutItemsSub.HasElement( pszSubClass ) )
+			{
+				int id = m_LoadoutItemsSub.Find( pszSubClass );
+				itemID = m_LoadoutItemsSub[id]->Items[iSlot];
+			}
 		}
 
 		// If we don't have an item in the loadout at that slot, we return the base item
-		if ( m_LoadoutItems[iClass][iSlot] != LOADOUT_SLOT_USE_BASE_ITEM )
+		if ( itemID != LOADOUT_SLOT_USE_BASE_ITEM )
 		{
-			CEconItemView *pItem = GetInventoryItemByItemID( m_LoadoutItems[iClass][iSlot] );
+			CEconItemView *pItem = GetInventoryItemByItemID( itemID );
 
 			// To protect against users lying to the backend about the position of their items,
 			// we need to validate their position on the server when we retrieve them.
@@ -1741,28 +2002,28 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot, cons
 				}
 				else
 				{
-					return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot );
+					return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, pszSubClass );
 				}
 			}
 
-			if ( m_LoadoutItems[iClass][iSlot] < LOCAL_LOADOUT_RESERVE )
+			if ( itemID < LOCAL_LOADOUT_RESERVE )
 			{
 				int count = TFInventoryManager()->GetSoloItemCount();
 				for (int i = 0; i < count; i++)
 				{
 					CEconItemView* pItem = TFInventoryManager()->GetSoloItem(i);
-					if ( pItem && pItem->GetItemDefIndex() == m_LoadoutItems[iClass][iSlot] )
+					if ( pItem && pItem->GetItemDefIndex() == itemID )
 					{
-						if ( pItem && AreSlotsConsideredIdentical( pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot (iClass ), iSlot ) )
+						if ( pItem && AreSlotsConsideredIdentical( pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot ( iClass ), iSlot ) )
 							return pItem;
 					}
 				}
-				return TFInventoryManager()->AddSoloItem( m_LoadoutItems[iClass][iSlot] );
+				return TFInventoryManager()->AddSoloItem( itemID );
 			}
 		}
 	}
 
-	return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot );
+	return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, pszSubClass );
 }
 
 #ifdef CLIENT_DLL
@@ -1784,7 +2045,7 @@ CEconItemView *CTFPlayerInventory::GetCacheServerItemInLoadout( int iClass, int 
 			return pItem;
 	}
 
-	return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot );
+	return TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, NULL );
 }
 #endif // CLIENT_DLL
 
@@ -1856,7 +2117,7 @@ int	CTFPlayerInventory::GetMaxItemCount( void ) const
 // Purpose: Removes any item in a loadout slot. If the slot has a base item,
 //			the player essentially returns to using that item.
 //-----------------------------------------------------------------------------
-bool CTFPlayerInventory::ClearLoadoutSlot( int iClass, int iSlot )
+bool CTFPlayerInventory::ClearLoadoutSlot( int iClass, int iSlot, const char* pszSubClass )
 {
 	if ( iSlot < 0 || iSlot >= CLASS_LOADOUT_POSITION_COUNT )
 		return false;
@@ -1865,6 +2126,17 @@ bool CTFPlayerInventory::ClearLoadoutSlot( int iClass, int iSlot )
 	{
 		if ( m_AccountLoadoutItems[iSlot] == LOADOUT_SLOT_USE_BASE_ITEM )
 			return false;
+	}
+	else if ( pszSubClass && pszSubClass[0] )
+	{
+		if ( m_LoadoutItemsSub.HasElement( pszSubClass ) )
+		{
+			int id = m_LoadoutItemsSub.Find( pszSubClass );
+			if ( m_LoadoutItemsSub[id]->Items[iSlot] == LOADOUT_SLOT_USE_BASE_ITEM )
+			{
+				return false;
+			}
+		}
 	}
 	else
 	{
@@ -1875,11 +2147,11 @@ bool CTFPlayerInventory::ClearLoadoutSlot( int iClass, int iSlot )
 			return false;
 	}
 	
-	CEconItemView *pItemInSlot = GetItemInLoadout( iClass, iSlot );
+	CEconItemView *pItemInSlot = GetItemInLoadout( iClass, iSlot, pszSubClass );
 	if ( !pItemInSlot )
 		return false;
 
-	InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, iClass, iSlot );
+	InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, iClass, iSlot, pszSubClass );
 
 	// TODO: Prediction
 	// It's been moved to the backpack, so clear out loadout entry
@@ -2123,7 +2395,7 @@ void CTFPlayerInventory::VerifyLoadoutItemsAreValid( int iClass )
 	equip_region_mask_t unCumulativeRegionMask = 0;
 	for ( int i = 0; i < CLASS_LOADOUT_POSITION_COUNT; i++ )
 	{
-		CEconItemView *pEquippedItemView = GetItemInLoadout( iClass, i );
+		CEconItemView *pEquippedItemView = GetItemInLoadout( iClass, i, NULL );
 		if ( !pEquippedItemView )
 			continue;
 
@@ -2133,7 +2405,7 @@ void CTFPlayerInventory::VerifyLoadoutItemsAreValid( int iClass )
 		{
 			// Unequip this item. This will wind up calling into ::ItemHasBeenUpdated() once the
 			// unequip makes it to the GC and back.
-			InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, iClass, pEquippedItemView->GetEquippedPositionForClass( iClass ) );
+			InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, iClass, pEquippedItemView->GetEquippedPositionForClass( iClass ), NULL );
 		}
 		else
 		{
@@ -2207,14 +2479,14 @@ CTFPlayerInventory	*CTFInventoryManager::GetLocalTFInventory( void )
 #endif
 
 #ifdef CLIENT_DLL
-void CTFInventoryManager::UpdateInventoryEquippedState(CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot)
+void CTFInventoryManager::UpdateInventoryEquippedState(CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot, const char* pszSubClass)
 {
-	BaseClass::UpdateInventoryEquippedState(pInventory, ulItemID, unClass, unSlot);
+	BaseClass::UpdateInventoryEquippedState(pInventory, ulItemID, unClass, unSlot, pszSubClass);
 
 	CTFPlayerInventory* pTFInventory = dynamic_cast<CTFPlayerInventory*>(pInventory);
 	if (pTFInventory) 
 	{
-		pTFInventory->EquipLocal(ulItemID, unClass, unSlot);
+		pTFInventory->EquipLocal(ulItemID, unClass, unSlot, pszSubClass);
 		pTFInventory->SaveLocalLoadout();
 	}
 }
@@ -2294,15 +2566,21 @@ CON_COMMAND( load_itempreset, "Equip all items for a given preset on the player.
 
 	equipped_class_t unClass = pPlayer->GetPlayerClass()->GetClassIndex();
 	equipped_preset_t unPreset = atoi( args[1] );
-	if ( TFInventoryManager()->LoadPreset( unClass, unPreset ) )
+	bool bPresetLoaded = false;
+	if ( pPlayer->m_Shared.IsSubClass() )
 	{
-		// Tell the GC to tell server that we should respawn if we're in a respawn room
-		extern ConVar tf_respawn_on_loadoutchanges;
-		if ( tf_respawn_on_loadoutchanges.GetBool() )
-		{
-			GCSDK::CGCMsg< ::MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
-			GCClientSystem()->BSendMessage( msg );
-		}
+		bPresetLoaded = TFInventoryManager()->LoadPresetSub( unClass, pPlayer->m_Shared.GetSubClass(), unPreset );
+	}
+	else
+	{
+		bPresetLoaded = TFInventoryManager()->LoadPreset( unClass, unPreset );
+	}
+	// Tell the GC to tell server that we should respawn if we're in a respawn room
+	extern ConVar tf_respawn_on_loadoutchanges;
+	if ( bPresetLoaded && tf_respawn_on_loadoutchanges.GetBool() )
+	{
+		GCSDK::CGCMsg< ::MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
+		GCClientSystem()->BSendMessage( msg );
 	}
 }
 #endif	// TF_CLIENT_DLL
@@ -2409,7 +2687,59 @@ bool CTFPlayerInventory::EquipLocalPreset(equipped_class_t unClass, equipped_pre
 	for (int iSlot = 0; iSlot < CLASS_LOADOUT_POSITION_COUNT; ++iSlot)
 	{
 		itemid_t uItemId = m_PresetItems[unPreset][unClass][iSlot];
-		EquipLocal(uItemId, unClass, iSlot);
+		EquipLocal(uItemId, unClass, iSlot, NULL);
+	}
+
+	SaveLocalLoadout();
+
+	return true;
+}
+
+bool CTFInventoryManager::LoadPresetSub(equipped_class_t unClass, const char* pszSubClass, equipped_preset_t unPreset)
+{
+	if (!GetPlayerSubClassData(pszSubClass))
+		return false;
+
+	if (!IsPresetIndexValid(unPreset))
+		return false;
+
+	if (!GetLocalInventory()->GetSOC())
+		return false;
+
+	if (!steamapicontext || !steamapicontext->SteamUser())
+		return false;
+
+	CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
+	CTFPlayerInventory* pInv = GetInventoryForPlayer(localSteamID);
+	if (!pInv)
+		return false;
+
+	if (m_flNextLoadPresetChange > gpGlobals->realtime)
+	{
+		Msg("Loadout change denied. Changing presets too quickly.\n");
+		return false;
+	}
+
+	m_flNextLoadPresetChange = gpGlobals->realtime + 0.5f;
+
+	return pInv->EquipLocalPresetSub(unClass, pszSubClass, unPreset);
+}
+
+bool CTFPlayerInventory::EquipLocalPresetSub(equipped_class_t unClass, const char* pszSubClass, equipped_preset_t unPreset)
+{
+	if (!InventoryManager()->IsPresetIndexValid(unPreset))
+		return false;
+
+	m_ActivePresetSub.InsertOrReplace(pszSubClass, unPreset);
+
+	if (m_PresetItemsSub.HasElement(pszSubClass))
+	{
+		int id = m_PresetItemsSub.Find(pszSubClass);
+		for (int iSlot = 0; iSlot < CLASS_LOADOUT_POSITION_COUNT; ++iSlot)
+		{
+			itemid_t uItemId = m_PresetItemsSub[id]->Items[unPreset][iSlot];
+			EquipLocal(uItemId, unClass, iSlot, pszSubClass);
+		}
 	}
 
 	SaveLocalLoadout();
@@ -2419,7 +2749,7 @@ bool CTFPlayerInventory::EquipLocalPreset(equipped_class_t unClass, equipped_pre
 #endif
 
 #ifdef CLIENT_DLL
-#define TFSOLO_SAVE_PATH "cfg/solo/"
+#define TFSOLO_SAVE_PATH "cfg/solo/save.txt"
 
 void CTFInventoryManager::InitSaveData()
 {
@@ -2435,24 +2765,13 @@ void CTFInventoryManager::WriteSaveData()
 	if (!m_SoloSaveData)
 		return;
 
-	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
-
-	CUtlString path;
-	path.Append(TFSOLO_SAVE_PATH);
-	path.Append(CFmtStr("save_%d.txt", steamID.GetAccountID()));
-	m_SoloSaveData->SaveToFile(g_pFullFileSystem, path, "GAME");
+	m_SoloSaveData->SaveToFile(g_pFullFileSystem, TFSOLO_SAVE_PATH, "GAME");
 }
 
 void CTFInventoryManager::LoadSaveData()
 {
-	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
-
-	CUtlString path;
-	path.Append(TFSOLO_SAVE_PATH);
-	path.Append(CFmtStr("save_%d.txt", steamID.GetAccountID()));
-	
 	KeyValues* save = new KeyValues("solo_data");
-	if (!save->LoadFromFile(g_pFullFileSystem, path, "GAME"))
+	if (!save->LoadFromFile(g_pFullFileSystem, TFSOLO_SAVE_PATH, "GAME"))
 	{
 		Msg("Unable to parse solo save data into keyvalues.\n");
 		//engine->ClientCmd_Unrestricted("clear_loadout\n");
@@ -2477,6 +2796,7 @@ void CTFInventoryManager::LoadSaveData()
 		}
 	}
 
+	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
 	CTFPlayerInventory* pInventory = TFInventoryManager()->GetInventoryForPlayer(steamID);
 	if (!pInventory)
 		return;
