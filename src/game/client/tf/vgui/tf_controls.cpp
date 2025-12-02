@@ -31,6 +31,7 @@
 #include "filesystem.h"
 #include "hud_controlpointicons.h"
 #include "achievementmgr.h"
+#include "tf/tf_item_inventory.h"
 
 using namespace vgui;
 
@@ -3086,7 +3087,6 @@ void CTFCustomMatchSettingsDialog::CreateControls()
 
 	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
 	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
-	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color creditColor = Color(255, 255, 255, 255);
 
@@ -3444,6 +3444,27 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		m_pDescription->WriteToConfig();
 	}
 
+	KeyValues* save = TFInventoryManager()->GetSaveData();
+	KeyValues* saveMaps = NULL;
+	KeyValues* saveMap = NULL;
+	if ( save )
+	{
+		saveMaps = save->FindKey( "Maps" );
+		if ( !saveMaps )
+		{
+			saveMaps = save->CreateKey( "Maps" );
+		}
+		saveMap = saveMaps->FindKey( m_iszRequestedMap );
+		if ( !saveMap )
+		{
+			saveMap = saveMaps->CreateKey( m_iszRequestedMap );
+		}
+		int saveVisits = saveMap->GetInt( "Visits" );
+		saveVisits++;
+		saveMap->SetInt( "Visits", saveVisits );
+		TFInventoryManager()->WriteSaveData();
+	}
+
 	char* mapFile = V_strdup( m_iszRequestedMap );
 	if ( !V_strnicmp( mapFile, "workshop_", 9 ) )
 	{
@@ -3691,7 +3712,6 @@ void CTFCustomMatchModeDialog::CreateControls()
 
 	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
 	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
-	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color textColor = Color(255, 255, 255, 255);
 	Color textShadowColor = Color(0, 0, 0, 255);
@@ -4341,9 +4361,9 @@ void CTFCustomMatchMapDialog::CreateControls()
 
 	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
 	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
-	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color textColor = Color(255, 255, 255, 255);
+	Color textNewColor = Color(255, 255, 0, 255);
 	Color textShadowColor = Color(0, 0, 0, 255);
 
 	bool bShowDisabled = false;
@@ -4371,6 +4391,13 @@ void CTFCustomMatchMapDialog::CreateControls()
 	{
 		return;
 	}
+	KeyValues* save = TFInventoryManager()->GetSaveData();
+	KeyValues* saveMaps = NULL;
+	if ( save )
+	{
+		saveMaps = save->FindKey( "Maps" );
+	}
+
 	KeyValues* key = maps->GetFirstSubKey();
 	while ( key )
 	{
@@ -4387,7 +4414,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				char mapIDstr[MAX_PATH] = { 0 };
 				V_StrSlice( key->GetName(), 9, 0, mapIDstr, sizeof( mapIDstr ) );
-				PublishedFileId_t mapID = V_atoui64( mapIDstr );
+				//PublishedFileId_t mapID = V_atoui64( mapIDstr );
 				if ( !workshopConfig->FindKey( mapIDstr ) )
 				{
 					key = key->GetNextKey();
@@ -4649,6 +4676,31 @@ void CTFCustomMatchMapDialog::CreateControls()
 		labelShadow->SetKeyBoardInputEnabled(false);
 		//labelShadow->SetWrap(true);
 
+		if ( !saveMaps || !saveMaps->FindKey( map.m_MapFile ) )
+		{
+			CExLabel* label = new CExLabel(holder, "UnplayedLabel", "*NEW*");
+			label->SetContentAlignment(vgui::Label::a_northeast);
+			label->SetTextInset(5, 0);
+			label->SetFont(hTextFont);
+			label->InvalidateLayout(true, true);
+			label->SetFgColor(textNewColor);
+			label->SetZPos(10);
+			label->SetSize(256, 192);
+			label->SetMouseInputEnabled(false);
+			label->SetKeyBoardInputEnabled(false);
+
+			CExLabel* labelShadow = new CExLabel(holder, "UnplayedLabelShadow", "*NEW*");
+			labelShadow->SetContentAlignment(vgui::Label::a_northeast);
+			labelShadow->SetTextInset(8, 3);
+			labelShadow->SetFont(hTextFont);
+			labelShadow->InvalidateLayout(true, true);
+			labelShadow->SetFgColor(textShadowColor);
+			labelShadow->SetZPos(9);
+			labelShadow->SetSize(256, 192);
+			labelShadow->SetMouseInputEnabled(false);
+			labelShadow->SetKeyBoardInputEnabled(false);
+		}
+
 		CFmtStr1024 fmtMapCommand(
 			"map$%s", map.m_MapFile
 		);
@@ -4860,7 +4912,6 @@ void CTFAchievementsDialog::CreateControls()
 
 	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
 	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
-	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color tfOrange = pScheme->GetColor("TFOrange", Color(145, 73, 59, 255));
 	Color creditColor = Color(255, 255, 255, 255);
@@ -5152,7 +5203,6 @@ void CTFOOBEDialog::CreateControls()
 
 	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
 	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
-	vgui::HFont hCreditFont = pScheme->GetFont("HudFontMediumSecondary", true);
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color creditColor = Color(255, 255, 255, 255);
 

@@ -2,34 +2,6 @@ VERSION 1.0
 
 DESCRIPTION SERVER_OPTIONS
 {
-	"sv_lan"
-	{
-		"LAN connections only"
-		{ BOOL }
-		{ "0" }
-	}
-
-	"mp_timelimit"
-	{
-		"#TF_Timelimit"
-		{ NUMBER 0 -1 }
-		{ "0" }
-	}
-
-	"mp_winlimit"
-	{
-		"#TF_WinLimit"
-		{ NUMBER 0 -1 }
-		{ "0" }
-	}
-
-	"mp_maxrounds"
-	{
-		"#TF_MaxRounds"
-		{ NUMBER 0 -1 }
-		{ "0" }
-	}
-
 	"tf_bot_quota"
 	{
 		"Bot Count"

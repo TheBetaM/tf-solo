@@ -12,6 +12,9 @@ TFSOLO.StartMission <- function()
 	// Reset server enforced cvars
 	SoloPanel.PrepareForLevelLoad()
 	
+	// Save data
+	TFSOLO.UpdateMapVisits(data.Map)
+	
 	// Prepare server settings 
 	// Preferably only ones that need to be setup before level load, the rest should be in server scripts
 	if (data.TeamSelected == 1)
@@ -78,6 +81,7 @@ TFSOLO.StartMission <- function()
 TFSOLO.StartMissionTest <- function(map)
 {
 	TFSOLO.ResetMissionSettings()
+	TFSOLO.UpdateMapVisits(map)
 	if (map.find("workshop_") == null)
 	{
 		TFSOLO.PlayerData.Map = map

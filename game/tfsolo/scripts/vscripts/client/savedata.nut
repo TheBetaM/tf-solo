@@ -94,6 +94,17 @@ TFSOLO.UnlockItemID <- function(item)
 	TFSOLO.OnItemUnlock(Solo.ItemDefName(item), item)
 }
 
+TFSOLO.UpdateMapVisits <- function(map)
+{
+	local kv = Solo.GetSaveData()
+	local mapsKV = kv.GetKey("Maps", true)
+	local mapKV = mapsKV.GetKey(map, true)
+	local mapVisits = mapKV.GetInt("Visits")
+	mapKV.SetInt("Visits", mapVisits + 1)
+	
+	Solo.WriteSaveData()
+}
+
 TFSOLO.SaveEventTag <- UniqueString()
 getroottable()[TFSOLO.SaveEventTag] <- {
 	OnGameEvent_solo_add_credits = function(params)
@@ -190,6 +201,15 @@ getroottable()[TFSOLO.SaveEventTag] <- {
 		StringToFile("merc/merc_headhunt/savedata.nut","printl(0)")
 		StringToFile("merc/merc_bloodthirst/savedata.nut","printl(0)")
 	}
+	
+	OnScriptHook_OnServerScriptTable = function(params)
+	{
+		if ("target" in params && params.target == "SaveMapVisit" && "map" in params)
+		{
+			TFSOLO.UpdateMapVisits(params.map)
+		}
+	}
+	
 }
 TFSOLO.SaveEventTable <- getroottable()[TFSOLO.SaveEventTag]
 __CollectGameEventCallbacks(TFSOLO.SaveEventTable)

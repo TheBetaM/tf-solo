@@ -56,6 +56,17 @@ Merc.Spell_BLU <- 0
 Merc.ChangeLevelWithBuffer <- function(targetmap)
 {
 	Merc.SaveProgress()
+	
+	local msgmap = targetmap
+	if (msgmap.find("workshop/") != null)
+	{
+		msgmap = "workshop_" + targetmap.slice(9)
+	}
+	local msg = {
+		target = "SaveMapVisit"
+		map = msgmap
+	}
+	BroadcastTable(msg)
 
 	ToConsole("mp_timelimit 0")
 	if (Merc.Missions[Merc.MissionID].ForcedTeam == TF_TEAM_RED)
