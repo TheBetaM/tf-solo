@@ -3,6 +3,7 @@ bot_presets
 	Headhunt_HandlerRED
 	{
 		Name "Ed"
+		Desc "Your RED handler in the Headhunt campaign."
 		Class Engineer
 		Skill 2
 		Team 2
@@ -21,6 +22,7 @@ bot_presets
 	Headhunt_HandlerBLU
 	{
 		Name "Lou"
+		Desc "Your BLU handler in the Headhunt campaign."
 		Class Scout
 		Skill 2
 		Team 3
@@ -39,6 +41,7 @@ bot_presets
 	Headhunt_RecruitRED
 	{
 		Name "Old Pete"
+		Desc "Recruited in the Headhunt campaign."
 		Class Soldier
 		Skill 1
 		Team 2
@@ -58,6 +61,7 @@ bot_presets
 	Headhunt_RecruitBLU
 	{
 		Name "Weird Sal"
+		Desc "Recruited in the Headhunt campaign."
 		Class Sniper
 		Skill 2
 		Team 3

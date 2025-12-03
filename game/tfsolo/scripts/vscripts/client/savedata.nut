@@ -105,6 +105,23 @@ TFSOLO.UpdateMapVisits <- function(map)
 	Solo.WriteSaveData()
 }
 
+TFSOLO.UpdateBotStats <- function(params)
+{
+	local kv = Solo.GetSaveData()
+	local botsKV = kv.GetKey("Bots", true)
+	local botKV = botsKV.GetKey(params.preset, true)
+	if (params.target == "BotStatPlayerKilledBy")
+	{
+		local stat = botKV.GetInt("KilledBy")
+		botKV.SetInt("KilledBy", stat + 1)
+	}
+	else if (params.target == "BotStatPlayerKilled")
+	{
+		local stat = botKV.GetInt("Killed")
+		botKV.SetInt("Killed", stat + 1)
+	}
+}
+
 TFSOLO.SaveEventTag <- UniqueString()
 getroottable()[TFSOLO.SaveEventTag] <- {
 	OnGameEvent_solo_add_credits = function(params)
@@ -204,12 +221,27 @@ getroottable()[TFSOLO.SaveEventTag] <- {
 	
 	OnScriptHook_OnServerScriptTable = function(params)
 	{
-		if ("target" in params && params.target == "SaveMapVisit" && "map" in params)
+		if ("target" in params)
 		{
-			TFSOLO.UpdateMapVisits(params.map)
+			if (params.target == "SaveMapVisit" && "map" in params)
+			{
+				TFSOLO.UpdateMapVisits(params.map)
+			}
+			else if (params.target == "BotStatPlayerKilledBy" && "preset" in params)
+			{
+				TFSOLO.UpdateBotStats(params)
+			}
+			else if (params.target == "BotStatPlayerKilled" && "preset" in params)
+			{
+				TFSOLO.UpdateBotStats(params)
+			}
 		}
 	}
 	
+	OnScriptHook_LevelDisconnect = function(params)
+	{
+		Solo.WriteSaveData()
+	}
 }
 TFSOLO.SaveEventTable <- getroottable()[TFSOLO.SaveEventTag]
 __CollectGameEventCallbacks(TFSOLO.SaveEventTable)

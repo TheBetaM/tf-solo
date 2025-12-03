@@ -446,7 +446,7 @@ void CCraftingPanel::UpdateRecipeItems( bool bClearInputItems )
 	m_iCurrentRecipeTotalInputs = 0;
 	m_iCurrentRecipeTotalOutputs = 0;
 
-	if ( m_iCurrentlySelectedRecipe == "" )
+	if ( !m_iCurrentlySelectedRecipe || !m_iCurrentlySelectedRecipe[0] )
 		return;
 
 	// Now check to see if they've got the right items in there
@@ -460,7 +460,7 @@ void CCraftingPanel::UpdateCraftButton( void )
 {
 	if ( m_pCraftButton )
 	{
-		if (m_iCurrentlySelectedRecipe == "")
+		if ( !m_iCurrentlySelectedRecipe || !m_iCurrentlySelectedRecipe[0] )
 		{
 			if (m_pPlayerModelPanel)
 			{
@@ -515,7 +515,15 @@ void CCraftingPanel::UpdatePlayerModelPanel(void)
 	else if (key->FindKey("SubClass"))
 	{
 		auto subclass = GetPlayerSubClassData(key->GetString("SubClass"));
-		if (subclass)
+		if (key->FindKey("Model") && g_pFullFileSystem->FileExists(key->GetString("Model")))
+		{
+			m_pPlayerModelPanel->SetToPlayerSubClass(key->GetString("SubClass"), true, key->GetString("Model"));
+		}
+		else if (key->FindKey("ModelStatic") && g_pFullFileSystem->FileExists(key->GetString("ModelStatic")))
+		{
+			m_pPlayerModelPanel->SetToPlayerSubClass(key->GetString("SubClass"), true, key->GetString("ModelStatic"));
+		}
+		else if (subclass)
 		{
 			m_pPlayerModelPanel->SetToPlayerSubClass(key->GetString("SubClass"), true);
 		}
@@ -558,7 +566,7 @@ void CCraftingPanel::UpdatePlayerModelPanel(void)
 //-----------------------------------------------------------------------------
 void CCraftingPanel::JumpToArmory(void)
 {
-	if (m_iCurrentlySelectedRecipe == "")
+	if ( !m_iCurrentlySelectedRecipe || !m_iCurrentlySelectedRecipe[0] )
 		return;
 	auto key = m_presetsKV->FindKey(m_iCurrentlySelectedRecipe);
 	auto kItems = key->FindKey("Items");
@@ -633,7 +641,7 @@ void CCraftingPanel::UpdateSelectedRecipe( bool bClearInputItems )
 {
 	for ( int i = 0; i < m_pRecipeButtons.Count(); i++ )
 	{
-		bool bSelected = !V_strcmp(m_pRecipeButtons[i]->m_iRecipeDefIndex, m_iCurrentlySelectedRecipe);
+		bool bSelected = !V_strcmp( m_pRecipeButtons[i]->m_iRecipeDefIndex, m_iCurrentlySelectedRecipe );
 		m_pRecipeButtons[i]->ForceDepressed( bSelected );
 		m_pRecipeButtons[i]->RecalculateDepressedState();
 
@@ -643,11 +651,59 @@ void CCraftingPanel::UpdateSelectedRecipe( bool bClearInputItems )
 			m_pRecipeButtons[i]->GetText( wszText, ARRAYSIZE( wszText ) );
 			m_pSelectedRecipeContainer->SetDialogVariable( "recipetitle", wszText );
 
-			m_pSelectedRecipeContainer->SetDialogVariable("recipeinputstring", g_pVGuiLocalize->Find("#TFSOLO_Bestiary_DescGeneric"));
+			auto key = m_presetsKV->FindKey( m_iCurrentlySelectedRecipe );
+			KeyValues* save = TFInventoryManager()->GetSaveData();
+			KeyValues* saveBots = NULL;
+			KeyValues* saveBot = NULL;
+			if ( save )
+			{
+				saveBots = save->FindKey( "Bots" );
+			}
+			if ( saveBots )
+			{
+				saveBot = saveBots->FindKey( m_iCurrentlySelectedRecipe );
+			}
+
+			if ( m_pCraftButton )
+			{
+				m_pCraftButton->SetText( "#TFSOLO_Bestiary_ToArmoryButton" );
+				if ( key->FindKey( "Class" ) && FStrEq( key->GetString( "Class" ),"Pyro" ) && RandomInt( 0, 1 ) == 0 )
+				{
+					m_pCraftButton->SetText( "#TFSOLO_Bestiary_ToArmoryButtonB" );
+				}
+				else if ( key->FindKey( "SubClass" ) )
+				{
+					m_pCraftButton->SetText( "#TFSOLO_Bestiary_ToArmoryButtonC" );
+				}
+			}
+
+			CUtlStringBuilder botDesc;
+			if ( key->FindKey( "Desc") )
+			{
+				botDesc.Append( key->GetString( "Desc" ) );
+				botDesc.Append( "\n" );
+			}
+			else
+			{
+				botDesc.Append( g_pVGuiLocalize->FindAsUTF8( "#TFSOLO_Bestiary_DescGeneric" ) );
+				botDesc.Append( "\n" );
+			}
+			int iKills = 0;
+			int iKilledBy = 0;
+			if ( saveBot )
+			{
+				iKills = saveBot->GetInt( "Killed" );
+				iKilledBy = saveBot->GetInt( "KilledBy" );
+			}
+			botDesc.Append( CFmtStr( "Killed: %u", iKills ) );
+			botDesc.Append( "\n" );
+			botDesc.Append( CFmtStr( "Killed by: %u", iKilledBy ) );
+			botDesc.Append( "\n" );
+			m_pSelectedRecipeContainer->SetDialogVariable( "recipeinputstring", botDesc.Access() );
 		}
 	}
 
-	m_pSelectedRecipeContainer->SetVisible(m_iCurrentlySelectedRecipe != "");
+	m_pSelectedRecipeContainer->SetVisible( m_iCurrentlySelectedRecipe && m_iCurrentlySelectedRecipe[0] );
 
 	UpdateRecipeItems( bClearInputItems );
 	UpdateModelPanels();

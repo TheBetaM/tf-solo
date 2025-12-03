@@ -20,7 +20,7 @@
 - Loadouts now work offline; accessing your base TF2 inventory still requires a connection
 - Added Armory - a way to unlock items using credits earned in the game
 - Added new weapon and taunt items
-- Added Bestiary - browse enemies encountered in the game
+- Added Hit List - browse enemies encountered in the game
 - Added Subs - class substitute playable characters
 - Added the Game Instructor feature from Alien Swarm:  
 -- Optional context-sensitive tutorials for base TF2 mechanics  
@@ -34,8 +34,9 @@ mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override,
 nav_save_compressed, tf_bot_spells, 
 tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable, 
 sv_mapentities_override, sv_mapentities_mod, nav_begin_ladder, 
-tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force,
-sv_thirdperson_platformer_force, tf_subclass_allow, mp_humans_must_join_subclass
+tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force, 
+sv_thirdperson_platformer_force, tf_subclass_allow, mp_humans_must_join_subclass, 
+tf_bot_sniper_lasersight
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

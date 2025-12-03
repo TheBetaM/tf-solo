@@ -4203,11 +4203,11 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
-	m_pCategoryList->AddItem("Workshop (Installed/Subscribed)", NULL);
-	m_pCategoryList->AddItem("TF2 Workshop (Installed/Subscribed)", NULL);
+	m_pCategoryList->AddItem("Workshop (Downloaded/Subscribed)", NULL);
+	m_pCategoryList->AddItem("TF2 Workshop (Downloaded/Subscribed)", NULL);
 	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
 	{
-		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Installed/Subscribed)", NULL);
+		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Downloaded/Subscribed)", NULL);
 	}
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );

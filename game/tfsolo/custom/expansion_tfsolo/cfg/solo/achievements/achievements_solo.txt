@@ -8,4 +8,10 @@ achievements
 	{
 		id 160
 	}
+	TFSOLO_GENERAL_COLLECT_CREDITS
+	{
+		id 161
+		goal 100
+		showallprogress 1
+	}
 }

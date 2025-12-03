@@ -69,6 +69,7 @@ CBaseAchievement::CBaseAchievement()
 	m_pAchievementMgr = NULL;
 	m_bShowOnHUD = false;
 	m_pszStat = NULL;
+	m_bProgressEveryStep = false;
 }
 
 CBaseAchievement::~CBaseAchievement()
@@ -319,6 +320,11 @@ void CBaseAchievement::CalcProgressMsgIncrement()
 	if ( m_iProgressMsgIncrement < 5 )
 	{
 		m_iProgressMsgIncrement = 0;
+	}
+
+	if ( m_bProgressEveryStep )
+	{
+		m_iProgressMsgIncrement = 1;
 	}
 }
 
@@ -759,4 +765,5 @@ void CCustomAchievement::InitFromKV(KeyValues* pKV)
 	SetPointValue( pKV->GetInt( "pointValue", 5 ) );
 	SetHideUntilAchieved( false );
 	SetGoal( pKV->GetInt( "goal", 1 ) );
+	m_bProgressEveryStep = pKV->GetInt( "showallprogress" ) != 0;
 }

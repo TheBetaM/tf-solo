@@ -46,18 +46,19 @@ public:
 	CRecipeButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
 		: CExButton( parent, name, text, pActionSignalTarget, cmd )
 	{
+		m_iRecipeDefIndex = NULL;
 	}
 
 	virtual void ApplySettings( KeyValues *inResourceData )
 	{
 		BaseClass::ApplySettings( inResourceData );
-		SetEnabled( m_iRecipeDefIndex != "" );
+		SetEnabled( m_iRecipeDefIndex && m_iRecipeDefIndex[0] );
 	}
 
 	void SetDefIndex( const char* iIndex )
 	{
 		m_iRecipeDefIndex = iIndex;
-		SetEnabled( m_iRecipeDefIndex != "" );
+		SetEnabled( m_iRecipeDefIndex && m_iRecipeDefIndex[0] );
 	}
 
 	const char* GetDefIndex()

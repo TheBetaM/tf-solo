@@ -155,6 +155,7 @@ protected:
 	uint64		m_iComponentBits;						// bitfield of components achieved
 	CAchievementMgr *m_pAchievementMgr;					// our achievement manager
 	bool		m_bShowOnHUD;							// if set, the player wants this achievement pinned to the HUD
+	bool		m_bProgressEveryStep;					// show progress on every step
 
 	friend class CAchievementMgr;
 public:

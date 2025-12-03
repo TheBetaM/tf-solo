@@ -49,6 +49,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 ConVar tf_sniper_fullcharge_bell( "tf_sniper_fullcharge_bell", "0", FCVAR_ARCHIVE );
 extern ConVar cl_lockview;
 extern ConVar sv_lockview_force;
+ConVar tf_bot_sniper_lasersight( "tf_bot_sniper_lasersight", "1", FCVAR_ARCHIVE, "All bots with sniper rifles have a visible laser sight outside MVM mode." );
 #endif
 
 //=============================================================================
@@ -1692,10 +1693,10 @@ bool CSniperDot::ShouldDraw( void )
 void CSniperDot::ClientThink( void )
 {
 	// snipers have laser sights in PvE mode
-	if ( TFGameRules()->IsPVEModeActive() && GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+	if ( ( TFGameRules()->IsPVEModeActive() && GetTeamNumber() == TF_TEAM_PVE_INVADERS ) || tf_bot_sniper_lasersight.GetBool() )
 	{
 		C_TFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
-		if ( pPlayer )
+		if ( pPlayer && !pPlayer->IsLocalPlayer() )
 		{
 			if ( !m_laserBeamEffect )
 			{
@@ -1705,7 +1706,14 @@ void CSniperDot::ClientThink( void )
 			if ( m_laserBeamEffect )
 			{
 				m_laserBeamEffect->SetSortOrigin( m_laserBeamEffect->GetRenderOrigin() );
-				m_laserBeamEffect->SetControlPoint( 2, Vector( 0, 0, 255 ) );
+				if ( pPlayer->GetTeamNumber() == TF_TEAM_RED )
+				{
+					m_laserBeamEffect->SetControlPoint( 2, Vector( 255, 0, 0 ) );
+				}
+				else
+				{
+					m_laserBeamEffect->SetControlPoint( 2, Vector( 0, 0, 255 ) );
+				}
 
 				Vector vecAttachment;
 				Vector vecEndPos;

@@ -7,6 +7,7 @@ printl("[TFSOLO] Server Init")
 IncludeScript("solo/util.nut")
 IncludeScript("solo/serverutil.nut")
 IncludeScript("solo/itemschema.nut")
+IncludeScript("solo/botstats.nut")
 if (IsDedicatedServer())
 {
 	IncludeScript("client/solo/preload_items.nut")

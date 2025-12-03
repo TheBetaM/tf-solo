@@ -70,6 +70,7 @@ getroottable()[TFSOLO.PickupsEventTag] <- {
 			TFSOLO.AddCredits(50)
 			Solo.WriteSaveData()
 			EmitSound("MVM.MoneyPickup")
+			AwardAchievement(161, 1) // TFSOLO_GENERAL_COLLECT_CREDITS
 		}
 	}
 }

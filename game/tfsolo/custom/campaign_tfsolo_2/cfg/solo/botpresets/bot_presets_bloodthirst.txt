@@ -3,6 +3,7 @@ bot_presets
 	Bloodthirst_HandlerRED
 	{
 		Name "Ed"
+		Desc "Your RED handler in the Bloodthirst campaign."
 		Class Engineer
 		Skill 2
 		Team 2
@@ -21,6 +22,7 @@ bot_presets
 	Bloodthirst_HandlerBLU
 	{
 		Name "DRACULA"
+		Desc "Your BLU handler in the Bloodthirst campaign."
 		Class Medic
 		Skill 2
 		Team 3
@@ -36,6 +38,7 @@ bot_presets
 	Bloodthirst_Merasmus
 	{
 		Name "MERASMUS"
+		Desc "An unlikely ally in the Bloodthirst campaign."
 		Class Sniper
 		Rarity 3
 		Items
@@ -46,6 +49,7 @@ bot_presets
 	Bloodthirst_RecruitRED
 	{
 		Name "Captain Calamari"
+		Desc "Recruited in the Bloodthirst campaign."
 		Class Demoman
 		Skill 1
 		Team 2
@@ -65,6 +69,7 @@ bot_presets
 	Bloodthirst_RecruitBLU
 	{
 		Name "Deadly Dragon"
+		Desc "Recruited in the Bloodthirst campaign."
 		Class Pyro
 		Skill 2
 		Team 3
