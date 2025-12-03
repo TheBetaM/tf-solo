@@ -4,6 +4,7 @@ TFSOLO.PlayerData <- {
 	TeamSelected = 0
 	Map = ""
 	PlayerClass = "any"
+	PlayerSubClass = "any"
 	PopFile = "solo_easy_1"
 	CvarGamemodeOverride = 0
 	GameMode = "standard"
@@ -24,6 +25,7 @@ TFSOLO.ResetMissionSettings <- function()
 	TFSOLO.PlayerData.TeamSelected = 0
 	TFSOLO.PlayerData.Map = ""
 	TFSOLO.PlayerData.PlayerClass = "any"
+	TFSOLO.PlayerData.PlayerSubClass = "any"
 	TFSOLO.PlayerData.PopFile = "solo_easy_1"
 	TFSOLO.PlayerData.CvarGamemodeOverride = 0
 	TFSOLO.PlayerData.GameMode = "standard"

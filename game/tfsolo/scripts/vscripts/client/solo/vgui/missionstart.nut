@@ -14,6 +14,7 @@ TFSOLO.StartMission <- function()
 	
 	// Save data
 	TFSOLO.UpdateMapVisits(data.Map)
+	SendToConsole("tfsolo_mapentry " + data.Map)
 	
 	// Prepare server settings 
 	// Preferably only ones that need to be setup before level load, the rest should be in server scripts
@@ -35,6 +36,7 @@ TFSOLO.StartMission <- function()
 		}
 	}
 	SendToConsole("mp_humans_must_join_class " + data.PlayerClass)
+	SendToConsole("mp_humans_must_join_subclass " + data.PlayerSubClass)
 	SendToConsole("nav_generate_auto 1")
 	if (mapData != null)
 	{

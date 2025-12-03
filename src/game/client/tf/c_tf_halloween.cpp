@@ -18,6 +18,7 @@
 #include "baseachievement.h"
 #include "achievements_tf.h"
 #include "gc_clientsystem.h"
+#include "vscript_client.h"
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -413,4 +414,157 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 void CL_Halloween_LevelShutdown()
 {
 	gHalloweenPickup = NULL;
+}
+
+//-----------------------------------------------------------------------------
+class C_GenericItemPickup : public CBaseAnimating
+{
+	DECLARE_CLASS( C_GenericItemPickup, CBaseAnimating );
+public:
+	C_GenericItemPickup()
+		: m_bClaimed( false ),
+		m_iPickupType( 0 )
+	{
+		m_pszPickupName = NULL;
+		m_pszPickupModel = NULL;
+		AddEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
+	}
+
+	virtual ~C_GenericItemPickup()
+	{
+	}
+
+	bool Initialize()
+	{
+		SetModelName( AllocPooledString( m_pszPickupModel ) );
+
+		if ( InitializeAsClientEntity( STRING( GetModelName() ), RENDER_GROUP_OPAQUE_ENTITY ) == false )
+			return false;
+
+		const model_t* mod = GetModel();
+		if ( mod )
+		{
+			Vector mins, maxs;
+			modelinfo->GetModelBounds( mod, mins, maxs );
+			SetCollisionBounds( mins, maxs );
+		}
+
+		Spawn();
+
+		// initialize as translucent		
+		//float alpha = 0.0f;
+		//SetRenderMode( kRenderTransTexture );
+		//SetRenderColorA( alpha * 256 );
+		//m_flTimeToReady = gpGlobals->realtime + HALLOWEEN_ITEM_TIME_TO_READY;
+
+		UpdatePartitionListEntry();
+
+		SetBlocksLOS( false ); // this should be a small object
+
+		// Set up shadows; do it here so that objects can change shadowcasting state
+		CreateShadow();
+
+		UpdateVisibility();
+
+		SetNextClientThink( CLIENT_THINK_ALWAYS );
+
+		return true;
+	}
+
+	virtual void Spawn()
+	{
+		Precache();
+		BaseClass::Spawn();
+		SetSolid( SOLID_NONE );
+		AddSolidFlags( FSOLID_NOT_SOLID );
+		SetMoveType( MOVETYPE_NONE );
+	}
+
+	virtual void ClientThink()
+	{
+		ClientThink_Active();
+	}
+
+	void ClientThink_Active( void )
+	{
+		Vector vWorldMins = WorldAlignMins();
+		Vector vWorldMaxs = WorldAlignMaxs();
+		Vector vBoxMin1 = GetAbsOrigin() + vWorldMins;
+		Vector vBoxMax1 = GetAbsOrigin() + vWorldMaxs;
+
+		bool bPickupIntersect = false;
+		C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
+		if ( pPlayer == NULL || pPlayer->IsBot() == true ||
+			( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
+			pPlayer->IsAlive() == false ||
+			pPlayer->GetObserverMode() != OBS_MODE_NONE )
+		{
+			SetNextClientThink( gpGlobals->curtime + 0.16f );
+			return;
+		}
+
+		Vector vPlayerMins = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMins();
+		Vector vPlayerMaxs = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMaxs();
+		bool bIntersecting = IsBoxIntersectingBox( vBoxMin1, vBoxMax1, vPlayerMins, vPlayerMaxs );
+		float flDistance2 = ( pPlayer->GetAbsOrigin(), GetAbsOrigin() ).LengthSqr();
+		if ( bIntersecting )
+		{
+			bPickupIntersect = true;
+		}
+
+		if ( bPickupIntersect )
+		{
+			OnClaimed();
+		}
+		else
+		{
+			SetNextClientThink( gpGlobals->curtime + 0.16f );
+		}
+	}
+
+	void OnClaimed()
+	{
+		if ( m_bClaimed )
+			return;
+
+		m_bClaimed = true;
+		// stop thinking and remove sparkle...
+		//ParticleProp()->StopParticlesNamed("halloween_pickup_active", true);
+		SetNextClientThink( CLIENT_THINK_NEVER );
+		// throw up bday confetti
+		//DispatchParticleEffect("halloween_gift_pickup", GetAbsOrigin(), vec3_angle);
+
+		SetRenderMode( kRenderNone );
+		UpdateVisibility();
+
+		IScriptVM* pVM = g_pScriptVM;
+		ScriptVariant_t varTable;
+		pVM->CreateTable( varTable );
+		pVM->SetValue( varTable, "name", m_pszPickupName );
+		pVM->SetValue( varTable, "pickuptype", m_iPickupType );
+		RunScriptHook( "GenericItemPickupCollect", varTable );
+	}
+
+	bool m_bClaimed;
+	const char* m_pszPickupName;
+	const char* m_pszPickupModel;
+	int m_iPickupType;
+
+	static void C_GenericItemPickup::Create( const char* name, Vector pos, int type, const char* model )
+	{
+		C_GenericItemPickup* pPickup = new C_GenericItemPickup;
+		pPickup->m_pszPickupName = V_strdup( name );
+		pPickup->m_iPickupType = type;
+		pPickup->m_pszPickupModel = model;
+		pPickup->Initialize();
+		pPickup->SetAbsOrigin( pos );
+	}
+};
+
+LINK_ENTITY_TO_CLASS( tf_generic_item_pickup_client, C_GenericItemPickup );
+PRECACHE_REGISTER( tf_generic_item_pickup_client );
+
+void TFSOLO_CreateGenericItemPickup( const char* name, Vector pos, int type, const char* model )
+{
+	C_GenericItemPickup::Create( name, pos, type, model );
 }

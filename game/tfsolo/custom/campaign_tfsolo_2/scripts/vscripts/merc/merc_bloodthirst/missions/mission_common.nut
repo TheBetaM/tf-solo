@@ -530,6 +530,7 @@ Merc.SaveProgress <- function()
 	StringToFile("merc/" + Merc.ProjectName + "/savedata.nut", buffer)
 	
 	Entities.FindByClassname(null,"tf_gamerules").AcceptInput("SoloSaveData","",null,null)
+	ToConsole("tfsolo_mapentry \"\"")
 }
 
 Merc.ReturnTuHub <- function()

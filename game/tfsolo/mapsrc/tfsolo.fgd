@@ -356,9 +356,9 @@
 		1 : "Show when occluded"
 	]
 	
-	hint_icon_onscreen(string) : "Onscreen Icon" : : "The icon to use when the hint is within the player's view." =
+	hint_icon_onscreen(string) : "Onscreen Icon" : : "The icon to use when the hint is within the player's view."
 	
-	hint_icon_offscreen(string) : "Offscreen Icon" : : "The icon to use when the hint is outside the player's view." =
+	hint_icon_offscreen(string) : "Offscreen Icon" : : "The icon to use when the hint is outside the player's view."
 	
 	hint_nooffscreen(Choices) : "Show offscreen" : 0 : "When the hint is offscreen, do we show an icon and arrow?" =
 	[

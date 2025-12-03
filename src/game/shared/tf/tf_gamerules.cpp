@@ -963,6 +963,7 @@ ConVar tf_maddash_override( "tf_maddash_override", "0", FCVAR_REPLICATED, "Overr
 ConVar tf_maddash_infiltration( "tf_maddash_infiltration", "0", FCVAR_REPLICATED, "Enable Infiltration variant mode.\n" );
 ConVar tf_propertydamage_mode( "tf_propertydamage_mode", "0", FCVAR_REPLICATED, "Enable Property Damage gamemode.\n" );
 ConVar tf_subclass_allow( "tf_subclass_allow", "0", FCVAR_REPLICATED, "1 - Allow human players to change into any available subclass.\n" );
+ConVar tfsolo_mapentry( "tfsolo_mapentry", "", FCVAR_REPLICATED, "Name of the current map's config entry.\n" );
 
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;

@@ -169,6 +169,95 @@ int GetDeveloperLevel()
 	return developer.GetInt();
 }
 
+/// Exposes convars to script
+class CScriptConvarAccessor : public CAutoGameSystem
+{
+public:
+	ScriptVariant_t GetBool(const char* cvar);
+	ScriptVariant_t GetInt(const char* cvar);
+	ScriptVariant_t GetFloat(const char* cvar);
+	ScriptVariant_t GetStr(const char* cvar);
+};
+CScriptConvarAccessor g_ScriptConvars;
+
+#define FCVAR_SCRIPT_NONO ( FCVAR_PROTECTED | FCVAR_SERVER_CANNOT_QUERY )
+
+ScriptVariant_t CScriptConvarAccessor::GetBool(const char* cvar)
+{
+	if (!cvar || !*cvar)
+		return ScriptVariant_t();
+
+	ConVarRef cref(cvar);
+	if (cref.IsValid() && !cref.IsFlagSet(FCVAR_SCRIPT_NONO))
+	{
+		return cref.GetBool();
+	}
+	else
+	{
+		return ScriptVariant_t(); // default ctor is NULL
+	}
+}
+
+ScriptVariant_t CScriptConvarAccessor::GetInt(const char* cvar)
+{
+	if (!cvar || !*cvar)
+		return ScriptVariant_t();
+
+	ConVarRef cref(cvar);
+	if (cref.IsValid() && !cref.IsFlagSet(FCVAR_SCRIPT_NONO))
+	{
+		return cref.GetInt();
+	}
+	else
+	{
+		return ScriptVariant_t(); // default ctor is NULL
+	}
+}
+
+ScriptVariant_t CScriptConvarAccessor::GetFloat(const char* cvar)
+{
+	if (!cvar || !*cvar)
+		return ScriptVariant_t();
+
+	ConVarRef cref(cvar);
+	if (cref.IsValid() && !cref.IsFlagSet(FCVAR_SCRIPT_NONO))
+	{
+		return cref.GetFloat();
+	}
+	else
+	{
+		return ScriptVariant_t(); // default ctor is NULL
+	}
+}
+
+ScriptVariant_t CScriptConvarAccessor::GetStr(const char* cvar)
+{
+	if (!cvar || !*cvar)
+		return ScriptVariant_t();
+
+	ConVarRef cref(cvar);
+	if (cref.IsValid())
+	{
+		if (cref.IsFlagSet(FCVAR_SCRIPT_NONO))
+		{
+			// the funny.
+			return "hunter2";
+		}
+		return cref.GetString();
+	}
+	else
+	{
+		return ScriptVariant_t(); // default ctor is NULL
+	}
+}
+
+BEGIN_SCRIPTDESC_ROOT_NAMED(CScriptConvarAccessor, "Convars", SCRIPT_SINGLETON "Access to convar functions")
+DEFINE_SCRIPTFUNC(GetBool, "GetBool(name) : returns the convar as a bool. May return null if no such convar.")
+DEFINE_SCRIPTFUNC(GetInt, "GetInt(name) : returns the convar as an int. May return null if no such convar.")
+DEFINE_SCRIPTFUNC(GetFloat, "GetFloat(name) : returns the convar as a float. May return null if no such convar.")
+DEFINE_SCRIPTFUNC(GetStr, "GetStr(name) : returns the convar as a string. May return null if no such convar.")
+END_SCRIPTDESC()
+
 CVScriptGameEventListener g_VScriptGameEventListener;
 
 void CVScriptGameEventListener::Init()
@@ -1150,6 +1239,7 @@ int Script_ScreenHeight()
 }
 
 #ifdef TF_CLIENT_DLL
+extern void TFSOLO_CreateGenericItemPickup(const char* name, Vector pos, int type, const char* model);
 // ----------------------------------------------------------------------------
 // Solo access
 // ----------------------------------------------------------------------------
@@ -1257,6 +1347,12 @@ public:
 		GetItemSchema()->BInitFromKV(kvs->m_pKeyValues);
 		g_VScriptGameSystem.m_bLockSchema = false;
 	}
+	void CreateClientPickup(const char* name, const char* pos, int type, const char* model)
+	{
+		Vector vecPos;
+		UTIL_StringToVector(vecPos.Base(), pos);
+		TFSOLO_CreateGenericItemPickup(name, vecPos, type, model);
+	}
 };
 
 CSoloAccess g_SoloAccess;
@@ -1280,6 +1376,8 @@ BEGIN_SCRIPTDESC_ROOT_NAMED(CSoloAccess, "CSolo", SCRIPT_SINGLETON "Solo access"
 	DEFINE_SCRIPTFUNC(EconMenuOpenArmory, "")
 	DEFINE_SCRIPTFUNC(EconMenuOpenBestiary, "")
 	DEFINE_SCRIPTFUNC(EconNotifyPop, "")
+
+	DEFINE_SCRIPTFUNC(CreateClientPickup, "")
 
 END_SCRIPTDESC();
 #endif // TF_CLIENT_DLL
@@ -1404,6 +1502,8 @@ bool VScriptClientInit()
 #ifdef PANORAMA_ENABLE
 				g_pScriptVM->RegisterInstance( &g_ScriptPanorama, "Panorama" );
 #endif
+
+				g_pScriptVM->RegisterInstance(&g_ScriptConvars, "Convars");
 
 				ScriptVariant_t	vConstantsTable;
 				g_pScriptVM->CreateTable(vConstantsTable);

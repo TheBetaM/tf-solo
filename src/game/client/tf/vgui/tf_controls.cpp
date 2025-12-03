@@ -3465,6 +3465,9 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		TFInventoryManager()->WriteSaveData();
 	}
 
+	ConVarRef tfsolo_mapentry( "tfsolo_mapentry" );
+	tfsolo_mapentry.SetValue( m_iszRequestedMap );
+
 	char* mapFile = V_strdup( m_iszRequestedMap );
 	if ( !V_strnicmp( mapFile, "workshop_", 9 ) )
 	{
@@ -4200,7 +4203,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
-	m_pCategoryList->AddItem("#MMenu_SteamWorkshop", NULL);
+	m_pCategoryList->AddItem("Workshop (Installed/Subscribed)", NULL);
 	m_pCategoryList->AddItem("TF2 Workshop (Installed/Subscribed)", NULL);
 	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
 	{
@@ -4343,6 +4346,7 @@ struct CTFCustomMatchMapInfo
 	const char* m_ThumbArt;
 	const char* m_MapFile;
 	bool m_IsWorkshop;
+	const char* m_StateText;
 };
 
 int TFCustomMatchMapSort( CTFCustomMatchMapInfo const* p1, CTFCustomMatchMapInfo const* p2 )
@@ -4364,6 +4368,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
 	Color textColor = Color(255, 255, 255, 255);
 	Color textNewColor = Color(255, 255, 0, 255);
+	Color textClearColor = Color(0, 255, 0, 255);
 	Color textShadowColor = Color(0, 0, 0, 255);
 
 	bool bShowDisabled = false;
@@ -4607,12 +4612,40 @@ void CTFCustomMatchMapDialog::CreateControls()
 			continue;
 		}
 
+		const char* pszStateText = "*NEW*";
+		if ( saveMaps->FindKey( key->GetName() ) )
+		{
+			pszStateText = "CLEAR";
+			KeyValues* pickupsSave = saveMaps->FindKey( key->GetName() );
+			KeyValues* pickups = key->FindKey( "pickups" );
+			if ( pickups )
+			{
+				int iPickups = 0;
+				int iPickupsTotal = 0;
+				KeyValues* pkey = pickups->GetFirstSubKey();
+				while ( pkey )
+				{
+					iPickupsTotal++;
+					if ( pickupsSave->GetInt( pkey->GetName() ) != 0)
+					{
+						iPickups++;
+					}
+					pkey = pkey->GetNextKey();
+				}
+				if ( iPickups != iPickupsTotal )
+				{
+					pszStateText = CFmtStr("%d/%d", iPickups, iPickupsTotal);
+				}
+			}
+		}
+
 		CTFCustomMatchMapInfo info;
 		info.m_MapFile = key->GetName();
 		info.m_Name = key->GetString("name");
 		info.m_ModeName = key->GetString("modename");
 		info.m_ThumbArt = key->GetString("thumbArt");
 		info.m_IsWorkshop = isWorkshop;
+		info.m_StateText = V_strdup(pszStateText);
 
 		mapSort.AddToTail( info );
 		key = key->GetNextKey();
@@ -4676,20 +4709,27 @@ void CTFCustomMatchMapDialog::CreateControls()
 		labelShadow->SetKeyBoardInputEnabled(false);
 		//labelShadow->SetWrap(true);
 
-		if ( !saveMaps || !saveMaps->FindKey( map.m_MapFile ) )
+		if (map.m_StateText)
 		{
-			CExLabel* label = new CExLabel(holder, "UnplayedLabel", "*NEW*");
+			CExLabel* label = new CExLabel(holder, "UnplayedLabel", map.m_StateText);
 			label->SetContentAlignment(vgui::Label::a_northeast);
 			label->SetTextInset(5, 0);
 			label->SetFont(hTextFont);
 			label->InvalidateLayout(true, true);
-			label->SetFgColor(textNewColor);
+			if (FStrEq(map.m_StateText, "CLEAR"))
+			{
+				label->SetFgColor(textClearColor);
+			}
+			else
+			{
+				label->SetFgColor(textNewColor);
+			}
 			label->SetZPos(10);
 			label->SetSize(256, 192);
 			label->SetMouseInputEnabled(false);
 			label->SetKeyBoardInputEnabled(false);
 
-			CExLabel* labelShadow = new CExLabel(holder, "UnplayedLabelShadow", "*NEW*");
+			CExLabel* labelShadow = new CExLabel(holder, "UnplayedLabelShadow", map.m_StateText);
 			labelShadow->SetContentAlignment(vgui::Label::a_northeast);
 			labelShadow->SetTextInset(8, 3);
 			labelShadow->SetFont(hTextFont);

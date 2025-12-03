@@ -586,6 +586,29 @@ maps_config
 				allow_arena 1
 				allow_pd 1
 			}
+			pickups
+			{
+				cred1
+				{
+					pos "-1366 2040 92"
+				}
+				cred2
+				{
+					pos "-1713 854 256"
+				}
+				cred3
+				{
+					pos "-1499 -1754 92"
+				}
+				cred4
+				{
+					pos "-1879 -2952 100"
+				}
+				cred5
+				{
+					pos "-2413 -285 460"
+				}
+			}
 		}
 		koth_harvest_event
 		{

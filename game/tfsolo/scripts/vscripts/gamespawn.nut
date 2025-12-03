@@ -9,6 +9,7 @@ IncludeScript("solo/itemschema.nut")
 IncludeScript("client/solo/preload_items.nut")
 IncludeScript("client/solo/vgui/init.nut")
 IncludeScript("client/solo/music.nut")
+IncludeScript("client/solo/pickups.nut")
 
 TFSOLO.CoreEventTag <- UniqueString()
 getroottable()[TFSOLO.CoreEventTag] <- {

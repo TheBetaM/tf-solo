@@ -67,6 +67,7 @@ Merc.ChangeLevelWithBuffer <- function(targetmap)
 		map = msgmap
 	}
 	BroadcastTable(msg)
+	ToConsole("tfsolo_mapentry " + msgmap)
 
 	ToConsole("mp_timelimit 0")
 	if (Merc.Missions[Merc.MissionID].ForcedTeam == TF_TEAM_RED)
