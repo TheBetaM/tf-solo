@@ -1056,7 +1056,7 @@ void CTFAdvancedOptionsDialog::CreateControls()
 			pCtrl->SetSize( m_iControlW, m_iControlH );
 			break;
 		case O_SLIDER:
-			pCtrl->SetSize( m_iSliderW, m_iSliderH );
+			pCtrl->SetSize( m_iSliderW, m_iSliderH + 10 );
 			break;
 		default:
 			break;
@@ -3208,7 +3208,7 @@ void CTFCustomMatchSettingsDialog::CreateControls()
 			pCtrl->SetSize(m_iControlW, m_iControlH);
 			break;
 		case O_SLIDER:
-			pCtrl->SetSize(m_iSliderW, m_iSliderH);
+			pCtrl->SetSize(m_iSliderW, m_iSliderH + 10);
 			break;
 		default:
 			break;
@@ -3760,7 +3760,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 		while ( key )
 		{
 			KeyValues* altmap = maps->FindKey( key->GetName() );
-			if ( !altmap )
+			if ( !altmap || altmap->GetInt( "disabled" ) == 1 )
 			{
 				key = key->GetNextKey();
 				continue;
@@ -4939,7 +4939,7 @@ void CTFAchievementsDialog::CreateControls()
 	if ( !pAchievementMgr )
 		return;
 
-	mpcontrol_t* pCtrl;
+	vgui::EditablePanel* pCtrl;
 
 	Button* pButton;
 	CheckButton* pBox;
@@ -4972,7 +4972,7 @@ void CTFAchievementsDialog::CreateControls()
 		const wchar_t* nameLoc = g_pVGuiLocalize->Find( fmtAchName );
 		wchar_t wszNumber1[16] = L"";
 		wchar_t wszNumber2[16] = L"";
-		wchar_t wszFmt[16] = L"%s1 (%s2/%s3)";
+		wchar_t wszFmt[16] = L"%s1\n%s2/%s3";
 		V_swprintf_safe(wszNumber1, L"%i", pAch->GetCount());
 		V_swprintf_safe(wszNumber2, L"%i", pAch->GetGoal());
 		wchar_t wszText[1024] = L"";
@@ -4993,12 +4993,10 @@ void CTFAchievementsDialog::CreateControls()
 			targetColor = tanDark;
 		}
 
-		pCtrl = new mpcontrol_t(objParent, "mpcontrol_t");
-		pCtrl->type = O_BOOL;
+		pCtrl = new vgui::EditablePanel(objParent, "AchHolder");
 		pCtrl->InvalidateLayout( true, true );
-
+		
 		ImagePanel* achIcon = new vgui::ImagePanel( pCtrl, "AchImage" );
-		pCtrl->pControl = achIcon;
 		if ( pAch->IsAchieved() )
 		{
 			achIcon->SetImage( fmtAchImage );
@@ -5007,46 +5005,25 @@ void CTFAchievementsDialog::CreateControls()
 		{
 			achIcon->SetImage( fmtAchImageBW );
 		}
-		
-		pCtrl->pPrompt = new vgui::Label(pCtrl, "DescLabel", "");
-		pCtrl->pPrompt->SetContentAlignment( vgui::Label::a_east );
-		pCtrl->pPrompt->SetTextInset(10, 0);
-		pCtrl->pPrompt->SetText(wszText);
-		pCtrl->pPrompt->SetFont(hTextFont);
-		pCtrl->pPrompt->InvalidateLayout(true, true);
-		pCtrl->pPrompt->SetFgColor(targetColor);
-		pCtrl->pPrompt->SetDisabledFgColor1(targetColor);
-		pCtrl->pPrompt->SetDisabledFgColor2(targetColor);
 
-		pCtrl->pPrompt->SetTooltip(m_pToolTip, fmtAchDesc);
-		achIcon->SetTooltip(m_pToolTip, fmtAchDesc);
+		vgui::Label* pPrompt = new vgui::Label(pCtrl, "DescLabel", "");
+		pPrompt->SetContentAlignment(vgui::Label::a_west);
+		pPrompt->SetTextInset(90, 0);
+		pPrompt->SetText(wszText);
+		pPrompt->SetFont(hTextFont);
+		pPrompt->InvalidateLayout(true, true);
+		pPrompt->SetFgColor(targetColor);
+		pPrompt->SetDisabledFgColor1(targetColor);
+		pPrompt->SetDisabledFgColor2(targetColor);
 
-		pCtrl->SetSize(m_iControlW, 70);
+		pPrompt->SetTooltip(m_pToolTip, fmtAchDesc);
+		achIcon->SetTooltip( m_pToolTip, fmtAchDesc );
+
+		pCtrl->SetSize( 450, 70 );
+		achIcon->SetBounds( 0, 0, 64, 64 );
+		pPrompt->SetBounds( 0, 0, 450, 70 );
 
 		m_pListPanel->AddItem(NULL, pCtrl);
-
-		// Link it in
-		if (!m_pList)
-		{
-			m_pList = pCtrl;
-			pCtrl->next = NULL;
-		}
-		else
-		{
-			mpcontrol_t* p;
-			p = m_pList;
-			while (p)
-			{
-				if (!p->next)
-				{
-					p->next = pCtrl;
-					pCtrl->next = NULL;
-					break;
-				}
-				p = p->next;
-			}
-		}
-
 	}
 
 }

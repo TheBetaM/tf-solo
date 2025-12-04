@@ -68,7 +68,6 @@ private:
 	CPanelAnimationVarAliasType(int, m_iDataCenterY, "datacenter_y", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iDataCenterYSpace, "datacenter_y_space", "0", "proportional_int");
 
-	ComboBox* m_pInviteModeComboBox = NULL;
 	CvarToggleCheckButton<UIConVarRef>* m_pIgnoreInvitesCheckBox = NULL;
 	CvarToggleCheckButton<UIConVarRef>* m_pSteamNetworkingCheckBox = NULL;
 

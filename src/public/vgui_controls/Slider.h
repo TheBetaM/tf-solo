@@ -40,6 +40,8 @@ public:
 	virtual void OnMouseReleased(MouseCode code);
 	virtual void SetTickCaptions(const wchar_t *left, const wchar_t *right);
 	virtual void SetTickCaptions(const char *left, const char *right);
+	virtual void SetValueCaption(const wchar_t* text);
+	virtual void SetValueCaption(const char* text);
 	virtual void SetNumTicks(int ticks);
 	virtual void SetThumbWidth( int width );
 	virtual int	 EstimateValueAtPos( int localMouseX, int localMouseY );
@@ -103,6 +105,7 @@ protected:
 
 	TextImage *_leftCaption;
 	TextImage *_rightCaption;
+	TextImage *_valueCaption;
 
 	Color m_TickColor;
 	Color m_TrackColor;

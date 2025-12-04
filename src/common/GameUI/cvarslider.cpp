@@ -76,11 +76,14 @@ void CCvarSlider::SetupSlider( float minValue, float maxValue, const char *cvarn
 
 	char szMin[ 32 ];
 	char szMax[ 32 ];
+	char szVal[ 32 ];
 
 	Q_snprintf( szMin, sizeof( szMin ), "%.2f", minValue );
 	Q_snprintf( szMax, sizeof( szMax ), "%.2f", maxValue );
+	Q_snprintf( szVal, sizeof( szVal ), "%.2f", (float)(GetValue() / CVARSLIDER_SCALE_FACTOR) );
 
 	SetTickCaptions( szMin, szMax );
+	SetValueCaption( szVal );
 
 	Q_strncpy( m_szCvarName, cvarname, sizeof( m_szCvarName ) );
 

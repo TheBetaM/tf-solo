@@ -46,6 +46,7 @@ Slider::Slider(Panel *parent, const char *panelName ) : BaseClass(parent, panelN
 	m_nNumTicks = 10;
 	_leftCaption = NULL;
 	_rightCaption = NULL;
+	_valueCaption = NULL;
 
 	_subrange[ 0 ] = 0;
 	_subrange[ 1 ] = 0;
@@ -121,6 +122,12 @@ void Slider::SetValue(int value, bool bTriggerChangeMessage)
 	{
 		SendSliderMovedMessage();
 	}
+	if (_value != oldValue)
+	{
+		char szVal[32];
+		Q_snprintf( szVal, sizeof(szVal), "%.2f", ((float)_value / 100.0f) );
+		SetValueCaption( szVal );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -146,6 +153,10 @@ void Slider::PerformLayout()
 	if (_rightCaption)
 	{
 		_rightCaption->ResizeImageToContent();
+	}
+	if (_valueCaption)
+	{
+		_valueCaption->ResizeImageToContent();
 	}
 }
 
@@ -298,6 +309,11 @@ void Slider::ApplySchemeSettings(IScheme *pScheme)
 	{
 		_rightCaption->SetFont(pScheme->GetFont("DefaultVerySmall", IsProportional() ));
 	}
+
+	if ( _valueCaption )
+	{
+		_valueCaption->SetFont(pScheme->GetFont("DefaultVerySmall", IsProportional() ));
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -318,6 +334,12 @@ void Slider::GetSettings(KeyValues *outResourceData)
 	{
 		_rightCaption->GetUnlocalizedText(buf, sizeof(buf));
 		outResourceData->SetString("rightText", buf);
+	}
+
+	if (_valueCaption)
+	{
+		_valueCaption->GetUnlocalizedText(buf, sizeof(buf));
+		outResourceData->SetString("valueText", buf);
 	}
 }
 
@@ -504,6 +526,23 @@ void Slider::DrawTickLabels()
 
 		_rightCaption->Paint();
 	}
+
+	if (_valueCaption != NULL)
+	{
+		int rwide, rtall;
+		_valueCaption->GetSize(rwide, rtall);
+		_valueCaption->SetPos((int)((wide / 2) - rwide), y);
+		if (IsEnabled())
+		{
+			_valueCaption->SetColor( m_TickColor );
+		}
+		else
+		{
+			_valueCaption->SetColor( m_DisabledTextColor1 );
+		}
+
+		_valueCaption->Paint();
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -600,6 +639,44 @@ void Slider::SetTickCaptions( const wchar_t *left, const wchar_t *right )
 		else
 		{
 			_rightCaption = new TextImage(right);
+		}
+	}
+	InvalidateLayout();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Set the text labels of the value caption.
+//-----------------------------------------------------------------------------
+void Slider::SetValueCaption( const char* text )
+{
+	if (text)
+	{
+		if (_valueCaption)
+		{
+			_valueCaption->SetText(text);
+		}
+		else
+		{
+			_valueCaption = new TextImage(text);
+		}
+	}
+	InvalidateLayout();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Set the text labels of the value caption.
+//-----------------------------------------------------------------------------
+void Slider::SetValueCaption( const wchar_t* text )
+{
+	if (text)
+	{
+		if (_valueCaption)
+		{
+			_valueCaption->SetText(text);
+		}
+		else
+		{
+			_valueCaption = new TextImage(text);
 		}
 	}
 	InvalidateLayout();

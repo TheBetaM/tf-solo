@@ -11,7 +11,6 @@
 #include "vgui_controls/ProgressBar.h"
 #include "vgui_controls/AnimationController.h"
 #include "vgui_controls/cvartogglecheckbutton.h"
-#include "vgui_controls/ComboBox.h"
 
 #include "tf_gc_client.h"
 #include "tf_partyclient.h"
@@ -30,7 +29,7 @@ void CTFCampaignsPanelSingle::ApplySchemeSettings(IScheme* pScheme)
 	LoadControlSettings("resource/ui/MatchMakingCampaignsPanelSingle.res");
 
 	const char* cName = "";
-	const char* cDesc;
+	const char* cDesc = NULL;
 	CUtlString cProgress;
 	const char* cMap = "";
 	bool cShowProgress = false;
@@ -57,6 +56,10 @@ void CTFCampaignsPanelSingle::ApplySchemeSettings(IScheme* pScheme)
 			cProgress.Append(CFmtStr("%d", progVal));
 			cProgress.Append("%");
 		}
+	}
+	else
+	{
+		return;
 	}
 
 	EditablePanel* pTopContainer = FindControl< EditablePanel >("TopContainer", true);
@@ -87,7 +90,7 @@ void CTFCampaignsPanelSingle::ApplySchemeSettings(IScheme* pScheme)
 	}
 
 	ImagePanel* pImagePanel = FindControl< ImagePanel >("BGImage", true);
-	if (pImagePanel && cBGArt != "")
+	if (pImagePanel && cBGArt && cBGArt[0])
 	{
 		pImagePanel->SetImage(cBGArt);
 	}
@@ -236,13 +239,6 @@ CTFCampaignsPanel::CTFCampaignsPanel(Panel* pPanel, const char* pszName, ETFMatc
 {
 	SetProportional(true);
 
-	m_pInviteModeComboBox = new ComboBox(this, "InviteModeComboBox", 3, false);
-	m_pInviteModeComboBox->AddItem("#TF_MM_InviteMode_Open", new KeyValues(NULL, "mode", CTFPartyClient::k_ePartyJoinRequestMode_OpenToFriends));
-	m_pInviteModeComboBox->AddItem("#TF_MM_InviteMode_Invite", new KeyValues(NULL, "mode", CTFPartyClient::k_ePartyJoinRequestMode_FriendsCanRequestToJoin));
-	m_pInviteModeComboBox->AddItem("#TF_MM_InviteMode_Closed", new KeyValues(NULL, "mode", CTFPartyClient::k_ePartyJoinRequestMode_ClosedToFriends));
-	m_pInviteModeComboBox->SilentActivateItemByRow(GTFPartyClient()->GetPartyJoinRequestMode());
-	m_pInviteModeComboBox->SetEditable(false);
-
 	ListenForGameEvent("ping_updated");
 	ListenForGameEvent("mmstats_updated");
 	ListenForGameEvent("party_pref_changed");
@@ -372,12 +368,7 @@ void CTFCampaignsPanel::CleanupCampaignsPanels()
 //-----------------------------------------------------------------------------
 void CTFCampaignsPanel::OnTextChanged(vgui::Panel* panel)
 {
-	if (panel == m_pInviteModeComboBox)
-	{
-		using EPartyJoinRequestMode = CTFPartyClient::EPartyJoinRequestMode;
-		EPartyJoinRequestMode eMode = (EPartyJoinRequestMode)m_pInviteModeComboBox->GetActiveItemUserData()->GetInt("mode");
-		GTFPartyClient()->SetPartyJoinRequestMode(eMode);
-	}
+	
 }
 
 //-----------------------------------------------------------------------------
