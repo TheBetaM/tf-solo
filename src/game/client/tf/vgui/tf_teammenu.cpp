@@ -35,6 +35,8 @@
 #include "tf_hud_notification_panel.h"
 #include "iinput.h"
 
+extern ConVar tf_player_preventteamchange;
+
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -369,6 +371,7 @@ void CTFTeamMenu::ShowPanel( bool bShow )
 			 || TFGameRules()->IsInTraining() 
 			 // or if they are coaching
 			 || C_TFPlayer::GetLocalTFPlayer()->m_bIsCoaching
+			 || tf_player_preventteamchange.GetBool()
 			 || bDisallowChange
 			)
 		{

@@ -27,7 +27,7 @@
 -- Optional context-sensitive tutorials for new mechanics  
 -- Plus additional flavor text  
 - Added new achievements
-- Added console commands: mp_humans_must_join_class, 
+- Added console commands: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
@@ -36,7 +36,8 @@ tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable,
 sv_mapentities_override, sv_mapentities_mod, nav_begin_ladder, 
 tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force, 
 sv_thirdperson_platformer_force, tf_subclass_allow, mp_humans_must_join_subclass, 
-tf_bot_sniper_lasersight
+tf_bot_sniper_lasersight, tf_player_maxspeed_override, tf_scoreboard_allow,
+tf_player_preventdeath, tf_player_preventteamchange
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

@@ -581,6 +581,7 @@ float ClientModeTFNormal::GetViewModelFOV( void )
 }
 
 extern ConVar r_drawviewmodel;
+extern ConVar tf_viewmodel_forcehide;
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -594,6 +595,9 @@ bool ClientModeTFNormal::ShouldDrawViewModel()
 	}
 
 	if ( !r_drawviewmodel.GetBool() )
+		return false;
+
+	if ( tf_viewmodel_forcehide.GetBool() )
 		return false;
 
 	return true;

@@ -963,6 +963,12 @@ ConVar tf_maddash_override( "tf_maddash_override", "0", FCVAR_REPLICATED, "Overr
 ConVar tf_maddash_infiltration( "tf_maddash_infiltration", "0", FCVAR_REPLICATED, "Enable Infiltration variant mode.\n" );
 ConVar tf_propertydamage_mode( "tf_propertydamage_mode", "0", FCVAR_REPLICATED, "Enable Property Damage gamemode.\n" );
 ConVar tf_subclass_allow( "tf_subclass_allow", "0", FCVAR_REPLICATED, "1 - Allow human players to change into any available subclass.\n" );
+ConVar tf_scoreboard_allow( "tf_scoreboard_allow", "1", FCVAR_REPLICATED, "Allow players to see scoreboard.\n" );
+ConVar tf_player_maxspeed_override( "tf_player_maxspeed_override", "-1", FCVAR_REPLICATED, "Override base max speed of all players.\n" );
+ConVar tf_player_responses_mute( "tf_player_responses_mute", "0", FCVAR_REPLICATED, "Mute all player class response rules.\n" );
+ConVar tf_viewmodel_forcehide( "tf_viewmodel_forcehide", "0", FCVAR_REPLICATED, "Hide viewmodels on all players.\n" );
+ConVar tf_player_preventdeath( "tf_player_preventdeath", "0", FCVAR_REPLICATED, "Prevent killbinds from working.\n" );
+ConVar tf_player_preventteamchange( "tf_player_preventteamchange", "0", FCVAR_REPLICATED, "Prevent players from switching teams.\n" );
 ConVar tfsolo_mapentry( "tfsolo_mapentry", "", FCVAR_REPLICATED, "Name of the current map's config entry.\n" );
 
 #ifdef GAME_DLL
@@ -5013,7 +5019,7 @@ void CTFGameRules::RecalculateControlPointState( void )
 
 			if ( !pPoint->IsMarkedForDeletion() )
 			{
-				int index = pPoint->GetPointIndex();
+				//int index = pPoint->GetPointIndex();
 				AllPointsVec.AddToTail( pPoint );
 				numFound++;
 			}
@@ -5291,7 +5297,7 @@ void CTFGameRules::SetupOnRoundStart( void )
 
 			if ( !pPoint->IsMarkedForDeletion() )
 			{
-				int index = pPoint->GetPointIndex();
+				//int index = pPoint->GetPointIndex();
 				AllPointsVec.AddToTail( pPoint );
 				numFound++;
 			}

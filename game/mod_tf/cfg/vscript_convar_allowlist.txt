@@ -581,7 +581,11 @@ vscript_convar_allowlist
     tf_pipebomb_deflect_reset_time                                    allowed
     tf_pipebomb_force_to_move                                         allowed
     tf_player_drop_bonus_ducks                                        allowed
+    tf_player_maxspeed_override                                       allowed
     tf_player_movement_restart_freeze                                 allowed
+    tf_player_preventdeath                                            allowed
+    tf_player_preventteamchange                                       allowed
+    tf_player_responses_mute                                          allowed
     tf_player_spell_drop_on_death_rate                                allowed
     tf_playergib                                                      allowed
     tf_populator_active_buffer_range                                  allowed
@@ -621,6 +625,7 @@ vscript_convar_allowlist
     tf_rocketpack_refire_delay                                        allowed
     tf_rocketpack_toggle_duration                                     allowed
     tf_roundstarttalk_disable                                         allowed
+    tf_scoreboard_allow                                               allowed
     tf_scout_air_dash_count                                           allowed
     tf_scout_bat_launch_delay                                         allowed
     tf_scout_energydrink_activation                                   allowed
@@ -707,6 +712,7 @@ vscript_convar_allowlist
     tf_use_fixed_weaponspreads                                        allowed
     tf_useparticletracers                                             allowed
     tf_vaccinator_uber_charge_rate_modifier                           allowed
+    tf_viewmodel_forcehide                                            allowed
     tf_vision_force                                                   allowed
     tf_vision_custom                                                  allowed
     tf_vision_custom_dof                                              allowed

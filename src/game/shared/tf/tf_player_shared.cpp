@@ -123,6 +123,7 @@ ConVar tf_invuln_time( "tf_invuln_time", "1.0", FCVAR_DEVELOPMENTONLY | FCVAR_RE
 extern ConVar tf_player_movement_restart_freeze;
 extern ConVar mp_tournament_readymode_countdown;
 extern ConVar tf_max_charge_speed;
+extern ConVar tf_player_maxspeed_override;
 
 ConVar tf_always_loser( "tf_always_loser", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "Force loserstate to true." );
 
@@ -10794,6 +10795,10 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 	if ( m_Shared.IsSubClass() )
 	{
 		default_speed = m_Shared.GetSubClassData()->m_flMaxSpeed;
+	}
+	if ( tf_player_maxspeed_override.GetFloat() >= 0 )
+	{
+		default_speed = tf_player_maxspeed_override.GetFloat();
 	}
 
 	// Avoid re-entering and calculating our velocity while we're calculating our velocity.

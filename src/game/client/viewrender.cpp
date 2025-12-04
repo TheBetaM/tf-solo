@@ -114,6 +114,7 @@ static ConVar r_3dsky( "r_3dsky","1", 0, "Enable the rendering of 3d sky boxes" 
 static ConVar r_skybox( "r_skybox","1", FCVAR_CHEAT, "Enable the rendering of sky boxes" );
 #ifdef TF_CLIENT_DLL
 ConVar r_drawviewmodel( "r_drawviewmodel","1", FCVAR_DONTRECORD );
+extern ConVar tf_viewmodel_forcehide;
 #else
 ConVar r_drawviewmodel( "r_drawviewmodel","1", FCVAR_CHEAT );
 #endif
@@ -987,6 +988,11 @@ bool CViewRender::ShouldDrawViewModel( bool bDrawViewmodel )
 
 	if ( !r_drawviewmodel.GetBool() )
 		return false;
+
+#ifdef TF_CLIENT_DLL
+	if ( tf_viewmodel_forcehide.GetBool() )
+		return false;
+#endif // TF_CLIENT_DLL
 
 	if ( C_BasePlayer::ShouldDrawLocalPlayer() )
 		return false;

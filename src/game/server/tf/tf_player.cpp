@@ -171,6 +171,7 @@ extern ConVar	halloween_starting_souls;
 extern ConVar	nav_generate_auto;
 extern ConVar	tf_revives_enable;
 extern ConVar	tf_subclass_allow;
+extern ConVar	tf_player_preventdeath;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -296,6 +297,8 @@ extern ConVar tf_tournament_classchange_allowed;
 extern ConVar tf_tournament_classchange_ready_allowed;
 extern ConVar tf_rocketpack_impact_push_min;
 extern ConVar tf_rocketpack_impact_push_max;
+extern ConVar tf_player_responses_mute;
+extern ConVar tf_player_preventteamchange;
 #if defined( _DEBUG ) || defined( STAGING_ONLY )
 extern ConVar mp_developer;
 extern ConVar bot_mimic;
@@ -7533,6 +7536,9 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 
 		SetNextChangeTeamTime( gpGlobals->curtime + 2.0f );  // limit to one change every 2 secs
 
+		if ( tf_player_preventteamchange.GetBool() && !IsFakeClient() )
+			return true;
+
 		if ( args.ArgC() >= 2 )
 		{
 			HandleCommand_JoinTeam( args[1] );
@@ -8211,6 +8217,9 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 	}
 	else if ( FStrEq( pcmd, "spectate" ) )
 	{
+		if ( tf_player_preventteamchange.GetBool() && !IsFakeClient() )
+			return true;
+
 		HandleCommand_JoinTeam( "spectate" );
 		return true;
 	}
@@ -10444,6 +10453,9 @@ void CTFPlayer::CommitSuicide( bool bExplode /* = false */, bool bForce /*= fals
 	
 	// No suicide while a kart
 	if ( m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
+		return;
+
+	if ( tf_player_preventdeath.GetBool() && !IsFakeClient() )
 		return;
 
 	m_bSuicideExplode = bExplode;
@@ -19572,7 +19584,11 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 	// we were that class.
 	int disguiseIndex = criteriaSet.FindCriterionIndex( "disguiseclass" );
 
-	if ( disguiseIndex != -1 )
+	if ( tf_player_responses_mute.GetBool() )
+	{
+		criteriaSet.AppendCriteria( "playerclass", "muted" );
+	}
+	else if ( disguiseIndex != -1 )
 	{
 		criteriaSet.AppendCriteria( "playerclass", criteriaSet.GetValue(disguiseIndex) );
 	}
