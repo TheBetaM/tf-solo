@@ -1097,7 +1097,6 @@ maps_config
 		}
 		koth_moonshine_event
 		{
-			disabled 1
 			name "Moonshine"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_moonshine_event"
@@ -1213,7 +1212,6 @@ maps_config
 		}
 		koth_undergrove_event
 		{
-			disabled 1
 			name "Moldergrove"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_undergrove_event"
@@ -1705,7 +1703,6 @@ maps_config
 		}
 		pl_millstone_event
 		{
-			disabled 1
 			name "Hellstone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_millstone_event"
@@ -2297,7 +2294,6 @@ maps_config
 		
 		cp_cowerhouse
 		{
-			disabled 1
 			name "Cowerhouse"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_cowerhouse"

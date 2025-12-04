@@ -1,0 +1,1526 @@
+maps_config
+{
+	maps
+	{
+		arena_badlands
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1280 -2184 38"
+				}
+				cred2
+				{
+					pos "-196 -419 370"
+				}
+				cred3
+				{
+					pos "-1022 961 126"
+				}
+			}
+		}
+		arena_granary
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2016 1664 -381"
+				}
+				cred2
+				{
+					pos "-949 47 -231"
+				}
+				cred3
+				{
+					pos "-2853 -732 -377"
+				}
+			}
+		}
+		arena_lumberyard
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-3475 1000 55"
+				}
+				cred2
+				{
+					pos "-957 1324 186"
+				}
+				cred3
+				{
+					pos "-2915 1915 59"
+				}
+			}
+		}
+		arena_nucleus
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1590 288 -40"
+				}
+				cred2
+				{
+					pos "804 -897 398"
+				}
+				cred3
+				{
+					pos "0 777 568"
+				}
+			}
+		}
+		arena_ravine
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1577 1683 261"
+				}
+				cred2
+				{
+					pos "1438 513 304"
+				}
+				cred3
+				{
+					pos "1831 -136 -78"
+				}
+			}
+		}
+		arena_sawmill
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "632 2044 -82"
+				}
+				cred2
+				{
+					pos "-1433 -1755 -70"
+				}
+				cred3
+				{
+					pos "521 -97 372"
+				}
+			}
+		}
+		arena_well
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1188 1068 -464"
+				}
+				cred2
+				{
+					pos "-343 -865 -278"
+				}
+				cred3
+				{
+					pos "-2239 1154 -276"
+				}
+			}
+		}
+		cp_5gorge
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-5093 5548 -43"
+				}
+				cred2
+				{
+					pos "-4412 3125 76"
+				}
+				cred3
+				{
+					pos "-6010 2714 138"
+				}
+				cred4
+				{
+					pos "-6015 873 -43"
+				}
+				cred5
+				{
+					pos "-5774 -655 63"
+				}
+				cred6
+				{
+					pos "-7296 -1705 -107"
+				}
+				cred7
+				{
+					pos "-5385 -4916 -50"
+				}
+			}
+		}
+		cp_degrootkeep
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1045 2760 48"
+				}
+				cred2
+				{
+					pos "-1595 2048 -110"
+				}
+				cred3
+				{
+					pos "-544 1620 250"
+				}
+			}
+		}
+		cp_gravelpit
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2244 3970 -118"
+				}
+				cred2
+				{
+					pos "777 592 -160"
+				}
+				cred3
+				{
+					pos "-1280 2431 -548"
+				}
+				cred4
+				{
+					pos "-2154 1358 -462"
+				}
+				cred5
+				{
+					pos "-1367 690 -334"
+				}
+			}
+		}
+		cp_well
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-196 3906 -74"
+				}
+				cred2
+				{
+					pos "0 1875 -846"
+				}
+				cred3
+				{
+					pos "1107 0 -272"
+				}
+				cred4
+				{
+					pos "-857 -2869 -264"
+				}
+				cred5
+				{
+					pos "1010 -5506 -468"
+				}
+				cred6
+				{
+					pos "-986 -1349 -468"
+				}
+				cred7
+				{
+					pos "-426 2490 -274"
+				}
+			}
+		}
+		cp_badlands
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "769 4300 -16"
+				}
+				cred2
+				{
+					pos "915 2496 296"
+				}
+				cred3
+				{
+					pos "852 728 238"
+				}
+				cred4
+				{
+					pos "688 -420 138"
+				}
+				cred5
+				{
+					pos "-103 -1744 230"
+				}
+				cred6
+				{
+					pos "-2476 -2968 46"
+				}
+				cred7
+				{
+					pos "-986 -3010 42"
+				}
+			}
+		}
+		cp_dustbowl
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "51 2895 -214"
+				}
+				cred2
+				{
+					pos "2663 1261 54"
+				}
+				cred3
+				{
+					pos "224 2440 -58"
+				}
+				cred4
+				{
+					pos "1561 -450 -144"
+				}
+				cred5
+				{
+					pos "1203 -2124 -90"
+				}
+				cred6
+				{
+					pos "195 -1574 104"
+				}
+				cred7
+				{
+					pos "-2163 723 -26"
+				}
+				cred8
+				{
+					pos "-408 -568 156"
+				}
+				cred9
+				{
+					pos "1198 391 172"
+				}
+			}
+		}
+		cp_foundry
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "876 4966 296"
+				}
+				cred2
+				{
+					pos "-1091 4409 340"
+				}
+				cred3
+				{
+					pos "201 2046 362"
+				}
+				cred4
+				{
+					pos "-548 -161 220"
+				}
+				cred5
+				{
+					pos "-1335 -3020 282"
+				}
+				cred6
+				{
+					pos "-780 -755 -64"
+				}
+				cred7
+				{
+					pos "329 -4942 50"
+				}
+			}
+		}
+		cp_gorge
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-5488 818 150"
+				}
+				cred2
+				{
+					pos "-5126 1973 334"
+				}
+				cred3
+				{
+					pos "-4412 3147 96"
+				}
+				cred4
+				{
+					pos "-5977 7079 -52"
+				}
+				cred5
+				{
+					pos "-6981 4374 -134"
+				}
+			}
+		}
+		cp_granary
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1566 6234 -370"
+				}
+				cred2
+				{
+					pos "-2236 3627 -176"
+				}
+				cred3
+				{
+					pos "-251 2740 -366"
+				}
+				cred4
+				{
+					pos "-941 213 -222"
+				}
+				cred5
+				{
+					pos "-913 -1874 -162"
+				}
+				cred6
+				{
+					pos "-469 -5302 -370"
+				}
+				cred7
+				{
+					pos "-928 -2812 -404"
+				}
+			}
+		}
+		cp_mercenarypark
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1244 -966 -110"
+				}
+				cred2
+				{
+					pos "-4618 -1367 190"
+				}
+				cred3
+				{
+					pos "-5973 -1162 264"
+				}
+				cred4
+				{
+					pos "-7993 -1251 190"
+				}
+				cred5
+				{
+					pos "-9800 -2085 -134"
+				}
+			}
+		}
+		cp_powerhouse
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1004 217 1500"
+				}
+				cred2
+				{
+					pos "912 -3139 1632"
+				}
+				cred3
+				{
+					pos "0 -3131 1064"
+				}
+				cred4
+				{
+					pos "-834 -2058 1520"
+				}
+				cred5
+				{
+					pos "-1055 -1832 1360"
+				}
+			}
+		}
+		ctf_2fort
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1152 -2960 308"
+				}
+				cred2
+				{
+					pos "987 -1602 -148"
+				}
+				cred3
+				{
+					pos "772 2233 134"
+				}
+				cred4
+				{
+					pos "19 2988 -154"
+				}
+				cred5
+				{
+					pos "0 0 -250"
+				}
+			}
+		}
+		ctf_doublecross
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-736 -1348 360"
+				}
+				cred2
+				{
+					pos "-1705 -1184 -204"
+				}
+				cred3
+				{
+					pos "597 1444 -164"
+				}
+				cred4
+				{
+					pos "2282 1537 -212"
+				}
+				cred5
+				{
+					pos "-891 437 64"
+				}
+			}
+		}
+		ctf_sawmill
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "638 2039 -74"
+				}
+				cred2
+				{
+					pos "2659 -962 -38"
+				}
+				cred3
+				{
+					pos "-115 -641 122"
+				}
+				cred4
+				{
+					pos "208 1462 -280"
+				}
+				cred5
+				{
+					pos "1145 -1538 -70"
+				}
+			}
+		}
+		ctf_well
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "0 -4636 -196"
+				}
+				cred2
+				{
+					pos "598 -1805 -264"
+				}
+				cred3
+				{
+					pos "0 0 -220"
+				}
+				cred4
+				{
+					pos "187 2604 -80"
+				}
+				cred5
+				{
+					pos "-847 1548 -460"
+				}
+			}
+		}
+		ctf_hellfire
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1266 -5760 -1992"
+				}
+				cred2
+				{
+					pos "-648 -2925 -1236"
+				}
+				cred3
+				{
+					pos "-207 -580 -1560"
+				}
+				cred4
+				{
+					pos "-575 2785 -1136"
+				}
+				cred5
+				{
+					pos "1350 4936 -1414"
+				}
+			}
+		}
+		ctf_foundry
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1089 4404 337"
+				}
+				cred2
+				{
+					pos "-1175 -411 -42"
+				}
+				cred3
+				{
+					pos "909 -3294 110"
+				}
+				cred4
+				{
+					pos "-332 2602 241"
+				}
+				cred5
+				{
+					pos "326 -4931 42"
+				}
+			}
+		}
+		ctf_gorge
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-6013 2889 -108"
+				}
+				cred2
+				{
+					pos "-5494 1534 138"
+				}
+				cred3
+				{
+					pos "-4733 4335 354"
+				}
+				cred4
+				{
+					pos "-5140 -1198 80"
+				}
+				cred5
+				{
+					pos "-5986 -2855 350"
+				}
+			}
+		}
+		ctf_thundermountain
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2012 -2521 231"
+				}
+				cred2
+				{
+					pos "-2958 -1086 752"
+				}
+				cred3
+				{
+					pos "-3521 1184 494"
+				}
+				cred4
+				{
+					pos "-4538 2096 500"
+				}
+				cred5
+				{
+					pos "-4701 3282 109"
+				}
+			}
+		}
+		koth_badlands
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-192 -416 379"
+				}
+				cred2
+				{
+					pos "50 1740 283"
+				}
+				cred3
+				{
+					pos "-854 -724 226"
+				}
+				cred4
+				{
+					pos "-681 1316 113"
+				}
+				cred5
+				{
+					pos "978 -188 345"
+				}
+			}
+		}
+		koth_nucleus
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "0 798 529"
+				}
+				cred2
+				{
+					pos "-1857 640 -37"
+				}
+				cred3
+				{
+					pos "575 1595 -46"
+				}
+				cred4
+				{
+					pos "-808 -907 399"
+				}
+				cred5
+				{
+					pos "-1863 -861 152"
+				}
+			}
+		}
+		koth_sawmill
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "635 2034 -80"
+				}
+				cred2
+				{
+					pos "1362 310 354"
+				}
+				cred3
+				{
+					pos "221 -687 58"
+				}
+				cred4
+				{
+					pos "722 -2025 214"
+				}
+				cred5
+				{
+					pos "505 -99 382"
+				}
+			}
+		}
+		koth_viaduct
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1366 2040 92"
+				}
+				cred2
+				{
+					pos "-1713 854 256"
+				}
+				cred3
+				{
+					pos "-1499 -1754 92"
+				}
+				cred4
+				{
+					pos "-1879 -2952 100"
+				}
+				cred5
+				{
+					pos "-2413 -285 460"
+				}
+			}
+		}
+		koth_harvest_event
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1046 -904 154"
+				}
+				cred2
+				{
+					pos "1240 200 268"
+				}
+				cred3
+				{
+					pos "924 1652 292"
+				}
+				cred4
+				{
+					pos "-716 -1341 76"
+				}
+				cred5
+				{
+					pos "-1558 -304 123"
+				}
+			}
+		}
+		koth_viaduct_event
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2077 -2631 63"
+				}
+				cred2
+				{
+					pos "-2013 850 270"
+				}
+				cred3
+				{
+					pos "3063 -502 -11484"
+				}
+				cred4
+				{
+					pos "2269 -3484 -11424"
+				}
+				cred5
+				{
+					pos "1090 -2699 -11541"
+				}
+			}
+		}
+		koth_lakeside_event
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "0 -1056 358"
+				}
+				cred2
+				{
+					pos "-321 -128 416"
+				}
+				cred3
+				{
+					pos "2317 259 -60"
+				}
+				cred4
+				{
+					pos "-9 -1702 108"
+				}
+				cred5
+				{
+					pos "-1732 -702 -68"
+				}
+			}
+		}
+		pass_brickyard
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-9104 6273 1068"
+				}
+				cred2
+				{
+					pos "-10940 3973 738"
+				}
+				cred3
+				{
+					pos "-5047 5576 638"
+				}
+				cred4
+				{
+					pos "-12196 6343 886"
+				}
+				cred5
+				{
+					pos "-6546 5306 732"
+				}
+			}
+		}
+		pass_district
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-8480 7380 188"
+				}
+				cred2
+				{
+					pos "-6948 9740 168"
+				}
+				cred3
+				{
+					pos "-8972 9988 368"
+				}
+				cred4
+				{
+					pos "-9411 3053 380"
+				}
+				cred5
+				{
+					pos "-7204 3246 364"
+				}
+			}
+		}
+		pass_timbertown
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-13218 8579 1004"
+				}
+				cred2
+				{
+					pos "-10671 7096 646"
+				}
+				cred3
+				{
+					pos "-7596 8771 866"
+				}
+				cred4
+				{
+					pos "-7219 7264 1042"
+				}
+				cred5
+				{
+					pos "-5058 7085 1022"
+				}
+			}
+		}
+		pl_badwater
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-714 -2624 424"
+				}
+				cred2
+				{
+					pos "-2067 2557 308"
+				}
+				cred3
+				{
+					pos "722 1721 292"
+				}
+				cred4
+				{
+					pos "328 484 160"
+				}
+				cred5
+				{
+					pos "-1970 385 56"
+				}
+			}
+		}
+		pl_barnblitz
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "3314 -960 46"
+				}
+				cred2
+				{
+					pos "2390 -2580 82"
+				}
+				cred3
+				{
+					pos "-87 -2797 -52"
+				}
+				cred4
+				{
+					pos "1198 -191 -184"
+				}
+				cred5
+				{
+					pos "274 849 -78"
+				}
+			}
+		}
+		pl_goldrush
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2368 1626 104"
+				}
+				cred2
+				{
+					pos "-2509 -2115 286"
+				}
+				cred3
+				{
+					pos "-4422 -2426 232"
+				}
+				cred4
+				{
+					pos "-6783 -1380 288"
+				}
+				cred5
+				{
+					pos "-7058 -837 282"
+				}
+				cred6
+				{
+					pos "-8207 1510 46"
+				}
+				cred7
+				{
+					pos "-6140 2793 238"
+				}
+				cred8
+				{
+					pos "-5755 -1024 300"
+				}
+				cred9
+				{
+					pos "-5014 581 290"
+				}
+			}
+		}
+		pl_thundermountain
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1364 -800 480"
+				}
+				cred2
+				{
+					pos "-3988 -1420 172"
+				}
+				cred3
+				{
+					pos "-2173 -330 680"
+				}
+				cred4
+				{
+					pos "-2870 3331 756"
+				}
+				cred5
+				{
+					pos "-907 2710 312"
+				}
+				cred6
+				{
+					pos "-144 2461 884"
+				}
+				cred7
+				{
+					pos "4153 1343 372"
+				}
+				cred8
+				{
+					pos "3818 4724 492"
+				}
+				cred9
+				{
+					pos "4679 2554 276"
+				}
+			}
+		}
+		pl_upward
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1683 -2515 -8"
+				}
+				cred2
+				{
+					pos "1288 -336 298"
+				}
+				cred3
+				{
+					pos "2054 1559 400"
+				}
+				cred4
+				{
+					pos "-782 855 194"
+				}
+				cred5
+				{
+					pos "647 -1075 402"
+				}
+			}
+		}
+		plr_hightower
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "7652 7584 102"
+				}
+				cred2
+				{
+					pos "7817 8705 236"
+				}
+				cred3
+				{
+					pos "5337 6901 36"
+				}
+			}
+		}
+		plr_hightower_event
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "8688 7586 120"
+				}
+				cred2
+				{
+					pos "6244 6084 -232"
+				}
+				cred3
+				{
+					pos "8322 8821 -204"
+				}
+				cred4
+				{
+					pos "-4593 -230 -8144"
+				}
+				cred5
+				{
+					pos "-3211 1208 -8352"
+				}
+			}
+		}
+		plr_pipeline
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1305 -1280 308"
+				}
+				cred2
+				{
+					pos "-948 -3144 302"
+				}
+				cred3
+				{
+					pos "757 -3788 234"
+				}
+				cred4
+				{
+					pos "1793 1408 368"
+				}
+				cred5
+				{
+					pos "-417 2042 366"
+				}
+				cred6
+				{
+					pos "951 2949 492"
+				}
+				cred7
+				{
+					pos "1137 7265 -260"
+				}
+				cred8
+				{
+					pos "-86 8771 42"
+				}
+				cred9
+				{
+					pos "786 5502 -210"
+				}
+			}
+		}
+		sd_doomsday
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1150 2172 -144"
+				}
+				cred2
+				{
+					pos "-1979 365 320"
+				}
+				cred3
+				{
+					pos "194 2937 92"
+				}
+			}
+		}
+		sd_doomsday_event
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1528 4394 184"
+				}
+				cred2
+				{
+					pos "-1082 186 316"
+				}
+				cred3
+				{
+					pos "-756 3240 200"
+				}
+			}
+		}
+		tc_hydro
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1396 2400 492"
+				}
+				cred2
+				{
+					pos "-2117 2215 200"
+				}
+				cred3
+				{
+					pos "-2137 168 438"
+				}
+				cred4
+				{
+					pos "-2235 -1684 338"
+				}
+				cred5
+				{
+					pos "-4956 -2289 78"
+				}
+				cred6
+				{
+					pos "710 -2185 18"
+				}
+				cred7
+				{
+					pos "4263 2755 18"
+				}
+				cred8
+				{
+					pos "4768 1858 430"
+				}
+				cred9
+				{
+					pos "-3165 -1924 306"
+				}
+				cred10
+				{
+					pos "-2106 -1108 528"
+				}
+				cred11
+				{
+					pos "1375 371 488"
+				}
+				cred12
+				{
+					pos "2400 -970 334"
+				}
+			}
+		}
+		mvm_bigrock
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1289 1084 326"
+				}
+				cred2
+				{
+					pos "1324 636 284"
+				}
+				cred3
+				{
+					pos "300 4195 528"
+				}
+				cred4
+				{
+					pos "685 -1406 188"
+				}
+				cred5
+				{
+					pos "-1595 -777 624"
+				}
+			}
+		}
+		mvm_coaltown
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-639 2672 354"
+				}
+				cred2
+				{
+					pos "-1310 198 620"
+				}
+				cred3
+				{
+					pos "1288 -2324 520"
+				}
+				cred4
+				{
+					pos "366 -840 772"
+				}
+				cred5
+				{
+					pos "99 172 468"
+				}
+			}
+		}
+		mvm_decoy
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "646 865 626"
+				}
+				cred2
+				{
+					pos "619 1843 416"
+				}
+				cred3
+				{
+					pos "-1246 -686 164"
+				}
+				cred4
+				{
+					pos "1216 -1408 590"
+				}
+				cred5
+				{
+					pos "149 -393 390"
+				}
+			}
+		}
+		mvm_ghost_town
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1010 -1721 681"
+				}
+				cred2
+				{
+					pos "-371 -839 781"
+				}
+				cred3
+				{
+					pos "888 2446 321"
+				}
+				cred4
+				{
+					pos "1623 -312 778"
+				}
+				cred5
+				{
+					pos "1279 -2182 748"
+				}
+			}
+		}
+		mvm_mannhattan
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "598 -766 -182"
+				}
+				cred2
+				{
+					pos "-833 997 -260"
+				}
+				cred3
+				{
+					pos "-81 -1030 139"
+				}
+				cred4
+				{
+					pos "832 -3209 -185"
+				}
+				cred5
+				{
+					pos "-1281 -1631 81"
+				}
+			}
+		}
+		mvm_mannworks
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1150 -566 564"
+				}
+				cred2
+				{
+					pos "-508 2 100"
+				}
+				cred3
+				{
+					pos "818 -2244 504"
+				}
+				cred4
+				{
+					pos "-1320 -1104 304"
+				}
+				cred5
+				{
+					pos "-823 840 432"
+				}
+			}
+		}
+		mvm_rottenburg
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "634 2006 58"
+				}
+				cred2
+				{
+					pos "-365 3308 -80"
+				}
+				cred3
+				{
+					pos "1676 2182 -380"
+				}
+				cred4
+				{
+					pos "2217 -1130 -464"
+				}
+				cred5
+				{
+					pos "-2104 2106 -88"
+				}
+			}
+		}
+		rd_asteroid
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "690 -819 -868"
+				}
+				cred2
+				{
+					pos "-234 -4055 -536"
+				}
+				cred3
+				{
+					pos "1006 1364 -312"
+				}
+				cred4
+				{
+					pos "-1313 -2616 -282"
+				}
+				cred5
+				{
+					pos "1318 2738 -716"
+				}
+			}
+		}
+		pl_cactuscanyon
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "2279 10661 -1511"
+				}
+				cred2
+				{
+					pos "-203 12473 -1505"
+				}
+				cred3
+				{
+					pos "-1485 11304 -1231"
+				}
+				cred4
+				{
+					pos "-398 9767 -1093"
+				}
+				cred5
+				{
+					pos "-281 11835 -1276"
+				}
+				cred6
+				{
+					pos "-1095 -7769 -2012"
+				}
+				cred7
+				{
+					pos "-211 -7059 -2058"
+				}
+				cred8
+				{
+					pos "-3921 -7217 -2064"
+				}
+				cred9
+				{
+					pos "-467 -7505 -1871"
+				}
+				cred10
+				{
+					pos "-1529 -9045 -2088"
+				}
+			}
+		}
+	}
+}
