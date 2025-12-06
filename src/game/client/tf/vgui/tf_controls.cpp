@@ -646,6 +646,7 @@ void CTFFooter::ClearButtons( void )
 
 #define OPTIONS_DIR "cfg"
 #define DEFAULT_OPTIONS_FILE OPTIONS_DIR "/user_default.scr"
+#define DEFAULT_MOD_OPTIONS_FILE OPTIONS_DIR "/user_default_tfsolo.scr"
 #define OPTIONS_FILE OPTIONS_DIR "/user.scr"
 
 //-----------------------------------------------------------------------------
@@ -670,6 +671,7 @@ CTFAdvancedOptionsDialog::CTFAdvancedOptionsDialog(vgui::Panel *parent) : BaseCl
 	m_pToolTip->SetTooltipDelay( 0 );
 
 	m_pDescription = new CInfoDescription();
+	m_pDescription->InitFromFile( DEFAULT_MOD_OPTIONS_FILE );
 	m_pDescription->InitFromFile( DEFAULT_OPTIONS_FILE );
 	m_pDescription->InitFromFile( OPTIONS_FILE, false );
 	m_pDescription->TransferCurrentValues( NULL );
@@ -755,6 +757,12 @@ void CTFAdvancedOptionsDialog::OnCommand( const char *command )
 	else if ( !stricmp( command, "Close" ) )
 	{
 		OnClose();
+		return;
+	}
+	else if ( !stricmp( command, "OpenOptionsDialog" ) )
+	{
+		OnClose();
+		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand( "OpenOptionsDialog" );
 		return;
 	}
 
