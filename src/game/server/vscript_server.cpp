@@ -185,11 +185,13 @@ void CScriptConvarAccessor::SetValue( const char *cvar, ScriptVariant_t value )
 	if ( !cvar || !*cvar )
 		return;
 
+	/* Not needed for local hosted servers - Cvars can be changed anyway with SendToConsole
 	if ( !IsConVarOnAllowList( cvar ) )
 	{
 		DevMsg( "Convar %s was not in " VSCRIPT_CONVAR_ALLOWLIST_NAME "\n", cvar );
 		return;
 	}
+	*/
 
 	ConVarRef cref( cvar );
 	if ( cref.IsValid() && !cref.IsFlagSet( FCVAR_SCRIPT_NONO ) )
@@ -240,8 +242,8 @@ void CScriptConvarAccessor::LevelInitPreEntity()
 		}
 	}
 	
-	if ( !bLoaded )
-		Warning( "Error loading " VSCRIPT_CONVAR_ALLOWLIST_NAME "\n" );
+	//if ( !bLoaded )
+	//	Warning( "Error loading " VSCRIPT_CONVAR_ALLOWLIST_NAME "\n" );
 	kv->deleteThis();
 }
 
