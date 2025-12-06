@@ -11,7 +11,9 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	{
 		// Enable re-deploy
 		Convars.SetValue("tf_parachute_deploy_toggle_allowed", 1)
-		// Revert 50% air control decrease
-		Convars.SetValue("tf_parachute_aircontrol", 5.0)
+		// Revert 50% air control decrease / original stats
+		//Convars.SetValue("tf_parachute_aircontrol", 5.0)
+		Convars.SetValue("tf_parachute_maxspeed_xy", 400)
+		Convars.SetValue("tf_parachute_maxspeed_onfire_z", 10)
 	}
 })

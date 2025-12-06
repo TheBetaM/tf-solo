@@ -119,7 +119,7 @@ GetDamageDone(), GetCrits(), GetPoints()
 - B.A.S.E. Jumper  
 -- Reverted to its original functionality:  
 -- Restored re-deploy in mid-air  
--- Restored air control to before the 50% decrease   
+-- Restored air control  
   
 - Rainblower  
 -- Removed Pyrovision requirement  
