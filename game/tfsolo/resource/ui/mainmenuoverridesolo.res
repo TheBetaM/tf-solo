@@ -2438,17 +2438,17 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"SettingsButtonSDK"
-		"xpos"			"c-0+19"//"c-34+273"
+		"xpos"			"c-0+25"
 		"ypos"			"437"
 		"zpos"			"4"
-		"wide"			"25"
-		"tall"			"25"
+		"wide"			"100"
+		"tall"			"26"
 		"autoResize"	"0"
 		"pinCorner"		"3"
 		"visible"		"1"
 		"enabled"		"1"
 		"tabPosition"	"0"
-		"labelText"		""
+		"labelText"		"#GameUI_Options"
 		"font"			"HudFontSmallBold"
 		"textAlignment"	"west"
 		"textinsetx"	"25"
@@ -2458,12 +2458,16 @@
 		"default"		"1"
 		"Command"		"opentf2options"//"OpenOptionsDialog"
 
-		"navUp"			"TF2SettingsButtonSDK"
-		"navLeft"		"TF2SettingsButtonSDK"
-		"navRight"		"TF2SettingsButtonSDK"
+		"navUp"			"TFSOLO_MainMenu_ScenariosButton"
+		"navLeft"		"TFSOLO_CharacterSetupButton"
+		"navRight"		"TFSOLO_CharacterSetupButton"
+		"navDown"		"TFSOLO_MainMenu_ScenariosButton"
 
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
+		"proportionaltoparent"	"1"
+			
+		"paintbackground"	"1"
 		
 		"image_drawcolor"	"235 226 202 255"
 		"SubImage"
@@ -3163,9 +3167,9 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"TFSOLO_MainMenu_CampaignsButton"
-		"xpos"			"c-125"
-		"ypos"			"rs1-150"
-		"wide"			"100"
+		"xpos"			"c-175"
+		"ypos"			"rs1-100"
+		"wide"			"110"
 		"tall"			"26"
 		"autoResize"	"0"
 		"pinCorner"		"3"
@@ -3175,7 +3179,7 @@
 		"textinsetx"	"25"
 		"use_proportional_insets" "1"
 		"font"			"HudFontSmallBold"
-		"textAlignment"	"center"
+		"textAlignment"	"west"
 		"dulltext"		"0"
 		"brighttext"	"0"
 		"default"		"1"
@@ -3186,6 +3190,11 @@
 		"proportionaltoparent"	"1"
 			
 		"paintbackground"	"1"
+		
+		"navUp"			"TFSOLO_CharacterSetupButton"
+		"navLeft"		"TFSOLO_MainMenu_CustomButton"
+		"navRight"		"TFSOLO_MainMenu_ScenariosButton"
+		"navDown"		"TFSOLO_CharacterSetupButton"
 				
 		"image_drawcolor"	"235 226 202 255"
 		"SubImage"
@@ -3197,10 +3206,10 @@
 			"zpos"			"1"
 			"wide"			"14"
 			"tall"			"14"
-			"visible"		"0"
-			"enabled"		"0"
+			"visible"		"1"
+			"enabled"		"1"
 			"scaleImage"	"1"
-			"image"			"glyph_items"
+			"image"			"glyph_quest_icon"
 		}		
 	}
 	
@@ -3208,9 +3217,9 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"TFSOLO_MainMenu_ScenariosButton"
-		"xpos"			"c+25"
-		"ypos"			"rs1-150"
-		"wide"			"100"
+		"xpos"			"c-55"
+		"ypos"			"rs1-100"
+		"wide"			"110"
 		"tall"			"26"
 		"autoResize"	"0"
 		"pinCorner"		"3"
@@ -3220,7 +3229,7 @@
 		"textinsetx"	"25"
 		"use_proportional_insets" "1"
 		"font"			"HudFontSmallBold"
-		"textAlignment"	"center"
+		"textAlignment"	"west"
 		"dulltext"		"0"
 		"brighttext"	"0"
 		"default"		"1"
@@ -3231,6 +3240,11 @@
 		"proportionaltoparent"	"1"
 			
 		"paintbackground"	"1"
+		
+		"navUp"			"TFSOLO_CharacterSetupButton"
+		"navLeft"		"TFSOLO_MainMenu_CampaignsButton"
+		"navRight"		"TFSOLO_MainMenu_CustomButton"
+		"navDown"		"TFSOLO_CharacterSetupButton"
 				
 		"image_drawcolor"	"235 226 202 255"
 		"SubImage"
@@ -3242,10 +3256,10 @@
 			"zpos"			"1"
 			"wide"			"14"
 			"tall"			"14"
-			"visible"		"0"
-			"enabled"		"0"
+			"visible"		"1"
+			"enabled"		"1"
 			"scaleImage"	"1"
-			"image"			"glyph_items"
+			"image"			"glyph_practice"
 		}		
 	}
 	
@@ -3253,9 +3267,9 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"TFSOLO_MainMenu_CustomButton"
-		"xpos"			"c+25"
+		"xpos"			"c+65"
 		"ypos"			"rs1-100"
-		"wide"			"100"
+		"wide"			"110"
 		"tall"			"26"
 		"autoResize"	"0"
 		"pinCorner"		"3"
@@ -3265,7 +3279,7 @@
 		"textinsetx"	"25"
 		"use_proportional_insets" "1"
 		"font"			"HudFontSmallBold"
-		"textAlignment"	"center"
+		"textAlignment"	"west"
 		"dulltext"		"0"
 		"brighttext"	"0"
 		"default"		"1"
@@ -3276,6 +3290,11 @@
 		"proportionaltoparent"	"1"
 			
 		"paintbackground"	"1"
+		
+		"navUp"			"SettingsButtonSDK"
+		"navLeft"		"TFSOLO_MainMenu_ScenariosButton"
+		"navRight"		"TFSOLO_MainMenu_CampaignsButton"
+		"navDown"		"SettingsButtonSDK"
 				
 		"image_drawcolor"	"235 226 202 255"
 		"SubImage"
@@ -3287,19 +3306,19 @@
 			"zpos"			"1"
 			"wide"			"14"
 			"tall"			"14"
-			"visible"		"0"
-			"enabled"		"0"
+			"visible"		"1"
+			"enabled"		"1"
 			"scaleImage"	"1"
-			"image"			"glyph_items"
+			"image"			"glyph_multiplayer"
 		}		
 	}
 	
 	"TFSOLO_MainMenu_ItemsButton"
 	{
 		"ControlName"	"CExImageButton"
-		"fieldName"		"CharacterSetupButton"
-		"xpos"			"c-125"
-		"ypos"			"rs1-100"
+		"fieldName"		"TFSOLO_CharacterSetupButton"
+		"xpos"			"c-0-125"
+		"ypos"			"437"
 		"wide"			"100"
 		"tall"			"26"
 		"autoResize"	"0"
@@ -3319,6 +3338,11 @@
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
 		"proportionaltoparent"	"1"
+		
+		"navUp"			"TFSOLO_MainMenu_ScenariosButton"
+		"navLeft"		"SettingsButtonSDK"
+		"navRight"		"SettingsButtonSDK"
+		"navDown"		"TFSOLO_MainMenu_ScenariosButton"
 			
 		"paintbackground"	"1"
 				
