@@ -705,6 +705,8 @@ void CTFStatPanel::ShowStatPanel( int iClass, int iTeam, int iCurStatValue, TFSt
 {
 	bool bMVM = TFGameRules() && TFGameRules()->IsMannVsMachineMode();
 
+	return;
+
 	// If this is MvM mode and we're looking at the round end, dont show the stats
 	// panel because the PVEWinPanel will be up
 	if( bMVM && TFGameRules()->State_Get() == GR_STATE_TEAM_WIN )

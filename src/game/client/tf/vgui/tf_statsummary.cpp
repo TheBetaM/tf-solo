@@ -93,6 +93,7 @@ CUtlVector<CTFStatsSummaryPanel *> g_vecStatPanels;
 
 ConVar cl_loadingimage_override("cl_loadingimage_override", "", FCVAR_REPLICATED, "Override the loading screen image");
 ConVar cl_loadingimage_force("cl_loadingimage_force", "0", FCVAR_REPLICATED, "Force the loading screen image to be used for the whole loading");
+ConVar cl_loading_stats("cl_loading_stats", "0", FCVAR_ARCHIVE, "Show stats in the loading screen");
 
 void SetLoadingVisibilityRecursive( vgui::VPANEL parentPanel, const char* targetPanelName, int depth = 0 )
 {
@@ -579,9 +580,9 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 	{
 		m_pMainBackground->SetVisible( !bShowMapInfo );
 	}
-	m_pPlayerData->SetVisible( bIsMVM || !bShowMapInfo );
-	m_pNextTipButton->SetVisible( m_bInteractive && !bShowMapInfo );
-	m_pResetStatsButton->SetVisible( m_bInteractive && !bShowMapInfo );
+	m_pPlayerData->SetVisible( false );// bIsMVM || !bShowMapInfo );
+	m_pNextTipButton->SetVisible( false );// m_bInteractive && !bShowMapInfo );
+	m_pResetStatsButton->SetVisible( false );// m_bInteractive && !bShowMapInfo );
 
 	if ( m_pMapInfoPanel )
 	{
@@ -826,6 +827,7 @@ void CTFStatsSummaryPanel::UpdateLeaderboard()
 	}
 	else
 	{
+		/*
 		bVisible = Leaderboards_GetDuelWins( scores, false );
 		if ( bVisible && scores.Count() < kIdeallyNumVisible_DuelWins )
 		{
@@ -841,6 +843,7 @@ void CTFStatsSummaryPanel::UpdateLeaderboard()
 				pInfoBG->SetVisible( bVisible );
 			}
 		}
+		*/
 	}
 
 	const int kMaxVisible = m_bLoadingCommunityMap ? kMaxVisible_Supporters : kMaxVisible_DuelWins;
@@ -917,7 +920,7 @@ void CTFStatsSummaryPanel::UpdateDialog()
 {
 	UpdateMainBackground();
 
-	if ( g_bIsReplayRewinding || engine->IsLoadingDemo() || engine->IsPlayingDemo() || engine->IsSkippingPlayback() || cl_loadingimage_force.GetBool() )
+	if ( g_bIsReplayRewinding || engine->IsLoadingDemo() || engine->IsPlayingDemo() || engine->IsSkippingPlayback() || cl_loadingimage_force.GetBool() || !cl_loading_stats.GetBool() )
 	{
 		// hide all of the various panels for the other loadscreen modes
 		if ( IsPC() )

@@ -480,11 +480,14 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 			}
 			else
 			{
+				/*
 				wchar_t wzTipLabel[512]=L"";
 				const wchar_t *wzTip = g_TFTips.GetNextClassTip( iClass );
 				Assert( wzTip && wzTip[0] );
 				g_pVGuiLocalize->ConstructString_safe( wzTipLabel, g_pVGuiLocalize->Find( "#Tip_Fmt" ), 1, wzTip );
 				SetDialogVariable( "tip", wzTipLabel );
+				*/
+				SetDialogVariable( "tip", "" );
 			}
 			
 			m_flNextTipChangeTime = gpGlobals->curtime + 10.0f;

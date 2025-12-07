@@ -233,6 +233,8 @@ void CMvMWaveLossPanel::ShowPanel()
 				m_pCaptainCanteenHat->SetVisible( false );
 			}
 		}
+
+		m_pHintContainer->SetVisible( false );
 	}
 
 	/*waveheader
@@ -267,6 +269,9 @@ void CMvMWaveLossPanel::SetHintImage( vgui::ImagePanel *panel, int iClassUsed, b
 {
 	if ( !panel )
 		return;
+
+	panel->SetVisible( false );
+	return;
 
 	if ( bAllowCaptainCanteen && iClassUsed == TF_LAST_NORMAL_CLASS )
 	{

@@ -92,6 +92,7 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 	AddPage( m_pLoadoutPanel, "#Loadout");
 
 	// Stat summary
+	/*
 	CTFStatsSummaryPanel *pStatSummaryPanel = new CTFStatsSummaryPanel(this);
 	pStatSummaryPanel->SetupForEmbedded();
 	AddPage( pStatSummaryPanel, "#Stats");
@@ -101,6 +102,7 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 		// Ask for our embedded stat summary be updated immediately
 		pStatPanel->UpdateStatSummaryPanel();
 	}
+	*/
 
 	// Achievements
 	//AddPage(new CCharacterInfoSubAchievements(this), "#Achievements");

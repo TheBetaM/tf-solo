@@ -544,7 +544,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 
 		UpgradeItemInSlot( LOADOUT_POSITION_PRIMARY );
 
-		m_pTipPanel->SetVisible( true );
+		m_pTipPanel->SetVisible( false );
 		
 		if ( tf_mvm_tabs_discovered.GetInt() >= 3 )
 		{
@@ -2195,7 +2195,8 @@ void CHudUpgradePanel::OnCommand( const char *command )
 void CHudUpgradePanel::UpdateTip()
 {
 	int iClassUsed;
-	m_pTipPanel->SetDialogVariable( "tiptext", g_TFTips.GetRandomMvMTip( iClassUsed ) );
+	//m_pTipPanel->SetDialogVariable( "tiptext", g_TFTips.GetRandomMvMTip( iClassUsed ) );
+	m_pTipPanel->SetVisible( false );
 }
 
 
