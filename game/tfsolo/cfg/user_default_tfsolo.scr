@@ -39,5 +39,13 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "0" }
 	}
+	
+	"mod_reset_progress"
+	{
+		"#TFSOLO_ResetProgress_Button"
+		"#TFSOLO_ResetProgress_Desc"
+		{ BUTTON }
+		{ "resetmodprogress" }
+	}
 
 }

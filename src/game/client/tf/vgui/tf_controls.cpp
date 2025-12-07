@@ -32,6 +32,7 @@
 #include "hud_controlpointicons.h"
 #include "achievementmgr.h"
 #include "tf/tf_item_inventory.h"
+#include "tf_hud_mainmenuoverride.h"
 
 using namespace vgui;
 
@@ -763,6 +764,13 @@ void CTFAdvancedOptionsDialog::OnCommand( const char *command )
 	{
 		OnClose();
 		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand( "OpenOptionsDialog" );
+		return;
+	}
+	else if ( !stricmp( command, "resetmodprogress" ) )
+	{
+		OnClose();
+		CHudMainMenuOverride* pMMOverride = (CHudMainMenuOverride*)( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
+		pMMOverride->OnCommand( "resetmodprogress" );
 		return;
 	}
 
