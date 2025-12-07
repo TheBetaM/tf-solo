@@ -217,17 +217,17 @@ class CTFModCreditsDialog : public vgui::EditablePanel
 	DECLARE_CLASS_SIMPLE(CTFModCreditsDialog, vgui::EditablePanel);
 
 public:
-	CTFModCreditsDialog(vgui::Panel* parent);
+	CTFModCreditsDialog(vgui::Panel* parent, bool bEmbed);
 	~CTFModCreditsDialog();
 
 	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
 	virtual void	ApplySettings(KeyValues* pResourceData);
 
 	void	Deploy(void);
+	void	CreateControls();
 
 private:
 
-	void CreateControls();
 	void DestroyControls();
 
 	virtual void OnCommand(const char* command);
@@ -241,6 +241,7 @@ private:
 	vgui::PanelListPanel* m_pListPanel;
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+	bool m_bEmbedded;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");
@@ -401,17 +402,17 @@ class CTFAchievementsDialog : public vgui::EditablePanel
 	DECLARE_CLASS_SIMPLE(CTFAchievementsDialog, vgui::EditablePanel);
 
 public:
-	CTFAchievementsDialog(vgui::Panel* parent);
+	CTFAchievementsDialog(vgui::Panel* parent, bool bEmbed);
 	~CTFAchievementsDialog();
 
 	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
 	virtual void	ApplySettings(KeyValues* pResourceData);
 
 	void	Deploy(void);
+	void	CreateControls();
 
 private:
 
-	void CreateControls();
 	void DestroyControls();
 
 	virtual void OnCommand(const char* command);
@@ -425,6 +426,7 @@ private:
 	vgui::PanelListPanel* m_pListPanel;
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+	bool m_bEmbedded;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");

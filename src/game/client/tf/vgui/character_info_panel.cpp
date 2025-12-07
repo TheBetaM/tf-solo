@@ -106,6 +106,14 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 
 	// Achievements
 	//AddPage(new CCharacterInfoSubAchievements(this), "#Achievements");
+	m_pAchievementsPanel = new CTFAchievementsDialog( this, true );
+	m_pAchievementsPanel->AddActionSignalTarget( this );
+	AddPage( m_pAchievementsPanel, "#Achievements" );
+
+	// Mod Credits
+	m_pModCreditsPanel = new CTFModCreditsDialog( this, true );
+	m_pModCreditsPanel->AddActionSignalTarget( this );
+	AddPage( m_pModCreditsPanel, "#TFSOLO_ModCredits_Title" );
 
 	m_pToolTip = new CCharacterInfoToolTip( this );
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );
@@ -350,6 +358,23 @@ void CCharacterInfoPanel::OnCommand( const char *command )
 	}
 
 	BaseClass::OnCommand( command );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CCharacterInfoPanel::OnPageChanged()
+{
+	vgui::Panel* pPanel = GetActivePage();
+
+	if ( pPanel == m_pModCreditsPanel )
+	{
+		m_pModCreditsPanel->CreateControls();
+	}
+	else if ( pPanel == m_pAchievementsPanel )
+	{
+		m_pAchievementsPanel->CreateControls();
+	}
 }
 
 //-----------------------------------------------------------------------------

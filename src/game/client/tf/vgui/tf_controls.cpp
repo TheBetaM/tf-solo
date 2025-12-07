@@ -1364,7 +1364,7 @@ void CL_OpenTFModCreditsDialog(const CCommand& args)
 {
 	if ( g_pTFModCreditsDialog.Get() == NULL )
 	{
-		g_pTFModCreditsDialog = vgui::SETUP_PANEL( new CTFModCreditsDialog( NULL ) );
+		g_pTFModCreditsDialog = vgui::SETUP_PANEL( new CTFModCreditsDialog( NULL, false ) );
 	}
 
 	g_pTFModCreditsDialog->Deploy();
@@ -1382,7 +1382,7 @@ void CL_OpenTFAchievementsDialog(const CCommand& args)
 {
 	if ( g_pTFAchievementsDialog.Get() == NULL )
 	{
-		g_pTFAchievementsDialog = vgui::SETUP_PANEL( new CTFAchievementsDialog( NULL ) );
+		g_pTFAchievementsDialog = vgui::SETUP_PANEL( new CTFAchievementsDialog( NULL, false ) );
 	}
 
 	g_pTFAchievementsDialog->Deploy();
@@ -2567,8 +2567,10 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFModCreditsDialog::CTFModCreditsDialog(vgui::Panel* parent) : BaseClass(NULL, "TFModCreditsDialog")
+CTFModCreditsDialog::CTFModCreditsDialog(vgui::Panel* parent, bool bEmbed) : BaseClass(NULL, "TFModCreditsDialog")
 {
+	m_bEmbedded = bEmbed;
+
 	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
 	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
@@ -2623,7 +2625,14 @@ void CTFModCreditsDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings("resource/ui/TFModCreditsDialog.res");
+	if (m_bEmbedded)
+	{
+		LoadControlSettings("resource/ui/TFModCreditsDialog_Embedded.res");
+	}
+	else
+	{
+		LoadControlSettings("resource/ui/TFModCreditsDialog.res");
+	}
 	m_pListPanel->SetFirstColumnWidth(0);
 
 	CreateControls();
@@ -2898,28 +2907,8 @@ void CTFModCreditsDialog::CreateControls()
 //-----------------------------------------------------------------------------
 void CTFModCreditsDialog::DestroyControls()
 {
-	mpcontrol_t* p, * n;
-
-	p = m_pList;
-	while (p)
-	{
-		n = p->next;
-		//
-		if (p->pControl)
-		{
-			p->pControl->MarkForDeletion();
-			p->pControl = NULL;
-		}
-		if (p->pPrompt)
-		{
-			p->pPrompt->MarkForDeletion();
-			p->pPrompt = NULL;
-		}
-		delete p;
-		p = n;
-	}
-
 	m_pList = NULL;
+	m_pListPanel->DeleteAllItems();
 }
 
 //-----------------------------------------------------------------------------
@@ -4811,8 +4800,10 @@ void CTFCustomMatchMapDialog::Deploy(void)
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFAchievementsDialog::CTFAchievementsDialog(vgui::Panel* parent) : BaseClass(NULL, "TFAchievementsDialog")
+CTFAchievementsDialog::CTFAchievementsDialog(vgui::Panel* parent, bool bEmbed) : BaseClass(NULL, "TFAchievementsDialog")
 {
+	m_bEmbedded = bEmbed;
+
 	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
 	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
@@ -4849,7 +4840,14 @@ void CTFAchievementsDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings("resource/ui/TFAchievementsDialog.res");
+	if (m_bEmbedded)
+	{
+		LoadControlSettings("resource/ui/TFAchievementsDialog_Embedded.res");
+	}
+	else
+	{
+		LoadControlSettings("resource/ui/TFAchievementsDialog.res");
+	}
 	m_pListPanel->SetFirstColumnWidth(0);
 
 	CreateControls();
@@ -5049,28 +5047,8 @@ void CTFAchievementsDialog::CreateControls()
 //-----------------------------------------------------------------------------
 void CTFAchievementsDialog::DestroyControls()
 {
-	mpcontrol_t* p, * n;
-
-	p = m_pList;
-	while (p)
-	{
-		n = p->next;
-		//
-		if (p->pControl)
-		{
-			p->pControl->MarkForDeletion();
-			p->pControl = NULL;
-		}
-		if (p->pPrompt)
-		{
-			p->pPrompt->MarkForDeletion();
-			p->pPrompt = NULL;
-		}
-		delete p;
-		p = n;
-	}
-
 	m_pList = NULL;
+	m_pListPanel->DeleteAllItems();
 }
 
 //-----------------------------------------------------------------------------

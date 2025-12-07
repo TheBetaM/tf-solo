@@ -107,6 +107,7 @@ public:
 	void		 FireGameEvent( IGameEvent *event );
 
 	MESSAGE_FUNC_PARAMS( OnOpenArmoryDirect, "OpenArmoryDirect", data );
+	MESSAGE_FUNC( OnPageChanged, "PageChanged" );
 
 	//---------------------------------------
 	// IEconRootUI
@@ -154,6 +155,8 @@ private:
 	bool						m_bPreventClosure;
 	int							m_iClosePanel;
 	int							m_iDefaultTeam;
+	CTFAchievementsDialog		*m_pAchievementsPanel;
+	CTFModCreditsDialog			*m_pModCreditsPanel;
 
 	CUtlVector< vgui::VPanelHandle >	m_vecOnCloseListeners;
 

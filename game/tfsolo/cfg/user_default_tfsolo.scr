@@ -47,5 +47,13 @@ DESCRIPTION INFO_OPTIONS
 		{ BUTTON }
 		{ "resetmodprogress" }
 	}
+	
+	"tf_bot_sniper_lasersight"
+	{
+		"#TFSOLO_Setting_SniperLaser"
+		"#TFSOLO_Setting_SniperLaser_Desc"
+		{ BOOL }
+		{ "1" }
+	}
 
 }
