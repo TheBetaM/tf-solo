@@ -334,7 +334,7 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 	}
 
 	const float playerCurTime = player->m_nTickBase * TICK_INTERVAL;
-	const float playerFrameTime = TICK_INTERVAL;
+	const float playerFrameTime = engine->IsPaused() ? 0 : TICK_INTERVAL;
 
 	StartCommand( player, ucmd );
 
