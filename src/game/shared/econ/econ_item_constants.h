@@ -428,8 +428,8 @@ extern const char		*PchNameFromeEconItemOrigin( eEconItemOrigin eOrigin );
 
 // The Steam backend representation of a unique item index
 typedef uint64	itemid_t;
-typedef uint16	item_definition_index_t;
-typedef uint16	attrib_definition_index_t;
+typedef int32	item_definition_index_t;
+typedef int32	attrib_definition_index_t;
 typedef uint32	attrib_value_t;
 typedef uint32	operation_definition_index_t;
 typedef uint8	war_definition_index_t;

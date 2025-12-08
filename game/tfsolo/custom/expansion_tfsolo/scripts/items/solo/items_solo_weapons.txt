@@ -844,57 +844,57 @@
 	}
 	"items"
 	{
-		"20100"
+		"100001"
 		{
 			"name" "Solo Spineyard Tommygun"
 			"prefab" "weapon_spineyard_tommygun"
 		}
-		"20101"
+		"100002"
 		{
 			"name" "Solo Wallboots"
 			"prefab" "weapon_wallboots"
 		}
-		"20102"
+		"100003"
 		{
 			"name" "Solo Critee Cool"
 			"prefab" "weapon_critdrink"
 		}
-		"20103"
+		"100004"
 		{
 			"name" "Solo Rocket Center"
 			"prefab" "weapon_rocketlauncher_center"
 		}
-		"20104"
+		"100005"
 		{
 			"name" "Solo Rocket Trainer"
 			"prefab" "weapon_rocketlauncher_training"
 		}
-		"20105"
+		"100006"
 		{
 			"name" "Solo Stickybomb Trainer"
 			"prefab" "weapon_sticky_training"
 		}
-		"20106"
+		"100007"
 		{
 			"name" "Solo The Runaway Pride"
 			"prefab" "weapon_pickaxe_surrender"
 		}
-		"20107"
+		"100008"
 		{
 			"name" "Solo Barbell"
 			"prefab" "weapon_barbell"
 		}
-		"20108"
+		"100009"
 		{
 			"name" "Solo Hammer"
 			"prefab" "weapon_blacksmith_hammer"
 		}
-		"20109"
+		"100010"
 		{
 			"name" "Solo Backstabber"
 			"prefab" "weapon_backstabber"
 		}
-		"20110"
+		"100011"
 		{
 			"name" "Solo Unarmed"
 			"prefab" "weapon_unarmed"

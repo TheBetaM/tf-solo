@@ -618,7 +618,7 @@ void CTFStorePage2::UpdateFilteredItems()
 	else if ( unSubcategoryID == CEconStoreCategoryManager::k_CategoryID_New )
 	{
 		// Add all new items
-		const CUtlMap< uint16, econ_store_entry_t > &mapEntries = pStorePanel->GetPriceSheet()->GetEntries();
+		const CUtlMap< int32, econ_store_entry_t > &mapEntries = pStorePanel->GetPriceSheet()->GetEntries();
 		FOR_EACH_MAP_FAST( mapEntries, i )
 		{
 			const econ_store_entry_t *pCurEntry = &mapEntries[i];

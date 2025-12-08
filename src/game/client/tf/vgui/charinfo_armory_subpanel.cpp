@@ -464,7 +464,7 @@ void CArmoryPanel::OnCommand( const char *command )
 				bool CustomArmory = false;
 				auto kvSave = TFInventoryManager()->GetSaveData();
 				CUtlVector<int> ArmoryList;
-				if (tf_armory_custom.GetString() != "")
+				if (tf_armory_custom.GetString() && tf_armory_custom.GetString()[0])
 				{
 					CustomArmory = true;
 					auto key = m_armoryConfig->GetFirstSubKey();
@@ -520,7 +520,7 @@ void CArmoryPanel::ShowCustomList(const char* listname, KeyValues* kvItems)
 	bool CustomArmory = false;
 	auto kvSave = TFInventoryManager()->GetSaveData();
 	CUtlVector<int> ArmoryList;
-	if (tf_armory_custom.GetString() != "")
+	if (tf_armory_custom.GetString() && tf_armory_custom.GetString()[0])
 	{
 		CustomArmory = true;
 		auto key = m_armoryConfig->GetFirstSubKey();
@@ -663,7 +663,7 @@ void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 		bool CustomArmory = false;
 		auto kvSave = TFInventoryManager()->GetSaveData();
 		CUtlVector<int> ArmoryList;
-		if (tf_armory_custom.GetString() != "")
+		if (tf_armory_custom.GetString() && tf_armory_custom.GetString()[0])
 		{
 			CustomArmory = true;
 			auto key = m_armoryConfig->GetFirstSubKey();

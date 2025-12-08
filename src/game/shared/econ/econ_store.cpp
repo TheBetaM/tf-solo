@@ -335,7 +335,7 @@ void econ_store_entry_t::ValidatePrice( ECurrency eCurrency, item_price_t unPric
 //-----------------------------------------------------------------------------
 CEconStorePriceSheet::CEconStorePriceSheet()
 	: m_pKVRaw( NULL )
-	, m_mapEntries( DefLessFunc( uint16 ) )
+	, m_mapEntries( DefLessFunc( int32 ) )
 	, m_mapRentalPriceScales( DefLessFunc( const char * ) )
 	, m_RTimeVersionStamp( 0 )
 	, m_pStorePromotionFirstTimePurchaseItem( NULL )

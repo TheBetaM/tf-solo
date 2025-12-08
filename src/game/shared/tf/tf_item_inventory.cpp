@@ -50,7 +50,7 @@
 using namespace GCSDK;
 
 #define LOCAL_LOADOUT_FILE		"cfg/local_loadout.txt"
-#define LOCAL_LOADOUT_RESERVE   65536
+const itemid_t LOCAL_LOADOUT_RESERVE = ( (itemid_t) - INT_MAX );
 
 ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "0", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
 ConVar tf_disable_holiday_restrictions("tf_disable_holiday_restrictions", "1", FCVAR_REPLICATED, "Disable holiday restrictions on items.");
@@ -252,20 +252,20 @@ void CTFInventoryManager::PostInit( void )
 	ListenForGameEvent("solo_client_armory_unlocked");
 }
 
-CEconItemView* CTFInventoryManager::AddSoloItem(int id)
+CEconItemView* CTFInventoryManager::AddSoloItem( int id )
 {
 	CEconItemView* pItemView = new CEconItemView;
 	CEconItem* pItem = new CEconItem;
-	pItem->SetItemID(id);
+	pItem->SetItemID( id + LOCAL_LOADOUT_RESERVE );
 	pItem->m_unAccountID = 0;
 	pItem->m_unDefIndex = id;
 	pItem->m_unLevel = 1;
-	pItemView->Init(id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
-	pItemView->SetItemID(id);
+	pItemView->Init( id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false );
+	pItemView->SetItemID( id + LOCAL_LOADOUT_RESERVE );
 #if CLIENT_DLL
-	pItemView->SetNonSOEconItem(pItem);
+	pItemView->SetNonSOEconItem( pItem );
 #endif
-	m_pSoloLoadoutItems.AddToTail(pItemView);
+	m_pSoloLoadoutItems.AddToTail( pItemView );
 	return pItemView;
 }
 
@@ -367,14 +367,15 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 	if ( iItemID == INVALID_ITEM_ID )
 		return m_LocalInventory.ClearLoadoutSlot( iClass, iSlot, pszSubClass );
 
-	CEconItemView* pItem = m_LocalInventory.GetInventoryItemByItemID(iItemID);
-	if (iItemID < LOCAL_LOADOUT_RESERVE)
+	CEconItemView* pItem = m_LocalInventory.GetInventoryItemByItemID( iItemID );
+	if ( iItemID >= LOCAL_LOADOUT_RESERVE && iItemID != INVALID_ITEM_DEF_INDEX )
 	{
+		itemid_t remapItemID = iItemID - LOCAL_LOADOUT_RESERVE;
 		int count = TFInventoryManager()->GetSoloItemCount();
-		for (int i = 0; i < count; i++)
+		for ( int i = 0; i < count; i++ )
 		{
 			CEconItemView* pEItem = TFInventoryManager()->GetSoloItem(i);
-			if (pEItem && pEItem->GetItemDefIndex() == iItemID)
+			if ( pEItem && pEItem->GetItemDefIndex() == remapItemID )
 			{
 				pItem = pEItem;
 				break;
@@ -1330,7 +1331,7 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 					uItemId = ( bDefaultToGC && iPreset == 0 ) ? m_RealTFLoadoutItems[iClass][iSlot] : 0;
 				}
 
-				if ( uItemId >= LOCAL_LOADOUT_RESERVE && !TFInventoryManager()->CheckAllowItemEquip(iClass, iSlot) )
+				if ( uItemId < LOCAL_LOADOUT_RESERVE && !TFInventoryManager()->CheckAllowItemEquip( iClass, iSlot ) )
 				{
 					uItemId = 0;
 				}
@@ -1379,7 +1380,7 @@ void CTFPlayerInventory::SaveLocalLoadout( bool bReset, bool bDefaultToGC )
 					uItemId = 0;
 				}
 
-				if (uItemId >= LOCAL_LOADOUT_RESERVE && !TFInventoryManager()->CheckAllowItemEquip(0, iSlot))
+				if ( uItemId < LOCAL_LOADOUT_RESERVE && !TFInventoryManager()->CheckAllowItemEquip( 0, iSlot ) )
 				{
 					uItemId = 0;
 				}
@@ -1414,13 +1415,14 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 
 	// Unequip whatever was previously in the slot.
 	itemid_t ulPreviousItem = m_LoadoutItems[unClass][unSlot];
-	if (ulPreviousItem != 0 && ulPreviousItem < LOCAL_LOADOUT_RESERVE)
+	if (ulPreviousItem != 0 && ulPreviousItem >= LOCAL_LOADOUT_RESERVE && ulPreviousItem != INVALID_ITEM_DEF_INDEX)
 	{
+		itemid_t remapItemID = ulPreviousItem - LOCAL_LOADOUT_RESERVE;
 		int count = TFInventoryManager()->GetSoloItemCount();
 		for (int i = 0; i < count; i++)
 		{
 			CEconItemView* pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulPreviousItem)
+			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == remapItemID)
 			{
 				pItem->GetSOCData()->UnequipFromClass(unClass);
 			}
@@ -1435,14 +1437,15 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 	}
 
 	// Equip the new item and add it to our loadout.
-	if (ulItemID < LOCAL_LOADOUT_RESERVE)
+	if (ulItemID >= LOCAL_LOADOUT_RESERVE && ulItemID != INVALID_ITEM_DEF_INDEX)
 	{
+		itemid_t remapItemID = ulItemID - LOCAL_LOADOUT_RESERVE;
 		int count = TFInventoryManager()->GetSoloItemCount();
 		CEconItemView* pItem = NULL;
 		for (int i = 0; i < count; i++)
 		{
 			pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulItemID)
+			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == remapItemID)
 			{
 				pItem->GetSOCData()->Equip(unClass, unSlot);
 				break;
@@ -1450,8 +1453,8 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 		}
 		if (ulItemID != 0 && !pItem)
 		{
-			pItem = TFInventoryManager()->AddSoloItem(ulItemID);
-			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == ulItemID)
+			pItem = TFInventoryManager()->AddSoloItem(remapItemID);
+			if (pItem && pItem->GetSOCData() && pItem->GetItemDefIndex() == remapItemID)
 			{
 				pItem->GetSOCData()->Equip(unClass, unSlot);
 			}
@@ -1495,7 +1498,7 @@ void CTFPlayerInventory::EquipLocalSub(uint64 ulItemID, equipped_class_t unClass
 	// We will never get those messages, so we do everything locally.
 
 	// Equip the new item and add it to our loadout.
-	if (ulItemID < LOCAL_LOADOUT_RESERVE)
+	if (ulItemID >= LOCAL_LOADOUT_RESERVE && ulItemID != INVALID_ITEM_DEF_INDEX)
 	{
 		if (!m_LoadoutItemsSub.HasElement(pszSubClass))
 		{
@@ -2007,19 +2010,20 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot, cons
 				}
 			}
 
-			if ( itemID < LOCAL_LOADOUT_RESERVE )
+			if ( itemID >= LOCAL_LOADOUT_RESERVE && itemID != INVALID_ITEM_DEF_INDEX )
 			{
+				itemid_t remapItemID = itemID - LOCAL_LOADOUT_RESERVE;
 				int count = TFInventoryManager()->GetSoloItemCount();
-				for (int i = 0; i < count; i++)
+				for ( int i = 0; i < count; i++ )
 				{
 					CEconItemView* pItem = TFInventoryManager()->GetSoloItem(i);
-					if ( pItem && pItem->GetItemDefIndex() == itemID )
+					if ( pItem && pItem->GetItemDefIndex() == remapItemID )
 					{
 						if ( pItem && AreSlotsConsideredIdentical( pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot ( iClass ), iSlot ) )
 							return pItem;
 					}
 				}
-				return TFInventoryManager()->AddSoloItem( itemID );
+				return TFInventoryManager()->AddSoloItem( remapItemID );
 			}
 		}
 	}

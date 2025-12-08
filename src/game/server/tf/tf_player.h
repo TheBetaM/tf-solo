@@ -39,6 +39,7 @@ extern const float tf_afterburn_max_duration;
 extern void BotGenerateAndWearItem(CTFPlayer* pBot, const char* itemName);
 
 #define MAX_FIRE_WEAPON_SCENES 4
+const itemid_t TF_LOCAL_LOADOUT_RESERVE = ( (itemid_t) - INT_MAX );
 
 //=============================================================================
 //
@@ -623,13 +624,14 @@ public:
 	CEconItemView *GetEquippedItemForLoadoutSlot( int iLoadoutSlot ){ 
 		auto itemID = m_EquippedLoadoutItemIndices[iLoadoutSlot];
 		CEconItemView* pItem;
-		if (itemID < 65536)
+		if ( itemID >= TF_LOCAL_LOADOUT_RESERVE && itemID != INVALID_ITEM_DEF_INDEX )
 		{
+			itemid_t remapItemID = itemID - TF_LOCAL_LOADOUT_RESERVE;
 			int count = TFInventoryManager()->GetSoloItemCount();
-			for (int i = 0; i < count; i++)
+			for ( int i = 0; i < count; i++ )
 			{
 				pItem = TFInventoryManager()->GetSoloItem(i);
-				if (pItem && pItem->GetItemDefIndex() == itemID)
+				if ( pItem && pItem->GetItemDefIndex() == remapItemID )
 				{
 					return pItem;
 				}

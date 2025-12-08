@@ -506,7 +506,7 @@ public:
 
 	uint32 GetHashForAllItems() const { return m_unHashForAllItems; }
 
-	typedef CUtlMap<uint16, econ_store_entry_t> EconStoreEntryMap_t;
+	typedef CUtlMap<int32, econ_store_entry_t> EconStoreEntryMap_t;
 	EconStoreEntryMap_t &GetEntries() { return m_mapEntries; }
 	
 
