@@ -523,6 +523,10 @@ void ClientModeTFNormal::Init()
 	BaseClass::Init();
 
 	m_bPendingRichPresenceUpdate = true;
+
+	// Fixes player movement in maxplayers 1
+	ConVarRef dt_UsePartialChangeEnts( "dt_UsePartialChangeEnts" );
+	dt_UsePartialChangeEnts.SetValue( 0 );
 }
 
 //-----------------------------------------------------------------------------
