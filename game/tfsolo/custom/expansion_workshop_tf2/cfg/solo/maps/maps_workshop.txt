@@ -1007,20 +1007,6 @@ maps_config
 				vscript 1
 			}
 		}
-		workshop_3362948939
-		{
-			disabled 1
-			name "Gavle"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 2
-				hybrid 1
-				stages 2
-				theme_snow 1
-			}
-		}
 		workshop_3364324332
 		{
 			name "Fjord"

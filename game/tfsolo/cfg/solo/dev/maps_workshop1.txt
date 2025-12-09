@@ -3623,30 +3623,6 @@ maps_config
 				theme_autumn 1
 			}
 		}
-		workshop_3362948939
-		{
-			name "Gavle"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 2
-				hybrid 1
-				stages 2
-				theme_snow 1
-			}
-		}
-		workshop_3363695104
-		{
-			name "Matterhorn"
-			modename "#Gametype_EscortRace"
-			tags
-			{
-				plr 1
-				symm 1
-				theme_xmas 1
-			}
-		}
 		workshop_3364324332
 		{
 			name "Fjord"
@@ -7282,18 +7258,6 @@ maps_config
 				theme_indoor 1
 			}
 		}
-		workshop_3361314165
-		{
-			name "Winter Ridge"
-			modename "#Gametype_Arena"
-			tags
-			{
-				arena_pd 1
-				cp_count 1
-				symm 1
-				theme_snow 1
-			}
-		}
 		workshop_3362591018
 		{
 			name "Ether Estate"
@@ -7872,17 +7836,6 @@ maps_config
 				theme_xmas 1
 			}
 		}
-		workshop_3593391553
-		{
-			name "Nutcracker"
-			modename "#Gametype_PlayerDestruction"
-			tags
-			{
-				pd 1
-				symm 1
-				theme_xmas 1
-			}
-		}
 		workshop_3595239561
 		{
 			name "Burner"
@@ -7970,18 +7923,6 @@ maps_config
 			{
 				ctf 1
 				flag_count 2
-				symm 1
-				theme_snow 1
-			}
-		}
-		workshop_3603406052
-		{
-			name "Abbey"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 2
 				symm 1
 				theme_snow 1
 			}
