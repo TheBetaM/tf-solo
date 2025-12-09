@@ -1,0 +1,19 @@
+maps_config
+{
+	maps
+	{
+		workshop_3620522223
+		{
+			name "2Fort Classic Redux"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
+				workshop_cf 1
+			}
+		}
+	}
+}

@@ -4159,6 +4159,7 @@ enum CustomMatchMapCategory
 	MapCategory_Workshop,
 	MapCategory_Workshop_TF2,
 	MapCategory_Workshop_TF2GR,
+	MapCategory_Workshop_CF,
 
 	MapCategory_MAX,
 
@@ -4213,6 +4214,18 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
 	{
 		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Downloaded/Subscribed)", NULL);
+	}
+	else
+	{
+		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Not Installed)", NULL);
+	}
+	if ( SteamApps()->BIsAppInstalled( 3768450 ) )
+	{
+		m_pCategoryList->AddItem("Custom Fortress Workshop (Downloaded/Subscribed)", NULL);
+	}
+	else
+	{
+		m_pCategoryList->AddItem("Custom Fortress Workshop (Not Installed)", NULL);
 	}
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );
@@ -4589,7 +4602,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			}
 			case MapCategory_Workshop_TF2:
 			{
-				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") != 0 || tags->GetInt("workshop_tf2gr") != 0 )
+				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") != 0 || tags->GetInt("workshop_tf2gr") != 0 || tags->GetInt("workshop_cf") != 0 )
 				{
 					key = key->GetNextKey();
 					continue;
@@ -4599,6 +4612,15 @@ void CTFCustomMatchMapDialog::CreateControls()
 			case MapCategory_Workshop_TF2GR:
 			{
 				if ( !isWorkshop || tags->GetInt("workshop_tf2gr") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_Workshop_CF:
+			{
+				if ( !isWorkshop || tags->GetInt("workshop_cf") == 0 )
 				{
 					key = key->GetNextKey();
 					continue;
@@ -4618,7 +4640,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		}
 
 		const char* pszStateText = "*NEW*";
-		if ( saveMaps->FindKey( key->GetName() ) )
+		if ( saveMaps && saveMaps->FindKey( key->GetName() ) )
 		{
 			pszStateText = "CLEAR";
 			KeyValues* pickupsSave = saveMaps->FindKey( key->GetName() );

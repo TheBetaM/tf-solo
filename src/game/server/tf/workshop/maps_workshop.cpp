@@ -1287,6 +1287,7 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 
 	KeyValues* TF2_KV = GetAppWorkshopManifest( 440 );
 	KeyValues* TF2_GR_KV = GetAppWorkshopManifest( 3826520 );
+	KeyValues* CF_KV = GetAppWorkshopManifest( 3768450 );
 	if ( !TF2_KV )
 	{
 		TFWorkshopMsg( "TF2 workshop manifest not found\n" );
@@ -1368,6 +1369,53 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 			FileFindHandle_t hFind = NULL;
 			const char* pszSearch = CFmtStr( "%s%s/*.bsp", rootPath, itemID );
 			const char* pszRootFolder = CFmtStr( "%s%s/", rootPath, itemID );
+			char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
+			while ( szFileName )
+			{
+				// Map file found, let's add it to the map list
+				PublishedFileId_t fileID = V_atoui64( itemID );
+				m_vecLocalWorkshopMaps.AddToTail( (uint64)itemID );
+				if ( m_mapMaps.Find( fileID ) == m_mapMaps.InvalidIndex() )
+				{
+					CTFWorkshopMap* newMap = new CTFWorkshopMap( fileID, true );
+					newMap->m_strMapName = V_strdup( szFileName );
+					newMap->m_strCanonicalName = V_strdup( szFileName );
+					CanonicalNameForMap( fileID, szFileName, newMap->m_strCanonicalName );
+					newMap->m_strLocalFolder = V_strdup( pszRootFolder );
+					m_mapMaps.Insert( fileID, newMap );
+					cachefile->SetString( itemID, CFmtStr( "%s%s", pszRootFolder, szFileName ) );
+				}
+
+				mapCount++;
+				szFileName = g_pFullFileSystem->FindNext( hFind );
+			}
+
+			g_pFullFileSystem->FindClose( hFind );
+			key = key->GetNextKey();
+		}
+	}
+
+	// Custom Fortress
+	if ( CF_KV )
+	{
+		const char* rootPath = CF_KV->GetString( "ws" );
+
+		KeyValues* items = CF_KV->FindKey( "WorkshopItemsInstalled" );
+		if ( !items )
+		{
+			TFWorkshopMsg( "CF workshop manifest parse error\n" );
+			cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );
+			return;
+		}
+
+		KeyValues* key = items->GetFirstSubKey();
+		while ( key )
+		{
+			const char* itemID = key->GetName();
+
+			FileFindHandle_t hFind = NULL;
+			const char* pszSearch = CFmtStr( "%s%s/maps/*.bsp", rootPath, itemID );
+			const char* pszRootFolder = CFmtStr( "%s%s/maps/", rootPath, itemID );
 			char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
 			while ( szFileName )
 			{
