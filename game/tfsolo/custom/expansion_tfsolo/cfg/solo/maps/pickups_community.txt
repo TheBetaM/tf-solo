@@ -4241,5 +4241,158 @@ maps_config
 			}
 		}
 		
+		2koth_abbey
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1024 1280 -58"
+				}
+				cred2
+				{
+					pos "2062 353 485"
+				}
+				cred3
+				{
+					pos "3290 0 468"
+				}
+				cred4
+				{
+					pos "4509 822 583"
+				}
+				cred5
+				{
+					pos "713 -1092 223"
+				}
+			}
+		}
+		cppl_gavle
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "597 564 260"
+				}
+				cred2
+				{
+					pos "-1054 -2375 220"
+				}
+				cred3
+				{
+					pos "-1034 -1111 -114"
+				}
+				cred4
+				{
+					pos "-6405 -1124 256"
+				}
+				cred5
+				{
+					pos "-7144 -872 476"
+				}
+				cred6
+				{
+					pos "-7847 -280 312"
+				}
+			}
+		}
+		ctf_sidewinder
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "2532 -602 0"
+				}
+				cred2
+				{
+					pos "738 -190 296"
+				}
+				cred3
+				{
+					pos "-103 -150 -182"
+				}
+				cred4
+				{
+					pos "-1865 1258 -7"
+				}
+				cred5
+				{
+					pos "60 1901 125"
+				}
+			}
+		}
+		koth_winter_ridge
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "101 2258 -390"
+				}
+				cred2
+				{
+					pos "-2597 897 -276"
+				}
+				cred3
+				{
+					pos "-3023 -27 44"
+				}
+				cred4
+				{
+					pos "-389 -202 -228"
+				}
+				cred5
+				{
+					pos "-1846 -2062 -144"
+				}
+			}
+		}
+		pd_nutcracker
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-1243 -3811 204"
+				}
+				cred2
+				{
+					pos "-2089 -6296 464"
+				}
+				cred3
+				{
+					pos "-251 -6296 204"
+				}
+				cred4
+				{
+					pos "2189 -4807 490"
+				}
+				cred5
+				{
+					pos "-4083 -5082 436"
+				}
+			}
+		}
+		plr_matterhorn
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "0 -298 98"
+				}
+				cred2
+				{
+					pos "-159 2989 1040"
+				}
+				cred3
+				{
+					pos "1471 1144 300"
+				}
+			}
+		}
+		
 	}
 }

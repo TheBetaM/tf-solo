@@ -2373,18 +2373,23 @@ maps_config
 		{
 			name "Abbey"
 			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_2koth_abbey"
+			photosArt "maps/menu_photos_2koth_abbey"
 			tags
 			{
 				koth 1
 				cp_count 2
 				symm 1
 				theme_snow 1
+				vscript 1
 			}
 		}
 		cppl_gavle
 		{
 			name "Gavle"
 			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cppl_gavle"
+			photosArt "maps/menu_photos_cppl_gavle"
 			tags
 			{
 				cp 1
@@ -2392,12 +2397,15 @@ maps_config
 				hybrid 1
 				stages 2
 				theme_snow 1
+				vscript 1
 			}
 		}
-		ctF_sidewinder
+		ctf_sidewinder
 		{
 			name "Sidewinder"
 			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_sidewinder"
+			photosArt "maps/menu_photos_ctf_sidewinder"
 			tags
 			{
 				ctf 1
@@ -2409,10 +2417,12 @@ maps_config
 		koth_winter_ridge
 		{
 			name "Winter Ridge"
-			modename "#Gametype_Arena"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_winter_ridge"
+			photosArt "maps/menu_photos_koth_winter_ridge"
 			tags
 			{
-				arena_pd 1
+				koth 1
 				cp_count 1
 				symm 1
 				theme_snow 1
@@ -2420,20 +2430,24 @@ maps_config
 		}
 		pd_nutcracker
 		{
-			disabled 1
 			name "Nutcracker"
 			modename "#Gametype_PlayerDestruction"
+			thumbArt "maps/menu_thumb_pd_nutcracker"
+			photosArt "maps/menu_photos_pd_nutcracker"
 			tags
 			{
 				pd 1
 				symm 1
 				theme_xmas 1
+				vscript 1
 			}
 		}
 		plr_matterhorn
 		{
 			name "Matterhorn"
 			modename "#Gametype_EscortRace"
+			thumbArt "maps/menu_thumb_plr_matterhorn"
+			photosArt "maps/menu_photos_plr_matterhorn"
 			tags
 			{
 				plr 1

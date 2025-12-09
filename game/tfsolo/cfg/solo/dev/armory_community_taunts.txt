@@ -336,4 +336,16 @@ armory_config
 	{
 		Cost 100
 	}
+	"Taunt: Dead Mann's Drink"
+	{
+		Cost 100
+	}
+	"Taunt: The Critical Fail"
+	{
+		Cost 100
+	}
+	"Taunt: Chairholder"
+	{
+		Cost 100
+	}
 }

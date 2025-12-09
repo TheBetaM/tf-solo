@@ -6172,4 +6172,96 @@ armory_config
 	{
 		Cost 100
 	}
+	"Lazer Gazers"
+	{
+		Cost 100
+	}
+	"Snow Merc"
+	{
+		Cost 100
+	}
+	"The Old Days Devotion"
+	{
+		Cost 100
+	}
+	"Alpine Hawk"
+	{
+		Cost 100
+	}
+	"Alpine Apparel"
+	{
+		Cost 100
+	}
+	"Chill-Seeker"
+	{
+		Cost 100
+	}
+	"Puncher's Polar Puffer"
+	{
+		Cost 100
+	}
+	"Commonwealth Commander"
+	{
+		Cost 100
+	}
+	"Veteran's Visor"
+	{
+		Cost 100
+	}
+	"Deserter's Duster"
+	{
+		Cost 100
+	}
+	"Blizzard Bonnet"
+	{
+		Cost 100
+	}
+	"Festive Fleece"
+	{
+		Cost 100
+	}
+	"Air Head"
+	{
+		Cost 100
+	}
+	"Sydney Shearling"
+	{
+		Cost 100
+	}
+	"Epilogue Locks"
+	{
+		Cost 100
+	}
+	"Willis' Warmer"
+	{
+		Cost 100
+	}
+	"The Sole Providers"
+	{
+		Cost 100
+	}
+	"Scrooge McCrocket"
+	{
+		Cost 100
+	}
+	"Black Tie Affair"
+	{
+		Cost 100
+	}
+	"Aristocravat"
+	{
+		Cost 100
+	}
+	"Flatline Flatcap"
+	{
+		Cost 100
+	}
+	"Cardiologist's Cardigan"
+	{
+		Cost 100
+	}
+	"Scrub Stompers"
+	{
+		Cost 100
+	}
 }
