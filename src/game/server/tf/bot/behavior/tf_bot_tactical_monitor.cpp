@@ -205,33 +205,53 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 	}
 
 	auto activeWeapon = me->GetActiveTFWeapon();
-	if ( me->GetLocomotionInterface()->IsUsingLadder() && activeWeapon )
+	if ( activeWeapon )
 	{
-		if ( TFGameRules()->IsUsingGrapplingHook( me->GetTeamNumber() ) )
-		{
-			// Mannpower
-			if ( activeWeapon->GetSlot() == TF_WPN_TYPE_ITEM1 )
-			{
-				// todo
-			}
-		}
-		else if ( activeWeapon->GetSlot() == TF_WPN_TYPE_MELEE )
+		bool bIsHale = false;
+		if ( activeWeapon->GetSlot() == TF_WPN_TYPE_MELEE )
 		{
 			float flHealthMult = 1.0f;
 			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( activeWeapon, flHealthMult, mult_health_frompacks );
 			if ( flHealthMult <= 0.0f )
 			{
+				bIsHale = true;
 				// Versus Saxton Hale (Community) Hale - Do a Brave Jump
-				if ( !m_braveJumpTimer.HasStarted() || m_braveJumpTimer.IsElapsed() )
+				if ( !m_braveJumpTimer.HasStarted() )
 				{
-					m_braveJumpTimer.Start( 0.1f );
+					m_braveJumpTimer.Start( RandomFloat( 15.0f, 25.0f ) );
+					me->PressJumpButton();
+				}
+				else if ( m_braveJumpTimer.GetCountdownDuration() < 2.0f && m_braveJumpTimer.IsElapsed() )
+				{
+					m_braveJumpTimer.Start( RandomFloat( 5.0f, 15.0f ) );
+					me->PressJumpButton();
+				}
+				else if ( m_braveJumpTimer.IsElapsed() )
+				{
+					m_braveJumpTimer.Start( RandomFloat( 0.3f, 0.6f ) );
 					me->PressJumpButton();
 				}
 			}
-			else
+		}
+		if ( !bIsHale && me->GetLocomotionInterface()->IsUsingLadder() )
+		{
+			if (  TFGameRules()->IsUsingGrapplingHook( me->GetTeamNumber() ) )
 			{
-				// Versus Saxton Hale (Community) Mercs - Keep hitting the wall (ladder)
-				me->PressFireButton();
+				// Mannpower
+				if ( activeWeapon->GetSlot() == TF_WPN_TYPE_ITEM1 )
+				{
+					// todo
+				}
+			}
+			else if ( activeWeapon->GetSlot() == TF_WPN_TYPE_MELEE )
+			{
+				float flHealthMult = 1.0f;
+				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( activeWeapon, flHealthMult, mult_health_frompacks );
+				if ( flHealthMult > 0.0f )
+				{
+					// Versus Saxton Hale (Community) Mercs - Keep hitting the wall (ladder)
+					me->PressFireButton();
+				}
 			}
 		}
 	}

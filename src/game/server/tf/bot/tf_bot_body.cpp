@@ -49,5 +49,6 @@ float CTFBotBody::GetBodyScale( void )
 		return 1.0f;
 	}
 
-	return me->GetModelScale();
+	return 1.0f;
+	//return me->GetModelScale();
 }
