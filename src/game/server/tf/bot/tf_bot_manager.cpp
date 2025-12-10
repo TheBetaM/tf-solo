@@ -384,7 +384,16 @@ void CTFBotManager::MaintainBotQuota()
 
 		CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
 		if ( tf_bot_join_after_player.GetBool() && ( !pTFPlayer || pTFPlayer->IsPlayerClass( TF_CLASS_UNDEFINED ) ) )
-			return;
+		{
+			if ( TFGameRules()->IsInArenaMode() && pTFPlayer && ( pTFPlayer->GetTeamNumber() == TF_TEAM_BLUE || pTFPlayer->GetTeamNumber() == TF_TEAM_RED ) && pTFPlayer->GetDesiredPlayerClassIndex() > TF_CLASS_UNDEFINED )
+			{
+
+			}
+			else
+			{
+				return;
+			}
+		}
 	}
 
 	// We want to balance based on who's playing on game teams not necessary who's on team spectator, etc.
@@ -444,7 +453,7 @@ void CTFBotManager::MaintainBotQuota()
 	}
 
 	// wait for a player to join, if necessary
-	if ( tf_bot_join_after_player.GetBool() )
+	if ( tf_bot_join_after_player.GetBool() && !TFGameRules()->IsInArenaMode() )
 	{
 		if ( ( nNonTFBotsOnGameTeams == 0 ) && ( nSpectators == 0 ) )
 		{

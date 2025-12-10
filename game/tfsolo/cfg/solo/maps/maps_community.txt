@@ -2387,11 +2387,12 @@ maps_config
 		cppl_gavle
 		{
 			name "Gavle"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cppl_gavle"
 			photosArt "maps/menu_photos_cppl_gavle"
 			tags
 			{
+				ad 1
 				cp 1
 				cp_count 2
 				hybrid 1
@@ -2426,6 +2427,8 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_snow 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		pd_nutcracker
