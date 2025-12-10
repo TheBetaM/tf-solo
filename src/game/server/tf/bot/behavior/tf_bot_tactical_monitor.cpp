@@ -233,14 +233,17 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 				}
 			}
 		}
+
 		if ( !bIsHale && me->GetLocomotionInterface()->IsUsingLadder() )
 		{
-			if (  TFGameRules()->IsUsingGrapplingHook( me->GetTeamNumber() ) )
+			if ( TFGameRules()->IsUsingGrapplingHook( me->GetTeamNumber() ) )
 			{
-				// Mannpower
-				if ( activeWeapon->GetSlot() == TF_WPN_TYPE_ITEM1 )
+				// Mannpower Grappling Hooks
+				if ( me->IsUsingActionSlot() )
 				{
-					// todo
+					// Reached nav ladder, jump to get up
+					me->UseActionSlotItemReleased();
+					me->PressJumpButton();
 				}
 			}
 			else if ( activeWeapon->GetSlot() == TF_WPN_TYPE_MELEE )
@@ -254,6 +257,38 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 				}
 			}
 		}
+		else if ( TFGameRules()->IsUsingGrapplingHook( me->GetTeamNumber() ) )
+		{
+			// Mannpower Grappling Hooks
+			bool bAimingForLadder = false;
+			bool bLookingAtLadder = false;
+			if ( me->GetCurrentPath() && me->GetCurrentPath()->GetCurrentGoal() && me->GetCurrentPath()->GetCurrentGoal()->ladder )
+			{
+				auto ladder = me->GetCurrentPath()->GetCurrentGoal()->ladder;
+				bAimingForLadder = true;
+				Vector lookAtPos = ladder->m_top - 2.0f * ladder->GetNormal() + Vector( 0, 0, me->GetBodyInterface()->GetCrouchHullHeight() );
+				me->GetBodyInterface()->AimHeadTowards( lookAtPos, IBody::CRITICAL, 0.1f, NULL, "Aiming for ladder" );
+
+				if ( me->GetBodyInterface()->HasHeadAimedOnTarget() )
+				{
+					bLookingAtLadder = true;
+				}
+			}
+
+			if ( bAimingForLadder )
+			{
+				if ( !me->IsUsingActionSlot() && bLookingAtLadder )
+				{
+					me->UseActionSlotItemPressed();
+				}
+			}
+			else if ( me->IsUsingActionSlot() )
+			{
+				me->UseActionSlotItemReleased();
+				me->PressJumpButton();
+			}
+		}
+
 	}
 
 	if ( TFGameRules()->State_Get() == GR_STATE_PREROUND )

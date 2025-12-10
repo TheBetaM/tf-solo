@@ -985,6 +985,11 @@ public:
 			if ( ladder )
 			{
 				dist = ladder->m_length;
+				if ( TFGameRules()->IsUsingGrapplingHook( m_me->GetTeamNumber() ) )
+				{
+					// any ladder is assumed to be a shortcut / must-use path
+					return 0.0f;
+				}
 			}
 			else if ( length > 0.0 )
 			{

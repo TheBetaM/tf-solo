@@ -76,6 +76,7 @@ public:
 								 const char *reason = NULL );		// continually aim the bot's head towards the given subject
 
 	virtual bool IsHeadAimingOnTarget( void ) const;				// return true if the bot's head has achieved its most recent lookat target
+	virtual bool HasHeadAimedOnTarget( void ) const { return m_hasBeenSightedIn; }	// return true if the bot's head has just achieved its most recent lookat target
 	virtual bool IsHeadSteady( void ) const;						// return true if head is not rapidly turning to look somewhere else
 	virtual float GetHeadSteadyDuration( void ) const;				// return the duration that the bot's head has been on-target
 	virtual void ClearPendingAimReply( void );						// clear out currently pending replyWhenAimed callback

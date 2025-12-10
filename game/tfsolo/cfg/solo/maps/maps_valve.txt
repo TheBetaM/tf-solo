@@ -427,7 +427,6 @@ maps_config
 		}
 		ctf_hellfire
 		{
-			disabled 1
 			name "Hellfire"
 			modename "#GameType_Powerup"
 			thumbArt "maps/menu_thumb_ctf_hellfire"

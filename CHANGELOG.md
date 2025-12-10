@@ -66,7 +66,8 @@ tf_player_preventdeath, tf_player_preventteamchange
 - Bots can now stun Merasmus and seek him out while he's hiding
 - Bots can now use all ZI abilities
 - Bots can now wall climb in VSH using nav mesh ladders
-- Bots can now use Sweeping Charge in VSH
+- Bots can now use the Grappling Hook on nav mesh ladders
+- Bots can now use Sweeping Charge and Brave Jump in VSH
 - Bots can now buyback in MvM
 - Medic bots can now revive teammates if revives are active in MvM/PvP
 - Bots will now try to escape the Underworld and Loot Island through nav areas marked with nav_stop
