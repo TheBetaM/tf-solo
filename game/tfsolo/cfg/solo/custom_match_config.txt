@@ -5,15 +5,8 @@ DESCRIPTION SERVER_OPTIONS
 	"tf_bot_quota"
 	{
 		"Bot Count"
-		{ SLIDER 0 31 }
-		{ "23" }
-	}
-	
-	"tf_bot_quota_use_presets"
-	{
-		"Bots Use Preset Loadouds"
-		{ BOOL }
-		{ "1" }
+		{ SLIDER 0 32 }
+		{ "24" }
 	}
 	
 	"tf_bot_difficulty"
@@ -98,7 +91,7 @@ DESCRIPTION SERVER_OPTIONS
 	"tf_player_spell_drop_on_death_rate"
 	{
 		"Halloween Spell On Death Chance"
-		{ NUMBER 0.0 1.0 }
+		{ SLIDER 0.0 1.0 }
 		{ "0" }
 	}
 	

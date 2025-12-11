@@ -56,8 +56,6 @@ maps_config
 				symm 1
 				theme_alpine 1
 				valve 1
-				allow_koth 1
-				allow_pd 1
 			}
 		}
 		arena_nucleus
@@ -94,8 +92,6 @@ maps_config
 				symm 1
 				theme_desert 1
 				valve 1
-				allow_koth 1
-				allow_pd 1
 			}
 		}
 		arena_sawmill
@@ -153,9 +149,6 @@ maps_config
 				symm 1
 				theme_alpine 1
 				valve 1
-				allow_koth 1
-				allow_ctf 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -207,8 +200,6 @@ maps_config
 				symm 1
 				theme_industrial 1
 				valve 1
-				allow_koth 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -229,8 +220,6 @@ maps_config
 				symm 1
 				theme_desert 1
 				valve 1
-				allow_ctf 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -267,9 +256,6 @@ maps_config
 				symm 1
 				theme_industrial 1
 				valve 1
-				allow_ctf 1
-				allow_arena 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -310,9 +296,6 @@ maps_config
 				symm 1
 				theme_farm 1
 				valve 1
-				allow_koth 1
-				allow_ctf 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -347,10 +330,6 @@ maps_config
 				symm 1
 				theme_industrial 1
 				valve 1
-				allow_koth 1
-				allow_ctf 1
-				allow_arena 1
-				allow_pd 1
 			}
 		}
 		ctf_2fort
@@ -540,7 +519,6 @@ maps_config
 				symm 1
 				theme_industrial 1
 				valve 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -561,7 +539,6 @@ maps_config
 				symm 1
 				theme_swamp 1
 				valve 1
-				allow_pd 1
 			}
 			alts
 			{
@@ -582,8 +559,6 @@ maps_config
 				symm 1
 				theme_snow 1
 				valve 1
-				allow_arena 1
-				allow_pd 1
 			}
 		}
 		koth_harvest_event
@@ -600,8 +575,6 @@ maps_config
 				theme_farm 1
 				theme_hallow 1
 				valve 1
-				allow_arena 1
-				allow_pd 1
 			}
 		}
 		koth_viaduct_event
@@ -617,8 +590,6 @@ maps_config
 				symm 1
 				theme_hallow 1
 				valve 1
-				allow_arena 1
-				allow_pd 1
 			}
 		}
 		koth_lakeside_event
@@ -634,8 +605,6 @@ maps_config
 				symm 1
 				theme_hallow 1
 				valve 1
-				allow_arena 1
-				allow_pd 1
 			}
 		}
 		pass_brickyard

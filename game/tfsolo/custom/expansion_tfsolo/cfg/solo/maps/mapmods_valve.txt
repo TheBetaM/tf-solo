@@ -2,7 +2,23 @@ maps_config
 {
 	maps
 	{
-		koth_harvest_event
+		arena_lumberyard
+		{
+			tags
+			{
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		arena_ravine
+		{
+			tags
+			{
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		arena_sawmill
 		{
 			mods
 			{
@@ -13,8 +29,80 @@ maps_config
 				}
 			}
 		}
+		cp_5gorge
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+		}
+		cp_well
+		{
+			tags
+			{
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		cp_badlands
+		{
+			tags
+			{
+				allow_ctf 1
+				allow_pd 1
+			}
+		}
+		cp_foundry
+		{
+			tags
+			{
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_granary
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+		}
+		cp_powerhouse
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_nucleus
+		{
+			tags
+			{
+				allow_pd 1
+			}
+		}
+		koth_sawmill
+		{
+			tags
+			{
+				allow_pd 1
+			}
+		}
 		koth_viaduct
 		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
 			mods
 			{
 				pda
@@ -24,5 +112,39 @@ maps_config
 				}
 			}
 		}
+		koth_harvest_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+			mods
+			{
+				zi
+				{
+					modename "#GameType_ZI"
+					modfile "scripts/mapmods/auto_zi.txt"
+				}
+			}
+		}
+		koth_viaduct_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_lakeside_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		
+		
 	}
 }

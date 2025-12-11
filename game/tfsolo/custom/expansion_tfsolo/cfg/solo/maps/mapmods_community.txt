@@ -2,8 +2,230 @@ maps_config
 {
 	maps
 	{
+		arena_offblast_final
+		{
+			tags
+			{
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		arena_watchtower
+		{
+			tags
+			{
+				allow_koth 1
+				allow_pd 1
+			}
+		}
+		cp_fastlane
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_freight_final1
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_standin_final
+		{
+			tags
+			{
+				allow_koth 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_yukon_final
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_gullywash_final1
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+			}
+		}
+		cp_metalworks
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_process_final
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_reckoner
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_sunshine
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_vanguard
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_snakewater_final1
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_freaky_fair
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_sunshine_event
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_coldfront
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_harvest_final
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_highpass
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_suijin
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_brazil
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_cachoeira
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_king
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_lakeside_final
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_lazarus
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
 		koth_megaton
 		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
 			mods
 			{
 				vsh
@@ -13,5 +235,238 @@ maps_config
 				}
 			}
 		}
+		koth_rotunda
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_sharkbay
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_bagel_event
+		{
+			tags
+			{
+				allow_arena 1
+			}
+		}
+		koth_los_muertos
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_moonshine_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_sawmill_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_slasher
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_slaughter_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_slime
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_synthetic_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_toxic
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_undergrove_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_maple_ridge_event
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_probed
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_krampus
+		{
+			mods
+			{
+				arena
+				{
+					modeoverride 2
+					modename "#GameType_Arena"
+					modfile "scripts/mapmods/filter_generic.txt"
+				}
+				pd
+				{
+					modeoverride 5
+					modename "#Gametype_PlayerDestruction"
+					modfile "scripts/mapmods/filter_generic.txt"
+				}
+			}
+		}
+		koth_cascade
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_snowtower
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_overcast
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_blowout
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_boardwalk
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_demolition
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_mannhole
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		cp_cowerhouse
+		{
+			mods
+			{
+				arena
+				{
+					modeoverride 2
+					modename "#GameType_Arena"
+					modfile "scripts/mapmods/filter_generic.txt"
+				}
+				koth
+				{
+					modeoverride 3
+					modename "#GameType_Koth"
+					modfile "scripts/mapmods/filter_generic.txt"
+				}
+				//bug: no ctf hud
+				//ctf
+				//{
+				//	modeoverride 4
+				//	modename "#GameType_CTF"
+				//	modfile "scripts/mapmods/filter_generic.txt"
+				//}
+				pd
+				{
+					modeoverride 5
+					modename "#Gametype_PlayerDestruction"
+					modfile "scripts/mapmods/filter_generic.txt"
+				}
+			}
+		}
+		koth_dusker
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_winter_ridge
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		
 	}
 }

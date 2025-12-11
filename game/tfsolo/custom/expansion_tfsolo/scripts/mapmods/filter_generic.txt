@@ -75,6 +75,41 @@ filter
 	{
 		"classname" "tf_propertydamage_nextbot"
 	}
+	generic_f19
+	{
+		"classname" "logic_script"
+		"vscripts" "koth_krampus/koth_krampus.nut"
+	}
+	generic_f20
+	{
+		"classname" "logic_script"
+		"vscripts" "cp_powerhouse_event_custom_countdown.nut"
+	}
+	//generic_f21
+	//{
+	//	"classname" "logic_script"
+	//	"vscripts" "vssaxtonhale/vsh.nut"
+	//}
+	//generic_f22
+	//{
+	//	"classname" "logic_script"
+	//	"vscripts" "infection/infection.nut"
+	//}
+	//generic_f23
+	//{
+	//	"classname" "logic_script"
+	//	"vscripts" "graveyard.nut"
+	//}
+	//generic_f24
+	//{
+	//	"classname" "logic_script"
+	//	"vscripts" "perks/main.nut"
+	//}
+	//generic_f25
+	//{
+	//	"classname" "logic_script"
+	//	"vscripts" "tug_of_war.nut tow_dynamite.nut"
+	//}
 }
 
 }
