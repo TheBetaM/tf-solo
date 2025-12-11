@@ -2138,10 +2138,19 @@ void CommandNavConnect( void )
 	if ( !UTIL_IsCommandIssuedByServerAdmin() )
 		return;
 
-	TheNavMesh->CommandNavConnect();
+	TheNavMesh->CommandNavConnect( false );
 }
 static ConCommand nav_connect( "nav_connect", CommandNavConnect, "To connect two Areas, mark the first Area, highlight the second Area, then invoke the connect command. Note that this creates a ONE-WAY connection from the first to the second Area. To make a two-way connection, also connect the second area to the first.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
+//--------------------------------------------------------------------------------------------------------------
+void CommandNavConnectLadderBottom(void)
+{
+	if ( !UTIL_IsCommandIssuedByServerAdmin() )
+		return;
+
+	TheNavMesh->CommandNavConnect( true );
+}
+static ConCommand nav_connect_ladder_bottom( "nav_connect_ladder_bottom", CommandNavConnectLadderBottom, "To connect two Areas, mark the first Area, highlight the second Area, then invoke the connect command. Note that this creates a ONE-WAY connection from the first to the second Area. To make a two-way connection, also connect the second area to the first.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
 //--------------------------------------------------------------------------------------------------------------
 void CommandNavDisconnect( void )

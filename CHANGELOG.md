@@ -37,7 +37,7 @@ sv_mapentities_override, sv_mapentities_mod, nav_begin_ladder,
 tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force, 
 sv_thirdperson_platformer_force, tf_subclass_allow, mp_humans_must_join_subclass, 
 tf_bot_sniper_lasersight, tf_player_maxspeed_override, tf_scoreboard_allow,
-tf_player_preventdeath, tf_player_preventteamchange
+tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

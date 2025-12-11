@@ -465,7 +465,6 @@ maps_config
 		}
 		ctf_thundermountain
 		{
-			disabled 1
 			name "Thunder Mountain (CTF)"
 			modename "#Gametype_Powerup"
 			thumbArt "maps/menu_thumb_ctf_thundermountain"

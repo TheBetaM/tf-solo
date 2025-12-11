@@ -266,9 +266,17 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 			{
 				auto ladder = me->GetCurrentPath()->GetCurrentGoal()->ladder;
 				bAimingForLadder = true;
-				Vector lookAtPos = ladder->m_top - 2.0f * ladder->GetNormal() + Vector( 0, 0, me->GetBodyInterface()->GetCrouchHullHeight() );
-				me->GetBodyInterface()->AimHeadTowards( lookAtPos, IBody::CRITICAL, 0.1f, NULL, "Aiming for ladder" );
+				Vector lookAtPos = ladder->m_top - 2.0f * ladder->GetNormal();//+ Vector( 0, 0, me->GetBodyInterface()->GetCrouchHullHeight() );
+				me->GetBodyInterface()->AimHeadTowards( lookAtPos, IBody::CRITICAL, 0.3f, NULL, "Aiming for ladder" );
 
+				if ( !me->IsUsingActionSlot() )
+				{
+					me->ReleaseForwardButton();
+					me->ReleaseLeftButton();
+					me->ReleaseRightButton();
+					me->ReleaseBackwardButton();
+					me->GetLocomotionInterface()->Stop();
+				}
 				if ( me->GetBodyInterface()->HasHeadAimedOnTarget() )
 				{
 					bLookingAtLadder = true;

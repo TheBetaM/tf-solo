@@ -2898,7 +2898,7 @@ void CNavMesh::CommandNavEndArea( void )
 
 
 //--------------------------------------------------------------------------------------------------------------
-void CNavMesh::CommandNavConnect( void )
+void CNavMesh::CommandNavConnect( bool bLadderBottom )
 {
 	CBasePlayer *player = UTIL_GetListenServerHost();
 	if (player == NULL)
@@ -2957,7 +2957,7 @@ void CNavMesh::CommandNavConnect( void )
 	{
 		if ( m_markedLadder )
 		{
-			m_markedLadder->ConnectTo( m_selectedArea );
+			m_markedLadder->ConnectTo( m_selectedArea, bLadderBottom );
 			player->EmitSound( "EDIT_CONNECT.Added" );
 		}
 		else if ( m_markedArea )
@@ -3000,7 +3000,7 @@ void CNavMesh::CommandNavConnect( void )
 	{
 		if ( m_markedArea )
 		{
-			m_markedArea->ConnectTo( m_selectedLadder );
+			m_markedArea->ConnectTo( m_selectedLadder, bLadderBottom );
 			player->EmitSound( "EDIT_CONNECT.Added" );
 		}
 		else

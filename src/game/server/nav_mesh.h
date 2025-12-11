@@ -420,7 +420,7 @@ public:
 	void CommandNavBeginShiftXY( void );								// begin shifting selected set in the XY plane
 	void CommandNavEndShiftXY( void );									// end shifting selected set in the XY plane
 
-	void CommandNavConnect( void );										// connect marked area to selected area
+	void CommandNavConnect( bool bLadderBottom );						// connect marked area to selected area
 	void CommandNavDisconnect( void );									// disconnect marked area from selected area
 	void CommandNavDisconnectOutgoingOneWays( void );					// disconnect all outgoing one-way connects from each area in the selected set
 	void CommandNavSplice( void );										// create new area in between marked and selected areas

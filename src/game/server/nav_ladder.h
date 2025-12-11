@@ -70,7 +70,7 @@ public:
 
 	void ConnectGeneratedLadder( float maxHeightAboveTopArea );		///< Connect a generated ladder to nav areas at the end of nav generation
 
-	void ConnectTo( CNavArea *area );				///< connect this ladder to given area
+	void ConnectTo( CNavArea *area, bool bForceBottom );				///< connect this ladder to given area
 	void Disconnect( CNavArea *area );				///< disconnect this ladder from given area
 
 	void OnSplit( CNavArea *original, CNavArea *alpha, CNavArea *beta );	///< when original is split into alpha and beta, update our connections

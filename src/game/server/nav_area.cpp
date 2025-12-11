@@ -823,13 +823,13 @@ void CNavArea::ConnectTo( CNavArea *area, NavDirType dir )
 /**
  * Connect this area to given ladder
  */
-void CNavArea::ConnectTo( CNavLadder *ladder )
+void CNavArea::ConnectTo( CNavLadder *ladder, bool bForceBottom )
 {
 	float center = (ladder->m_top.z + ladder->m_bottom.z) * 0.5f;
 
 	Disconnect( ladder ); // just in case
 
-	if ( GetCenter().z > center )
+	if ( GetCenter().z > center && !bForceBottom )
 	{
 		AddLadderDown( ladder );
 	}
@@ -1053,7 +1053,7 @@ void CNavArea::MergeAdjacentConnections( CNavArea *adjArea )
 	{
 		FOR_EACH_VEC( adjArea->m_ladder[ dir ], it )
 		{
-			ConnectTo( adjArea->m_ladder[ dir ][ it ].ladder );
+			ConnectTo( adjArea->m_ladder[ dir ][ it ].ladder, false );
 		}
 	}
 
@@ -1213,11 +1213,11 @@ bool CNavArea::SplitEdit( bool splitAlongX, float splitEdge, CNavArea **outAlpha
 
 			if ( alphaDistance < betaDistance )
 			{
-				alpha->ConnectTo( ladder );
+				alpha->ConnectTo( ladder, false );
 			}
 			else
 			{
-				beta->ConnectTo( ladder );
+				beta->ConnectTo( ladder, false );
 			}
 		}
 	}

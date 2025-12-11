@@ -287,7 +287,7 @@ public:
 	void ConnectTo( CNavArea *area, NavDirType dir );			// connect this area to given area in given direction
 	void Disconnect( CNavArea *area );							// disconnect this area from given area
 
-	void ConnectTo( CNavLadder *ladder );						// connect this area to given ladder
+	void ConnectTo( CNavLadder *ladder, bool bForceBottom );	// connect this area to given ladder
 	void Disconnect( CNavLadder *ladder );						// disconnect this area from given ladder
 
 	unsigned int GetID( void ) const	{ return m_id; }		// return this area's unique ID

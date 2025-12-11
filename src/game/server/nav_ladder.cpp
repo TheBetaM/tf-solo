@@ -102,11 +102,11 @@ void CNavLadder::OnSplit( CNavArea *original, CNavArea *alpha, CNavArea *beta )
 /**
  * Connect this ladder to given area
  */
-void CNavLadder::ConnectTo( CNavArea *area )
+void CNavLadder::ConnectTo( CNavArea *area, bool bForceBottom )
 {
 	float center = (m_top.z + m_bottom.z) * 0.5f;
 
-	if (area->GetCenter().z > center)
+	if ( area->GetCenter().z > center && !bForceBottom )
 	{
 		// connect to top
 		NavDirType dir;
