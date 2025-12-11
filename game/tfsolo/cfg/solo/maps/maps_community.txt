@@ -162,7 +162,6 @@ maps_config
 		}
 		cp_steel
 		{
-			disabled 1
 			name "Steel"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_steel"
@@ -319,7 +318,6 @@ maps_config
 		}
 		cp_sulfur
 		{
-			disabled 1
 			name "Sulfur"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_sulfur"
@@ -379,7 +377,6 @@ maps_config
 		}
 		cp_hadal
 		{
-			disabled 1
 			name "Hadal"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_hadal"
@@ -483,7 +480,6 @@ maps_config
 		}
 		cp_spookeyridge
 		{
-			disabled 1
 			name "Spookeyridge"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_spookeyridge"

@@ -2054,12 +2054,12 @@ CTeamControlPoint *CTFBot::SelectPointToCapture( CUtlVector< CTeamControlPoint *
 		float combat = pointArea->GetCombatIntensity();
 
 		const float minCombat = 0.1f;
-		if ( combat > minCombat )
+		if ( combat > minCombat || pointArea->IsBlocked( GetTeamNumber() ) )
 		{
 			areAllPointsCombatFree = false;
 		}
 
-		if ( combat < safestPointCombat )
+		if ( combat < safestPointCombat && !pointArea->IsBlocked( GetTeamNumber() ) )
 		{
 			safestPoint = point;
 			safestPointCombat = combat;

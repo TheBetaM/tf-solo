@@ -1241,6 +1241,10 @@ void CTFNavMesh::RecomputeInternalData( void )
 				{
 					area->ClearAttributeTF( TF_NAV_BLOCKED );
 				}
+				else
+				{
+					area->SetAttributeTF( TF_NAV_BLOCKED );
+				}
 			}
 			else if ( area->HasAttributeTF( TF_NAV_BLOCKED_AFTER_POINT_CAPTURE ) )
 			{
