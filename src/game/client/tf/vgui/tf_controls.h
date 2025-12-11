@@ -257,7 +257,7 @@ class CTFCustomMatchSettingsDialog : public vgui::EditablePanel
 	DECLARE_CLASS_SIMPLE(CTFCustomMatchSettingsDialog, vgui::EditablePanel);
 
 public:
-	CTFCustomMatchSettingsDialog(vgui::Panel* parent);
+	CTFCustomMatchSettingsDialog(vgui::Panel* parent, bool bIsMVM);
 	~CTFCustomMatchSettingsDialog();
 
 	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);

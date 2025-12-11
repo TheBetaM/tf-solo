@@ -4,14 +4,14 @@ DESCRIPTION SERVER_OPTIONS
 {
 	"tf_bot_quota"
 	{
-		"Bot Count"
-		{ SLIDER 0 31 }
-		{ "23" }
+		"Teammate Count"
+		{ SLIDER 0 5 }
+		{ "5" }
 	}
 	
 	"tf_bot_difficulty"
 	{
-		"Bot Difficulty"
+		"Teammate Skill"
 		{
 			LIST
 			"Easy" "0"

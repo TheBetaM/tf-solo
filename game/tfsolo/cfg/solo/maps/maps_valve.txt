@@ -808,7 +808,6 @@ maps_config
 		}
 		mvm_bigrock
 		{
-			disabled 1
 			name "Bigrock"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_bigrock"
@@ -823,7 +822,6 @@ maps_config
 		}
 		mvm_coaltown
 		{
-			disabled 1
 			name "Coaltown"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_coaltown"
@@ -838,7 +836,6 @@ maps_config
 		}
 		mvm_decoy
 		{
-			disabled 1
 			name "Decoy"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_decoy"
@@ -853,7 +850,6 @@ maps_config
 		}
 		mvm_ghost_town
 		{
-			disabled 1
 			name "Ghost Town"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_ghost_town"
@@ -869,7 +865,6 @@ maps_config
 		}
 		mvm_mannhattan
 		{
-			disabled 1
 			name "Mannhattan"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_mannhattan"
@@ -885,7 +880,6 @@ maps_config
 		}
 		mvm_mannworks
 		{
-			disabled 1
 			name "Mannworks"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_mannworks"
@@ -900,7 +894,6 @@ maps_config
 		}
 		mvm_rottenburg
 		{
-			disabled 1
 			name "Rottenburg"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_rottenburg"

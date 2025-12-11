@@ -2561,6 +2561,7 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 #define MOD_CREDITS_FILE "cfg/solo/modcredits.txt"
 #define MOD_OOBE_FILE "cfg/solo/oobe_config.txt"
 #define TFSOLO_CUSTOM_MATCH_CONFIG_FILE "cfg/solo/custom_match_config.txt"
+#define TFSOLO_CUSTOM_MATCH_CONFIG_MVM_FILE "cfg/solo/custom_match_config_mvm.txt"
 #define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/maps_config.txt"
 #define TFSOLO_WORKSHOP_CACHE_FILE "workshop_localcache.txt"
 
@@ -2934,7 +2935,7 @@ void CTFModCreditsDialog::Deploy(void)
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFCustomMatchSettingsDialog::CTFCustomMatchSettingsDialog(vgui::Panel* parent) : BaseClass(NULL, "TFCustomMatchSettingsDialog")
+CTFCustomMatchSettingsDialog::CTFCustomMatchSettingsDialog(vgui::Panel* parent, bool bIsMVM) : BaseClass(NULL, "TFCustomMatchSettingsDialog")
 {
 	// Need to use the clientscheme (we're not parented to a clientscheme'd panel)
 	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL), "resource/ClientScheme.res", "ClientScheme");
@@ -2954,11 +2955,20 @@ CTFCustomMatchSettingsDialog::CTFCustomMatchSettingsDialog(vgui::Panel* parent) 
 
 	m_pDescription = new CInfoDescription();
 	m_pDescription->setDescription("SERVER_OPTIONS");
-	m_pDescription->InitFromFile(TFSOLO_CUSTOM_MATCH_CONFIG_FILE);
+	if (bIsMVM)
+	{
+		m_pDescription->InitFromFile(TFSOLO_CUSTOM_MATCH_CONFIG_MVM_FILE);
+	}
+	else
+	{
+		m_pDescription->InitFromFile(TFSOLO_CUSTOM_MATCH_CONFIG_FILE);
+	}
 	m_pDescription->TransferCurrentValues(NULL);
 
 	m_iszRequestedMap = "";
 	m_iRequestedMode = 0;
+	m_iszRequestedMapMod = NULL;
+	m_iszRequestedMapOverride = NULL;
 
 	// 	MoveToCenterOfScreen();
 	// 	SetSizeable( false );
@@ -3604,9 +3614,15 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		m_iszRequestedMap = V_strdup( outStr[1] );
 		m_iRequestedMode = 0;
 
+		bool bIsMVM = false;
+		if ( V_strstr( m_iszRequestedMap, "mvm_" ) )
+		{
+			bIsMVM = true;
+		}
+
 		if ( g_pTFCustomMatchSettingsDialog.Get() == NULL )
 		{
-			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
+			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL, bIsMVM ) );
 		}
 		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
@@ -3619,9 +3635,15 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		V_SplitString( command, "$", outStr );
 		m_iRequestedMode = V_atoi( outStr[1] );
 
+		bool bIsMVM = false;
+		if ( m_iRequestedMode == 0 && V_strstr( m_iszRequestedMap, "mvm_" ) )
+		{
+			bIsMVM = true;
+		}
+
 		if ( g_pTFCustomMatchSettingsDialog.Get() == NULL )
 		{
-			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
+			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL, bIsMVM ) );
 		}
 		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
@@ -3647,7 +3669,7 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 
 		if ( g_pTFCustomMatchSettingsDialog.Get() == NULL )
 		{
-			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL ) );
+			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL, false ) );
 		}
 		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
@@ -4147,7 +4169,7 @@ enum CustomMatchMapCategory
 	MapCategory_CTF,
 	MapCategory_PL,
 	MapCategory_PLR,
-	//MapCategory_MVM,
+	MapCategory_MVM,
 	MapCategory_PASS,
 	MapCategory_PD,
 	MapCategory_VSH,
@@ -4162,8 +4184,6 @@ enum CustomMatchMapCategory
 	MapCategory_Workshop_CF,
 
 	MapCategory_MAX,
-
-	MapCategory_MVM,
 };
 
 
@@ -4200,7 +4220,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_CTF", NULL);
 	m_pCategoryList->AddItem("#Gametype_Escort", NULL);
 	m_pCategoryList->AddItem("#Gametype_EscortRace", NULL);
-	//m_pCategoryList->AddItem("#Gametype_MVM", NULL);
+	m_pCategoryList->AddItem("#Gametype_MVM", NULL);
 	m_pCategoryList->AddItem("#Gametype_Passtime", NULL);
 	m_pCategoryList->AddItem("#Gametype_PlayerDestruction", NULL);
 	m_pCategoryList->AddItem("#Gametype_VSH", NULL);
