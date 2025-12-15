@@ -372,6 +372,10 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		// never retreat in MvM mode
 		shouldRetreat = ANSWER_NO;
 	}
+	if ( me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
+	{
+		shouldRetreat = ANSWER_NO;
+	}
 
 	if ( shouldRetreat == ANSWER_YES )
 	{

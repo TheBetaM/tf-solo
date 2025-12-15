@@ -1039,7 +1039,6 @@ maps_config
 		}
 		koth_slasher
 		{
-			disabled 1
 			name "Slasher"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_slasher"
@@ -1611,7 +1610,6 @@ maps_config
 		}
 		pl_rumble_event
 		{
-			disabled 1
 			name "Gravestone"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_rumble_event"
@@ -1803,7 +1801,6 @@ maps_config
 		}
 		plr_hacksaw_event
 		{
-			disabled 1
 			name "Bonesaw"
 			modename "#Gametype_EscortRace"
 			thumbArt "maps/menu_thumb_plr_hacksaw_event"
