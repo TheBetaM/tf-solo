@@ -113,6 +113,9 @@ public:
 	void ScheduleRecomputationOfInternalData( RecomputeReasonType reason, float delay );
 
 	virtual void OnDoorCreated( CBaseEntity *door );					// invoked when a door is created
+	
+	void ScriptRecalculateBlocked( float delay );
+	void ScriptRecalculateBlockedWithCapture( float delay );
 
 protected:
 	virtual void BeginCustomAnalysis( bool bIncremental );

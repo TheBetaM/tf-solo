@@ -48,7 +48,7 @@ ConVar tf_bot_force_jump( "tf_bot_force_jump", "0", FCVAR_CHEAT, "Force bots to 
 
 Action< CTFBot > *CTFBotTacticalMonitor::InitialContainedAction( CTFBot *me )
 {
-	return new CTFBotScenarioMonitor;
+	return new CTFBotSituationMonitor;
 }
 
 

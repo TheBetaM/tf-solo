@@ -18,13 +18,17 @@ CTFBotMoveToVantagePoint::CTFBotMoveToVantagePoint( float maxTravelDistance )
 {
 	m_maxTravelDistance = maxTravelDistance;
 	m_isEscaping = false;
+	m_isEscapingZone = false;
+	m_bHasEscaped = false;
 }
 
 //---------------------------------------------------------------------------------------------
-CTFBotMoveToVantagePoint::CTFBotMoveToVantagePoint( float maxTravelDistance, bool escape )
+CTFBotMoveToVantagePoint::CTFBotMoveToVantagePoint( float maxTravelDistance, bool escape, bool zone )
 {
 	m_maxTravelDistance = maxTravelDistance;
 	m_isEscaping = true;
+	m_bHasEscaped = false;
+	m_isEscapingZone = zone;
 }
 
 
@@ -76,7 +80,13 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float inter
 		}
 	}
 
-	if ( m_isEscaping && !me->m_Shared.InCond( TF_COND_PURGATORY ) && !me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) && V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay" ) )
+	if ( m_isEscaping && !m_isEscapingZone && !me->m_Shared.InCond( TF_COND_PURGATORY ) && !me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL )
+		&& V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay" ) && !me->HasTag( "InPurg" ) )
+	{
+		return Done( "I've escaped" );
+	}
+
+	if ( m_bHasEscaped && m_isEscapingZone )
 	{
 		return Done( "I've escaped" );
 	}
@@ -113,4 +123,14 @@ EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToFailure( CTFBot *
 	return TryContinue();
 }
 
+
+EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnNavAreaChanged( CTFBot* me, CNavArea* newArea, CNavArea* oldArea )
+{
+	if ( m_isEscapingZone && newArea && !newArea->HasAttributes( NAV_MESH_NO_HOSTAGES ) )
+	{
+		m_bHasEscaped = true;
+	}
+
+	return TryContinue();
+}
 

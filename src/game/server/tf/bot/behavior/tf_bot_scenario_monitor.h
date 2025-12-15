@@ -24,5 +24,20 @@ private:
 	virtual Action< CTFBot > *DesiredScenarioAndClassAction( CTFBot *me );
 };
 
+class CTFBotSituationMonitor : public Action< CTFBot >
+{
+public:
+	virtual Action< CTFBot >* InitialContainedAction( CTFBot* me );
+
+	virtual ActionResult< CTFBot >	OnStart( CTFBot* me, Action< CTFBot >* priorAction );
+	virtual ActionResult< CTFBot >	Update( CTFBot* me, float interval );
+	virtual EventDesiredResult< CTFBot > OnNavAreaChanged( CTFBot* me, CNavArea* newArea, CNavArea* oldArea );
+
+	virtual const char* GetName( void ) const { return "SituationMonitor"; }
+
+private:
+	bool m_bEscapeZone;
+};
+
 
 #endif // TF_BOT_SCENARIO_MONITOR_H

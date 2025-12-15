@@ -3,6 +3,8 @@ printl("[TFSOLO] Server Init")
 ::TFMOD <- 1
 ::TFSOLO.IsCampaign <- Convars.GetInt("tf_gamemode_campaign") != 0
 ::TFSOLO.IsSolo <- Convars.GetInt("tf_gamemode_solo") != 0
+::TFSOLO.UseMapFixes <- true
+::TFSOLO.MapEntryCvar <- Convars.GetStr("tfsolo_mapentry")
 
 IncludeScript("solo/util.nut")
 IncludeScript("solo/serverutil.nut")
@@ -19,6 +21,14 @@ if (TFSOLO.IsSolo)
 if (TFSOLO.IsSolo || TFSOLO.IsCampaign)
 {
 	IncludeScript("solo/credits.nut")
+}
+if (TFSOLO.UseMapFixes && TFSOLO.MapEntryCvar != null && TFSOLO.MapEntryCvar.len() != 0)
+{
+	try { IncludeScript("mapfix/"+TFSOLO.MapEntryCvar+ ".nut"); } catch(e) { }
+}
+else if (TFSOLO.UseMapFixes)
+{
+	try { IncludeScript("mapfix/"+GetMapName()+ ".nut"); } catch(e) { }
 }
 
 TFSOLO.CoreEventTag <- UniqueString()

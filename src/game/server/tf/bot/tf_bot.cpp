@@ -3464,9 +3464,10 @@ CTFNavArea *CTFBot::FindVantagePoint( float maxTravelDistance ) const
 class CFindUnderworldExitPoint : public ISearchSurroundingAreasFunctor
 {
 public:
-	CFindUnderworldExitPoint( int enemyTeamIndex )
+	CFindUnderworldExitPoint( int teamIndex )
 	{
 		m_escapeArea = NULL;
+		m_nTeamIndex = teamIndex;
 	}
 
 	virtual bool operator() ( CNavArea* baseArea, CNavArea* priorArea, float travelDistanceSoFar )
@@ -3475,6 +3476,14 @@ public:
 
 		if ( area->HasAttributes( NAV_MESH_STOP ) )
 		{
+			if ( area->HasAttributeTF( TF_NAV_BLUE_ONE_WAY_DOOR ) && m_nTeamIndex != TF_TEAM_BLUE )
+			{
+				return true;
+			}
+			else if ( area->HasAttributeTF( TF_NAV_RED_ONE_WAY_DOOR ) && m_nTeamIndex != TF_TEAM_RED )
+			{
+				return true;
+			}
 			m_escapeArea = area;
 			return false;
 		}
@@ -3482,6 +3491,7 @@ public:
 		return true;
 	}
 
+	int m_nTeamIndex;
 	CTFNavArea* m_escapeArea;
 };
 
@@ -3490,7 +3500,7 @@ public:
 // Return a nearby area where we can see a member of the enemy team
 CTFNavArea* CTFBot::FindUnderworldExitPoint( float maxTravelDistance ) const
 {
-	CFindUnderworldExitPoint find( GetTeamNumber() == TF_TEAM_BLUE ? TF_TEAM_RED : TF_TEAM_BLUE );
+	CFindUnderworldExitPoint find( GetTeamNumber() );
 	SearchSurroundingAreas( GetLastKnownArea(), find, maxTravelDistance );
 	return find.m_escapeArea;
 }

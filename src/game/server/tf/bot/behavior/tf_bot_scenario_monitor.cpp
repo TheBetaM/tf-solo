@@ -462,11 +462,6 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 			return Continue();
 		}
 
-		if ( me->m_Shared.InCond( TF_COND_PURGATORY ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL ) || !V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay" ) )
-		{
-			return SuspendFor( new CTFBotMoveToVantagePoint( -1.0f, true ), "I gotta get out of here" );
-		}
-
 		if ( m_roamer || !GetActiveChildAction() )
 		{
 			CCaptureFlag *flag = me->GetFlagToFetch();
@@ -527,3 +522,44 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 	return Continue();
 }
 
+//-----------------------------------------------------------------------------------------
+Action< CTFBot >* CTFBotSituationMonitor::InitialContainedAction( CTFBot* me )
+{
+	m_bEscapeZone = false;
+	return new CTFBotScenarioMonitor;
+}
+
+ActionResult< CTFBot >	CTFBotSituationMonitor::OnStart( CTFBot* me, Action< CTFBot >* priorAction )
+{
+	m_bEscapeZone = false;
+	return Continue();
+}
+
+ActionResult< CTFBot >	CTFBotSituationMonitor::Update( CTFBot* me, float interval )
+{
+	if ( me->m_Shared.InCond( TF_COND_PURGATORY ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL )
+		|| !V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay ") || me->HasTag( "InPurg" ) )
+	{
+		return SuspendFor( new CTFBotMoveToVantagePoint( -1.0f, true, false ), "I gotta get out of here" );
+	}
+	else if ( m_bEscapeZone )
+	{
+		return SuspendFor( new CTFBotMoveToVantagePoint( -1.0f, true, true ), "I gotta get out of here" );
+	}
+
+	return Continue();
+}
+
+EventDesiredResult< CTFBot > CTFBotSituationMonitor::OnNavAreaChanged( CTFBot* me, CNavArea* newArea, CNavArea* oldArea )
+{
+	if ( newArea && newArea->HasAttributes( NAV_MESH_NO_HOSTAGES ) )
+	{
+		m_bEscapeZone = true;
+	}
+	else
+	{
+		m_bEscapeZone = false;
+	}
+
+	return TryContinue();
+}

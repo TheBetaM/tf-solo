@@ -344,17 +344,20 @@ public:
 	virtual void Spawn( void );
 
 	virtual void Touch( CBaseEntity *pOther );
+	virtual void EndTouch( CBaseEntity* pOther );
 
 private:
 	string_t m_iszTags;
 
 	bool m_bAdd;
+	bool m_bRemoveOnExit;
 	CUtlStringList m_tags;
 };
 
 BEGIN_DATADESC( CTriggerBotTag )
 	DEFINE_KEYFIELD( m_iszTags, FIELD_STRING, "tags" ),
 	DEFINE_KEYFIELD( m_bAdd, FIELD_BOOLEAN, "add" ),
+	DEFINE_KEYFIELD( m_bRemoveOnExit, FIELD_BOOLEAN, "exitremove" ),
 END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( trigger_bot_tag, CTriggerBotTag );
@@ -412,6 +415,39 @@ void CTriggerBotTag::Touch( CBaseEntity *pOther )
 	}
 }
 
+void CTriggerBotTag::EndTouch( CBaseEntity* pOther )
+{
+	if ( m_bDisabled || !m_bRemoveOnExit )
+	{
+		return;
+	}
+
+	if ( !pOther->IsPlayer() )
+	{
+		return;
+	}
+
+	CTFBot* pBot = ToTFBot( pOther );
+	if ( !pBot )
+	{
+		return;
+	}
+
+	if ( m_bAdd )
+	{
+		for ( int i = 0; i < m_tags.Count(); ++i )
+		{
+			pBot->RemoveTag( m_tags[i] );
+		}
+	}
+	else
+	{
+		for ( int i = 0; i < m_tags.Count(); ++i )
+		{
+			pBot->AddTag( m_tags[i] );
+		}
+	}
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Trigger that adds a condition to players

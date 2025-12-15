@@ -12,7 +12,7 @@ class CTFBotMoveToVantagePoint : public Action< CTFBot >
 {
 public:
 	CTFBotMoveToVantagePoint( float maxTravelDistance = 2000.0f );
-	CTFBotMoveToVantagePoint( float maxTravelDistance = 2000.0f, bool escape = false );
+	CTFBotMoveToVantagePoint( float maxTravelDistance = 2000.0f, bool escape = false, bool zone = false );
 	virtual ~CTFBotMoveToVantagePoint() { }
 
 	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -21,6 +21,7 @@ public:
 	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
 	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
 	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+	virtual EventDesiredResult< CTFBot > OnNavAreaChanged( CTFBot* me, CNavArea* newArea, CNavArea* oldArea );
 
 	virtual const char *GetName( void ) const	{ return "MoveToVantagePoint"; };
 
@@ -30,6 +31,8 @@ private:
 	CountdownTimer m_repathTimer;
 	CTFNavArea *m_vantageArea;
 	bool m_isEscaping;
+	bool m_isEscapingZone;
+	bool m_bHasEscaped;
 };
 
 #endif // TF_BOT_MOVE_TO_VANTAGE_POINT_H

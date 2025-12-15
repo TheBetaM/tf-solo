@@ -411,3 +411,19 @@
 [
 
 ]
+
+@SolidClass base(Trigger) = trigger_bot_tag :
+	"A trigger that will open/close the door base filtered objects."
+[
+	tags(string) : "Tags" : "" : "Add/Remove these tags."
+	add(choices) : "Operation" : 1 : "Add/Remove tags operation." =
+	[
+		0 : "RemoveTag"
+		1 : "AddTag"
+	]
+	exitremove(choices) : "Remove On Exit" : 0 : "Revert operation on trigger exit." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]

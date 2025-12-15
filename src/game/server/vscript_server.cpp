@@ -3155,7 +3155,7 @@ bool VScriptServerInit()
 #endif // TF_DLL
 
 #ifdef TF_DLL
-				g_pScriptVM->RegisterInstance( TheNavMesh, "NavMesh" );
+				g_pScriptVM->RegisterInstance( TheTFNavMesh(), "NavMesh");
 #endif
 				g_pScriptVM->RegisterInstance( &g_ScriptEntityIterator, "Entities" );
 #if 0

@@ -20,6 +20,7 @@ public:
 
 	// Input handlers
 	void RecomputeBlockers(inputdata_t &inputdata);
+	void RecomputeBlockersWithCapture(inputdata_t &inputdata);
 	
 	DECLARE_DATADESC();
 };
@@ -28,6 +29,7 @@ BEGIN_DATADESC( CPointNavInterface )
 
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_VOID, "RecomputeBlockers", RecomputeBlockers ),
+	DEFINE_INPUTFUNC( FIELD_VOID, "RecomputeBlockersWithCapture", RecomputeBlockersWithCapture ),
 
 END_DATADESC()
 
@@ -41,5 +43,15 @@ void CPointNavInterface::RecomputeBlockers( inputdata_t &inputdata )
 	if( pTFNavMesh )
 	{
 		pTFNavMesh->ScheduleRecomputationOfInternalData( CTFNavMesh::MAP_LOGIC );
+	}
+}
+
+void CPointNavInterface::RecomputeBlockersWithCapture( inputdata_t &inputdata )
+{
+	CTFNavMesh* pTFNavMesh = dynamic_cast<CTFNavMesh*>( TheNavMesh );
+	Assert( pTFNavMesh );
+	if( pTFNavMesh )
+	{
+		pTFNavMesh->ScheduleRecomputationOfInternalData( CTFNavMesh::POINT_CAPTURED );
 	}
 }

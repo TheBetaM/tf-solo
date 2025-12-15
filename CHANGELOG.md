@@ -70,7 +70,7 @@ tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom
 - Bots can now use Sweeping Charge and Brave Jump in VSH
 - Bots can now buyback in MvM
 - Medic bots can now revive teammates if revives are active in MvM/PvP
-- Bots will now try to escape the Underworld and Loot Island through nav areas marked with nav_stop
+- Bots will now try to escape the Underworld and Loot Island through nav areas marked with nav_stop, detected through TF_COND_PURGATORY, TF_COND_HALLOWEEN_IN_HELL, or nav areas marked with nav_no_hostages
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR
@@ -106,6 +106,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 - TFBot: Added GetPreset(), SetPreset(string)
 - TFPlayer: Added PostInventoryApplication(), GetKills(), GetDeaths(), GetSuicides(), GetBuildingsBuilt(), 
 GetDamageDone(), GetCrits(), GetPoints()
+- NavMesh: RecomputeBlockers(delay), RecomputeBlockersWithCapture(delay)
 - Moved TFBot.GenerateAndWearItem to TFPlayer and optimized execution time
 - Added IncludeScriptsDir(string, scope) to include all files in a directory
 ## Item changes

@@ -1154,7 +1154,6 @@ maps_config
 		}
 		koth_probed
 		{
-			disabled 1
 			name "Probed"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_probed"
@@ -1267,7 +1266,6 @@ maps_config
 		}
 		pd_mannsylvania
 		{
-			disabled 1
 			name "Mannsylvania"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_mannsylvania"
@@ -1281,7 +1279,6 @@ maps_config
 		}
 		pd_monster_bash
 		{
-			disabled 1
 			name "Monster Bash"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_monster_bash"
@@ -1323,7 +1320,6 @@ maps_config
 		}
 		pd_cursed_cove_event
 		{
-			disabled 1
 			name "Cursed Cove"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_cursed_cove_event"
