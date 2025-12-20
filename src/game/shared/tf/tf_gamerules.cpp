@@ -10195,7 +10195,7 @@ void CTFGameRules::CheckRespawnWaves()
 		{
 			maxRespawnTime = maxBotRespawnTime;
 		}
-		if ( maxRespawnTime >= 0 )
+		if ( maxRespawnTime >= 0 && m_TeamRespawnWaveTimes[ pTFPlayer->GetTeamNumber() ] < 90 && m_iRoundState != GR_STATE_STALEMATE )
 		{
 			float flMinSpawnTime = 2.0 + spec_freeze_traveltime.GetFloat();
 			if ( gpGlobals->curtime > pTFPlayer->GetDeathTime() + flMinSpawnTime + maxRespawnTime && pTFPlayer->IsReadyToSpawn() )

@@ -277,7 +277,7 @@ void CTFPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer 
 	{
 		flRespawnTime = pTFPlayer->GetDeathTime() + pTFPlayer->GetRespawnTimeOverride();
 	}
-	if ( !pTFPlayer->IsAlive() )
+	if ( !pTFPlayer->IsAlive() && TFGameRules()->GetNextRespawnWave( pTFPlayer->GetTeamNumber() ) < 90 && TFGameRules()->GetRoundState() != GR_STATE_STALEMATE )
 	{
 		float flMinSpawnTime = 2.0 + spec_freeze_traveltime.GetFloat();
 		float maxRespawnTime = mp_humans_maxrespawntime.GetFloat();
