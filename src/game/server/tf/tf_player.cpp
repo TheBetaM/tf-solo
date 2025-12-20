@@ -3297,7 +3297,7 @@ bool CTFPlayer::IsReadyToPlay( void )
 //-----------------------------------------------------------------------------
 bool CTFPlayer::IsReadyToSpawn( void )
 {
-	if ( IsClassMenuOpen() )
+	if ( IsClassMenuOpen() && ( GetHudClassAutoKill() || GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED ) )
 	{
 		return false;
 	}

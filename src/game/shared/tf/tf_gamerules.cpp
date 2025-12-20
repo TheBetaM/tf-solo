@@ -687,6 +687,8 @@ extern ConVar mp_idlemaxtime;
 
 extern ConVar tf_mm_strict;
 extern ConVar mp_autoteambalance;
+extern ConVar spec_freeze_traveltime;
+extern ConVar spec_freeze_time;
 
 // STAGING_SPY
 ConVar tf_feign_death_activate_damage_scale( "tf_feign_death_activate_damage_scale", "0.25", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
@@ -836,6 +838,8 @@ ConVar tf_autobalance_xp_bonus( "tf_autobalance_xp_bonus", "500", FCVAR_REPLICAT
 
 ConVar mp_humans_must_join_class("mp_humans_must_join_class", "any", FCVAR_REPLICATED, "Restricts human players to a single class {any, scout, soldier, etc.}");
 ConVar mp_humans_must_join_subclass("mp_humans_must_join_subclass", "any", FCVAR_REPLICATED, "Restricts human players to a single subclass {any, saxton, merasmus, etc.}, auto forces parent class");
+ConVar mp_humans_maxrespawntime("mp_humans_maxrespawntime", "-1", FCVAR_REPLICATED, "Override the maximum respawn time for human players.");
+ConVar mp_bots_maxrespawntime("mp_bots_maxrespawntime", "-1", FCVAR_REPLICATED, "Override the maximum respawn time for bot players.");
 #ifdef GAME_DLL
 
 static const float g_flStrangeEventBatchProcessInterval = 30.0f;
@@ -10139,6 +10143,9 @@ void CTFGameRules::CheckRespawnWaves()
 {
 	BaseClass::CheckRespawnWaves();
 
+	float maxHumanRespawnTime = mp_humans_maxrespawntime.GetFloat();
+	float maxBotRespawnTime = mp_bots_maxrespawntime.GetFloat();
+
 	// Look for overrides
 	for ( int i = 1; i <= gpGlobals->maxClients; i++ )
 	{
@@ -10181,6 +10188,20 @@ void CTFGameRules::CheckRespawnWaves()
 
 			// Respawn this player
 			pTFPlayer->ForceRespawn();
+		}
+
+		float maxRespawnTime = maxHumanRespawnTime;
+		if ( pTFPlayer->IsFakeClient() )
+		{
+			maxRespawnTime = maxBotRespawnTime;
+		}
+		if ( maxRespawnTime >= 0 )
+		{
+			float flMinSpawnTime = 2.0 + spec_freeze_traveltime.GetFloat();
+			if ( gpGlobals->curtime > pTFPlayer->GetDeathTime() + flMinSpawnTime + maxRespawnTime && pTFPlayer->IsReadyToSpawn() )
+			{
+				pTFPlayer->ForceRespawn();
+			}
 		}
 	}
 }

@@ -19,6 +19,10 @@
 
 #define STATS_SEND_FREQUENCY 1.f
 
+extern ConVar mp_humans_maxrespawntime;
+extern ConVar mp_bots_maxrespawntime;
+extern ConVar spec_freeze_traveltime;
+
 // Datatable
 IMPLEMENT_SERVERCLASS_ST( CTFPlayerResource, DT_TFPlayerResource )
 	SendPropArray3( SENDINFO_ARRAY3( m_iTotalScore ), SendPropInt( SENDINFO_ARRAY( m_iTotalScore ), -1, SPROP_UNSIGNED | SPROP_VARINT ) ),
@@ -272,6 +276,19 @@ void CTFPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer 
 	if ( pTFPlayer->GetRespawnTimeOverride() != -1.f )
 	{
 		flRespawnTime = pTFPlayer->GetDeathTime() + pTFPlayer->GetRespawnTimeOverride();
+	}
+	if ( !pTFPlayer->IsAlive() )
+	{
+		float flMinSpawnTime = 2.0 + spec_freeze_traveltime.GetFloat();
+		float maxRespawnTime = mp_humans_maxrespawntime.GetFloat();
+		if ( pTFPlayer->IsFakeClient() )
+		{
+			maxRespawnTime = mp_bots_maxrespawntime.GetFloat();
+		}
+		if ( maxRespawnTime >= 0 && flRespawnTime > pTFPlayer->GetDeathTime() + maxRespawnTime + flMinSpawnTime )
+		{
+			flRespawnTime = pTFPlayer->GetDeathTime() + maxRespawnTime + flMinSpawnTime;
+		}
 	}
 	m_flNextRespawnTime.Set( iIndex, flRespawnTime );
 
