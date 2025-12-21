@@ -548,7 +548,6 @@ maps_config
 				cp 1
 				cp_count 2
 				theme_snow 1
-				theme_xmas 1
 				vscript 1
 			}
 		}
@@ -1332,7 +1331,6 @@ maps_config
 		}
 		pd_watergate
 		{
-			disabled 1
 			name "Watergate"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_watergate"
@@ -1360,7 +1358,6 @@ maps_config
 		}
 		pd_snowville_event
 		{
-			disabled 1
 			name "SnowVille"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_snowville_event"

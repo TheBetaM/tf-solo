@@ -372,6 +372,14 @@ bool CCaptureZone::IsDisabled( void )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Source Spaghetti (c), yum!
+//-----------------------------------------------------------------------------
+bool CCaptureZone::IsTriggerDisabled( void )
+{
+	return BaseClass::m_bDisabled;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureZone::InputEnable( inputdata_t &inputdata )

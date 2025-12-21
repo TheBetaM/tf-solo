@@ -40,6 +40,7 @@ public:
 	void	Capture( CBaseEntity *pOther );
 
 	bool	IsDisabled( void );
+	bool	IsTriggerDisabled( void );
 	void	SetDisabled( bool bDisabled );
 
 	// Input handlers
