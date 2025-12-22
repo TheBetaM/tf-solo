@@ -3466,7 +3466,6 @@ class CFindUnderworldExitPoint : public ISearchSurroundingAreasFunctor
 public:
 	CFindUnderworldExitPoint( int teamIndex )
 	{
-		m_escapeArea = NULL;
 		m_nTeamIndex = teamIndex;
 	}
 
@@ -3484,15 +3483,15 @@ public:
 			{
 				return true;
 			}
-			m_escapeArea = area;
-			return false;
+			m_escapeAreas.AddToTail( area );
+			return true;
 		}
 
 		return true;
 	}
 
 	int m_nTeamIndex;
-	CTFNavArea* m_escapeArea;
+	CUtlVector< CTFNavArea* > m_escapeAreas;
 };
 
 
@@ -3501,8 +3500,34 @@ public:
 CTFNavArea* CTFBot::FindUnderworldExitPoint( float maxTravelDistance ) const
 {
 	CFindUnderworldExitPoint find( GetTeamNumber() );
-	SearchSurroundingAreas( GetLastKnownArea(), find, maxTravelDistance );
-	return find.m_escapeArea;
+	auto area = TheTFNavMesh()->GetNearestNavArea( GetAbsOrigin(), true );
+	if ( !area )
+	{
+		return NULL;
+	}
+	SearchSurroundingAreas( area, find, maxTravelDistance );
+	if ( find.m_escapeAreas.Count() == 0 )
+	{
+		return NULL;
+	}
+	else
+	{
+		return find.m_escapeAreas[ RandomInt( 0, find.m_escapeAreas.Count() - 1 ) ];
+	}
+}
+
+CTFNavArea* CTFBot::FindUnderworldExitPoint( CNavArea* origin, float maxTravelDistance ) const
+{
+	CFindUnderworldExitPoint find( GetTeamNumber() );
+	SearchSurroundingAreas( origin, find, maxTravelDistance );
+	if ( find.m_escapeAreas.Count() == 0 )
+	{
+		return NULL;
+	}
+	else
+	{
+		return find.m_escapeAreas[ RandomInt( 0, find.m_escapeAreas.Count() - 1 ) ];
+	}
 }
 
 

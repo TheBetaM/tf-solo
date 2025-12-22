@@ -28,6 +28,8 @@ CTFBotSeekAndDestroy::CTFBotSeekAndDestroy( float duration, bool roamer )
 		m_giveUpTimer.Start( duration );
 	}
 	m_isRoaming = roamer;
+	m_isCapZoneLocked = false;
+	m_isPointLocked = false;
 }
 
 //---------------------------------------------------------------------------------------------
@@ -39,6 +41,12 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::OnStart( CTFBot *me, Action< CTFBot
 
 	CTeamControlPoint *point = me->GetMyControlPoint();
 	m_isPointLocked = ( point && point->IsLocked() );
+
+	m_isCapZoneLocked = false;
+	if ( me->HasTheFlag() )
+	{
+		m_isCapZoneLocked = true;
+	}
 
 	// restart the timer if we have one
 	if ( m_giveUpTimer.HasStarted() )
@@ -83,7 +91,16 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 			}
 		}
 		
-		if ( !TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat() )
+		if ( m_isCapZoneLocked )
+		{
+			CCaptureZone* zone = me->GetFlagCaptureZone();
+
+			if ( zone || !me->HasTheFlag() )
+			{
+				return Done( "Flag waiting over" );
+			}
+		}
+		else if ( !TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat() )
 		{
 			return Done( "Time to push for the objective" );
 		}

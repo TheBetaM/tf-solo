@@ -1249,7 +1249,6 @@ maps_config
 		}
 		pd_farmageddon
 		{
-			disabled 1
 			name "Farmageddon"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_farmageddon"
@@ -1290,7 +1289,6 @@ maps_config
 		}
 		pd_pit_of_death_event
 		{
-			disabled 1
 			name "Pit of Death"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_pit_of_death_event"
@@ -1304,7 +1302,6 @@ maps_config
 		}
 		pd_circus
 		{
-			disabled 1
 			name "Circus"
 			modename "#Gametype_PlayerDestruction"
 			thumbArt "maps/menu_thumb_pd_circus"

@@ -69,6 +69,7 @@ private:
 	bool			m_bShouldBlock;
 	float			m_flCaptureDelay;
 	float			m_flCaptureDelayOffset;
+	bool			m_bBotIgnore;
 };
 
 

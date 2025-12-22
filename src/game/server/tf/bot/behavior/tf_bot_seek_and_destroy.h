@@ -39,6 +39,7 @@ private:
 	CTFNavArea *m_goalArea;
 	CTFNavArea *ChooseGoalArea( CTFBot *me );
 	bool m_isPointLocked;
+	bool m_isCapZoneLocked;
 
 	PathFollower m_path;
 	CountdownTimer m_repathTimer;

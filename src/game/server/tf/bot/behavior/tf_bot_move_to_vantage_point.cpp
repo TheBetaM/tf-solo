@@ -130,6 +130,13 @@ EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnNavAreaChanged( CTFBot*
 	{
 		m_bHasEscaped = true;
 	}
+	if ( m_isEscaping && !m_isEscapingZone && newArea && newArea->HasAttributes( NAV_MESH_NO_HOSTAGES ) )
+	{
+		m_isEscapingZone = true;
+		m_vantageArea = me->FindUnderworldExitPoint( newArea, m_maxTravelDistance );
+		m_path.Invalidate();
+		m_repathTimer.Invalidate();
+	}
 
 	return TryContinue();
 }

@@ -11,6 +11,7 @@
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_deliver_flag.h"
 #include "bot/behavior/tf_bot_taunt.h"
 #include "bot/behavior/tf_bot_mvm_deploy_bomb.h"
+#include "bot/behavior/tf_bot_seek_and_destroy.h"
 
 #include "tf_objective_resource.h"
 #include "player_vs_environment/tf_population_manager.h"
@@ -242,7 +243,7 @@ ActionResult< CTFBot > CTFBotDeliverFlag::Update( CTFBot *me, float interval )
 
 		if ( !zone )
 		{
-			return Done( "No flag capture zone exists!" );
+			return SuspendFor( new CTFBotSeekAndDestroy( RandomFloat( 10.0f, 20.0f ), false ), "Waiting for capture zone to open..." );
 		}
 
 		CTFBotPathCost cost( me, FASTEST_ROUTE );

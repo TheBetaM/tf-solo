@@ -24,6 +24,7 @@ DEFINE_KEYFIELD( m_nCapturePoint, FIELD_INTEGER, "CapturePoint" ),
 DEFINE_KEYFIELD( m_flCaptureDelay, FIELD_FLOAT, "capture_delay" ),
 DEFINE_KEYFIELD( m_flCaptureDelayOffset, FIELD_FLOAT, "capture_delay_offset" ),
 DEFINE_KEYFIELD( m_bShouldBlock, FIELD_BOOLEAN, "shouldBlock" ),
+DEFINE_FIELD( m_bBotIgnore, FIELD_BOOLEAN ),
 
 // Functions.
 DEFINE_FUNCTION( CCaptureZoneShim::Touch ),
@@ -63,6 +64,7 @@ CCaptureZone::CCaptureZone()
 	m_bShouldBlock = true;
 	m_flCaptureDelay = 1.1f;
 	m_flCaptureDelayOffset = 0.025f;
+	m_bBotIgnore = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -376,7 +378,7 @@ bool CCaptureZone::IsDisabled( void )
 //-----------------------------------------------------------------------------
 bool CCaptureZone::IsTriggerDisabled( void )
 {
-	return BaseClass::m_bDisabled;
+	return BaseClass::m_bDisabled || m_bBotIgnore;
 }
 
 //-----------------------------------------------------------------------------

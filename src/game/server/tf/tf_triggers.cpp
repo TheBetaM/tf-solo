@@ -385,6 +385,10 @@ void CTriggerBotTag::Touch( CBaseEntity *pOther )
 {
 	if ( m_bDisabled )
 	{
+		if ( m_bRemoveOnExit )
+		{
+			EndTouch( pOther );
+		}
 		return;
 	}
 
@@ -417,7 +421,7 @@ void CTriggerBotTag::Touch( CBaseEntity *pOther )
 
 void CTriggerBotTag::EndTouch( CBaseEntity* pOther )
 {
-	if ( m_bDisabled || !m_bRemoveOnExit )
+	if ( !m_bRemoveOnExit )
 	{
 		return;
 	}
