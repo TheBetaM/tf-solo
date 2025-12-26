@@ -410,12 +410,12 @@ public:
 				
 				float deltaZ = closeTo.z - closeFrom.z;
 
-				if ( deltaZ > m_mover->GetMaxJumpHeight() )
+				if ( deltaZ > m_mover->GetMaxJumpHeight() && ( !m_mover->IsAbleToSwim() || !fromArea->IsUnderwater() ) )
 				{
 					// too high to jump
 					return -1.0f;
 				}
-				else if ( -deltaZ > m_mover->GetDeathDropHeight() )
+				else if ( -deltaZ > m_mover->GetDeathDropHeight() && ( !m_mover->IsAbleToSwim() || !area->IsUnderwater() ) )
 				{
 					// too far down to drop
 					return -1.0f;

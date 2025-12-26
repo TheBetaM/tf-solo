@@ -1009,7 +1009,7 @@ public:
 
 				if ( deltaZ >= m_stepHeight )
 				{
-					if ( deltaZ >= m_maxJumpHeight )
+					if ( deltaZ >= m_maxJumpHeight && !fromArea->IsUnderwater() )
 					{
 						// too high to reach
 						return -1.0f;
@@ -1019,7 +1019,7 @@ public:
 					const float jumpPenalty = 2.0f;
 					dist *= jumpPenalty;
 				}
-				else if ( deltaZ < -m_maxDropHeight )
+				else if ( deltaZ < -m_maxDropHeight && !area->IsUnderwater() )
 				{
 					// too far to drop
 					return -1.0f;

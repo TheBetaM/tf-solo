@@ -91,6 +91,7 @@ mp_humans_maxrespawntime, mp_bots_maxrespawntime
 - Fixed bots trying to use resupply lockers in Sudden Death/Arena
 - Fixed players/bots firing weapons never affecting bot behavior in Sudden Death/Arena
 - Nav mesh blocked state now also updates after tf_logic_cp_timer countdown ends
+- Bots will no longer try to attack using flamethrowers underwater
 ## VScript updates
 - Added Client VScript functionality for main menu UI and ingame HUD elements
 - Added in Solo table (Client/Server): ItemSchemaGetKV(), ItemSchemaReload(KeyValues), ItemDefExists(string), 

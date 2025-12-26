@@ -3915,6 +3915,18 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 					gun = primary;
 				}
 			}
+
+			if ( GetWaterLevel() >= 2 )
+			{
+				if ( secondary )
+				{
+					gun = secondary;
+				}
+				else if ( melee )
+				{
+					gun = melee;
+				}
+			}
 		}
 		break;
 	}

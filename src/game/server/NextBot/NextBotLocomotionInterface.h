@@ -116,12 +116,16 @@ public:
 	//
 	virtual bool IsAbleToJumpAcrossGaps( void ) const;		// return true if this bot can jump across gaps in its path
 	virtual bool IsAbleToClimb( void ) const;				// return true if this bot can climb arbitrary geometry it encounters
+	virtual bool IsAbleToSwim( void ) const { return false; }
+	virtual bool IsAbleToAirJump( void ) const { return false; }
 
 	virtual const Vector &GetFeet( void ) const;			// return position of "feet" - the driving point where the bot contacts the ground
 
 	virtual float GetStepHeight( void ) const;				// if delta Z is greater than this, we have to jump to get up
 	virtual float GetMaxJumpHeight( void ) const;			// return maximum height of a jump
 	virtual float GetDeathDropHeight( void ) const;			// distance at which we will die if we fall
+
+	virtual int GetRemainingAirJumps( void ) { return 0; }
 
 	virtual float GetRunSpeed( void ) const;				// get maximum running speed
 	virtual float GetWalkSpeed( void ) const;				// get maximum walking speed

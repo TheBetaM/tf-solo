@@ -62,6 +62,8 @@ public:
 	virtual bool IsCloseEnoughToLadderTop( void ) const;
 	virtual bool IsCloseEnoughToLadder( void ) const;
 	virtual bool CanClimbFakeLadders( void ) const		{ return false; }
+	virtual bool IsAbleToSwim( void ) const				{ return true; }
+	virtual bool IsAbleToAirJump( void ) const				{ return true; }
 
 	virtual void FaceTowards( const Vector &target );		// rotate body to face towards "target"
 
@@ -85,7 +87,7 @@ public:
 
 	virtual const Vector &GetVelocity( void ) const;		// return current world space velocity
 
-	virtual int GetRemainingAirJumps( void );
+	virtual int GetRemainingAirJumps( void ) OVERRIDE;
 
 protected:
 	virtual void AdjustPosture( const Vector &moveGoal );

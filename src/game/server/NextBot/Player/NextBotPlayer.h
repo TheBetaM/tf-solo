@@ -20,6 +20,7 @@ extern ConVar NextBotPlayerStop;
 extern ConVar NextBotPlayerWalk;
 extern ConVar NextBotPlayerCrouch;
 extern ConVar NextBotPlayerMove;
+extern ConVar cl_upspeed;
 
 
 
@@ -118,6 +119,12 @@ public:
 	virtual void PressRightButton( float duration = -1.0f ) = 0;
 	virtual void ReleaseRightButton( void ) = 0;
 
+	virtual void PressUpButton( float duration = -1.0f ) = 0;
+	virtual void ReleaseUpButton( void ) = 0;
+
+	virtual void PressDownButton( float duration = -1.0f ) = 0;
+	virtual void ReleaseDownButton( void ) = 0;
+
 	virtual void PressJumpButton( float duration = -1.0f ) = 0;
 	virtual void ReleaseJumpButton( void ) = 0;
 
@@ -208,6 +215,12 @@ public:
 	virtual void PressRightButton( float duration = -1.0f );
 	virtual void ReleaseRightButton( void );
 
+	virtual void PressUpButton( float duration = -1.0f );
+	virtual void ReleaseUpButton( void );
+
+	virtual void PressDownButton( float duration = -1.0f );
+	virtual void ReleaseDownButton( void );
+
 	virtual void PressJumpButton( float duration = -1.0f );
 	virtual void ReleaseJumpButton( void );
 
@@ -253,6 +266,8 @@ protected:
 	CountdownTimer m_backwardButtonTimer;
 	CountdownTimer m_leftButtonTimer;
 	CountdownTimer m_rightButtonTimer;
+	CountdownTimer m_upButtonTimer;
+	CountdownTimer m_downButtonTimer;
 	CountdownTimer m_jumpButtonTimer;
 	CountdownTimer m_crouchButtonTimer;
 	CountdownTimer m_walkButtonTimer;
@@ -260,6 +275,7 @@ protected:
 	IntervalTimer m_burningTimer;		// how long since we were last burning
 	float m_forwardScale;
 	float m_rightScale;
+	float m_upMove;
 	CHandle< CBaseEntity > m_spawnPointEntity;
 };
 
@@ -496,6 +512,34 @@ inline void NextBotPlayer< PlayerType >::ReleaseRightButton( void )
 }
 
 template < typename PlayerType >
+inline void NextBotPlayer< PlayerType >::PressUpButton( float duration )
+{
+	m_upMove = 1.0f;
+	m_upButtonTimer.Start( duration );
+}
+
+template < typename PlayerType >
+inline void NextBotPlayer< PlayerType >::ReleaseUpButton( void )
+{
+	m_upMove = 0;
+	m_upButtonTimer.Invalidate();
+}
+
+template < typename PlayerType >
+inline void NextBotPlayer< PlayerType >::PressDownButton( float duration )
+{
+	m_upMove = -1.0f;
+	m_downButtonTimer.Start( duration );
+}
+
+template < typename PlayerType >
+inline void NextBotPlayer< PlayerType >::ReleaseDownButton( void )
+{
+	m_upMove = 0;
+	m_downButtonTimer.Invalidate();
+}
+
+template < typename PlayerType >
 inline void NextBotPlayer< PlayerType >::SetButtonScale( float forward, float right )
 {
 	m_forwardScale = forward;
@@ -511,6 +555,7 @@ inline NextBotPlayer< PlayerType >::NextBotPlayer( void )
 {
 	m_prevInputButtons = 0;
 	m_inputButtons = 0;
+	m_upMove = 0;
 	m_burningTimer.Invalidate();
 	m_spawnPointEntity = NULL;
 }
@@ -539,6 +584,8 @@ inline void NextBotPlayer< PlayerType >::Spawn( void )
 	m_backwardButtonTimer.Invalidate();
 	m_leftButtonTimer.Invalidate();
 	m_rightButtonTimer.Invalidate();
+	m_upButtonTimer.Invalidate();
+	m_downButtonTimer.Invalidate();
 	m_jumpButtonTimer.Invalidate();
 	m_crouchButtonTimer.Invalidate();
 	m_walkButtonTimer.Invalidate();
@@ -599,6 +646,7 @@ inline void NextBotPlayer< PlayerType >::PhysicsSimulate( void )
 	}
 
 	int inputButtons;
+	float upMove = m_upMove * cl_upspeed.GetFloat();
 	//
 	// Update bot behavior
 	//
@@ -642,6 +690,12 @@ inline void NextBotPlayer< PlayerType >::PhysicsSimulate( void )
 
 		if ( !m_walkButtonTimer.IsElapsed() )
 			m_inputButtons |= IN_SPEED;
+
+		if ( !m_upButtonTimer.IsElapsed() )
+			upMove = 1.0f * cl_upspeed.GetFloat();
+
+		if ( !m_downButtonTimer.IsElapsed() )
+			upMove = -1.0f * cl_upspeed.GetFloat();
 
 		m_prevInputButtons = m_inputButtons;
 		inputButtons = m_inputButtons;
@@ -734,7 +788,7 @@ inline void NextBotPlayer< PlayerType >::PhysicsSimulate( void )
 
 	// construct a "command" to move the player
 	CUserCmd userCmd;
-	_NextBot_BuildUserCommand( &userCmd, angles, forwardSpeed, strafeSpeed, verticalSpeed, inputButtons, 0 );
+	_NextBot_BuildUserCommand( &userCmd, angles, forwardSpeed, strafeSpeed, verticalSpeed, inputButtons, upMove );
 
 	AvoidPlayers( &userCmd );
 

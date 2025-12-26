@@ -692,7 +692,9 @@ void PathFollower::Update( INextBot *bot )
 	// limit too high distance to reasonable value for bots that can climb very high
 	float tooHighDistance = mover->GetMaxJumpHeight();
 
-	if ( !m_goal->ladder && !mover->IsClimbingOrJumping() && !isOnStairs && m_goal->pos.z > mover->GetFeet().z + tooHighDistance )
+	bool bUnderwater = ( UTIL_PointContents( m_goal->pos ) & MASK_WATER ) ? true : false;
+	bool bIsUnderwater = mover->IsAbleToSwim() && ( bot->GetEntity()->GetWaterLevel() >= 2 || bUnderwater );
+	if ( !m_goal->ladder && !mover->IsClimbingOrJumping() && !isOnStairs && m_goal->pos.z > mover->GetFeet().z + tooHighDistance && !bIsUnderwater )
 	{
 		const float closeRange = 25.0f; // 75.0f;
 		Vector2D to( mover->GetFeet().x - m_goal->pos.x, mover->GetFeet().y - m_goal->pos.y );

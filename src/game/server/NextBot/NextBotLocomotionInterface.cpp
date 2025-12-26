@@ -178,7 +178,9 @@ bool ILocomotion::IsPotentiallyTraversable( const Vector &from, const Vector &to
 
 	// if 'to' is high above us, it's not directly traversable
 	// Adding a bit of fudge room to allow for floating point roundoff errors
-	if ( ( to.z - from.z ) > GetMaxJumpHeight() + 0.1f )
+	bool bUnderwater = ( UTIL_PointContents( to ) & MASK_WATER ) ? true : false;
+	bool bIsUnderwater = IsAbleToSwim() && ( GetBot()->GetEntity()->GetWaterLevel() >= 2 || bUnderwater );
+	if ( ( to.z - from.z ) > GetMaxJumpHeight() + 0.1f && !bIsUnderwater )
 	{
 		Vector along = to - from;
 		along.NormalizeInPlace();
@@ -548,10 +550,13 @@ BEGIN_ENT_SCRIPTDESC( ILocomotion, INextBotComponent, "Next bot locomotion" )
 	DEFINE_SCRIPTFUNC( FaceTowards, "Rotate body to face towards target" )
 	DEFINE_SCRIPTFUNC( IsAbleToJumpAcrossGaps, "Return true if this bot can jump across gaps in its path" )
 	DEFINE_SCRIPTFUNC( IsAbleToClimb, "Return true if this bot can climb arbitrary geometry it encounters" )
+	DEFINE_SCRIPTFUNC( IsAbleToSwim, "Return true if this bot can swim" )
+	DEFINE_SCRIPTFUNC( IsAbleToAirJump, "Return true if this bot can air jump" )
 	DEFINE_SCRIPTFUNC( GetFeet, "Return position of feet - the driving point where the bot contacts the ground" )
 	DEFINE_SCRIPTFUNC( GetStepHeight, "If delta Z is greater than this, we have to jump to get up" )
 	DEFINE_SCRIPTFUNC( GetMaxJumpHeight, "Return maximum height of a jump" )
 	DEFINE_SCRIPTFUNC( GetDeathDropHeight, "Distance at which we will die if we fall" )
+	DEFINE_SCRIPTFUNC( GetRemainingAirJumps, "Return remaining air jumps" )
 	DEFINE_SCRIPTFUNC( GetRunSpeed, "Get maximum running speed" )
 	DEFINE_SCRIPTFUNC( GetWalkSpeed, "Get maximum walking speed" )
 	DEFINE_SCRIPTFUNC( GetMaxAcceleration, "Return maximum acceleration of locomotor" )
