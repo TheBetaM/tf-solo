@@ -89,6 +89,7 @@ public:
 	MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
 	MESSAGE_FUNC( OnCancelSelection, "CancelSelection" );
 	MESSAGE_FUNC( OnClosing, "Closing" );
+	MESSAGE_FUNC( OnItemPresetLoaded, "ItemPresetLoaded" );
 	virtual void OnCommand( const char *command );
 	virtual void OnMessage( const KeyValues* pParams, vgui::VPANEL hFromPanel );
 	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );

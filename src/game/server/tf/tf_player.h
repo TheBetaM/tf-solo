@@ -161,7 +161,7 @@ public:
 	virtual bool		ShouldGainInstantSpawn( void );
 	virtual void		ResetScores( void );
 	virtual void		UpdateOnRemove( void );
-	void				CheckInstantLoadoutRespawn( void );
+	void				CheckInstantLoadoutRespawn( bool bForce = false );
 
 	virtual void		ResetPerRoundStats( void );
 

@@ -278,6 +278,8 @@ ConVar tf_halloween_allow_ghost_hit_by_kart_delay( "tf_halloween_allow_ghost_hit
 ConVar tf_maxhealth_drain_hp_min( "tf_maxhealth_drain_hp_min", "100", FCVAR_DEVELOPMENTONLY );
 ConVar tf_maxhealth_drain_deploy_cost( "tf_maxhealth_drain_deploy_cost", "20", FCVAR_DEVELOPMENTONLY );
 
+ConVar tf_respawn_on_loadoutchanges_type( "tf_respawn_on_loadoutchanges_type", "2", FCVAR_NONE, "0 - Do nothing, 1 - Respawn and regenerate, 2 - Regenerate only" );
+
 extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );
 ConVar sv_vote_late_join_cooldown( "sv_vote_late_join_cooldown", "300", FCVAR_NONE, "Length of the vote-creation cooldown when joining the server after the grace period has expired" );
@@ -7257,33 +7259,36 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 //-----------------------------------------------------------------------------
 // Purpose: The GC has told us this player wants to respawn now that their loadout has changed.
 //-----------------------------------------------------------------------------
-void CTFPlayer::CheckInstantLoadoutRespawn( void )
+void CTFPlayer::CheckInstantLoadoutRespawn( bool bForce )
 {
 	// Must be alive
 	if ( !IsAlive() )
 		return;
 
 	// In a respawn room of your own team
-	if ( !PointInRespawnRoom( this, WorldSpaceCenter(), true ) )
+	if ( !PointInRespawnRoom( this, WorldSpaceCenter(), true ) && !TFGameRules()->IsInArenaMode() )
 		return;
 	
 	// Not in stalemate (beyond the change class period)
-	if ( TFGameRules()->InStalemate() && !TFGameRules()->CanChangeClassInStalemate() )
+	if ( TFGameRules()->InStalemate() && !TFGameRules()->CanChangeClassInStalemate() && !TFGameRules()->IsInArenaMode() )
 		return;
 
-	// Not in Arena mode
-	if ( TFGameRules()->IsInArenaMode() == true )
+	// Not in Arena mode after round start
+	if ( TFGameRules()->IsInArenaMode() == true && TFGameRules()->State_Get() != GR_STATE_PREROUND )
 		return;
 
 	// Not if we're on the losing team
 	if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN && TFGameRules()->GetWinningTeam() != GetTeamNumber() ) 
 		return;
 
+	if ( tf_respawn_on_loadoutchanges_type.GetInt() == 0 )
+		return;
+
 	// Not if our current class's loadout hasn't changed
 	int iClass = GetPlayerClass() ? GetPlayerClass()->GetClassIndex() : TF_CLASS_UNDEFINED;
 	if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass < TF_LAST_NORMAL_CLASS )
 	{
-		if ( m_Inventory.ClassLoadoutHasChanged( iClass ) )
+		if ( m_Inventory.ClassLoadoutHasChanged( iClass ) || bForce )
 		{
 			if ( m_Shared.InCond( TF_COND_AIMING ) )
 			{
@@ -7318,9 +7323,17 @@ void CTFPlayer::CheckInstantLoadoutRespawn( void )
 				}
 			}
 
-			// We want to use ForceRespawn() here so the player is physically moved back
-			// into the spawn room and not just regenerated instantly in the doorway
-			ForceRegenerateAndRespawn();
+			if ( tf_respawn_on_loadoutchanges_type.GetInt() == 1 )
+			{
+				// We want to use ForceRespawn() here so the player is physically moved back
+				// into the spawn room and not just regenerated instantly in the doorway
+				ForceRegenerateAndRespawn();
+			}
+			else if ( tf_respawn_on_loadoutchanges_type.GetInt() == 2 )
+			{
+				Regenerate();
+				SetNextRegenTime( gpGlobals->curtime + 1.0 );
+			}
 		}
 	}
 }

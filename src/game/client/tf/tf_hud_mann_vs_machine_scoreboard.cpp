@@ -337,11 +337,11 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 		// check for bots first, so malicious server operators can't fake a ping and stuff their server with bots that look like players
 		if ( g_PR->IsFakePlayer( playerIndex ) )
 		{
-			pKeyValues->SetString( "ping", "#TF_Scoreboard_Bot" );
+			pKeyValues->SetString( "ping", "" );
 		}
 		else
 		{
-			if ( g_PR->GetPing( playerIndex ) < 1 )
+			if ( g_PR->GetPing( playerIndex ) < 1 || g_PR->IsLocalPlayer( playerIndex ) )
 			{
 				pKeyValues->SetString( "ping", "" );
 			}

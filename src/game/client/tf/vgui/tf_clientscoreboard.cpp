@@ -1410,19 +1410,20 @@ void CTFClientScoreBoardDialog::UpdatePlayerList()
 			{
 				if ( tf_scoreboard_ping_as_text.GetBool() )
 				{
-					pKeyValues->SetString( "ping", "#TF_Scoreboard_Bot" );
+					pKeyValues->SetString( "ping", "" );
 				}
 				else
 				{
-					int iIndex = ( nTeam == TF_TEAM_RED ) ? PING_BOT_RED : PING_BOT_BLUE;
-					pKeyValues->SetInt( "ping", bAlive ? m_iImagePing[iIndex] : m_iImagePingDead[iIndex] );
+					//int iIndex = ( nTeam == TF_TEAM_RED ) ? PING_BOT_RED : PING_BOT_BLUE;
+					//pKeyValues->SetInt( "ping", bAlive ? m_iImagePing[iIndex] : m_iImagePingDead[iIndex] );
+					pKeyValues->SetInt( "ping", 0 );
 				}
 			}
 			else
 			{
 				int nPing = g_PR->GetPing( playerIndex );
 
- 				if ( nPing < 1 )
+ 				if ( nPing < 1 || g_PR->IsLocalPlayer( playerIndex ) )
  				{
 					if ( tf_scoreboard_ping_as_text.GetBool() )
 					{

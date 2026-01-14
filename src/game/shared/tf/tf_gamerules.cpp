@@ -16099,6 +16099,13 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 
 			GTFGCClientSystem()->ProcessPlayerInventoryRequest( steamID, pKeyValues );
 		}
+		else if ( FStrEq( pszCommand, "sdk_inventory_update" ) )
+		{
+			if ( steamapicontext == NULL || steamapicontext->SteamUser() == NULL || !steamapicontext->SteamUser()->BLoggedOn() )
+			{
+				pTFPlayer->CheckInstantLoadoutRespawn( true );
+			}
+		}
 		else
 		{
 			BaseClass::ClientCommandKeyValues( pEntity, pKeyValues );

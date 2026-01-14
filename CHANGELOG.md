@@ -38,7 +38,7 @@ tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force,
 sv_thirdperson_platformer_force, tf_subclass_allow, mp_humans_must_join_subclass, 
 tf_bot_sniper_lasersight, tf_player_maxspeed_override, tf_scoreboard_allow,
 tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom,
-mp_humans_maxrespawntime, mp_bots_maxrespawntime
+mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_type
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
@@ -55,6 +55,7 @@ mp_humans_maxrespawntime, mp_bots_maxrespawntime
 - Increased maximum FoV to 140
 - Changed tf_airblast_cray default value to 0 (restoring old airblast mechanics)
 - Spawning is no longer prevented while having the class select menu open with hud_classautokill 0
+- Fixed loadout changes not respawning players during the preround period in Arena mode
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added nav files for many existing maps

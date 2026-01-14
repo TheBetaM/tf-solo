@@ -2586,6 +2586,8 @@ CON_COMMAND( load_itempreset, "Equip all items for a given preset on the player.
 	{
 		GCSDK::CGCMsg< ::MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
 		GCClientSystem()->BSendMessage( msg );
+		KeyValues* kv = new KeyValues( "sdk_inventory_update" );
+		engine->ServerCmdKeyValues( kv );
 	}
 }
 #endif	// TF_CLIENT_DLL
@@ -2660,8 +2662,8 @@ bool CTFInventoryManager::LoadPreset(equipped_class_t unClass, equipped_preset_t
 	if (!IsPresetIndexValid(unPreset))
 		return false;
 
-	if (!GetLocalInventory()->GetSOC())
-		return false;
+	//if (!GetLocalInventory()->GetSOC())
+	//	return false;
 
 	if (!steamapicontext || !steamapicontext->SteamUser())
 		return false;
@@ -2708,8 +2710,8 @@ bool CTFInventoryManager::LoadPresetSub(equipped_class_t unClass, const char* ps
 	if (!IsPresetIndexValid(unPreset))
 		return false;
 
-	if (!GetLocalInventory()->GetSOC())
-		return false;
+	//if (!GetLocalInventory()->GetSOC())
+	//	return false;
 
 	if (!steamapicontext || !steamapicontext->SteamUser())
 		return false;

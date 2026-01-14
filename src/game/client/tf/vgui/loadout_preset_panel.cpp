@@ -174,6 +174,8 @@ void CLoadoutPresetPanel::LoadPreset( int iPresetIndex )
 		TFInventoryManager()->LoadPreset( m_iClass, iPresetIndex );
 	}
 
+	PostMessage( GetParent(), new KeyValues( "ItemPresetLoaded" ) );
+
 	if (m_pClassLoadoutPanel)
 	{
 		m_pClassLoadoutPanel->UpdateModelPanels();

@@ -1071,6 +1071,14 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+void CClassLoadoutPanel::OnItemPresetLoaded( void )
+{
+	m_bLoadoutHasChanged = true;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnCancelSelection( void )
 {
 	if ( m_pSelectionPanel )
@@ -1096,6 +1104,8 @@ void CClassLoadoutPanel::RespawnPlayer()
 		// Tell the GC to tell server that we should respawn if we're in a respawn room
 		GCSDK::CGCMsg< MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
 		GCClientSystem()->BSendMessage( msg );
+		KeyValues* kv = new KeyValues( "sdk_inventory_update" );
+		engine->ServerCmdKeyValues( kv );
 	}
 }
 
