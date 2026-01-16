@@ -1,4 +1,913 @@
 bot_presets
 {
+	Warmup
+	{
+		Name "Warmup Runner"
+		Class Scout
+		Items
+		{
+			"Weight Room Warmer" {}
+			"Runner's Warm-Up" {}
+		}
+	}
+	Snowboarder
+	{
+		Name "Snowboarder"
+		Class Scout
+		Items
+		{
+			"Antarctic Eyewear" {}
+			"Wipe Out Wraps" {}
+			"Blizzard Britches" {}
+			"The Tundra Top" {}
+		}
+	}
+	SnowScout
+	{
+		Name "SnowScout"
+		Class Scout
+		Items
+		{
+			"Isotopic Insulator" {}
+			"Bonk Beanie" {}
+		}
+	}
+	Elf
+	{
+		Name "Santa's Little Accomplice"
+		Class Scout
+		Items
+		{
+			"The Big Elfin Deal" {}
+			"The Bootie Time" {}
+			
+			"The Wrap Assassin" {}
+		}
+	}
+	XmasScout
+	{
+		Name "Yo! Merry Smissmas!"
+		Class Scout
+		Items
+		{
+			"EOTL_thermal_sleeves" {}
+			"The B.M.O.C." {}
+			"Pocket Santa" {}
+		}
+	}
+	Snowboarder2
+	{
+		Name "Mountaineer"
+		Class Scout
+		Items
+		{
+			"Woolen Warmer" {}
+			"Snowwing" {}
+		}
+	}
+	Jingler
+	{
+		Name "Jolly Jingler"
+		Class Scout
+		Items
+		{
+			"Jolly Jingler" {}
+			"Festive Flip-thwomps" {}
+		}
+	}
+	Giftcrafter
+	{
+		Name "Giftcrafter"
+		Class Scout
+		Items
+		{
+			"The Giftcrafter" {}
+			"Festive Frames" {}
+			"Seasonal Employee" {}
+		}
+	}
+	JollyJester
+	{
+		Name "Jolly Jester"
+		Class Scout
+		Items
+		{
+			"Jolly Jester" {}
+		}
+	}
+	JollyJester
+	{
+		Name "Jolly Jester"
+		Class Scout
+		Items
+		{
+			"The Crimbo Cap" {}
+			"The Triple Jumper" {}
+		}
+	}
+	EpilogueScout
+	{
+		Name "EpilogueScout"
+		Class Scout
+		Items
+		{
+			"Epilogue Locks" {}
+			"Willis' Warmer" {}
+			"The Sole Providers" {}
+		}
+	}
+	
+	Polar
+	{
+		Name "Polar Ace"
+		Class Soldier
+		Items
+		{
+			"Antarctic Parka" {}
+			"The Polar Pullover" {}
+		}
+	}
+	Stomper
+	{
+		Name "Snow Stomper"
+		Class Soldier
+		Items
+		{
+			"EOTL_soldierhat" {}
+			"EOTL_beard" {}
+			"EOTL_Coldfront Curbstompers" {}
+		}
+	}
+	Charger
+	{
+		Name "Charger"
+		Class Soldier
+		Items
+		{
+			"Polar Charger" {}
+			"Field Fatigues" {}
+		}
+	}
+	Kringle
+	{
+		Name "Kringle"
+		Class Soldier
+		Items
+		{
+			"The All-Father" {}
+			"The Kringle Collection" {}
+			"Colonel Kringle" {}
+			"The Ornament Armament" {}
+		}
+	}
+	Headcase
+	{
+		Name "Holiday Headcase"
+		Class Soldier
+		Items
+		{
+			"The Holiday Headcase" {}
+		}
+	}
+	ToySoldier
+	{
+		Name "Toy Soldier"
+		Class Soldier
+		Items
+		{
+			"The Toy Soldier" {}
+		}
+	}
+	WinterSoldier
+	{
+		Name "WinterSoldier"
+		Class Soldier
+		Items
+		{
+			"eotl_winter_coat" {}
+			"dec2014 Skullcap" {}
+		}
+	}
+	GiftBringer
+	{
+		Name "Gift Bringer"
+		Class Soldier
+		Items
+		{
+			"The Gift Bringer" {}
+			"Wanderer's Wool" {}
+		}
+	}
+	Muffler
+	{
+		Name "Muffler"
+		Class Soldier
+		Items
+		{
+			"Soldier's Slope Scopers" {}
+			"The Merc's Muffler" {}
+		}
+	}
+	SmissmasWarrior
+	{
+		Name "Smissmas Warrior"
+		Class Soldier
+		Items
+		{
+			"The War on Smissmas Battle Hood" {}
+			"The War on Smissmas Battle Socks" {}
+		}
+	}
+	Climbing
+	{
+		Name "Climbing Commander"
+		Class Soldier
+		Items
+		{
+			"Climbing Commander" {}
+		}
+	}
+	Beanies
+	{
+		Name "Beanie Baby"
+		Class Soldier
+		Items
+		{
+			"Towering Pillar of Beanies" {}
+		}
+	}
+	ElfSoldier
+	{
+		Name "Elf Defence"
+		Class Soldier
+		Items
+		{
+			"Elf Defence" {}
+			"Elf-Made Bandanna" {}
+		}
+	}
+	Bulbhead
+	{
+		Name "Bulbhead"
+		Class Soldier
+		Items
+		{
+			"Bulb Bonnet" {}
+		}
+	}
+	Scrooge
+	{
+		Name "Scrooge McCrocket"
+		Class Soldier
+		Items
+		{
+			"Scrooge McCrocket" {}
+		}
+	}
+	
+	SubZero
+	{
+		Name "Sub-Zero Ignition"
+		Class Pyro
+		Items
+		{
+			"The Blizzard Breather" {}
+			"The Sub Zero Suit" {}
+		}
+	}
+	Skier
+	{
+		Name "Skier"
+		Class Pyro
+		Items
+		{
+			"EOTL_Skier" {}
+			"EOTL_Brisk-weather Beanie" {}
+			"EOTL_pyro_sweater" {}
+			"EOTL_hiphunter_boots" {}
+		}
+	}
+	Tundra
+	{
+		Name "Tundra"
+		Class Pyro
+		Items
+		{
+			"The Tundra Top" {}
+			"The Hot Case" {}
+		}
+	}
+	Spaniel
+	{
+		Name "Hot Spaniel"
+		Class Pyro
+		Items
+		{
+			"Hot Spaniel" {}
+			"Frostbite Fit" {}
+		}
+	}
+	JingleHell
+	{
+		Name "Jingle Hell"
+		Class Pyro
+		Items
+		{
+			"The Head Warmer" {}
+			"The Jingle Belt" {}
+		}
+	}
+	Pyrotechnic
+	{
+		Name "Pyrotechnic"
+		Class Pyro
+		Items
+		{
+			"The Brown Bomber" {}
+			"The Pyrotechnic Tote" {}
+		}
+	}
+	Wrapped
+	{
+		Name "Wrapped Up"
+		Class Pyro
+		Items
+		{
+			"The Winter Wonderland Wrap" {}
+		}
+	}
+	Tailor
+	{
+		Name "Toy Tailor"
+		Class Pyro
+		Items
+		{
+			"The Toy Tailor" {}
+			"Tiny Timber" {}
+		}
+	}
+	Flamedeer
+	{
+		Name "Flamedeer"
+		Class Pyro
+		Items
+		{
+			"Sweet Smissmas Sweater" {}
+			"Flammable Favor" {}
+			"Pyro the Flamedeer" {}
+		}
+	}
+	CandyCranium
+	{
+		Name "Candy Crusher"
+		Class Pyro
+		Items
+		{
+			"Candy Cranium" {}
+			"Gingerbread Mann" {}
+			"Candy Cantlers" {}
+		}
+	}
+	Reindoonifan
+	{
+		Name "Reindoonifan"
+		Class Pyro
+		Items
+		{
+			"Pet Reindoonicorn" {}
+			"Reindoonibeanie" {}
+		}
+	}
+	Ignition
+	{
+		Name "Elf Ignition"
+		Class Pyro
+		Items
+		{
+			"Elf Ignition" {}
+		}
+	}
+	
+	Breeze
+	{
+		Name "Cool Breeze"
+		Class Demoman
+		Items
+		{
+			"The Cool Breeze" {}
+			"Tough Stuff Muffs" {}
+		}
+	}
+	Winter
+	{
+		Name "Winter Blowout"
+		Class Demoman
+		Items
+		{
+			"EOTL_hiphunter_jacket" {}
+			"EOTL_demopants" {}
+			"Boarder's Beanie" {}
+		}
+	}
+	Snowball
+	{
+		Name "Snowball"
+		Class Demoman
+		Items
+		{
+			"The Ebenezer" {}
+		}
+	}
+	Comforter
+	{
+		Name "Comforter"
+		Class Demoman
+		Items
+		{
+			"dec2014 Comforter" {}
+		}
+	}
+	CitizenCane
+	{
+		Name "Citizen Cane"
+		Class Demoman
+		Items
+		{
+			"Citizen Cane" {}
+			"Handy Canes" {}
+		}
+	}
+	YuleHog
+	{
+		Name "YuleHog"
+		Class Demoman
+		Items
+		{
+			"Yule Hog" {}
+			"Glittering Garland" {}
+		}
+	}
+	Fleece
+	{
+		Name "Festive Fleece"
+		Class Demoman
+		Items
+		{
+			"Blizzard Bonnet" {}
+			"Festive Fleece" {}
+		}
+	}
+	
+	Ushanka
+	{
+		Name "Cold Warrior"
+		Class HeavyWeapons
+		Items
+		{
+			"Officer's Ushanka" {}
+		}
+	}
+	Heating
+	{
+		Name "Blizzard Survivor"
+		Class HeavyWeapons
+		Items
+		{
+			"Ol' Reliable" {}
+			"Heavy Heating" {}
+		}
+	}
+	Tough
+	{
+		Name "Tough Guy"
+		Class HeavyWeapons
+		Items
+		{
+			"Tough Guy's Toque" {}
+		}
+	}
+	BigBear
+	{
+		Name "Big Bear"
+		Class HeavyWeapons
+		Items
+		{
+			"EOTL_Ursa Major" {}
+			"EOTL_Flat_cap" {}
+		}
+	}
+	Siberian
+	{
+		Name "Siberian"
+		Class HeavyWeapons
+		Items
+		{
+			"dec2014 heavy_parka" {}
+		}
+	}
+	OldManFrost
+	{
+		Name "Old Man Frost"
+		Class HeavyWeapons
+		Items
+		{
+			"dec2014 The Big Papa" {}
+			"Siberian Sweater" {}
+		}
+	}
+	PolarBear
+	{
+		Name "Polar Bear"
+		Class HeavyWeapons
+		Items
+		{
+			"Polar Bear" {}
+		}
+	}
+	Parka
+	{
+		Name "Warm Regards"
+		Class HeavyWeapons
+		Items
+		{
+			"Cool Capuchon" {}
+			"Paka Parka" {}
+		}
+	}
+	CandyKing
+	{
+		Name "Candy King"
+		Class HeavyWeapons
+		Items
+		{
+			"Candy Crown" {}
+		}
+	}
+	Moose
+	{
+		Name "Moose"
+		Class HeavyWeapons
+		Items
+		{
+			"Mooshanka" {}
+		}
+	}
+	XmasBeat
+	{
+		Name "Smissmas Beat"
+		Class HeavyWeapons
+		Items
+		{
+			"Cozy Cover-Up" {}
+		}
+	}
+	Balkan
+	{
+		Name "Balkan's Brute"
+		Class HeavyWeapons
+		Items
+		{
+			"Balkan's Brute" {}
+		}
+	}
+	ChillSeeker
+	{
+		Name "Chill-Seeker"
+		Class HeavyWeapons
+		Items
+		{
+			"Chill-Seeker" {}
+			"Puncher's Polar Puffer" {}
+		}
+	}
+	
+	Barnstormer
+	{
+		Name "Barnstormer"
+		Class Engineer
+		Items
+		{
+			"The Barnstormer" {}
+			"The Dogfighter" {}
+		}
+	}
+	Insulated
+	{
+		Name "Insulated Innovator"
+		Class Engineer
+		Items
+		{
+			"EOTL_Insulated_innovator" {}
+			"EOTL_winter_pants" {}
+			"EOTL_FURCAP" {}
+		}
+	}
+	Lawnmaker
+	{
+		Name "Antarctic Researcher"
+		Class Engineer
+		Items
+		{
+			"The Gold Digger" {}
+			"The Lawnmaker" {}
+			"The Antarctic Researcher" {}
+		}
+	}
+	FestiveFace
+	{
+		Name "Festive Face"
+		Class Engineer
+		Items
+		{
+			"Industrial Festivizer" {}
+			"Face Full of Festive" {}
+			"Festive Fascinator" {}
+			"Festive Frames" {}
+		}
+	}
+	ColdCaller
+	{
+		Name "Cold Caller"
+		Class Engineer
+		Items
+		{
+			"dec2014 Thermal Insulation Layer" {}
+			"Winter Wrap Up" {}
+		}
+	}
+	SoftSpot
+	{
+		Name "Soft Spot"
+		Class Engineer
+		Items
+		{
+			"The Soft Hard Hat" {}
+			"The Cool Warm Sweater" {}
+		}
+	}
+	Underminer
+	{
+		Name "Underminer"
+		Class Engineer
+		Items
+		{
+			"Arctic Mole" {}
+			"Underminer's Overcoat" {}
+		}
+	}
+	Alpine
+	{
+		Name "Alpine Hawk"
+		Class Engineer
+		Items
+		{
+			"Alpine Hawk" {}
+			"Alpine Apparel" {}
+		}
+	}
+	
+	Mantel
+	{
+		Name "Shivering Aid"
+		Class Medic
+		Items
+		{
+			"Der Wintermantel" {}
+			"Tough Stuff Muffs" {}
+			"The Merc's Muffler" {}
+		}
+	}
+	Coldfront
+	{
+		Name "Coldfront Commander"
+		Class Medic
+		Items
+		{
+			"Coldfront Commander" {}
+			"Coldfront Carapace" {}
+		}
+	}
+	Puffed
+	{
+		Name "Puffed"
+		Class Medic
+		Items
+		{
+			"The Puffed Practitioner" {}
+			"The Frigid Fashion" {}
+		}
+	}
+	Scarf
+	{
+		Name "Scarf"
+		Class Medic
+		Items
+		{
+			"The Gentleman's Ushanka" {}
+			"The Chronoscarf" {}
+		}
+	}
+	Monarch
+	{
+		Name "Monarch"
+		Class Medic
+		Items
+		{
+			"Medical Monarch" {}
+			"Ze Ubermensch" {}
+			"dec2014 Surgeon's Shako" {}
+		}
+	}
+	ElfCare
+	{
+		Name "Elf Care Provider"
+		Class Medic
+		Items
+		{
+			"Elf Care Provider" {}
+		}
+	}
+	Chocolate
+	{
+		Name "Chocolate"
+		Class Medic
+		Items
+		{
+			"Hat Chocolate" {}
+		}
+	}
+	Wooly
+	{
+		Name "Wooly"
+		Class Medic
+		Items
+		{
+			"Trapper's Flap" {}
+			"The Wooly Pulli" {}
+		}
+	}
+	McDoc
+	{
+		Name "Scrooge McDoc"
+		Class Medic
+		Items
+		{
+			"Scrooge McDoc" {}
+		}
+	}
+	
+	Woodsman
+	{
+		Name "Woodsman"
+		Class Sniper
+		Items
+		{
+			"EOTL_hiphunter_hat" {}
+			"EOTL_hiphunter_jacket" {}
+			"EOTL_hiphunter_boots" {}
+		}
+	}
+	Marksman
+	{
+		Name "Marksman"
+		Class Sniper
+		Items
+		{
+			"dec2014 hunter_ushanka" {}
+			"dec2014 hunter_vest" {}
+			"dec2014 hunter_beard" {}
+		}
+	}
+	Cardigan
+	{
+		Name "Cardigan"
+		Class Sniper
+		Items
+		{
+			"Lumbercap" {}
+			"Crosshair Cardigan" {}
+		}
+	}
+	Cold
+	{
+		Name "Cold Blooded"
+		Class Sniper
+		Items
+		{
+			"The Cold Killer" {}
+			"The Snow Scoper" {}
+		}
+	}
+	Snug
+	{
+		Name "Snug"
+		Class Sniper
+		Items
+		{
+			"Snug Sharpshooter" {}
+		}
+	}
+	Tree
+	{
+		Name "Tree"
+		Class Sniper
+		Items
+		{
+			"A Rather Festive Tree" {}
+		}
+	}
+	Mislaid
+	{
+		Name "Mislaid"
+		Class Sniper
+		Items
+		{
+			"The Missing Piece" {}
+			"The Mislaid Sweater" {}
+		}
+	}
+	Shoestring
+	{
+		Name "Shoestring Santa" 
+		Class Sniper
+		Items
+		{
+			"Shoestring Santa" {}
+		}
+	}
+	AirHead
+	{
+		Name "Air Head" 
+		Class Sniper
+		Items
+		{
+			"Air Head" {}
+			"Sydney Shearling" {}
+		}
+	}
+	
+	Puffy
+	{
+		Name "Puffy"
+		Class Spy
+		Items
+		{
+			"dec2014 The Puffy Provocateur" {}
+			"dec2014 Stealthy Scarf" {}
+			"The Pom-Pommed Provocateur" {}
+		}
+	}
+	Frostbite
+	{
+		Name "Frostbite"
+		Class Spy
+		Items
+		{
+			"The Spy-cicle" {}
+			
+			"Cold Blooded Coat" {}
+			"Frostbite Bonnet" {}
+		}
+	}
+	Legion
+	{
+		Name "Legionnaire"
+		Class Spy
+		Items
+		{
+			"The Lurking Legionnaire" {}
+		}
+	}
+	Covert
+	{
+		Name "Covert Ops"
+		Class Spy
+		Items
+		{
+			"The Covert Covers" {}
+		}
+	}
+	Poleur
+	{
+		Name "Poleur"
+		Class Spy
+		Items
+		{
+			"L'aire Filteure" {}
+			"Le Frosteaux" {}
+			"Poleur Voyeur" {}
+		}
+	}
+	Gnome
+	{
+		Name "Gnome"
+		Class Spy
+		Items
+		{
+			"Gnome Dome" {}
+		}
+	}
+	
+	
 	
 }

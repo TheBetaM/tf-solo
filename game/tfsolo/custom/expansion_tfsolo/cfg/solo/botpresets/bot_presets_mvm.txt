@@ -1,4 +1,784 @@
 bot_presets
 {
+	ChickenBit
+	{
+		Name "Chicken Bit"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"Robot Chicken Hat" {}
+		}
+	}
+	Virtual
+	{
+		Name "Virtual Runner"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"The Long Fall Loafers" {}
+			"The TF2VRH" {}
+		}
+	}
+	Audio
+	{
+		Name "Audio Emitter"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"The Audio File" {}
+		}
+	}
+	FoodDispenser
+	{
+		Name "Food Dispenser"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"The Bot Dogger" {}
+		}
+	}
+	Oiled
+	{
+		Name "Oiled"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"Ye Oiled Baker Boy" {}
+		}
+	}
+	BoltBoy
+	{
+		Name "Bolt Boy"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"The Bolt Boy" {}
+		}
+	}
+	SimBonk
+	{
+		Name "Simulated Bonk"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"Bonk Leadwear" {}
+			
+			"Bonk! Atomic Punch" {}
+		}
+	}
+	Fueled
+	{
+		Name "Fully Fueled"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"Fuel Injector" {}
+		}
+	}
 	
+	Signal
+	{
+		Name "Signal"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"The Conspiracy Cap" {}
+		}
+	}
+	Tyrantium
+	{
+		Name "Tyrantium"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"Tyrantium Helmet" {}
+		}
+	}
+	DoubleRefined
+	{
+		Name "Double Refined"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"Steel Shako" {}
+		}
+	}
+	Sparkplug
+	{
+		Name "Sparkplug"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"Full Metal Drill Hat" {}
+			"Soldier's Sparkplug" {}
+		}
+	}
+	Peacebreaker
+	{
+		Name "Peacebreaker"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"The Peacebreaker" {}
+		}
+	}
+	Speaker
+	{
+		Name "Public Speaker"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"Public Speaker" {}
+		}
+	}
+	Speaker
+	{
+		Name "Public Speaker"
+		Class Soldier
+		Robot 1
+		Items
+		{
+			"Public Speaker" {}
+		}
+	}
+	
+	Scrap
+	{
+		Name "Scrap"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"Pet Robro" {}
+			"The Scrap Pack" {}
+		}
+	}
+	Triclops
+	{
+		Name "Triclops"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Triclops" {}
+			"The Pyrobotics Pack" {}
+		}
+	}
+	Accessor
+	{
+		Name "Public Accessor"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Public Accessor" {}
+		}
+	}
+	Nabler
+	{
+		Name "Nabler"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Nabler" {}
+		}
+	}
+	Plumber
+	{
+		Name "Plumber"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Scrap Sack" {}
+			"Plumber's Pipe" {}
+		}
+	}
+	Escorter
+	{
+		Name "Electric Escorter"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Electric Escorter" {}
+		}
+	}
+	Escorter
+	{
+		Name "Electric Escorter"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Electric Escorter" {}
+		}
+	}
+	Slugger
+	{
+		Name "Metal Slugger"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Metal Slug" {}
+		}
+	}
+	Reaper
+	{
+		Name "Rusty Reaper"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Rusty Reaper" {}
+		}
+	}
+	Filamental
+	{
+		Name "Filamental"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Filamental" {}
+		}
+	}
+	Firewall
+	{
+		Name "Firewall"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"Firewall Helmet" {}
+		}
+	}
+	Respectless
+	{
+		Name "Respectless"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"Respectless Robo-Glove" {}
+		}
+	}
+	Sbyteful
+	{
+		Name "Sbyteful"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"Pyro's Boron Beanie" {}
+			"The Googol Glass Eyes" {}
+		}
+	}
+	Faraday
+	{
+		Name "Faraday Cage"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"The Bolted Birdcage" {}
+		}
+	}
+	Incinerator
+	{
+		Name "Incinerator"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"PY-40 Incinibot" {}
+		}
+	}
+	Propaniac
+	{
+		Name "Propaniac"
+		Class Pyro
+		Robot 1
+		Items
+		{
+			"Propaniac" {}
+		}
+	}
+	
+	Longwave
+	{
+		Name "Longwave"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"Lo-Fi Longwave" {}
+			"The Battery Bandolier" {}
+		}
+	}
+	Metallic
+	{
+		Name "Metallic"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"Modest Metal Pile of Scrap" {}
+		}
+	}
+	Bolted
+	{
+		Name "Bolted Bombardier"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The HDMI Patch" {}
+			"The Bolted Bombardier" {}
+		}
+	}
+	Groovy
+	{
+		Name "Groovy"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The FR-0" {}
+		}
+	}
+	ByteBomb
+	{
+		Name "Byte Bomb"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The Pure Tin Capotain" {}
+		}
+	}
+	Cyborg
+	{
+		Name "Cyborg Stuntman"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The Cyborg Stunt Helmet" {}
+		}
+	}
+	Broadband
+	{
+		Name "Broadband"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The Broadband Bonnet" {}
+		}
+	}
+	SoftwarePiracy
+	{
+		Name "Software Piracy"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The Bolted Bicorne" {}
+		}
+	}
+	Scrumpy
+	{
+		Name "Scrumpy"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"The Strontium Stove Pipe" {}
+			"The Scrumpy Strongbox" {}
+		}
+	}
+	Automaton
+	{
+		Name "Automaton"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"Alcoholic Automaton" {}
+		}
+	}
+	Lunon
+	{
+		Name "Lunon"
+		Class Demoman
+		Robot 1
+		Items
+		{
+			"Ludicrously Lunatic Lunon Fedora" {}
+		}
+	}
+	
+	Augment
+	{
+		Name "Augment"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"The Purity Fist" {}
+			"The Deus Specs" {}
+		}
+	}
+	ToweringTitanium
+	{
+		Name "Towering Titanium"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"Towering Titanium Pillar of Hats" {}
+		}
+	}
+	Gridiron
+	{
+		Name "Gridiron"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"The Titanium Towel" {}
+			"The Gridiron Guardian" {}
+		}
+	}
+	Tungsten
+	{
+		Name "Tungsten"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"The Tungsten Toque" {}
+		}
+	}
+	Bunsen
+	{
+		Name "Bunsen Brave"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"The Bunsen Brave" {}
+		}
+	}
+	Computron
+	{
+		Name "Computron 5000"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"Computron 5000" {}
+		}
+	}
+	Lazer
+	{
+		Name "Lazer Gazer"
+		Class HeavyWeapons
+		Robot 1
+		Items
+		{
+			"Lazer Gazers" {}
+		}
+	}
+	
+	Visionary
+	{
+		Name "Visionary"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"The Virtual Reality Headset" {}
+		}
+	}
+	Potato
+	{
+		Name "Potato Powered"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Potato Hat" {}
+		}
+	}
+	Clockwork
+	{
+		Name "Clockwork"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Clockwerk's Helm" {}
+		}
+	}
+	Grandmaster
+	{
+		Name "Grandmaster"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"The Grandmaster" {}
+		}
+	}
+	Plugin
+	{
+		Name "Plug-In Prospector"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"The Plug-In Prospector" {}
+		}
+	}
+	Rusty
+	{
+		Name "Rusty"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"The Timeless Topper" {}
+			"The Dual-Core Devil Doll" {}
+		}
+	}
+	TexasTester
+	{
+		Name "Texas Tester"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Texas Tin-Gallon" {}
+		}
+	}
+	Dataminer
+	{
+		Name "Data Miner"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"The Data Mining Light" {}
+			"Teddy Roosebelt" {}
+		}
+	}
+	BeepMan
+	{
+		Name "Beep Man"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Beep Man" {}
+		}
+	}
+	Defrag
+	{
+		Name "Defragmenter"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Defragmenting Hard Hat 17%" {}
+		}
+	}
+	Interface
+	{
+		Name "Interface"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Brain Interface" {}
+		}
+	}
+	Cabinet
+	{
+		Name "Cabinet"
+		Class Engineer
+		Robot 1
+		Items
+		{
+			"Cabinet Mann" {}
+		}
+	}
+	
+	NobleNickel
+	{
+		Name "Noble Nickel"
+		Class Medic
+		Robot 1
+		Items
+		{
+			"Noble Nickel Amassment of Hats" {}
+		}
+	}
+	Halogen
+	{
+		Name "Halogen"
+		Class Medic
+		Robot 1
+		Items
+		{
+			"Halogen Head Lamp" {}
+			"Practitioner's Processing Mask" {}
+		}
+	}
+	Platinum
+	{
+		Name "Platinum Protector"
+		Class Medic
+		Robot 1
+		Items
+		{
+			"Platinum Pickelhaube" {}
+		}
+	}
+	Virus
+	{
+		Name "Virus Doctor"
+		Class Medic
+		Robot 1
+		Items
+		{
+			"The Virus Doctor" {}
+			"The Byte'd Beak" {}
+			"Mecha-Medes" {}
+		}
+	}
+	DigitalSleuth
+	{
+		Name "Digital Sleuth"
+		Class Medic
+		Robot 1
+		Items
+		{
+			"Titanium Tyrolean" {}
+			"The Steam Pipe" {}
+		}
+	}
+	
+	Letch
+	{
+		Name "Letch" 
+		Class Sniper
+		Robot 1
+		Items
+		{
+			"Letch's LED" {}
+		}
+	}
+	MachineLearning
+	{
+		Name "Machine Learning" 
+		Class Sniper
+		Robot 1
+		Items
+		{
+			"The Galvanized Gibus" {}
+		}
+	}
+	Soldered
+	{
+		Name "Soldered Sensei" 
+		Class Sniper
+		Robot 1
+		Items
+		{
+			"Soldered Sensei" {}
+		}
+	}
+	WhiteHat
+	{
+		Name "White Hat"
+		Class Sniper
+		Robot 1
+		Items
+		{
+			"Shooter's Tin Topi" {}
+		}
+	}
+	Attributor
+	{
+		Name "Attributor"
+		Class Sniper
+		Robot 1
+		Items
+		{
+			"Corona Australis" {}
+			"Botler 2000" {}
+		}
+	}
+	
+	StealthMachine
+	{
+		Name "Stealth Machine"
+		Class Spy
+		Robot 1
+		Items
+		{
+			"Belltower Spec Ops" {}
+			
+			"The Diamondback" {}
+		}
+	}
+	BugHunter
+	{
+		Name "Bug Hunter"
+		Class Spy
+		Robot 1
+		Items
+		{
+			"The Finder's Fee" {}
+		}
+	}
+	SmallByte
+	{
+		Name "Small Byte"
+		Class Spy
+		Robot 1
+		Items
+		{
+			"Base Metal Billycock" {}
+			"The Megapixel Beard" {}
+		}
+	}
+	Bootleg
+	{
+		Name "Bootleg"
+		Class Spy
+		Robot 1
+		Items
+		{
+			"Bootleg Base Metal Billycock" {}
+		}
+	}
 }

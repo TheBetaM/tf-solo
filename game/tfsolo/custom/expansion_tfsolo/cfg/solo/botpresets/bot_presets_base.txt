@@ -200,16 +200,6 @@ bot_presets
 			"The Breakneck Baggies" {}
 		}
 	}
-	Warmup
-	{
-		Name "Warmup Runner"
-		Class Scout
-		Items
-		{
-			"Weight Room Warmer" {}
-			"Runner's Warm-Up" {}
-		}
-	}
 	Fool
 	{
 		Name "Fool"
@@ -273,18 +263,6 @@ bot_presets
 			"Forest Footwear" {}
 		}
 	}
-	Snowboarder
-	{
-		Name "Snowboarder"
-		Class Scout
-		Items
-		{
-			"Antarctic Eyewear" {}
-			"Wipe Out Wraps" {}
-			"Blizzard Britches" {}
-			"The Tundra Top" {}
-		}
-	}
 	Olympic
 	{
 		Name "Olympic Wannabe"
@@ -336,16 +314,6 @@ bot_presets
 		{
 			"The Last Laugh" {}
 			"Jumping Jester" {}
-		}
-	}
-	SnowScout
-	{
-		Name "SnowScout"
-		Class Scout
-		Items
-		{
-			"Isotopic Insulator" {}
-			"Bonk Beanie" {}
 		}
 	}
 	Commando
@@ -407,6 +375,28 @@ bot_presets
 		{
 			"The Triple Jumper" {}
 			"The Battle Music" {}
+		}
+	}
+	Headliner
+	{
+		Name "Headliner"
+		Class Scout
+		Items
+		{
+			"The Headliner" {}
+			"Case of the Blues" {}
+			"Mann of the Hour" {}
+		}
+	}
+	BuzzKill
+	{
+		Name "Buzz Kill"
+		Class Scout
+		Items
+		{
+			"Buzz Kill" {}
+			"Torn Terror" {}
+			"Ripped Runts" {}
 		}
 	}
 	
@@ -635,16 +625,6 @@ bot_presets
 			"The Powdered Practitioner" {}
 		}
 	}
-	Polar
-	{
-		Name "Polar Ace"
-		Class Soldier
-		Items
-		{
-			"Antarctic Parka" {}
-			"The Polar Pullover" {}
-		}
-	}
 	Agent
 	{
 		Name "Agent S."
@@ -654,17 +634,6 @@ bot_presets
 			"The Classified Coif" {}
 			"The Spook Specs" {}
 			"The Man in Slacks" {}
-		}
-	}
-	Stomper
-	{
-		Name "Snow Stomper"
-		Class Soldier
-		Items
-		{
-			"EOTL_soldierhat" {}
-			"EOTL_beard" {}
-			"EOTL_Coldfront Curbstompers" {}
 		}
 	}
 	Diplomat
@@ -787,14 +756,13 @@ bot_presets
 			"Full Metal Helmet" {}
 		}
 	}
-	Charger
+	Jarhead
 	{
-		Name "Charger"
+		Name "Jarhead"
 		Class Soldier
 		Items
 		{
-			"Polar Charger" {}
-			"Field Fatigues" {}
+			"Jarhead" {}
 		}
 	}
 	
@@ -1022,16 +990,6 @@ bot_presets
 			"The Air Raider" {}
 		}
 	}
-	SubZero
-	{
-		Name "Sub-Zero Ignition"
-		Class Pyro
-		Items
-		{
-			"The Blizzard Breather" {}
-			"The Sub Zero Suit" {}
-		}
-	}
 	Shy
 	{
 		Name "Shy"
@@ -1061,18 +1019,6 @@ bot_presets
 		{
 			"The Sengoku Scorcher" {}
 			"The Combustible Kabuto" {}
-		}
-	}
-	Skier
-	{
-		Name "Skier"
-		Class Pyro
-		Items
-		{
-			"EOTL_Skier" {}
-			"EOTL_Brisk-weather Beanie" {}
-			"EOTL_pyro_sweater" {}
-			"EOTL_hiphunter_boots" {}
 		}
 	}
 	Pyromancer
@@ -1119,16 +1065,6 @@ bot_presets
 			"Combustible Cutie" {}
 			"Pet Balloonicorn" {}
 			"The Infernal Orchestrina" {}
-		}
-	}
-	Tundra
-	{
-		Name "Tundra"
-		Class Pyro
-		Items
-		{
-			"The Tundra Top" {}
-			"The Hot Case" {}
 		}
 	}
 	Quackers
@@ -1255,14 +1191,36 @@ bot_presets
 			"The Soot Suit" {}
 		}
 	}
-	Spaniel
+	Frogmann
 	{
-		Name "Spaniel"
+		Name "Frogmann"
 		Class Pyro
 		Items
 		{
-			"Hot Spaniel" {}
-			"Frostbite Fit" {}
+			"The Abyss Diver" {}
+			"Frogmann's Fittings" {}
+			"Oxygen Provider" {}
+		}
+	}
+	Insurgent
+	{
+		Name "Insurgent"
+		Class Pyro
+		Items
+		{
+			"Air Exchanger" {}
+			"Industrial Insurgent" {}
+		}
+	}
+	Deserter
+	{
+		Name "Deserter"
+		Class Pyro
+		Items
+		{
+			"Commonwealth Commander" {}
+			"Deserter's Duster" {}
+			"Veteran's Visor" {}
 		}
 	}
 	
@@ -1436,16 +1394,6 @@ bot_presets
 			"The Salty Dog" {}
 			"The Liquor Locker" {}
 			"The Bearded Bombardier" {}
-		}
-	}
-	Breeze
-	{
-		Name "Cool Breeze"
-		Class Demoman
-		Items
-		{
-			"The Cool Breeze" {}
-			"Tough Stuff Muffs" {}
 		}
 	}
 	DarkAge
@@ -1666,17 +1614,6 @@ bot_presets
 			"The Whiskey Bib" {}
 		}
 	}
-	Winter
-	{
-		Name "Winter Blowout"
-		Class Demoman
-		Items
-		{
-			"EOTL_hiphunter_jacket" {}
-			"EOTL_demopants" {}
-			"Boarder's Beanie" {}
-		}
-	}
 	Sweepers
 	{
 		Name "Sweepers"
@@ -1686,6 +1623,15 @@ bot_presets
 			"The Top Brass" {}
 			"Mine Sweepers" {}
 			"Commanding Presence" {}
+		}
+	}
+	Fuse
+	{
+		Name "Short Fuse"
+		Class Demoman
+		Items
+		{
+			"Short Fuse" {}
 		}
 	}
 	
@@ -1802,15 +1748,6 @@ bot_presets
 			"The Unshaved Bear" {}
 			"Convict Cap" {}
 			"Soviet Strongmann" {}
-		}
-	}
-	Ushanka
-	{
-		Name "Cold Warrior"
-		Class HeavyWeapons
-		Items
-		{
-			"Officer's Ushanka" {}
 		}
 	}
 	Boxer
@@ -1946,16 +1883,6 @@ bot_presets
 			"Road Block" {}
 		}
 	}
-	Heating
-	{
-		Name "Blizzard Survivor"
-		Class HeavyWeapons
-		Items
-		{
-			"Ol' Reliable" {}
-			"Heavy Heating" {}
-		}
-	}
 	Metal
 	{
 		Name "Heavy Metal"
@@ -2044,12 +1971,44 @@ bot_presets
 	}
 	Cossack
 	{
-		Name "Hound"
+		Name "Cossack"
 		Class HeavyWeapons
 		Items
 		{
 			"Cossack Camo" {}
 			"Battle Balaclava" {}
+		}
+	}
+	Monk
+	{
+		Name "Monk"
+		Class HeavyWeapons
+		Items
+		{
+			"Hunk Of Monk" {}
+			"Fat Friar" {}
+		}
+	}
+	Esprit
+	{
+		Name "Esprit"
+		Class HeavyWeapons
+		Items
+		{
+			"Mr. Rostov" {}
+			"Esprit De Corps" {}
+			"Hardcore Pantalon" {}
+		}
+	}
+	Pesado
+	{
+		Name "Pesado"
+		Class HeavyWeapons
+		Items
+		{
+			"Cigarillo Caballero" {}
+			"El Gigante's Gunbelt" {}
+			"Poncho del Pesado" {}
 		}
 	}
 	
@@ -2153,16 +2112,6 @@ bot_presets
 			"The Builder's Blueprints" {}
 		}
 	}
-	Barnstormer
-	{
-		Name "Barnstormer"
-		Class Engineer
-		Items
-		{
-			"The Barnstormer" {}
-			"The Dogfighter" {}
-		}
-	}
 	Pardner
 	{
 		Name "Frontiersman"
@@ -2203,17 +2152,6 @@ bot_presets
 			"The Egghead's Overalls" {}
 			"The Lonesome Loafers" {}
 			"Texas Slim's Dome Shine" {}
-		}
-	}
-	Insulated
-	{
-		Name "Insulated Innovator"
-		Class Engineer
-		Items
-		{
-			"EOTL_Insulated_innovator" {}
-			"EOTL_winter_pants" {}
-			"EOTL_FURCAP" {}
 		}
 	}
 	Officer
@@ -2297,16 +2235,6 @@ bot_presets
 		Items
 		{
 			"More Gun Marshal" {}
-		}
-	}
-	Underminer
-	{
-		Name "Underminer"
-		Class Engineer
-		Items
-		{
-			"Arctic Mole" {}
-			"Underminer's Overcoat" {}
 		}
 	}
 	Cargo
@@ -2405,17 +2333,6 @@ bot_presets
 			"Winter Backup" {}
 		}
 	}
-	Lawnmaker
-	{
-		Name "Antarctic Researcher"
-		Class Engineer
-		Items
-		{
-			"The Gold Digger" {}
-			"The Lawnmaker" {}
-			"The Antarctic Researcher" {}
-		}
-	}
 	Country
 	{
 		Name "Country"
@@ -2444,6 +2361,27 @@ bot_presets
 		{
 			"The Westcoat" {}
 			"Buck's Brim" {}
+		}
+	}
+	Cattleman
+	{
+		Name "Cattleman"
+		Class Engineer
+		Items
+		{
+			"Cattleman's Kettle" {}
+			"Sir Buildsalot" {}
+		}
+	}
+	Technician
+	{
+		Name "Technician"
+		Class Engineer
+		Items
+		{
+			"Heat Shield" {}
+			"Technician's Tunic" {}
+			"Service Satchel" {}
 		}
 	}
 	
@@ -2536,17 +2474,6 @@ bot_presets
 		Items
 		{
 			"Medic Goggles" {}
-		}
-	}
-	Mantel
-	{
-		Name "Shivering Aid"
-		Class Medic
-		Items
-		{
-			"Der Wintermantel" {}
-			"Tough Stuff Muffs" {}
-			"The Merc's Muffler" {}
 		}
 	}
 	Hazmat
@@ -2651,16 +2578,6 @@ bot_presets
 			"Battle Boonie" {}
 		}
 	}
-	Coldfront
-	{
-		Name "Coldfront Commander"
-		Class Medic
-		Items
-		{
-			"Coldfront Commander" {}
-			"Coldfront Carapace" {}
-		}
-	}
 	Madman
 	{
 		Name "Madman"
@@ -2710,16 +2627,6 @@ bot_presets
 			"Uber-Wear" {}
 		}
 	}
-	Puffed
-	{
-		Name "Puffed"
-		Class Medic
-		Items
-		{
-			"The Puffed Practitioner" {}
-			"The Frigid Fashion" {}
-		}
-	}
 	Freeman
 	{
 		Name "Free Mann"
@@ -2750,17 +2657,6 @@ bot_presets
 			"Self-Care" {}
 			"Beaten and Bruised" {}
 			"The Main Cast" {}
-		}
-	}
-	Monarch
-	{
-		Name "Monarch"
-		Class Medic
-		Items
-		{
-			"Medical Monarch" {}
-			"Ze Ubermensch" {}
-			"dec2014 Surgeon's Shako" {}
 		}
 	}
 	Burly
@@ -2836,16 +2732,6 @@ bot_presets
 			"Bowtie" {}
 		}
 	}
-	Scarf
-	{
-		Name "Scarf"
-		Class Medic
-		Items
-		{
-			"The Gentleman's Ushanka" {}
-			"The Chronoscarf" {}
-		}
-	}
 	SurgeonGeneral
 	{
 		Name "Surgeon General"
@@ -2865,6 +2751,38 @@ bot_presets
 		{
 			"The Checkered Past" {}
 			"Consigliere's Coverup" {}
+		}
+	}
+	Investigator
+	{
+		Name "Investigator"
+		Class Medic
+		Items
+		{
+			"Shadow of Doubt" {}
+			"Clinical Investigator" {}
+		}
+	}
+	Photon
+	{
+		Name "Photon"
+		Class Medic
+		Items
+		{
+			"Professor Photon" {}
+			"Mad Drip" {}
+			"Viscera Visor" {}
+		}
+	}
+	Cardiologist
+	{
+		Name "Cardiologist"
+		Class Medic
+		Items
+		{
+			"Cardiologist's Cardigan" {}
+			"Flatline Flatcap" {}
+			"Scrub Stompers" {}
 		}
 	}
 	
@@ -3059,27 +2977,6 @@ bot_presets
 			"The Toowoomba Tunic" {}
 		}
 	}
-	Woodsman
-	{
-		Name "Woodsman"
-		Class Sniper
-		Items
-		{
-			"EOTL_hiphunter_hat" {}
-			"EOTL_hiphunter_jacket" {}
-			"EOTL_hiphunter_boots" {}
-		}
-	}
-	Marksman
-	{
-		Name "Marksman"
-		Class Sniper
-		Items
-		{
-			"dec2014 hunter_ushanka" {}
-			"dec2014 hunter_vest" {}
-		}
-	}
 	Frontiersman
 	{
 		Name "Frontiersman"
@@ -3149,16 +3046,6 @@ bot_presets
 		{
 			"Headhunter's Brim" {}
 			"Hunting Cloak" {}
-		}
-	}
-	Cardigan
-	{
-		Name "Cardigan"
-		Class Sniper
-		Items
-		{
-			"Lumbercap" {}
-			"Crosshair Cardigan" {}
 		}
 	}
 	Cover2
@@ -3275,16 +3162,6 @@ bot_presets
 			"Wet Works" {}
 		}
 	}
-	Cold
-	{
-		Name "Cold Blooded"
-		Class Sniper
-		Items
-		{
-			"The Cold Killer" {}
-			"The Snow Scoper" {}
-		}
-	}
 	Outback
 	{
 		Name "Outback Intellectual"
@@ -3305,13 +3182,25 @@ bot_presets
 			"The Five-Month Shadow" {}
 		}
 	}
-	Snug
+	Shelby
 	{
-		Name "Snug"
+		Name "Shelby"
 		Class Sniper
 		Items
 		{
-			"Snug Sharpshooter" {}
+			"Blindin' Bonnett" {}
+			"Shady Shelby" {}
+		}
+	}
+	Villainy
+	{
+		Name "Villainy"
+		Class Sniper
+		Items
+		{
+			"Feathered Villain" {}
+			"Velveteen Villain" {}
+			"Pantaloons of Unabashed Villainy" {}
 		}
 	}
 	
@@ -3442,16 +3331,6 @@ bot_presets
 			"Escapist" {}
 		}
 	}
-	Puffy
-	{
-		Name "Puffy"
-		Class Spy
-		Items
-		{
-			"dec2014 The Puffy Provocateur" {}
-			"dec2014 Stealthy Scarf" {}
-		}
-	}
 	Lurker
 	{
 		Name "Lurker"
@@ -3509,18 +3388,6 @@ bot_presets
 		Items
 		{
 			"The Turncoat" {}
-		}
-	}
-	Frostbite
-	{
-		Name "Frostbite"
-		Class Spy
-		Items
-		{
-			"The Spy-cicle" {}
-			
-			"Cold Blooded Coat" {}
-			"Frostbite Bonnet" {}
 		}
 	}
 	Cleaner
@@ -3647,15 +3514,6 @@ bot_presets
 			"The Au Courant Assassin" {}
 		}
 	}
-	Legion
-	{
-		Name "Legionnaire"
-		Class Spy
-		Items
-		{
-			"The Lurking Legionnaire" {}
-		}
-	}
 	Ninja2
 	{
 		Name "Ninja2"
@@ -3664,15 +3522,6 @@ bot_presets
 		{
 			"The Ninja Cowl" {}
 			"Assassin's Attire" {}
-		}
-	}
-	Covert
-	{
-		Name "Covert Ops"
-		Class Spy
-		Items
-		{
-			"The Covert Covers" {}
 		}
 	}
 	Nightfall
@@ -3685,17 +3534,26 @@ bot_presets
 			"Nightfall Veil" {}
 		}
 	}
-	Poleur
+	Sapeur
 	{
-		Name "Poleur"
+		Name "Sapeur"
 		Class Spy
 		Items
 		{
-			"L'aire Filteure" {}
-			"Le Frosteaux" {}
-			"Poleur Voyeur" {}
+			"Le Sapeur" {}
+			"Le Morne Uniforme" {}
 		}
 	}
-	
+	Misdirector
+	{
+		Name "Misdirector"
+		Class Spy
+		Items
+		{
+			"The Misdirector" {}
+			"Sleight of Hand" {}
+			"Vanishing Act" {}
+		}
+	}
 	
 }

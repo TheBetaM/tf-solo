@@ -8,20 +8,4 @@ achievements
 	{
 		id 154
 	}
-	//TFSOLO_CAMPAIGN_XMAS_CLEAR
-	//{
-	//	id 155
-	//}
-	//TFSOLO_CAMPAIGN_XMAS_COMPLETE
-	//{
-	//	id 156
-	//}
-	//TFSOLO_CAMPAIGN_MVM_CLEAR
-	//{
-	//	id 157
-	//}
-	//TFSOLO_CAMPAIGN_MVM_COMPLETE
-	//{
-	//	id 158
-	//}
 }

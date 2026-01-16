@@ -2,13 +2,13 @@ VERSION 1.0
 
 DESCRIPTION INFO_OPTIONS
 {
-	"category3"
+	"category3b"
 	{
 		"Campaign - Bloodthirst"
 		{ CATEGORY }
 	}
 	
-	"credit3_1"
+	"credit3b_1"
 	{
 		"Campaign by BetaM"
 		"https://www.youtube.com/BetaM"

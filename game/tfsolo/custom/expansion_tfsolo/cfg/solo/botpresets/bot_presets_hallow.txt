@@ -869,6 +869,24 @@ bot_presets
 			"Duality of Mantle" {}
 		}
 	}
+	Hellscape
+	{
+		Name "Hellscape"
+		Class Pyro
+		Items
+		{
+			"Hellscape" {}
+		}
+	}
+	Plumage
+	{
+		Name "Plumage"
+		Class Pyro
+		Items
+		{
+			"Pyromantic Plumage" {}
+		}
+	}
 	
 	HighlandHound
 	{
@@ -1040,6 +1058,15 @@ bot_presets
 			"Upgradeable TF_WEAPON_PIPEBOMBLAUNCHER" {}
 			
 			"Defaced Detonator" {}
+		}
+	}
+	FusedPlates
+	{
+		Name "Fused Plates"
+		Class Demoman
+		Items
+		{
+			"Fused Plates" {}
 		}
 	}
 	
@@ -1663,6 +1690,8 @@ bot_presets
 		{
 			"Spy Oni Mask" {}
 			"The Foul Cowl" {}
+			
+			"Conniver's Kunai" {}
 		}
 	}
 	MoralFiber
