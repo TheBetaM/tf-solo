@@ -2,5 +2,8 @@
 
 maps_config
 {
-	
+	maps
+	{
+		
+	}
 }

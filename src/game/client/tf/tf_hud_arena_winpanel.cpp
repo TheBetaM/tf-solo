@@ -95,12 +95,9 @@ void CTFArenaWinPanel::SetVisible( bool state )
 		return;
 
 	int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "mid" );
-
-	ConVarRef tf_gamemode_solo("tf_gamemode_solo");
-	ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
-	if ( !tf_gamemode_solo.GetBool() && !tf_gamemode_campaign.GetBool() && state )
+	if ( state )
 	{
-		gHUD.LockRenderGroup( iRenderGroup );
+		//gHUD.LockRenderGroup( iRenderGroup );
 	}
 	else
 	{

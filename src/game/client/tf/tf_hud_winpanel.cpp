@@ -99,16 +99,7 @@ void CTFWinPanel::SetVisible( bool state )
 
 	if ( state )
 	{
-		ConVarRef tf_gamemode_solo("tf_gamemode_solo");
-		ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
-		if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
-		{
-			
-		}
-		else
-		{
-			HideLowerPriorityHudElementsInGroup("mid");
-		}
+		//HideLowerPriorityHudElementsInGroup( "mid" );
 	}
 	else
 	{
