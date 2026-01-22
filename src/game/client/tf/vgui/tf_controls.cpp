@@ -2963,7 +2963,7 @@ CTFCustomMatchSettingsDialog::CTFCustomMatchSettingsDialog(vgui::Panel* parent, 
 	{
 		m_pDescription->InitFromFile(TFSOLO_CUSTOM_MATCH_CONFIG_FILE);
 	}
-	m_pDescription->TransferCurrentValues(NULL);
+	//m_pDescription->TransferCurrentValues( NULL );
 
 	m_iszRequestedMap = "";
 	m_iRequestedMode = 0;
@@ -3139,7 +3139,6 @@ void CTFCustomMatchSettingsDialog::CreateControls()
 			pBox->GetCheckImage()->SetColor(tanDark);
 			break;
 		case O_STRING:
-		case O_NUMBER:
 			pEdit = new TextEntry(pCtrl, "DescTextEntry");
 			pEdit->InsertString(pObj->defValue);
 			pCtrl->pControl = (Panel*)pEdit;
@@ -3147,6 +3146,11 @@ void CTFCustomMatchSettingsDialog::CreateControls()
 
 			pEdit->InvalidateLayout(true, true);
 			pEdit->SetBgColor(Color(0, 0, 0, 255));
+			break;
+		case O_NUMBER:
+			pSlider = new CCvarSlider(pCtrl, "DescSlider", "Test", pObj->fMin, pObj->fMax, pObj->cvarname, false, true);
+			pCtrl->pControl = (Panel*)pSlider;
+			pSlider->SetSliderValue( pObj->fdefValue );
 			break;
 		case O_LIST:
 		{
@@ -3176,6 +3180,7 @@ void CTFCustomMatchSettingsDialog::CreateControls()
 		case O_SLIDER:
 			pSlider = new CCvarSlider(pCtrl, "DescSlider", "Test", pObj->fMin, pObj->fMax, pObj->cvarname, false);
 			pCtrl->pControl = (Panel*)pSlider;
+			pSlider->SetSliderValue( pObj->fdefValue );
 			break;
 		case O_BUTTON:
 			pButton = new CExButton(pCtrl, "DescButton", pObj->prompt, this, pObj->defValue);
@@ -3216,12 +3221,12 @@ void CTFCustomMatchSettingsDialog::CreateControls()
 		{
 		case O_BOOL:
 		case O_STRING:
-		case O_NUMBER:
 		case O_LIST:
 		case O_BUTTON:
 		case O_CATEGORY:
 			pCtrl->SetSize(m_iControlW, m_iControlH);
 			break;
+		case O_NUMBER:
 		case O_SLIDER:
 			pCtrl->SetSize(m_iSliderW, m_iSliderH + 10);
 			break;
@@ -3385,9 +3390,8 @@ void CTFCustomMatchSettingsDialog::GatherCurrentValues()
 			sprintf(szValue, "%s", pBox->IsSelected() ? "1" : "0");
 			break;
 		case O_NUMBER:
-			pEdit = (TextEntry*)pList->pControl;
-			pEdit->GetText(strValue, sizeof(strValue));
-			sprintf(szValue, "%s", strValue);
+			pSlider = (CCvarSlider*)pList->pControl;
+			sprintf(szValue, "%.2f", pSlider->GetSliderValue());
 			break;
 		case O_STRING:
 			pEdit = (TextEntry*)pList->pControl;
@@ -4198,7 +4202,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	SetProportional(true);
 
 	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
-	m_iSelectedCategory = MapCategory_CP;
+	m_iSelectedCategory = MapCategory_TFSOLO;
 
 	m_pToolTip = new CTFTextToolTip(this);
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
@@ -4229,23 +4233,23 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
-	m_pCategoryList->AddItem("Workshop (Downloaded/Subscribed)", NULL);
-	m_pCategoryList->AddItem("TF2 Workshop (Downloaded/Subscribed)", NULL);
+	m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_Mod", NULL);
+	m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2", NULL);
 	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
 	{
-		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Downloaded/Subscribed)", NULL);
+		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2GR", NULL);
 	}
 	else
 	{
-		m_pCategoryList->AddItem("TF2: Gold Rush Workshop (Not Installed)", NULL);
+		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2GR_B", NULL);
 	}
 	if ( SteamApps()->BIsAppInstalled( 3768450 ) )
 	{
-		m_pCategoryList->AddItem("Custom Fortress Workshop (Downloaded/Subscribed)", NULL);
+		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_CF", NULL);
 	}
 	else
 	{
-		m_pCategoryList->AddItem("Custom Fortress Workshop (Not Installed)", NULL);
+		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_CF_B", NULL);
 	}
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );

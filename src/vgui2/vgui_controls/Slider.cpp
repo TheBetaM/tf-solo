@@ -52,6 +52,7 @@ Slider::Slider(Panel *parent, const char *panelName ) : BaseClass(parent, panelN
 	_subrange[ 1 ] = 0;
 	m_bUseSubRange = false;
 	m_bInverted = false;
+	m_bIntegerValue = false;
 
 	SetThumbWidth( QuickPropScale( 8 ) );
 	RecomputeNobPosFromValue();
@@ -125,7 +126,14 @@ void Slider::SetValue(int value, bool bTriggerChangeMessage)
 	if (_value != oldValue)
 	{
 		char szVal[32];
-		Q_snprintf( szVal, sizeof(szVal), "%.2f", ((float)_value / 100.0f) );
+		if ( m_bIntegerValue )
+		{
+			Q_snprintf( szVal, sizeof(szVal), "%d", (int)((float)_value / 100.0f) );
+		}
+		else
+		{
+			Q_snprintf( szVal, sizeof(szVal), "%.2f", ((float)_value / 100.0f) );
+		}
 		SetValueCaption( szVal );
 	}
 }

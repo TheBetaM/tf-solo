@@ -5,7 +5,7 @@ DESCRIPTION SERVER_OPTIONS
 	"tf_bot_quota"
 	{
 		"Merc Count"
-		{ SLIDER 0 31 }
+		{ NUMBER 0 31 }
 		{ "23" }
 	}
 	

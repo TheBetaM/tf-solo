@@ -3,10 +3,11 @@ TFSOLO.CreditLines <- []
 TFSOLO.Rewards <- {
 	CampaignMain = 100
 	CampaignBonus = 150
-	CampaignReplay = 25
-	Victory = 50	
+	CampaignReplay = 30
+	Victory = 50
+	VictoryArena = 5
 	Point = 1
-	CustomVictory = 25
+	CustomVictory = 50
 	CustomVictoryArena = 5
 }
 TFSOLO.CustomPointTally <- 0
@@ -103,7 +104,7 @@ OnScriptHook_custom_match_over = function(params)
 	}
 	else
 	{
-		if (IsInArenaMode())
+		if (IsInArenaMode() || IsInMedievalMode())
 		{
 			TFSOLO.CreditPool += TFSOLO.Rewards.CustomVictoryArena
 			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.CustomVictoryArena + " Victory")
@@ -176,8 +177,16 @@ OnScriptHook_solo_mission_over = function(params)
 	TFSOLO.CreditLines = []
 	if (params.playerWon)
 	{
-		TFSOLO.CreditPool += TFSOLO.Rewards.Victory
-		TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.Victory + " Victory")
+		if (IsInArenaMode())
+		{
+			TFSOLO.CreditPool += TFSOLO.Rewards.VictoryArena
+			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.VictoryArena + " Victory")
+		}
+		else
+		{
+			TFSOLO.CreditPool += TFSOLO.Rewards.Victory
+			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.Victory + " Victory")
+		}
 	}
 	
 	local PointTally = 0

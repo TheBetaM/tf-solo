@@ -28,6 +28,7 @@ CCvarSlider::CCvarSlider( Panel *parent, const char *name ) : Slider( parent, na
 {
 	SetupSlider( 0, 1, "", false );
 	m_bCreatedInCode = false;
+	m_bIntegerValue = false;
 
 	AddActionSignalTarget( this );
 }
@@ -36,10 +37,12 @@ CCvarSlider::CCvarSlider( Panel *parent, const char *name ) : Slider( parent, na
 // Purpose: 
 //-----------------------------------------------------------------------------
 CCvarSlider::CCvarSlider( Panel *parent, const char *panelName, char const *caption,
-		float minValue, float maxValue, char const *cvarname, bool bAllowOutOfRange )
+		float minValue, float maxValue, char const *cvarname, bool bAllowOutOfRange, bool bIntegerVal )
   : Slider( parent, panelName )
 {
 	AddActionSignalTarget( this );
+
+	m_bIntegerValue = bIntegerVal;
 
 	SetupSlider( minValue, maxValue, cvarname, bAllowOutOfRange );
 
@@ -78,9 +81,18 @@ void CCvarSlider::SetupSlider( float minValue, float maxValue, const char *cvarn
 	char szMax[ 32 ];
 	char szVal[ 32 ];
 
-	Q_snprintf( szMin, sizeof( szMin ), "%.2f", minValue );
-	Q_snprintf( szMax, sizeof( szMax ), "%.2f", maxValue );
-	Q_snprintf( szVal, sizeof( szVal ), "%.2f", (float)(GetValue() / CVARSLIDER_SCALE_FACTOR) );
+	if ( m_bIntegerValue )
+	{
+		Q_snprintf( szMin, sizeof( szMin ), "%d", (int)minValue );
+		Q_snprintf( szMax, sizeof( szMax ), "%d", (int)maxValue );
+		Q_snprintf( szVal, sizeof( szVal ), "%d", (int)(GetValue() / CVARSLIDER_SCALE_FACTOR) );
+	}
+	else
+	{
+		Q_snprintf( szMin, sizeof( szMin ), "%.2f", minValue );
+		Q_snprintf( szMax, sizeof( szMax ), "%.2f", maxValue );
+		Q_snprintf( szVal, sizeof( szVal ), "%.2f", (float)(GetValue() / CVARSLIDER_SCALE_FACTOR) );
+	}
 
 	SetTickCaptions( szMin, szMax );
 	SetValueCaption( szVal );
@@ -166,9 +178,16 @@ void CCvarSlider::SetMinMaxValues( float minValue, float maxValue, bool bSetTick
 		char szMin[ 32 ];
 		char szMax[ 32 ];
 
-		Q_snprintf( szMin, sizeof( szMin ), "%.2f", minValue );
-		Q_snprintf( szMax, sizeof( szMax ), "%.2f", maxValue );
-
+		if ( m_bIntegerValue )
+		{
+			Q_snprintf( szMin, sizeof( szMin ), "%d", (int)minValue );
+			Q_snprintf( szMax, sizeof( szMax ), "%d", (int)maxValue );
+		}
+		else
+		{
+			Q_snprintf( szMin, sizeof( szMin ), "%.2f", minValue );
+			Q_snprintf( szMax, sizeof( szMax ), "%.2f", maxValue );
+		}
 
 		SetTickCaptions( szMin, szMax );
 	}

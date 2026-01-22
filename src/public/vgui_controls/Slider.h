@@ -119,6 +119,7 @@ protected:
 	bool	m_bIsDragOnRepositionNob : 1;
 	bool	m_bUseSubRange : 1;
 	bool	m_bInverted : 1;
+	bool	m_bIntegerValue;
 };
 
 }
