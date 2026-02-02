@@ -677,8 +677,12 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 	lambdaAddTooltipSolo( "AchievementsButtonSolo", "#MMenu_Tooltip_Achievements" );
 	lambdaAddTooltipSolo( "ResetModProgressButton", "#TFSOLO_ResetProgress_Title" );
 	lambdaAddTooltipSolo( "ModCreditsButton", "#TFSOLO_ModCredits_Title" );
-	lambdaAddTooltipSolo( "SettingsButtonSDK", "#MMenu_Tooltip_Options" );
-	lambdaAddTooltipSolo( "TF2SettingsButtonSDK", "#MMenu_Tooltip_AdvOptions" );
+	lambdaAddTooltipSolo( "SettingsButtonSDK", "#TFSOLO_Options_Desc" );
+	lambdaAddTooltipSolo( "TF2SettingsButtonSDK", "#TFSOLO_Options_Desc" );
+	lambdaAddTooltipSolo( "TFSOLO_MainMenu_CustomButton", "#TFSOLO_CustomMatch_Desc" );
+	lambdaAddTooltipSolo( "TFSOLO_CharacterSetupButton", "#TFSOLO_CharacterSetup_Desc" );
+	lambdaAddTooltipSolo( "TFSOLO_MainMenu_ScenariosButton", "#TFSOLO_Scenarios_Desc" );
+	lambdaAddTooltipSolo( "TFSOLO_MainMenu_CampaignsButton", "#TFSOLO_Campaigns_Desc" );
 
 	LoadCharacterImageFile();
 

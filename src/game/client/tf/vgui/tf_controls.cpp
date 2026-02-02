@@ -3532,6 +3532,7 @@ CTFCustomMatchModeDialog::CTFCustomMatchModeDialog(vgui::Panel* parent) : BaseCl
 	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
 
 	m_TitleLabel = new CExLabel(this, "TitleLabel", "");
+	m_DescLabel = new CExLabel(this, "DescLabel", "");
 
 	m_pToolTip = new CTFTextToolTip(this);
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
@@ -3544,6 +3545,9 @@ CTFCustomMatchModeDialog::CTFCustomMatchModeDialog(vgui::Panel* parent) : BaseCl
 	m_iRequestedMode = 0;
 	m_iszRequestedMapMod = NULL;
 	m_iszRequestedMapOverride = NULL;
+
+	MapDesc.SetLessFunc( DefLessFunc( const char* ) );
+	MapDesc.Purge();
 
 	// 	MoveToCenterOfScreen();
 	// 	SetSizeable( false );
@@ -4091,6 +4095,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 			label->SetFgColor( textYellowColor );
 		}
 
+		CFmtStr1024 fmtModeDesc(
+			"%s_Desc", mode.ModeName
+		);
+
 		if ( ( mode.MapMod && mode.MapMod[0] ) || ( mode.MapOverride && mode.MapOverride[0] ) )
 		{
 			CFmtStr1024 fmtModeCommand(
@@ -4101,6 +4109,8 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapButton->SetZPos(3);
 			mapButton->AddActionSignalTarget(this);
 			mapButton->SetVisible(true);
+			mapButton->PassMouseTicksTo(this, true);
+			MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup(fmtModeDesc));
 		}
 		else if ( mode.ModeOverride == 0 && mode.MapAlt && mode.MapAlt[0] )
 		{
@@ -4112,6 +4122,8 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapButton->SetZPos(3);
 			mapButton->AddActionSignalTarget(this);
 			mapButton->SetVisible(true);
+			mapButton->PassMouseTicksTo(this, true);
+			MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup(fmtModeDesc));
 		}
 		else
 		{
@@ -4123,11 +4135,31 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapButton->SetZPos(3);
 			mapButton->AddActionSignalTarget(this);
 			mapButton->SetVisible(true);
+			mapButton->PassMouseTicksTo(this, true);
+			MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup(fmtModeDesc));
 		}
 
 		m_pListPanel->AddItem(NULL, holder);
 	}
 
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFCustomMatchModeDialog::OnCursorEnteredButton( KeyValues* data )
+{
+	const char* key = data->GetString( "command" );
+	auto keyind = MapDesc.Find( key );
+	if ( keyind != MapDesc.InvalidIndex() )
+	{
+		m_DescLabel->SetText( MapDesc[keyind] );
+	}
+	else
+	{
+		m_DescLabel->SetText( "" );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -4186,8 +4218,11 @@ enum CustomMatchMapCategory
 	MapCategory_Workshop_TF2,
 	MapCategory_Workshop_TF2GR,
 	MapCategory_Workshop_CF,
-
+	
 	MapCategory_MAX,
+
+	MapCategory_TF2C,
+	MapCategory_Workshop_TF2C,
 };
 
 
@@ -4250,6 +4285,16 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	else
 	{
 		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_CF_B", NULL);
+	}
+	if ( SteamApps()->BIsAppInstalled( 3545060 ) )
+	{
+		//m_pCategoryList->AddItem("#TFSOLO_MapSource_TF2C", NULL);
+		//m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2C", NULL);
+	}
+	else
+	{
+		//m_pCategoryList->AddItem("#TFSOLO_MapSource_TF2C_B", NULL);
+		//m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2C_B", NULL);
 	}
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );
@@ -4626,7 +4671,8 @@ void CTFCustomMatchMapDialog::CreateControls()
 			}
 			case MapCategory_Workshop_TF2:
 			{
-				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") != 0 || tags->GetInt("workshop_tf2gr") != 0 || tags->GetInt("workshop_cf") != 0 )
+				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") != 0 || tags->GetInt("workshop_tf2gr") != 0 || tags->GetInt("workshop_cf") != 0
+					|| tags->GetInt("tf2c") != 0 || tags->GetInt("workshop_tf2c") != 0 )
 				{
 					key = key->GetNextKey();
 					continue;
@@ -4645,6 +4691,24 @@ void CTFCustomMatchMapDialog::CreateControls()
 			case MapCategory_Workshop_CF:
 			{
 				if ( !isWorkshop || tags->GetInt("workshop_cf") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_TF2C:
+			{
+				if ( !isWorkshop || tags->GetInt("tf2c") == 0 )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
+			case MapCategory_Workshop_TF2C:
+			{
+				if ( !isWorkshop || tags->GetInt("workshop_tf2c") == 0 )
 				{
 					key = key->GetNextKey();
 					continue;

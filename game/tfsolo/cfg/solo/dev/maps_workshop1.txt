@@ -124,18 +124,6 @@ maps_config
 				theme_desert 1
 			}
 		}
-		workshop_454147907
-		{
-			name "Furnace Creek"
-			modename "#Gametype_AttackDefense"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 3
-				theme_desert 1
-			}
-		}
 		workshop_454159900
 		{
 			name "Redbrier"
@@ -202,18 +190,6 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_desert 1
-			}
-		}
-		workshop_454268166
-		{
-			name "Amaranth"
-			modename "#Gametype_AttackDefense"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 2
-				theme_alpine 1
 			}
 		}
 		workshop_454592932
@@ -750,18 +726,6 @@ maps_config
 				tc 1
 				cp_count 6
 				theme_jungle 1
-			}
-		}
-		workshop_570869131
-		{
-			name "Tidal"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 5
-				symm 1
-				theme_industrial 1
 			}
 		}
 		workshop_580052046
@@ -2847,16 +2811,6 @@ maps_config
 				theme_alpine 1
 			}
 		}
-		workshop_2964570577
-		{
-			name "Jinn"
-			modename "#Gametype_Escort"
-			tags
-			{
-				pl 1
-				theme_egypt 1
-			}
-		}
 		workshop_2965301326
 		{
 			name "Relic"
@@ -3668,18 +3622,6 @@ maps_config
 				mvm 1
 				flag_count 1
 				theme_alpine 1
-			}
-		}
-		workshop_3460960153
-		{
-			name "Winter Ridge"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_snow 1
 			}
 		}
 		workshop_3462326252

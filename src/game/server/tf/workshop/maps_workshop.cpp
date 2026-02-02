@@ -1288,20 +1288,22 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 	KeyValues* TF2_KV = GetAppWorkshopManifest( 440 );
 	KeyValues* TF2_GR_KV = GetAppWorkshopManifest( 3826520 );
 	KeyValues* CF_KV = GetAppWorkshopManifest( 3768450 );
+	//const char* TF2C_Path = GetAppInstallDirNoSteam( 3545060 );
+	//KeyValues* TF2C_W_KV = GetAppWorkshopManifest( 3545060 );
 	if ( !TF2_KV )
 	{
 		TFWorkshopMsg( "TF2 workshop manifest not found\n" );
 	}
-	if ( !TF2_KV && !TF2_GR_KV )
+	if ( !TF2_KV && !TF2_GR_KV && !CF_KV )
 	{
-		cachefile->SaveToFile(g_pFullFileSystem, "workshop_localcache.txt", "GAME");
+		cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );
 		return;
 	}
 
 	int mapCount = 0;
 	m_vecLocalWorkshopMaps.RemoveAll();
 
-	// TF2
+	// TF2 Workshop
 	if ( TF2_KV )
 	{
 		const char* rootPath = TF2_KV->GetString( "ws" );
@@ -1348,7 +1350,7 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 		}
 	}
 
-	// TF2: Gold Rush
+	// TF2: Gold Rush Workshop
 	if ( TF2_GR_KV )
 	{
 		const char* rootPath = TF2_GR_KV->GetString( "ws" );
@@ -1395,7 +1397,7 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 		}
 	}
 
-	// Custom Fortress
+	// Custom Fortress Workshop
 	if ( CF_KV )
 	{
 		const char* rootPath = CF_KV->GetString( "ws" );
@@ -1441,6 +1443,44 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 			key = key->GetNextKey();
 		}
 	}
+
+	// TF2 Classified
+	/*
+	if ( TF2C_Path && TF2C_Path[0] )
+	{
+		static char szMapsPath[1024] = {};
+		V_snprintf( szMapsPath, sizeof( szMapsPath ), "%s%s", TF2C_Path, "/tf2classified/maps/" );
+
+		FileFindHandle_t hFind = NULL;
+		const char* pszSearch = CFmtStr( "%s*.bsp", szMapsPath );
+		const char* pszRootFolder = CFmtStr( "%s", szMapsPath );
+		char const* szFileName = g_pFullFileSystem->FindFirstEx( pszSearch, "GAME", &hFind );
+		while ( szFileName )
+		{
+			// Map file found, let's add it to the map list
+			const char* pszMapID = CFmtStr( "%s%s", "tf2c_", szFileName );
+			m_vecLocalModMaps.AddToTail( V_strdup( pszMapID ) );
+
+			CTFWorkshopMap* newMap = new CTFWorkshopMap( true );
+			newMap->m_strMapName = V_strdup( szFileName );
+			newMap->m_strCanonicalName = V_strdup( szFileName );
+			//CanonicalNameForMap( fileID, szFileName, newMap->m_strCanonicalName );
+			newMap->m_strLocalFolder = V_strdup( pszRootFolder );
+			m_mapMaps.Insert( fileID, newMap );
+			cachefile->SetString( pszMapID, CFmtStr( "%s%s", pszRootFolder, szFileName ) );
+
+			mapCount++;
+			szFileName = g_pFullFileSystem->FindNext( hFind );
+		}
+
+		g_pFullFileSystem->FindClose( hFind );
+	}
+	*/
+
+	// TF2 Classified Workshop
+	//if ( TF2C_W_KV )
+	//{
+	//}
 
 	TFWorkshopMsg( "Local workshop maps found: %u\n", mapCount );
 	cachefile->SaveToFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" );

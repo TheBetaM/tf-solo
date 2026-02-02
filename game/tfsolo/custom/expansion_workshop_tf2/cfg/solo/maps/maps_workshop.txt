@@ -36,17 +36,6 @@ maps_config
 				theme_industrial 1
 			}
 		}
-		workshop_2851677751
-		{
-			name "Caper"
-			modename "#Gametype_CP"
-			tags
-			{
-				cp 1
-				cp_count 3
-				theme_desert 1
-			}
-		}
 		workshop_3322275041
 		{
 			name "Life Snatcher"

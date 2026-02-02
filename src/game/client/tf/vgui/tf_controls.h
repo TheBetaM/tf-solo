@@ -332,6 +332,7 @@ private:
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
 	CExLabel* m_TitleLabel;
+	CExLabel* m_DescLabel;
 
 	struct ModeOption
 	{
@@ -342,7 +343,10 @@ private:
 		const char* MapOverride;
 	};
 
+	MESSAGE_FUNC_PARAMS(OnCursorEnteredButton, "CursorEntered", data);
+
 	CUtlVector<ModeOption> MapMods;
+	CUtlMap<const char*, const char*> MapDesc;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");

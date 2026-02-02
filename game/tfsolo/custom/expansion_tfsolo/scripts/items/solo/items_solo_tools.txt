@@ -19,8 +19,8 @@
 			}
 			"show_in_armory"	"1"
 			"item_type_name"	"#TF_T"
-			"item_name"			"TF2 Base Game Weapons Unlock"
-			"item_description"	"Unlock the ability to equip all weapon items from your base Team Fortress 2 inventory."
+			"item_name"			"#TFSOLO_Item_BaseGameWeapons"
+			"item_description"	"#TFSOLO_Item_BaseGameWeapons_Desc"
 			"image_inventory"	"backpack/crafting/haunted_metal"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
