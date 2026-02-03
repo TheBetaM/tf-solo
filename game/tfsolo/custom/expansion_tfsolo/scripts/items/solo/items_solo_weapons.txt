@@ -2,7 +2,7 @@
 {
 	"prefabs"
 	{
-		"weapon_bottledsorrow"
+		"tfsolo_weapon_bottledsorrow"
 		{
 			"item_class"	"saxxy"
 			"capabilities"
@@ -63,7 +63,7 @@
 			"mouse_pressed_sound"	"ui/item_bottle_pickup.wav"
 			"drop_sound"		"ui/item_bottle_drop.wav"
 		}
-		"weapon_shockingtruth"
+		"tfsolo_weapon_shockingtruth"
 		{
 			"item_class"	"saxxy"
 			"capabilities"
@@ -127,7 +127,7 @@
 			"mouse_pressed_sound"	"ui/item_bottle_pickup.wav"
 			"drop_sound"		"ui/item_bottle_drop.wav"
 		}
-		"weapon_spineyard_tommygun"
+		"tfsolo_weapon_spineyard_tommygun"
 		{
 			"enabled"	"1"
 			"item_class"	"tf_weapon_charged_smg"
@@ -209,7 +209,7 @@
 				}
 			}
 		}
-		"weapon_wallboots"
+		"tfsolo_weapon_wallboots"
 		{
 			"enabled"		"1"
 			"item_class"		"tf_wearable"
@@ -260,7 +260,7 @@
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 		}
-		"weapon_critdrink"
+		"tfsolo_weapon_critdrink"
 		{
 			"prefab"	"valve weapon_scout_drink"
 			"first_sale_date"	"2010/09/29"
@@ -288,7 +288,7 @@
 				}
 			}
 		}
-		"weapon_rocketlauncher_center"
+		"tfsolo_weapon_rocketlauncher_center"
 		{
 			"item_class"	"tf_weapon_rocketlauncher"
 			"craft_material_type"	"weapon"
@@ -365,7 +365,7 @@
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"
 		}
-		"weapon_rocketlauncher_training"
+		"tfsolo_weapon_rocketlauncher_training"
 		{
 			"prefab"	"valve"
 			"item_class"	"tf_weapon_rocketlauncher"
@@ -429,7 +429,7 @@
 				}
 			}
 		}
-		"weapon_sticky_training"
+		"tfsolo_weapon_sticky_training"
 		{
 			"prefab"	"valve"
 			"first_sale_date"	"2010/10/11"
@@ -496,7 +496,7 @@
 				}
 			}
 		}
-		"weapon_pickaxe_surrender"
+		"tfsolo_weapon_pickaxe_surrender"
 		{
 			"prefab"	"valve"
 			"first_sale_date"	"2012/06/29"
@@ -576,7 +576,7 @@
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 		}
-		"weapon_barbell"
+		"tfsolo_weapon_barbell"
 		{
 			"item_class"	"saxxy"
 			"prefab"	"weapon_melee_allclass"
@@ -653,7 +653,7 @@
 				}
 			}
 		}
-		"weapon_blacksmith_hammer"
+		"tfsolo_weapon_blacksmith_hammer"
 		{
 			"item_class"	"tf_weapon_fireaxe"
 			"craft_class"	"weapon"
@@ -716,7 +716,7 @@
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"
 		}
-		"weapon_backstabber"
+		"tfsolo_weapon_backstabber"
 		{
 			"prefab"	"weapon_spy_knife_item2"
 			"capabilities"
@@ -772,7 +772,7 @@
 				}
 			}
 		}
-		"weapon_unarmed"
+		"tfsolo_weapon_unarmed"
 		{
 			"item_class"	"saxxy"
 			"prefab"	"weapon_melee_allclass"
@@ -841,63 +841,618 @@
 				}
 			}
 		}
+		"tfsolo_weapon_medic_syringe"
+		{
+			"item_class"	"tf_weapon_bonesaw"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+			}
+			"anim_slot" "MELEE_ALLCLASS"
+			"item_logname"	"ubersaw"
+			"item_iconname"	"ubersaw"
+			"show_in_armory"	"1"
+			"item_type_name"	"Syringe"
+			"item_name"	"Marrow Extractor"
+			"item_description" "#TF_Unique_BattleSaw_Desc"
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/c_models/c_ubersaw/c_ubersaw"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"50"
+			"model_player"	"models/weapons/w_models/w_syringe.mdl"
+			"attach_to_hands"	"1"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"medic"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -12"
+			}
+			"attributes"
+			{
+				"ubercharge_preserved_on_spawn_max"
+				{
+					"attribute_class"	"ubercharge_preserved_on_spawn_max"
+					"value" "0.6"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-10"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"2"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_hit"	"Weapon_UberSaw.HitFlesh"
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
+		"tfsolo_weapon_spy_tranq"
+		{
+			"item_class"	"tf_weapon_revolver"
+			"craft_material_type"	"weapon"
+			"craft_class"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+				"can_craft_count"	"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_mvm_penetration_damage"	"1"
+				"can_deal_long_distance_damage"	"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Revolver"
+			"item_name"	"Finishing Touch"
+			"item_description"	""
+			"item_slot"	"secondary"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"item_logname"	"ambassador"
+			"item_iconname"	"ambassador"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"image_inventory"	"sprites/bucket_tranq"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"32"
+			"model_player"	"models/weapons/w_models/w_tranq.mdl"
+			"attach_to_hands" "1"
+			"used_by_classes"
+			{
+				"spy"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -6"				
+			}
+			"attributes"
+			{
+				"sapper kills collect crits"
+				{
+					"attribute_class"	"sapper_kills_collect_crits"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.85"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot" "Weapon_Ambassador.Single"
+				"sound_burst" "Weapon_Ambassador.SingleCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+		}
+		"tfsolo_weapon_pyro_brandingiron"
+		{
+			"item_class"	"tf_weapon_fireaxe"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_posthumous_damage"	"1"
+				"can_deal_critical_damage"	"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"Branding Iron"
+			"item_name"	"Branding Iron"
+			"item_description"	""
+			"item_slot"	"melee"
+			"item_logname"	"axtinguisher"
+			"item_iconname"	"axtinguisher"
+			"item_quality"	"unique"
+			"image_inventory"	"backpack/weapons/c_models/c_axtinguisher/c_axtinguisher_pyro"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"55"
+			"model_player"	"models/weapons/w_models/w_brandingiron.mdl"
+			"attach_to_hands"	"1"
+			"min_ilevel"	"10"
+			"max_ilevel"	"10"
+			"propername"	"0"
+			"used_by_classes"
+			{
+				"pyro"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -11"				
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+			"attributes"
+			{
+				"Set DamageType Ignite"
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" "1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+			}
+		}
+		"tfsolo_weapon_sniper_club"
+		{
+			"item_class"	"tf_weapon_club"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_be_festivized"		"1"
+			}
+			"item_logname"	"tf_weapon_club"
+			"item_iconname"	"tf_weapon_club"
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Club"
+			"item_name"	"Sniper Club"
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/w_models/w_machete"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist"			  "45"
+			"model_player"	"models/weapons/w_models/w_club.mdl"
+			"attach_to_hands"	"1"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"sniper"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -6"				
+			}
+			"mouse_pressed_sound"	"ui/item_knife_small_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" "1"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"	"1.2"
+				}
+				"minicrits become crits"
+				{
+					"attribute_class"	"minicrits_become_crits"
+					"value" "1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		"tfsolo_weapon_leadpipe"
+		{
+			"item_class"	"saxxy"
+			"prefab"	"weapon_melee_allclass"
+			"craft_class"			"" 
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_be_festivized"		"1"
+			}
+			"show_in_armory"	"1"
+			"item_type_name"	"Lead Pipe"
+			"item_name"	"Lead Pipe"
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/c_models/c_carnival_mallet/c_carnival_mallet"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 				"53"					
+			"model_player"	"models/weapons/w_models/w_leadpipe.mdl"
+			"attach_to_hands"	"1"
+			"item_quality"	"unique"
+			"min_ilevel"	"10"
+			"max_ilevel"	"10"
+			"propername"	"1"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"heavy"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"
+				"mult_patient_overheal_penalty_active"	"0.6"
+				"mult_health_fromhealers_penalty_active""0.6"
+			}
+			"visuals"
+			{
+				"sound_melee_hit_world"	"Weapon_Machete.HitWorld"
+				"sound_melee_miss"	"Weapon_Machete.Miss"
+				"sound_melee_hit"	"Weapon_Machete.HitFlesh"
+				"sound_burst"		"Weapon_Machete.MissCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+			"attributes"
+			{
+				"dmg from ranged reduced"
+				{
+					"attribute_class"	"dmg_from_ranged"
+					"value"	"0.6"
+				}
+				"dmg from melee increased"
+				{
+					"attribute_class"	"dmg_from_melee"
+					"value"	"2.0"
+				}
+				"single wep holster time increased"
+				{
+					"attribute_class"	"mult_switch_from_wep_deploy_time"
+					"value"				"2.0"
+				}
+			}
+		}
+		"tfsolo_weapon_nailgun"
+		{
+			"item_class"	"tf_weapon_syringegun_medic"
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_posthumous_damage"	"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_long_distance_damage"	"1"
+			}
+			"item_logname"	"blutsauger"
+			"item_iconname"	"blutsauger"
+			"show_in_armory"	"1"
+			"item_type_name"	"Nailgun"
+			"item_name"		"Stitch Applier"
+			"item_description"	"#TF_Overdose_Desc"
+			"item_slot"	"primary"
+			"image_inventory"	"sprites/bucket_nailgun"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/weapons/w_models/w_nailgun.mdl"
+			"attach_to_hands"	"1"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"medic"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -14"				
+			}
+			"attributes"
+			{
+				"move speed bonus resource level"
+				{
+					"attribute_class"	"mult_player_movespeed_resource_level"
+					"value"	"1.2"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.85"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+		}
+		"tfsolo_weapon_medic_beerstein"
+		{
+			"item_class"		"tf_weapon_bonesaw"
+			"craft_class"		"weapon"
+			"craft_material_type"		"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_heal_allies"			"1"
+			}
+			"item_logname"		"ubersaw"
+			"item_iconname"		"ubersaw"
+			"show_in_armory"	"1"
+			"item_type_name"	"Beer Stein"
+			"item_name"		"Oktober Feast"
+			"item_slot"		"melee"
+			"image_inventory"	"backpack/weapons/c_models/c_ubersaw/c_ubersaw"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"		"models/weapons/w_models/w_beer_stein.mdl"
+			"attach_to_hands"	"1"
+			"inspect_panel_dist" "42"
+			"item_quality"		"unique"
+			"propername"		"1"
+			"min_ilevel"		"15"
+			"max_ilevel"		"15"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"medic"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"			"10 0 -12"			
+			}
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" "1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.80"
+				}
+				"enables aoe heal"
+				{
+					"attribute_class"	"enables_aoe_heal"
+					"value"	"1"
+				}
+				"health regen"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"	"3"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
+		"tfsolo_weapon_crowbar"
+		{
+			"item_class"	"saxxy"
+			"prefab"	"weapon_melee_allclass"
+			"craft_class"			"" 
+			"capabilities"
+			{
+				"nameable"		"1"
+				"can_craft_count"	"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_be_equipped_by_soldier_or_demo"	"1"
+			}
+			"item_logname"	"necro_smasher"
+			"item_iconname"	"necro_smasher"
+			"show_in_armory"	"1"
+			"item_type_name"	"Crowbar"
+			"item_name"	"Battle Opener"
+			"item_description"	""
+			"item_slot"	"melee"
+			"image_inventory"	"backpack/weapons/c_models/c_carnival_mallet/c_carnival_mallet"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 				"46"			
+			"model_player"	"models/weapons/w_models/w_crowbar.mdl"
+			"attach_to_hands"	"1"
+			"item_quality"	"unique"
+			"propername"	"1"
+			"min_ilevel"	"50"
+			"max_ilevel"	"50"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"scout"	"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"	"1"
+				"heavy"	"1"
+				"pyro" "1"
+				"engineer"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"			"20 4 -20"
+				"inspect_viewmodel_offset" 		"5 0 -3"
+			}
+			"visuals"
+			{
+				"sound_melee_hit_world"	"Weapon_Machete.HitWorld"
+				"sound_melee_miss"	"Weapon_Machete.Miss"
+				"sound_melee_hit"	"Weapon_Machete.HitFlesh"
+				"sound_burst"		"Weapon_Machete.MissCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
 	}
 	"items"
 	{
 		"100001"
 		{
 			"name" "Solo Spineyard Tommygun"
-			"prefab" "weapon_spineyard_tommygun"
+			"prefab" "tfsolo_weapon_spineyard_tommygun"
 		}
 		"100002"
 		{
 			"name" "Solo Wallboots"
-			"prefab" "weapon_wallboots"
+			"prefab" "tfsolo_weapon_wallboots"
 		}
 		"100003"
 		{
 			"name" "Solo Critee Cool"
-			"prefab" "weapon_critdrink"
+			"prefab" "tfsolo_weapon_critdrink"
 		}
 		"100004"
 		{
 			"name" "Solo Rocket Center"
-			"prefab" "weapon_rocketlauncher_center"
+			"prefab" "tfsolo_weapon_rocketlauncher_center"
 		}
 		"100005"
 		{
 			"name" "Solo Rocket Trainer"
-			"prefab" "weapon_rocketlauncher_training"
+			"prefab" "tfsolo_weapon_rocketlauncher_training"
 		}
 		"100006"
 		{
 			"name" "Solo Stickybomb Trainer"
-			"prefab" "weapon_sticky_training"
+			"prefab" "tfsolo_weapon_sticky_training"
 		}
 		"100007"
 		{
 			"name" "Solo The Runaway Pride"
-			"prefab" "weapon_pickaxe_surrender"
+			"prefab" "tfsolo_weapon_pickaxe_surrender"
 		}
 		"100008"
 		{
 			"name" "Solo Barbell"
-			"prefab" "weapon_barbell"
+			"prefab" "tfsolo_weapon_barbell"
 		}
 		"100009"
 		{
 			"name" "Solo Hammer"
-			"prefab" "weapon_blacksmith_hammer"
+			"prefab" "tfsolo_weapon_blacksmith_hammer"
 		}
 		"100010"
 		{
 			"name" "Solo Backstabber"
-			"prefab" "weapon_backstabber"
+			"prefab" "tfsolo_weapon_backstabber"
 		}
 		"100011"
 		{
 			"name" "Solo Unarmed"
-			"prefab" "weapon_unarmed"
+			"prefab" "tfsolo_weapon_unarmed"
+		}
+		"100012"
+		{
+			"name" "Solo Medic Syringe"
+			"prefab" "tfsolo_weapon_medic_syringe"
+		}
+		"100013"
+		{
+			"name" "Solo Spy Tranq"
+			"prefab" "tfsolo_weapon_spy_tranq"
+		}
+		"100014"
+		{
+			"name" "Solo Branding Iron"
+			"prefab" "tfsolo_weapon_pyro_brandingiron"
+		}
+		"100015"
+		{
+			"name" "Solo Sniper Club"
+			"prefab" "tfsolo_weapon_sniper_club"
+		}
+		"100016"
+		{
+			"name" "Solo Leadpipe"
+			"prefab" "tfsolo_weapon_leadpipe"
+		}
+		"100017"
+		{
+			"name" "Solo Nailgun"
+			"prefab" "tfsolo_weapon_nailgun"
+		}
+		"100018"
+		{
+			"name" "Solo Medic Beer Stein"
+			"prefab" "tfsolo_weapon_medic_beerstein"
+		}
+		"100019"
+		{
+			"name" "Solo Crowbar"
+			"prefab" "tfsolo_weapon_crowbar"
 		}
 	}
 }

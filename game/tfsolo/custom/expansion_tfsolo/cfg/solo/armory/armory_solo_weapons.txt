@@ -42,4 +42,36 @@ armory_config
 	{
 		Cost 100
 	}
+	"Solo Medic Syringe"
+	{
+		Cost 100
+	}
+	"Solo Spy Tranq"
+	{
+		Cost 100
+	}
+	"Solo Branding Iron"
+	{
+		Cost 100
+	}
+	"Solo Sniper Club"
+	{
+		Cost 100
+	}
+	"Solo Leadpipe"
+	{
+		Cost 100
+	}
+	"Solo Nailgun"
+	{
+		Cost 100
+	}
+	"Solo Medic Beer Stein"
+	{
+		Cost 100
+	}
+	"Solo Crowbar"
+	{
+		Cost 100
+	}
 }
