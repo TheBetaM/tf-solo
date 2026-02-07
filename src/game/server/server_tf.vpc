@@ -1007,8 +1007,8 @@ $Project "Server (TF)"
 
 			$Folder	"TFSOLO"
 			{
-				$File	"tf\solo\propertydamage_prop.cpp"
-				$File	"tf\solo\propertydamage_prop.h"
+				$File	"$SRCDIR\game\shared\tf\solo\propertydamage_prop.cpp"
+				$File	"$SRCDIR\game\shared\tf\solo\propertydamage_prop.h"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.cpp"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
 				$File	"$SRCDIR\game\server\env_instructor_hint.cpp"

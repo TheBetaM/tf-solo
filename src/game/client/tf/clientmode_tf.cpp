@@ -527,6 +527,10 @@ void ClientModeTFNormal::Init()
 	// Fixes player movement in maxplayers 1
 	ConVarRef dt_UsePartialChangeEnts( "dt_UsePartialChangeEnts" );
 	dt_UsePartialChangeEnts.SetValue( 0 );
+
+	// Fixes visual bugs
+	ConVarRef mat_supportflashlight( "mat_supportflashlight" );
+	mat_supportflashlight.SetValue( false );
 }
 
 //-----------------------------------------------------------------------------

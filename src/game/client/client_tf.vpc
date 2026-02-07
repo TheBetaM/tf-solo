@@ -977,6 +977,8 @@ $Project "Client (TF)"
 
 			$Folder	"TFSOLO"
 			{
+				$File	"$SRCDIR\game\shared\tf\solo\propertydamage_prop.cpp"
+				$File	"$SRCDIR\game\shared\tf\solo\propertydamage_prop.h"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.cpp"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
 				$File	"$SRCDIR\patch\patch_singleplayer.cpp"

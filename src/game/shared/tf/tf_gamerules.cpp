@@ -958,7 +958,7 @@ ConVar tf_revives_enable( "tf_revives_enable", "0", FCVAR_REPLICATED, "Force ena
 ConVar tf_maddash_mode( "tf_maddash_mode", "0", FCVAR_REPLICATED, "Enable Mad Dash gamemode.\n" );
 ConVar tf_maddash_flipteams( "tf_maddash_flipteams", "0", FCVAR_REPLICATED, "Flip team roles.\n" );
 ConVar tf_maddash_charge_time( "tf_maddash_charge_time", "10.0", FCVAR_REPLICATED, "Base time to fully charge.\n" );
-ConVar tf_maddash_charge_type("tf_maddash_charge_type", "0", FCVAR_REPLICATED, "0 - Uber, 1 - Uber + Crits, 2 - Uber + MiniCrits, 3 - Crits, 4 - MiniCrits\n");
+ConVar tf_maddash_charge_type( "tf_maddash_charge_type", "0", FCVAR_REPLICATED, "0 - Uber, 1 - Uber + Crits, 2 - Uber + MiniCrits, 3 - Crits, 4 - MiniCrits\n");
 ConVar tf_maddash_deplete_time( "tf_maddash_deplete_rate", "30.0", FCVAR_REPLICATED, "Base time to fully deplete.\n" );
 ConVar tf_maddash_discharge_time( "tf_maddash_discharge_time", "3.0", FCVAR_REPLICATED, "Flicker time after meter depletes.\n" );
 ConVar tf_maddash_deplete_action( "tf_maddash_deplete_action", "0", FCVAR_REPLICATED, "1 - Instant death on deplete, 2 - Instant fail on deplete\n" );
@@ -4681,6 +4681,15 @@ void CTFGameRules::Activate()
 		{
 			tf_maddash_infiltration.SetValue( 1 );
 		}
+		if ( pLogicMadDash->m_bFlipTeams || tf_maddash_flipteams.GetBool() )
+		{
+			mp_humans_must_join_team.SetValue( "red" );
+			tf_maddash_flipteams.SetValue( true );
+		}
+		else
+		{
+			mp_humans_must_join_team.SetValue( "blue" );
+		}
 	}
 
 	if ( tf_powerup_mode.GetBool() )
@@ -4736,6 +4745,14 @@ void CTFGameRules::Activate()
 	else if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_MADDASH || overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION )
 	{
 		tf_maddash_mode.SetValue( 1 );
+		if ( tf_maddash_flipteams.GetBool() )
+		{
+			mp_humans_must_join_team.SetValue( "red" );
+		}
+		else
+		{
+			mp_humans_must_join_team.SetValue( "blue" );
+		}
 		if ( overrideMode == TF_GAMEMODEOVERRIDE_TFSOLO_INFILTRATION )
 		{
 			tf_maddash_infiltration.SetValue( 1 );
@@ -5174,6 +5191,15 @@ void CTFGameRules::SetupOnRoundStart( void )
 			if ( pLogicMadDash->m_iGamemodeType == 1 )
 			{
 				tf_maddash_infiltration.SetValue( 1 );
+			}
+			if ( pLogicMadDash->m_bFlipTeams || tf_maddash_flipteams.GetBool() )
+			{
+				mp_humans_must_join_team.SetValue( "red" );
+				tf_maddash_flipteams.SetValue( true );
+			}
+			else
+			{
+				mp_humans_must_join_team.SetValue( "blue" );
 			}
 		}
 	}

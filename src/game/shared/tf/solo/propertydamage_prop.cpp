@@ -1,12 +1,60 @@
 #include "cbase.h"
 
+#ifdef GAME_DLL
 #include "tf_ammo_pack.h"
-#include "particle_parse.h"
 #include "tf_player.h"
+#endif // GAME_DLL
+#include "particle_parse.h"
 #include "tf_gamerules.h"
-
 #include "propertydamage_prop.h"
 #include "solo/tf_logic_propertydamage.h"
+
+#include "tier0/memdbgon.h"
+
+IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamageProp, DT_TFSOLOPropertyDamageProp)
+IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamagePhysicsProp, DT_TFSOLOPropertyDamagePhysicsProp)
+IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamageBrush, DT_TFSOLOPropertyDamageBrush)
+IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamageNextBot, DT_TFSOLOPropertyDamageNextBot)
+
+BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamageProp, DT_TFSOLOPropertyDamageProp)
+#ifdef GAME_DLL
+SendPropFloat(SENDINFO(m_flCurrentDamage)),
+SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+#else
+RecvPropFloat(RECVINFO(m_flCurrentDamage)),
+RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+#endif
+END_NETWORK_TABLE()
+
+BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamagePhysicsProp, DT_TFSOLOPropertyDamagePhysicsProp)
+#ifdef GAME_DLL
+SendPropFloat(SENDINFO(m_flCurrentDamage)),
+SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+#else
+RecvPropFloat(RECVINFO(m_flCurrentDamage)),
+RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+#endif
+END_NETWORK_TABLE()
+
+BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamageBrush, DT_TFSOLOPropertyDamageBrush)
+#ifdef GAME_DLL
+SendPropFloat(SENDINFO(m_flCurrentDamage)),
+SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+#else
+RecvPropFloat(RECVINFO(m_flCurrentDamage)),
+RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+#endif
+END_NETWORK_TABLE()
+
+BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamageNextBot, DT_TFSOLOPropertyDamageNextBot)
+#ifdef GAME_DLL
+SendPropFloat(SENDINFO(m_flCurrentDamage)),
+SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+#else
+RecvPropFloat(RECVINFO(m_flCurrentDamage)),
+RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+#endif
+END_NETWORK_TABLE()
 
 LINK_ENTITY_TO_CLASS( tf_propertydamage_prop, CTFSOLOPropertyDamageProp );
 LINK_ENTITY_TO_CLASS( tf_propertydamage_prop_physics, CTFSOLOPropertyDamagePhysicsProp );
@@ -27,6 +75,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+#ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
@@ -36,6 +85,7 @@ DEFINE_INPUTFUNC( FIELD_FLOAT, "SetDamageAmount", InputSetDamageAmount ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetDamageable", InputSetDamageable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetSappable", InputSetSappable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetRepairable", InputSetRepairable ),
+#endif
 END_DATADESC()
 
 BEGIN_DATADESC( CTFSOLOPropertyDamagePhysicsProp )
@@ -47,6 +97,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+#ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
@@ -56,6 +107,7 @@ DEFINE_INPUTFUNC( FIELD_FLOAT, "SetDamageAmount", InputSetDamageAmount ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetDamageable", InputSetDamageable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetSappable", InputSetSappable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetRepairable", InputSetRepairable ),
+#endif
 END_DATADESC()
 
 BEGIN_DATADESC( CTFSOLOPropertyDamageBrush )
@@ -67,6 +119,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+#ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
@@ -76,6 +129,7 @@ DEFINE_INPUTFUNC( FIELD_FLOAT, "SetDamageAmount", InputSetDamageAmount ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetDamageable", InputSetDamageable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetSappable", InputSetSappable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetRepairable", InputSetRepairable ),
+#endif
 END_DATADESC()
 
 BEGIN_DATADESC( CTFSOLOPropertyDamageNextBot )
@@ -89,6 +143,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+#ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
 DEFINE_OUTPUT( m_onPropCapturedTeam1, "OnPropCapturedTeam1" ),
@@ -98,9 +153,11 @@ DEFINE_INPUTFUNC( FIELD_FLOAT, "SetDamageAmount", InputSetDamageAmount ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetDamageable", InputSetDamageable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetSappable", InputSetSappable ),
 DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetRepairable", InputSetRepairable ),
+#endif
 END_DATADESC()
 
-bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, int TeamNum, int entindex )
+#ifdef GAME_DLL
+bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, int TeamNum, CBaseEntity* pEnt )
 {
 	CTFPlayer* pTFPlayer = ToTFPlayer( info.GetAttacker() );
 	if ( pTFPlayer && pTFPlayer->GetTeamNumber() != TeamNum )
@@ -110,20 +167,20 @@ bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, 
 		bool isMaxDamage = false;
 		if ( m_flFixedDamageAmount > 0.0f )
 		{
-			m_flCurrentDamage = MIN( m_flCurrentDamage + info.GetDamage(), m_flFixedDamageAmount );
-			if ( m_flCurrentDamage >= m_flFixedDamageAmount )
+			SetDamage( MIN( GetDamage() + info.GetDamage(), m_flFixedDamageAmount ) );
+			if ( GetDamage() >= m_flFixedDamageAmount )
 			{
-				m_flCurrentDamage = 0.0f;
+				SetDamage( 0.0f );
 				isMaxDamage = true;
 			}
 		}
 		else
 		{
-			m_flCurrentDamage = m_flCurrentDamage + info.GetDamage();
-			if ( m_flCurrentDamage >= m_flLastMaxDamage )
+			SetDamage( GetDamage() + info.GetDamage() );
+			if ( GetDamage() >= GetMaxDamage() )
 			{
-				m_flLastMaxDamage = ( m_flCurrentDamage + m_flMaxDamageIncrement ) * m_flMaxDamageMult;
-				m_flCurrentDamage = 0.0f;
+				SetMaxDamage( ( GetDamage() + m_flMaxDamageIncrement ) * m_flMaxDamageMult );
+				SetDamage( 0.0f );
 				isMaxDamage = true;
 			}
 		}
@@ -131,7 +188,7 @@ bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, 
 		IGameEvent* event = gameeventmanager->CreateEvent( "npc_hurt" );
 		if ( event )
 		{
-			event->SetInt( "entindex", entindex );
+			event->SetInt( "entindex", pEnt->entindex() );
 			if ( isMaxDamage )
 			{
 				event->SetInt( "health", 0 );
@@ -163,7 +220,7 @@ bool ITFSOLOPropertyDamagePropAll::OnWrenchHit( CTFPlayer* pPlayer, CTFWrench* p
 {
 	// todo: deal damage to sappers
 
-	if ( !IsRepairable() || m_flCurrentDamage <= 0.0f )
+	if ( !IsRepairable() || GetDamage() <= 0.0f )
 	{
 		return false;
 	}
@@ -171,7 +228,7 @@ bool ITFSOLOPropertyDamagePropAll::OnWrenchHit( CTFPlayer* pPlayer, CTFWrench* p
 	float flAmount = pWrench->GetRepairAmount();
 	float flRepairToMetalRatio = 1.0f; // 3.0f
 	float flRepairAmountMax = flAmount * 1.0f;
-	int iRepairAmount = MIN( RoundFloatToInt( flRepairAmountMax ), m_flCurrentDamage );
+	int iRepairAmount = MIN( RoundFloatToInt( flRepairAmountMax ), GetDamage() );
 	int iRepairCost = ceil( (float)( iRepairAmount ) / flRepairToMetalRatio );
 	if ( iRepairCost > pPlayer->GetBuildResources() )
 	{
@@ -183,7 +240,7 @@ bool ITFSOLOPropertyDamagePropAll::OnWrenchHit( CTFPlayer* pPlayer, CTFWrench* p
 	}
 
 	iRepairAmount = iRepairCost * flRepairToMetalRatio;
-	m_flCurrentDamage = MAX( 0, m_flCurrentDamage - iRepairAmount );
+	SetDamage( MAX( 0, GetDamage() - iRepairAmount ) );
 	pPlayer->RemoveBuildResources( iRepairCost );
 
 	IGameEvent* pEvent = gameeventmanager->CreateEvent( "building_healed" );
@@ -227,6 +284,7 @@ void ITFSOLOPropertyDamagePropAll::AfterCapture( int oldTeam, CBaseEntity* pEnt,
 		}
 	}
 }
+#endif
 
 CTFSOLOPropertyDamageProp::CTFSOLOPropertyDamageProp()
 {
@@ -241,7 +299,7 @@ CTFSOLOPropertyDamageProp::CTFSOLOPropertyDamageProp()
 	m_bIsRepairable = true;
 }
 
-
+#ifdef GAME_DLL
 void CTFSOLOPropertyDamageProp::Spawn()
 {
 	Precache();
@@ -252,6 +310,7 @@ void CTFSOLOPropertyDamageProp::Spawn()
 	m_takedamage = DAMAGE_YES;
 	m_lifeState = LIFE_ALIVE;
 	RemoveFlag( FL_STATICPROP );
+	SetMaxHealth( 99999 );
 	SetHealth( 99999 );
 	if ( m_iCaptureAction == 1 )
 	{
@@ -322,7 +381,7 @@ int CTFSOLOPropertyDamageProp::OnTakeDamage( const CTakeDamageInfo &info )
 	{
 		FireNamedOutput( "OnPropDamaged", variant_t(), this, pTFPlayer );
 	}
-	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), entindex() ) )
+	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), this ) )
 	{
 		if ( pTFPlayer )
 		{
@@ -381,6 +440,8 @@ CTFSOLOPropertyDamageProp* CTFSOLOPropertyDamageProp::Create( const Vector& vPos
 	return pPropertyDamageProp;
 }
 
+
+#endif
 //=========================================================================//
 
 CTFSOLOPropertyDamagePhysicsProp::CTFSOLOPropertyDamagePhysicsProp()
@@ -396,7 +457,7 @@ CTFSOLOPropertyDamagePhysicsProp::CTFSOLOPropertyDamagePhysicsProp()
 	m_bIsRepairable = true;
 }
 
-
+#ifdef GAME_DLL
 void CTFSOLOPropertyDamagePhysicsProp::Spawn()
 {
 	Precache();
@@ -407,6 +468,7 @@ void CTFSOLOPropertyDamagePhysicsProp::Spawn()
 	m_takedamage = DAMAGE_YES;
 	m_lifeState = LIFE_ALIVE;
 	RemoveFlag( FL_STATICPROP );
+	SetMaxHealth( 99999 );
 	SetHealth( 99999 );
 	if ( m_iCaptureAction == 1 )
 	{
@@ -477,7 +539,7 @@ int CTFSOLOPropertyDamagePhysicsProp::OnTakeDamage( const CTakeDamageInfo& info 
 	{
 		FireNamedOutput( "OnPropDamaged", variant_t(), this, pTFPlayer );
 	}
-	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), entindex() ) )
+	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), this ) )
 	{
 		if ( pTFPlayer )
 		{
@@ -536,6 +598,7 @@ CTFSOLOPropertyDamagePhysicsProp* CTFSOLOPropertyDamagePhysicsProp::Create(const
 	return pPropertyDamagePhysicsProp;
 }
 
+#endif
 //=========================================================================//
 
 CTFSOLOPropertyDamageBrush::CTFSOLOPropertyDamageBrush()
@@ -551,7 +614,7 @@ CTFSOLOPropertyDamageBrush::CTFSOLOPropertyDamageBrush()
 	m_bIsRepairable = true;
 }
 
-
+#ifdef GAME_DLL
 void CTFSOLOPropertyDamageBrush::Spawn()
 {
 	Precache();
@@ -562,6 +625,7 @@ void CTFSOLOPropertyDamageBrush::Spawn()
 	SetSolid( SOLID_BSP );
 	m_takedamage = DAMAGE_YES;
 	m_lifeState = LIFE_ALIVE;
+	SetMaxHealth( 99999 );
 	SetHealth( 99999 );
 	if ( m_iCaptureAction == 1 )
 	{
@@ -618,7 +682,7 @@ int CTFSOLOPropertyDamageBrush::OnTakeDamage( const CTakeDamageInfo& info )
 	{
 		FireNamedOutput( "OnPropDamaged", variant_t(), this, pTFPlayer );
 	}
-	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), entindex() ) )
+	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), this ) )
 	{
 		if ( pTFPlayer )
 		{
@@ -648,6 +712,7 @@ int CTFSOLOPropertyDamageBrush::OnTakeDamage( const CTakeDamageInfo& info )
 	return BaseClass::OnTakeDamage( newinfo );
 }
 
+#endif
 //=========================================================================//
 
 CTFSOLOPropertyDamageNextBot::CTFSOLOPropertyDamageNextBot()
@@ -664,6 +729,7 @@ CTFSOLOPropertyDamageNextBot::CTFSOLOPropertyDamageNextBot()
 	m_bMovementCollide = false;
 }
 
+#ifdef GAME_DLL
 void CTFSOLOPropertyDamageNextBot::Spawn()
 {
 	BaseClass::Spawn();
@@ -734,7 +800,7 @@ int CTFSOLOPropertyDamageNextBot::OnTakeDamage( const CTakeDamageInfo& info )
 	{
 		FireNamedOutput( "OnPropDamaged", variant_t(), this, pTFPlayer );
 	}
-	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), entindex() ) )
+	if ( IsDamageable() && PropTookDamage( info, GetTeamNumber(), this ) )
 	{
 		if ( pTFPlayer )
 		{
@@ -785,3 +851,4 @@ bool CTFSOLOPropertyDamageNextBot::ShouldCollide( int collisionGroup, int conten
 	return BaseClass::ShouldCollide( collisionGroup, contentsMask );
 }
 
+#endif

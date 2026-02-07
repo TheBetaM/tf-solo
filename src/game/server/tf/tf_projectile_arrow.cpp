@@ -544,6 +544,73 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 				ImpactTeamPlayer( dynamic_cast<CTFPlayer*>( pOther ) );
 			}
 		}
+		else if ( bApplyEffect )
+		{
+			CTFSOLOPropertyDamageProp* pPDAProp1 = dynamic_cast<CTFSOLOPropertyDamageProp*>( pOther );
+			CTFSOLOPropertyDamagePhysicsProp* pPDAProp2 = dynamic_cast<CTFSOLOPropertyDamagePhysicsProp*>( pOther );
+			CTFSOLOPropertyDamageBrush* pPDAProp3 = dynamic_cast<CTFSOLOPropertyDamageBrush*>( pOther );
+			CTFSOLOPropertyDamageNextBot* pPDAProp4 = dynamic_cast<CTFSOLOPropertyDamageNextBot*>( pOther );
+			if ( pPDAProp1 && pPDAProp1->GetDamage() > 0 && pPDAProp1->IsRepairable() )
+			{
+				float flHealth = GetDamage() * 2.0f;
+				pPDAProp1->SetDamage( MAX( 0, pPDAProp1->GetDamage() - flHealth ) );
+				ImpactSound( "Weapon_Arrow.ImpactFleshCrossbowHeal" );
+				IGameEvent* pEvent = gameeventmanager->CreateEvent( "building_healed" );
+				if ( pEvent )
+				{
+					pEvent->SetInt( "priority", 1 );
+					pEvent->SetInt( "building", pOther->entindex() );
+					pEvent->SetInt( "healer", pAttacker->entindex() );
+					pEvent->SetInt( "amount", (int)flHealth );
+					gameeventmanager->FireEvent( pEvent );
+				}
+			}
+			else if ( pPDAProp2 && pPDAProp2->GetDamage() > 0 && pPDAProp2->IsRepairable() )
+			{
+				float flHealth = GetDamage() * 2.0f;
+				pPDAProp2->SetDamage( MAX( 0, pPDAProp2->GetDamage() - flHealth ) );
+				ImpactSound( "Weapon_Arrow.ImpactFleshCrossbowHeal" );
+				IGameEvent* pEvent = gameeventmanager->CreateEvent( "building_healed" );
+				if ( pEvent )
+				{
+					pEvent->SetInt( "priority", 1 );
+					pEvent->SetInt( "building", pOther->entindex() );
+					pEvent->SetInt( "healer", pAttacker->entindex() );
+					pEvent->SetInt( "amount", (int)flHealth );
+					gameeventmanager->FireEvent( pEvent );
+				}
+			}
+			else if ( pPDAProp3 && pPDAProp3->GetDamage() > 0 && pPDAProp3->IsRepairable() )
+			{
+				float flHealth = GetDamage() * 2.0f;
+				pPDAProp3->SetDamage( MAX( 0, pPDAProp3->GetDamage() - flHealth ) );
+				ImpactSound( "Weapon_Arrow.ImpactFleshCrossbowHeal" );
+				IGameEvent* pEvent = gameeventmanager->CreateEvent( "building_healed" );
+				if ( pEvent )
+				{
+					pEvent->SetInt( "priority", 1 );
+					pEvent->SetInt( "building", pOther->entindex() );
+					pEvent->SetInt( "healer", pAttacker->entindex() );
+					pEvent->SetInt( "amount", (int)flHealth );
+					gameeventmanager->FireEvent( pEvent );
+				}
+			}
+			else if ( pPDAProp4 && pPDAProp4->GetDamage() > 0 && pPDAProp4->IsRepairable() )
+			{
+				float flHealth = GetDamage() * 2.0f;
+				pPDAProp4->SetDamage( MAX( 0, pPDAProp4->GetDamage() - flHealth ) );
+				ImpactSound( "Weapon_Arrow.ImpactFleshCrossbowHeal" );
+				IGameEvent* pEvent = gameeventmanager->CreateEvent( "building_healed" );
+				if ( pEvent )
+				{
+					pEvent->SetInt( "priority", 1 );
+					pEvent->SetInt( "building", pOther->entindex() );
+					pEvent->SetInt( "healer", pAttacker->entindex() );
+					pEvent->SetInt( "amount", (int)flHealth );
+					gameeventmanager->FireEvent( pEvent );
+				}
+			}
+		}
 	}
 
 	if ( pBox && !m_bPenetrate && !bBreakArrow )

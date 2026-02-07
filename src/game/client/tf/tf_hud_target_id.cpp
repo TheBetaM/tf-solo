@@ -24,6 +24,7 @@
 #include "tf_logic_robot_destruction.h"
 #include "entity_capture_flag.h"
 #include "vgui_avatarimage.h"
+#include "../shared/tf/solo/propertydamage_prop.h"
 
 #include "VGuiMatSurface/IMatSystemSurface.h"
 #include "renderparm.h"
@@ -207,6 +208,9 @@ bool CTargetID::DrawHealthIcon()
 {
 	C_BaseEntity *pEnt = cl_entitylist->GetEnt( GetTargetIndex() );
 	if ( pEnt && pEnt->IsBaseObject() )
+		return true;
+
+	if ( pEnt && pEnt->IsHealthBarVisible() )
 		return true;
 
 	if ( tf_hud_target_id_disable_floating_health.GetBool() )
@@ -479,6 +483,11 @@ bool CTargetID::IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, floa
 				if ( !m_pFloatingHealthIcon && !bSpectator && ( !bSpy || bHealthBarVisible ) && !DrawHealthIcon() )
 				{
 					m_pFloatingHealthIcon = CFloatingHealthIcon::AddFloatingHealthIcon( pEnt );
+				}
+
+				if ( !pPlayer )
+				{
+					bReturn = true;
 				}
 			}
 			else if ( pEnt->IsBaseObject() && ( bInSameTeam || bSpy ) )
@@ -927,13 +936,59 @@ void CTargetID::UpdateID( void )
 			// Generic
 			else if ( pEnt->IsVisibleToTargetID() )
 			{
+				bool bIsTeamProperty = false;
+				CTFSOLOPropertyDamageProp* pPDAProp1 = dynamic_cast<CTFSOLOPropertyDamageProp*>( pEnt );
+				CTFSOLOPropertyDamagePhysicsProp* pPDAProp2 = dynamic_cast<CTFSOLOPropertyDamagePhysicsProp*>( pEnt );
+				CTFSOLOPropertyDamageBrush* pPDAProp3 = dynamic_cast<CTFSOLOPropertyDamageBrush*>( pEnt );
+				CTFSOLOPropertyDamageNextBot* pPDAProp4 = dynamic_cast<CTFSOLOPropertyDamageNextBot*>( pEnt );
+				if ( pPDAProp1 || pPDAProp2 || pPDAProp3 || pPDAProp4 )
+				{
+					bShowHealth = true;
+					if ( pPDAProp1 )
+					{
+						flHealth = MAX( 1,( pPDAProp1->m_flLastMaxDamage - pPDAProp1->m_flCurrentDamage ) );
+						flMaxHealth = MAX( 1, pPDAProp1->m_flLastMaxDamage );
+						iMaxBuffedHealth = MAX( 1, (int)pPDAProp1->m_flLastMaxDamage );
+					}
+					else if ( pPDAProp2 )
+					{
+						flHealth = MAX( 1,( pPDAProp2->m_flLastMaxDamage - pPDAProp2->m_flCurrentDamage ) );
+						flMaxHealth = MAX( 1, pPDAProp2->m_flLastMaxDamage );
+						iMaxBuffedHealth = MAX( 1, (int)pPDAProp2->m_flLastMaxDamage );
+					}
+					else if ( pPDAProp3 )
+					{
+						flHealth = MAX( 1,( pPDAProp3->m_flLastMaxDamage - pPDAProp3->m_flCurrentDamage ) );
+						flMaxHealth = MAX( 1, pPDAProp3->m_flLastMaxDamage );
+						iMaxBuffedHealth = MAX( 1, (int)pPDAProp3->m_flLastMaxDamage );
+					}
+					else if ( pPDAProp4 )
+					{
+						flHealth = MAX( 1,( pPDAProp4->m_flLastMaxDamage - pPDAProp4->m_flCurrentDamage ) );
+						flMaxHealth = MAX( 1, pPDAProp4->m_flLastMaxDamage );
+						iMaxBuffedHealth = MAX( 1, (int)pPDAProp4->m_flLastMaxDamage );
+					}
+					bIsTeamProperty = true;
+					if ( pEnt->GetTeamNumber() == TF_TEAM_RED )
+					{
+						g_pVGuiLocalize->ConstructString_safe( sIDString, g_pVGuiLocalize->Find("#TFSOLO_PDA_PropertyOfTeam"), 1, g_pVGuiLocalize->Find("#TF_RedTeam_Name") );
+					}
+					else if ( pEnt->GetTeamNumber() == TF_TEAM_BLUE )
+					{
+						g_pVGuiLocalize->ConstructString_safe( sIDString, g_pVGuiLocalize->Find("#TFSOLO_PDA_PropertyOfTeam"), 1, g_pVGuiLocalize->Find("#TF_BlueTeam_Name") );
+					}
+					else
+					{
+						g_pVGuiLocalize->ConstructString_safe( sIDString, g_pVGuiLocalize->Find("#TFSOLO_PDA_Property"), 1, "" );
+					}
+				}
 				CCaptureFlag *pFlag = dynamic_cast< CCaptureFlag * >( pEnt );
 				if ( pFlag && pFlag->GetPointValue() > 0 )
 				{
 					bShowHealth = false;
 					g_pVGuiLocalize->ConvertANSIToUnicode( CFmtStr("%d Points", pFlag->GetPointValue() ), sIDString, sizeof(sIDString) );
 				}
-				else
+				else if ( !bIsTeamProperty )
 				{
 					CTFDroppedWeapon *pDroppedWeapon = dynamic_cast< CTFDroppedWeapon * >( pEnt );
 					if ( pDroppedWeapon )

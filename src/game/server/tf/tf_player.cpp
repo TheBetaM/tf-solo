@@ -301,6 +301,8 @@ extern ConVar tf_rocketpack_impact_push_min;
 extern ConVar tf_rocketpack_impact_push_max;
 extern ConVar tf_player_responses_mute;
 extern ConVar tf_player_preventteamchange;
+extern ConVar tf_maddash_mode;
+extern ConVar tf_maddash_flipteams;
 #if defined( _DEBUG ) || defined( STAGING_ONLY )
 extern ConVar mp_developer;
 extern ConVar bot_mimic;
@@ -6162,6 +6164,32 @@ int CTFPlayer::GetAutoTeam( int nPreferedTeam /*= TF_TEAM_AUTOASSIGN*/ )
 				bReturnDefenders = true;
 			}
 #endif // TF_RAID_MODE
+
+			if ( tf_maddash_mode.GetBool() )
+			{
+				if ( IsFakeClient() )
+				{
+					if ( tf_maddash_flipteams.GetBool() )
+					{
+						return TF_TEAM_BLUE;
+					}
+					else
+					{
+						return TF_TEAM_RED;
+					}
+				}
+				else
+				{
+					if ( tf_maddash_flipteams.GetBool() )
+					{
+						return TF_TEAM_RED;
+					}
+					else
+					{
+						return TF_TEAM_BLUE;
+					}
+				}
+			}
 
 			if ( TFGameRules()->IsMannVsMachineMode() )
 			{

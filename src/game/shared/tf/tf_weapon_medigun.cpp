@@ -14,6 +14,7 @@
 #include "tf_item.h"
 #include "entity_capture_flag.h"
 #include "tf_logic_player_destruction.h"
+#include "../shared/tf/solo/propertydamage_prop.h"
 
 #if defined( CLIENT_DLL )
 #include <vgui_controls/Panel.h>
@@ -636,6 +637,31 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 			m_hReviveMarker = pReviveMarker;	// Store last marker we touched
 			return true;
 		}
+
+		CTFSOLOPropertyDamageProp* pPDAProp1 = dynamic_cast<CTFSOLOPropertyDamageProp*>( pTarget );
+		CTFSOLOPropertyDamagePhysicsProp* pPDAProp2 = dynamic_cast<CTFSOLOPropertyDamagePhysicsProp*>( pTarget );
+		CTFSOLOPropertyDamageBrush* pPDAProp3 = dynamic_cast<CTFSOLOPropertyDamageBrush*>( pTarget );
+		CTFSOLOPropertyDamageNextBot* pPDAProp4 = dynamic_cast<CTFSOLOPropertyDamageNextBot*>( pTarget );
+		if ( pPDAProp1 && pPDAProp1->IsRepairable() )
+		{
+			m_hTeamProperty = pTarget;
+			return true;
+		}
+		else if ( pPDAProp2 && pPDAProp2->IsRepairable() )
+		{
+			m_hTeamProperty = pTarget;
+			return true;
+		}
+		else if ( pPDAProp3 && pPDAProp3->IsRepairable() )
+		{
+			m_hTeamProperty = pTarget;
+			return true;
+		}
+		else if ( pPDAProp4 && pPDAProp4->IsRepairable() )
+		{
+			m_hTeamProperty = pTarget;
+			return true;
+		}
 	}
 
 	return false;
@@ -1111,6 +1137,32 @@ void CWeaponMedigun::HealTargetThink( void )
 					// This will give them a messagebox that has a Cancel button
 					pReviveMarker->PromptOwner();
 				}
+			}
+		}
+
+		CTFSOLOPropertyDamageProp* pPDAProp1 = dynamic_cast<CTFSOLOPropertyDamageProp*>( pTarget );
+		CTFSOLOPropertyDamagePhysicsProp* pPDAProp2 = dynamic_cast<CTFSOLOPropertyDamagePhysicsProp*>( pTarget );
+		CTFSOLOPropertyDamageBrush* pPDAProp3 = dynamic_cast<CTFSOLOPropertyDamageBrush*>( pTarget );
+		CTFSOLOPropertyDamageNextBot* pPDAProp4 = dynamic_cast<CTFSOLOPropertyDamageNextBot*>( pTarget );
+		if ( pPDAProp1 || pPDAProp2 || pPDAProp3 || pPDAProp4 )
+		{
+			float flHealRate = GetHealRate();
+			float flReviveRate = m_bChargeRelease ? flHealRate * 3.0f : flHealRate;
+			if ( pPDAProp1 && pPDAProp1->GetDamage() > 0 && pPDAProp1->IsRepairable() )
+			{
+				pPDAProp1->SetDamage( MAX( 0, pPDAProp1->GetDamage() - flReviveRate ) );
+			}
+			else if ( pPDAProp2 && pPDAProp2->GetDamage() > 0 && pPDAProp2->IsRepairable() )
+			{
+				pPDAProp2->SetDamage( MAX( 0, pPDAProp2->GetDamage() - flReviveRate ) );
+			}
+			else if ( pPDAProp3 && pPDAProp3->GetDamage() > 0 && pPDAProp3->IsRepairable() )
+			{
+				pPDAProp3->SetDamage( MAX( 0, pPDAProp3->GetDamage() - flReviveRate ) );
+			}
+			else if ( pPDAProp4 && pPDAProp4->GetDamage() > 0 && pPDAProp4->IsRepairable() )
+			{
+				pPDAProp4->SetDamage( MAX( 0, pPDAProp4->GetDamage() - flReviveRate ) );
 			}
 		}
 	}
@@ -2628,7 +2680,8 @@ void CWeaponMedigun::UpdateEffects( void )
 			return;
 
 		bool bReviveMarker = m_hReviveMarker && m_hReviveMarker == m_hHealingTarget;	// Hack to avoid another dynamic_cast here
-		bool bHealTargetMarker = hud_medichealtargetmarker.GetBool() && !bReviveMarker;
+		bool bTeamProperty = m_hTeamProperty && m_hTeamProperty == m_hHealingTarget;
+		bool bHealTargetMarker = hud_medichealtargetmarker.GetBool() && !bReviveMarker && !bTeamProperty;
 
 		const char *pszEffectName;
 		if ( IsAttachedToBuilding() )

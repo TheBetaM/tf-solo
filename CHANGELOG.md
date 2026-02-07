@@ -52,8 +52,7 @@ mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_t
 - Added #basedir to KeyValues to include all files in a directory
 - Added functionality to change Pyrovision into any custom vision
 - Improved thirdperson_platformer, now allows firing in the direction you're aiming
-- Increased maximum FoV to 140
-- Changed tf_airblast_cray default value to 0 (restoring old airblast mechanics)
+- Increased maximum FoV to 130
 - Spawning is no longer prevented while having the class select menu open with hud_classautokill 0
 - Fixed loadout changes not respawning players during the preround period in Arena mode
 ## TFBot improvements
@@ -132,7 +131,7 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Backburner  
 -- Added: Airblast dashes  
 - Manmelter  
--- Removed flaming particle effect  
+-- Removed flaming particle effect obstructing view  
 - Panic Attack  
 -- Reverted to its original functionality/older stats:  
 -- +50% reload speed  

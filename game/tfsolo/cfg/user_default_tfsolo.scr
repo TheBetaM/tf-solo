@@ -55,5 +55,12 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
+	
+	"fov_desired"
+	{
+		"#GameUI_FOV"
+		{ SLIDER 75 130 }
+		{ "90" }
+	}
 
 }

@@ -223,6 +223,7 @@ protected:
 
 	CHandle< CTFMedigunShield > m_hMedigunShield;
 	CHandle< CTFReviveMarker > m_hReviveMarker;
+	CHandle< CBaseEntity > m_hTeamProperty;
 
 #ifdef CLIENT_DLL
 	bool					m_bPlayingSound;

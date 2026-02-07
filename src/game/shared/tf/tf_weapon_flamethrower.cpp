@@ -83,7 +83,7 @@ ConVar	tf_flamethrower_waterfall_damage_per_tick( "tf_flamethrower_waterfall_dam
 
 #if defined( GAME_DLL )
 // TODO These should be cheat upon shipping probably
-ConVar tf_airblast_cray( "tf_airblast_cray", "0", FCVAR_CHEAT,
+ConVar tf_airblast_cray( "tf_airblast_cray", "1", FCVAR_CHEAT,
                          "Use alternate cray airblast logic globally." );
 ConVar tf_airblast_cray_debug( "tf_airblast_cray_debug", "0", FCVAR_CHEAT,
                                "Enable debugging overlays & output for cray airblast.  "
