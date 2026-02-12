@@ -1,0 +1,8 @@
+pda_map
+{
+	pos_x 0
+	pos_y 0
+	scale 1.0
+	rotate 0
+	zoom 0.25
+}

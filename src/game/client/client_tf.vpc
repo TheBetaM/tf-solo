@@ -989,6 +989,8 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\client\c_gameinstructor.h"
 				$File	"$SRCDIR\game\client\hud_locator_target.cpp"
 				$File	"$SRCDIR\game\client\hud_locator_target.h"
+				$File	"$SRCDIR\game\client\tf\vgui\tf_overview.cpp"
+				$File	"$SRCDIR\game\client\tf\vgui\tf_overview.h"
 			}
 		}
 

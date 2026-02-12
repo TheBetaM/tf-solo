@@ -139,6 +139,7 @@ extern bool ArenaClassLayoutKeyInput( int down, ButtonCode_t keynum, const char 
 extern bool CoachingHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 extern bool ItemTestHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 extern bool ShouldScoreBoardHandleKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+extern bool ShouldMapOverviewHandleKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
 static bool TrainingHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -423,6 +424,7 @@ void ClientModeTFNormal::Init()
 
 	m_pMenuUpgradePanel = ( CHudUpgradePanel* )GET_HUDELEMENT( CHudUpgradePanel );
 
+	m_pMapOverview = ( CTFMapOverview* )GET_HUDELEMENT( CTFMapOverview );
 
 	m_pMenuSpell = ( CHudSpellMenu * )GET_HUDELEMENT( CHudSpellMenu);
 	Assert( m_pMenuSpell );
@@ -1594,6 +1596,9 @@ int	ClientModeTFNormal::HudElementKeyInput( int down, ButtonCode_t keynum, const
 	if ( ShouldScoreBoardHandleKeyInput( down, keynum, pszCurrentBinding ) )
 		return 0;
 #endif // !360
+
+	if ( ShouldMapOverviewHandleKeyInput( down, keynum, pszCurrentBinding ) )
+		return 0;
 
 	return BaseClass::HudElementKeyInput( down, keynum, pszCurrentBinding );
 }

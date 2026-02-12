@@ -86,6 +86,7 @@ extern void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 extern ConVar cl_hud_playerclass_use_playermodel;
 extern ConVar mp_tournament;
 extern ConVar tf_scoreboard_allow;
+extern ConVar tf_overview_scoreboard;
 
 //......................................................
 enum
@@ -412,7 +413,7 @@ void CTFClientScoreBoardDialog::ShowPanel( bool bShow )
 		if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
 			return;
 
-		if ( !tf_scoreboard_allow.GetBool() )
+		if ( !tf_scoreboard_allow.GetBool() || tf_overview_scoreboard.GetBool() )
 			return;
 	}
 

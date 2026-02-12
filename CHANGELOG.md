@@ -1,23 +1,20 @@
 # 1.0.0
 ## General
+- Added Campaigns - new stories, new characters, standalone progression and mechanics!  
+-- Headhunt, enhanced from the original Workshop release!  
+-- Bloodthirst, a new campaign featuring Dracula!  
+- Added Scenarios - story vignettes from across Team Fortress history, and beyond!  
+-- Meet The Team - An introduction for each individual class  
+-- Territory Control - Choose from a randomly generated set of scenarios to control every map  
+- Added Quickplay - a new interface for setting up regular TF gameplay, and in new ways!  
+-- Maps can now be played in other gamemodes without having to modify them, including such modes as: Arena, King of the Hill, Capture the Flag, Player Destruction  
+-- Mirror Mode - The entire world flipped, it's like having two maps in one!  
+-- Map Mods - Any map can be modded to suit new gamemodes better or implement other changes and additions  
 - Added new gamemodes:  
 -- Mad Dash  
 -- Property Damage  
 - Added new maps  
-- Added a new main menu interface for selecting maps to play, and in new ways!
--- Arena Mode - Now playable on any map  
--- King of the Hill - Now playable on any symmetrical point map  
--- Capture the Flag - Now playable on any symmetrical multi-point map  
--- Player Destruction - Now playable on any map  
--- Mirror Mode - The entire world flipped, it's like having two maps in one!  
--- Map Mods - Any map can be modded to suit new gamemodes or other changes  
-- Added Campaigns:  
--- Headhunt, enhanced from the original Workshop release!  
--- Bloodthirst, a new campaign featuring Dracula!  
-- Added Scenarios:  
--- Meet The Team - An introduction for each individual class  
--- Territory Control - Choose from a randomly generated set of scenarios to control every map  
-- Loadouts now work offline; accessing your base TF2 inventory still requires a connection
+- Loadouts now work offline; accessing your base TF2 inventory still requires an internet connection
 - Added Armory - a way to unlock items using credits earned in the game
 - Added new weapon and taunt items
 - Added Hit List - browse enemies encountered in the game
@@ -26,6 +23,7 @@
 -- Optional context-sensitive tutorials for base TF2 mechanics  
 -- Optional context-sensitive tutorials for new mechanics  
 -- Plus additional flavor text  
+- Added a map overview, replacing the scoreboard
 - Added new achievements
 - Added console commands: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
@@ -36,8 +34,8 @@ tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable,
 sv_mapentities_override, sv_mapentities_mod, nav_begin_ladder, 
 tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force, 
 sv_thirdperson_platformer_force, tf_subclass_allow, mp_humans_must_join_subclass, 
-tf_bot_sniper_lasersight, tf_player_maxspeed_override, tf_scoreboard_allow,
-tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom,
+tf_bot_sniper_lasersight, tf_player_maxspeed_override, tf_scoreboard_allow, 
+tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom, 
 mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_type
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
@@ -49,7 +47,7 @@ mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_t
 - Fixed round restart commands not working in Arena mode
 - Fixed mini-rounds without a setup timer being stuck in setup mode
 - Fixed canteens being unusable in Sudden Death/Arena
-- Added #basedir to KeyValues to include all files in a directory
+- Added #basedir to KeyValues to base on top of all files in a directory
 - Added functionality to change Pyrovision into any custom vision
 - Improved thirdperson_platformer, now allows firing in the direction you're aiming
 - Increased maximum FoV to 130
@@ -57,8 +55,7 @@ mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_t
 - Fixed loadout changes not respawning players during the preround period in Arena mode
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
-- Added nav files for many existing maps
-- Improved nav meshes in many existing maps
+- Added/Improved nav files for existing maps
 - Saved nav files now get compressed by default
 - Human players can now manually manage bot teammates' PvP/MvM upgrades by inspecting them
 - Bots can now play the objective in all gamemodes
@@ -83,7 +80,7 @@ mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_t
 - Fixed bots not firing during setup outside Attack/Defend maps
 - Fixed bots not moving if the map has no func_respawnroom's
 - Fixed crash on point capture if no nav areas found around point
-- Where needed, bots will now follow the capture zone instead of the payload directly
+- Where needed, bots will now follow the capture zone instead of the payload model directly
 - Fixed bots using Payload logic on hybrid maps like Snowplow
 - Fixed crash with bots after playing on a Mannpower map
 - Giants will now always avoid nav areas marked with nav_stop

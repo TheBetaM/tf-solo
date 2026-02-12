@@ -130,7 +130,7 @@ CON_COMMAND( overview_mode, "Sets overview map mode off,small,large: <0|1|2>" )
 
 using namespace vgui;
 
-CMapOverview::CMapOverview( const char *pElementName ) : BaseClass( NULL, pElementName ), CHudElement( pElementName )
+CMapOverview::CMapOverview( const char *pElementName ) : EditablePanel( NULL, pElementName ), CHudElement( pElementName )
 {
 	SetParent( g_pClientMode->GetViewport()->GetVPanel() );
 
@@ -187,6 +187,7 @@ void CMapOverview::Init( void )
 	ListenForGameEvent( "player_spawn" );
 	ListenForGameEvent( "player_death" );
 	ListenForGameEvent( "player_disconnect" );
+	ListenForGameEvent( "recalculate_holidays" );
 }
 
 void CMapOverview::InitTeamColorsAndIcons()
@@ -863,20 +864,28 @@ void CMapOverview::SetMap(const char * levelname)
 
 	// TODO release old texture ?
 
-	m_nMapTextureID = surface()->CreateNewTextureID();
-
-	//if we have not uploaded yet, lets go ahead and do so
-	surface()->DrawSetTextureFile( m_nMapTextureID, m_MapKeyValues->GetString("material"), true, false);
-
-	int wide, tall;
-
-	surface()->DrawGetTextureSize( m_nMapTextureID, wide, tall );
-
-	if ( wide != tall )
+	const char* pszTextureMat = m_MapKeyValues->GetString("material");
+	if ( pszTextureMat && pszTextureMat[0] )
 	{
-		DevMsg( 1, "Error! CMapOverview::SetMap: map image must be a square.\n" );
+		m_nMapTextureID = surface()->CreateNewTextureID();
+
+		//if we have not uploaded yet, lets go ahead and do so
+		surface()->DrawSetTextureFile( m_nMapTextureID, m_MapKeyValues->GetString("material"), true, false);
+
+		int wide, tall;
+
+		surface()->DrawGetTextureSize( m_nMapTextureID, wide, tall );
+
+		if ( wide != tall )
+		{
+			DevMsg( 1, "Error! CMapOverview::SetMap: map image must be a square.\n" );
+			m_nMapTextureID = -1;
+			return;
+		}
+	}
+	else
+	{
 		m_nMapTextureID = -1;
-		return;
 	}
 
 	m_MapOrigin.x	= m_MapKeyValues->GetInt("pos_x");
@@ -929,6 +938,10 @@ void CMapOverview::FireGameEvent( IGameEvent *event )
 	}
 
 	else if ( Q_strcmp(type, "round_start") == 0 )
+	{
+		ResetRound();
+	}
+	else if ( Q_strcmp(type, "recalculate_holidays") == 0 )
 	{
 		ResetRound();
 	}

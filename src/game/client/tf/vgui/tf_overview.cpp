@@ -19,8 +19,27 @@
 #include "voice_status.h"
 #include "spectatorgui.h"
 #include "c_team_objectiveresource.h"
+#include "solo/propertydamage_prop.h"
+#include "tf_gamerules.h"
+#include "filesystem.h"
 
 using namespace vgui;
+
+static const char* pszTeamPropertyIcons[] = {
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_red",
+	"sprites/obj_icons/icon_obj_blu",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+	"sprites/obj_icons/icon_obj_neutral",
+};
 
 void __MsgFunc_UpdateRadar( bf_read &msg )
 {
@@ -44,9 +63,11 @@ void __MsgFunc_UpdateRadar( bf_read &msg )
 	}
 }
 
-extern ConVar _overview_mode;
+extern ConVar tf_overview_scoreboard;
+extern ConVar tf_overview_knowledge;
+extern ConVar tfsolo_mapentry;
+extern ConVar tf_scoreboard_allow;
 ConVar _cl_minimapzoom( "_cl_minimapzoom", "1", FCVAR_ARCHIVE );
-ConVar _overview_mode( "_overview_mode", "1", FCVAR_ARCHIVE, "Overview mode - 0=off, 1=inset, 2=full\n", true, 0, true, 2 );
 
 
 CTFMapOverview *GetTFOverview( void )
@@ -63,7 +84,7 @@ void ToggleZoom( void )
 
 	GetTFOverview()->ToggleZoom();
 }
-static ConCommand overview_togglezoom( "overview_togglezoom", ToggleZoom );
+//static ConCommand overview_togglezoom( "overview_togglezoom", ToggleZoom );
 
 // overview_largemap toggles showing the large map
 //------------------------------------------------
@@ -74,7 +95,7 @@ void ShowLargeMap( void )
 
 	GetTFOverview()->ShowLargeMap();
 }
-static ConCommand overview_showlargemap( "+overview_largemap", ShowLargeMap );
+//static ConCommand overview_showlargemap( "+overview_largemap", ShowLargeMap );
 
 void HideLargeMap( void )
 {
@@ -83,7 +104,7 @@ void HideLargeMap( void )
 
 	GetTFOverview()->HideLargeMap();
 }
-static ConCommand overview_hidelargemap( "-overview_largemap", HideLargeMap );
+//static ConCommand overview_hidelargemap( "-overview_largemap", HideLargeMap );
 
 //--------------------------------
 // map border ?
@@ -96,6 +117,7 @@ static ConCommand overview_hidelargemap( "-overview_largemap", HideLargeMap );
 DECLARE_HUDELEMENT( CTFMapOverview );
 
 ConVar tf_overview_voice_icon_size( "tf_overview_voice_icon_size", "64", FCVAR_ARCHIVE );
+ConVar tf_overview_pause( "tf_overview_pause", "0", FCVAR_ARCHIVE );
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -108,6 +130,53 @@ CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElement
 	m_bDisabled = false;
 	m_nMapTextureOverlayID = -1;
 	usermessages->HookMessage( "UpdateRadar", __MsgFunc_UpdateRadar );
+	RegisterForRenderGroup( "overview" );
+	UnregisterForRenderGroup( "global" );
+	m_TeamProperty.SetLessFunc( DefLessFunc(int) );
+	m_TeamProperty.Purge();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFMapOverview::ResetRound()
+{
+	BaseClass::ResetRound();
+
+	m_TeamProperty.Purge();
+
+	KeyValuesAD config( "maps_config" );
+	if ( !config->LoadFromFile( g_pFullFileSystem, "cfg/solo/maps_config.txt", "GAME" ) )
+	{
+		Msg( "MapOverview: Unable to parse maps_config.txt into keyvalues.\n" );
+		return;
+	}
+	KeyValues* maps = config->FindKey( "maps" );
+	if ( !maps )
+	{
+		return;
+	}
+
+	if ( m_pTitleLabel )
+	{
+		const char* pszMapName = tfsolo_mapentry.GetString();
+		if ( pszMapName && pszMapName[0] )
+		{
+			KeyValues* map = maps->FindKey(pszMapName);
+			if ( map )
+			{
+				m_pTitleLabel->SetText( map->GetString("name") );
+			}
+			else
+			{
+				m_pTitleLabel->SetText( GetMapDisplayName( pszMapName ) );
+			}
+		}
+		else
+		{
+			m_pTitleLabel->SetText( engine->GetLevelName() );
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -116,6 +185,8 @@ CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElement
 void CTFMapOverview::Update()
 {
 	UpdateCapturePoints();
+
+	UpdateTeamProperty();
 
 	BaseClass::Update();
 }
@@ -193,17 +264,160 @@ void CTFMapOverview::UpdateCapturePoints()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+void CTFMapOverview::UpdateTeamProperty()
+{
+	int propCount = 0;
+	propCount += ITFSOLOPropertyDamageProp::AutoList().Count();
+	propCount += ITFSOLOPropertyDamagePhysicsProp::AutoList().Count();
+	propCount += ITFSOLOPropertyDamageBrush::AutoList().Count();
+	propCount += ITFSOLOPropertyDamageNextBot::AutoList().Count();
+
+	if ( propCount == 0 )
+		return;
+
+	Color colorGreen( 0, 255, 0, 255 );
+
+	for ( int i = 0; i < ITFSOLOPropertyDamageProp::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageProp* pObj = static_cast<CTFSOLOPropertyDamageProp*>( ITFSOLOPropertyDamageProp::AutoList()[i] );
+		int iOwningTeam = pObj->GetTeamNumber();
+		const char* textureName = pszTeamPropertyIcons[ iOwningTeam ];
+		int objID = m_TeamProperty.Find( pObj->entindex() );
+		if ( objID == m_TeamProperty.InvalidIndex() )
+		{
+			objID = AddObject( textureName, pObj->entindex(), -1 );
+			m_TeamProperty.InsertOrReplace( pObj->entindex(), objID );
+			SetObjectPosition( objID, pObj->GetAbsOrigin(), vec3_angle );
+			AddObjectFlags( objID, MAP_OBJECT_ALIGN_TO_MAP );
+		}
+		else
+		{
+			objID = m_TeamProperty[ objID ];
+		}
+		SetObjectIcon( objID, textureName, 128.0 );
+		if ( pObj->m_flCurrentDamage > 0.0 )
+		{
+			float flHealth = MAX( 1, ( pObj->m_flLastMaxDamage - pObj->m_flCurrentDamage ) );
+			float flMaxHealth = MAX( 1, pObj->m_flLastMaxDamage );
+			SetObjectStatus( objID, flHealth / flMaxHealth, colorGreen );
+		}
+		else
+		{
+			SetObjectStatus( objID, -1, colorGreen );
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamagePhysicsProp::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamagePhysicsProp* pObj = static_cast<CTFSOLOPropertyDamagePhysicsProp*>( ITFSOLOPropertyDamagePhysicsProp::AutoList()[i] );
+		int iOwningTeam = pObj->GetTeamNumber();
+		const char* textureName = pszTeamPropertyIcons[ iOwningTeam ];
+		int objID = m_TeamProperty.Find( pObj->entindex() );
+		if ( objID == m_TeamProperty.InvalidIndex() )
+		{
+			objID = AddObject( textureName, pObj->entindex(), -1);
+			m_TeamProperty.InsertOrReplace( pObj->entindex(), objID );
+			SetObjectPosition( objID, pObj->GetAbsOrigin(), vec3_angle );
+			AddObjectFlags( objID, MAP_OBJECT_ALIGN_TO_MAP );
+		}
+		else
+		{
+			objID = m_TeamProperty[ objID ];
+		}
+		SetObjectIcon( objID, textureName, 128.0 );
+		if ( pObj->m_flCurrentDamage > 0.0 )
+		{
+			float flHealth = MAX( 1, ( pObj->m_flLastMaxDamage - pObj->m_flCurrentDamage ) );
+			float flMaxHealth = MAX( 1, pObj->m_flLastMaxDamage );
+			SetObjectStatus( objID, flHealth / flMaxHealth, colorGreen );
+		}
+		else
+		{
+			SetObjectStatus( objID, -1, colorGreen );
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamageBrush::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageBrush* pObj = static_cast<CTFSOLOPropertyDamageBrush*>( ITFSOLOPropertyDamageBrush::AutoList()[i] );
+		int iOwningTeam = pObj->GetTeamNumber();
+		const char* textureName = pszTeamPropertyIcons[ iOwningTeam ];
+		int objID = m_TeamProperty.Find( pObj->entindex() );
+		if ( objID == m_TeamProperty.InvalidIndex() )
+		{
+			objID = AddObject( textureName, pObj->entindex(), -1 );
+			m_TeamProperty.InsertOrReplace( pObj->entindex(), objID );
+			SetObjectPosition( objID, pObj->GetAbsOrigin(), vec3_angle );
+			AddObjectFlags( objID, MAP_OBJECT_ALIGN_TO_MAP );
+		}
+		else
+		{
+			objID = m_TeamProperty[ objID ];
+		}
+		SetObjectIcon( objID, textureName, 128.0 );
+		if ( pObj->m_flCurrentDamage > 0.0 )
+		{
+			float flHealth = MAX( 1, ( pObj->m_flLastMaxDamage - pObj->m_flCurrentDamage ) );
+			float flMaxHealth = MAX( 1, pObj->m_flLastMaxDamage );
+			SetObjectStatus( objID, flHealth / flMaxHealth, colorGreen );
+		}
+		else
+		{
+			SetObjectStatus( objID, -1, colorGreen );
+		}
+	}
+	for ( int i = 0; i < ITFSOLOPropertyDamageNextBot::AutoList().Count(); ++i )
+	{
+		CTFSOLOPropertyDamageNextBot* pObj = static_cast<CTFSOLOPropertyDamageNextBot*>( ITFSOLOPropertyDamageNextBot::AutoList()[i] );
+		int iOwningTeam = pObj->GetTeamNumber();
+		const char* textureName = pszTeamPropertyIcons[ iOwningTeam ];
+		int objID = m_TeamProperty.Find( pObj->entindex() );
+		if ( objID == m_TeamProperty.InvalidIndex() )
+		{
+			objID = AddObject( textureName, pObj->entindex(), -1 );
+			m_TeamProperty.InsertOrReplace( pObj->entindex(), objID );
+			SetObjectPosition( objID, pObj->GetAbsOrigin(), vec3_angle );
+			AddObjectFlags( objID, MAP_OBJECT_ALIGN_TO_MAP );
+		}
+		else
+		{
+			objID = m_TeamProperty[ objID ];
+		}
+		SetObjectIcon( objID, textureName, 128.0 );
+		if ( pObj->m_flCurrentDamage > 0.0 )
+		{
+			float flHealth = MAX( 1, ( pObj->m_flLastMaxDamage - pObj->m_flCurrentDamage ) );
+			float flMaxHealth = MAX( 1, pObj->m_flLastMaxDamage );
+			SetObjectStatus( objID, flHealth / flMaxHealth, colorGreen );
+		}
+		else
+		{
+			SetObjectStatus( objID, -1, colorGreen );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void CTFMapOverview::InitTeamColorsAndIcons()
 {
 	BaseClass::InitTeamColorsAndIcons();
 
+	Q_memset( m_TeamPropertyIcons, 0, sizeof(m_TeamPropertyIcons) );
+
 	m_TeamColors[TF_TEAM_RED] = COLOR_TF_RED;
 	m_TeamIcons[TF_TEAM_RED] = AddIconTexture( "sprites/minimap_icons/red_player" );
 	m_CameraIcons[TF_TEAM_RED] = AddIconTexture( "sprites/minimap_icons/red_camera" );
+	m_TeamPropertyIcons[TF_TEAM_RED] = AddIconTexture( "sprites/obj_icons/icon_obj_red" );
 
 	m_TeamColors[TF_TEAM_BLUE] = COLOR_TF_BLUE;
 	m_TeamIcons[TF_TEAM_BLUE] = AddIconTexture( "sprites/minimap_icons/blue_player" );
 	m_CameraIcons[TF_TEAM_BLUE] = AddIconTexture( "sprites/minimap_icons/blue_camera" );
+	m_TeamPropertyIcons[TF_TEAM_BLUE] = AddIconTexture( "sprites/obj_icons/icon_obj_blu" );
+
+	m_TeamPropertyIcons[0] = AddIconTexture( "sprites/obj_icons/icon_obj_neutral" );
+	m_TeamPropertyIcons[1] = AddIconTexture( "sprites/obj_icons/icon_obj_neutral" );
+	m_TeamPropertyIcons[4] = AddIconTexture( "sprites/obj_icons/icon_obj_neutral" );
+	m_TeamPropertyIcons[5] = AddIconTexture( "sprites/obj_icons/icon_obj_neutral" );
 
 	Q_memset( m_flPlayerChatTime, 0, sizeof(m_flPlayerChatTime ) );
 	m_iVoiceIcon = AddIconTexture( "voice/icntlk_pl" );
@@ -245,6 +459,15 @@ void CTFMapOverview::DrawCamera()
 	}
 }
 
+void CTFMapOverview::ApplySchemeSettings( vgui::IScheme* scheme )
+{
+	BaseClass::ApplySchemeSettings( scheme );
+
+	LoadControlSettings( "resource/UI/TFOverview.res" );
+
+	m_pTitleLabel = dynamic_cast<CExLabel *>( FindChildByName( "TitleLabel" ) );
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -266,7 +489,7 @@ void CTFMapOverview::FireGameEvent( IGameEvent *event )
 	}
 	else if ( Q_strcmp( type, "game_newmap" ) == 0 )
 	{
-		SetMode( _overview_mode.GetInt() );
+		SetMode( MAP_MODE_OFF );
 	}
 
 	BaseClass::FireGameEvent( event	);
@@ -294,6 +517,9 @@ bool CTFMapOverview::CanPlayerBeSeen( MapPlayer_t *player )
 	// we never track unassigned or real spectators
 	if ( player->team <= TEAM_SPECTATOR )
 		return false;
+
+	if ( tf_overview_knowledge.GetInt() == 2 )
+		return true;
 
 	// ingame and as dead player we can only see our own teammates
 	return ( localPlayer->GetTeamNumber() == player->team );
@@ -375,11 +601,18 @@ void CTFMapOverview::SetMode(int mode)
 
 	m_flChangeSpeed = 0; // change size instantly
 
+	int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "global" );
+
 	if ( mode == MAP_MODE_OFF )
 	{
 		ShowPanel( false );
 
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "MapOff" );
+		gHUD.UnlockRenderGroup( iRenderGroup );
+		if ( tf_overview_pause.GetBool() && engine->IsPaused() )
+		{
+			engine->ClientCmd( "pause" );
+		}
 	}
 	else if ( mode == MAP_MODE_INSET )
 	{
@@ -411,6 +644,11 @@ void CTFMapOverview::SetMode(int mode)
 	}
 	else if ( mode == MAP_MODE_FULL )
 	{
+		if ( !tf_scoreboard_allow.GetBool() )
+		{
+			return;
+		}
+
 		SetFollowEntity( 0 );
 
 		ShowPanel( true );
@@ -419,13 +657,20 @@ void CTFMapOverview::SetMode(int mode)
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ZoomToLarge" );
 		else
             g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
+
+		MoveToFront();
+		MakePopup( false, true );
+		SetKeyBoardInputEnabled( false );
+		SetMouseInputEnabled( true );
+		gHUD.LockRenderGroup( iRenderGroup );
+		if ( tf_overview_pause.GetBool() && !engine->IsPaused() )
+		{
+			engine->ClientCmd( "pause" );
+		}
 	}
 
 	// finally set mode
 	m_nMode = mode;
-
-	// save in a cvar for archive
-	_overview_mode.SetValue( m_nMode );
 
 	UpdateSizeAndPosition();
 }
@@ -436,18 +681,20 @@ void CTFMapOverview::SetMode(int mode)
 void CTFMapOverview::UpdateSizeAndPosition()
 {
 	// move back up if the spectator menu is not visible
-	if ( !g_pSpectatorGUI || ( !g_pSpectatorGUI->IsVisible() && GetMode() == MAP_MODE_INSET ) )
-	{
+	//if ( !g_pSpectatorGUI || ( !g_pSpectatorGUI->IsVisible() && GetMode() == MAP_MODE_INSET ) )
+	//{
 		int x,y,w,h;
 
 		GetBounds( x,y,w,h );
 
-		y = YRES(5);	// hax, align to top of the screen
+		//y = YRES(5);	// hax, align to top of the screen
+		w = ScreenWidth();
+		h = ScreenHeight();
 
 		SetBounds( x,y,w,h );
-	}
+	//}
 
-	BaseClass::UpdateSizeAndPosition();
+	//BaseClass::UpdateSizeAndPosition();
 }
 
 ConVar cl_voicetest( "cl_voicetest", "0", FCVAR_CHEAT );
@@ -544,6 +791,15 @@ bool CTFMapOverview::DrawIcon( MapObject_t *obj )
 		if ( obj->objectID == m_CapturePoints[i] && obj->objectID != 0 )
 		{
 			return DrawCapturePoint( i, obj );
+		}
+	}
+
+	if ( obj->index > 0 )
+	{
+		int iInd = m_TeamProperty.Find(obj->index);
+		if ( iInd != m_TeamProperty.InvalidIndex() )
+		{
+			return DrawTeamProperty( obj );
 		}
 	}
 
@@ -675,6 +931,68 @@ bool CTFMapOverview::DrawCapturePoint( int iCP, MapObject_t *obj )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+bool CTFMapOverview::DrawTeamProperty( MapObject_t *obj )
+{
+	int textureID = obj->icon;
+	Vector pos = obj->position;
+	float scale = obj->size;
+
+	Vector2D pospanel = WorldToMap( pos );
+	pospanel = MapToPanel( pospanel );
+
+	if ( !IsInPanel( pospanel ) )
+		return false; // player is not within overview panel
+
+	// draw capture swipe
+	DrawQuad( pos, scale, 0, textureID, 255 );
+
+	C_BaseEntity* pEnt = ClientEntityList().GetEnt( obj->index );
+	if ( !pEnt )
+		return false;
+
+	CTFSOLOPropertyDamageProp* pPDAProp1 = dynamic_cast<CTFSOLOPropertyDamageProp*>( pEnt );
+	CTFSOLOPropertyDamagePhysicsProp* pPDAProp2 = dynamic_cast<CTFSOLOPropertyDamagePhysicsProp*>( pEnt );
+	CTFSOLOPropertyDamageBrush* pPDAProp3 = dynamic_cast<CTFSOLOPropertyDamageBrush*>( pEnt );
+	CTFSOLOPropertyDamageNextBot* pPDAProp4 = dynamic_cast<CTFSOLOPropertyDamageNextBot*>( pEnt );
+	if ( pPDAProp1 && pPDAProp1->m_flCurrentDamage > 0.0 )
+	{
+		float flHealth = MAX( 1, ( pPDAProp1->m_flLastMaxDamage - pPDAProp1->m_flCurrentDamage ) );
+		float flMaxHealth = MAX( 1, pPDAProp1->m_flLastMaxDamage );
+		bool bSwipeLeft = ( pEnt->GetTeamNumber() == TF_TEAM_RED ) ? true : false;
+		int iEnemyTeam = pEnt->GetTeamNumber() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED;
+		DrawHorizontalSwipe( pos, scale, m_TeamPropertyIcons[iEnemyTeam], flHealth / flMaxHealth, bSwipeLeft );
+	}
+	else if ( pPDAProp2 && pPDAProp2->m_flCurrentDamage > 0.0 )
+	{
+		float flHealth = MAX( 1, ( pPDAProp2->m_flLastMaxDamage - pPDAProp2->m_flCurrentDamage ) );
+		float flMaxHealth = MAX( 1, pPDAProp2->m_flLastMaxDamage );
+		bool bSwipeLeft = ( pEnt->GetTeamNumber() == TF_TEAM_RED ) ? true : false;
+		int iEnemyTeam = pEnt->GetTeamNumber() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED;
+		DrawHorizontalSwipe( pos, scale, m_TeamPropertyIcons[iEnemyTeam], flHealth / flMaxHealth, bSwipeLeft );
+	}
+	else if ( pPDAProp3 && pPDAProp3->m_flCurrentDamage > 0.0 )
+	{
+		float flHealth = MAX( 1, ( pPDAProp3->m_flLastMaxDamage - pPDAProp3->m_flCurrentDamage ) );
+		float flMaxHealth = MAX( 1, pPDAProp3->m_flLastMaxDamage );
+		bool bSwipeLeft = ( pEnt->GetTeamNumber() == TF_TEAM_RED ) ? true : false;
+		int iEnemyTeam = pEnt->GetTeamNumber() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED;
+		DrawHorizontalSwipe( pos, scale, m_TeamPropertyIcons[iEnemyTeam], flHealth / flMaxHealth, bSwipeLeft );
+	}
+	else if ( pPDAProp4 && pPDAProp4->m_flCurrentDamage > 0.0 )
+	{
+		float flHealth = MAX( 1, ( pPDAProp4->m_flLastMaxDamage - pPDAProp4->m_flCurrentDamage ) );
+		float flMaxHealth = MAX( 1, pPDAProp4->m_flLastMaxDamage );
+		bool bSwipeLeft = ( pEnt->GetTeamNumber() == TF_TEAM_RED ) ? true : false;
+		int iEnemyTeam = pEnt->GetTeamNumber() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED;
+		DrawHorizontalSwipe( pos, scale, m_TeamPropertyIcons[iEnemyTeam], flHealth / flMaxHealth, bSwipeLeft );
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void CTFMapOverview::DrawHorizontalSwipe( Vector pos, int scale, int textureID, float flCapPercentage, bool bSwipeLeft )
 {
 	float flIconSize = scale * 2;
@@ -749,7 +1067,9 @@ void CTFMapOverview::SetMap( const char * levelname )
 	else
 	{
 		// we failed to load a map image
-		SetDisabled( true );
+		//SetDisabled( true );
+		SetDisabled( false );
+		SetMode( m_nMode );
 	}
 }
 
@@ -795,7 +1115,7 @@ void CTFMapOverview::Paint()
 
 	DrawCamera();
 
-	Panel::Paint();
+	EditablePanel::Paint();
 }
 
 extern ConVar overview_alpha;
@@ -861,4 +1181,41 @@ void CTFMapOverview::UpdateMapOverlayTexture()
 		return;
 	}
 */
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFMapOverview::SetVisible( bool state )
+{
+	BaseClass::SetVisible( state );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Event handler
+//-----------------------------------------------------------------------------
+int	CTFMapOverview::HudElementKeyInput( int down, ButtonCode_t keynum, const char* pszCurrentBinding )
+{
+	if ( !IsVisible() )
+		return 1;
+
+	return 1;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool ShouldMapOverviewHandleKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+{
+	// We're only looking for specific mouse input
+	if ( keynum == MOUSE_LEFT || keynum == MOUSE_RIGHT )
+	{
+		CTFMapOverview *pMapOverview = dynamic_cast<CTFMapOverview* >( gViewPortInterface->FindPanelByName( PANEL_OVERVIEW ) );
+		if ( pMapOverview )
+		{
+			return !pMapOverview->HudElementKeyInput( down, keynum, pszCurrentBinding );
+		}
+	}
+
+	return false;
 }

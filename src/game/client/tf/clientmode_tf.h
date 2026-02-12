@@ -25,6 +25,7 @@ class CHudEurekaEffectTeleportMenu;
 class CHudMenuTauntSelection;
 class CHudInspectPanel;
 class CHudUpgradePanel;
+class CTFMapOverview;
 #if defined( _X360 )
 class CTFClientScoreBoardDialog;
 #endif
@@ -127,6 +128,7 @@ private:
 	CHudSpellMenu			*m_pMenuSpell;
 	CHudEurekaEffectTeleportMenu *m_pEurekaTeleportMenu;
 	CHudTeamGoalTournament	*m_pTeamGoalTournament;
+	CTFMapOverview			*m_pMapOverview;
 
 	CTFFreezePanel			*m_pFreezePanel;
 	CItemQuickSwitchPanel	*m_pQuickSwitch;

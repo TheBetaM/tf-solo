@@ -12,6 +12,7 @@
 #endif
 
 #include <vgui_controls/Panel.h>
+#include <vgui_controls/EditablePanel.h>
 #include <game/client/iviewport.h>
 #include "mathlib/vector.h"
 #include <igameevents.h>
@@ -44,9 +45,9 @@ public:
 typedef bool ( *FnCustomMapOverviewObjectPaint )( int textureID, Vector pos, float scale, float angle, const char *text, Color *textColor, float status, Color *statusColor );
 
 
-class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverviewPanel
+class CMapOverview : public CHudElement, public vgui::EditablePanel, public IMapOverviewPanel
 {
-	DECLARE_CLASS_SIMPLE( CMapOverview, vgui::Panel );
+	DECLARE_CLASS_SIMPLE( CMapOverview, vgui::EditablePanel );
 
 public:	
 

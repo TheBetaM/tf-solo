@@ -25,6 +25,7 @@
 #include <ctype.h> // isalnum()
 #include <voice_status.h>
 #include "cam_thirdperson.h"
+#include "mapoverview.h"
 
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
@@ -95,6 +96,8 @@ extern ConVar sv_thirdperson_platformer_force;
 
 #ifdef TF_CLIENT_DLL
 extern ConVar tf_mirrormode;
+extern ConVar tf_overview_scoreboard;
+extern IMapOverviewPanel* g_pMapOverview;
 #endif
 
 #define UsingMouselook() cl_mouselook.GetBool()
@@ -543,6 +546,14 @@ void IN_ScoreDown( const CCommand &args )
 	KeyDown( &in_score, args[1] );
 	if ( gViewPortInterface )
 	{
+#ifdef TF_CLIENT_DLL
+		if ( tf_overview_scoreboard.GetBool() )
+		{
+			gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, false );
+			g_pMapOverview->SetMode( 2 );
+			return;
+		}
+#endif
 		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
 	}
 }
@@ -552,6 +563,9 @@ void IN_ScoreUp( const CCommand &args )
 	KeyUp( &in_score, args[1] );
 	if ( gViewPortInterface )
 	{
+#ifdef TF_CLIENT_DLL
+		g_pMapOverview->SetMode( 0 );
+#endif
 		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, false );
 		GetClientVoiceMgr()->StopSquelchMode();
 	}

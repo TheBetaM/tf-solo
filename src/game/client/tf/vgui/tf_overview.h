@@ -10,6 +10,7 @@
 
 #include <mapoverview.h>
 #include "tf_shareddefs.h"
+#include "tf_controls.h"
 
 class CTFMapOverview : public CMapOverview
 {
@@ -19,6 +20,7 @@ class CTFMapOverview : public CMapOverview
 
 	int m_CameraIcons[MAX_TEAMS];
 	int m_CapturePoints[MAX_CONTROL_POINTS];
+	CUtlMap<int, int> m_TeamProperty;
 
 	void ShowLargeMap( void );
 	void HideLargeMap( void );
@@ -29,14 +31,19 @@ class CTFMapOverview : public CMapOverview
 	void DrawQuad( Vector pos, int scale, float angle, int textureID, int alpha );
 	void DrawHorizontalSwipe( Vector pos, int scale, int textureID, float flCapPercentage, bool bSwipeLeft );
 	bool DrawCapturePoint( int iCP, MapObject_t *obj );
+	bool DrawTeamProperty( MapObject_t *obj );
 
 	void SetDisabled( bool disabled ){ 	m_bDisabled = disabled; }
 	bool IsDisabled( void ){ return m_bDisabled; }
+	virtual void SetVisible( bool state );
 
 	virtual void Paint();
 	virtual bool ShouldDraw( void );
 	virtual void VidInit( void );
 	virtual void SetMap( const char * map );
+
+	virtual void ApplySchemeSettings( vgui::IScheme* scheme );
+	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
 protected:	
 	virtual void SetMode(int mode);
@@ -59,6 +66,8 @@ protected:
 
 protected:
 	void UpdateCapturePoints();
+	void UpdateTeamProperty();
+	virtual void ResetRound( void );
 
 private:
 	int m_iLastMode;
@@ -71,6 +80,10 @@ private:
 	float m_flPlayerChatTime[MAX_PLAYERS_ARRAY_SAFE];
 
 	int m_nMapTextureOverlayID;	// texture id for current overlay image (shown over the current overview image)
+
+	int	m_TeamPropertyIcons[MAX_TEAMS];
+
+	CExLabel* m_pTitleLabel;
 
 #define TF_MAP_ZOOM_LEVELS	2
 };
