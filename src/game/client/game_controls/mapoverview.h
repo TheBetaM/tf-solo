@@ -145,6 +145,9 @@ public:
 	virtual int GetMode( void );
 	virtual float GetFullZoom( void ){ return m_fFullZoom; }
 	virtual float GetMapScale( void ){ return m_fMapScale; }
+	virtual Vector2D GetCenter( void ){ return m_MapCenter; }
+	virtual Vector GetMapOrigin( void ){ return m_MapOrigin; }
+	virtual Vector2D GetViewOrigin( void ){ return m_ViewOrigin; }
 
 	// Player settings:
 	virtual void ShowPlayerNames(bool state);
@@ -162,6 +165,8 @@ public:
 	virtual void SetCenter( const Vector2D &mappos); 
 	virtual void SetAngle( float angle);
 	virtual Vector2D WorldToMap( const Vector &worldpos );
+	virtual void SetViewOrigin( const Vector2D& mappos){ m_ViewOrigin = Vector2D(mappos.x, mappos.y); }
+	virtual void SetMapOrigin( const Vector& mappos ){ m_MapOrigin = Vector(mappos.x, mappos.y, mappos.z); }
 
 	// Object settings
 	virtual int		AddObject( const char *icon, int entity, float timeToLive ); // returns object ID, 0 = no entity, -1 = forever

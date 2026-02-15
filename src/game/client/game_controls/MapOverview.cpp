@@ -34,6 +34,10 @@ ConVar overview_alpha( "overview_alpha",  "1.0", FCVAR_ARCHIVE | FCVAR_CLIENTCMD
 
 IMapOverviewPanel *g_pMapOverview = NULL; // we assume only one overview is created
 
+#ifdef TF_CLIENT_DLL
+extern ConVar tf_mirrormode;
+#endif // TF_CLIENT_DLL
+
 static int AdjustValue( int curValue, int targetValue, int amount )
 {
 	if ( curValue > targetValue )

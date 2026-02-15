@@ -62,13 +62,18 @@ public:
 	void ClearAllLines();
 	const CUtlVector<MapLine>& GetLines( int iIndex ) const { return m_vecDrawnLines[iIndex]; }
 	void SetType( int iPanelType ){ m_iPanelType = iPanelType; }
+	void SetViewOnly( bool state ){ m_bViewOnly = state; }
 
 	virtual void FireGameEvent( IGameEvent *event );
+
+	void SaveLinesToFile( const char* path );
+	void LoadLinesFromFile( const char* path );
 
 private:
 	void ReadColor( const char* pszToken, Color& color );
 
 	bool m_bDrawingLines;
+	bool m_bViewOnly;
 	float m_fLastMapLine;
 	int m_iMouseX, m_iMouseY;
 	int m_nWhiteTexture;

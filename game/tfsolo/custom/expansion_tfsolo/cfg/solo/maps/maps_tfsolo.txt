@@ -17,7 +17,7 @@ maps_config
 		inf_map
 		{
 			disabled 1
-			name "Infiltration Map (DEV)"
+			name "INF Map (DEV)"
 			modename "#GameType_TFSOLO_INF"
 			tags
 			{
@@ -29,7 +29,7 @@ maps_config
 		}
 		pda_map
 		{
-			name "Property Damage Map (DEV)"
+			name "PDA Map (DEV)"
 			modename "#GameType_TFSOLO_PDA"
 			tags
 			{
@@ -42,7 +42,7 @@ maps_config
 		pde_map
 		{
 			disabled 1
-			name "Property Defense Map (DEV)"
+			name "PDE Map (DEV)"
 			modename "#GameType_TFSOLO_PDE"
 			tags
 			{
@@ -55,7 +55,7 @@ maps_config
 		fort_map
 		{
 			disabled 1
-			name "Fortified Map (DEV)"
+			name "FORT Map (DEV)"
 			modename "#GameType_TFSOLO_FORT"
 			tags
 			{
@@ -67,7 +67,7 @@ maps_config
 		cv_map
 		{
 			disabled 1
-			name "Convoy Map (DEV)"
+			name "CV Map (DEV)"
 			modename "#GameType_TFSOLO_CV"
 			tags
 			{
@@ -80,7 +80,7 @@ maps_config
 		cvr_map
 		{
 			disabled 1
-			name "Convoy Race Map (DEV)"
+			name "CVR Map (DEV)"
 			modename "#GameType_TFSOLO_CVR"
 			tags
 			{
@@ -90,10 +90,10 @@ maps_config
 				tfsolo_tc_hide 1
 			}
 		}
-		mvm_deathmetal
+		mvm_dreadmetal
 		{
 			disabled 1
-			name "Death Metal (DEV)"
+			name "Dread Metal (DEV)"
 			modename "#Gametype_MVM"
 			tags
 			{

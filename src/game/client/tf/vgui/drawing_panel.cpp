@@ -7,6 +7,7 @@
 #include "cbase.h"
 #include "drawing_panel.h"
 #include "softline.h"
+#include "filesystem.h"
 #include <vgui/IScheme.h>
 #include <vgui/IVGui.h>
 #include "voice_status.h"
@@ -34,6 +35,7 @@ CDrawingPanel::CDrawingPanel( Panel *parent, const char*name ) : Panel( parent, 
 	m_iMouseY = 0;
 	m_iPanelType = DRAWING_PANEL_TYPE_NONE;
 	m_bTeamColors = false;
+	m_bViewOnly = false;
 
 	m_nWhiteTexture = vgui::surface()->CreateNewTextureID();
 	vgui::surface()->DrawSetTextureFile( m_nWhiteTexture, "vgui/white", true, false );
@@ -43,7 +45,10 @@ CDrawingPanel::CDrawingPanel( Panel *parent, const char*name ) : Panel( parent, 
 
 void CDrawingPanel::SetVisible( bool bState )
 {
-	ClearAllLines();
+	if ( m_iPanelType != DRAWING_PANEL_TYPE_OVERVIEW )
+	{
+		ClearAllLines();
+	}
 
 	BaseClass::SetVisible( bState );
 }
@@ -181,7 +186,7 @@ void CDrawingPanel::Paint()
 
 void CDrawingPanel::OnMousePressed( vgui::MouseCode code )
 {
-	if ( code != MOUSE_LEFT )
+	if ( code != MOUSE_LEFT || m_bViewOnly )
 		return;
 
 	SendMapLine( m_iMouseX, m_iMouseY, true );
@@ -228,7 +233,7 @@ void CDrawingPanel::OnCursorMoved( int x, int y )
 
 	const float flLineInterval = 1.f / 60.f;
 
-	if ( m_bDrawingLines && gpGlobals->curtime >= m_fLastMapLine + flLineInterval )
+	if ( m_bDrawingLines && ( gpGlobals->curtime >= m_fLastMapLine + flLineInterval || engine->IsPaused() ) )
 	{
 		SendMapLine( x, y, false );
 	}
@@ -249,6 +254,10 @@ void CDrawingPanel::SendMapLine( int x, int y, bool bInitial )
 	if ( m_iPanelType == DRAWING_PANEL_TYPE_MATCH_SUMMARY )
 	{
 		nMaxLines = 120; // 2 seconds of drawing at 60fps
+	}
+	if ( m_iPanelType == DRAWING_PANEL_TYPE_OVERVIEW )
+	{
+		nMaxLines = 3000; // 50 seconds of drawing at 60fps
 	}
 
 	// Stop adding lines after this much
@@ -346,6 +355,71 @@ void CDrawingPanel::FireGameEvent( IGameEvent *event )
 					return;
 
 				m_vecDrawnLines[iIndex].AddToTail( line );
+			}
+		}
+	}
+}
+
+void CDrawingPanel::SaveLinesToFile( const char* path )
+{
+	KeyValuesAD config( "lines" );
+	
+	char szPlayer[256];
+	V_snprintf( szPlayer, sizeof( szPlayer ), "%i", 1 );
+	KeyValues* playerKey = new KeyValues( szPlayer );
+	//playerKey->SetInt( "color", m_colorLine );
+	FOR_EACH_VEC( m_vecDrawnLines[1], i )
+	{
+		char szLine[256];
+		V_snprintf( szLine, sizeof( szLine ), "%i", i );
+		KeyValues* lineKey = new KeyValues( szLine );
+		MapLine pLine = m_vecDrawnLines[1][i];
+		lineKey->SetInt( "l", pLine.bLink ? 1 : 0 );
+		lineKey->SetFloat( "x", pLine.worldpos.x );
+		lineKey->SetFloat( "y", pLine.worldpos.y );
+		playerKey->AddSubKey( lineKey );
+	}
+	config->AddSubKey( playerKey );
+
+	config->SaveToFile( g_pFullFileSystem, path );
+}
+
+void CDrawingPanel::LoadLinesFromFile( const char* path )
+{
+	ClearAllLines();
+
+	KeyValuesAD config( "lines" );
+	if ( !config->LoadFromFile( g_pFullFileSystem, path, "GAME" ) )
+	{
+		Msg( "Unable to parse keyvalues.\n" );
+		return;
+	}
+
+	for ( int iIndex = 0; iIndex < ARRAYSIZE( m_vecDrawnLines ); iIndex++ )
+	{
+		char szPlayer[256] ;
+		V_snprintf( szPlayer, sizeof( szPlayer ), "%i", iIndex );
+		KeyValues* playerKey = config->FindKey( szPlayer );
+		if ( playerKey )
+		{
+			int lineID = 0;
+			char szLine[256];
+			KeyValues* lineKey = playerKey->GetFirstSubKey();
+			while ( lineKey )
+			{
+				MapLine line;
+				line.worldpos.x = lineKey->GetFloat( "x" );
+				line.worldpos.y = lineKey->GetFloat( "y" );
+				line.created_time = gpGlobals->curtime;
+				if ( lineKey->GetInt( "l" ) != 0 )
+				{
+					line.bLink = true;
+				}
+
+				m_vecDrawnLines[iIndex].AddToTail( line );
+
+				lineID++;
+				lineKey = lineKey->GetNextKey();
 			}
 		}
 	}

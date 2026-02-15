@@ -11,6 +11,15 @@
 #include <mapoverview.h>
 #include "tf_shareddefs.h"
 #include "tf_controls.h"
+#include "drawing_panel.h"
+
+enum
+{
+	TF_OVERVIEW_MODE_PAN,
+	TF_OVERVIEW_MODE_DRAW,
+
+	TF_OVERVIEW_MODE_MAX,
+};
 
 class CTFMapOverview : public CMapOverview
 {
@@ -42,8 +51,17 @@ class CTFMapOverview : public CMapOverview
 	virtual void VidInit( void );
 	virtual void SetMap( const char * map );
 
+	virtual void OnKeyCodePressed( vgui::KeyCode code );
+	virtual void OnMouseWheeled( int delta );
+	virtual void OnMouseReleased( vgui::MouseCode code );
+	virtual void OnMousePressed( vgui::MouseCode code );
+	virtual void OnCursorExited();
+	virtual void OnCursorMoved( int x, int y );
+	virtual void OnCommand( const char* command );
 	virtual void ApplySchemeSettings( vgui::IScheme* scheme );
 	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+
+	CDrawingPanel* m_pDrawingPanel;
 
 protected:	
 	virtual void SetMode(int mode);
@@ -71,11 +89,14 @@ protected:
 
 private:
 	int m_iLastMode;
+	int m_iNavigationMode;
 
 	int m_iVoiceIcon;
 	int m_iChatIcon;
 
 	bool m_bDisabled;
+	bool m_bIsPanning;
+	Vector2D m_vLastMousePos;
 
 	float m_flPlayerChatTime[MAX_PLAYERS_ARRAY_SAFE];
 

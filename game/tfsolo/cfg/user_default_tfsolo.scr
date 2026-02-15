@@ -48,6 +48,20 @@ DESCRIPTION INFO_OPTIONS
 		{ "resetmodprogress" }
 	}
 	
+	"fov_desired"
+	{
+		"#GameUI_FOV"
+		{ SLIDER 75 130 }
+		{ "90" }
+	}
+	
+	"tf_overview_pause"
+	{
+		"Pause the game while in map overview"
+		{ BOOL }
+		{ "0" }
+	}
+	
 	"tf_bot_sniper_lasersight"
 	{
 		"#TFSOLO_Setting_SniperLaser"
@@ -56,11 +70,11 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"fov_desired"
+	"tf_flamethrower_oldeffects"
 	{
-		"#GameUI_FOV"
-		{ SLIDER 75 130 }
-		{ "90" }
+		"Legacy flamethrower visual effects"
+		{ BOOL }
+		{ "1" }
 	}
 
 }

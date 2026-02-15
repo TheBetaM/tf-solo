@@ -67,6 +67,7 @@ extern ConVar tf_overview_scoreboard;
 extern ConVar tf_overview_knowledge;
 extern ConVar tfsolo_mapentry;
 extern ConVar tf_scoreboard_allow;
+extern ConVar tf_mirrormode;
 ConVar _cl_minimapzoom( "_cl_minimapzoom", "1", FCVAR_ARCHIVE );
 
 
@@ -106,6 +107,38 @@ void HideLargeMap( void )
 }
 //static ConCommand overview_hidelargemap( "-overview_largemap", HideLargeMap );
 
+CON_COMMAND( tf_overview_drawing_save, "Saves overview drawing to file" )
+{
+	if ( !GetTFOverview() || !GetTFOverview()->m_pDrawingPanel )
+		return;
+
+	const char* path;
+	if ( args.ArgC() <= 1 )
+	{
+		path = "overview_drawing.txt";
+	}
+	else
+	{
+		path = args.Arg(1);
+	}
+
+	GetTFOverview()->m_pDrawingPanel->SaveLinesToFile( path );
+}
+CON_COMMAND( tf_overview_drawing_load, "Loads overview drawing from file" )
+{
+	if ( !GetTFOverview() || !GetTFOverview()->m_pDrawingPanel )
+		return;
+
+	const char* path = args.Arg(1);
+	GetTFOverview()->m_pDrawingPanel->LoadLinesFromFile( path );
+}
+CON_COMMAND( tf_overview_drawing_clear, "Clears overview drawing" )
+{
+	if (!GetTFOverview() || !GetTFOverview()->m_pDrawingPanel)
+		return;
+	GetTFOverview()->m_pDrawingPanel->ClearAllLines();
+}
+
 //--------------------------------
 // map border ?
 // icon minimum zoom
@@ -127,6 +160,7 @@ CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElement
 	InitTeamColorsAndIcons();
 	m_flIconSize = 96.0f;
 	m_iLastMode = MAP_MODE_OFF;
+	m_iNavigationMode = TF_OVERVIEW_MODE_PAN;
 	m_bDisabled = false;
 	m_nMapTextureOverlayID = -1;
 	usermessages->HookMessage( "UpdateRadar", __MsgFunc_UpdateRadar );
@@ -134,6 +168,16 @@ CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElement
 	UnregisterForRenderGroup( "global" );
 	m_TeamProperty.SetLessFunc( DefLessFunc(int) );
 	m_TeamProperty.Purge();
+	m_bIsPanning = false;
+	m_vLastMousePos = Vector2D( 512, 512 );
+
+	/*m_pDrawingPanel = new CDrawingPanel( this, "DrawingPanel" );
+	CExButton* button1 = new CExButton( this, "PanButton", "", this );
+	CExButton* button2 = new CExButton( this, "DrawButton", "", this );
+	CExButton* button3 = new CExButton( this, "DrawClearButton", "", this );
+	CExButton* button4 = new CExButton( this, "ZoomPlusButton", "", this );
+	CExButton* button5 = new CExButton( this, "ZoomMinusButton", "", this );
+	CExButton* button6 = new CExButton( this, "ZoomCenterButton", "", this );*/
 }
 
 //-----------------------------------------------------------------------------
@@ -176,6 +220,11 @@ void CTFMapOverview::ResetRound()
 		{
 			m_pTitleLabel->SetText( engine->GetLevelName() );
 		}
+	}
+	if ( m_pDrawingPanel )
+	{
+		m_pDrawingPanel->ClearAllLines();
+		m_pDrawingPanel->SetType( DRAWING_PANEL_TYPE_OVERVIEW );
 	}
 }
 
@@ -466,6 +515,7 @@ void CTFMapOverview::ApplySchemeSettings( vgui::IScheme* scheme )
 	LoadControlSettings( "resource/UI/TFOverview.res" );
 
 	m_pTitleLabel = dynamic_cast<CExLabel *>( FindChildByName( "TitleLabel" ) );
+	m_pDrawingPanel = dynamic_cast<CDrawingPanel *>( FindChildByName( "DrawingPanel" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -493,6 +543,128 @@ void CTFMapOverview::FireGameEvent( IGameEvent *event )
 	}
 
 	BaseClass::FireGameEvent( event	);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFMapOverview::OnCommand( const char* command )
+{
+	if ( FStrEq( "mode_pan", command ) )
+	{
+		m_iNavigationMode = TF_OVERVIEW_MODE_PAN;
+		if ( m_pDrawingPanel )
+		{
+			m_pDrawingPanel->SetViewOnly( true );
+		}
+		return;
+	}
+	else if ( FStrEq( "mode_draw", command ) )
+	{
+		m_iNavigationMode = TF_OVERVIEW_MODE_DRAW;
+		if ( m_pDrawingPanel )
+		{
+			m_pDrawingPanel->SetViewOnly( false );
+		}
+		return;
+	}
+	else if ( FStrEq( "mode_drawclear", command ) )
+	{
+		if ( m_pDrawingPanel )
+		{
+			m_pDrawingPanel->ClearLines( 1 );
+		}
+		return;
+	}
+	else if ( FStrEq( "zoom_plus", command ) )
+	{
+		if ( m_fZoom >= 2.0f )
+		{
+			return;
+		}
+		float zoom = m_fZoom + 0.2f;
+		float time = 0.2f;
+		float desiredViewSize = 0.0f;
+		desiredViewSize = ( zoom * OVERVIEW_MAP_SIZE * g_pMapOverview->GetFullZoom() ) / g_pMapOverview->GetMapScale();
+		g_pMapOverview->SetPlayerPreferredViewSize( desiredViewSize );
+		if ( engine->IsPaused() )
+		{
+			m_fZoom = zoom;
+		}
+		else
+		{
+			m_fZoom = zoom;
+			//g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( g_pMapOverview->GetAsPanel(), "zoom", zoom, 0.0, time, vgui::AnimationController::INTERPOLATOR_LINEAR );
+		}
+		return;
+	}
+	else if ( FStrEq( "zoom_minus", command ) )
+	{
+		if ( m_fZoom <= 0.3f )
+		{
+			return;
+		}
+		float zoom = m_fZoom - 0.2f;
+		float time = 0.2f;
+		float desiredViewSize = 0.0f;
+		desiredViewSize = ( zoom * OVERVIEW_MAP_SIZE * g_pMapOverview->GetFullZoom() ) / g_pMapOverview->GetMapScale();
+		g_pMapOverview->SetPlayerPreferredViewSize( desiredViewSize );
+		if ( engine->IsPaused() )
+		{
+			m_fZoom = zoom;
+		}
+		else
+		{
+			m_fZoom = zoom;
+			//g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( g_pMapOverview->GetAsPanel(), "zoom", zoom, 0.0, time, vgui::AnimationController::INTERPOLATOR_LINEAR );
+		}
+		return;
+	}
+	else if ( FStrEq( "zoom_center", command ) )
+	{
+		Vector center = Vector( 0, 0, 0 );
+		SetMapOrigin( center );
+		return;
+	}
+
+	BaseClass::OnCommand( command );
+}
+
+void CTFMapOverview::OnMousePressed( vgui::MouseCode code )
+{
+	if ( code != MOUSE_LEFT )
+		return;
+
+	if ( m_iNavigationMode == TF_OVERVIEW_MODE_PAN )
+	{
+		m_bIsPanning = true;
+	}
+}
+
+void CTFMapOverview::OnMouseReleased( vgui::MouseCode code )
+{
+	if ( code != MOUSE_LEFT )
+		return;
+
+	m_bIsPanning = false;
+}
+
+void CTFMapOverview::OnCursorExited()
+{
+	m_bIsPanning = false;
+}
+
+void CTFMapOverview::OnCursorMoved( int x, int y )
+{
+	if ( m_iNavigationMode == TF_OVERVIEW_MODE_PAN && m_bIsPanning )
+	{
+		Vector src = GetMapOrigin();
+		Vector center = Vector( src.x, src.y, 0 );
+		center.x -= (x - m_vLastMousePos.x) * 1.5f;
+		center.y += (y - m_vLastMousePos.y) * 1.5f;
+		SetMapOrigin( center );
+	}
+	m_vLastMousePos = Vector2D( x, y );
 }
 
 //-----------------------------------------------------------------------------
@@ -592,7 +764,7 @@ void CTFMapOverview::ToggleZoom( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFMapOverview::SetMode(int mode)
+void CTFMapOverview::SetMode( int mode )
 {
 	if ( IsDisabled() )
 	{
@@ -612,6 +784,10 @@ void CTFMapOverview::SetMode(int mode)
 		if ( tf_overview_pause.GetBool() && engine->IsPaused() )
 		{
 			engine->ClientCmd( "pause" );
+		}
+		if ( m_pDrawingPanel )
+		{
+			m_pDrawingPanel->SetVisible( false );
 		}
 	}
 	else if ( mode == MAP_MODE_INSET )
@@ -658,11 +834,28 @@ void CTFMapOverview::SetMode(int mode)
 		else
             g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
 
-		MoveToFront();
 		MakePopup( false, true );
 		SetKeyBoardInputEnabled( false );
+		ConVarRef sv_pausable( "sv_pausable" );
+		if ( tf_overview_pause.GetBool() && sv_pausable.GetBool() )
+		{
+			SetKeyBoardInputEnabled( true );
+		}
 		SetMouseInputEnabled( true );
 		gHUD.LockRenderGroup( iRenderGroup );
+		if ( m_pDrawingPanel )
+		{
+			m_pDrawingPanel->SetVisible( true );
+			m_pDrawingPanel->SetMouseInputEnabled( true );
+			if ( m_iNavigationMode == TF_OVERVIEW_MODE_DRAW )
+			{
+				m_pDrawingPanel->SetViewOnly( false );
+			}
+			else
+			{
+				m_pDrawingPanel->SetViewOnly( true );
+			}
+		}
 		if ( tf_overview_pause.GetBool() && !engine->IsPaused() )
 		{
 			engine->ClientCmd( "pause" );
@@ -680,21 +873,15 @@ void CTFMapOverview::SetMode(int mode)
 //-----------------------------------------------------------------------------
 void CTFMapOverview::UpdateSizeAndPosition()
 {
-	// move back up if the spectator menu is not visible
-	//if ( !g_pSpectatorGUI || ( !g_pSpectatorGUI->IsVisible() && GetMode() == MAP_MODE_INSET ) )
-	//{
-		int x,y,w,h;
+	int x,y,w,h;
 
-		GetBounds( x,y,w,h );
+	GetBounds( x,y,w,h );
 
-		//y = YRES(5);	// hax, align to top of the screen
-		w = ScreenWidth();
-		h = ScreenHeight();
+	//y = YRES(5);	// hax, align to top of the screen
+	w = ScreenWidth();
+	h = ScreenHeight();
 
-		SetBounds( x,y,w,h );
-	//}
-
-	//BaseClass::UpdateSizeAndPosition();
+	SetBounds( x,y,w,h );
 }
 
 ConVar cl_voicetest( "cl_voicetest", "0", FCVAR_CHEAT );
@@ -1191,6 +1378,54 @@ void CTFMapOverview::SetVisible( bool state )
 	BaseClass::SetVisible( state );
 }
 
+void CTFMapOverview::OnKeyCodePressed( vgui::KeyCode code )
+{
+	if ( !IsVisible() )
+		return;
+
+	if ( code == KEY_E )
+	{
+		OnCommand( "zoom_plus" );
+	}
+	else if ( code == KEY_Q )
+	{
+		OnCommand( "zoom_minus" );
+	}
+	else if ( code == KEY_R )
+	{
+		OnCommand( "mode_draw" );
+	}
+	else if ( code == KEY_F )
+	{
+		OnCommand( "mode_pan" );
+	}
+	else if ( code == KEY_C )
+	{
+		OnCommand( "zoom_center" );
+	}
+	else
+	{
+		BaseClass::OnKeyCodePressed( code );
+	}
+}
+
+void CTFMapOverview::OnMouseWheeled( int delta )
+{
+	if ( !IsVisible() )
+		return;
+
+	if ( delta > 0 )
+	{
+		OnCommand( "zoom_plus" );
+	}
+	else if ( delta < 0 )
+	{
+		OnCommand( "zoom_minus" );
+	}
+	
+	BaseClass::OnMouseWheeled( delta );
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Event handler
 //-----------------------------------------------------------------------------
@@ -1198,6 +1433,33 @@ int	CTFMapOverview::HudElementKeyInput( int down, ButtonCode_t keynum, const cha
 {
 	if ( !IsVisible() )
 		return 1;
+
+	//OnMousePressed( keynum == MOUSE_LEFT ? MouseCode::MOUSE_LEFT : MouseCode::MOUSE_RIGHT );
+	if ( keynum == KEY_E )
+	{
+		OnCommand( "zoom_plus" );
+		return 0;
+	}
+	else if ( keynum == KEY_Q )
+	{
+		OnCommand( "zoom_minus" );
+		return 0;
+	}
+	else if ( keynum == KEY_R )
+	{
+		OnCommand( "mode_draw" );
+		return 0;
+	}
+	else if ( keynum == KEY_F )
+	{
+		OnCommand( "mode_pan" );
+		return 0;
+	}
+	else if ( keynum == KEY_C )
+	{
+		OnCommand( "zoom_center" );
+		return 0;
+	}
 
 	return 1;
 }
@@ -1208,14 +1470,14 @@ int	CTFMapOverview::HudElementKeyInput( int down, ButtonCode_t keynum, const cha
 bool ShouldMapOverviewHandleKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
 	// We're only looking for specific mouse input
-	if ( keynum == MOUSE_LEFT || keynum == MOUSE_RIGHT )
-	{
-		CTFMapOverview *pMapOverview = dynamic_cast<CTFMapOverview* >( gViewPortInterface->FindPanelByName( PANEL_OVERVIEW ) );
-		if ( pMapOverview )
-		{
-			return !pMapOverview->HudElementKeyInput( down, keynum, pszCurrentBinding );
-		}
-	}
+	//if ( keynum == MOUSE_LEFT || keynum == MOUSE_RIGHT || keynum == MOUSE_WHEEL_UP || keynum == MOUSE_WHEEL_DOWN )
+	//{
+		//CTFMapOverview *pMapOverview = dynamic_cast<CTFMapOverview* >( gViewPortInterface->FindPanelByName( PANEL_OVERVIEW ) );
+		//if ( pMapOverview )
+		//{
+			//return !pMapOverview->HudElementKeyInput( down, keynum, pszCurrentBinding );
+		//}
+	//}
 
 	return false;
 }
