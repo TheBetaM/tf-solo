@@ -513,6 +513,13 @@ void CTFMinigun::RingOfFireAttack( int nDamage )
 	CBaseEntity *pEntity = NULL;
 	for ( CEntitySphereQuery sphere( vOrigin, flFireRadius ); (pEntity = sphere.GetCurrentEntity()) != NULL; sphere.NextEntity() )
 	{
+		if ( FClassnameIs( pEntity, "tf_propertydamage_prop" ) || FClassnameIs( pEntity, "func_propertydamage_brush" )
+			|| FClassnameIs( pEntity, "tf_propertydamage_nextbot" ) || FClassnameIs( pEntity, "tf_propertydamage_prop_physics" ))
+		{
+			pEntity->TakeDamage( CTakeDamageInfo( pPlayer, pPlayer, this, vec3_origin, vOrigin, nDamage, DMG_PLASMA, TF_DMG_CUSTOM_BURNING, &vOrigin ) );
+			continue;
+		}
+
 		// Skip players on the same team or who are invuln
 		CTFPlayer *pVictim = ToTFPlayer( pEntity );
 		if ( !pVictim || InSameTeam( pVictim ) || pVictim->m_Shared.InCond( TF_COND_INVULNERABLE ) )

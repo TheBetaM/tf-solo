@@ -178,7 +178,10 @@ bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, 
 	{
 		DispatchParticleEffect( "merasmus_blood", info.GetDamagePosition(), vec3_angle );
 
-		if ( info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING )
+		if ( info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING || info.GetDamageCustom() == TF_DMG_CUSTOM_FLYINGBURN ||
+			info.GetDamageCustom() == TF_DMG_CUSTOM_PLASMA_CHARGED || info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING_ARROW ||
+			info.GetDamageCustom() == TF_DMG_CUSTOM_FLARE_EXPLOSION || info.GetDamageCustom() == TF_DMG_CUSTOM_FLARE_PELLET ||
+			info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING_FLARE || ( info.GetDamageType() & DMG_IGNITE ) )
 		{
 			m_hBurnAttacker = pTFPlayer;
 			m_hBurnWeapon = (CTFWeaponBase*)info.GetWeapon();
@@ -509,12 +512,12 @@ void CTFSOLOPropertyDamageProp::IgniteOnFire()
 
 	if ( m_bIsOnFire )
 	{
-		if ( m_flOnFireTime < 6.0f )
+		if ( m_flOnFireTime < 10.0f )
 		{
 			m_flOnFireTime += 2.0f;
-			if ( m_flOnFireTime > 6.0f )
+			if ( m_flOnFireTime > 10.0f )
 			{
-				m_flOnFireTime = 6.0f;
+				m_flOnFireTime = 10.0f;
 			}
 		}
 	}
@@ -539,7 +542,7 @@ void CTFSOLOPropertyDamageProp::OnFireThink()
 	float flBurnDamage = TF_BURNING_DMG;
 	int team = GetTeamNumber();
 	
-	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT );
 	TakeDamage( info );
 
 	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
@@ -768,12 +771,12 @@ void CTFSOLOPropertyDamagePhysicsProp::IgniteOnFire()
 
 	if ( m_bIsOnFire )
 	{
-		if ( m_flOnFireTime < 6.0f )
+		if ( m_flOnFireTime < 10.0f )
 		{
 			m_flOnFireTime += 2.0f;
-			if ( m_flOnFireTime > 6.0f )
+			if ( m_flOnFireTime > 10.0f )
 			{
-				m_flOnFireTime = 6.0f;
+				m_flOnFireTime = 10.0f;
 			}
 		}
 	}
@@ -798,7 +801,7 @@ void CTFSOLOPropertyDamagePhysicsProp::OnFireThink()
 	float flBurnDamage = TF_BURNING_DMG;
 	int team = GetTeamNumber();
 	
-	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT );
 	TakeDamage( info );
 
 	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
@@ -992,12 +995,12 @@ void CTFSOLOPropertyDamageBrush::IgniteOnFire()
 
 	if ( m_bIsOnFire )
 	{
-		if ( m_flOnFireTime < 6.0f )
+		if ( m_flOnFireTime < 10.0f )
 		{
 			m_flOnFireTime += 2.0f;
-			if ( m_flOnFireTime > 6.0f )
+			if ( m_flOnFireTime > 10.0f )
 			{
-				m_flOnFireTime = 6.0f;
+				m_flOnFireTime = 10.0f;
 			}
 		}
 	}
@@ -1022,7 +1025,7 @@ void CTFSOLOPropertyDamageBrush::OnFireThink()
 	float flBurnDamage = TF_BURNING_DMG;
 	int team = GetTeamNumber();
 	
-	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT );
 	TakeDamage( info );
 
 	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
@@ -1216,12 +1219,12 @@ void CTFSOLOPropertyDamageNextBot::IgniteOnFire()
 
 	if ( m_bIsOnFire )
 	{
-		if ( m_flOnFireTime < 6.0f )
+		if ( m_flOnFireTime < 10.0f )
 		{
 			m_flOnFireTime += 2.0f;
-			if ( m_flOnFireTime > 6.0f )
+			if ( m_flOnFireTime > 10.0f )
 			{
-				m_flOnFireTime = 6.0f;
+				m_flOnFireTime = 10.0f;
 			}
 		}
 	}
@@ -1246,7 +1249,7 @@ void CTFSOLOPropertyDamageNextBot::OnFireThink()
 	float flBurnDamage = TF_BURNING_DMG;
 	int team = GetTeamNumber();
 	
-	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT );
 	TakeDamage( info );
 
 	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
