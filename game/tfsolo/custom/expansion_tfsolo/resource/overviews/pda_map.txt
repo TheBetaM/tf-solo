@@ -1,8 +1,9 @@
 pda_map
 {
-	pos_x 0
-	pos_y 0
-	scale 1.0
+	material overviews/pda_map_f0
+	pos_x -2175
+	pos_y 2200
+	scale 4.25
 	rotate 0
-	zoom 0.25
+	zoom 1.2
 }

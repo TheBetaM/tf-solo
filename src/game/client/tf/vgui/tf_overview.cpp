@@ -134,9 +134,24 @@ CON_COMMAND( tf_overview_drawing_load, "Loads overview drawing from file" )
 }
 CON_COMMAND( tf_overview_drawing_clear, "Clears overview drawing" )
 {
-	if (!GetTFOverview() || !GetTFOverview()->m_pDrawingPanel)
+	if ( !GetTFOverview() || !GetTFOverview()->m_pDrawingPanel )
 		return;
 	GetTFOverview()->m_pDrawingPanel->ClearAllLines();
+}
+CON_COMMAND( tf_overview_reload, "Reloads overview" )
+{
+	if ( !GetTFOverview() )
+		return;
+
+	if ( args.ArgC() <= 1 )
+	{
+		GetTFOverview()->ReloadOverview();
+	}
+	else
+	{
+		const char* path = args.Arg(1);
+		GetTFOverview()->ReloadOverviewSetMap( path );
+	}
 }
 
 //--------------------------------
@@ -617,8 +632,8 @@ void CTFMapOverview::OnCommand( const char* command )
 	}
 	else if ( FStrEq( "zoom_center", command ) )
 	{
-		Vector center = Vector( 0, 0, 0 );
-		SetMapOrigin( center );
+		m_PanOffset.x = 0;
+		m_PanOffset.y = 0;
 		return;
 	}
 
@@ -627,15 +642,30 @@ void CTFMapOverview::OnCommand( const char* command )
 
 void CTFMapOverview::OnMousePressed( vgui::MouseCode code )
 {
-	if ( code != MOUSE_LEFT )
+	if ( code == MOUSE_LEFT )
 	{
-		BaseClass::OnMousePressed( code );
-		return;
+		if ( m_iNavigationMode == TF_OVERVIEW_MODE_PAN )
+		{
+			m_bIsPanning = true;
+		}
 	}
-
-	if ( m_iNavigationMode == TF_OVERVIEW_MODE_PAN )
+	else if ( code == MOUSE_RIGHT )
 	{
-		m_bIsPanning = true;
+		Vector2D cursorPos = PanelToMap( m_vLastMousePos );
+		for ( int i = 0; i < m_Objects.Count(); i++ )
+		{
+			MapObject_t* obj = &m_Objects[i];
+			Vector2D pos = WorldToMap( obj->position );
+			if ( cursorPos.x <= pos.x + obj->size && cursorPos.x >= pos.x - obj->size
+				&& cursorPos.y <= pos.y + obj->size && cursorPos.y >= pos.y - obj->size )
+			{
+				if ( obj->index != 0 )
+				{
+					SetFollowEntity( obj->index );
+					break;
+				}
+			}
+		}
 	}
 	BaseClass::OnMousePressed( code );
 }
@@ -662,11 +692,12 @@ void CTFMapOverview::OnCursorMoved( int x, int y )
 {
 	if ( m_iNavigationMode == TF_OVERVIEW_MODE_PAN && m_bIsPanning )
 	{
-		Vector src = GetMapOrigin();
-		Vector center = Vector( src.x, src.y, 0 );
-		center.x -= (x - m_vLastMousePos.x) * 1.5f;
-		center.y += (y - m_vLastMousePos.y) * 1.5f;
-		SetMapOrigin( center );
+		m_PanOffset.x -= (x - m_vLastMousePos.x);
+		m_PanOffset.y -= (y - m_vLastMousePos.y);
+		if ( m_nFollowEntity != 0 )
+		{
+			SetFollowEntity( 0 );
+		}
 	}
 	m_vLastMousePos = Vector2D( x, y );
 	BaseClass::OnCursorMoved( x, y );
@@ -831,6 +862,21 @@ void CTFMapOverview::SetMode( int mode )
 		}
 
 		SetFollowEntity( 0 );
+		C_BasePlayer* pPlayer = C_BasePlayer::GetLocalPlayer();
+		if ( pPlayer )
+		{
+			int specmode = GetSpectatorMode();
+			if ( specmode == OBS_MODE_IN_EYE || specmode == OBS_MODE_CHASE )
+			{
+				// follow target
+				SetFollowEntity( GetSpectatorTarget() );
+			}
+			else
+			{
+				// follow ourself otherwise
+				//SetFollowEntity( pPlayer->entindex() );
+			}
+		}
 
 		ShowPanel( true );
 
@@ -1381,6 +1427,19 @@ void CTFMapOverview::UpdateMapOverlayTexture()
 		return;
 	}
 */
+}
+
+void CTFMapOverview::ReloadOverview()
+{
+	SetMap( tfsolo_mapentry.GetString() );
+	ResetRound();
+	m_bIsRefreshed = false;
+}
+void CTFMapOverview::ReloadOverviewSetMap( const char* pMap )
+{
+	SetMap( pMap );
+	ResetRound();
+	m_bIsRefreshed = false;
 }
 
 //-----------------------------------------------------------------------------

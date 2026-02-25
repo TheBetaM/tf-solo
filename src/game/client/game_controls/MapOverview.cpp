@@ -159,6 +159,7 @@ CMapOverview::CMapOverview( const char *pElementName ) : EditablePanel( NULL, PA
 	m_fZoom = 3.0f;
 	m_MapCenter = Vector2D( 512, 512 );
 	m_ViewOrigin = Vector2D( 512, 512 );
+	m_PanOffset = Vector2D( 0, 0 );
 	m_fViewAngle = 0;
 	m_fTrailUpdateInterval = 1.0f;
 
@@ -335,11 +336,13 @@ void CMapOverview::UpdateFollowEntity()
 
 			SetCenter( WorldToMap(position) );
 			SetAngle( angle[YAW] );
+			m_PanOffset.x = m_MapCenter.x - ( OVERVIEW_MAP_SIZE / 2 );
+			m_PanOffset.y = m_MapCenter.y - ( OVERVIEW_MAP_SIZE / 2 );
 		}
 	}
 	else
 	{
-		SetCenter( Vector2D(OVERVIEW_MAP_SIZE/2,OVERVIEW_MAP_SIZE/2) );
+		SetCenter( Vector2D( ( OVERVIEW_MAP_SIZE / 2 ) + m_PanOffset.x ,( OVERVIEW_MAP_SIZE / 2 ) + m_PanOffset.y ) );
 		SetAngle( 0 );
 	}
 }
@@ -478,7 +481,7 @@ void CMapOverview::Update( void )
 
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 
-	if ( !pPlayer )
+	if ( !pPlayer || GetMode() != MAP_MODE_RADAR )
 		return;
 
 	int specmode = GetSpectatorMode();
@@ -774,10 +777,24 @@ void CMapOverview::DrawMapPlayers()
 
 Vector2D CMapOverview::WorldToMap( const Vector &worldpos )
 {
-	Vector2D offset( worldpos.x - m_MapOrigin.x, worldpos.y - m_MapOrigin.y);
+	Vector2D offset( worldpos.x - m_MapOrigin.x, worldpos.y - m_MapOrigin.y );
 
 	offset.x /=  m_fMapScale;
 	offset.y /= -m_fMapScale;
+
+	return offset;
+}
+
+Vector CMapOverview::MapToWorld( const Vector2D& mappos )
+{
+	// todo: elevation
+	Vector offset( mappos.x, mappos.y, 0 );
+
+	offset.x *= m_fMapScale;
+	offset.y *= -m_fMapScale;
+
+	offset.x += m_MapOrigin.x;
+	offset.y += m_MapOrigin.y;
 
 	return offset;
 }
@@ -825,6 +842,33 @@ Vector2D CMapOverview::MapToPanel( const Vector2D &mappos )
 	return panelpos;
 }
 
+Vector2D CMapOverview::PanelToMap( const Vector2D& panelpos )
+{
+	int pwidth, pheight;
+	Vector2D mappos;
+	float viewAngle = GetViewAngle();
+
+	GetSize(pwidth, pheight);
+
+	Vector offset;
+	offset.x = (pwidth * 0.5f) - (pheight * panelpos.x);
+	offset.y = (pheight * 0.5f) - (pheight * panelpos.y);
+	offset.z = 0;
+
+	// find the actual zoom from the animationvar m_fZoom and the map zoom scale
+	float fScale = (m_fZoom * m_fFullZoom) / OVERVIEW_MAP_SIZE;
+
+	offset.x /= fScale;
+	offset.y /= fScale;
+
+	VectorYawRotate( offset, -viewAngle, offset );
+
+	mappos.x = offset.x + m_MapCenter.x;
+	mappos.y = offset.y + m_MapCenter.y;
+
+	return mappos;
+}
+
 void CMapOverview::SetTime( float time )
 {
 	m_fWorldTime = time;
@@ -842,10 +886,10 @@ void CMapOverview::SetMap(const char * levelname)
 	InitTeamColorsAndIcons();
 
 	// load new KeyValues
-	if ( m_MapKeyValues && Q_strcmp( levelname, m_MapKeyValues->GetName() ) == 0 )
-	{
-		return;	// map didn't change
-	}
+	//if ( m_MapKeyValues && Q_strcmp( levelname, m_MapKeyValues->GetName() ) == 0 )
+	//{
+	//	return;	// map didn't change
+	//}
 
 	if ( m_MapKeyValues )
 		m_MapKeyValues->deleteThis();
@@ -861,6 +905,8 @@ void CMapOverview::SetMap(const char * levelname)
 		m_nMapTextureID = -1;
 		m_MapOrigin.x = 0;
 		m_MapOrigin.y = 0;
+		m_PanOffset.x = 0;
+		m_PanOffset.y = 0;
 		m_fMapScale = 1;
 		m_bRotateMap = false;
 		m_fFullZoom = 1;
@@ -898,6 +944,8 @@ void CMapOverview::SetMap(const char * levelname)
 	m_fMapScale		= m_MapKeyValues->GetFloat("scale", 1.0f);
 	m_bRotateMap	= m_MapKeyValues->GetInt("rotate")!=0;
 	m_fFullZoom		= m_MapKeyValues->GetFloat("zoom", 1.0f );
+	m_PanOffset.x = 0;
+	m_PanOffset.y = 0;
 }
 
 void CMapOverview::ResetRound()
@@ -1129,7 +1177,7 @@ void CMapOverview::SetCenter(const Vector2D &mappos)
 
 	width = height = OVERVIEW_MAP_SIZE / (fTwiceZoom);
 
-	if( GetMode() != MAP_MODE_RADAR )
+	if ( false )//if( GetMode() != MAP_MODE_RADAR )
 	{
 		if ( m_MapCenter.x < width )
 			m_MapCenter.x = width;

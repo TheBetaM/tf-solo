@@ -149,6 +149,7 @@ public:
 	virtual Vector2D GetCenter( void ){ return m_MapCenter; }
 	virtual Vector GetMapOrigin( void ){ return m_MapOrigin; }
 	virtual Vector2D GetViewOrigin( void ){ return m_ViewOrigin; }
+	virtual Vector2D GetPanOffset( void ){ return m_PanOffset; }
 
 	// Player settings:
 	virtual void ShowPlayerNames(bool state);
@@ -166,6 +167,7 @@ public:
 	virtual void SetCenter( const Vector2D &mappos); 
 	virtual void SetAngle( float angle);
 	virtual Vector2D WorldToMap( const Vector &worldpos );
+	virtual Vector MapToWorld( const Vector2D &mappos );
 	virtual void SetViewOrigin( const Vector2D& mappos){ m_ViewOrigin = Vector2D(mappos.x, mappos.y); }
 	virtual void SetMapOrigin( const Vector& mappos ){ m_MapOrigin = Vector(mappos.x, mappos.y, mappos.z); }
 
@@ -209,6 +211,7 @@ protected:
 	MapPlayer_t*	GetPlayerByUserID( int userID );
 	int				AddIconTexture(const char *filename);
 	Vector2D		MapToPanel( const Vector2D &mappos );
+	Vector2D		PanelToMap( const Vector2D &panelpos );
 	int				GetPixelOffset( float height );
 	void			UpdateFollowEntity();
 	virtual void	UpdatePlayers();
@@ -266,6 +269,7 @@ protected:
 	float	m_fFullZoom;	// best zoom factor for full map view (1.0 is map is a square) 
 	Vector2D m_ViewOrigin;	// map coordinates that are in the center of the pverview panel
 	Vector2D m_MapCenter;	// map coordinates that are in the center of the pverview panel
+	Vector2D m_PanOffset;
 
 	float	m_fNextUpdateTime;
 	float	m_fViewAngle;	// rotation of overview map

@@ -38,6 +38,8 @@ class CTFMapOverview : public CMapOverview
 	void ToggleZoom( void );
 
 	void PlayerChat( int index );
+	void ReloadOverview( void );
+	void ReloadOverviewSetMap( const char* pMap );
 
 	void DrawQuad( Vector pos, int scale, float angle, int textureID, int alpha );
 	void DrawHorizontalSwipe( Vector pos, int scale, int textureID, float flCapPercentage, bool bSwipeLeft );
