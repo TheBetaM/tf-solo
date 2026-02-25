@@ -1921,7 +1921,9 @@ bool CTFFlameThrower::DeflectEntity( CBaseEntity *pTarget, CTFPlayer *pOwner, Ve
 	// can't deflect things on our own team
 	// except the passtime ball when in passtime mode
 	if ( (pTarget->GetTeamNumber() == pOwner->GetTeamNumber()) 
-		&& !(g_pPasstimeLogic && (g_pPasstimeLogic->GetBall() == pTarget)) )
+		&& !(g_pPasstimeLogic && (g_pPasstimeLogic->GetBall() == pTarget))
+		&& !FClassnameIs( pTarget, "tf_propertydamage_prop" ) && !FClassnameIs( pTarget, "func_propertydamage_brush" )
+		&& !FClassnameIs( pTarget, "tf_propertydamage_nextbot" ) && !FClassnameIs( pTarget, "tf_propertydamage_prop_physics" ) )
 	{
 		return false;
 	}

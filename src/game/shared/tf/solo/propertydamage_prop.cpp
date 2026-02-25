@@ -11,6 +11,8 @@
 
 #include "tier0/memdbgon.h"
 
+#define PDA_PROP_AFTERBURN_INTERVAL	1.0f
+
 IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamageProp, DT_TFSOLOPropertyDamageProp)
 IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamagePhysicsProp, DT_TFSOLOPropertyDamagePhysicsProp)
 IMPLEMENT_NETWORKCLASS_ALIASED(TFSOLOPropertyDamageBrush, DT_TFSOLOPropertyDamageBrush)
@@ -20,9 +22,11 @@ BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamageProp, DT_TFSOLOPropertyDamageProp)
 #ifdef GAME_DLL
 SendPropFloat(SENDINFO(m_flCurrentDamage)),
 SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+SendPropBool(SENDINFO(m_bIsOnFire)),
 #else
 RecvPropFloat(RECVINFO(m_flCurrentDamage)),
 RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+RecvPropBool(RECVINFO(m_bIsOnFire)),
 #endif
 END_NETWORK_TABLE()
 
@@ -30,9 +34,11 @@ BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamagePhysicsProp, DT_TFSOLOPropertyDamagePhy
 #ifdef GAME_DLL
 SendPropFloat(SENDINFO(m_flCurrentDamage)),
 SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+SendPropBool(SENDINFO(m_bIsOnFire)),
 #else
 RecvPropFloat(RECVINFO(m_flCurrentDamage)),
 RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+RecvPropBool(RECVINFO(m_bIsOnFire)),
 #endif
 END_NETWORK_TABLE()
 
@@ -40,9 +46,11 @@ BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamageBrush, DT_TFSOLOPropertyDamageBrush)
 #ifdef GAME_DLL
 SendPropFloat(SENDINFO(m_flCurrentDamage)),
 SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+SendPropBool(SENDINFO(m_bIsOnFire)),
 #else
 RecvPropFloat(RECVINFO(m_flCurrentDamage)),
 RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+RecvPropBool(RECVINFO(m_bIsOnFire)),
 #endif
 END_NETWORK_TABLE()
 
@@ -50,9 +58,11 @@ BEGIN_NETWORK_TABLE(CTFSOLOPropertyDamageNextBot, DT_TFSOLOPropertyDamageNextBot
 #ifdef GAME_DLL
 SendPropFloat(SENDINFO(m_flCurrentDamage)),
 SendPropFloat(SENDINFO(m_flLastMaxDamage)),
+SendPropBool(SENDINFO(m_bIsOnFire)),
 #else
 RecvPropFloat(RECVINFO(m_flCurrentDamage)),
 RecvPropFloat(RECVINFO(m_flLastMaxDamage)),
+RecvPropBool(RECVINFO(m_bIsOnFire)),
 #endif
 END_NETWORK_TABLE()
 
@@ -75,6 +85,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+DEFINE_KEYFIELD( m_bIsIgnitable, FIELD_BOOLEAN, "is_ignitable" ),
 #ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
@@ -97,6 +108,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+DEFINE_KEYFIELD( m_bIsIgnitable, FIELD_BOOLEAN, "is_ignitable" ),
 #ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
@@ -119,6 +131,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+DEFINE_KEYFIELD( m_bIsIgnitable, FIELD_BOOLEAN, "is_ignitable" ),
 #ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
@@ -143,6 +156,7 @@ DEFINE_KEYFIELD( m_iCaptureAction, FIELD_INTEGER, "capture_action" ),
 DEFINE_KEYFIELD( m_bIsDamageable, FIELD_BOOLEAN, "is_damageable" ),
 DEFINE_KEYFIELD( m_bIsSappable, FIELD_BOOLEAN, "is_sappable" ),
 DEFINE_KEYFIELD( m_bIsRepairable, FIELD_BOOLEAN, "is_repairable" ),
+DEFINE_KEYFIELD( m_bIsIgnitable, FIELD_BOOLEAN, "is_ignitable" ),
 #ifdef GAME_DLL
 DEFINE_OUTPUT( m_onPropDamaged, "OnPropDamaged" ),
 DEFINE_OUTPUT( m_onPropCaptured, "OnPropCaptured" ),
@@ -163,6 +177,13 @@ bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, 
 	if ( pTFPlayer && pTFPlayer->GetTeamNumber() != TeamNum )
 	{
 		DispatchParticleEffect( "merasmus_blood", info.GetDamagePosition(), vec3_angle );
+
+		if ( info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING )
+		{
+			m_hBurnAttacker = pTFPlayer;
+			m_hBurnWeapon = (CTFWeaponBase*)info.GetWeapon();
+			IgniteOnFire();
+		}
 
 		bool isMaxDamage = false;
 		if ( m_flFixedDamageAmount > 0.0f )
@@ -297,7 +318,39 @@ CTFSOLOPropertyDamageProp::CTFSOLOPropertyDamageProp()
 	m_bIsDamageable = true;
 	m_bIsSappable = true;
 	m_bIsRepairable = true;
+	m_bIsIgnitable = true;
+	m_flOnFireTime = 0.0f;
+#ifdef GAME_DLL
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
+#endif
+#ifdef CLIENT_DLL
+	m_pBurningEffect = NULL;
+#endif
 }
+
+#ifdef CLIENT_DLL
+void CTFSOLOPropertyDamageProp::Spawn()
+{
+	BaseClass::Spawn();
+	SetNextClientThink( CLIENT_THINK_ALWAYS );
+}
+
+void CTFSOLOPropertyDamageProp::ClientThink()
+{
+	BaseClass::ClientThink();
+	if ( m_bIsOnFire && !m_pBurningEffect )
+	{
+		const char* pEffectName = ( GetTeamNumber() == TF_TEAM_RED ) ? "burningplayer_red" : "burningplayer_blue";
+		m_pBurningEffect = ParticleProp()->Create( pEffectName, PATTACH_ABSORIGIN_FOLLOW );
+	}
+	else if ( !m_bIsOnFire && m_pBurningEffect )
+	{
+		ParticleProp()->StopEmission( m_pBurningEffect );
+		m_pBurningEffect = NULL;
+	}
+}
+#endif
 
 #ifdef GAME_DLL
 void CTFSOLOPropertyDamageProp::Spawn()
@@ -327,6 +380,9 @@ void CTFSOLOPropertyDamageProp::Spawn()
 	{
 		SetSkin( GetTeamNumber() );
 	}
+	AddFlag( FL_GRENADE );
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
 }
 
 void CTFSOLOPropertyDamageProp::InputRoundActivate( inputdata_t& inputdata )
@@ -432,6 +488,72 @@ bool CTFSOLOPropertyDamageProp::OverridePropdata()
 	return true;
 }
 
+void CTFSOLOPropertyDamageProp::Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir )
+{
+	if ( m_bIsOnFire && pDeflectedBy->GetTeamNumber() == GetTeamNumber() )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		EmitSound( "TFPlayer.FlameOut" );
+	}
+}
+
+void CTFSOLOPropertyDamageProp::IgniteOnFire()
+{
+	if ( !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	if ( m_bIsOnFire )
+	{
+		if ( m_flOnFireTime < 6.0f )
+		{
+			m_flOnFireTime += 2.0f;
+			if ( m_flOnFireTime > 6.0f )
+			{
+				m_flOnFireTime = 6.0f;
+			}
+		}
+	}
+	else
+	{
+		m_bIsOnFire = true;
+		m_flOnFireTime = 5.0f;
+		EmitSound( "Player.OnFire" );
+		SetContextThink( &CTFSOLOPropertyDamageProp::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+}
+
+void CTFSOLOPropertyDamageProp::OnFireThink()
+{
+	if ( !m_bIsOnFire || !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	float flBurnDamage = TF_BURNING_DMG;
+	int team = GetTeamNumber();
+	
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	TakeDamage( info );
+
+	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
+
+	if ( team == GetTeamNumber() && m_flOnFireTime > 0.0f )
+	{
+		SetContextThink( &CTFSOLOPropertyDamageProp::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+	else
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+	}
+}
 
 CTFSOLOPropertyDamageProp* CTFSOLOPropertyDamageProp::Create( const Vector& vPosition, const QAngle& qAngles )
 {
@@ -455,7 +577,39 @@ CTFSOLOPropertyDamagePhysicsProp::CTFSOLOPropertyDamagePhysicsProp()
 	m_bIsDamageable = true;
 	m_bIsSappable = true;
 	m_bIsRepairable = true;
+	m_bIsIgnitable = true;
+	m_flOnFireTime = 0.0f;
+#ifdef GAME_DLL
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
+#endif
+#ifdef CLIENT_DLL
+	m_pBurningEffect = NULL;
+#endif
 }
+
+#ifdef CLIENT_DLL
+void CTFSOLOPropertyDamagePhysicsProp::Spawn()
+{
+	BaseClass::Spawn();
+	SetNextClientThink( CLIENT_THINK_ALWAYS );
+}
+
+void CTFSOLOPropertyDamagePhysicsProp::ClientThink()
+{
+	BaseClass::ClientThink();
+	if ( m_bIsOnFire && !m_pBurningEffect )
+	{
+		const char* pEffectName = ( GetTeamNumber() == TF_TEAM_RED ) ? "burningplayer_red" : "burningplayer_blue";
+		m_pBurningEffect = ParticleProp()->Create( pEffectName, PATTACH_ABSORIGIN_FOLLOW );
+	}
+	else if ( !m_bIsOnFire && m_pBurningEffect )
+	{
+		ParticleProp()->StopEmission( m_pBurningEffect );
+		m_pBurningEffect = NULL;
+	}
+}
+#endif
 
 #ifdef GAME_DLL
 void CTFSOLOPropertyDamagePhysicsProp::Spawn()
@@ -485,6 +639,9 @@ void CTFSOLOPropertyDamagePhysicsProp::Spawn()
 	{
 		SetSkin( GetTeamNumber() );
 	}
+	AddFlag( FL_GRENADE );
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
 }
 
 void CTFSOLOPropertyDamagePhysicsProp::InputRoundActivate( inputdata_t& inputdata )
@@ -590,6 +747,73 @@ bool CTFSOLOPropertyDamagePhysicsProp::OverridePropdata()
 	return true;
 }
 
+void CTFSOLOPropertyDamagePhysicsProp::Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir )
+{
+	if ( m_bIsOnFire && pDeflectedBy->GetTeamNumber() == GetTeamNumber() )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		EmitSound( "TFPlayer.FlameOut" );
+	}
+}
+
+void CTFSOLOPropertyDamagePhysicsProp::IgniteOnFire()
+{
+	if ( !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	if ( m_bIsOnFire )
+	{
+		if ( m_flOnFireTime < 6.0f )
+		{
+			m_flOnFireTime += 2.0f;
+			if ( m_flOnFireTime > 6.0f )
+			{
+				m_flOnFireTime = 6.0f;
+			}
+		}
+	}
+	else
+	{
+		m_bIsOnFire = true;
+		m_flOnFireTime = 5.0f;
+		EmitSound( "Player.OnFire" );
+		SetContextThink( &CTFSOLOPropertyDamagePhysicsProp::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+}
+
+void CTFSOLOPropertyDamagePhysicsProp::OnFireThink()
+{
+	if ( !m_bIsOnFire || !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	float flBurnDamage = TF_BURNING_DMG;
+	int team = GetTeamNumber();
+	
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	TakeDamage( info );
+
+	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
+
+	if ( team == GetTeamNumber() && m_flOnFireTime > 0.0f )
+	{
+		SetContextThink( &CTFSOLOPropertyDamagePhysicsProp::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+	else
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+	}
+}
+
 
 CTFSOLOPropertyDamagePhysicsProp* CTFSOLOPropertyDamagePhysicsProp::Create(const Vector& vPosition, const QAngle& qAngles)
 {
@@ -612,7 +836,39 @@ CTFSOLOPropertyDamageBrush::CTFSOLOPropertyDamageBrush()
 	m_bIsDamageable = true;
 	m_bIsSappable = true;
 	m_bIsRepairable = true;
+	m_bIsIgnitable = true;
+	m_flOnFireTime = 0.0f;
+#ifdef GAME_DLL
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
+#endif
+#ifdef CLIENT_DLL
+	m_pBurningEffect = NULL;
+#endif
 }
+
+#ifdef CLIENT_DLL
+void CTFSOLOPropertyDamageBrush::Spawn()
+{
+	BaseClass::Spawn();
+	SetNextClientThink( CLIENT_THINK_ALWAYS );
+}
+
+void CTFSOLOPropertyDamageBrush::ClientThink()
+{
+	BaseClass::ClientThink();
+	if ( m_bIsOnFire && !m_pBurningEffect )
+	{
+		const char* pEffectName = ( GetTeamNumber() == TF_TEAM_RED ) ? "burningplayer_red" : "burningplayer_blue";
+		m_pBurningEffect = ParticleProp()->Create( pEffectName, PATTACH_ABSORIGIN_FOLLOW );
+	}
+	else if ( !m_bIsOnFire && m_pBurningEffect )
+	{
+		ParticleProp()->StopEmission( m_pBurningEffect );
+		m_pBurningEffect = NULL;
+	}
+}
+#endif
 
 #ifdef GAME_DLL
 void CTFSOLOPropertyDamageBrush::Spawn()
@@ -638,6 +894,9 @@ void CTFSOLOPropertyDamageBrush::Spawn()
 			SetRenderColor(125, 168, 196);
 		}
 	}
+	AddFlag( FL_GRENADE );
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
 }
 
 void CTFSOLOPropertyDamageBrush::InputRoundActivate( inputdata_t& inputdata )
@@ -712,6 +971,73 @@ int CTFSOLOPropertyDamageBrush::OnTakeDamage( const CTakeDamageInfo& info )
 	return BaseClass::OnTakeDamage( newinfo );
 }
 
+void CTFSOLOPropertyDamageBrush::Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir )
+{
+	if ( m_bIsOnFire && pDeflectedBy->GetTeamNumber() == GetTeamNumber() )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		EmitSound( "TFPlayer.FlameOut" );
+	}
+}
+
+void CTFSOLOPropertyDamageBrush::IgniteOnFire()
+{
+	if ( !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	if ( m_bIsOnFire )
+	{
+		if ( m_flOnFireTime < 6.0f )
+		{
+			m_flOnFireTime += 2.0f;
+			if ( m_flOnFireTime > 6.0f )
+			{
+				m_flOnFireTime = 6.0f;
+			}
+		}
+	}
+	else
+	{
+		m_bIsOnFire = true;
+		m_flOnFireTime = 5.0f;
+		EmitSound( "Player.OnFire" );
+		SetContextThink( &CTFSOLOPropertyDamageBrush::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+}
+
+void CTFSOLOPropertyDamageBrush::OnFireThink()
+{
+	if ( !m_bIsOnFire || !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	float flBurnDamage = TF_BURNING_DMG;
+	int team = GetTeamNumber();
+	
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	TakeDamage( info );
+
+	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
+
+	if ( team == GetTeamNumber() && m_flOnFireTime > 0.0f )
+	{
+		SetContextThink( &CTFSOLOPropertyDamageBrush::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+	else
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+	}
+}
+
 #endif
 //=========================================================================//
 
@@ -727,7 +1053,39 @@ CTFSOLOPropertyDamageNextBot::CTFSOLOPropertyDamageNextBot()
 	m_bIsSappable = true;
 	m_bIsRepairable = true;
 	m_bMovementCollide = false;
+	m_bIsIgnitable = true;
+	m_flOnFireTime = 0.0f;
+#ifdef GAME_DLL
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
+#endif
+#ifdef CLIENT_DLL
+	m_pBurningEffect = NULL;
+#endif
 }
+
+#ifdef CLIENT_DLL
+void CTFSOLOPropertyDamageNextBot::Spawn()
+{
+	BaseClass::Spawn();
+	SetNextClientThink( CLIENT_THINK_ALWAYS );
+}
+
+void CTFSOLOPropertyDamageNextBot::ClientThink()
+{
+	BaseClass::ClientThink();
+	if ( m_bIsOnFire && !m_pBurningEffect )
+	{
+		const char* pEffectName = ( GetTeamNumber() == TF_TEAM_RED ) ? "burningplayer_red" : "burningplayer_blue";
+		m_pBurningEffect = ParticleProp()->Create( pEffectName, PATTACH_ABSORIGIN_FOLLOW );
+	}
+	else if ( !m_bIsOnFire && m_pBurningEffect )
+	{
+		ParticleProp()->StopEmission( m_pBurningEffect );
+		m_pBurningEffect = NULL;
+	}
+}
+#endif
 
 #ifdef GAME_DLL
 void CTFSOLOPropertyDamageNextBot::Spawn()
@@ -752,6 +1110,9 @@ void CTFSOLOPropertyDamageNextBot::Spawn()
 	{
 		SetSkin( GetTeamNumber() );
 	}
+	AddFlag( FL_GRENADE );
+	m_hBurnAttacker = NULL;
+	m_hBurnWeapon = NULL;
 }
 
 void CTFSOLOPropertyDamageNextBot::InputRoundActivate( inputdata_t& inputdata )
@@ -832,6 +1193,73 @@ int CTFSOLOPropertyDamageNextBot::OnTakeDamage( const CTakeDamageInfo& info )
 	CTakeDamageInfo newinfo = info;
 	newinfo.SetDamage( 0.0f );
 	return BaseClass::OnTakeDamage( newinfo );
+}
+
+void CTFSOLOPropertyDamageNextBot::Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir )
+{
+	if ( m_bIsOnFire && pDeflectedBy->GetTeamNumber() == GetTeamNumber() )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		EmitSound( "TFPlayer.FlameOut" );
+	}
+}
+
+void CTFSOLOPropertyDamageNextBot::IgniteOnFire()
+{
+	if ( !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	if ( m_bIsOnFire )
+	{
+		if ( m_flOnFireTime < 6.0f )
+		{
+			m_flOnFireTime += 2.0f;
+			if ( m_flOnFireTime > 6.0f )
+			{
+				m_flOnFireTime = 6.0f;
+			}
+		}
+	}
+	else
+	{
+		m_bIsOnFire = true;
+		m_flOnFireTime = 5.0f;
+		EmitSound( "Player.OnFire" );
+		SetContextThink( &CTFSOLOPropertyDamageNextBot::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+}
+
+void CTFSOLOPropertyDamageNextBot::OnFireThink()
+{
+	if ( !m_bIsOnFire || !m_bIsIgnitable )
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+		return;
+	}
+
+	float flBurnDamage = TF_BURNING_DMG;
+	int team = GetTeamNumber();
+	
+	CTakeDamageInfo info( m_hBurnAttacker, m_hBurnAttacker, m_hBurnWeapon, flBurnDamage, DMG_BURN | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_BURNING );
+	TakeDamage( info );
+
+	m_flOnFireTime -= PDA_PROP_AFTERBURN_INTERVAL;
+
+	if ( team == GetTeamNumber() && m_flOnFireTime > 0.0f )
+	{
+		SetContextThink( &CTFSOLOPropertyDamageNextBot::OnFireThink, gpGlobals->curtime + PDA_PROP_AFTERBURN_INTERVAL, "OnFireThink" );
+	}
+	else
+	{
+		m_flOnFireTime = 0.0f;
+		m_bIsOnFire = false;
+	}
 }
 
 int CTFSOLOPropertyDamageNextBot::OnTakeDamage_Alive( const CTakeDamageInfo& info )

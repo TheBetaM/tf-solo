@@ -5860,7 +5860,9 @@ bool CTFWeaponBase::DeflectProjectiles()
 		if ( bTruce && ( pObjects[i]->GetTeamNumber() == iEnemyTeam ) )
 			continue;
 
-		if ( !pObjects[i]->IsDeflectable() && !FClassnameIs( pObjects[i], "prop_physics" ) )
+		if ( !pObjects[i]->IsDeflectable() && !FClassnameIs( pObjects[i], "prop_physics" )
+			&& !FClassnameIs( pObjects[i], "tf_propertydamage_prop" ) && !FClassnameIs( pObjects[i], "func_propertydamage_brush" ) 
+			&& !FClassnameIs( pObjects[i], "tf_propertydamage_nextbot" ) && !FClassnameIs( pObjects[i], "tf_propertydamage_prop_physics" ) )
 			continue;
 
 		if ( pObjects[i]->IsPlayer() == true )
@@ -5955,6 +5957,12 @@ bool CTFWeaponBase::DeflectEntity( CBaseEntity *pTarget, CTFPlayer *pOwner, Vect
 			pPhysicsObject->ApplyForceOffset( vecDir * flVel, vecEye );
 		}
 		return true;
+	}
+
+	if ( FClassnameIs( pTarget, "tf_propertydamage_prop" ) || FClassnameIs( pTarget, "func_propertydamage_brush" ) || FClassnameIs( pTarget, "tf_propertydamage_nextbot" ) )
+	{
+		pTarget->Deflected( pOwner, Vector( 0, 0, 0 ) );
+		return false;
 	}
 
 	int iAOEDeflection = 0;

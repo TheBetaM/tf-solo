@@ -331,7 +331,7 @@ void JarExplode( int iEntIndex, CTFPlayer *pAttacker, CBaseEntity *pOriginalWeap
 
 	// Splash pee on everyone nearby.
 	CBaseEntity *pListOfEntities[MAX_PLAYERS_ARRAY_SAFE];
-	int iEntities = UTIL_EntitiesInSphere( pListOfEntities, ARRAYSIZE( pListOfEntities ), vContactPoint, flRadius, FL_CLIENT | FL_NPC );
+	int iEntities = UTIL_EntitiesInSphere( pListOfEntities, ARRAYSIZE( pListOfEntities ), vContactPoint, flRadius, FL_CLIENT | FL_NPC | FL_GRENADE );
 	for ( int i = 0; i < iEntities; ++i )
 	{
 		CTFPlayer *pPlayer = ToTFPlayer( pListOfEntities[i] );
@@ -467,6 +467,14 @@ void JarExplode( int iEntIndex, CTFPlayer *pAttacker, CBaseEntity *pOriginalWeap
 						}
 					}
 				}
+			}
+		}
+		else if ( FClassnameIs( pListOfEntities[i], "tf_propertydamage_prop" ) || FClassnameIs(pListOfEntities[i], "func_propertydamage_brush" )
+			|| FClassnameIs( pListOfEntities[i], "tf_propertydamage_nextbot" ) || FClassnameIs(pListOfEntities[i], "tf_propertydamage_prop_physics" ) )
+		{
+			if ( pAttacker )
+			{
+				pListOfEntities[i]->Deflected( pAttacker, Vector( 0, 0, 0 ) );
 			}
 		}
 	}

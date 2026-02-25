@@ -534,6 +534,18 @@ void CTFFlareGun_Revenge::ChargePostFrame( void )
 			trace_t tr;
 			UTIL_TraceHull( vecEye, vecEye + vecForward * 256.0f, -vHull, vHull, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
 
+#ifdef GAME_DLL
+			if ( tr.m_pEnt )
+			{
+				if ( FClassnameIs( tr.m_pEnt, "tf_propertydamage_prop" ) || FClassnameIs( tr.m_pEnt, "func_propertydamage_brush" )
+					|| FClassnameIs( tr.m_pEnt, "tf_propertydamage_nextbot" ) || FClassnameIs( tr.m_pEnt, "tf_propertydamage_prop_physics" ) )
+				{
+					tr.m_pEnt->Deflected( pOwner, Vector( 0, 0, 0 ) );
+					m_fLastExtinguishTime = gpGlobals->curtime;
+				}
+			}
+#endif
+
 			CTFPlayer *pTarget = ToTFPlayer( tr.m_pEnt );
 			if ( pTarget )
 			{

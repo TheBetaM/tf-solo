@@ -156,6 +156,7 @@
 	is_damageable(integer) : "Starts Damageable" : 1 : "Boolean value (0 or 1)."
 	is_sappable(integer) : "Is Sappable" : 1 : "Boolean value (0 or 1)."
 	is_repairable(integer) : "Is Repairable" : 1 : "Boolean value (0 or 1)."
+	is_ignitable(integer) : "Is Ignitable" : 1 : "Boolean value (0 or 1)."
 	
 	input SetDamageAmount(float) : "Set the prop's current damage amount taken."
 	input SetDamageable(bool) : "Set whether the prop is damageable."

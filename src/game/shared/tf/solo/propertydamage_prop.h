@@ -26,11 +26,13 @@ public:
 	bool			IsDamageable( void ) { return m_bIsDamageable; }
 	bool			IsSappable( void ) { return m_bIsSappable; }
 	bool			IsRepairable( void ) { return m_bIsRepairable; }
+	bool			IsIgnitable( void ) { return m_bIsIgnitable; }
 #ifdef GAME_DLL
 	virtual void	SetDamage(float flDmg) = 0;
 	virtual void	SetMaxDamage(float flDmg) = 0;
 	virtual float	GetDamage() = 0;
 	virtual float	GetMaxDamage() = 0;
+	virtual void	IgniteOnFire() = 0;
 	bool			PropTookDamage( const CTakeDamageInfo& info, int TeamNum, CBaseEntity* pEnt );
 	bool			OnWrenchHit( CTFPlayer* pPlayer, CTFWrench* pWrench, Vector hitLoc, CBaseEntity* pEnt );
 	void			AfterCapture( int oldteam, CBaseEntity* pEnt, CTFPlayer* pTFPlayer );
@@ -40,17 +42,26 @@ public:
 	float m_flMaxDamageIncrement;
 	float m_flMaxDamageMult;
 	int m_iCaptureAction;
+	float m_flOnFireTime;
 
 	bool m_bIsDamageable;
 	bool m_bIsSappable;
 	bool m_bIsRepairable;
+	bool m_bIsIgnitable;
 
 #ifdef GAME_DLL
 	COutputEvent m_onPropDamaged;
 	COutputEvent m_onPropCaptured;
 	COutputEvent m_onPropCapturedTeam1;
 	COutputEvent m_onPropCapturedTeam2;
+
+	CHandle<CTFPlayer> m_hBurnAttacker;
+	CHandle<CTFWeaponBase> m_hBurnWeapon;
 #endif // GAME_DLL
+
+#ifdef CLIENT_DLL
+	HPARTICLEFFECT      m_pBurningEffect;
+#endif
 };
 
 DECLARE_AUTO_LIST( ITFSOLOPropertyDamageProp );
@@ -66,19 +77,23 @@ public:
 
 	CNetworkVar( float, m_flCurrentDamage );
 	CNetworkVar( float, m_flLastMaxDamage );
+	CNetworkVar( bool, m_bIsOnFire );
 
-#ifdef GAME_DLL
 	virtual void	Spawn( void );
+#ifdef GAME_DLL
 	virtual void	Event_Killed( const CTakeDamageInfo &info );
 	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
 	virtual void	Touch( CBaseEntity *pOther );
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
 	virtual bool	OverridePropdata( void ) OVERRIDE;
 	virtual bool	IsAlive( void ) OVERRIDE { return true; }
+	virtual void	Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir );
 	virtual void	SetDamage( float flDmg ) { m_flCurrentDamage = flDmg; }
 	virtual void	SetMaxDamage( float flDmg ) { m_flLastMaxDamage = flDmg; }
 	virtual float	GetDamage() { return m_flCurrentDamage; }
 	virtual float	GetMaxDamage() { return m_flLastMaxDamage; }
+	virtual void	IgniteOnFire();
+	virtual void	OnFireThink( void );
 
 	void InputRoundActivate(inputdata_t& inputdata);
 	void InputSetDamageAmount(inputdata_t& inputdata);
@@ -92,6 +107,7 @@ public:
 #ifdef CLIENT_DLL
 	virtual bool	IsVisibleToTargetID( void ) const { return true; }
 	virtual bool	IsHealthBarVisible( void ) const { return true; }
+	virtual void	ClientThink( void );
 #endif // CLIENT_DLL
 	
 private:
@@ -111,19 +127,23 @@ public:
 
 	CNetworkVar( float, m_flCurrentDamage );
 	CNetworkVar( float, m_flLastMaxDamage );
+	CNetworkVar( bool, m_bIsOnFire );
 
-#ifdef GAME_DLL
 	virtual void	Spawn( void );
+#ifdef GAME_DLL
 	virtual void	Event_Killed( const CTakeDamageInfo& info );
 	virtual int		OnTakeDamage( const CTakeDamageInfo& info );
 	virtual void	Touch( CBaseEntity* pOther );
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
 	virtual bool	OverridePropdata( void ) OVERRIDE;
 	virtual bool	IsAlive( void ) OVERRIDE { return true; }
+	virtual void	Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir );
 	virtual void	SetDamage( float flDmg ) { m_flCurrentDamage = flDmg; }
 	virtual void	SetMaxDamage( float flDmg ) { m_flLastMaxDamage = flDmg; }
 	virtual float	GetDamage() { return m_flCurrentDamage; }
 	virtual float	GetMaxDamage() { return m_flLastMaxDamage; }
+	virtual void	IgniteOnFire();
+	virtual void	OnFireThink( void );
 
 	void InputRoundActivate( inputdata_t& inputdata );
 	void InputSetDamageAmount( inputdata_t& inputdata );
@@ -137,6 +157,7 @@ public:
 #ifdef CLIENT_DLL
 	virtual bool	IsVisibleToTargetID( void ) const { return true; }
 	virtual bool	IsHealthBarVisible( void ) const { return true; }
+	virtual void	ClientThink( void );
 #endif // CLIENT_DLL
 
 private:
@@ -163,9 +184,10 @@ public:
 
 	CNetworkVar( float, m_flCurrentDamage );
 	CNetworkVar( float, m_flLastMaxDamage );
+	CNetworkVar( bool, m_bIsOnFire );
 
+	virtual void	Spawn( void );
 #ifdef GAME_DLL
-	virtual void Spawn( void );
 	virtual int OnTakeDamage(const CTakeDamageInfo& info);
 
 	virtual int		UpdateTransmitState( void ) { return SetTransmitState( FL_EDICT_ALWAYS ); }
@@ -173,10 +195,13 @@ public:
 	virtual bool	ShouldCollide( int collisionGroup, int contentsMask ) const { return true; }
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
 	virtual bool	IsAlive( void ) OVERRIDE { return true; }
+	virtual void	Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir );
 	virtual void	SetDamage( float flDmg ) { m_flCurrentDamage = flDmg; }
 	virtual void	SetMaxDamage( float flDmg ) { m_flLastMaxDamage = flDmg; }
 	virtual float	GetDamage() { return m_flCurrentDamage; }
 	virtual float	GetMaxDamage() { return m_flLastMaxDamage; }
+	virtual void	IgniteOnFire();
+	virtual void	OnFireThink( void );
 
 	void InputRoundActivate( inputdata_t& inputdata );
 	void InputSetDamageAmount( inputdata_t& inputdata );
@@ -188,6 +213,7 @@ public:
 #ifdef CLIENT_DLL
 	virtual bool	IsVisibleToTargetID( void ) const { return true; }
 	virtual bool	IsHealthBarVisible( void ) const { return true; }
+	virtual void	ClientThink( void );
 #endif // CLIENT_DLL
 
 private:
@@ -206,19 +232,23 @@ public:
 
 	CNetworkVar( float, m_flCurrentDamage );
 	CNetworkVar( float, m_flLastMaxDamage );
+	CNetworkVar( bool, m_bIsOnFire );
 
+	virtual void	Spawn( void );
 #ifdef GAME_DLL
-	virtual void Spawn( void );
 	virtual int OnTakeDamage( const CTakeDamageInfo& info ) OVERRIDE;
 	virtual int OnTakeDamage_Alive( const CTakeDamageInfo& info ) OVERRIDE;
 	virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const OVERRIDE;
 
 	virtual bool	IsProjectileCollisionTarget( void ) const OVERRIDE { return true; }
 	virtual bool	IsAlive( void ) OVERRIDE { return true; }
+	virtual void	Deflected( CBaseEntity* pDeflectedBy, Vector& vecDir );
 	virtual void	SetDamage( float flDmg ) { m_flCurrentDamage = flDmg; }
 	virtual void	SetMaxDamage( float flDmg ) { m_flLastMaxDamage = flDmg; }
 	virtual float	GetDamage() { return m_flCurrentDamage; }
 	virtual float	GetMaxDamage() { return m_flLastMaxDamage; }
+	virtual void	IgniteOnFire();
+	virtual void	OnFireThink( void );
 
 	void InputRoundActivate( inputdata_t& inputdata );
 	void InputSetDamageAmount( inputdata_t& inputdata );
@@ -230,6 +260,7 @@ public:
 #ifdef CLIENT_DLL
 	virtual bool	IsVisibleToTargetID( void ) const { return true; }
 	virtual bool	IsHealthBarVisible( void ) const { return true; }
+	virtual void	ClientThink( void );
 #endif // CLIENT_DLL
 
 	bool m_bMovementCollide;
