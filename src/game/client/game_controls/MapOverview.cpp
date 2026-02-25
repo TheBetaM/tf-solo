@@ -134,7 +134,7 @@ CON_COMMAND( overview_mode, "Sets overview map mode off,small,large: <0|1|2>" )
 
 using namespace vgui;
 
-CMapOverview::CMapOverview( const char *pElementName ) : EditablePanel( NULL, pElementName ), CHudElement( pElementName )
+CMapOverview::CMapOverview( const char *pElementName ) : EditablePanel( NULL, PANEL_OVERVIEW ), CHudElement( PANEL_OVERVIEW )
 {
 	SetParent( g_pClientMode->GetViewport()->GetVPanel() );
 
@@ -458,6 +458,7 @@ void CMapOverview::OnThink( void )
 		Update();
 		m_fNextUpdateTime = gpGlobals->curtime + 0.2f; // update 5 times a second
 	}
+	BaseClass::OnThink();
 }
 
 bool CMapOverview::NeedsUpdate( void )
@@ -920,7 +921,7 @@ void CMapOverview::ResetRound()
 
 void CMapOverview::OnMousePressed( MouseCode code )
 {
-	
+	BaseClass::OnMousePressed( code );
 }
 
 void CMapOverview::DrawCamera()

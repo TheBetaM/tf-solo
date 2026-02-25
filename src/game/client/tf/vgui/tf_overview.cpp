@@ -169,15 +169,8 @@ CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElement
 	m_TeamProperty.SetLessFunc( DefLessFunc(int) );
 	m_TeamProperty.Purge();
 	m_bIsPanning = false;
+	m_bIsRefreshed = false;
 	m_vLastMousePos = Vector2D( 512, 512 );
-
-	/*m_pDrawingPanel = new CDrawingPanel( this, "DrawingPanel" );
-	CExButton* button1 = new CExButton( this, "PanButton", "", this );
-	CExButton* button2 = new CExButton( this, "DrawButton", "", this );
-	CExButton* button3 = new CExButton( this, "DrawClearButton", "", this );
-	CExButton* button4 = new CExButton( this, "ZoomPlusButton", "", this );
-	CExButton* button5 = new CExButton( this, "ZoomMinusButton", "", this );
-	CExButton* button6 = new CExButton( this, "ZoomCenterButton", "", this );*/
 }
 
 //-----------------------------------------------------------------------------
@@ -556,6 +549,7 @@ void CTFMapOverview::OnCommand( const char* command )
 		if ( m_pDrawingPanel )
 		{
 			m_pDrawingPanel->SetViewOnly( true );
+			m_pDrawingPanel->SetMouseInputEnabled( false );
 		}
 		return;
 	}
@@ -565,6 +559,7 @@ void CTFMapOverview::OnCommand( const char* command )
 		if ( m_pDrawingPanel )
 		{
 			m_pDrawingPanel->SetViewOnly( false );
+			m_pDrawingPanel->SetMouseInputEnabled( true );
 		}
 		return;
 	}
@@ -583,7 +578,7 @@ void CTFMapOverview::OnCommand( const char* command )
 			return;
 		}
 		float zoom = m_fZoom + 0.2f;
-		float time = 0.2f;
+		//float time = 0.2f;
 		float desiredViewSize = 0.0f;
 		desiredViewSize = ( zoom * OVERVIEW_MAP_SIZE * g_pMapOverview->GetFullZoom() ) / g_pMapOverview->GetMapScale();
 		g_pMapOverview->SetPlayerPreferredViewSize( desiredViewSize );
@@ -605,7 +600,7 @@ void CTFMapOverview::OnCommand( const char* command )
 			return;
 		}
 		float zoom = m_fZoom - 0.2f;
-		float time = 0.2f;
+		//float time = 0.2f;
 		float desiredViewSize = 0.0f;
 		desiredViewSize = ( zoom * OVERVIEW_MAP_SIZE * g_pMapOverview->GetFullZoom() ) / g_pMapOverview->GetMapScale();
 		g_pMapOverview->SetPlayerPreferredViewSize( desiredViewSize );
@@ -633,25 +628,34 @@ void CTFMapOverview::OnCommand( const char* command )
 void CTFMapOverview::OnMousePressed( vgui::MouseCode code )
 {
 	if ( code != MOUSE_LEFT )
+	{
+		BaseClass::OnMousePressed( code );
 		return;
+	}
 
 	if ( m_iNavigationMode == TF_OVERVIEW_MODE_PAN )
 	{
 		m_bIsPanning = true;
 	}
+	BaseClass::OnMousePressed( code );
 }
 
 void CTFMapOverview::OnMouseReleased( vgui::MouseCode code )
 {
-	if ( code != MOUSE_LEFT )
+	if (code != MOUSE_LEFT)
+	{
+		BaseClass::OnMouseReleased( code );
 		return;
+	}
 
 	m_bIsPanning = false;
+	BaseClass::OnMouseReleased( code );
 }
 
 void CTFMapOverview::OnCursorExited()
 {
 	m_bIsPanning = false;
+	BaseClass::OnCursorExited();
 }
 
 void CTFMapOverview::OnCursorMoved( int x, int y )
@@ -665,6 +669,7 @@ void CTFMapOverview::OnCursorMoved( int x, int y )
 		SetMapOrigin( center );
 	}
 	m_vLastMousePos = Vector2D( x, y );
+	BaseClass::OnCursorMoved( x, y );
 }
 
 //-----------------------------------------------------------------------------
@@ -835,6 +840,12 @@ void CTFMapOverview::SetMode( int mode )
             g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
 
 		MakePopup( false, true );
+		if ( !m_bIsRefreshed )
+		{
+			m_bIsRefreshed = true;
+			InvalidateLayout( true, true );
+			ResetRound();
+		}
 		SetKeyBoardInputEnabled( false );
 		ConVarRef sv_pausable( "sv_pausable" );
 		if ( tf_overview_pause.GetBool() && sv_pausable.GetBool() )
@@ -850,10 +861,12 @@ void CTFMapOverview::SetMode( int mode )
 			if ( m_iNavigationMode == TF_OVERVIEW_MODE_DRAW )
 			{
 				m_pDrawingPanel->SetViewOnly( false );
+				m_pDrawingPanel->SetMouseInputEnabled( true );
 			}
 			else
 			{
 				m_pDrawingPanel->SetViewOnly( true );
+				m_pDrawingPanel->SetMouseInputEnabled( false );
 			}
 		}
 		if ( tf_overview_pause.GetBool() && !engine->IsPaused() )

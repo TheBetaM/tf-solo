@@ -45,7 +45,7 @@ public:
 typedef bool ( *FnCustomMapOverviewObjectPaint )( int textureID, Vector pos, float scale, float angle, const char *text, Color *textColor, float status, Color *statusColor );
 
 
-class CMapOverview : public CHudElement, public vgui::EditablePanel, public IMapOverviewPanel
+class CMapOverview : public vgui::EditablePanel, public IViewPortPanel, public IMapOverviewPanel, public CHudElement
 {
 	DECLARE_CLASS_SIMPLE( CMapOverview, vgui::EditablePanel );
 
@@ -118,7 +118,7 @@ public: // IViewPortPanel interface:
 	virtual void OnThink();
 	virtual void Update();
 	virtual bool NeedsUpdate( void );
-	virtual bool HasInputElements( void ) { return false; }
+	virtual bool HasInputElements( void ) { return true; }
 	virtual void ShowPanel( bool bShow );
 	virtual void Init( void );
 
@@ -127,6 +127,7 @@ public: // IViewPortPanel interface:
 	virtual bool IsVisible() { return BaseClass::IsVisible(); }
 	virtual void GetBounds(int &x, int &y, int &wide, int &tall) { BaseClass::GetBounds(x, y, wide, tall); }
 	virtual void SetParent(vgui::VPANEL parent) { BaseClass::SetParent(parent); }
+	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_NONE; }
 
 public: // IGameEventListener
 

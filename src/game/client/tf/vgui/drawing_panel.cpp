@@ -187,24 +187,33 @@ void CDrawingPanel::Paint()
 void CDrawingPanel::OnMousePressed( vgui::MouseCode code )
 {
 	if ( code != MOUSE_LEFT || m_bViewOnly )
+	{
+		BaseClass::OnMousePressed( code );
 		return;
+	}
 
 	SendMapLine( m_iMouseX, m_iMouseY, true );
 	m_bDrawingLines = true;
+	BaseClass::OnMousePressed( code );
 }
 
 void CDrawingPanel::OnMouseReleased( vgui::MouseCode code )
 {
 	if ( code != MOUSE_LEFT )
+	{
+		BaseClass::OnMouseReleased( code );
 		return;
+	}
 
 	m_bDrawingLines = false;
+	BaseClass::OnMouseReleased( code );
 }
 
 void CDrawingPanel::OnCursorExited()
 {
 	//Msg("CDrawingPanel::OnCursorExited\n");
 	m_bDrawingLines = false;
+	BaseClass::OnCursorExited();
 }
 
 void CDrawingPanel::OnThink()
@@ -237,7 +246,7 @@ void CDrawingPanel::OnCursorMoved( int x, int y )
 	{
 		SendMapLine( x, y, false );
 	}
-
+	BaseClass::OnCursorMoved( x, y );
 }
 
 void CDrawingPanel::SendMapLine( int x, int y, bool bInitial )

@@ -31,6 +31,8 @@ class CTFMapOverview : public CMapOverview
 	int m_CapturePoints[MAX_CONTROL_POINTS];
 	CUtlMap<int, int> m_TeamProperty;
 
+	virtual bool HasInputElements( void ) { return true; }
+
 	void ShowLargeMap( void );
 	void HideLargeMap( void );
 	void ToggleZoom( void );
@@ -96,6 +98,7 @@ private:
 
 	bool m_bDisabled;
 	bool m_bIsPanning;
+	bool m_bIsRefreshed;
 	Vector2D m_vLastMousePos;
 
 	float m_flPlayerChatTime[MAX_PLAYERS_ARRAY_SAFE];
