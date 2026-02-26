@@ -9311,6 +9311,18 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 					pPlayer->EmitSound( "TFPlayer.FlameOut" );
 					CTF_GameStats.Event_PlayerAwardBonusPoints( this, pPlayer, 10 );
 				}
+
+				const int maxCollectedEntities = 64;
+				CBaseEntity* pObjects[maxCollectedEntities];
+				int count = UTIL_EntitiesInSphere( pObjects, maxCollectedEntities, GetAbsOrigin(), flPushRadius, FL_GRENADE );
+				for ( int i = 0; i < count; i++ )
+				{
+					if ( FClassnameIs( pObjects[i], "tf_propertydamage_prop" ) || FClassnameIs( pObjects[i], "func_propertydamage_brush" )
+						|| FClassnameIs( pObjects[i], "tf_propertydamage_nextbot" ) || FClassnameIs( pObjects[i], "tf_propertydamage_prop_physics" ) )
+					{
+						pObjects[i]->Deflected( this, Vector( 0, 0, 0 ) );
+					}
+				}
 			}
 
 			info.SetDamage( Max( info.GetDamage() * 0.25f, 1.f ) );

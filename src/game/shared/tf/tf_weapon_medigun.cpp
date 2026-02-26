@@ -1164,6 +1164,7 @@ void CWeaponMedigun::HealTargetThink( void )
 			{
 				pPDAProp4->SetDamage( MAX( 0, pPDAProp4->GetDamage() - flReviveRate ) );
 			}
+			pTarget->Deflected( pOwner, Vector( 0, 0, 0 ) );
 		}
 	}
 

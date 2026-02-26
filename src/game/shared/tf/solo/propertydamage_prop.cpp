@@ -178,16 +178,6 @@ bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, 
 	{
 		DispatchParticleEffect( "merasmus_blood", info.GetDamagePosition(), vec3_angle );
 
-		if ( info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING || info.GetDamageCustom() == TF_DMG_CUSTOM_FLYINGBURN ||
-			info.GetDamageCustom() == TF_DMG_CUSTOM_PLASMA_CHARGED || info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING_ARROW ||
-			info.GetDamageCustom() == TF_DMG_CUSTOM_FLARE_EXPLOSION || info.GetDamageCustom() == TF_DMG_CUSTOM_FLARE_PELLET ||
-			info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING_FLARE || ( info.GetDamageType() & DMG_IGNITE ) )
-		{
-			m_hBurnAttacker = pTFPlayer;
-			m_hBurnWeapon = (CTFWeaponBase*)info.GetWeapon();
-			IgniteOnFire();
-		}
-
 		bool isMaxDamage = false;
 		if ( m_flFixedDamageAmount > 0.0f )
 		{
@@ -206,6 +196,19 @@ bool ITFSOLOPropertyDamagePropAll::PropTookDamage( const CTakeDamageInfo& info, 
 				SetMaxDamage( ( GetDamage() + m_flMaxDamageIncrement ) * m_flMaxDamageMult );
 				SetDamage( 0.0f );
 				isMaxDamage = true;
+			}
+		}
+
+		if ( !isMaxDamage )
+		{
+			if ( info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING || info.GetDamageCustom() == TF_DMG_CUSTOM_FLYINGBURN ||
+				info.GetDamageCustom() == TF_DMG_CUSTOM_PLASMA_CHARGED || info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING_ARROW ||
+				info.GetDamageCustom() == TF_DMG_CUSTOM_FLARE_EXPLOSION || info.GetDamageCustom() == TF_DMG_CUSTOM_FLARE_PELLET ||
+				info.GetDamageCustom() == TF_DMG_CUSTOM_BURNING_FLARE || ( info.GetDamageType() & DMG_IGNITE ) )
+			{
+				m_hBurnAttacker = pTFPlayer;
+				m_hBurnWeapon = (CTFWeaponBase*)info.GetWeapon();
+				IgniteOnFire();
 			}
 		}
 
@@ -465,6 +468,9 @@ int CTFSOLOPropertyDamageProp::OnTakeDamage( const CTakeDamageInfo &info )
 			{
 				SetSkin( pTFPlayer->GetTeamNumber() );
 			}
+			m_flOnFireTime = 0.0f;
+			m_bIsOnFire = false;
+
 			AfterCapture( oldTeam, this, pTFPlayer );
 		}
 	}
@@ -724,6 +730,9 @@ int CTFSOLOPropertyDamagePhysicsProp::OnTakeDamage( const CTakeDamageInfo& info 
 			{
 				SetSkin( pTFPlayer->GetTeamNumber() );
 			}
+			m_flOnFireTime = 0.0f;
+			m_bIsOnFire = false;
+
 			AfterCapture( oldTeam, this, pTFPlayer );
 		}
 	}
@@ -965,6 +974,9 @@ int CTFSOLOPropertyDamageBrush::OnTakeDamage( const CTakeDamageInfo& info )
 					SetRenderColor(255, 255, 255);
 				}
 			}
+			m_flOnFireTime = 0.0f;
+			m_bIsOnFire = false;
+
 			AfterCapture( oldTeam, this, pTFPlayer );
 		}
 	}
@@ -1189,6 +1201,9 @@ int CTFSOLOPropertyDamageNextBot::OnTakeDamage( const CTakeDamageInfo& info )
 			{
 				SetSkin( pTFPlayer->GetTeamNumber() );
 			}
+			m_flOnFireTime = 0.0f;
+			m_bIsOnFire = false;
+
 			AfterCapture( oldTeam, this, pTFPlayer );
 		}
 	}
