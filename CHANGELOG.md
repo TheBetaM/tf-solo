@@ -54,6 +54,7 @@ tf_overview_scoreboard
 - Increased maximum FoV to 130
 - Spawning is no longer prevented while having the class select menu open with hud_classautokill 0
 - Fixed loadout changes not respawning players during the preround period in Arena mode
+- Added bitmap support to ImagePanel (can now use BMP/JPG/TGA/PNG files directly in VGUI images)
 ## TFBot improvements
 - Added MvM style bot presets, configurable in cfg/bot_presets.txt
 - Added/Improved nav files for existing maps

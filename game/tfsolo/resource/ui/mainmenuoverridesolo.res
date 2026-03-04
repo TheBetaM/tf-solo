@@ -194,14 +194,14 @@
 	{
 		"ControlName"	"ImagePanel"
 		"fieldName"		"TFLogoImage"
-		"xpos"			"c-128"
+		"xpos"			"c-256"
 		"ypos"			"32"
 		"zpos"			"1"
-		"wide"			"256"
-		"tall"			"64"
+		"wide"			"512"
+		"tall"			"128"
 		"visible"		"1"
 		"enabled"		"1"
-		"image"			"../logo/new_tf2_logo"
+		"image"			"materials/logo/mod_logo.png"
 		"scaleImage"	"1"
 		"mouseinputenabled"	"0"
 	}	

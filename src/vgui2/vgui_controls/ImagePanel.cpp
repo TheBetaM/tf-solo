@@ -17,6 +17,9 @@
 #include <vgui_controls/Image.h>
 #include <vgui_controls/Controls.h>
 
+#include "../common/imageutils.h"
+#include "../game/client/vgui_bitmapimage.h"
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
@@ -43,6 +46,7 @@ ImagePanel::ImagePanel(Panel *parent, const char *name) : Panel(parent, name)
 	m_FillColor = Color(0, 0, 0, 0);
 	m_DrawColor = Color(255,255,255,255);
 	m_iRotation = ROTATED_UNROTATED;
+	m_bBitmapImage = false;
 
 	SetImage( m_pImage );
 
@@ -58,6 +62,11 @@ ImagePanel::~ImagePanel()
 	delete [] m_pszImageName;
 	delete [] m_pszFillColorName;
 	delete [] m_pszDrawColorName;	// HPE addition
+	if ( m_bBitmapImage && m_pImage )
+	{
+		delete m_pImage;
+		m_pImage = NULL;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -90,6 +99,27 @@ void ImagePanel::SetImage(const char *imageName)
 	m_pszImageName = new char[ len ];
 	Q_strncpy(m_pszImageName, imageName, len );
 	InvalidateLayout(false, true); // force applyschemesettings to run
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Set image data directly
+//-----------------------------------------------------------------------------
+void ImagePanel::SetBitmap(const Bitmap_t& bitmap)
+{
+	// Make sure we have an image that we own
+	if ( m_pImage == NULL || !m_bBitmapImage )
+	{
+		delete m_pImage;
+		m_pImage = new BitmapImage( GetVPanel(), NULL );
+		m_bBitmapImage = true;
+	}
+
+	auto image = dynamic_cast<BitmapImage *>( m_pImage );
+	if ( image )
+	{
+		// Set the bitmap
+		image->SetBitmap( bitmap );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -288,8 +318,15 @@ void ImagePanel::ApplySettings(KeyValues *inResourceData)
 	m_pszImageName = NULL;
 	m_pszFillColorName = NULL;
 	m_pszDrawColorName = NULL;		// HPE addition
+	if ( m_bBitmapImage && m_pImage )
+	{
+		delete m_pImage;
+		m_pImage = NULL;
+	}
+	m_bBitmapImage = false;
 
 	m_bPositionImage = inResourceData->GetInt("positionImage", 1);
+	m_bCenterImage = inResourceData->GetInt("centerImage", 0);
 	m_bScaleImage = inResourceData->GetInt("scaleImage", 0);
 	m_nScaleProportional = inResourceData->GetInt("scaleProportional", 0);
 
@@ -374,7 +411,23 @@ void ImagePanel::ApplySchemeSettings( IScheme *pScheme )
 	BaseClass::ApplySchemeSettings(pScheme);
 	if ( m_pszImageName && strlen( m_pszImageName ) > 0 )
 	{
-		SetImage(scheme()->GetImage(m_pszImageName, m_bScaleImage));
+		const char* pExt = V_GetFileExtension( m_pszImageName );
+		if ( pExt && pExt[0] && Q_stricmp( pExt, "vtf" ) )
+		{
+			ConversionErrorType nErrorCode = ImgUtl_LoadBitmap( m_pszImageName, m_pBitmapSource );
+			if ( nErrorCode == CE_SUCCESS )
+			{
+				SetBitmap( m_pBitmapSource );
+			}
+			else
+			{
+				SetImage( scheme()->GetImage( m_pszImageName, m_bScaleImage ) );
+			}
+		}
+		else
+		{
+			SetImage( scheme()->GetImage( m_pszImageName, m_bScaleImage ) );
+		}
 	}
 }
 
@@ -446,7 +499,13 @@ bool ImagePanel::EvictImage()
 		return false;
 	}
 
-	if ( !scheme()->DeleteImage( m_pszImageName ) )
+	if ( m_bBitmapImage )
+	{
+		m_bBitmapImage = false;
+		delete m_pImage;
+		m_pImage = NULL;
+	}
+	else if ( !scheme()->DeleteImage( m_pszImageName ) )
 	{
 		// no eviction occured, could have an outstanding reference
 		return false;

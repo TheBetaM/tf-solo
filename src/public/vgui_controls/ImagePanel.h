@@ -14,6 +14,7 @@
 
 #include <vgui/VGUI.h>
 #include <vgui_controls/Panel.h>
+#include "bitmap/bitmap.h"
 
 namespace vgui
 {
@@ -64,6 +65,9 @@ public:
 
 	void SetRotation( int iRotation ) { m_iRotation = iRotation; }
 
+	/// Set bitmap data directly
+	virtual void SetBitmap( const Bitmap_t &bitmap );
+
 protected:
 	virtual void PaintBackground();
 	virtual void GetSettings(KeyValues *outResourceData);
@@ -87,6 +91,8 @@ private:
 	Color m_FillColor;
 	Color m_DrawColor;
 	int m_iRotation;
+	bool m_bBitmapImage;
+	Bitmap_t m_pBitmapSource;
 };
 
 } // namespace vgui
