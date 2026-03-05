@@ -31,6 +31,7 @@ enum ImageFileFormat
 {
 	kImageFileFormat_PNG,
 	kImageFileFormat_JPG,
+	kImageFileFormat_SVG,
 };
 
 struct TGAHeader {
@@ -59,6 +60,7 @@ unsigned char		*ImgUtl_ReadJPEGAsRGBA( const char *jpegPath, int &width, int &he
 unsigned char		*ImgUtl_ReadBMPAsRGBA( const char *bmpPath, int &width, int &height, ConversionErrorType &errcode );
 unsigned char		*ImgUtl_ReadPNGAsRGBA( const char *bmpPath, int &width, int &height, ConversionErrorType &errcode );
 unsigned char		*ImgUtl_ReadPNGAsRGBAFromBuffer( CUtlBuffer &buffer, int &width, int &height, ConversionErrorType &errcode );
+unsigned char		*ImgUtl_ReadSVGAsRGBA(const char *svgPath, int& width, int& height, ConversionErrorType& errcode );
 unsigned char		*ImgUtl_ReadImageAsRGBA( const char *path, int &width, int &height, ConversionErrorType &errcode );
 ConversionErrorType ImgUtl_StretchRGBAImage( const unsigned char *srcBuf, const int srcWidth, const int srcHeight, unsigned char *destBuf, const int destWidth, const int destHeight );
 ConversionErrorType ImgUtl_PadRGBAImage( const unsigned char *srcBuf, const int srcWidth, const int srcHeight, unsigned char *destBuf, const int destWidth, const int destHeight );

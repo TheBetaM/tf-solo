@@ -84,7 +84,9 @@ extern void longjmp( jmp_buf, int ) __attribute__((noreturn));
 #include "xbox/xbox_win32stubs.h"
 #endif
 
-
+#include "../thirdparty/lunasvg/include/lunasvg.h"
+#include "tier1/lzmaDecoder.h"
+#include "lzma/lzma.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -964,6 +966,46 @@ unsigned char *ImgUtl_ReadBMPAsRGBA( const char *bmpPath, int &width, int &heigh
 #endif
 }
 
+unsigned char *ImgUtl_ReadSVGAsRGBA( const char *svgPath, int& width, int& height, ConversionErrorType& errcode )
+{
+	errcode = CE_MEMORY_ERROR;
+	CUtlBuffer bufFileContents;
+	if ( !g_pFullFileSystem->ReadFile( svgPath, NULL, bufFileContents ) )
+	{
+		errcode = CE_CANT_OPEN_SOURCE_FILE;
+		return NULL;
+	}
+	if ( CLZMA::IsCompressed((unsigned char*)bufFileContents.Base() ) )
+	{
+		int originalSize = CLZMA::GetActualSize( (unsigned char*)bufFileContents.Base() );
+		unsigned char* pOriginalData = new unsigned char[originalSize];
+		CLZMA::Uncompress( (unsigned char*)bufFileContents.Base(), pOriginalData );
+		bufFileContents.AssumeMemory( pOriginalData, originalSize, originalSize, CUtlBuffer::READ_ONLY );
+	}
+	auto document = lunasvg::Document::loadFromData( (const char*)bufFileContents.Base() );
+	if ( document == nullptr )
+	{
+		return NULL;
+	}
+	auto bitmap = document->renderToBitmap();
+	if ( bitmap.isNull() )
+	{
+		document.release();
+		return NULL;
+	}
+	errcode = CE_ERROR_PARSING_SOURCE;
+	width = bitmap.width();
+	height = bitmap.height();
+
+	unsigned char* pResultData = (unsigned char*)MemAlloc_Alloc( width * height * 4 );
+	bitmap.convertToRGBA();
+	V_memcpy( pResultData, bitmap.data(), width * height * 4 );
+	document.release();
+
+	errcode = CE_SUCCESS;
+	return pResultData;
+}
+
 unsigned char *ImgUtl_ReadImageAsRGBA( const char *path, int &width, int &height, ConversionErrorType &errcode )
 {
 
@@ -971,6 +1013,10 @@ unsigned char *ImgUtl_ReadImageAsRGBA( const char *path, int &width, int &height
 	const char *pExt = V_GetFileExtension( path );
 	if ( pExt )
 	{
+		if ( !Q_stricmp(pExt, "svg") )
+		{
+			return ImgUtl_ReadSVGAsRGBA( path, width, height, errcode );
+		}
 		if ( !Q_stricmp(pExt, "vtf") )
 		{
 			return ImgUtl_ReadVTFAsRGBA( path, width, height, errcode );

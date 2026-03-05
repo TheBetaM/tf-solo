@@ -185,6 +185,8 @@ $Project
 	{
 		$Lib "$LIBCOMMON/jpeglib"
 		$Lib "$LIBCOMMON/libspng"
+		$Lib "$LIBCOMMON/plutovg"
+		$Lib "$LIBCOMMON/lunasvg"
 		$Lib libz [!$LINUXALL]
 	}
 }
