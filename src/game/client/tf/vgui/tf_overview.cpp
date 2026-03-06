@@ -632,8 +632,27 @@ void CTFMapOverview::OnCommand( const char* command )
 	}
 	else if ( FStrEq( "zoom_center", command ) )
 	{
-		m_PanOffset.x = 0;
-		m_PanOffset.y = 0;
+		//m_PanOffset.x = 0;
+		//m_PanOffset.y = 0;
+
+		C_BasePlayer* pPlayer = C_BasePlayer::GetLocalPlayer();
+		if ( pPlayer )
+		{
+			int specmode = GetSpectatorMode();
+			if ( specmode == OBS_MODE_IN_EYE || specmode == OBS_MODE_CHASE )
+			{
+				// follow target
+				SetFollowEntity( GetSpectatorTarget() );
+			}
+			else
+			{
+				// follow ourself otherwise
+				SetFollowEntity( pPlayer->entindex() );
+				UpdateFollowEntity();
+				SetFollowEntity( 0 );
+			}
+		}
+
 		return;
 	}
 
@@ -874,7 +893,9 @@ void CTFMapOverview::SetMode( int mode )
 			else
 			{
 				// follow ourself otherwise
-				//SetFollowEntity( pPlayer->entindex() );
+				SetFollowEntity( pPlayer->entindex() );
+				UpdateFollowEntity();
+				SetFollowEntity( 0 );
 			}
 		}
 
@@ -1304,19 +1325,8 @@ void CTFMapOverview::SetMap( const char * levelname )
 {
 	BaseClass::SetMap( levelname );
 
-	if ( m_nMapTextureID != -1 )
-	{
-		// we found a texture for this map
-		SetDisabled( false );
-		SetMode( m_nMode );
-	}
-	else
-	{
-		// we failed to load a map image
-		//SetDisabled( true );
-		SetDisabled( false );
-		SetMode( m_nMode );
-	}
+	SetDisabled( false );
+	SetMode( m_nMode );
 }
 
 //-----------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 #include <shareddefs.h>
 #include <const.h>
 #include "hudelement.h"
+#include "bitmap/bitmap.h"
 
 class IMapOverviewPanel
 {
@@ -278,6 +279,7 @@ protected:
 	float	m_fTrailUpdateInterval; // if -1 don't show trails
 	bool	m_bFollowAngle;	// if true, map rotates with view angle
 
+	Bitmap_t m_pBitmapSource;
 
 };
 

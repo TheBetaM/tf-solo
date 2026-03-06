@@ -22,6 +22,8 @@
 
 #include "clientmode.h"
 #include <vgui_controls/AnimationController.h>
+#include "../common/imageutils.h"
+#include "../game/client/vgui_bitmapimage.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -913,15 +915,46 @@ void CMapOverview::SetMap(const char * levelname)
 		return;
 	}
 
-	// TODO release old texture ?
+	// release old texture
+	if ( m_nMapTextureID != -1 )
+	{
+		vgui::surface()->DestroyTextureID( m_nMapTextureID );
+		m_nMapTextureID = -1;
+	}
 
 	const char* pszTextureMat = m_MapKeyValues->GetString("material");
+	const char* pszTextureFile = m_MapKeyValues->GetString("texture");
 	if ( pszTextureMat && pszTextureMat[0] )
 	{
 		m_nMapTextureID = surface()->CreateNewTextureID();
 
 		//if we have not uploaded yet, lets go ahead and do so
 		surface()->DrawSetTextureFile( m_nMapTextureID, m_MapKeyValues->GetString("material"), true, false);
+
+		int wide, tall;
+
+		surface()->DrawGetTextureSize( m_nMapTextureID, wide, tall );
+
+		if ( wide != tall )
+		{
+			DevMsg( 1, "Error! CMapOverview::SetMap: map image must be a square.\n" );
+			m_nMapTextureID = -1;
+			return;
+		}
+	}
+	else if ( pszTextureFile && pszTextureFile[0] )
+	{
+		m_nMapTextureID = surface()->CreateNewTextureID( true );
+
+		ConversionErrorType nErrorCode = ImgUtl_LoadBitmap( pszTextureFile, m_pBitmapSource );
+		if ( nErrorCode != CE_SUCCESS )
+		{
+			DevMsg( 1, "Error! CMapOverview::SetMap: Failed to load map texture.\n" );
+			m_nMapTextureID = -1;
+			return;
+		}
+
+		vgui::surface()->DrawSetTextureRGBA( m_nMapTextureID, m_pBitmapSource.GetBits(), m_pBitmapSource.Width(), m_pBitmapSource.Height(), 1, true );
 
 		int wide, tall;
 

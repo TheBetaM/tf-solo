@@ -16,6 +16,10 @@
 #include "../public/zip_utils.h"
 #include "../public/zip_utils.cpp"
 #include "bspfile.h"
+#ifdef CLIENT_DLL
+#include "tier1/lzmaDecoder.h"
+#include "lzma/lzma.h"
+#endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -645,6 +649,100 @@ CON_COMMAND( bsp_cache_dump, "Dump BSP cache contents to console." )
 CON_COMMAND( bsp_cache_clear, "Clear BSP cache." )
 {
 	BSP_ClearCache();
+}
+
+CON_COMMAND( lzma_compress, "Compress a file using LZMA" )
+{
+	const char* szInFilename = NULL;
+	const char* szOutFilename = NULL;
+
+	if ( args.ArgC() == 3 )
+	{
+		szInFilename = args.Arg(1);
+		szOutFilename = args.Arg(2);
+	}
+
+	if ( !szInFilename || !szOutFilename || !strlen(szInFilename) || !strlen(szOutFilename) )
+	{
+		Msg( "Usage: lzma_compress inFile outFile\n" );
+		return;
+	}
+
+	CUtlBuffer bufFileContents;
+	if ( !g_pFullFileSystem->ReadFile( szInFilename, NULL, bufFileContents ) )
+	{
+		Warning( "Error: Failed to open file\n" );
+		return;
+	}
+
+	if ( CLZMA::IsCompressed( (unsigned char*)bufFileContents.Base() ) )
+	{
+		Warning( "Error: File is already LZMA compressed\n" );
+		return;
+	}
+
+	int outLength = bufFileContents.TellPut();
+	unsigned int compressedSize = 0;
+	unsigned char* pCompressedOutput = LZMA_Compress( (unsigned char*)bufFileContents.Base(), outLength, &compressedSize );
+	if ( !pCompressedOutput || compressedSize < sizeof(lzma_header_t) )
+	{
+		Warning( "Error: LZMA compression failed\n" );
+		return;
+	}
+
+	CUtlBuffer compressionBuffer;
+	compressionBuffer.EnsureCapacity( compressedSize );
+	compressionBuffer.Put( pCompressedOutput, compressedSize );
+
+	if ( !filesystem->WriteFile( szOutFilename, "MOD", compressionBuffer ) )
+	{
+		free( pCompressedOutput );
+		pCompressedOutput = NULL;
+		Warning( "Error: Failed to write file\n" );
+		return;
+	}
+
+	free( pCompressedOutput );
+	pCompressedOutput = NULL;
+}
+
+CON_COMMAND( lzma_decompress, "Decompress a compressed file using LZMA" )
+{
+	const char* szInFilename = NULL;
+	const char* szOutFilename = NULL;
+
+	if ( args.ArgC() == 3 )
+	{
+		szInFilename = args.Arg(1);
+		szOutFilename = args.Arg(2);
+	}
+
+	if ( !szInFilename || !szOutFilename || !strlen(szInFilename) || !strlen(szOutFilename) )
+	{
+		Msg( "Usage: lzma_decompress inFile outFile\n" );
+		return;
+	}
+
+	CUtlBuffer bufFileContents;
+	if ( !g_pFullFileSystem->ReadFile( szInFilename, NULL, bufFileContents ) )
+	{
+		Warning( "Error: Failed to open file\n" );
+		return;
+	}
+
+	if ( CLZMA::IsCompressed( (unsigned char*)bufFileContents.Base() ) )
+	{
+		int originalSize = CLZMA::GetActualSize( (unsigned char*)bufFileContents.Base() );
+		unsigned char* pOriginalData = new unsigned char[originalSize];
+		CLZMA::Uncompress( (unsigned char*)bufFileContents.Base(), pOriginalData );
+		bufFileContents.AssumeMemory( pOriginalData, originalSize, originalSize, CUtlBuffer::READ_ONLY );
+		g_pFullFileSystem->WriteFile( szOutFilename, "MOD", bufFileContents );
+	}
+	else
+	{
+		Warning( "Error: File is not LZMA compressed\n" );
+		return;
+	}
 }
 #endif
 

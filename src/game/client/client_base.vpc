@@ -1269,6 +1269,7 @@ $Project
 		$Lib		tier3
 		$Lib		vgui_controls
 		$Lib		vtf
+		$Lib    	"$LIBCOMMON/lzma"
 
 		$ImpLibexternal steam_api	[!$WIN64]
 		$ImpLibexternal steam_api64	[$WIN64]
