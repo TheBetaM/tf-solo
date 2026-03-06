@@ -1202,7 +1202,7 @@ void CHLClient::PostInit()
 		r_lightmap_bicubic_set.SetValue( true );
 	}
 
-	TFSOLO_Patch_Singleplayer();
+	//TFSOLO_Patch_Singleplayer();
 }
 
 //-----------------------------------------------------------------------------

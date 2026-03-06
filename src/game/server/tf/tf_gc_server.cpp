@@ -2834,7 +2834,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
 			if ( pPlayerSteamID == NULL || !pPlayerSteamID->IsValid() )
 			{
 				// This can occur in lan-mode
-				Warning( "Player with no steam ID, counting as ad-hoc\n" );
+				//Warning( "Player with no steam ID, counting as ad-hoc\n" );
 			}
 
 			bActive = true;

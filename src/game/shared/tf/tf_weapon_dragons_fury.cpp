@@ -147,15 +147,12 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 	Vector vecForward, vecRight, vecUp;
 	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
-	Vector vecForward, vecRight, vecUp;
-	AngleVectors( angForward, &vecForward, &vecRight, &vecUp );
-
 	float fRight = 7.0f;
 	if ( IsViewModelFlipped() )
 	{
 		fRight *= -1;
 	}
-	Vector vecShootPos = pPlayer->Weapon_ShootPosition();
+	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	// Shoot from the right location
 	vecSrc = vecSrc + (vecUp * -9.0f) + (vecRight * 7.0f) + (vecForward * 3.0f);
 
@@ -178,7 +175,7 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 
 		float flEndDist = tf_fireball_distance.GetFloat();
 
-		Vector vecProjForward = ( vecShootPos + vecForward * flEndDist ) - vecSrc;
+		Vector vecProjForward = ( vecSrc + vecForward * flEndDist ) - vecSrc;
 		VectorNormalize( vecProjForward );
 
 		pRocket->SetAbsVelocity( vecProjForward * 600 );

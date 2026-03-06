@@ -2218,7 +2218,7 @@ maps_config
 				theme_hallow 1
 			}
 		}
-		sd_marshlands
+		htf_marshlands
 		{
 			name "Marshlands"
 			modename "#GameType_HTF"
