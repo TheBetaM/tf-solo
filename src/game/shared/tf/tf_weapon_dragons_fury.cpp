@@ -21,7 +21,7 @@
 #endif
 
 extern ConVar tf_flamethrower_burstammo;
-
+extern ConVar tf_fireball_distance;
 
 //=============================================================================
 //
@@ -147,12 +147,15 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 	Vector vecForward, vecRight, vecUp;
 	AngleVectors( pPlayer->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
-	float fRight = 8.f;
+	Vector vecForward, vecRight, vecUp;
+	AngleVectors( angForward, &vecForward, &vecRight, &vecUp );
+
+	float fRight = 7.0f;
 	if ( IsViewModelFlipped() )
 	{
 		fRight *= -1;
 	}
-	Vector vecSrc = pPlayer->Weapon_ShootPosition();
+	Vector vecShootPos = pPlayer->Weapon_ShootPosition();
 	// Shoot from the right location
 	vecSrc = vecSrc + (vecUp * -9.0f) + (vecRight * 7.0f) + (vecForward * 3.0f);
 
@@ -171,12 +174,14 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 		DoFireEffects();
 
 		pRocket->SetOwnerEntity( pPlayer );
-		pRocket->SetLauncher( this ); 
+		pRocket->SetLauncher( this );
 
-		Vector vForward;
-		AngleVectors( angForward, &vForward, NULL, NULL );
+		float flEndDist = tf_fireball_distance.GetFloat();
 
-		pRocket->SetAbsVelocity( vForward * 600 );
+		Vector vecProjForward = ( vecShootPos + vecForward * flEndDist ) - vecSrc;
+		VectorNormalize( vecProjForward );
+
+		pRocket->SetAbsVelocity( vecProjForward * 600 );
 
 		pRocket->SetDamage( 20 );
 		pRocket->ChangeTeam( pPlayer->GetTeamNumber() );

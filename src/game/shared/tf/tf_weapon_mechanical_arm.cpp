@@ -250,7 +250,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
 		Vector vecForward, vecRight, vecUp;
 		AngleVectors( pOwner->Weapon_ShootAngles(), &vecForward, &vecRight, &vecUp );
 
-		float fRight = 8.f;
+		float fRight = 15.f;
 		if ( IsViewModelFlipped() )
 		{
 			fRight *= -1;
