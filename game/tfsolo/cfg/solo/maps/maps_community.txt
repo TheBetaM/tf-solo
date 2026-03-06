@@ -2222,8 +2222,8 @@ maps_config
 		{
 			name "Marshlands"
 			modename "#GameType_HTF"
-			thumbArt "maps/menu_thumb_sd_marshlands"
-			photosArt "maps/menu_photos_sd_marshlands"
+			thumbArt "maps/menu_thumb_htf_marshlands"
+			photosArt "maps/menu_photos_htf_marshlands"
 			tags
 			{
 				ctf 1
@@ -2231,6 +2231,7 @@ maps_config
 				flag_neutral 1
 				symm 1
 				theme_hallow 1
+				vscript 1
 			}
 		}
 		

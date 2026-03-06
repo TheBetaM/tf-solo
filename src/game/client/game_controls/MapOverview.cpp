@@ -938,6 +938,7 @@ void CMapOverview::SetMap(const char * levelname)
 		if ( wide != tall )
 		{
 			DevMsg( 1, "Error! CMapOverview::SetMap: map image must be a square.\n" );
+			vgui::surface()->DestroyTextureID( m_nMapTextureID );
 			m_nMapTextureID = -1;
 			return;
 		}
@@ -950,6 +951,7 @@ void CMapOverview::SetMap(const char * levelname)
 		if ( nErrorCode != CE_SUCCESS )
 		{
 			DevMsg( 1, "Error! CMapOverview::SetMap: Failed to load map texture.\n" );
+			vgui::surface()->DestroyTextureID( m_nMapTextureID );
 			m_nMapTextureID = -1;
 			return;
 		}
@@ -963,6 +965,7 @@ void CMapOverview::SetMap(const char * levelname)
 		if ( wide != tall )
 		{
 			DevMsg( 1, "Error! CMapOverview::SetMap: map image must be a square.\n" );
+			vgui::surface()->DestroyTextureID( m_nMapTextureID );
 			m_nMapTextureID = -1;
 			return;
 		}
