@@ -17,6 +17,7 @@
 #define ZOMBIE_CHASE_MIN_DURATION 3.0f
 
 ConVar tf_halloween_zombie_damage( "tf_halloween_zombie_damage", "10", FCVAR_CHEAT, "How much damage a zombie melee hit does." );
+ConVar tf_halloween_zombie_forceteam( "tf_halloween_zombie_forceteam", "0", FCVAR_CHEAT, "Force neutral zombies to attack a specific team" );
 
 
 //----------------------------------------------------------------------------------
@@ -45,6 +46,11 @@ bool CZombieAttack::IsPotentiallyChaseable( CZombie *me, CBaseCombatCharacter *v
 	if ( !victim->IsAlive() )
 	{
 		// victim is dead - pick a new one
+		return false;
+	}
+
+	if ( tf_halloween_zombie_forceteam.GetInt() != 0 && victim->GetTeamNumber() != tf_halloween_zombie_forceteam.GetInt() )
+	{
 		return false;
 	}
 
@@ -94,8 +100,15 @@ void CZombieAttack::SelectVictim( CZombie *me )
 	}
 	else
 	{
-		CollectPlayers( &playerVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS );
-		CollectPlayers( &playerVector, TF_TEAM_BLUE, COLLECT_ONLY_LIVING_PLAYERS, APPEND_PLAYERS );
+		if ( tf_halloween_zombie_forceteam.GetInt() != 0 )
+		{
+			CollectPlayers( &playerVector, tf_halloween_zombie_forceteam.GetInt(), COLLECT_ONLY_LIVING_PLAYERS );
+		}
+		else
+		{
+			CollectPlayers( &playerVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS );
+			CollectPlayers( &playerVector, TF_TEAM_BLUE, COLLECT_ONLY_LIVING_PLAYERS, APPEND_PLAYERS );
+		}
 	}
 
 	float victimRangeSq = FLT_MAX;

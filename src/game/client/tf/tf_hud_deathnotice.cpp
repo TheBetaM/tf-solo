@@ -60,6 +60,7 @@ const int STREAK_MIN_DUCKS = 10;
 
 extern ConVar tf_vision_custom;
 extern ConVar tf_vision_custom_assister;
+extern ConVar tf_hud_deathnotice_filter;
 
 static int MinStreakForType( CTFPlayerShared::ETFStreak eStreakType )
 {
@@ -719,6 +720,23 @@ bool CTFHudDeathNotice::ShouldShowDeathNotice( IGameEvent *event )
 				return false;
 			}
 		}
+	}
+
+	if ( tf_hud_deathnotice_filter.GetInt() == 1 )
+	{
+		return false;
+	}
+	else if ( tf_hud_deathnotice_filter.GetInt() == 2 )
+	{
+		int iLocalPlayerIndex = GetLocalPlayerIndex();
+
+		if ( iLocalPlayerIndex == engine->GetPlayerForUserID( event->GetInt( "attacker" ) ) ||
+			 iLocalPlayerIndex == engine->GetPlayerForUserID( event->GetInt( "assister" ) ) ||
+			 iLocalPlayerIndex == engine->GetPlayerForUserID( event->GetInt( "userid" ) ) )
+		{
+			return true;
+		}
+		return false;
 	}
 
 	return true;

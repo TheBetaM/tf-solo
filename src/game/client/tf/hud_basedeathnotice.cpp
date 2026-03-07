@@ -30,6 +30,8 @@
 
 static ConVar hud_deathnotice_time( "hud_deathnotice_time", "6", 0 );
 
+extern ConVar tf_hud_deathnotice_filter;
+
 
 using namespace vgui;
 
@@ -403,7 +405,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 		return;
 	}
 
-	if ( hud_deathnotice_time.GetFloat() == 0 )
+	if ( hud_deathnotice_time.GetFloat() == 0 || tf_hud_deathnotice_filter.GetInt() == 1 )
 	{
 		return;
 	}

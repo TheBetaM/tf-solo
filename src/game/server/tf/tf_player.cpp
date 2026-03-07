@@ -172,6 +172,7 @@ extern ConVar	nav_generate_auto;
 extern ConVar	tf_revives_enable;
 extern ConVar	tf_subclass_allow;
 extern ConVar	tf_player_preventdeath;
+extern ConVar	tf_taunt_disable_attack;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -303,6 +304,7 @@ extern ConVar tf_player_responses_mute;
 extern ConVar tf_player_preventteamchange;
 extern ConVar tf_maddash_mode;
 extern ConVar tf_maddash_flipteams;
+extern ConVar tf_allow_taunt_aerial;
 #if defined( _DEBUG ) || defined( STAGING_ONLY )
 extern ConVar mp_developer;
 extern ConVar bot_mimic;
@@ -1516,7 +1518,8 @@ void CTFPlayer::TFPlayerThink()
 		// stop taunting if I lost my ground entity or was moved at all
 		if ( !CanMoveDuringTaunt() )
 		{
-			bStopTaunt |= pGroundEntity == NULL;
+			if ( !tf_allow_taunt_aerial.GetBool() )
+				bStopTaunt |= pGroundEntity == NULL;
 			
 			if ( m_TauntEconItemView.IsValid() && m_TauntEconItemView.GetStaticData()->GetTauntData()->ShouldStopTauntIfMoved() )
 				bStopTaunt |= m_vecTauntStartPosition.DistToSqr( GetAbsOrigin() ) > 0.1f;
@@ -18396,6 +18399,13 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 		}
 	}
 
+	// Blocking taunt attacks
+	if ( m_Shared.IsStealthed() || m_Shared.InCond( TF_COND_STEALTHED_BLINK ) || 
+		m_Shared.InCond( TF_COND_DISGUISED ) || m_Shared.InCond( TF_COND_DISGUISING ) || tf_taunt_disable_attack.GetBool() )
+	{
+		return;
+	}
+
 	// Setup taunt attacks. Hacky, but a lot easier to do than getting server side anim events working.
 	if ( IsPlayerClass(TF_CLASS_PYRO) )
 	{
@@ -20322,7 +20332,7 @@ bool CTFPlayer::SpeakConceptIfAllowed( int iConcept, const char *modifiers, char
 	// Save the current concept.
 	m_iCurrentConcept = iConcept;
 
-	if ( m_Shared.InCond( TF_COND_DISGUISED ) && !filter && ( iConcept != MP_CONCEPT_KILLED_PLAYER ) )
+	if ( m_Shared.InCond( TF_COND_DISGUISED ) && !filter && ( iConcept != MP_CONCEPT_KILLED_PLAYER && iConcept != MP_CONCEPT_PLAYER_TAUNT ) )
 	{
 		CSingleUserRecipientFilter filter(this);
 

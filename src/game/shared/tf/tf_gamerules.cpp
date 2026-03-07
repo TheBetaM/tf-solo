@@ -975,6 +975,8 @@ ConVar tf_player_responses_mute( "tf_player_responses_mute", "0", FCVAR_REPLICAT
 ConVar tf_viewmodel_forcehide( "tf_viewmodel_forcehide", "0", FCVAR_REPLICATED, "Hide viewmodels on all players.\n" );
 ConVar tf_player_preventdeath( "tf_player_preventdeath", "0", FCVAR_REPLICATED, "Prevent killbinds from working.\n" );
 ConVar tf_player_preventteamchange( "tf_player_preventteamchange", "0", FCVAR_REPLICATED, "Prevent players from switching teams.\n" );
+ConVar tf_hud_deathnotice_filter( "tf_hud_deathnotice_filter", "0", FCVAR_REPLICATED, "1 - disable all death notices, 2 - disable all except local player's\n" );
+ConVar tf_taunt_disable_attack( "tf_taunt_disable_attack", "0", FCVAR_REPLICATED, "Disable taunt attacks from dealing damage.\n" );
 ConVar tfsolo_mapentry( "tfsolo_mapentry", "", FCVAR_REPLICATED, "Name of the current map's config entry.\n" );
 
 #ifdef GAME_DLL
