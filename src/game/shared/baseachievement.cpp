@@ -479,6 +479,7 @@ void CBaseAchievement::ShowProgressNotification()
 		event->SetString( "achievement_name", GetName() );
 		event->SetInt( "cur_val", m_iCount );
 		event->SetInt( "max_val", m_iGoal );
+		event->SetInt( "achievement_id", m_iAchievementID );
 #ifdef GAME_DLL
 		gameeventmanager->FireEvent( event );
 #else
@@ -758,7 +759,7 @@ void CAchievement_AchievedCount::SetAchievementsRequired( int iNumRequired, int 
 }
 
 //----------------------------------------------------------------------------------------------------------------
-void CCustomAchievement::InitFromKV(KeyValues* pKV)
+void CCustomAchievement::InitFromKV( KeyValues* pKV )
 {
 	SetAchievementID( pKV->GetInt( "id" ) );
 	SetName( pKV->GetName() );
@@ -766,4 +767,6 @@ void CCustomAchievement::InitFromKV(KeyValues* pKV)
 	SetHideUntilAchieved( false );
 	SetGoal( pKV->GetInt( "goal", 1 ) );
 	m_bProgressEveryStep = pKV->GetInt( "showallprogress" ) != 0;
+	m_pCustomIcon = V_strdup( pKV->GetString( "icon" ) );
+	m_pCustomIconBW = V_strdup( pKV->GetString( "icon_bw" ) );
 }

@@ -31,7 +31,7 @@ public:
 	virtual void	FireGameEvent( IGameEvent * event );
 	virtual void	OnTick( void );
 
-	void AddNotification( const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle );
+	void AddNotification( const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle, bool bCustomIcon = false );
 
 private:
 	void ShowNextNotification();
@@ -49,6 +49,7 @@ private:
 		char szIconBaseName[255];
 		wchar_t szHeading[255];
 		wchar_t szTitle[255];
+		bool bCustomIcon;
 	};
 
 	CUtlLinkedList<Notification_t> m_queueNotification;

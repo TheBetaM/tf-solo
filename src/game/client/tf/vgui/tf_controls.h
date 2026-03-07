@@ -267,6 +267,7 @@ public:
 
 	const char* m_iszRequestedMap;
 	int m_iRequestedMode;
+	int m_iLastCategory;
 	const char* m_iszRequestedMapMod;
 	const char* m_iszRequestedMapOverride;
 
@@ -313,6 +314,7 @@ public:
 
 	const char* m_iszRequestedMap;
 	int m_iRequestedMode;
+	int m_iLastCategory;
 	const char* m_iszRequestedMapMod;
 	const char* m_iszRequestedMapOverride;
 	vgui::Panel* m_SelectedModePanel;
@@ -341,6 +343,7 @@ private:
 		const char* ModeName;
 		const char* MapMod;
 		const char* MapOverride;
+		const char* ModeArt;
 	};
 
 	MESSAGE_FUNC_PARAMS(OnCursorEnteredButton, "CursorEntered", data);
@@ -374,6 +377,8 @@ public:
 
 	const char* m_iszRequestedMap;
 	vgui::Panel* m_SelectedMapPanel;
+	int m_iSelectedCategory;
+	vgui::ComboBox* m_pCategoryList;
 
 private:
 
@@ -389,8 +394,6 @@ private:
 	vgui::PanelListPanel* m_pListPanel;
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
-	vgui::ComboBox* m_pCategoryList;
-	int m_iSelectedCategory;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");

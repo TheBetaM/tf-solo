@@ -20,6 +20,7 @@
 #include "achievement_notification_panel.h"
 #include "steam/steam_api.h"
 #include "iachievementmgr.h"
+#include "achievementmgr.h"
 #include "fmtstr.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -99,6 +100,7 @@ void CAchievementNotificationPanel::FireGameEvent( IGameEvent * event )
 		const char *pchName = event->GetString( "achievement_name" );
 		int iCur = event->GetInt( "cur_val" );
 		int iMax = event->GetInt( "max_val" );
+		int iAchID = event->GetInt( "achievement_id" );
 		wchar_t szLocalizedName[256]=L"";
 
 		if ( false )
@@ -137,8 +139,24 @@ void CAchievementNotificationPanel::FireGameEvent( IGameEvent * event )
 				return;
 			Q_wcsncpy( szFmt, pchFmt, sizeof( szFmt ) );
 
+			bool bCustom = false;
+			CAchievementMgr* pAchievementMgr = dynamic_cast<CAchievementMgr *>( engine->GetAchievementMgr() );
+			if ( pAchievementMgr )
+			{
+				IAchievement* pAchievement = pAchievementMgr->GetAchievementByID( iAchID );
+				if ( pAchievement )
+				{
+					auto pCustomAchievement = dynamic_cast<CCustomAchievement *>( pAchievement );
+					if ( pCustomAchievement && pCustomAchievement->GetIcon() && pCustomAchievement->GetIcon()[0] )
+					{
+						pchName = V_strdup( pCustomAchievement->GetIcon() );
+						bCustom = true;
+					}
+				}
+			}
+
 			g_pVGuiLocalize->ConstructString_safe( szText, szFmt, 3, szLocalizedName, szNumFound, szNumTotal );
-			AddNotification( pchName, g_pVGuiLocalize->Find( "#GameUI_Achievement_Progress" ), szText );
+			AddNotification( pchName, g_pVGuiLocalize->Find( "#GameUI_Achievement_Progress" ), szText, bCustom );
 		}
 	}
 }
@@ -166,7 +184,7 @@ bool CAchievementNotificationPanel::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CAchievementNotificationPanel::AddNotification( const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle )
+void CAchievementNotificationPanel::AddNotification( const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle, bool bCustomIcon )
 {
 	// put this notification in our queue
 	int iQueueItem = m_queueNotification.AddToTail();
@@ -174,6 +192,7 @@ void CAchievementNotificationPanel::AddNotification( const char *szIconBaseName,
 	Q_strncpy( notification.szIconBaseName, szIconBaseName, ARRAYSIZE( notification.szIconBaseName ) );
 	Q_wcsncpy( notification.szHeading, pHeading, sizeof( notification.szHeading ) );
 	Q_wcsncpy( notification.szTitle, pTitle, sizeof( notification.szTitle ) );
+	notification.bCustomIcon = bCustomIcon;
 
 	// if we are not currently displaying a notification, go ahead and show this one
 	if ( 0 == m_flHideTime )
@@ -204,7 +223,14 @@ void CAchievementNotificationPanel::ShowNextNotification()
 	const char *pchIconBaseName = notification.szIconBaseName;
 	if ( pchIconBaseName && pchIconBaseName[0] )
 	{
-		m_pIcon->SetImage( CFmtStr( "achievements/%s.vmt", pchIconBaseName ) );
+		if ( notification.bCustomIcon )
+		{
+			m_pIcon->SetImage( pchIconBaseName );
+		}
+		else
+		{
+			m_pIcon->SetImage( CFmtStr( "achievements/%s.vmt", pchIconBaseName ) );
+		}
 	}
 
 	// resize the panel so it always looks good

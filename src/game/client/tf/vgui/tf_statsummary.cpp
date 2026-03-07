@@ -93,6 +93,7 @@ CUtlVector<CTFStatsSummaryPanel *> g_vecStatPanels;
 
 ConVar cl_loadingimage_override("cl_loadingimage_override", "", FCVAR_REPLICATED, "Override the loading screen image");
 ConVar cl_loadingimage_force("cl_loadingimage_force", "0", FCVAR_REPLICATED, "Force the loading screen image to be used for the whole loading");
+ConVar cl_loadingimage_map("cl_loadingimage_map", "0", FCVAR_REPLICATED, "Force the loading screen image to persist into the second part of the loading screen");
 ConVar cl_loading_stats("cl_loading_stats", "0", FCVAR_ARCHIVE, "Show stats in the loading screen");
 
 void SetLoadingVisibilityRecursive( vgui::VPANEL parentPanel, const char* targetPanelName, int depth = 0 )
@@ -576,9 +577,26 @@ void CTFStatsSummaryPanel::ClearMapLabel()
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false*/, bool bBackgroundOverride /*= false*/ )
 {
+	bool bDrawOverlay = false;
 	if ( m_pMainBackground )
 	{
-		m_pMainBackground->SetVisible( !bShowMapInfo );
+		if ( bShowMapInfo )
+		{
+			if ( cl_loadingimage_map.GetBool() )
+			{
+				m_pMainBackground->SetVisible( true );
+				bDrawOverlay = true;
+			}
+			else
+			{
+				m_pMainBackground->SetVisible( false );
+			}
+			cl_loadingimage_map.SetValue( 0 );
+		}
+		else
+		{
+			m_pMainBackground->SetVisible( true );
+		}
 	}
 	m_pPlayerData->SetVisible( false );// bIsMVM || !bShowMapInfo );
 	m_pNextTipButton->SetVisible( false );// m_bInteractive && !bShowMapInfo );
@@ -587,6 +605,7 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 	if ( m_pMapInfoPanel )
 	{
 		m_pMapInfoPanel->SetVisible( bShowMapInfo );
+		m_pMapInfoPanel->SetPaintBackgroundEnabled( !bDrawOverlay );
 		vgui::Panel* pInfoBG = m_pMapInfoPanel->FindChildByName( "InfoBG" );
 		if ( pInfoBG )
 		{
@@ -607,6 +626,7 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 	if ( cl_loadingimage_force.GetBool() )
 	{
 		cl_loadingimage_force.SetValue( 0 );
+		cl_loadingimage_map.SetValue( 0 );
 		return;
 	}
 

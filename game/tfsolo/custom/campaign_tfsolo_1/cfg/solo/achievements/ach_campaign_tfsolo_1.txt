@@ -3,9 +3,13 @@ achievements
 	TFSOLO_CAMPAIGN_FIRST_CLEAR
 	{
 		id 151
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 	TFSOLO_CAMPAIGN_FIRST_COMPLETE
 	{
 		id 152
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 }

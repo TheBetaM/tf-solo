@@ -210,14 +210,21 @@ public:
 	virtual bool AlwaysListen() { return true; }
 	virtual bool LocalPlayerCanEarn() { return true; }
 	virtual bool AlwaysEnabled() { return true; }
+	virtual const char* GetIcon() { return m_pCustomIcon; }
+	virtual const char* GetIconBW() { return m_pCustomIconBW; }
 
 	void Init()
 	{
+		m_pCustomIcon = NULL;
+		m_pCustomIconBW = NULL;
 		this->SetFlags(ACH_SAVE_GLOBAL);
 		this->SetGoal(1);
 	}
 
 	void InitFromKV(KeyValues* pKV);
+
+	const char* m_pCustomIcon;
+	const char* m_pCustomIconBW;
 };
 
 

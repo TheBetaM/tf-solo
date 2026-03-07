@@ -82,6 +82,10 @@ maps_config
 				allow_pd 1
 			}
 		}
+		ctf_2fort
+		{
+			loadArt "materials/vgui/loadart/ctf_2fort.svg"
+		}
 		koth_nucleus
 		{
 			tags

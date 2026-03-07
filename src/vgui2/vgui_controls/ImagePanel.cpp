@@ -106,13 +106,8 @@ void ImagePanel::SetImage(const char *imageName)
 //-----------------------------------------------------------------------------
 void ImagePanel::SetBitmap(const Bitmap_t& bitmap)
 {
-	// Make sure we have an image that we own
-	if ( m_pImage == NULL || !m_bBitmapImage )
-	{
-		delete m_pImage;
-		m_pImage = new BitmapImage( GetVPanel(), NULL );
-		m_bBitmapImage = true;
-	}
+	m_pImage = new BitmapImage( GetVPanel(), NULL );
+	m_bBitmapImage = true;
 
 	auto image = dynamic_cast<BitmapImage *>( m_pImage );
 	if ( image )
@@ -409,6 +404,13 @@ void ImagePanel::ApplySettings(KeyValues *inResourceData)
 void ImagePanel::ApplySchemeSettings( IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings(pScheme);
+
+	if ( m_bBitmapImage && m_pImage )
+	{
+		delete m_pImage;
+		m_bBitmapImage = false;
+	}
+
 	if ( m_pszImageName && strlen( m_pszImageName ) > 0 )
 	{
 		const char* pExt = V_GetFileExtension( m_pszImageName );

@@ -3,15 +3,21 @@ achievements
 	TFSOLO_SOLO_TC_COMPLETE
 	{
 		id 159
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 	TFSOLO_SOLO_MTT_COMPLETE
 	{
 		id 160
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 	TFSOLO_GENERAL_COLLECT_CREDITS
 	{
 		id 161
 		goal 100
 		showallprogress 1
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 }

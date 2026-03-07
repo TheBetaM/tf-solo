@@ -3035,6 +3035,7 @@ void CTFCustomMatchSettingsDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchModeDialog = vgui::SETUP_PANEL( new CTFCustomMatchModeDialog( NULL ) );
 		}
+		g_pTFCustomMatchModeDialog->m_iLastCategory = m_iLastCategory;
 		g_pTFCustomMatchModeDialog->Deploy( m_iszRequestedMap );
 
 		return;
@@ -3484,6 +3485,27 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		TFInventoryManager()->WriteSaveData();
 	}
 
+	KeyValuesAD config( "maps_config" );
+	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
+	{
+		Msg("Unable to parse maps_config.txt into keyvalues.\n");
+		return;
+	}
+	KeyValues* maps = config->FindKey( "maps" );
+	if ( !maps )
+	{
+		return;
+	}
+	KeyValues* mapKV = maps->FindKey( m_iszRequestedMap );
+	const char* loadArt = mapKV->GetString( "loadArt" );
+	if ( loadArt && loadArt[0] )
+	{
+		ConVarRef cl_loadingimage_override( "cl_loadingimage_override" );
+		cl_loadingimage_override.SetValue( loadArt );
+		ConVarRef cl_loadingimage_map( "cl_loadingimage_map" );
+		cl_loadingimage_map.SetValue( 1 );
+	}
+
 	ConVarRef tfsolo_mapentry( "tfsolo_mapentry" );
 	tfsolo_mapentry.SetValue( m_iszRequestedMap );
 
@@ -3543,6 +3565,7 @@ CTFCustomMatchModeDialog::CTFCustomMatchModeDialog(vgui::Panel* parent) : BaseCl
 
 	m_iszRequestedMap = "";
 	m_iRequestedMode = 0;
+	m_iLastCategory = 0;
 	m_iszRequestedMapMod = NULL;
 	m_iszRequestedMapOverride = NULL;
 
@@ -3611,6 +3634,8 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchMapDialog = vgui::SETUP_PANEL( new CTFCustomMatchMapDialog( NULL ) );
 		}
+		g_pTFCustomMatchMapDialog->m_iSelectedCategory = m_iLastCategory;
+		g_pTFCustomMatchMapDialog->m_pCategoryList->ActivateItemByRow(m_iLastCategory);
 		g_pTFCustomMatchMapDialog->Deploy();
 
 		return;
@@ -3632,6 +3657,7 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL, bIsMVM ) );
 		}
+		g_pTFCustomMatchSettingsDialog->m_iLastCategory = m_iLastCategory;
 		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
 		OnClose();
@@ -3653,6 +3679,7 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL, bIsMVM ) );
 		}
+		g_pTFCustomMatchSettingsDialog->m_iLastCategory = m_iLastCategory;
 		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
 		OnClose();
@@ -3679,6 +3706,7 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchSettingsDialog = vgui::SETUP_PANEL( new CTFCustomMatchSettingsDialog( NULL, false ) );
 		}
+		g_pTFCustomMatchSettingsDialog->m_iLastCategory = m_iLastCategory;
 		g_pTFCustomMatchSettingsDialog->Deploy( m_iszRequestedMap, m_iRequestedMode, m_iszRequestedMapMod, m_iszRequestedMapOverride );
 
 		OnClose();
@@ -3785,6 +3813,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 	mode0.ModeName = map->GetString("modename");
 	mode0.MapMod = NULL;
 	mode0.MapOverride = NULL;
+	mode0.ModeArt = NULL_STRING;
 	possibleModes.AddToTail( mode0 );
 	MapMods.AddToTail( mode0 );
 
@@ -3807,6 +3836,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			modemap.ModeName = V_strdup( altmap->GetString("modename") );
 			modemap.MapMod = NULL;
 			modemap.MapOverride = NULL;
+			modemap.ModeArt = V_strdup( altmap->GetString("modeart") );
 
 			possibleModes.AddToTail( modemap );
 			MapMods.AddToTail( modemap );
@@ -3827,6 +3857,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			modemap.ModeName = V_strdup( key->GetString( "modename", map->GetString( "modename" ) ) );
 			modemap.MapMod = V_strdup( key->GetString( "modfile" ) );
 			modemap.MapOverride = V_strdup( key->GetString( "overridefile" ) );
+			modemap.ModeArt = V_strdup( key->GetString( "modeart" ) );
 
 			possibleModes.AddToTail( modemap );
 			MapMods.AddToTail( modemap );
@@ -3846,6 +3877,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode2.ModeName = "#Gametype_Arena";
 			mode2.MapMod = NULL;
 			mode2.MapOverride = NULL;
+			mode2.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode2 );
 			MapMods.AddToTail( mode2 );
 		}
@@ -3857,6 +3889,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode3.ModeName = "#Gametype_Koth";
 			mode3.MapMod = NULL;
 			mode3.MapOverride = NULL;
+			mode3.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode3 );
 			MapMods.AddToTail( mode3 );
 		}
@@ -3868,6 +3901,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode4.ModeName = "#Gametype_CTF";
 			mode4.MapMod = NULL;
 			mode4.MapOverride = NULL;
+			mode4.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode4 );
 			MapMods.AddToTail( mode4 );
 		}
@@ -3879,6 +3913,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode5.ModeName = "#Gametype_PlayerDestruction";
 			mode5.MapMod = NULL;
 			mode5.MapOverride = NULL;
+			mode5.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode5 );
 			MapMods.AddToTail( mode5 );
 		}
@@ -3890,6 +3925,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode6.ModeName = "#GameType_TFSOLO_MD";
 			mode6.MapMod = NULL;
 			mode6.MapOverride = NULL;
+			mode6.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode6 );
 			MapMods.AddToTail( mode6 );
 		}
@@ -3901,6 +3937,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode7.ModeName = "#GameType_TFSOLO_INF";
 			mode7.MapMod = NULL;
 			mode7.MapOverride = NULL;
+			mode7.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode7 );
 			MapMods.AddToTail( mode7 );
 		}
@@ -3912,6 +3949,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode8.ModeName = "#GameType_TFSOLO_PDA";
 			mode8.MapMod = NULL;
 			mode8.MapOverride = NULL;
+			mode8.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode8 );
 			MapMods.AddToTail( mode8 );
 		}
@@ -3923,6 +3961,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode9.ModeName = "#GameType_TFSOLO_PDE";
 			mode9.MapMod = NULL;
 			mode9.MapOverride = NULL;
+			mode9.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode9 );
 			MapMods.AddToTail( mode9 );
 		}
@@ -3934,6 +3973,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mode10.ModeName = "#GameType_TFSOLO_Explore";
 			mode10.MapMod = NULL;
 			mode10.MapOverride = NULL;
+			mode10.ModeArt = NULL_STRING;
 			possibleModes.AddToTail( mode10 );
 			MapMods.AddToTail( mode10 );
 		}
@@ -3946,12 +3986,17 @@ void CTFCustomMatchModeDialog::CreateControls()
 		EditablePanel* holder = new EditablePanel(objParent, "ModeHolder");
 		holder->SetSize(256, 256);
 
-		ScalableImagePanel* mapIcon = new ScalableImagePanel(holder, "MapImage");
+		ImagePanel* mapIcon = new ImagePanel(holder, "MapImage");
 		mapIcon->SetSize(256, 256);
 		mapIcon->SetZPos(5);
+		mapIcon->SetShouldScaleImage(true);
 		mapIcon->SetMouseInputEnabled(false);
 		mapIcon->SetKeyBoardInputEnabled(false);
-		if ( !stricmp(mode.ModeName, "#Gametype_Arena") )
+		if ( mode.ModeArt && mode.ModeArt[0] )
+		{
+			mapIcon->SetImage(mode.ModeArt);
+		}
+		else if ( !stricmp(mode.ModeName, "#Gametype_Arena") )
 		{
 			mapIcon->SetImage("illustrations/training_offlinepractice");
 		}
@@ -4055,10 +4100,11 @@ void CTFCustomMatchModeDialog::CreateControls()
 		{
 			mapIcon->SetImage("illustrations/quickplay");
 		}
-		ScalableImagePanel* mapIconBG = new ScalableImagePanel(holder, "MapImageBG");
+		ImagePanel* mapIconBG = new ImagePanel(holder, "MapImageBG");
 		mapIconBG->SetImage("illustrations/bg");
 		mapIconBG->SetSize(256, 256);
 		mapIconBG->SetZPos(4);
+		mapIconBG->SetShouldScaleImage(true);
 		mapIconBG->SetMouseInputEnabled(false);
 		mapIconBG->SetKeyBoardInputEnabled(false);
 
@@ -4352,6 +4398,11 @@ void CTFCustomMatchMapDialog::OnClose()
 {
 	BaseClass::OnClose();
 
+	ConVarRef cl_loadingimage_override("cl_loadingimage_override");
+	cl_loadingimage_override.SetValue("");
+	ConVarRef cl_loadingimage_map("cl_loadingimage_map");
+	cl_loadingimage_map.SetValue(0);
+
 	TFModalStack()->PopModal(this);
 	MarkForDeletion();
 }
@@ -4368,6 +4419,7 @@ void CTFCustomMatchMapDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchModeDialog = vgui::SETUP_PANEL( new CTFCustomMatchModeDialog( NULL ) );
 		}
+		g_pTFCustomMatchModeDialog->m_iLastCategory = m_iSelectedCategory;
 		g_pTFCustomMatchModeDialog->Deploy( m_iszRequestedMap );
 
 		OnClose();
@@ -4388,6 +4440,7 @@ void CTFCustomMatchMapDialog::OnCommand(const char* command)
 		{
 			g_pTFCustomMatchModeDialog = vgui::SETUP_PANEL( new CTFCustomMatchModeDialog( NULL ) );
 		}
+		g_pTFCustomMatchModeDialog->m_iLastCategory = m_iSelectedCategory;
 		g_pTFCustomMatchModeDialog->Deploy( m_iszRequestedMap );
 
 		OnClose();
@@ -4431,6 +4484,7 @@ struct CTFCustomMatchMapInfo
 	const char* m_Name;
 	const char* m_ModeName;
 	const char* m_ThumbArt;
+	const char* m_LoadArt;
 	const char* m_MapFile;
 	bool m_IsWorkshop;
 	const char* m_StateText;
@@ -4779,7 +4833,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		EditablePanel* holder = new EditablePanel(objParent, "MapHolder");
 		holder->SetSize(256, 192);
 
-		ScalableImagePanel* mapIcon = new ScalableImagePanel(holder, "MapImage");
+		ImagePanel* mapIcon = new ImagePanel(holder, "MapImage");
 		if ( map.m_ThumbArt && map.m_ThumbArt[0] )
 		{
 			mapIcon->SetImage( map.m_ThumbArt );
@@ -4797,6 +4851,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		}
 		mapIcon->SetSize(256, 256);
 		mapIcon->SetZPos(5);
+		mapIcon->SetShouldScaleImage(true);
 		mapIcon->SetMouseInputEnabled(false);
 		mapIcon->SetKeyBoardInputEnabled(false);
 
@@ -5123,11 +5178,25 @@ void CTFAchievementsDialog::CreateControls()
 		ImagePanel* achIcon = new vgui::ImagePanel( pCtrl, "AchImage" );
 		if ( pAch->IsAchieved() )
 		{
-			achIcon->SetImage( fmtAchImage );
+			if ( pAch->GetIcon() && pAch->GetIcon()[0] )
+			{
+				achIcon->SetImage( pAch->GetIcon() );
+			}
+			else
+			{
+				achIcon->SetImage( fmtAchImage );
+			}
 		}
 		else
 		{
-			achIcon->SetImage( fmtAchImageBW );
+			if ( pAch->GetIconBW() && pAch->GetIconBW()[0] )
+			{
+				achIcon->SetImage( pAch->GetIconBW() );
+			}
+			else
+			{
+				achIcon->SetImage( fmtAchImageBW );
+			}
 		}
 
 		vgui::Label* pPrompt = new vgui::Label(pCtrl, "DescLabel", "");

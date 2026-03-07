@@ -3,9 +3,13 @@ achievements
 	TFSOLO_CAMPAIGN_HALLOW_CLEAR
 	{
 		id 153
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 	TFSOLO_CAMPAIGN_HALLOW_COMPLETE
 	{
 		id 154
+		icon "materials/vgui/achievements/ach_temp.png"
+		icon_bw "materials/vgui/achievements/ach_temp_bw.png"
 	}
 }
