@@ -1,0 +1,24 @@
+Licensing Information
+
+The following applies only to files specifically included in the mod.
+
+MAPS
+
+Maps (.bsp files) original to the mod are free to use and modify within the context of the mod itself.
+Permission is required to include or modify the map files outside the mod, in other mods, and the base game.
+
+LICENSED MAPS
+
+Maps (.bsp files) that are licensed for the mod (credited as COMMUNITY MAPS) are owned by their respective creators.
+If available, check the individual map's licensing information at its source for more information.
+
+ASSETS
+
+Assets (any non-.bsp files) original to the mod are free to use and modify within the context of the mod itself.
+Permission is required to include or modify the asset files outside the mod, in other mods, and the base game.
+
+LICENSED ASSETS
+
+Assets (any non-.bsp files) that are licensed for the mod (credited as COMMUNITY ASSETS) are owned by their respective creators.
+Licensed assets are free to use in maps within the context of the mod itself. (check asset license for permission to modify)
+If available, check the individual asset's licensing information at its source for more information.

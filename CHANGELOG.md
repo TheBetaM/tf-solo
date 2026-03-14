@@ -1,18 +1,14 @@
-# 1.0.0
+# Current changes compared to TF2
 ## General
 - Added Campaigns - new stories, new characters, standalone progression and mechanics!  
--- Headhunt, enhanced from the original Workshop release!  
--- Bloodthirst, a new campaign featuring Dracula!  
 - Added Scenarios - story vignettes from across Team Fortress history, and beyond!  
--- Meet The Team - An introduction for each individual class  
--- Territory Control - Choose from a randomly generated set of scenarios to control every map  
-- Added Quickplay - a new interface for setting up regular TF gameplay, and in new ways!  
+- Added Quickplay - a new interface for setting up regular TF gameplay, and in new ways, including:  
 -- Maps can now be played in other gamemodes without having to modify them, including such modes as: Arena, King of the Hill, Capture the Flag, Player Destruction  
 -- Mirror Mode - The entire world flipped, it's like having two maps in one!  
 -- Map Mods - Any map can be modded to suit new gamemodes better or implement other changes and additions  
 - Added new gamemodes:  
--- Mad Dash  
--- Property Damage  
+-- Mad Dash - Maintain your ÜberCharge long enough to reach the enemy base!  
+-- Property Damage - Capture team owned property by damaging it!  
 - Added new maps  
 - Loadouts now work offline; accessing your base TF2 inventory still requires an internet connection
 - Added Armory - a way to unlock items using credits earned in the game
@@ -23,8 +19,8 @@
 -- Optional context-sensitive tutorials for base TF2 mechanics  
 -- Optional context-sensitive tutorials for new mechanics  
 -- Plus additional flavor text  
-- Added a map overview, replacing the scoreboard
-- Added new achievements
+- Added a map overview, replacing the scoreboard  
+- Added new achievements, and functionality for player-made ones  
 - Added console commands: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
