@@ -40,6 +40,7 @@
 #include "NextBot/NextBotLocomotionInterface.h"
 #include "bot/tf_bot.h"
 #include "workshop/maps_workshop.h"
+#include "tf/solo/ChoreoSystem.h"
 #endif
 
 #if defined( _WIN32 ) || defined( POSIX )
@@ -3151,7 +3152,8 @@ bool VScriptServerInit()
 					GameRules()->RegisterScriptFunctions();
 				}
 #ifdef TF_DLL
-				g_pScriptVM->RegisterInstance(&g_SoloAccess, "Solo");
+				g_pScriptVM->RegisterInstance( &g_SoloAccess, "Solo" );
+				g_pScriptVM->RegisterInstance( &g_ChoreoSystem, "Choreo" );
 #endif // TF_DLL
 
 #ifdef TF_DLL

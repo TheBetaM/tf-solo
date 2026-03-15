@@ -7,6 +7,7 @@
 #include "tf_player.h"
 #include "bot/tf_bot.h"
 #include "bot/behavior/tf_bot_move_to_vantage_point.h"
+#include "tf/solo/ChoreoSystem.h"
 
 #include "nav_mesh.h"
 
@@ -37,7 +38,11 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CT
 {
 	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-	if ( !m_isEscaping )
+	if ( me->HasMission( CTFBot::MISSION_CHOREO ) )
+	{
+		m_vantageArea = dynamic_cast<CTFNavArea *>( TheTFNavMesh()->GetNearestNavArea( g_ChoreoSystem.GetStartOrigin( me->entindex() ), true, 10000.0f, false, true, TEAM_ANY ) );
+	}
+	else if ( !m_isEscaping )
 	{
 		m_vantageArea = me->FindVantagePoint( m_maxTravelDistance );
 	}
@@ -47,6 +52,10 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CT
 	}
 	if ( !m_vantageArea )
 	{
+		if ( me->HasMission( CTFBot::MISSION_CHOREO ) )
+		{
+			me->SetMission( CTFBot::NO_MISSION, false );
+		}
 		return Done( "No vantage point found" );
 	}
 
@@ -60,6 +69,28 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::OnStart( CTFBot *me, Action< CT
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float interval )
 {
+	if ( me->HasMission( CTFBot::MISSION_CHOREO ) )
+	{
+		if ( !m_path.IsValid() && m_repathTimer.IsElapsed() )
+		{
+			m_repathTimer.Start( 1.0f );
+
+			CTFBotPathCost cost( me, FASTEST_ROUTE );
+			if ( !m_path.Compute( me, g_ChoreoSystem.GetStartOrigin( me->entindex() ), cost ) )
+			{
+				me->SetMission( CTFBot::NO_MISSION, false );
+				me->SetAbsOrigin( g_ChoreoSystem.GetStartOrigin( me->entindex() ) );
+				me->SnapEyeAngles( g_ChoreoSystem.GetStartAngles( me->entindex() ) );
+				g_ChoreoSystem.Resume( me->entindex() );
+				return Done( "No path to choreo start exists" );
+			}
+		}
+
+		m_path.Update( me );
+
+		return Continue();
+	}
+
 	if ( !m_isEscaping )
 	{
 		const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
@@ -112,6 +143,13 @@ EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnStuck( CTFBot *me )
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToSuccess( CTFBot *me, const Path *path )
 {
+	if ( me->HasMission( CTFBot::MISSION_CHOREO ) )
+	{
+		me->SetMission( CTFBot::NO_MISSION, false );
+		me->SetAbsOrigin( g_ChoreoSystem.GetStartOrigin( me->entindex() ) );
+		me->SnapEyeAngles( g_ChoreoSystem.GetStartAngles( me->entindex() ) );
+		g_ChoreoSystem.Resume( me->entindex() );
+	}
 	return TryDone( RESULT_CRITICAL, "Vantage point reached" );
 }
 
@@ -126,6 +164,10 @@ EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToFailure( CTFBot *
 
 EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnNavAreaChanged( CTFBot* me, CNavArea* newArea, CNavArea* oldArea )
 {
+	if ( me->HasMission( CTFBot::MISSION_CHOREO ) )
+	{
+		return TryContinue();
+	}
 	if ( m_isEscapingZone && newArea && !newArea->HasAttributes( NAV_MESH_NO_HOSTAGES ) )
 	{
 		m_bHasEscaped = true;

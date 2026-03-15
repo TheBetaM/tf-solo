@@ -20,6 +20,7 @@
 -- Optional context-sensitive tutorials for new mechanics  
 -- Plus additional flavor text  
 - Added a map overview, replacing the scoreboard  
+- Added a choreography system for recording and playing back player inputs  
 - Added new achievements, and functionality for player-made ones  
 - Added console commands: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 

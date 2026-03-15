@@ -1012,6 +1012,8 @@ $Project "Server (TF)"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.cpp"
 				$File	"$SRCDIR\game\shared\tf\solo\tf_logic_propertydamage.h"
 				$File	"$SRCDIR\game\server\env_instructor_hint.cpp"
+				$File	"$SRCDIR\game\server\tf\solo\ChoreoSystem.h"
+				$File	"$SRCDIR\game\server\tf\solo\ChoreoSystem.cpp"
 			}
 		}
 

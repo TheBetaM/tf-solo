@@ -131,6 +131,7 @@
 	#include "func_respawnroom.h"
 	#include "func_flag_alert.h"
 	#include "vscript_utils.h"
+	#include "tf/solo/ChoreoSystem.h"
 #endif
 
 #include "tf_mann_vs_machine_stats.h"
@@ -5179,6 +5180,7 @@ void CTFGameRules::SetupOnRoundStart( void )
 		m_iNumCaps[i] = 0;
 	}
 
+	g_ChoreoSystem.RoundRestart();
 	SetOvertime( false );
 
 	m_hRedKothTimer.Set( NULL );
@@ -8456,6 +8458,11 @@ bool CTFGameRules::ClientCommand( CBaseEntity *pEdict, const CCommand &args )
 	CTFPlayer *pPlayer = ToTFPlayer( pEdict );
 
 	const char *pcmd = args[0];
+
+	if ( !g_ChoreoSystem.ClientCommand( pPlayer, args ) )
+	{
+		return true;
+	}
 
 	if ( IsInTournamentMode() == true && IsInPreMatch() == true )
 	{

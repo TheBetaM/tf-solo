@@ -59,6 +59,7 @@
 #include "bot/behavior/missions/tf_bot_mission_reprogrammed.h"
 
 #include "bot/behavior/tf_bot_scenario_monitor.h"
+#include "tf/solo/ChoreoSystem.h"
 
 
 extern ConVar tf_bot_health_ok_ratio;
@@ -537,6 +538,11 @@ ActionResult< CTFBot >	CTFBotSituationMonitor::OnStart( CTFBot* me, Action< CTFB
 
 ActionResult< CTFBot >	CTFBotSituationMonitor::Update( CTFBot* me, float interval )
 {
+	if ( me->HasMission( CTFBot::MISSION_CHOREO ) && g_ChoreoSystem.IsPlaying( me->entindex() ) )
+	{
+		return SuspendFor( new CTFBotMoveToVantagePoint( -1.0f, false, false ), "I'm getting into position for choreo" );
+	}
+
 	if ( me->m_Shared.InCond( TF_COND_PURGATORY ) || me->m_Shared.InCond( TF_COND_HALLOWEEN_IN_HELL )
 		|| !V_stricmp( me->GetScriptOverlayMaterial(), "effects/map_afterlife_soul_overlay ") || me->HasTag( "InPurg" ) )
 	{

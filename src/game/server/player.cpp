@@ -74,6 +74,10 @@
 #include "econ_wearable.h"
 #endif
 
+#ifdef TF_DLL
+#include "tf/solo/ChoreoSystem.h"
+#endif
+
 // NVNT haptic utils
 #include "haptics/haptic_utils.h"
 
@@ -3388,6 +3392,12 @@ void CBasePlayer::PhysicsSimulate( void )
 		// server should start RunNullCommand as if client sends an empty command so that Think and gamestate related things run properly
 		RunNullCommand();
 	}
+#ifdef TF_DLL
+	else if ( g_ChoreoSystem.IsPlaying( this->entindex() ) ) 
+	{
+		RunNullCommand();
+	}
+#endif // TF_DLL
 
 	int nMaxTicks = sv_maxusrcmdprocessticks.GetInt();
 	if ( nMaxTicks && gpGlobals->maxClients != 1 ) // Don't apply this filter in SP games
