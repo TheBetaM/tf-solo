@@ -34,7 +34,7 @@ ActionResult< CTFBot >	CTFBotSpyInfiltrate::Update( CTFBot *me, float interval )
 {
 	// switch to our pistol
 	CBaseCombatWeapon *myGun = me->Weapon_GetSlot( TF_WPN_TYPE_PRIMARY );
-	if ( myGun )
+	if ( myGun && !me->GetLocomotionInterface()->IsUsingLadder() )
 	{
 		me->Weapon_Switch( myGun );
 	}
