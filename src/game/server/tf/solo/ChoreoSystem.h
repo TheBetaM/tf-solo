@@ -26,6 +26,7 @@ struct PlayerChoreo
 	const char* pszRecordFile;
 	Vector StartOrigin;
 	QAngle StartAngles;
+	Vector StartVelocity;
 	CUtlMap<uint64_t, CUserCmd*>* CmdList;
 	CUtlMap<uint64_t, const char*>* ClientCmdList;
 	uint64_t TickCount;
@@ -66,6 +67,7 @@ public:
 	void Enqueue( int entindex, const char* pszFile, bool bInterrupt );
 	Vector GetStartOrigin( int entindex );
 	QAngle GetStartAngles( int entindex );
+	Vector GetStartVelocity( int entindex );
 	void ResetChoreo( int entindex );
 
 private:

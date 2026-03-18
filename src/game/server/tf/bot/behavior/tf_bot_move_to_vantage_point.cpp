@@ -79,8 +79,10 @@ ActionResult< CTFBot >	CTFBotMoveToVantagePoint::Update( CTFBot *me, float inter
 			if ( !m_path.Compute( me, g_ChoreoSystem.GetStartOrigin( me->entindex() ), cost ) )
 			{
 				me->SetMission( CTFBot::NO_MISSION, false );
-				me->SetAbsOrigin( g_ChoreoSystem.GetStartOrigin( me->entindex() ) );
-				me->SnapEyeAngles( g_ChoreoSystem.GetStartAngles( me->entindex() ) );
+				Vector pos = g_ChoreoSystem.GetStartOrigin( me->entindex() );
+				QAngle ang = g_ChoreoSystem.GetStartAngles( me->entindex() );
+				Vector vel = g_ChoreoSystem.GetStartVelocity( me->entindex() );
+				me->Teleport( &pos, &ang, &vel );
 				g_ChoreoSystem.Resume( me->entindex() );
 				return Done( "No path to choreo start exists" );
 			}
@@ -146,8 +148,10 @@ EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToSuccess( CTFBot *
 	if ( me->HasMission( CTFBot::MISSION_CHOREO ) )
 	{
 		me->SetMission( CTFBot::NO_MISSION, false );
-		me->SetAbsOrigin( g_ChoreoSystem.GetStartOrigin( me->entindex() ) );
-		me->SnapEyeAngles( g_ChoreoSystem.GetStartAngles( me->entindex() ) );
+		Vector pos = g_ChoreoSystem.GetStartOrigin( me->entindex() );
+		QAngle ang = g_ChoreoSystem.GetStartAngles( me->entindex() );
+		Vector vel = g_ChoreoSystem.GetStartVelocity( me->entindex() );
+		me->Teleport( &pos, &ang, &vel );
 		g_ChoreoSystem.Resume( me->entindex() );
 	}
 	return TryDone( RESULT_CRITICAL, "Vantage point reached" );

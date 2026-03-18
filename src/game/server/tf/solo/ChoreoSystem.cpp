@@ -239,6 +239,11 @@ void CChoreoSystem::PrePlayerRunCommand( CBasePlayer* pPlayer, CUserCmd* pUserCm
 			case CHOREO_LOOP_NONE:
 			{
 				Stop( iPlayerIndex );
+				IScriptVM* pVM = g_pScriptVM;
+				ScriptVariant_t varTable;
+				pVM->CreateTable( varTable );
+				pVM->SetValue( varTable, "player", ToHScript(pPlayer) );
+				RunScriptHook( "choreo_end", varTable );
 				break;
 			}
 			case CHOREO_LOOP_LINEAR:
@@ -340,9 +345,18 @@ void CChoreoSystem::Play( int entindex, const char* pszFile, bool bTeleport )
 	QAngle origin;
 	UTIL_StringToVector( origin.Base(), rec->GetString( "origin" ) );
 	m_PlayerChoreo[entindex].StartOrigin = Vector( origin.x, origin.y, origin.z );
-	QAngle angles;
-	UTIL_StringToVector( angles.Base(), rec->GetString( "angles" ) );
-	m_PlayerChoreo[entindex].StartAngles = QAngle( angles.x, angles.y, angles.z );
+	if ( rec->FindKey( "angles" ) )
+	{
+		QAngle angles;
+		UTIL_StringToVector( angles.Base(), rec->GetString( "angles" ) );
+		m_PlayerChoreo[entindex].StartAngles = QAngle( angles.x, angles.y, angles.z );
+	}
+	if ( rec->FindKey( "velocity" ) )
+	{
+		QAngle vel;
+		UTIL_StringToVector( vel.Base(), rec->GetString( "velocity" ) );
+		m_PlayerChoreo[entindex].StartVelocity = Vector( vel.x, vel.y, vel.z );
+	}
 
 	KeyValues* dataKey = rec->FindKey( "data" );
 	KeyValues* tickKey = dataKey->GetFirstSubKey();
@@ -379,8 +393,7 @@ void CChoreoSystem::Play( int entindex, const char* pszFile, bool bTeleport )
 
 	if ( bTeleport )
 	{
-		pPlayer->SetAbsOrigin( m_PlayerChoreo[entindex].StartOrigin );
-		pPlayer->SnapEyeAngles( m_PlayerChoreo[entindex].StartAngles );
+		pPlayer->Teleport( &m_PlayerChoreo[entindex].StartOrigin, &m_PlayerChoreo[entindex].StartAngles, &m_PlayerChoreo[entindex].StartVelocity );
 	}
 
 }
@@ -441,6 +454,7 @@ void CChoreoSystem::RecordStart( int entindex, const char* pszFile )
 	m_PlayerChoreo[entindex].RecordStartTick = (uint64_t)gpGlobals->tickcount;
 	m_PlayerChoreo[entindex].StartOrigin = pPlayer->GetAbsOrigin();
 	m_PlayerChoreo[entindex].StartAngles = pPlayer->GetAbsAngles();
+	m_PlayerChoreo[entindex].StartVelocity = pPlayer->GetAbsVelocity();
 }
 
 void CChoreoSystem::RecordStop( int entindex )
@@ -456,6 +470,7 @@ void CChoreoSystem::RecordStop( int entindex )
 	rec->SetInt( "ticks", m_PlayerChoreo[entindex].TickCount );
 	char szOrigin[1024];
 	char szAngles[1024];
+	char szVel[1024];
 	Q_snprintf( szOrigin, 1024, "%f %f %f",
 		m_PlayerChoreo[entindex].StartOrigin.x,
 		m_PlayerChoreo[entindex].StartOrigin.y,
@@ -464,8 +479,13 @@ void CChoreoSystem::RecordStop( int entindex )
 		m_PlayerChoreo[entindex].StartAngles.x,
 		m_PlayerChoreo[entindex].StartAngles.y,
 		m_PlayerChoreo[entindex].StartAngles.z );
+	Q_snprintf( szVel, 1024, "%f %f %f",
+		m_PlayerChoreo[entindex].StartVelocity.x,
+		m_PlayerChoreo[entindex].StartVelocity.y,
+		m_PlayerChoreo[entindex].StartVelocity.z );
 	rec->SetString( "origin", V_strdup( szOrigin ) );
 	rec->SetString( "angles", V_strdup( szAngles ) );
+	rec->SetString( "velocity", V_strdup( szVel ) );
 
 	KeyValues* dataKey = new KeyValues( "data" );
 	auto elemind = m_PlayerChoreo[entindex].CmdList->FirstInorder();
@@ -671,6 +691,15 @@ QAngle CChoreoSystem::GetStartAngles( int entindex )
 	return m_PlayerChoreo[entindex].StartAngles;
 }
 
+Vector CChoreoSystem::GetStartVelocity( int entindex )
+{
+	CTFPlayer* pPlayer = ToTFPlayer( UTIL_PlayerByIndex( entindex ) );
+	if ( !pPlayer )
+		return vec3_origin;
+
+	return m_PlayerChoreo[entindex].StartVelocity;
+}
+
 void CChoreoSystem::ResetChoreo( int entindex )
 {
 	m_PlayerChoreo[entindex].bIsBlockingCommands = false;
@@ -684,6 +713,7 @@ void CChoreoSystem::ResetChoreo( int entindex )
 	m_PlayerChoreo[entindex].pszRecordFile = NULL;
 	m_PlayerChoreo[entindex].StartOrigin = vec3_origin;
 	m_PlayerChoreo[entindex].StartAngles = vec3_angle;
+	m_PlayerChoreo[entindex].StartVelocity = vec3_origin;
 	m_PlayerChoreo[entindex].TickCount = 0;
 	m_PlayerChoreo[entindex].RecordStartTick = 0;
 	m_PlayerChoreo[entindex].CmdList = new CUtlMap<uint64_t, CUserCmd*>();
@@ -714,5 +744,6 @@ DEFINE_SCRIPTFUNC( SetInterruptable, "" )
 DEFINE_SCRIPTFUNC( Enqueue, "" )
 DEFINE_SCRIPTFUNC( GetStartOrigin, "" )
 DEFINE_SCRIPTFUNC( GetStartAngles, "" )
+DEFINE_SCRIPTFUNC( GetStartVelocity, "" )
 
 END_SCRIPTDESC();
