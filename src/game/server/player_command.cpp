@@ -14,9 +14,6 @@
 #include "movehelper_server.h"
 #include "iservervehicle.h"
 #include "tier0/vprof.h"
-#ifdef TF_DLL
-#include "tf/solo/ChoreoSystem.h"
-#endif // TF_DLL
 
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -371,9 +368,6 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 	g_pGameMovement->StartTrackPredictionErrors( player );
 
 	CommentarySystem_PePlayerRunCommand( player, ucmd );
-#ifdef TF_DLL
-	g_ChoreoSystem.PrePlayerRunCommand( player, ucmd );
-#endif // TF_DLL
 
 	// Do weapon selection
 	if ( ucmd->weaponselect != 0 )

@@ -132,6 +132,7 @@
 #include "tf_weapon_bonesaw.h"
 #include "pointhurt.h"
 #include "info_camera_link.h"
+#include "tf/solo/ChoreoSystem.h"
 
 // NVNT haptic utils
 #include "haptics/haptic_utils.h"
@@ -3222,6 +3223,8 @@ void CTFPlayer::PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper )
 
 	if ( !sv_runcmds.GetInt() )
 		return;
+
+	g_ChoreoSystem.PrePlayerRunCommand( this, ucmd );
 
 	if ( m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
 	{

@@ -198,6 +198,11 @@ void CChoreoSystem::PrePlayerRunCommand( CBasePlayer* pPlayer, CUserCmd* pUserCm
 		pUserCmds->viewangles = cmd->viewangles;
 		pUserCmds->weaponselect = cmd->weaponselect;
 		pUserCmds->weaponsubtype = cmd->weaponsubtype;
+		if ( pPlayer->IsFakeClient() )
+		{
+			// overrides PlayerBody::Upkeep
+			pPlayer->SnapEyeAngles( cmd->viewangles );
+		}
 	}
 
 	m_PlayerChoreo[iPlayerIndex].bIsBlockingCommands = false;
@@ -254,6 +259,12 @@ void CChoreoSystem::PrePlayerRunCommand( CBasePlayer* pPlayer, CUserCmd* pUserCm
 			case CHOREO_LOOP_PINGPONG:
 			{
 				m_PlayerChoreo[iPlayerIndex].bReversePlayback = !m_PlayerChoreo[iPlayerIndex].bReversePlayback;
+				break;
+			}
+			case CHOREO_LOOP_LINEAR_TELEPORT:
+			{
+				m_PlayerChoreo[iPlayerIndex].PlaybackTick = 0;
+				pPlayer->Teleport( &m_PlayerChoreo[iPlayerIndex].StartOrigin, &m_PlayerChoreo[iPlayerIndex].StartAngles, &m_PlayerChoreo[iPlayerIndex].StartVelocity );
 				break;
 			}
 		}
