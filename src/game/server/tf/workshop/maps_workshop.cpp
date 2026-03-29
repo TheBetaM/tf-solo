@@ -1286,8 +1286,8 @@ void CTFMapsWorkshop::UpdateLocalTF2WorkshopCache()
 	KeyValuesAD cachefile( "workshop" );
 
 	KeyValues* TF2_KV = GetAppWorkshopManifest( 440 );
-	KeyValues* TF2_GR_KV = GetAppWorkshopManifest( 3826520 );
-	KeyValues* CF_KV = GetAppWorkshopManifest( 3768450 );
+	KeyValues* TF2_GR_KV = NULL; //GetAppWorkshopManifest( 3826520 );
+	KeyValues* CF_KV = NULL; //GetAppWorkshopManifest( 3768450 );
 	//const char* TF2C_Path = GetAppInstallDirNoSteam( 3545060 );
 	//KeyValues* TF2C_W_KV = GetAppWorkshopManifest( 3545060 );
 	if ( !TF2_KV )

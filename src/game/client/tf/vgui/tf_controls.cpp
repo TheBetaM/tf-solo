@@ -4257,16 +4257,16 @@ enum CustomMatchMapCategory
 	MapCategory_VSH,
 	MapCategory_ZI,
 
-	MapCategory_Hallow,
-	MapCategory_Xmas,
-
 	MapCategory_Workshop,
 	MapCategory_Workshop_TF2,
-	MapCategory_Workshop_TF2GR,
-	MapCategory_Workshop_CF,
 	
 	MapCategory_MAX,
 
+	MapCategory_Hallow,
+	MapCategory_Xmas,
+
+	MapCategory_Workshop_TF2GR,
+	MapCategory_Workshop_CF,
 	MapCategory_TF2C,
 	MapCategory_Workshop_TF2C,
 };
@@ -4292,6 +4292,12 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
 	m_pToolTip->SetTooltipDelay(0);
 
+	m_pNameFilterTextEntry = new vgui::TextEntry(this, "NameFilterTextEntry");
+	if (m_pNameFilterTextEntry)
+	{
+		m_pNameFilterTextEntry->AddActionSignalTarget(this);
+	}
+
 	m_iszRequestedMap = "";
 
 	m_pCategoryList = new vgui::ComboBox( this, "MapCategoryList", MapCategory_MAX, false );
@@ -4311,11 +4317,12 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_pCategoryList->AddItem("#Gametype_VSH", NULL);
 	m_pCategoryList->AddItem("#Gametype_ZI", NULL);
 
-	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
-	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
+	//m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
+	//m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
 	m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_Mod", NULL);
 	m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2", NULL);
+	/*
 	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
 	{
 		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2GR", NULL);
@@ -4324,6 +4331,8 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	{
 		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2GR_B", NULL);
 	}
+	*/
+	/*
 	if ( SteamApps()->BIsAppInstalled( 3768450 ) )
 	{
 		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_CF", NULL);
@@ -4332,6 +4341,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	{
 		m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_CF_B", NULL);
 	}
+	*/
 	if ( SteamApps()->BIsAppInstalled( 3545060 ) )
 	{
 		//m_pCategoryList->AddItem("#TFSOLO_MapSource_TF2C", NULL);
@@ -4371,14 +4381,53 @@ void CTFCustomMatchMapDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 	CreateControls();
 }
 
+bool CTFCustomMatchMapDialog::DoesMapPassSearchFilter( const char* pszMapName, const char* pszMapFile, const wchar_t* wszFilter )
+{
+	if ( wszFilter && *wszFilter && pszMapName && pszMapFile )
+	{
+		wchar_t wszNameBuffer[ 4096 ] = L"";
+		V_UTF8ToUnicode( pszMapName, wszNameBuffer, 4096 );
+		V_wcslower( wszNameBuffer );
+
+		wchar_t wszBuffer[ 4096 ] = L"";
+		V_UTF8ToUnicode( pszMapFile, wszBuffer, 4096 );
+		V_wcslower( wszBuffer );
+
+		if ( !wcsstr( wszBuffer, wszFilter ) && !wcsstr( wszNameBuffer, wszFilter ) )
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void CTFCustomMatchMapDialog::OnTextChanged( KeyValues* data )
 {
 	Panel* pPanel = reinterpret_cast<vgui::Panel*>( data->GetPtr("panel") );
+
 	vgui::ComboBox* pComboBox = dynamic_cast<vgui::ComboBox*>( pPanel );
 	if ( pComboBox && m_pCategoryList )
 	{
 		m_iSelectedCategory = m_pCategoryList->GetActiveItem();
 		CreateControls();
+	}
+
+	vgui::TextEntry *pTextEntry = dynamic_cast<vgui::TextEntry *>( pPanel );
+	if ( pTextEntry )
+	{
+		if ( pTextEntry == m_pNameFilterTextEntry )
+		{
+			m_wNameFilter.RemoveAll();
+			if ( m_pNameFilterTextEntry->GetTextLength() )
+			{
+				m_wNameFilter.EnsureCount( m_pNameFilterTextEntry->GetTextLength() + 1 );
+				m_pNameFilterTextEntry->GetText( m_wNameFilter.Base(), m_wNameFilter.Count() * sizeof(wchar_t) );
+				V_wcslower( m_wNameFilter.Base() );
+			}
+			CreateControls();
+			return;
+		}
 	}
 }
 
@@ -4488,6 +4537,7 @@ struct CTFCustomMatchMapInfo
 	const char* m_MapFile;
 	bool m_IsWorkshop;
 	const char* m_StateText;
+	int m_MapState;
 };
 
 int TFCustomMatchMapSort( CTFCustomMatchMapInfo const* p1, CTFCustomMatchMapInfo const* p2 )
@@ -4502,6 +4552,16 @@ void CTFCustomMatchMapDialog::CreateControls()
 {
 	DestroyControls();
 
+	enum MapState
+	{
+		MapState_Open = 0,
+		MapState_Visited = 1,
+		MapState_Locked = 2,
+		MapState_Hidden = 3,
+		MapState_LockedVisible = 4,
+		MapState_Mystery = 5,
+	};
+
 	Panel* objParent = m_pListPanel;
 
 	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
@@ -4511,6 +4571,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 	Color textNewColor = Color(255, 255, 0, 255);
 	Color textClearColor = Color(0, 255, 0, 255);
 	Color textShadowColor = Color(0, 0, 0, 255);
+	Color textRedColor = Color(255, 0, 0, 255);
 
 	bool bShowDisabled = false;
 	ConVarRef cl_show_disabled_maps( "cl_show_disabled_maps" );
@@ -4782,10 +4843,13 @@ void CTFCustomMatchMapDialog::CreateControls()
 		}
 
 		const char* pszStateText = "*NEW*";
+		int nMapState = MapState_Open;
 		if ( saveMaps && saveMaps->FindKey( key->GetName() ) )
 		{
-			pszStateText = "CLEAR";
+			pszStateText = ""; // "CLEAR";
 			KeyValues* pickupsSave = saveMaps->FindKey( key->GetName() );
+			nMapState = pickupsSave->GetInt( "State" );
+			/*
 			KeyValues* pickups = key->FindKey( "pickups" );
 			if ( pickups )
 			{
@@ -4806,6 +4870,22 @@ void CTFCustomMatchMapDialog::CreateControls()
 					pszStateText = CFmtStr("%d/%d", iPickups, iPickupsTotal);
 				}
 			}
+			*/
+		}
+
+		if ( nMapState == MapState_Hidden )
+		{
+			key = key->GetNextKey();
+			continue;
+		}
+
+		if ( m_wNameFilter.Count() != 0 )
+		{
+			if ( !DoesMapPassSearchFilter( key->GetName(), key->GetString("name"), m_wNameFilter.Base() ) )
+			{
+				key = key->GetNextKey();
+				continue;
+			}
 		}
 
 		CTFCustomMatchMapInfo info;
@@ -4815,6 +4895,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		info.m_ThumbArt = key->GetString("thumbArt");
 		info.m_IsWorkshop = isWorkshop;
 		info.m_StateText = V_strdup(pszStateText);
+		info.m_MapState = nMapState;
 
 		mapSort.AddToTail( info );
 		key = key->GetNextKey();
@@ -4834,7 +4915,18 @@ void CTFCustomMatchMapDialog::CreateControls()
 		holder->SetSize(256, 192);
 
 		ImagePanel* mapIcon = new ImagePanel(holder, "MapImage");
-		if ( map.m_ThumbArt && map.m_ThumbArt[0] )
+		if ( map.m_MapState == MapState_Locked || map.m_MapState == MapState_Mystery )
+		{
+			if ( map.m_IsWorkshop )
+			{
+				mapIcon->SetImage( "maps/menu_thumb_default_download" );
+			}
+			else
+			{
+				mapIcon->SetImage( "maps/menu_thumb_default" );
+			}
+		}
+		else if ( map.m_ThumbArt && map.m_ThumbArt[0] )
 		{
 			mapIcon->SetImage( map.m_ThumbArt );
 		}
@@ -4861,6 +4953,14 @@ void CTFCustomMatchMapDialog::CreateControls()
 		label->SetFont(hTextFont);
 		label->InvalidateLayout(true, true);
 		label->SetFgColor(textColor);
+		if ( map.m_MapState == MapState_Locked || map.m_MapState == MapState_Mystery )
+		{
+			label->SetText("???");
+		}
+		if ( map.m_MapState == MapState_Locked || map.m_MapState == MapState_LockedVisible )
+		{
+			label->SetFgColor(textRedColor);
+		}
 		label->SetZPos(10);
 		label->SetSize(256, 192);
 		label->SetMouseInputEnabled(false);
@@ -4872,6 +4972,10 @@ void CTFCustomMatchMapDialog::CreateControls()
 		labelShadow->SetTextInset(8, 3);
 		labelShadow->SetFont(hTextFont);
 		labelShadow->InvalidateLayout(true, true);
+		if ( map.m_MapState == MapState_Locked || map.m_MapState == MapState_Mystery )
+		{
+			label->SetText("???");
+		}
 		labelShadow->SetFgColor(textShadowColor);
 		labelShadow->SetZPos(9);
 		labelShadow->SetSize(256, 192);
@@ -4879,7 +4983,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		labelShadow->SetKeyBoardInputEnabled(false);
 		//labelShadow->SetWrap(true);
 
-		if (map.m_StateText)
+		if ( map.m_StateText && map.m_StateText[0] )
 		{
 			CExLabel* label = new CExLabel(holder, "UnplayedLabel", map.m_StateText);
 			label->SetContentAlignment(vgui::Label::a_northeast);
@@ -4911,19 +5015,22 @@ void CTFCustomMatchMapDialog::CreateControls()
 			labelShadow->SetKeyBoardInputEnabled(false);
 		}
 
-		CFmtStr1024 fmtMapCommand(
-			"map$%s", map.m_MapFile
-		);
-		CExButton* mapButton = new CExButton(holder, "MapButton", "", this, fmtMapCommand);
-		mapButton->SetSize(256, 192);
-		mapButton->SetZPos(4);
-		mapButton->AddActionSignalTarget(this);
-		mapButton->SetVisible(true);
-		if ( !bFirstItem )
+		if ( map.m_MapState != MapState_Locked && map.m_MapState != MapState_LockedVisible )
 		{
-			mapButton->SetArmed(true);
-			m_iszRequestedMap = V_strdup(map.m_MapFile);
-			bFirstItem = true;
+			CFmtStr1024 fmtMapCommand(
+				"map$%s", map.m_MapFile
+			);
+			CExButton* mapButton = new CExButton(holder, "MapButton", "", this, fmtMapCommand);
+			mapButton->SetSize(256, 192);
+			mapButton->SetZPos(4);
+			mapButton->AddActionSignalTarget(this);
+			mapButton->SetVisible(true);
+			if ( !bFirstItem )
+			{
+				mapButton->SetArmed(true);
+				m_iszRequestedMap = V_strdup(map.m_MapFile);
+				bFirstItem = true;
+			}
 		}
 
 		m_pListPanel->AddItem(NULL, holder);

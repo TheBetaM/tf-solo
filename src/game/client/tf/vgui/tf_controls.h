@@ -370,8 +370,9 @@ public:
 
 	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
 	virtual void	ApplySettings(KeyValues* pResourceData);
+	bool DoesMapPassSearchFilter(const char* pszMapName, const char* pszMapFile, const wchar_t* pszText );
 
-	void	Deploy(void);
+	void	Deploy( void );
 
 	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
 
@@ -379,6 +380,8 @@ public:
 	vgui::Panel* m_SelectedMapPanel;
 	int m_iSelectedCategory;
 	vgui::ComboBox* m_pCategoryList;
+	CUtlVector<wchar_t>	m_wNameFilter;
+	vgui::TextEntry* m_pNameFilterTextEntry;
 
 private:
 

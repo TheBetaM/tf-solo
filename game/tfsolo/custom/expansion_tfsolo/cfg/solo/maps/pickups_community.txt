@@ -4214,7 +4214,7 @@ maps_config
 				}
 			}
 		}
-		sd_marshlands
+		htf_marshlands
 		{
 			pickups
 			{
