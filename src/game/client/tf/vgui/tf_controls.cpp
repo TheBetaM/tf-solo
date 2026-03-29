@@ -4141,6 +4141,48 @@ void CTFCustomMatchModeDialog::CreateControls()
 			label->SetFgColor( textYellowColor );
 		}
 
+		if ( mode.ModeOverride != 0 || ( mode.MapMod && mode.MapMod[0] ) || ( mode.MapOverride && mode.MapOverride[0] ) )
+		{
+			CExLabel* statelabel = new CExLabel(holder, "StateLabel", "MOD");
+			statelabel->SetContentAlignment(vgui::Label::a_northeast);
+			statelabel->SetTextInset(5, 0);
+			statelabel->SetFont(hTextFont);
+			statelabel->InvalidateLayout(true, true);
+			if ( ( mode.MapMod && mode.MapMod[0] ) || ( mode.MapOverride && mode.MapOverride[0] ) )
+			{
+				statelabel->SetFgColor(textYellowColor);
+				statelabel->SetText("MOD");
+			}
+			else
+			{
+				statelabel->SetFgColor(textColor);
+				statelabel->SetText("AUTOMOD");
+			}
+			statelabel->SetZPos(10);
+			statelabel->SetSize(256, 192);
+			statelabel->SetMouseInputEnabled(false);
+			statelabel->SetKeyBoardInputEnabled(false);
+
+			CExLabel* statelabelShadow = new CExLabel(holder, "UnplayedLabelShadow", "MOD");
+			statelabelShadow->SetContentAlignment(vgui::Label::a_northeast);
+			statelabelShadow->SetTextInset(8, 3);
+			statelabelShadow->SetFont(hTextFont);
+			statelabelShadow->InvalidateLayout(true, true);
+			statelabelShadow->SetFgColor(textShadowColor);
+			if ( ( mode.MapMod && mode.MapMod[0] ) || ( mode.MapOverride && mode.MapOverride[0] ) )
+			{
+				statelabelShadow->SetText("MOD");
+			}
+			else
+			{
+				statelabelShadow->SetText("AUTOMOD");
+			}
+			statelabelShadow->SetZPos(9);
+			statelabelShadow->SetSize(256, 192);
+			statelabelShadow->SetMouseInputEnabled(false);
+			statelabelShadow->SetKeyBoardInputEnabled(false);
+		}
+
 		CFmtStr1024 fmtModeDesc(
 			"%s_Desc", mode.ModeName
 		);
