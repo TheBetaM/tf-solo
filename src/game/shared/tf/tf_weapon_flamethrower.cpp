@@ -22,7 +22,7 @@
 	#include "haptics/ihaptics.h"
 	#include "c_tf_gamestats.h"
 
-	ConVar tf_flamethrower_oldeffects( "tf_flamethrower_oldeffects", "1", FCVAR_ARCHIVE, "Use the old flame particle effects." );
+	ConVar tf_flamethrower_oldeffects( "tf_flamethrower_oldeffects", "0", FCVAR_ARCHIVE, "Use the old flame particle effects." );
 #else
 
 	#include "explode.h"

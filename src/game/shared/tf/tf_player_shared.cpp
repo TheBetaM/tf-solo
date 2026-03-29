@@ -182,7 +182,7 @@ ConVar tf_feign_death_duration( "tf_feign_death_duration", "3.0", FCVAR_REPLICAT
 ConVar tf_feign_death_speed_duration( "tf_feign_death_speed_duration", "3.0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT, "Time that feign death speed boost last." );
 
 ConVar tf_allow_taunt_switch( "tf_allow_taunt_switch", "0", FCVAR_REPLICATED, "0 - players are not allowed to switch weapons while taunting, 1 - players can switch weapons at the start of a taunt (old bug behavior), 2 - players can switch weapons at any time during a taunt." );
-ConVar tf_allow_taunt_aerial( "tf_allow_taunt_aerial", "1", FCVAR_REPLICATED, "Allow taunting while not grounded." );
+ConVar tf_allow_taunt_aerial( "tf_allow_taunt_aerial", "0", FCVAR_REPLICATED, "Allow taunting while not grounded." );
 ConVar tf_allow_taunt_disguised( "tf_allow_taunt_disguised", "1", FCVAR_REPLICATED, "Allow taunting while disguised or invisible." );
 
 ConVar tf_allow_all_team_partner_taunt( "tf_allow_all_team_partner_taunt", "1", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );

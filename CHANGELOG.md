@@ -111,12 +111,6 @@ GetDamageDone(), GetCrits(), GetPoints()
 - Moved TFBot.GenerateAndWearItem to TFPlayer and optimized execution time
 - Added IncludeScriptsDir(string, scope) to include all files in a directory
 ## Item changes
-- Shortstop  
--- Removed 50% reload speed penalty   
-  
-- Gunboats  
--- Now also usable by Demoman  
--- Added: Allows wearer to stick to walls by jumping into them  
 - Righteous Bison  
 -- Allow the projectile to deal damage every tick, instead of every 2 ticks  
 - B.A.S.E. Jumper  
@@ -126,30 +120,13 @@ GetDamageDone(), GetCrits(), GetPoints()
   
 - Rainblower  
 -- Removed Pyrovision requirement  
-- Backburner  
--- Added: Airblast dashes  
 - Manmelter  
--- Removed flaming particle effect obstructing view  
-- Panic Attack  
--- Reverted to its original functionality/older stats:  
--- +50% reload speed  
--- +30% firing speed  
+-- Removed flaming particle effect that was obstructing view  
 - Gas Passer  
 -- Gas meter now starts full and resupplies  
 - Lollichop  
 -- Removed Pyrovision requirement  
-- Axtinguisher  
--- Reverted to original stats:  
--- 100% critical chance vs burning players  
--- -50% damage vs non-burning players  
--- No critical hits vs non-burning players  
   
-- Loch-n-Load  
--- Reverted to older stats:  
--- Replaced +20% damage to buildings with +20% damage bonus   
-- Stickybomb Jumper  
--- Reverted to older stats:  
--- Removed max sticky active penalty  
 - Ullapool Caber  
 -- Reverted to older stats:  
 -- Increased base explosion damage from 75 to 100  
@@ -164,9 +141,6 @@ GetDamageDone(), GetCrits(), GetPoints()
 -- Added: -25% damage penalty  
 - Eviction Notice  
 -- Removed maximum health drain  
-  
-- Pomson 6000  
--- Added projectile penetration  
   
 - Sydney Sleeper  
 -- Reverted to older stats:  
