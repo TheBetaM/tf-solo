@@ -1,0 +1,214 @@
+"wear_level_3"
+{
+	"combine_multiply"
+	{
+		"texture_lookup"
+		{
+			"texture"		"models/weapons/c_models/c_minigun/p_minigun_ao"
+		}
+		"texture_lookup"
+		{
+			"texture"		"patterns/paint_dirt"
+			"adjust_black"		"0"
+			"adjust_offset"		"255"
+			"adjust_gamma"		".8 1.0"
+			"rotation"		"0 360"
+			"translate_u"		"0.0 1.0"
+			"translate_v"		"0.0 1.0"
+			"scale_uv"		"2.000000"
+		}
+		"texture_lookup"
+		{
+			"texture"		"patterns/paint_blood"
+			"adjust_black"		"0"
+			"adjust_offset"		"255"
+			"adjust_gamma"		"1.000000"
+			"rotation"		"0 360"
+			"translate_u"		"0.0 1.0"
+			"translate_v"		"0.0 1.0"
+			"scale_uv"		"0.4 0.5"
+		}
+		"apply_sticker"
+		{
+			"sticker"
+			{
+				"base"		"patterns/combat/sticker_wilde_sau"
+				"weight"		"1"
+			}
+			"dest_tl"		"0.2857072949 0.1381493211"
+			"dest_tr"		"0.2856124938 0.04769086838"
+			"dest_bl"		"0.3622901142 0.138037324"
+			"combine_lerp"
+			{
+				"texture_lookup"
+				{
+					"texture"		"models/weapons/c_models/c_minigun/p_minigun_albedo"
+				}
+				"combine_lerp"
+				{
+					"combine_lerp"
+					{
+						"combine_lerp"
+						{
+							"combine_lerp"
+							{
+								"combine_lerp"
+								{
+									"combine_lerp"
+									{
+										"texture_lookup"
+										{
+											"texture"		"models/weapons/c_models/c_minigun/p_minigun_albedo"
+											"rotation"		"0"
+											"translate_u"		"0.000000"
+											"translate_v"		"0.000000"
+											"scale_uv"		"1.000000"
+										}
+										"texture_lookup"
+										{
+											"texture"		"patterns/combat/olive"
+											"rotation"		"0 360"
+											"translate_u"		"0.0 1.0"
+											"translate_v"		"0.0 1.0"
+											"scale_uv"		"1.25 2.0"
+										}
+										"Select"
+										{
+											"groups"		"patterns/combat/c_minigun_focke_wulf_groups"
+											"Select"		"180"
+										}
+									}
+									"texture_lookup"
+									{
+										"texture"		"patterns/combat/blue_grey"
+										"rotation"		"0 360"
+										"translate_u"		"0.0 1.0"
+										"translate_v"		"0.0 1.0"
+										"scale_uv"		"1.25 2.0"
+									}
+									"Select"
+									{
+										"groups"		"patterns/combat/c_minigun_focke_wulf_groups"
+										"Select"		"112"
+									}
+								}
+								"texture_lookup"
+								{
+									"texture"		"patterns/combat/camo_grey_blue"
+									"rotation"		"0 360"
+									"translate_u"		"0.0 1.0"
+									"translate_v"		"0.0 1.0"
+									"scale_uv"		"2.0 3.25"
+								}
+								"Select"
+								{
+									"groups"		"patterns/combat/c_minigun_focke_wulf_groups"
+									"Select"		"128"
+								}
+							}
+							"texture_lookup"
+							{
+								"texture"		"patterns/combat/lemon"
+								"rotation"		"0 360"
+								"translate_u"		"0.0 1.0"
+								"translate_v"		"0.0 1.0"
+								"scale_uv"		"1"
+							}
+							"Select"
+							{
+								"groups"		"patterns/combat/c_minigun_focke_wulf_groups"
+								"Select"		"96"
+							}
+						}
+						"texture_lookup"
+						{
+							"texture"		"patterns/combat/black"
+							"rotation"		"0 360"
+							"translate_u"		"0.0 1.0"
+							"translate_v"		"0.0 1.0"
+							"scale_uv"		"1"
+						}
+						"Select"
+						{
+							"groups"		"patterns/combat/c_minigun_focke_wulf_groups"
+							"Select"		"64"
+						}
+					}
+					"texture_lookup"
+					{
+						"texture"		"patterns/combat/checks_yellow_black"
+						"rotation"		"0"
+						"translate_u"		"0.0 1.0"
+						"translate_v"		"0.0 1.0"
+						"scale_uv"		"3 5"
+					}
+					"Select"
+					{
+						"groups"		"patterns/combat/c_minigun_focke_wulf_groups"
+						"Select"		"32"
+					}
+				}
+				"combine_multiply"
+				{
+					"texture_lookup"
+					{
+						"texture"		"patterns/paint_scratches"
+						"adjust_black"		"100"
+						"adjust_offset"		"40 100"
+						"adjust_gamma"		"0.400000"
+						"rotation"		"0 360"
+						"translate_u"		"0.0 1.0"
+						"translate_v"		"0.0 1.0"
+						"scale_uv"		".75 1.25"
+					}
+					"combine_lerp"
+					{
+						"combine_multiply"
+						{
+							"texture_lookup"
+							{
+								"texture"		"patterns/paint_scratches"
+								"adjust_black"		"35"
+								"adjust_offset"		"70 90"
+								"adjust_gamma"		"0.250000"
+								"rotation"		"0 360"
+								"translate_u"		"0.0 1.0"
+								"translate_v"		"0.0 1.0"
+								"scale_uv"		"4"
+							}
+							"texture_lookup"
+							{
+								"texture"		"patterns/paint_scratches"
+								"adjust_black"		"150"
+								"adjust_offset"		"65 85"
+								"adjust_gamma"		".8 1.5"
+								"rotation"		"0 360"
+								"translate_u"		"0.0 1.0"
+								"translate_v"		"0.0 1.0"
+								"scale_uv"		"1"
+							}
+						}
+						"texture_lookup"
+						{
+							"texture"		"patterns/paint_dirt"
+						}
+						"texture_lookup"
+						{
+							"texture"		"models/weapons/c_models/c_minigun/p_minigun_wearblend"
+							"adjust_black"		"25"
+							"adjust_offset"		"200"
+							"adjust_gamma"		"0.750000"
+						}
+					}
+					"texture_lookup"
+					{
+						"texture"		"models/weapons/c_models/c_minigun/p_minigun_wearblend"
+						"adjust_black"		"15 60"
+						"adjust_offset"		"90"
+						"adjust_gamma"		"0.65 1.0"
+					}
+				}
+			}
+		}
+	}
+}

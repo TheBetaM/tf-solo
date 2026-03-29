@@ -3606,22 +3606,45 @@ public:
 
 		// Start the composite. 
 		KeyValues* rootKV = NULL;
+
+		bool bCustomKV = false;
+		static CSchemaAttributeDefHandle pAttr_CustomPaintKitKV( "paintkit_kv" );
+		const char* pszKVFile = NULL;
+		bool bHasCustomKV = FindAttribute_UnsafeBitwiseCast<CAttribute_String>( pItem, pAttr_CustomPaintKitKV, &pszKVFile );
+		if ( bHasCustomKV && pszKVFile && *pszKVFile )
+		{
+			rootKV = new KeyValues( "paintkit_kv" );
+			if ( rootKV->LoadFromFile( g_pFullFileSystem, pszKVFile, "GAME" ) )
+			{
+				bCustomKV = true;
+			}
+			else
+			{
+				rootKV->deleteThis();
+				rootKV = NULL;
+			}
+		}
+
 		float flWear = 0;
-		if ( !GetPaintKitWear( pItem, flWear ) )
+		if ( !GetPaintKitWear( pItem, flWear ) && !bCustomKV )
 		{
 			return;
 		}
 		int nWear = EconWear_ToIntCategory( flWear );
 
 		uint32 unPaintKitDefIndex = uint32(-1);
-		if ( !GetPaintKitDefIndex( pItem, &unPaintKitDefIndex ) )
+		if ( !GetPaintKitDefIndex( pItem, &unPaintKitDefIndex ) && !bCustomKV )
 		{
 			return;
 		}
 
+		if ( bCustomKV )
+		{
+			unPaintKitDefIndex = pItem->GetItemDefIndex();
+		}
 
 		const GameItemDefinition_t* tfItemDef = pItem->GetItemDefinition();
-		if ( tfItemDef )
+		if ( tfItemDef && !bCustomKV )
 		{
 			const CPaintKitDefinition* pDef = assert_cast< const CPaintKitDefinition* >( GetProtoScriptObjDefManager()->GetDefinition( ProtoDefID_t( DEF_TYPE_PAINTKIT_DEFINITION, unPaintKitDefIndex ) ) );
 			if ( pDef )
@@ -3684,8 +3707,18 @@ public:
 				}
 
 				SafeRelease( pWeaponSkinBaseCompositor );
+
+				if ( bCustomKV )
+				{
+					rootKV->deleteThis();
+				}
 				return;
 			} 
+
+			if ( bCustomKV )
+			{
+				rootKV->deleteThis();
+			}
 		}
 
 	}

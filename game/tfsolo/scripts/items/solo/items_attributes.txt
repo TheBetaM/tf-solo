@@ -592,6 +592,14 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		"100060"
+		{
+			"name"	"paintkit_kv"
+			"attribute_class"	"paintkit_kv"
+			"attribute_type"	"string"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+		}
 		
 		
 	}

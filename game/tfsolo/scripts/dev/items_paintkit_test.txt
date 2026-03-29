@@ -1,0 +1,22 @@
+"items_game"
+{
+	"items"
+	{
+		"100020"
+		{
+			"name" "Solo Decor Test"
+			"prefab" "weapon_minigun"
+			"item_name"	"Decor Test"
+			"visuals"
+			{
+				"material_override"	"models/paintkits/c_minigun/c_minigun_focke_wulf"
+			}
+			"static_attrs"
+			{
+				"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+		}
+	}
+}
