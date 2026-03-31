@@ -16,6 +16,7 @@
 				"tfsolo_substitute" "1"
 			}
 		}
+		
 		"tfsolo_sub_scattergun"
 		{
 			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_scattergun"
@@ -48,9 +49,31 @@
 			//	"material_override"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher"
 			//}
 		}
-		"tfsolo_sub_shotgun"
+		"tfsolo_sub_shotgun_multiclass"
 		{
 			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_shotgun_multiclass"
+			//"visuals"
+			//{
+			//	"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			//}
+		}
+		"tfsolo_sub_shotgun"
+		{
+			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_shotgun"
+			"item_slot"	"secondary"
+			//"visuals"
+			//{
+			//	"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			//}
+		}
+		"tfsolo_sub_shotgun_primary"
+		{
+			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_shotgun"
+			"item_slot"	"primary"
+			"used_by_classes"
+			{
+				"engineer" "1"
+			}
 			//"visuals"
 			//{
 			//	"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
@@ -112,7 +135,13 @@
 		}
 		"tfsolo_sub_eyelander"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_eyelander"
+			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_sword"
+			"image_inventory" "backpack/weapons/c_models/c_claymore/c_claymore"
+			"model_player" "models/weapons/c_models/c_claymore/c_claymore.mdl"
+			"used_by_classes"
+			{
+				"demoman" "1"
+			}
 		}
 		"tfsolo_sub_minigun"
 		{
@@ -232,124 +261,253 @@
 			//	"material_override"	"models/weapons/c_models/c_knife/c_knife"
 			//}
 		}
-		"tfsolo_weapon_spineyard_tommygun"
+		"tfsolo_sub_knife_item2"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_charged_smg"
-			"tags"
+			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_spy_knife_item2"
+		}
+		
+		"tfsolo_sub_baby_face_blaster"
+		{
+			"prefab" "tfsolo_sub_scattergun"
+			"visuals"
 			{
-				"can_deal_damage"			"1"
-				"can_deal_critical_damage"	"1"
-				"can_deal_mvm_penetration_damage"	"1"
-				"can_deal_long_distance_damage"	"1"
+				"material_override"	"models/weapons/c_models/c_scattergun/c_scattergun"
 			}
-			"base_item_name" "TF_WEAPON_SMG"
-			"inspect_panel_dist" "39"
-			"show_in_armory" "1"
-			"item_slot"	"secondary"
-			"attach_to_hands" "1"
-			"used_by_classes"
-			{
-				"sniper" "1"
-			}
-			"mouse_pressed_sound" "ui/item_light_gun_pickup.wav"
-			"drop_sound" "ui/item_light_gun_drop.wav"
+			"item_class" "tf_weapon_pep_brawler_blaster"
+			"item_name"	"BFB Substitute"
+			"item_description"	""
 			"static_attrs"
 			{
-				"weapon_stattrak_module_scale" "0.505"
-				"min_viewmodel_offset" "10 0 -7"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
 				"weapon_allow_inspect" "1"
 				"use_model_cache_icon" "1"
 			}
-			"xifier_class_remap" "weapon_smg"
-			"particle_suffix" "smg"
-			"item_logname"	"spineyard_tommygun"
-			"item_iconname"	"spineyard_tommygun"
-			"item_type_name" "SMG"
-			"item_name"	"The Mob Warrior"
-			"image_inventory" "backpack/weapons/w_models/w_smg"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"model_player" "models/props_tuscany/tommygun_01.mdl"
-			"propername" "1"
 			"attributes"
 			{
-				"fire rate penalty"
+				"move speed penalty"
 				{
-					"attribute_class" "mult_postfiredelay"
-					"value" "1.25"
+					"attribute_class" "mult_player_movespeed"
+					"value"	"0.90"
+				}
+				"boost on damage"
+				{
+					"attribute_class" "boost_on_damage"
+					"value"	"1"
+				}
+				"hype resets on jump"
+				{
+					"attribute_class" "hype_resets_on_jump"
+					"value"	"75"
+				}
+				"lose hype on take damage"
+				{
+					"attribute_class" "lose_hype_on_take_damage"
+					"value"	"4"
 				}
 				"clip size penalty"
 				{
 					"attribute_class" "mult_clipsize"
-					"value"	"0.80"
+					"value"	"0.66"
+				}
+			}
+		}
+		"tfsolo_sub_back_scatter"
+		{
+			"prefab" "tfsolo_sub_scattergun"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_scattergun/c_scattergun"
+			}
+			"item_name"	"Back Scatter Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"closerange backattack minicrits"
+				{
+					"attribute_class" "closerange_backattack_minicrits"
+					"value" "1"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.66"
+				}
+				"spread penalty"
+				{
+					"attribute_class" "mult_spread_scale"
+					"value" "1.20"
 				}
 				"crit mod disabled"
 				{
 					"attribute_class" "mult_crit_chance"
 					"value"	"0"
 				}
-				"minicrit_boost_charge_rate"
-				{
-					"attribute_class" "minicrit_boost_charge_rate"
-					"value" "1"
-				}
-				"minicrit_boost_when_charged"
-				{
-					"attribute_class" "minicrit_boost_when_charged"
-					"value" "8"
-				}
 			}
 		}
-		"tfsolo_weapon_wallboots"
+		"tfsolo_sub_soda_popper"
 		{
-			"prefab" "tfsolo_item"
-			"item_class" "tf_wearable"
-			"craft_material_type" "weapon"
-			"loadondemand" "1"
-			"show_in_armory" "1"
-			"item_type_name" "#TF_Wearable_Boots"
-			"item_name"	"The Wallboots"
-			"item_slot"	"secondary"
-			"equip_region" "feet"
-			"anim_slot"	"FORCE_NOT_USED"
-			"propername" "1"
-			"image_inventory" "backpack/weapons/solo/c_wallboots"
+			"prefab" "tfsolo_sub_scattergun"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_scattergun/c_scattergun"
+			}
+			"item_name"	"Soda Popper Substitute"
+			"item_description"	"#TF_SodaPopper_Desc"
+			"image_inventory" "backpack/weapons/c_models/c_double_barrel"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
-			"model_player" "models/weapons/solo/c_wallboots.mdl"
-			"act_as_wearable" "1"
-			"used_by_classes"
+			"model_player" "models/weapons/c_models/c_double_barrel.mdl"
+			"item_class" "tf_weapon_soda_popper"
+			"item_slot"	"primary"
+			"anim_slot"	"item2"
+			"static_attrs"
 			{
-				"soldier" "secondary"
-				"demoman" "primary"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
-				"blast dmg to self reduced"
+				"Reload time decreased"
 				{
-					"attribute_class" "blast_dmg_to_self"
-					"value" "0.4"
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.75"
 				}
-				"stick_to_walls"
+				"fire rate bonus"
 				{
-					"attribute_class" "stick_to_walls"
+					"attribute_class"	"mult_postfiredelay"
+					"value" "0.5"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "0.34"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
 					"value"	"1"
 				}
-				"allowed in medieval mode"
+				"hype on damage"
 				{
-					"attribute_class" "allowed_in_medieval_mode"
+					"attribute_class"	"hype_on_damage"
+					"value"	"1"
+				}
+				"disable fancy class select anim"
+				{
+					"attribute_class"	"disable_fancy_class_select_anim"
 					"value"	"1"
 				}
 			}
-			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
-			"drop_sound" "ui/item_metal_weapon_drop.wav"
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE" "ACT_ITEM2_VM_IDLE"
+					"ACT_VM_DRAW" "ACT_ITEM2_VM_DRAW"
+					"ACT_VM_HOLSTER" "ACT_ITEM2_VM_HOLSTER"
+					"ACT_VM_PULLBACK" "ACT_ITEM2_VM_PULLBACK"
+					"ACT_VM_PRIMARYATTACK" "ACT_ITEM2_VM_PRIMARYATTACK"
+					"ACT_VM_SECONDARYATTACK" "ACT_ITEM2_VM_SECONDARYATTACK"
+					"ACT_VM_RELOAD" "ACT_ITEM2_VM_RELOAD"
+					"ACT_VM_DRYFIRE" "ACT_ITEM2_VM_DRYFIRE"
+					"ACT_VM_IDLE_TO_LOWERED" "ACT_ITEM2_VM_IDLE_TO_LOWERED"
+					"ACT_VM_IDLE_LOWERED" "ACT_ITEM2_VM_IDLE_LOWERED"
+					"ACT_VM_LOWERED_TO_IDLE" "ACT_ITEM2_VM_LOWERED_TO_IDLE"
+					"ACT_PRIMARY_VM_INSPECT_START" "ACT_ITEM2_VM_INSPECT_START"
+					"ACT_PRIMARY_VM_INSPECT_IDLE" "ACT_ITEM2_VM_INSPECT_IDLE"
+					"ACT_PRIMARY_VM_INSPECT_END" "ACT_ITEM2_VM_INSPECT_END"
+				}
+				"sound_single_shot" "Weapon_Scatter_Gun_Double.Single"
+				"sound_burst" "Weapon_Scatter_Gun_Double.SingleCrit"
+				"muzzle_flash" "muzzle_bignasty"
+				"tracer_effect"	"bullet_bignasty_tracer01"
+			}
 		}
-		"tfsolo_weapon_critdrink"
+		"tfsolo_sub_winger"
+		{
+			"prefab" "tfsolo_sub_pistol"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_pistol/c_pistol"
+			}
+			"item_name"	"Winger Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage bonus"
+				{
+					"attribute_class" "mult_dmg"
+					"value" "1.15"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.4"
+				}
+				"increased jump height from weapon"
+				{
+					"attribute_class" "mod_jump_height_from_weapon"
+					"value" "1.25"
+				}
+			}
+		}
+		"tfsolo_sub_pocket_pistol"
+		{
+			"prefab" "tfsolo_sub_pistol"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_pistol/c_pistol"
+			}
+			"item_name"	"Pocket Pistol Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class" "provide_on_active"
+					"value" "1"
+				}
+				"heal on hit for rapidfire"
+				{
+					"attribute_class" "add_onhit_addhealth"
+					"value"	"3"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value" "0.85"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_sub_critacola"
 		{
 			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_scout_drink"
 			"item_name"	"Critee Cool!"
-			"item_description" ""
+			"item_description" "#TF_Unique_EnergyDrink_CritCola_Desc"
 			"image_inventory" "backpack/weapons/c_models/c_energy_drink/c_energy_drink"
 			"inspect_panel_dist" 			"20"
 			"model_player" "models/weapons/c_models/c_energy_drink/c_energy_drink.mdl"
@@ -376,44 +534,185 @@
 				}
 			}
 		}
-		"tfsolo_weapon_rocketlauncher_center"
+		"tfsolo_sub_candy_cane"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_rocketlauncher"
-			"tags"
+			"prefab" "tfsolo_sub_bat"
+			"visuals"
 			{
-				"can_deal_damage"		"1"
-				"can_deal_gib_damage"	"1"
-				"can_deal_posthumous_damage"	"1"
-				"can_deal_critical_damage"	"1"
-				"can_deal_long_distance_damage"	"1"
+				//"material_override" "models/weapons/c_models/c_pistol/c_pistol"
 			}
-			"show_in_armory" "1"
-			"item_type_name" "#TF_Weapon_RocketLauncher"
-			"item_name"	"Rocket Center"
-			"item_slot"	"primary"
-			"propername" "1"
-			"inspect_panel_dist" "68"
-			"image_inventory" "backpack/weapons/w_models/w_rocketlauncher"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"model_player" "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
-			"attach_to_hands" "1"
-			"used_by_classes"
-			{
-				"soldier" "1"
-			}
+			"item_name"	"Candy Cane Substitute"
+			"item_description"	""
 			"static_attrs"
 			{
-				"min_viewmodel_offset" "10 0 -5"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
-				"centerfire projectile"
+				"drop health pack on kill"
 				{
-					"attribute_class" "centerfire_projectile"
+					"attribute_class" "drop_health_pack_on_kill"
+					"value" "1"
+				}
+				"dmg taken from blast increased"
+				{
+					"attribute_class" "mult_dmgtaken_from_explosions"
+					"value" "1.25"
+				}
+			}
+		}
+		"tfsolo_sub_boston_basher"
+		{
+			"prefab" "tfsolo_sub_bat"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_pistol/c_pistol"
+			}
+			"item_name"	"Boston Basher Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"bleeding duration"
+				{
+					"attribute_class" "bleeding_duration"
+					"value" "5"
+				}
+				"hit self on miss"
+				{
+					"attribute_class" "hit_self_on_miss"
 					"value"	"1"
 				}
+			}
+		}
+		"tfsolo_sub_sunonastick"
+		{
+			"prefab" "tfsolo_sub_bat"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_pistol/c_pistol"
+			}
+			"item_name"	"Sun-on-a-Stick Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"crit vs burning players"
+				{
+					"attribute_class" "or_crit_vs_playercond"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.75"
+				}
+				"dmg taken from fire reduced on active"
+				{
+					"attribute_class" "mult_dmgtaken_from_fire_active"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_sub_fanowar"
+		{
+			"prefab" "tfsolo_sub_bat"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_pistol/c_pistol"
+			}
+			"item_name"	"Fan O'War Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"mark for death"
+				{
+					"attribute_class" "mark_for_death"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.25"
+				}
+				"minicrits become crits"
+				{
+					"attribute_class" "minicrits_become_crits"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_atomizer"
+		{
+			"prefab" "tfsolo_sub_bat"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_pistol/c_pistol"
+			}
+			"item_name"	"Atomizer Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"air dash count"
+				{
+					"attribute_class" "air_dash_count"
+					"value"	"1"
+				}
+				"single wep deploy time increased"
+				{
+					"attribute_class" "mult_single_wep_deploy_time"
+					"value"	"1.5"
+				}
+				"dmg penalty vs players"
+				{
+					"attribute_class" "mult_dmg_vs_players"
+					"value"	"0.85"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_original"
+		{
+			"prefab" "tfsolo_sub_rocketlauncher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher"
+			}
+			"item_name"	"Rocket Center"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
 			"visuals"
 			{
@@ -430,7 +729,7 @@
 					"ACT_MP_RELOAD_CROUCH_PRIMARY" "ACT_MP_RELOAD_CROUCH_PRIMARY3"
 					"ACT_MP_RELOAD_AIRWALK_PRIMARY"	"ACT_MP_RELOAD_AIRWALK_PRIMARY3"
 					"ACT_MP_RELOAD_STAND_PRIMARY_LOOP" "ACT_MP_RELOAD_STAND_PRIMARY3_LOOP"
-					"ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP"	"ACT_MP_RELOAD_CROUCH_PRIMARY3_LOOP"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP" "ACT_MP_RELOAD_CROUCH_PRIMARY3_LOOP"
 					"ACT_MP_RELOAD_AIRWALK_PRIMARY_LOOP" "ACT_MP_RELOAD_AIRWALK_PRIMARY3_LOOP"
 					"ACT_MP_RELOAD_STAND_PRIMARY_END" "ACT_MP_RELOAD_STAND_PRIMARY3_END"
 					"ACT_MP_RELOAD_CROUCH_PRIMARY_END" "ACT_MP_RELOAD_CROUCH_PRIMARY3_END"
@@ -441,34 +740,51 @@
 					"ACT_PRIMARY_VM_INSPECT_END" "ACT_PRIMARY_ALT1_VM_INSPECT_END"
 				}
 			}
-			"mouse_pressed_sound" "ui/item_heavy_gun_pickup.wav"
-			"drop_sound" "ui/item_heavy_gun_drop.wav"
 		}
-		"tfsolo_weapon_rocketlauncher_training"
+		"tfsolo_sub_black_box"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_rocketlauncher"
-			"show_in_armory" "1"
-			"item_type_name" "#TF_Weapon_RocketLauncher"
-			"item_name"	"Rocket Trainer"
-			"item_description" "#TF_Weapon_RocketLauncher_Jump_Desc"
-			"item_slot"	"primary"
-			"propername" "1"
-			"image_inventory" "backpack/weapons/w_models/w_rocketlauncher"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"model_player" "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
-			"attach_to_hands" "1"
-			"used_by_classes"
+			"prefab" "tfsolo_sub_rocketlauncher"
+			"visuals"
 			{
-				"soldier" "1"
+				"material_override"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher"
 			}
+			"item_name"	"Black Box Substitute"
+			"item_description"	""
 			"static_attrs"
 			{
-				"min_viewmodel_offset" "10 -3 -10"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
-			"mouse_pressed_sound" "ui/item_heavy_gun_pickup.wav"
-			"drop_sound" "ui/item_heavy_gun_drop.wav"
+			"attributes"
+			{
+				"health on radius damage"
+				{
+					"attribute_class" "add_health_on_radius_damage"
+					"value"	"20"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_sub_rocket_jumper"
+		{
+			"prefab" "tfsolo_sub_rocketlauncher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher"
+			}
+			"item_name"	"Rocket Trainer"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
 			"attributes"
 			{
 				"damage penalty"
@@ -498,68 +814,90 @@
 				}
 			}
 		}
-		"tfsolo_weapon_sticky_training"
+		"tfsolo_sub_liberty_launcher"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_pipebomblauncher"
-			"show_in_armory" "1"
-			"item_type_name" "#Tf_Weapon_Pipebomblauncher"
-			"item_name"	"Stickybomb Trainer"
-			"item_description" "#TF_Weapon_StickyBomb_Jump_Desc"
-			"item_slot"	"secondary"
-			"anim_slot"	"primary"
-			"propername" "1"
-			"image_inventory" "backpack/weapons/w_models/w_stickybomb_launcher"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"inspect_panel_dist" "50"
-			"model_player" "models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher.mdl"
-			"attach_to_hands" "1"
-			"used_by_classes"
+			"prefab" "tfsolo_sub_rocketlauncher"
+			"visuals"
 			{
-				"demoman" "1"
+				"material_override"	"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher"
 			}
+			"item_name"	"Liberty Launcher Substitute"
+			"item_description"	""
 			"static_attrs"
 			{
-				"min_viewmodel_offset" "10 0 -10"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
-			"mouse_pressed_sound" "ui/item_heavy_gun_pickup.wav"
-			"drop_sound" "ui/item_heavy_gun_drop.wav"
 			"attributes"
 			{
+				"Projectile speed increased"
+				{
+					"attribute_class" "mult_projectile_speed"
+					"value"	"1.4"
+				}
 				"damage penalty"
 				{
 					"attribute_class" "mult_dmg"
-					"value"	"0"
+					"value" "0.75"
 				}
-				"crit mod disabled"
+				"clip size bonus"
 				{
-					"attribute_class" "mult_crit_chance"
-					"value"	"0"
+					"attribute_class" "mult_clipsize"
+					"value" "1.25"
 				}
-				"no self blast dmg"
+				"rocket jump damage reduction"
 				{
-					"attribute_class" "no_self_blast_dmg"
+					"attribute_class" "rocket_jump_dmg_reduction"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_sub_reserve_shooter"
+		{
+			"prefab" "tfsolo_sub_shotgun"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"used_by_classes"
+			{
+				"soldier" "1"
+				"pyro" "1"
+			}
+			"item_name"	"Reserve Shooter Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.66"
+				}
+				"mod mini-crit airborne"
+				{
+					"attribute_class" "mini_crit_airborne"
 					"value" "1"
 				}
-				"maxammo secondary increased"
+				"single wep deploy time decreased"
 				{
-					"attribute_class" "mult_maxammo_secondary"
-					"value" "3.0"
+					"attribute_class" "mult_single_wep_deploy_time"
+					"value"	"0.80"
 				}
-				"max pipebombs decreased"
+				"special taunt"
 				{
-					"attribute_class" "add_max_pipebombs"
-					"value" "-6"
-				}
-				"cannot pick up intelligence"
-				{
-					"attribute_class" "cannot_pick_up_intelligence"
+					"attribute_class" "special_taunt"
 					"value" "1"
 				}
 			}
 		}
-		"tfsolo_weapon_pickaxe_surrender"
+		"tfsolo_sub_escape_plan"
 		{
 			"prefab" "tfsolo_item tfsolo_sub_weapon"
 			"item_class" "tf_weapon_shovel"
@@ -629,7 +967,1232 @@
 			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
 			"drop_sound" "ui/item_metal_weapon_drop.wav"
 		}
-		"tfsolo_weapon_barbell"
+		"tfsolo_sub_paintrain"
+		{
+			"prefab" "tfsolo_sub_shovel"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Pain Train Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"used_by_classes"
+			{
+				"demoman" "1"
+				"soldier" "1"
+			}
+			"attributes"
+			{
+				"increase player capture value"
+				{
+					"attribute_class" "add_player_capturevalue"
+					"value"	"1"
+				}
+				"dmg taken from bullets increased"
+				{
+					"attribute_class" "mult_dmgtaken_from_bullets"
+					"value"	"1.1"
+				}
+			}
+		}
+		"tfsolo_sub_disciplinary_action"
+		{
+			"prefab" "tfsolo_sub_shovel"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Disciplinary Action Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.75"
+				}
+				"speed buff ally"
+				{
+					"attribute_class" "speed_buff_ally"
+					"value"	"1"
+				}
+				"melee range multiplier"
+				{
+					"attribute_class" "melee_range_multiplier"
+					"value"	"1.7"
+				}
+				"melee bounds multiplier"
+				{
+					"attribute_class" "melee_bounds_multiplier"
+					"value"	"1.55"
+				}
+			}
+		}
+		"tfsolo_sub_market_gardener"
+		{
+			"prefab" "tfsolo_sub_shovel"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Market Gardener Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"mod crit while airborne"
+				{
+					"attribute_class" "crit_while_airborne"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		"tfsolo_sub_degreaser"
+		{
+			"prefab" "tfsolo_sub_flamethrower"
+			"visuals"
+			{
+				"attached_models"
+				{
+					"0"
+					{
+						"model"	"models/weapons/c_models/c_flamethrower/c_flamethrower_pilotlight.mdl"
+					}
+				}
+			}
+			"visuals_red"
+			{
+				"use_visualsblock_as_base" "visuals"
+				"material_override"	"models/weapons/c_models/c_flamethrower/c_flamethrower"
+			}
+			"visuals_blu"
+			{
+				"use_visualsblock_as_base" "visuals"
+				"material_override"	"models/weapons/c_models/c_flamethrower/c_flamethrower_blue"
+			}
+			"item_name"	"Degreaser Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+				"single wep deploy time decreased" "0.4"
+				"switch from wep deploy time decreased"	"0.7"
+				"weapon burn dmg reduced" "0.34"
+				"airblast cost increased" "1.25"
+			}
+		}
+		"tfsolo_sub_phlogistinator"
+		{
+			"prefab" "tfsolo_sub_flamethrower"
+			"visuals"
+			{
+				"attached_models"
+				{
+					"0"
+					{
+						"model"	"models/weapons/c_models/c_flamethrower/c_flamethrower_pilotlight.mdl"
+					}
+				}
+			}
+			"visuals_red"
+			{
+				"use_visualsblock_as_base" "visuals"
+				"material_override"	"models/weapons/c_models/c_flamethrower/c_flamethrower"
+			}
+			"visuals_blu"
+			{
+				"use_visualsblock_as_base" "visuals"
+				"material_override"	"models/weapons/c_models/c_flamethrower/c_flamethrower_blue"
+			}
+			"item_name"	"Phlogistinator Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"burn damage earns rage"
+				{
+					"attribute_class" "burn_damage_earns_rage"
+					"value" "1"
+				}
+				"mod soldier buff type"
+				{
+					"attribute_class" "set_buff_type"
+					"value" "5"	
+				}
+				"airblast disabled"
+				{
+					"attribute_class" "airblast_disabled"
+					"value" "1"
+				}
+				"ragdolls become ash"
+				{
+					"attribute_class" "ragdolls_become_ash"
+					"value"	"1"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_detonator"
+		{
+			"prefab" "tfsolo_sub_flaregun"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Detonator Substitute"
+			"item_description"	"#TF_Weapon_Flaregun_Detonator_Desc"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"hidden secondary max ammo penalty"
+				{
+					"attribute_class" "mult_maxammo_secondary"
+					"value"	"0.5"
+				}
+				"blast dmg to self increased"
+				{
+					"attribute_class" "blast_dmg_to_self"
+					"value"	"1.50"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.75"
+				}
+				"minicrit vs burning player"
+				{
+					"attribute_class" "or_minicrit_vs_playercond_burning"
+					"value"	"1"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"1"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_scorch_shot"
+		{
+			"prefab" "tfsolo_sub_flaregun"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Scorch Shot Substitute"
+			"item_description"	"#TF_ScorchShot_Desc"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"hidden secondary max ammo penalty"
+				{
+					"attribute_class" "mult_maxammo_secondary"
+					"value"	 "0.5"
+				}
+				"self dmg push force decreased"
+				{
+					"attribute_class" "mult_dmgself_push_force"
+					"value" "0.65"
+				}
+				"minicrit vs burning player"
+				{
+					"attribute_class" "or_minicrit_vs_playercond_burning"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.65"
+				}
+				"mod flaregun fires pellets with knockback"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"3"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_panicattack"
+		{
+			"prefab" "tfsolo_sub_shotgun_multiclass"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Panic Attack Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.8"
+				}
+				"single wep deploy time decreased"
+				{
+					"attribute_class" "mult_single_wep_deploy_time"
+					"value"	"0.5"
+				}
+				"mult_spread_scales_consecutive"
+				{
+					"attribute_class" "mult_spread_scales_consecutive"
+					"value" "1"
+				}
+				"bullets per shot bonus"
+				{
+					"attribute_class" "mult_bullets_per_shot"
+					"value" "1.5"
+				}
+				"fixed_shot_pattern"
+				{
+					"attribute_class" "fixed_shot_pattern"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_homewrecker"
+		{
+			"prefab" "tfsolo_sub_fireaxe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"The Demolition Junior"
+			"item_description"	""
+			"model_player" "models/weapons/solo/c_blacksmith_hammer.mdl"
+			"item_type_name" "#TF_Weapon_SledgeHammer"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"dmg bonus vs buildings"
+				{
+					"attribute_class" "mult_dmg_vs_buildings"
+					"value"	"2.0"
+				}
+				"dmg penalty vs players"
+				{
+					"attribute_class" "mult_dmg_vs_players"
+					"value"	"0.75"
+				}
+				"damage applies to sappers"
+				{
+					"attribute_class" "set_dmg_apply_to_sapper"
+					"value"	"1"
+				}
+			}
+		}
+		"tfsolo_sub_powerjack"
+		{
+			"prefab" "tfsolo_sub_fireaxe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Powerjack Substitute"
+			"item_description"	""
+			"model_player" "models/weapons/solo/c_blacksmith_hammer.mdl"
+			"item_type_name" "#TF_Weapon_SledgeHammer"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"heal on kill"
+				{
+					"attribute_class" "heal_on_kill"
+					"value"	"25"
+				}
+				"move speed bonus"
+				{
+					"attribute_class" "mult_player_movespeed"
+					"value" "1.15"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class" "mult_dmgtaken"
+					"value"	"1.2"
+				}
+				"provide on active"
+				{
+					"attribute_class" "provide_on_active"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_back_scratcher"
+		{
+			"prefab" "tfsolo_sub_fireaxe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Back Scratcher Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage bonus"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"1.25"
+				}
+				"health from healers reduced"
+				{
+					"attribute_class" "mult_health_fromhealers"
+					"value" "0.25"
+				}
+				"health from packs increased"
+				{
+					"attribute_class" "mult_health_frompacks"
+					"value" "1.5"
+				}
+			}
+		}
+		"tfsolo_sub_volcano_fragment"
+		{
+			"prefab" "tfsolo_sub_fireaxe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Branding Iron"
+			"item_description"	""
+			"model_player" "models/weapons/w_models/w_brandingiron.mdl"
+			"item_type_name" "Branding Iron"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"Set DamageType Ignite"
+				{
+					"attribute_class" "set_dmgtype_ignite"
+					"value" "1"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.8"
+				}
+			}
+		}
+		"tfsolo_sub_third_degree"
+		{
+			"prefab" "tfsolo_sub_fireaxe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Third Degree Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage all connected"
+				{
+					"attribute_class" "damage_all_connected"
+					"value" "1"
+				}
+				"ragdolls become ash"
+				{
+					"attribute_class" "ragdolls_become_ash"
+					"value"	"1"
+				}
+			}
+		}
+		"tfsolo_sub_neon_annihilator"
+		{
+			"prefab" "tfsolo_sub_fireaxe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Neon Annihilator Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"dmg penalty vs players"
+				{
+					"attribute_class" "mult_dmg_vs_players"
+					"value"	"0.80"
+				}
+				"ragdolls plasma effect"
+				{
+					"attribute_class" "ragdolls_plasma_effect"
+					"value"	"1"
+				}
+				"crit vs wet players"
+				{
+					"attribute_class" "crit_vs_wet_players"
+					"value"	"1"
+				}
+				"damage applies to sappers"
+				{
+					"attribute_class" "set_dmg_apply_to_sapper"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		"tfsolo_sub_lochnload"
+		{
+			"prefab" "tfsolo_sub_grenade_launcher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_grenadelauncher/c_grenadelauncher"
+			}
+			"item_name"	"Loch-n-Load Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.75"
+				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class" "mult_dmg_vs_buildings"
+					"value"	"1.2"
+				}
+				"Projectile speed increased"
+				{
+					"attribute_class" "mult_projectile_speed"
+					"value" "1.25"
+				}
+				"Blast radius decreased"
+				{
+					"attribute_class" "mult_explosion_radius"
+					"value"	"0.75"
+				}
+				"sticky air burst mode"
+				{
+					"attribute_class" "set_detonate_mode"
+					"value"	"2"
+				}
+				"grenade no spin"
+				{
+					"attribute_class" "grenade_no_spin"
+					"value"	"1"
+				}
+			}
+		}
+		"tfsolo_sub_ironbomber"
+		{
+			"prefab" "tfsolo_sub_grenade_launcher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_grenadelauncher/c_grenadelauncher"
+			}
+			"item_name"	"Iron Bomber Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"Blast radius decreased"
+				{
+					"attribute_class" "mult_explosion_radius"
+					"value" "0.85"
+				}
+				"grenade no bounce"
+				{
+					"attribute_class" "grenade_no_bounce"
+					"value"	"1"
+				}
+				"fuse bonus"
+				{
+					"attribute_class" "fuse_mult"
+					"value" "0.7"
+				}
+			}
+		}
+		"tfsolo_sub_sticky_jumper"
+		{
+			"prefab" "tfsolo_sub_stickybomb_launcher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Stickybomb Trainer"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"no self blast dmg"
+				{
+					"attribute_class" "no_self_blast_dmg"
+					"value" "1"
+				}
+				"maxammo secondary increased"
+				{
+					"attribute_class" "mult_maxammo_secondary"
+					"value" "3.0"
+				}
+				"max pipebombs decreased"
+				{
+					"attribute_class" "add_max_pipebombs"
+					"value" "-6"
+				}
+				"cannot pick up intelligence"
+				{
+					"attribute_class" "cannot_pick_up_intelligence"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_quickiebomb"
+		{
+			"prefab" "tfsolo_sub_stickybomb_launcher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Quickiebomb Launcher Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"sticky arm time bonus"
+				{
+					"attribute_class" "sticky_arm_time"
+					"value"	"-0.2"
+				}
+				"stickybomb charge rate"
+				{
+					"attribute_class" "stickybomb_charge_rate"
+					"value"	"0.3"
+				}
+				"stickybomb_charge_damage_increase"
+				{
+					"attribute_class" "stickybomb_charge_damage_increase"
+					"value"	"1.35"
+				}
+				"stickies detonate stickies"
+				{
+					"attribute_class" "stickies_detonate_stickies"
+					"value"	"1"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value"	"0.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.85"
+				}
+			}
+		}
+		"tfsolo_sub_splendid_screen"
+		{
+			"prefab" "tfsolo_sub_targe"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Splendid Screen Substitute"
+			"item_description"	"#TF_SplendidScreen_Desc"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"charge recharge rate increased"
+				{
+					"attribute_class" "charge_recharge_rate"
+					"value"	"1.5"
+				}
+				"charge impact damage increased"
+				{
+					"attribute_class" "charge_impact_damage"
+					"value" "1.7"
+				}
+				"dmg taken from fire reduced"
+				{
+					"attribute_class" "mult_dmgtaken_from_fire"
+					"value" "0.8"
+				}
+				"dmg taken from blast reduced"
+				{
+					"attribute_class" "mult_dmgtaken_from_explosions"
+					"value" "0.8"
+				}
+				"allowed in medieval mode"
+				{
+					"attribute_class" "allowed_in_medieval_mode"
+					"value"	"1"
+				}
+			}
+		}
+		"tfsolo_sub_tide_turner"
+		{
+			"prefab" "tfsolo_sub_targe"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Tide Turner Substitute"
+			"item_description"	"#TF_TideTurner_Desc"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"dmg taken from fire reduced"
+				{
+					"attribute_class" "mult_dmgtaken_from_fire"
+					"value" "0.85"
+				}
+				"dmg taken from blast reduced"
+				{
+					"attribute_class" "mult_dmgtaken_from_explosions"
+					"value" "0.85"
+				}
+				"lose demo charge on damage when charging"
+				{
+					"attribute_class" "lose_demo_charge_on_damage_when_charging"
+					"value" "1"
+				}
+				"allowed in medieval mode"
+				{
+					"attribute_class" "allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				"full charge turn control"
+				{
+					"attribute_class" "charge_turn_control"
+					"value" "50"
+				}
+				"kill refills meter"
+				{
+					"attribute_class" "kill_refills_meter"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_sub_ullapool_caber"
+		{
+			"prefab" "tfsolo_sub_bottle"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Ullapool Caber Substitute"
+			"item_description"	"The first hit will cause an explosion."
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"item_class" "tf_weapon_stickbomb"
+			"attributes"
+			{
+				"damage penalty" 
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.55"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		"tfsolo_sub_skullcutter"
+		{
+			"prefab" "tfsolo_sub_eyelander"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Scotsman's Skullcutter Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"is_a_sword"
+				{
+					"attribute_class" "is_a_sword"
+					"value" "72"
+				}
+				"provide on active"
+				{
+					"attribute_class" "provide_on_active"
+					"value" "1"
+				}
+				"damage bonus"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"1.2"
+				}
+				"move speed penalty"
+				{
+					"attribute_class" "mult_player_movespeed"
+					"value"	"0.85"
+				}
+			}
+		}
+		"tfsolo_sub_claymore"
+		{
+			"prefab" "tfsolo_sub_eyelander"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Claidheamh Mor Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"kill refills meter"
+				{
+					"attribute_class" "kill_refills_meter"
+					"value" "0.25"
+				}
+				"is_a_sword"
+				{
+					"attribute_class" "is_a_sword"
+					"value" "72"
+				}
+				"charge time increased"
+				{
+					"attribute_class" "mod_charge_time"
+					"value" "0.5"
+				}
+				"provide on active"
+				{
+					"attribute_class" "provide_on_active"
+					"value" "1"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class" "mult_dmgtaken"
+					"value"	"1.15"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_half_zatoichi"
+		{
+			"prefab" "tfsolo_sub_eyelander"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Half-Zatoichi Substitute"
+			"item_description"	"Kills other wielders of this weapon in one hit."
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"is_a_sword"
+				{
+					"attribute_class" "is_a_sword"
+					"value" "72"
+				}
+				"decapitate type"
+				{
+					"attribute_class" "decapitate_type"
+					"value"	"1"
+				}
+				"restore health on kill"
+				{
+					"attribute_class" "restore_health_on_kill"
+					"value"	"50"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"honorbound"
+				{
+					"attribute_class" "honorbound"
+					"value"	"1"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_persian_persuader"
+		{
+			"prefab" "tfsolo_sub_eyelander"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Persian Persuader Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"is_a_sword"
+				{
+					"attribute_class" "is_a_sword"
+					"value" "72"
+				}
+				"maxammo primary reduced"
+				{
+					"attribute_class" "mult_maxammo_primary"
+					"value" "0.20"
+				}
+				"maxammo secondary reduced"
+				{
+					"attribute_class" "mult_maxammo_secondary"
+					"value" "0.20"
+				}
+				"ammo gives charge"
+				{
+					"attribute_class" "ammo_gives_charge"
+					"value" "1"
+				}
+				"charge meter on hit"
+				{
+					"attribute_class" "charge_meter_on_hit"
+					"value" "0.20"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_brass_beast"
+		{
+			"prefab" "tfsolo_sub_minigun"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_minigun/c_minigun"
+			}
+			"item_name"	"Brass Beast Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage bonus"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"1.20"
+				}
+				"minigun spinup time increased"
+				{
+					"attribute_class" "mult_minigun_spinup_time"
+					"value" "1.5"
+				}
+				"aiming movespeed decreased"
+				{
+					"attribute_class" "mult_player_aiming_movespeed"
+					"value" "0.4"
+				}
+				"spunup_damage_resistance"
+				{
+					"attribute_class" "spunup_damage_resistance"
+					"value"	"0.80"
+				}
+			}
+		}
+		"tfsolo_sub_tomislav"
+		{
+			"prefab" "tfsolo_sub_minigun"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_minigun/c_minigun"
+			}
+			"item_name"	"Tomislav Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"minigun spinup time decreased"
+				{
+					"attribute_class" "mult_minigun_spinup_time"
+					"value" "0.8"
+				}
+				"minigun no spin sounds"
+				{
+					"attribute_class" "minigun_no_spin_sounds"
+					"value" "1"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class" "mult_spread_scale"
+					"value"	"0.8"
+				}
+			}
+		}
+		"tfsolo_sub_huo_long_heater"
+		{
+			"prefab" "tfsolo_sub_minigun"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_minigun/c_minigun"
+			}
+			"item_name"	"Huo-Long Heater Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"ring of fire while aiming"
+				{
+					"attribute_class" "ring_of_fire_while_aiming"
+					"value"	"12"
+				}
+				"uses ammo while aiming"
+				{
+					"attribute_class" "uses_ammo_while_aiming"
+					"value" "4"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value" "0.9"
+				}
+				"damage bonus vs burning"
+				{
+					"attribute_class" "mult_dmg_vs_burning"
+					"value"	"1.25"
+				}
+			}
+		}
+		"tfsolo_sub_family_business"
+		{
+			"prefab" "tfsolo_sub_shotgun"
+			"used_by_classes"
+			{
+				"heavy"	"1"
+			}
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Family Business Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value" "0.85"
+				}
+				"clip size bonus"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "1.33"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value" "0.85"
+				}
+			}
+		}
+		"tfsolo_sub_warriors_spirit"
 		{
 			"item_class" "saxxy"
 			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_melee_allclass"
@@ -696,389 +2259,7 @@
 				}
 			}
 		}
-		"tfsolo_weapon_blacksmith_hammer"
-		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_fireaxe"
-			"tags"
-			{
-				"can_deal_damage"			"1"
-				"can_deal_critical_damage"	"1"
-				"can_destroy_sappers"		"1"
-			}
-			"show_in_armory" "1"
-			"item_type_name" "#TF_Weapon_SledgeHammer"
-			"item_name"	"The Demolition Junior"
-			"item_slot"	"melee"
-			"image_inventory" "backpack/weapons/c_models/c_fireaxe_pyro/c_fireaxe_pyro"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"model_player" "models/weapons/solo/c_blacksmith_hammer.mdl"
-			"attach_to_hands" "1"
-			"propername" "1"
-			"used_by_classes"
-			{
-				"pyro"	"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "10 0 -9"
-				"weapon_allow_inspect" "1"
-				"use_model_cache_icon" "1"
-			}
-			"attributes"
-			{
-				"dmg bonus vs buildings"
-				{
-					"attribute_class" "mult_dmg_vs_buildings"
-					"value"	"2.0"
-				}
-				"dmg penalty vs players"
-				{
-					"attribute_class" "mult_dmg_vs_players"
-					"value"	"0.75"
-				}
-				"damage applies to sappers"
-				{
-					"attribute_class" "set_dmg_apply_to_sapper"
-					"value"	"1"
-				}
-			}
-			"visuals"
-			{
-				"sound_melee_hit" "Weapon_Machete.HitFlesh"
-			}
-			"mouse_pressed_sound" "ui/item_heavy_gun_pickup.wav"
-			"drop_sound" "ui/item_heavy_gun_drop.wav"
-		}
-		"tfsolo_weapon_backstabber"
-		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_spy_knife_item2"
-			"tags"
-			{
-				"can_deal_damage"			"1"
-				"can_deal_taunt_damage"		"1"
-			}
-			"item_name"	"The Successor"
-			"propername" "0"
-			"image_inventory" "backpack/weapons/w_models/w_knife"
-			"model_player" "models/weapons/solo/c_backstabber.mdl"
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "5 0 -4"
-				"weapon_allow_inspect" "1"
-				"use_model_cache_icon" "1"
-			}
-			"attributes"
-			{
-				"disguise on backstab"
-				{
-					"attribute_class" "set_disguise_on_backstab"
-					"value" "1"
-				}
-				"silent killer"
-				{
-					"attribute_class" "set_silent_killer"
-					"value" "1"
-				}
-				"lunchbox adds minicrits"
-				{
-					"attribute_class" "set_weapon_mode"
-					"value" "1"
-				}
-				"special taunt"
-				{
-					"attribute_class" "special_taunt"
-					"value" "1"
-				}
-				"mod_disguise_consumes_cloak"
-				{
-					"attribute_class" "mod_disguise_consumes_cloak"
-					"value"	"1"
-				}
-			}
-		}
-		"tfsolo_weapon_unarmed"
-		{
-			"item_class" "saxxy"
-			"prefab" "weapon_melee_allclass tfsolo_item"
-			"soloitem" "1"
-			"tags"
-			{
-				"can_deal_damage" "1"
-				"can_be_equipped_by_soldier_or_demo" "1"
-				"can_deal_critical_damage" "1"
-				"can_deal_taunt_damage" "1"
-			}
-			"show_in_armory" "1"
-			"item_type_name" "Melee Weapon"
-			"item_name"	"Unarmed"
-			"item_description"	""
-			"item_slot"	"melee"
-			"propername" "0"
-			"attach_to_hands" "1"
-			"image_inventory" "backpack/weapons/v_models/v_fist_heavy"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"inspect_panel_dist"  "80"			
-			//"model_player" "models/weapons/solo/c_barbell.mdl"
-			"anim_slot" "MELEE_ALLCLASS"
-			"used_by_classes"
-			{
-				"scout"	"1"
-				"sniper" "1"
-				"soldier" "1"
-				"demoman" "1"
-				"medic"	"1"
-				"heavy"	"1"
-				"spy" "1"
-				"engineer" "1"
-				"pyro" "1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "10 0 -7"
-			}
-			"visuals"
-			{
-				"sound_melee_miss" "Weapon_BoxingGloves.Miss"
-				"sound_melee_hit" "Weapon_BoxingGloves.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
-				"sound_burst" "Weapon_BoxingGloves.MissCrit"
-			}
-			"mouse_pressed_sound" "ui/item_boxing_gloves_pickup.wav"
-			"drop_sound" "ui/item_boxing_gloves_drop.wav"
-			"attributes"
-			{
-				"damage penalty"
-				{
-					"attribute_class" "mult_dmg"
-					"value"	"0.5"
-				}
-			}
-		}
-		"tfsolo_weapon_medic_syringe"
-		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_bonesaw"
-			"tags"
-			{
-				"can_deal_damage"			"1"
-				"can_deal_critical_damage"	"1"
-			}
-			"anim_slot" "MELEE_ALLCLASS"
-			"item_logname" "ubersaw"
-			"item_iconname"	"ubersaw"
-			"show_in_armory" "1"
-			"item_type_name" "Syringe"
-			"item_name"	"Marrow Extractor"
-			"item_description" "#TF_Unique_BattleSaw_Desc"
-			"item_slot"	"melee"
-			"image_inventory" "backpack/weapons/c_models/c_ubersaw/c_ubersaw"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"inspect_panel_dist" "50"
-			"model_player" "models/weapons/w_models/w_syringe.mdl"
-			"attach_to_hands" "1"
-			"propername"	"1"
-			"used_by_classes"
-			{
-				"medic"	"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "10 0 -12"
-			}
-			"attributes"
-			{
-				"ubercharge_preserved_on_spawn_max"
-				{
-					"attribute_class" "ubercharge_preserved_on_spawn_max"
-					"value" "0.6"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class" "add_maxhealth"
-					"value" "-10"
-				}
-				"lunchbox adds minicrits"
-				{
-					"attribute_class" "set_weapon_mode"
-					"value"	"2"
-				}
-			}
-			"visuals"
-			{
-				"sound_melee_hit" "Weapon_UberSaw.HitFlesh"
-			}
-			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
-			"drop_sound" "ui/item_metal_weapon_drop.wav"
-		}
-		"tfsolo_weapon_spy_tranq"
-		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_revolver"
-			"tags"
-			{
-				"can_deal_damage"			"1"
-				"can_deal_critical_damage"	"1"
-				"can_deal_mvm_penetration_damage"	"1"
-				"can_deal_long_distance_damage"	"1"
-			}
-			"show_in_armory" "1"
-			"item_type_name" "#TF_Weapon_Revolver"
-			"item_name"	"Finishing Touch"
-			"item_description" ""
-			"item_slot"	"secondary"
-			"propername" "1"
-			"item_logname" "ambassador"
-			"item_iconname"	"ambassador"
-			"image_inventory" "sprites/bucket_tranq"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"inspect_panel_dist" "32"
-			"model_player" "models/weapons/w_models/w_tranq.mdl"
-			"attach_to_hands" "1"
-			"used_by_classes"
-			{
-				"spy"	"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "10 0 -6"
-			}
-			"attributes"
-			{
-				"sapper kills collect crits"
-				{
-					"attribute_class" "sapper_kills_collect_crits"
-					"value"	"1"
-				}
-				"damage penalty"
-				{
-					"attribute_class" "mult_dmg"
-					"value"	"0.85"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class" "mult_crit_chance"
-					"value"	"0"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot" "Weapon_Ambassador.Single"
-				"sound_burst" "Weapon_Ambassador.SingleCrit"
-			}
-			"mouse_pressed_sound" "ui/item_light_gun_pickup.wav"
-			"drop_sound" "ui/item_light_gun_drop.wav"
-		}
-		"tfsolo_weapon_pyro_brandingiron"
-		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_fireaxe"
-			"tags"
-			{
-				"can_deal_damage" "1"
-				"can_deal_posthumous_damage" "1"
-				"can_deal_critical_damage" "1"
-			}
-			"show_in_armory" "1"
-			"item_type_name" "Branding Iron"
-			"item_name"	"Branding Iron"
-			"item_description" ""
-			"item_slot"	"melee"
-			"item_logname" "axtinguisher"
-			"item_iconname"	"axtinguisher"
-			"image_inventory" "backpack/weapons/c_models/c_axtinguisher/c_axtinguisher_pyro"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"inspect_panel_dist" "55"
-			"model_player" "models/weapons/w_models/w_brandingiron.mdl"
-			"attach_to_hands" "1"
-			"propername"	"0"
-			"used_by_classes"
-			{
-				"pyro"	"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "10 0 -11"
-			}
-			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
-			"drop_sound" "ui/item_metal_weapon_drop.wav"
-			"attributes"
-			{
-				"Set DamageType Ignite"
-				{
-					"attribute_class" "set_dmgtype_ignite"
-					"value" "1"
-				}
-				"damage penalty"
-				{
-					"attribute_class" "mult_dmg"
-					"value"	"0.8"
-				}
-			}
-		}
-		"tfsolo_weapon_sniper_club"
-		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_club"
-			"tags"
-			{
-				"can_deal_damage" "1"
-				"can_deal_critical_damage" "1"
-				"can_be_festivized"	"1"
-			}
-			"item_logname"	"tf_weapon_club"
-			"item_iconname"	"tf_weapon_club"
-			"show_in_armory" "1"
-			"item_type_name" "#TF_Weapon_Club"
-			"item_name"	"Sniper Club"
-			"item_slot"	"melee"
-			"image_inventory" "backpack/weapons/w_models/w_machete"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"inspect_panel_dist" "45"
-			"model_player" "models/weapons/w_models/w_club.mdl"
-			"attach_to_hands" "1"
-			"propername" "1"
-			"used_by_classes"
-			{
-				"sniper" "1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset" "10 0 -6"
-			}
-			"mouse_pressed_sound" "ui/item_knife_small_pickup.wav"
-			"drop_sound" "ui/item_metal_weapon_drop.wav"
-			"attributes"
-			{
-				"provide on active"
-				{
-					"attribute_class" "provide_on_active"
-					"value" "1"
-				}
-				"dmg taken increased"
-				{
-					"attribute_class" "mult_dmgtaken"
-					"value"	"1.2"
-				}
-				"minicrits become crits"
-				{
-					"attribute_class" "minicrits_become_crits"
-					"value" "1"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class" "mult_crit_chance"
-					"value"	"0"
-				}
-			}
-		}
-		"tfsolo_weapon_leadpipe"
+		"tfsolo_sub_fists_of_steel"
 		{
 			"item_class" "saxxy"
 			"prefab" "tfsolo_item tfsolo_sub_weapon weapon_melee_allclass"
@@ -1138,37 +2319,194 @@
 				}
 			}
 		}
-		"tfsolo_weapon_nailgun"
+		"tfsolo_sub_widowmaker"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_syringegun_medic"
-			"tags"
+			"prefab" "tfsolo_sub_shotgun_primary"
+			"visuals"
 			{
-				"can_deal_damage" "1"
-				"can_deal_posthumous_damage" "1"
-				"can_deal_critical_damage" "1"
-				"can_deal_long_distance_damage"	"1"
+				"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
 			}
-			"item_logname" "blutsauger"
-			"item_iconname"	"blutsauger"
-			"show_in_armory" "1"
-			"item_type_name" "Nailgun"
-			"item_name" "Stitch Applier"
-			"item_description" "#TF_Overdose_Desc"
-			"item_slot"	"primary"
-			"image_inventory" "sprites/bucket_nailgun"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"model_player" "models/weapons/w_models/w_nailgun.mdl"
-			"attach_to_hands" "1"
-			"propername" "1"
-			"used_by_classes"
-			{
-				"medic"	"1"
-			}
+			"item_name"	"Widowmaker Substitute"
+			"item_description"	""
 			"static_attrs"
 			{
-				"min_viewmodel_offset" "10 0 -14"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"damage bonus bullet vs sentry target"
+				{
+					"attribute_class" "mult_dmg_bullet_vs_sentry_target"
+					"value"	"1.1"
+				}
+				"mod ammo per shot"
+				{
+					"attribute_class" "mod_ammo_per_shot"
+					"value"	"30"
+				}
+				"mod use metal ammo type"
+				{
+					"attribute_class" "mod_use_metal_ammo_type"
+					"value"	"1"
+				}
+				"mod no reload DISPLAY ONLY"
+				{
+					"attribute_class" "mod_no_reload_display_only"
+					"value" "1"
+				}
+				"mod max primary clip override"
+				{
+					"attribute_class" "mod_max_primary_clip_override"
+					"value"	"-1"
+				}
+				"add onhit addammo"
+				{
+					"attribute_class" "add_onhit_addammo"		
+					"value"	"100"
+				}
+			}
+		}
+		"tfsolo_sub_southern_hospitality"
+		{
+			"prefab" "tfsolo_sub_wrench"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Southern Hospitality Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"bleeding duration"
+				{
+					"attribute_class" "bleeding_duration"
+					"value" "5"
+				}
+				"dmg taken from fire increased"
+				{
+					"attribute_class" "mult_dmgtaken_from_fire"
+					"value" "1.20"
+				}
+			}
+		}
+		"tfsolo_sub_jag"
+		{
+			"prefab" "tfsolo_sub_wrench"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Jag Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"Construction rate increased"
+				{
+					"attribute_class" "mult_construction_value"
+					"value" "1.3"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value"	"0.85"
+				}
+				"Repair rate decreased"
+				{
+					"attribute_class" "mult_repair_value"
+					"value"	"0.80"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.75"
+				}
+				"dmg penalty vs buildings"
+				{
+					"attribute_class" "mult_dmg_vs_buildings"
+					"value" "0.67"
+				}
+			}
+		}
+		"tfsolo_sub_eureka_effect"
+		{
+			"prefab" "tfsolo_sub_wrench"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Eureka Effect Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"alt fire teleport to spawn"
+				{
+					"attribute_class" "alt_fire_teleport_to_spawn"
+					"value" "1"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+				"Construction rate decreased"
+				{
+					"attribute_class" "mult_construction_value"
+					"value" "0.50"
+				}
+				"metal_pickup_decreased"
+				{
+					"attribute_class" "mult_metal_pickup"
+					"value" "0.8"
+				}
+				"mod teleporter cost"
+				{
+					"attribute_class" "mod_teleporter_cost"
+					"value" "0.5"
+				}
+			}
+		}
+		"tfsolo_sub_overdose"
+		{
+			"prefab" "tfsolo_sub_syringegun"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_type_name" "Nailgun"
+			"item_name" "Stitch Applier"
+			"item_description"	"#TF_Overdose_Desc"
+			"image_inventory" "sprites/bucket_nailgun"
+			"model_player" "models/weapons/w_models/w_nailgun.mdl"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
@@ -1188,40 +2526,195 @@
 					"value"	"0.85"
 				}
 			}
-			"mouse_pressed_sound" "ui/item_light_gun_pickup.wav"
-			"drop_sound" "ui/item_light_gun_drop.wav"
 		}
-		"tfsolo_weapon_medic_beerstein"
+		"tfsolo_sub_quick_fix"
 		{
-			"prefab" "tfsolo_item tfsolo_sub_weapon"
-			"item_class" "tf_weapon_bonesaw"
-			"tags"
+			"prefab" "tfsolo_sub_medigun"
+			"visuals_red"
 			{
-				"can_deal_damage" "1"
-				"can_deal_critical_damage" "1"
-				"can_heal_allies" "1"
+				"material_override"	"models/weapons/c_models/c_medigun/c_medigun"
 			}
-			"item_logname" "ubersaw"
-			"item_iconname" "ubersaw"
-			"show_in_armory" "1"
-			"item_type_name" "Beer Stein"
-			"item_name"	"Oktober Feast"
-			"item_slot"	"melee"
-			"image_inventory" "backpack/weapons/c_models/c_ubersaw/c_ubersaw"
-			"image_inventory_size_w" "128"
-			"image_inventory_size_h" "82"
-			"model_player" "models/weapons/w_models/w_beer_stein.mdl"
-			"attach_to_hands" "1"
-			"inspect_panel_dist" "42"
-			"propername" "1"
-			"anim_slot" "MELEE_ALLCLASS"
-			"used_by_classes"
+			"visuals_blu"
 			{
-				"medic"	"1"
+				"material_override"	"models/weapons/c_models/c_medigun/c_medigun_blue"
 			}
+			"item_name"	"Quick-Fix Substitute"
+			"item_description"	"#TF_Unique_MediGun_QuickFix_Desc"
 			"static_attrs"
 			{
-				"min_viewmodel_offset" "10 0 -12"
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"2"
+				}
+				"heal rate bonus"
+				{
+					"attribute_class" "mult_medigun_healrate"
+					"value" "1.4"
+				}
+				"medigun charge is megaheal"
+				{
+					"attribute_class" "set_charge_type"
+					"value"	"2"
+				}
+				"ubercharge rate bonus"
+				{
+					"attribute_class" "mult_medigun_uberchargerate"
+					"value"	"1.1"
+				}
+				"overheal penalty"
+				{
+					"attribute_class" "mult_medigun_overheal_amount"
+					"value"	"0.5"
+				}
+			}
+		}
+		"tfsolo_sub_vaccinator"
+		{
+			"prefab" "tfsolo_sub_medigun"
+			"visuals_red"
+			{
+				"material_override"	"models/weapons/c_models/c_medigun/c_medigun"
+			}
+			"visuals_blu"
+			{
+				"material_override"	"models/weapons/c_models/c_medigun/c_medigun_blue"
+			}
+			"item_name"	"Vaccinator Substitute"
+			"item_description"	"#TF_Unique_MediGun_Resist_Desc"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"3"
+				}
+				"ubercharge rate bonus"
+				{
+					"attribute_class" "mult_medigun_uberchargerate"
+					"value"	"1.67"
+				}
+				"ubercharge overheal rate penalty"
+				{
+					"attribute_class" "mult_medigun_overheal_uberchargerate"
+					"value"	"0.67"
+				}
+				"overheal fill rate reduced"
+				{
+					"attribute_class" "overheal_fill_rate"
+					"value" "0.34"
+				}
+				"kill eater score type"
+				{
+					"attribute_class" "kill_eater_score_type"
+					"value" "1"								
+				}
+				"kill eater score type 2"
+				{
+					"attribute_class" "kill_eater_score_type_2"
+					"value" "2"								
+				}
+				"medigun charge is resists"
+				{
+					"attribute_class" "set_charge_type"
+					"value"	"3"
+				}
+				"medigun bullet resist passive"
+				{
+					"attribute_class" "medigun_bullet_resist_passive"
+					"value" "0.1"
+				}
+				"medigun bullet resist deployed"
+				{
+					"attribute_class" "medigun_bullet_resist_deployed"
+					"value" "0.75"
+				}
+				"medigun blast resist passive"
+				{
+					"attribute_class" "medigun_blast_resist_passive"
+					"value" "0.1"
+				}
+				"medigun blast resist deployed"
+				{
+					"attribute_class" "medigun_blast_resist_deployed"
+					"value" "0.75"
+				}
+				"medigun fire resist passive"
+				{
+					"attribute_class" "medigun_fire_resist_passive"
+					"value" "0.1"
+				}
+				"medigun fire resist deployed"
+				{
+					"attribute_class" "medigun_fire_resist_deployed"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_sub_vitasaw"
+		{
+			"prefab" "tfsolo_sub_bonesaw"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Marrow Extractor"
+			"item_description"	"#TF_Unique_BattleSaw_Desc"
+			"model_player" "models/weapons/w_models/w_syringe.mdl"
+			"anim_slot" "MELEE_ALLCLASS"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"ubercharge_preserved_on_spawn_max"
+				{
+					"attribute_class" "ubercharge_preserved_on_spawn_max"
+					"value" "0.6"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class" "add_maxhealth"
+					"value" "-10"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"2"
+				}
+			}
+		}
+		"tfsolo_sub_amputator"
+		{
+			"prefab" "tfsolo_sub_bonesaw"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Oktober Feast"
+			"item_description"	""
+			"model_player" "models/weapons/w_models/w_beer_stein.mdl"
+			"anim_slot" "MELEE_ALLCLASS"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
 			}
 			"attributes"
 			{
@@ -1251,8 +2744,712 @@
 					"value" "1"
 				}
 			}
-			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
-			"drop_sound" "ui/item_metal_weapon_drop.wav"
+		}
+		"tfsolo_sub_solemn_vow"
+		{
+			"prefab" "tfsolo_sub_bonesaw"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Solemn Vow Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value"	"1.1"
+				}
+				"mod see enemy health"
+				{
+					"attribute_class" "see_enemy_health"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_sydney_sleeper"
+		{
+			"prefab" "tfsolo_sub_sniperrifle"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Sydney Sleeper Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"sniper no headshots"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value" "1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"sniper charge per sec"
+				{
+					"attribute_class" "mult_sniper_charge_per_sec"
+					"value"	"1.25"
+				}
+				"rifle_jarate_on_hit"
+				{
+					"attribute_class" "rifle_jarate_on_hit"
+					"value"	"8"
+				}
+			}
+		}
+		"tfsolo_sub_bazaar_bargain"
+		{
+			"prefab" "tfsolo_sub_sniperrifle"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Bazaar Bargain Substitute"
+			"item_description"	"#TF_BazaarBargain_Desc"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"item_class" "tf_weapon_sniperrifle_decap"
+			"attributes"
+			{
+				"mult sniper charge penalty DISPLAY ONLY"
+				{
+					"attribute_class" "mult_sniper_charge_base_dummy"
+					"value" "1.5"
+				}
+			}
+		}
+		"tfsolo_sub_machina"
+		{
+			"prefab" "tfsolo_sub_sniperrifle"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Machina Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"sniper penetrate players when charged"
+				{
+					"attribute_class" "sniper_penetrate_players_when_charged"
+					"value"	"1"
+				}
+				"sniper only fire zoomed"
+				{
+					"attribute_class" "sniper_only_fire_zoomed"
+					"value"	"1"
+				}
+				"sniper full charge damage bonus"
+				{
+					"attribute_class" "sniper_full_charge_damage_bonus"
+					"value" "1.15"
+ 				}
+ 				"sniper fires tracer"
+ 				{
+					"attribute_class" "sniper_fires_tracer"
+					"value"	"1"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"2"
+				}
+			}
+		}
+		"tfsolo_sub_heatmaker"
+		{
+			"prefab" "tfsolo_sub_sniperrifle"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Hitman's Heatmaker Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"decapitate type"
+				{
+					"attribute_class" "decapitate_type"
+					"value"	"1"
+				}
+				"damage penalty on bodyshot"
+				{
+					"attribute_class" "bodyshot_damage_modify"
+					"value" "0.80"
+				}
+				"rage on kill"
+				{
+					"attribute_class" "rage_on_kill"
+					"value" "35"
+				}
+				"rage on assists"
+				{
+					"attribute_class" "rage_on_assists"
+					"value" "15"
+				}
+				"mod soldier buff type"
+				{
+					"attribute_class" "set_buff_type"
+					"value" "6"			
+				}
+				"sniper rage DISPLAY ONLY"
+				{
+					"attribute_class" "sniper_rage_DISPLAY_ONLY"
+					"value" "0"
+				}
+			}
+		}
+		"tfsolo_sub_classic"
+		{
+			"prefab" "tfsolo_sub_sniperrifle"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Classic Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"item_class" "tf_weapon_sniperrifle_classic"
+			"attributes"
+			{
+				"crit on hard hit"
+				{
+					"attribute_class" "crit_on_hard_hit"
+					"value"	"1"
+				}
+				"damage penalty on bodyshot"
+				{
+					"attribute_class" "bodyshot_damage_modify"
+					"value"	"0.90"
+				}
+				"sniper no headshot without full charge"
+				{
+					"attribute_class" "sniper_no_headshot_without_full_charge"
+					"value" "1"
+				}
+				"sniper crit no scope"
+				{
+					"attribute_class" "sniper_crit_no_scope"
+					"value" "1"
+				}
+				"sniper fires tracer HIDDEN"
+ 				{
+					"attribute_class" "sniper_fires_tracer_HIDDEN"
+					"value"	"1"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"3"
+				}
+			}
+		}
+		"tfsolo_sub_carbine"
+		{
+			"prefab" "tfsolo_sub_smg"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_smg/c_smg"
+			}
+			"item_name"	"Mob Warrior"
+			"item_description"	""
+			"model_player" "models/props_tuscany/tommygun_01.mdl"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"item_class" "tf_weapon_charged_smg"
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value" "1.25"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value"	"0.80"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"minicrit_boost_charge_rate"
+				{
+					"attribute_class" "minicrit_boost_charge_rate"
+					"value" "1"
+				}
+				"minicrit_boost_when_charged"
+				{
+					"attribute_class" "minicrit_boost_when_charged"
+					"value" "8"
+				}
+			}
+		}
+		"tfsolo_sub_tribalmans_shiv"
+		{
+			"prefab" "tfsolo_sub_kukri"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Tribalman's Shiv Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"bleeding duration"
+				{
+					"attribute_class" "bleeding_duration"
+					"value" "6"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.5"
+				}
+			}
+		}
+		"tfsolo_sub_bushwacka"
+		{
+			"prefab" "tfsolo_sub_kukri"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Bushwacka Substitute"
+			"item_description"	""
+			"model_player" "models/weapons/w_models/w_club.mdl"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class" "provide_on_active"
+					"value" "1"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class" "mult_dmgtaken"
+					"value"	"1.2"
+				}
+				"minicrits become crits"
+				{
+					"attribute_class" "minicrits_become_crits"
+					"value" "1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		"tfsolo_sub_shahanshah"
+		{
+			"prefab" "tfsolo_sub_kukri"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_sniperrifle/c_sniperrifle"
+			}
+			"item_name"	"Shahanshah Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"dmg bonus while half dead"
+				{
+					"attribute_class" "mult_dmg_bonus_while_half_dead"
+					"value"	"1.25"
+				}
+				"dmg penalty while half alive"
+				{
+					"attribute_class" "mult_dmg_penalty_while_half_alive"
+					"value"	"0.75"
+				}
+			}
+		}
+		"tfsolo_sub_letranger"
+		{
+			"prefab" "tfsolo_sub_revolver"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_revolver/c_revolver"
+			}
+			"item_name"	"L'Etranger Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"add cloak on hit"
+				{
+					"attribute_class" "add_cloak_on_hit"
+					"value" "15"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.8"
+				}
+				"cloak consume rate decreased"
+				{
+					"attribute_class" "mult_cloak_meter_consume_rate"
+					"value" "0.6"
+				}
+			}
+		}
+		"tfsolo_sub_enforcer"
+		{
+			"prefab" "tfsolo_sub_revolver"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_revolver/c_revolver"
+			}
+			"item_name"	"Enforcer Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"dmg pierces resists absorbs"
+				{
+					"attribute_class" "mod_pierce_resists_absorbs"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"damage bonus while disguised"
+				{
+					"attribute_class" "mult_dmg_disguised"
+					"value"	"1.2"
+				}
+			}
+		}
+		"tfsolo_sub_diamondback"
+		{
+			"prefab" "tfsolo_sub_revolver"
+			"visuals"
+			{
+				//"material_override"	"models/weapons/c_models/c_revolver/c_revolver"
+			}
+			"item_name"	"Finishing Touch"
+			"item_description"	""
+			"image_inventory" "sprites/bucket_tranq"
+			"model_player" "models/weapons/w_models/w_tranq.mdl"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"sapper kills collect crits"
+				{
+					"attribute_class" "sapper_kills_collect_crits"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.85"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class" "mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		"tfsolo_sub_yer"
+		{
+			"prefab" "tfsolo_sub_knife_item2"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_knife/c_knife"
+			}
+			"item_name"	"Backstabber"
+			"item_description"	""
+			"model_player" "models/weapons/solo/c_backstabber.mdl"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"disguise on backstab"
+				{
+					"attribute_class" "set_disguise_on_backstab"
+					"value" "1"
+				}
+				"silent killer"
+				{
+					"attribute_class" "set_silent_killer"
+					"value" "1"
+				}
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value" "1"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+				"mod_disguise_consumes_cloak"
+				{
+					"attribute_class" "mod_disguise_consumes_cloak"
+					"value"	"1"
+				}
+			}
+		}
+		"tfsolo_sub_kunai"
+		{
+			"prefab" "tfsolo_sub_knife"
+			"visuals"
+			{
+				"material_override" "models/weapons/c_models/c_knife/c_knife"
+			}
+			"item_name"	"Conniver's Kunai Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"sanguisuge"
+				{
+					"attribute_class" "sanguisuge"
+					"value"	"1"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class" "add_maxhealth"
+					"value" "-55"
+				}
+				"special taunt"
+				{
+					"attribute_class" "special_taunt"
+					"value" "1"
+				}
+			}
+		}
+		"tfsolo_sub_big_earner"
+		{
+			"prefab" "tfsolo_sub_knife"
+			"visuals"
+			{
+				"material_override" "models/weapons/c_models/c_knife/c_knife"
+			}
+			"item_name"	"Big Earner Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"add cloak on kill"
+				{
+					"attribute_class"	"add_cloak_on_kill"
+					"value" "30"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-25"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+				"speed_boost_on_kill"
+				{
+					"attribute_class"	"speed_boost_on_kill"
+					"value"	"3"
+				}
+			}
+		}
+		"tfsolo_sub_spycicle"
+		{
+			"prefab" "tfsolo_sub_knife"
+			"visuals"
+			{
+				"material_override" "models/weapons/c_models/c_knife/c_knife"
+			}
+			"item_name"	"Spy-cicle Substitute"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"freeze backstab victim"
+				{
+					"attribute_class" "freeze_backstab_victim"
+					"value" "1"
+				}
+				"melts in fire"
+				{
+					"attribute_class" "melts_in_fire"
+					"value" "15"
+				}
+				"become fireproof on hit by fire"
+				{
+					"attribute_class" "become_fireproof_on_hit_by_fire"
+					"value" "10"
+				}
+				"set icicle knife mode"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value" "3"
+				}
+			}
+		}
+		
+		"tfsolo_weapon_unarmed"
+		{
+			"item_class" "saxxy"
+			"prefab" "weapon_melee_allclass tfsolo_item"
+			"soloitem" "1"
+			"tags"
+			{
+				"can_deal_damage" "1"
+				"can_be_equipped_by_soldier_or_demo" "1"
+				"can_deal_critical_damage" "1"
+				"can_deal_taunt_damage" "1"
+			}
+			"show_in_armory" "1"
+			"item_type_name" "Melee Weapon"
+			"item_name"	"Unarmed"
+			"item_description"	""
+			"item_slot"	"melee"
+			"propername" "0"
+			"attach_to_hands" "1"
+			"image_inventory" "backpack/weapons/v_models/v_fist_heavy"
+			"image_inventory_size_w" "128"
+			"image_inventory_size_h" "82"
+			"inspect_panel_dist"  "80"			
+			//"model_player" "models/weapons/solo/c_barbell.mdl"
+			"anim_slot" "MELEE_ALLCLASS"
+			"used_by_classes"
+			{
+				"scout"	"1"
+				"sniper" "1"
+				"soldier" "1"
+				"demoman" "1"
+				"medic"	"1"
+				"heavy"	"1"
+				"spy" "1"
+				"engineer" "1"
+				"pyro" "1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset" "10 0 -7"
+			}
+			"visuals"
+			{
+				"sound_melee_miss" "Weapon_BoxingGloves.Miss"
+				"sound_melee_hit" "Weapon_BoxingGloves.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
+				"sound_burst" "Weapon_BoxingGloves.MissCrit"
+			}
+			"mouse_pressed_sound" "ui/item_boxing_gloves_pickup.wav"
+			"drop_sound" "ui/item_boxing_gloves_drop.wav"
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"0.5"
+				}
+			}
 		}
 		"tfsolo_weapon_crowbar"
 		{
@@ -1305,103 +3502,446 @@
 			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
 			"drop_sound" "ui/item_metal_weapon_drop.wav"
 		}
+		"tfsolo_weapon_wallboots"
+		{
+			"prefab" "tfsolo_item"
+			"item_class" "tf_wearable"
+			"craft_material_type" "weapon"
+			"loadondemand" "1"
+			"show_in_armory" "1"
+			"item_type_name" "#TF_Wearable_Boots"
+			"item_name"	"The Wallboots"
+			"item_slot"	"secondary"
+			"equip_region" "feet"
+			"anim_slot"	"FORCE_NOT_USED"
+			"propername" "1"
+			"image_inventory" "backpack/weapons/solo/c_wallboots"
+			"image_inventory_size_w" "128"
+			"image_inventory_size_h" "82"
+			"model_player" "models/weapons/solo/c_wallboots.mdl"
+			"act_as_wearable" "1"
+			"used_by_classes"
+			{
+				"soldier" "secondary"
+				"demoman" "primary"
+			}
+			"attributes"
+			{
+				"blast dmg to self reduced"
+				{
+					"attribute_class" "blast_dmg_to_self"
+					"value" "0.4"
+				}
+				"stick_to_walls"
+				{
+					"attribute_class" "stick_to_walls"
+					"value"	"1"
+				}
+				"allowed in medieval mode"
+				{
+					"attribute_class" "allowed_in_medieval_mode"
+					"value"	"1"
+				}
+			}
+			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
+			"drop_sound" "ui/item_metal_weapon_drop.wav"
+		}
 	}
 	"items"
 	{
 		"100001"
 		{
-			"name" "Solo Spineyard Tommygun"
-			"prefab" "tfsolo_weapon_spineyard_tommygun"
+			"name" "Solo Sub BFB"
+			"prefab" "tfsolo_sub_baby_face_blaster"
 		}
 		"100002"
 		{
-			"name" "Solo Wallboots"
-			"prefab" "tfsolo_weapon_wallboots"
+			"name" "Solo Sub Back Scatter"
+			"prefab" "tfsolo_sub_back_scatter"
 		}
 		"100003"
 		{
-			"name" "Solo Critee Cool"
-			"prefab" "tfsolo_weapon_critdrink"
+			"name" "Solo Sub Soda Popper"
+			"prefab" "tfsolo_sub_soda_popper"
 		}
 		"100004"
 		{
-			"name" "Solo Rocket Center"
-			"prefab" "tfsolo_weapon_rocketlauncher_center"
+			"name" "Solo Sub Winger"
+			"prefab" "tfsolo_sub_winger"
 		}
 		"100005"
 		{
-			"name" "Solo Rocket Trainer"
-			"prefab" "tfsolo_weapon_rocketlauncher_training"
+			"name" "Solo Sub Pocket Pistol"
+			"prefab" "tfsolo_sub_pocket_pistol"
 		}
 		"100006"
 		{
-			"name" "Solo Stickybomb Trainer"
-			"prefab" "tfsolo_weapon_sticky_training"
+			"name" "Solo Sub Crit-a-Cola"
+			"prefab" "tfsolo_sub_critacola"
 		}
 		"100007"
 		{
-			"name" "Solo The Runaway Pride"
-			"prefab" "tfsolo_weapon_pickaxe_surrender"
+			"name" "Solo Sub Candy Cane"
+			"prefab" "tfsolo_sub_candy_cane"
 		}
 		"100008"
 		{
-			"name" "Solo Barbell"
-			"prefab" "tfsolo_weapon_barbell"
+			"name" "Solo Sub Boston Basher"
+			"prefab" "tfsolo_sub_boston_basher"
 		}
 		"100009"
 		{
-			"name" "Solo Hammer"
-			"prefab" "tfsolo_weapon_blacksmith_hammer"
+			"name" "Solo Sub Sun-on-a-Stick"
+			"prefab" "tfsolo_sub_sunonastick"
 		}
 		"100010"
 		{
-			"name" "Solo Backstabber"
-			"prefab" "tfsolo_weapon_backstabber"
+			"name" "Solo Sub Fan O'War"
+			"prefab" "tfsolo_sub_fanowar"
 		}
 		"100011"
+		{
+			"name" "Solo Sub Atomizer"
+			"prefab" "tfsolo_sub_atomizer"
+		}
+		
+		"100101"
+		{
+			"name" "Solo Sub Original"
+			"prefab" "tfsolo_sub_original"
+		}
+		"100102"
+		{
+			"name" "Solo Sub Rocket Jumper"
+			"prefab" "tfsolo_sub_rocket_jumper"
+		}
+		"100103"
+		{
+			"name" "Solo Sub Black Box"
+			"prefab" "tfsolo_sub_black_box"
+		}
+		"100104"
+		{
+			"name" "Solo Sub Liberty Launcher"
+			"prefab" "tfsolo_sub_liberty_launcher"
+		}
+		"100105"
+		{
+			"name" "Solo Sub Reserve Shooter"
+			"prefab" "tfsolo_sub_reserve_shooter"
+		}
+		"100106"
+		{
+			"name" "Solo Sub Escape Plan"
+			"prefab" "tfsolo_sub_escape_plan"
+		}
+		"100107"
+		{
+			"name" "Solo Sub Pain Train"
+			"prefab" "tfsolo_sub_paintrain"
+		}
+		"100108"
+		{
+			"name" "Solo Sub Disciplinary Action"
+			"prefab" "tfsolo_sub_disciplinary_action"
+		}
+		"100109"
+		{
+			"name" "Solo Sub Market Gardener"
+			"prefab" "tfsolo_sub_market_gardener"
+		}
+		
+		"100201"
+		{
+			"name" "Solo Sub Degreaser"
+			"prefab" "tfsolo_sub_degreaser"
+		}
+		"100202"
+		{
+			"name" "Solo Sub Phlogistinator"
+			"prefab" "tfsolo_sub_phlogistinator"
+		}
+		"100203"
+		{
+			"name" "Solo Sub Detonator"
+			"prefab" "tfsolo_sub_detonator"
+		}
+		"100204"
+		{
+			"name" "Solo Sub Scorch Shot"
+			"prefab" "tfsolo_sub_scorch_shot"
+		}
+		"100205"
+		{
+			"name" "Solo Sub Panic Attack"
+			"prefab" "tfsolo_sub_panicattack"
+		}
+		"100206"
+		{
+			"name" "Solo Sub Homewrecker"
+			"prefab" "tfsolo_sub_homewrecker"
+		}
+		"100207"
+		{
+			"name" "Solo Sub Powerjack"
+			"prefab" "tfsolo_sub_powerjack"
+		}
+		"100208"
+		{
+			"name" "Solo Sub Sharpened Volcano Fragment"
+			"prefab" "tfsolo_sub_volcano_fragment"
+		}
+		"100209"
+		{
+			"name" "Solo Sub Back Scratcher"
+			"prefab" "tfsolo_sub_back_scratcher"
+		}
+		"100210"
+		{
+			"name" "Solo Sub Third Degree"
+			"prefab" "tfsolo_sub_third_degree"
+		}
+		"100211"
+		{
+			"name" "Solo Sub Neon Annihilator"
+			"prefab" "tfsolo_sub_neon_annihilator"
+		}
+		
+		"100301"
+		{
+			"name" "Solo Sub Stickybomb Jumper"
+			"prefab" "tfsolo_sub_sticky_jumper"
+		}
+		"100302"
+		{
+			"name" "Solo Sub Loch-n-Load"
+			"prefab" "tfsolo_sub_lochnload"
+		}
+		"100303"
+		{
+			"name" "Solo Sub Iron Bomber"
+			"prefab" "tfsolo_sub_ironbomber"
+		}
+		"100304"
+		{
+			"name" "Solo Sub Quickiebomb Launcher"
+			"prefab" "tfsolo_sub_quickiebomb"
+		}
+		"100305"
+		{
+			"name" "Solo Sub Splendid Screen"
+			"prefab" "tfsolo_sub_splendid_screen"
+		}
+		"100306"
+		{
+			"name" "Solo Sub Tide Turner"
+			"prefab" "tfsolo_sub_tide_turner"
+		}
+		"100307"
+		{
+			"name" "Solo Sub Ullapool Caber"
+			"prefab" "tfsolo_sub_ullapool_caber"
+		}
+		"100308"
+		{
+			"name" "Solo Sub Scotsman's Skullcutter"
+			"prefab" "tfsolo_sub_skullcutter"
+		}
+		"100309"
+		{
+			"name" "Solo Sub Claidheamh Mor"
+			"prefab" "tfsolo_sub_claymore"
+		}
+		"100310"
+		{
+			"name" "Solo Sub Half-Zatoichi"
+			"prefab" "tfsolo_sub_half_zatoichi"
+		}
+		"100311"
+		{
+			"name" "Solo Sub Persian Persuader"
+			"prefab" "tfsolo_sub_persian_persuader"
+		}
+		
+		"100401"
+		{
+			"name" "Solo Sub Brass Beast"
+			"prefab" "tfsolo_sub_brass_beast"
+		}
+		"100402"
+		{
+			"name" "Solo Sub Tomislav"
+			"prefab" "tfsolo_sub_tomislav"
+		}
+		"100403"
+		{
+			"name" "Solo Sub Huo-Long Heater"
+			"prefab" "tfsolo_sub_huo_long_heater"
+		}
+		"100404"
+		{
+			"name" "Solo Sub Family Business"
+			"prefab" "tfsolo_sub_family_business"
+		}
+		"100405"
+		{
+			"name" "Solo Sub Warrior's Spirit"
+			"prefab" "tfsolo_sub_warriors_spirit"
+		}
+		"100406"
+		{
+			"name" "Solo Sub Fists of Steel"
+			"prefab" "tfsolo_sub_fists_of_steel"
+		}
+		
+		"100501"
+		{
+			"name" "Solo Sub Widowmaker"
+			"prefab" "tfsolo_sub_widowmaker"
+		}
+		"100502"
+		{
+			"name" "Solo Sub Southern Hospitality"
+			"prefab" "tfsolo_sub_southern_hospitality"
+		}
+		"100503"
+		{
+			"name" "Solo Sub Jag"
+			"prefab" "tfsolo_sub_jag"
+		}
+		"100504"
+		{
+			"name" "Solo Sub Eureka Effect"
+			"prefab" "tfsolo_sub_eureka_effect"
+		}
+		
+		"100601"
+		{
+			"name" "Solo Sub Overdose"
+			"prefab" "tfsolo_sub_overdose"
+		}
+		"100602"
+		{
+			"name" "Solo Sub Quick-Fix"
+			"prefab" "tfsolo_sub_quick_fix"
+		}
+		"100603"
+		{
+			"name" "Solo Sub Vaccinator"
+			"prefab" "tfsolo_sub_vaccinator"
+		}
+		"100604"
+		{
+			"name" "Solo Sub Vita-Saw"
+			"prefab" "tfsolo_sub_vitasaw"
+		}
+		"100605"
+		{
+			"name" "Solo Sub Amputator"
+			"prefab" "tfsolo_sub_amputator"
+		}
+		"100606"
+		{
+			"name" "Solo Sub Solemn Vow"
+			"prefab" "tfsolo_sub_solemn_vow"
+		}
+		
+		"100701"
+		{
+			"name" "Solo Sub Sydney Sleeper"
+			"prefab" "tfsolo_sub_sydney_sleeper"
+		}
+		"100702"
+		{
+			"name" "Solo Sub Bazaar Bargain"
+			"prefab" "tfsolo_sub_bazaar_bargain"
+		}
+		"100703"
+		{
+			"name" "Solo Sub Machina"
+			"prefab" "tfsolo_sub_machina"
+		}
+		"100704"
+		{
+			"name" "Solo Sub Hitman's Heatmaker"
+			"prefab" "tfsolo_sub_heatmaker"
+		}
+		"100705"
+		{
+			"name" "Solo Sub Classic"
+			"prefab" "tfsolo_sub_classic"
+		}
+		"100706"
+		{
+			"name" "Solo Sub Cleaner's Carbine"
+			"prefab" "tfsolo_sub_carbine"
+		}
+		"100707"
+		{
+			"name" "Solo Sub Tribalman's Shiv"
+			"prefab" "tfsolo_sub_tribalmans_shiv"
+		}
+		"100708"
+		{
+			"name" "Solo Sub Bushwacka"
+			"prefab" "tfsolo_sub_bushwacka"
+		}
+		"100709"
+		{
+			"name" "Solo Sub Shahanshah"
+			"prefab" "tfsolo_sub_shahanshah"
+		}
+		
+		"100801"
+		{
+			"name" "Solo Sub L'Etranger"
+			"prefab" "tfsolo_sub_letranger"
+		}
+		"100802"
+		{
+			"name" "Solo Sub Enforcer"
+			"prefab" "tfsolo_sub_enforcer"
+		}
+		"100803"
+		{
+			"name" "Solo Sub Diamondback"
+			"prefab" "tfsolo_sub_diamondback"
+		}
+		"100804"
+		{
+			"name" "Solo Sub Your Eternal Reward"
+			"prefab" "tfsolo_sub_yer"
+		}
+		"100805"
+		{
+			"name" "Solo Sub Conniver's Kunai"
+			"prefab" "tfsolo_sub_kunai"
+		}
+		"100806"
+		{
+			"name" "Solo Sub Big Earner"
+			"prefab" "tfsolo_sub_big_earner"
+		}
+		"100807"
+		{
+			"name" "Solo Sub Spy-cicle"
+			"prefab" "tfsolo_sub_spycicle"
+		}
+		
+		"101000"
 		{
 			"name" "Solo Unarmed"
 			"prefab" "tfsolo_weapon_unarmed"
 		}
-		"100012"
-		{
-			"name" "Solo Medic Syringe"
-			"prefab" "tfsolo_weapon_medic_syringe"
-		}
-		"100013"
-		{
-			"name" "Solo Spy Tranq"
-			"prefab" "tfsolo_weapon_spy_tranq"
-		}
-		"100014"
-		{
-			"name" "Solo Branding Iron"
-			"prefab" "tfsolo_weapon_pyro_brandingiron"
-		}
-		"100015"
-		{
-			"name" "Solo Sniper Club"
-			"prefab" "tfsolo_weapon_sniper_club"
-		}
-		"100016"
-		{
-			"name" "Solo Leadpipe"
-			"prefab" "tfsolo_weapon_leadpipe"
-		}
-		"100017"
-		{
-			"name" "Solo Nailgun"
-			"prefab" "tfsolo_weapon_nailgun"
-		}
-		"100018"
-		{
-			"name" "Solo Medic Beer Stein"
-			"prefab" "tfsolo_weapon_medic_beerstein"
-		}
-		"100019"
+		"101001"
 		{
 			"name" "Solo Crowbar"
 			"prefab" "tfsolo_weapon_crowbar"
+		}
+		"101002"
+		{
+			"name" "Solo Wallboots"
+			"prefab" "tfsolo_weapon_wallboots"
 		}
 	}
 	"attributes"

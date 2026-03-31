@@ -1,77 +1,318 @@
 armory_config
 {
-	"Solo Spineyard Tommygun"
+	"Solo Sub BFB"
 	{
 		Cost 100
 	}
+	"Solo Sub Back Scatter"
+	{
+		Cost 100
+	}
+	"Solo Sub Soda Popper"
+	{
+		Cost 100
+	}
+	"Solo Sub Winger"
+	{
+		Cost 100
+	}
+	"Solo Sub Pocket Pistol"
+	{
+		Cost 100
+	}
+	"Solo Sub Crit-a-Cola"
+	{
+		Cost 100
+	}
+	"Solo Sub Candy Cane"
+	{
+		Cost 100
+	}
+	"Solo Sub Boston Basher"
+	{
+		Cost 100
+	}
+	"Solo Sub Sun-on-a-Stick"
+	{
+		Cost 100
+	}
+	"Solo Sub Fan O'War"
+	{
+		Cost 100
+	}
+	"Solo Sub Atomizer"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub Original"
+	{
+		Cost 100
+	}
+	"Solo Sub Rocket Jumper"
+	{
+		Cost 100
+	}
+	"Solo Sub Black Box"
+	{
+		Cost 100
+	}
+	"Solo Sub Liberty Launcher"
+	{
+		Cost 100
+	}
+	"Solo Sub Reserve Shooter"
+	{
+		Cost 100
+	}
+	"Solo Sub Escape Plan"
+	{
+		Cost 100
+	}
+	"Solo Sub Pain Train"
+	{
+		Cost 100
+	}
+	"Solo Sub Disciplinary Action"
+	{
+		Cost 100
+	}
+	"Solo Sub Market Gardener"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub Degreaser"
+	{
+		Cost 100
+	}
+	//"Solo Sub Phlogistinator"
+	//{
+	//	Cost 100
+	//}
+	"Solo Sub Detonator"
+	{
+		Cost 100
+	}
+	"Solo Sub Scorch Shot"
+	{
+		Cost 100
+	}
+	"Solo Sub Panic Attack"
+	{
+		Cost 100
+	}
+	"Solo Sub Homewrecker"
+	{
+		Cost 100
+	}
+	"Solo Sub Powerjack"
+	{
+		Cost 100
+	}
+	"Solo Sub Sharpened Volcano Fragment"
+	{
+		Cost 100
+	}
+	"Solo Sub Back Scratcher"
+	{
+		Cost 100
+	}
+	"Solo Sub Third Degree"
+	{
+		Cost 100
+	}
+	"Solo Sub Neon Annihilator"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub Stickybomb Jumper"
+	{
+		Cost 100
+	}
+	"Solo Sub Loch-n-Load"
+	{
+		Cost 100
+	}
+	"Solo Sub Iron Bomber"
+	{
+		Cost 100
+	}
+	"Solo Sub Quickiebomb Launcher"
+	{
+		Cost 100
+	}
+	"Solo Sub Splendid Screen"
+	{
+		Cost 100
+	}
+	"Solo Sub Tide Turner"
+	{
+		Cost 100
+	}
+	//"Solo Sub Ullapool Caber"
+	//{
+	//	Cost 100
+	//}
+	"Solo Sub Scotsman's Skullcutter"
+	{
+		Cost 100
+	}
+	"Solo Sub Claidheamh Mor"
+	{
+		Cost 100
+	}
+	"Solo Sub Half-Zatoichi"
+	{
+		Cost 100
+	}
+	"Solo Sub Persian Persuader"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub Brass Beast"
+	{
+		Cost 100
+	}
+	"Solo Sub Tomislav"
+	{
+		Cost 100
+	}
+	"Solo Sub Huo-Long Heater"
+	{
+		Cost 100
+	}
+	"Solo Sub Family Business"
+	{
+		Cost 100
+	}
+	"Solo Sub Warrior's Spirit"
+	{
+		Cost 100
+	}
+	"Solo Sub Fists of Steel"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub Widowmaker"
+	{
+		Cost 100
+	}
+	"Solo Sub Southern Hospitality"
+	{
+		Cost 100
+	}
+	"Solo Sub Jag"
+	{
+		Cost 100
+	}
+	//"Solo Sub Eureka Effect"
+	//{
+	//	Cost 100
+	//}
+	
+	"Solo Sub Overdose"
+	{
+		Cost 100
+	}
+	"Solo Sub Quick-Fix"
+	{
+		Cost 100
+	}
+	"Solo Sub Vaccinator"
+	{
+		Cost 100
+	}
+	"Solo Sub Amputator"
+	{
+		Cost 100
+	}
+	"Solo Sub Vita-Saw"
+	{
+		Cost 100
+	}
+	"Solo Sub Solemn Vow"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub Sydney Sleeper"
+	{
+		Cost 100
+	}
+	"Solo Sub Bazaar Bargain"
+	{
+		Cost 100
+	}
+	//"Solo Sub Machina"
+	//{
+	//	Cost 100
+	//}
+	"Solo Sub Hitman's Heatmaker"
+	{
+		Cost 100
+	}
+	"Solo Sub Classic"
+	{
+		Cost 100
+	}
+	"Solo Sub Cleaner's Carbine"
+	{
+		Cost 100
+	}
+	"Solo Sub Tribalman's Shiv"
+	{
+		Cost 100
+	}
+	"Solo Sub Bushwacka"
+	{
+		Cost 100
+	}
+	"Solo Sub Shahanshah"
+	{
+		Cost 100
+	}
+	
+	"Solo Sub L'Etranger"
+	{
+		Cost 100
+	}
+	"Solo Sub Enforcer"
+	{
+		Cost 100
+	}
+	"Solo Sub Diamondback"
+	{
+		Cost 100
+	}
+	"Solo Sub Your Eternal Reward"
+	{
+		Cost 100
+	}
+	"Solo Sub Conniver's Kunai"
+	{
+		Cost 100
+	}
+	"Solo Sub Big Earner"
+	{
+		Cost 100
+	}
+	"Solo Sub Spy-cicle"
+	{
+		Cost 100
+	}
+	
 	//"Solo Wallboots"
 	//{
 		//Cost 100
 		// UnlockFlag ScenarioOnly
 		// UnlockText "Unlockable from WAR! scenarios"
 	//}
-	"Solo Critee Cool"
-	{
-		Cost 100
-	}
-	"Solo Rocket Center"
-	{
-		Cost 100
-	}
-	"Solo Rocket Trainer"
-	{
-		Cost 100
-	}
-	"Solo Stickybomb Trainer"
-	{
-		Cost 100
-	}
-	"Solo The Runaway Pride"
-	{
-		Cost 100
-	}
-	"Solo Barbell"
-	{
-		Cost 100
-	}
-	"Solo Hammer"
-	{
-		Cost 100
-	}
-	"Solo Backstabber"
-	{
-		Cost 100
-	}
-	"Solo Medic Syringe"
-	{
-		Cost 100
-	}
-	"Solo Spy Tranq"
-	{
-		Cost 100
-	}
-	"Solo Branding Iron"
-	{
-		Cost 100
-	}
-	"Solo Sniper Club"
-	{
-		Cost 100
-	}
-	"Solo Leadpipe"
-	{
-		Cost 100
-	}
-	"Solo Nailgun"
-	{
-		Cost 100
-	}
-	"Solo Medic Beer Stein"
-	{
-		Cost 100
-	}
-	"Solo Crowbar"
-	{
-		Cost 100
-	}
+	//"Solo Crowbar"
+	//{
+	//	Cost 100
+	//}
 }
