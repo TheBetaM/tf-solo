@@ -41,6 +41,8 @@
 	static const char *g_pszEconDescriptionVprofGroup = _T("Econ Description");
 #endif
 
+const itemid_t LOCAL_LOADOUT_RESERVE = ( (itemid_t) - INT_MAX );
+
 extern const char *GetWearLocalizationString( float flWear );
 
 // --------------------------------------------------------------------------
@@ -1318,6 +1320,7 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 #if defined( TF_CLIENT_DLL )
 				if ( pEconItem->GetItemDefinition()->GetItemClass() && V_strcmp( pEconItem->GetItemDefinition()->GetItemClass(), "map_token" ) == 0 )
 				{
+					return;
 					// For map stamps on the client we can show how many hours they've played each map
 					// And how many times they've donated to it instead of the generic "level"
 					for ( int i = 0; i < GetItemSchema()->GetMapCount(); i++ )
@@ -1359,6 +1362,12 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 				}
 			}
 
+			if ( pEconItem->GetID() >= LOCAL_LOADOUT_RESERVE || pEconItem->GetID() == INVALID_ITEM_DEF_INDEX )
+			{
+				AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				return;
+			}
+
 			// If we still don't have a format string here, it means our default also failed, but CConstructLocalizedString will
 			// handle that safely.
 			AddDescLine( CConstructLocalizedString( pszFormatString, GetItemDescriptionDisplayLevel( pEconItem ), locTypename ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
@@ -1366,6 +1375,12 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 		else
 		{
 			Assert( bForceLevelDisplay );
+
+			if ( pEconItem->GetID() >= LOCAL_LOADOUT_RESERVE || pEconItem->GetID() == INVALID_ITEM_DEF_INDEX )
+			{
+				AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				return;
+			}
 
 			AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "ItemTypeDescNoLevel" ), GetItemDescriptionDisplayLevel( pEconItem ) ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
 		}

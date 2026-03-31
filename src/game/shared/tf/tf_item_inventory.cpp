@@ -260,7 +260,16 @@ CEconItemView* CTFInventoryManager::AddSoloItem( int id )
 	pItem->m_unAccountID = 0;
 	pItem->m_unDefIndex = id;
 	pItem->m_unLevel = 1;
-	pItemView->Init( id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false );
+	pItem->SetFlags( 0 );
+	pItem->SetOrigin( kEconItemOrigin_Drop );
+	int quality = AE_USE_SCRIPT_VALUE;
+	if ( id < 65536 )
+	{
+		// Normal quality for base TF2 items
+		quality = 0;
+		pItem->SetQuality( 0 );
+	}
+	pItemView->Init( id, quality, AE_USE_SCRIPT_VALUE, false );
 	pItemView->SetItemID( id + LOCAL_LOADOUT_RESERVE );
 #if CLIENT_DLL
 	pItemView->SetNonSOEconItem( pItem );
