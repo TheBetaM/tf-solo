@@ -1260,6 +1260,12 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 
 	item_definition_index_t usDefIndex = pEconItem->GetItemDefIndex();
 
+	static CSchemaAttributeDefHandle pAttrDef_TFSOLO_Substitute( "tfsolo_substitute" );
+	bool bTFSOLOSubstitute = false;
+	if ( pAttrDef_TFSOLO_Substitute && pEconItem->FindAttribute( pAttrDef_TFSOLO_Substitute ) )
+	{
+		bTFSOLOSubstitute = true;
+	}
 
 #ifdef CLIENT_DLL
 	const bool bIsStoreItem = IsStorePreviewItem( pEconItem );
@@ -1271,7 +1277,15 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 	{
 		if ( locTypename && *locTypename )
 		{
-			AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+			if ( bTFSOLOSubstitute )
+			{
+				const locchar_t* pszFormatString = pLocalizationProvider->Find( "TFSOLO_Attrib_Substitute_ItemType" );
+				AddDescLine( CConstructLocalizedString( pszFormatString, locTypename ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+			}
+			else
+			{
+				AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+			}
 		}
 		return;
 	}
@@ -1364,7 +1378,15 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 
 			if ( pEconItem->GetID() >= LOCAL_LOADOUT_RESERVE || pEconItem->GetID() == INVALID_ITEM_DEF_INDEX )
 			{
-				AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				if ( bTFSOLOSubstitute )
+				{
+					pszFormatString = pLocalizationProvider->Find( "TFSOLO_Attrib_Substitute_ItemType" );
+					AddDescLine( CConstructLocalizedString( pszFormatString, locTypename ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				}
+				else
+				{
+					AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				}
 				return;
 			}
 
@@ -1378,7 +1400,15 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 
 			if ( pEconItem->GetID() >= LOCAL_LOADOUT_RESERVE || pEconItem->GetID() == INVALID_ITEM_DEF_INDEX )
 			{
-				AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				if ( bTFSOLOSubstitute )
+				{
+					const locchar_t* pszFormatString = pLocalizationProvider->Find( "TFSOLO_Attrib_Substitute_ItemType" );
+					AddDescLine( CConstructLocalizedString( pszFormatString, locTypename ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				}
+				else
+				{
+					AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+				}
 				return;
 			}
 

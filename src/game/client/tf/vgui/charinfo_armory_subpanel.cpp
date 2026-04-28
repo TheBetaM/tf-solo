@@ -34,7 +34,7 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 	"#ArmoryFilter_Weapons",		// ARMFILT_WEAPONS,
 	"#ArmoryFilter_MiscItems",		// ARMFILT_MISCITEMS,
 	"#ArmoryFilter_ActionItems",	// ARMFILT_ACTIONITEMS,
-	"#ArmoryFilter_CraftItems",		// ARMFILT_CRAFTITEMS,
+	//"#ArmoryFilter_CraftItems",		// ARMFILT_CRAFTITEMS,
 	"#ArmoryFilter_Tools",			// ARMFILT_TOOLS,
 	"#ArmoryFilter_AllClass",		// ARMFILT_CLASS_ALL,
 	"#ArmoryFilter_Scout",			// ARMFILT_CLASS_SCOUT,
@@ -46,7 +46,7 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 	"#ArmoryFilter_Pyro",			// ARMFILT_CLASS_PYRO,
 	"#ArmoryFilter_Spy",			// ARMFILT_CLASS_SPY,
 	"#ArmoryFilter_Engineer",		// ARMFILT_CLASS_ENGINEER,
-	"#ArmoryFilter_Donationitems",	// ARMFILT_DONATIONITEMS,
+	//"#ArmoryFilter_Donationitems",	// ARMFILT_DONATIONITEMS,
 
 	"",								// ARMFILT_NUM_IN_DROPDOWN
 	"Not Used",						// ARMFILT_CUSTOM

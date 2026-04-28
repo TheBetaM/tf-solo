@@ -2,7 +2,7 @@
 {
 	"items"
 	{
-		"101001"
+		"110001"
 		{
 			"name" "Taunt Thriller"
 			"prefab" "taunt"
@@ -42,7 +42,7 @@
 				}
 			}
 		}
-		"101002"
+		"110002"
 		{
 			"name" "Taunt Robot"
 			"prefab" "taunt"
@@ -66,7 +66,7 @@
 				}
 			}
 		}
-		"101003"
+		"110003"
 		{
 			"name" "Taunt Werewolf"
 			"prefab" "taunt"
@@ -90,7 +90,7 @@
 				}
 			}
 		}
-		"101004"
+		"110004"
 		{
 			"name" "Taunt Frankenheavy"
 			"prefab" "taunt"
@@ -114,7 +114,7 @@
 				}
 			}
 		}
-		"101005"
+		"110005"
 		{
 			"name" "Taunt ComeAndGetMe"
 			"prefab" "taunt"
@@ -146,7 +146,7 @@
 				}
 			}
 		}
-		"101006"
+		"110006"
 		{
 			"name" "Taunt HeroPose"
 			"prefab" "taunt"
