@@ -305,74 +305,135 @@ int	CHudMenuEngyBuild::HudElementKeyInput( int down, ButtonCode_t keynum, const 
 		return 1;
 	}
 
-	bool bController = ( IsConsole() || ( keynum >= JOYSTICK_FIRST ) );
+	bool bController = ( IsConsole() || ( keynum >= JOYSTICK_FIRST ) || tf_build_menu_controller_mode.GetBool() );
 
 	if ( bController )
 	{
+		int iSlot = 0;
 		int iNewSelection = m_iSelectedItem;
 
-		switch( keynum )
+		// convert slot1, slot2 etc to 1,2,3,4
+		if( pszCurrentBinding && ( !Q_strncmp( pszCurrentBinding, "slot", NUM_ENGY_BUILDINGS ) && Q_strlen(pszCurrentBinding) > NUM_ENGY_BUILDINGS ) )
 		{
-		case KEY_XBUTTON_UP:
-		case STEAMCONTROLLER_DPAD_UP:
-			// jump to last
-			iNewSelection = NUM_ENGY_BUILDINGS;
-			break;
+			const char *pszNum = pszCurrentBinding+NUM_ENGY_BUILDINGS;
+			iSlot = atoi(pszNum);
+			iNewSelection = atoi(pszNum);
 
-		case KEY_XBUTTON_DOWN:
-		case STEAMCONTROLLER_DPAD_DOWN:
-			// jump to first
-			iNewSelection = 1;
-			break;
-
-		case KEY_XBUTTON_RIGHT:
-		case STEAMCONTROLLER_DPAD_RIGHT:
-			// move selection to the right
-			iNewSelection++;
-			if ( iNewSelection > NUM_ENGY_BUILDINGS )
-				iNewSelection = 1;
-			break;
-
-		case KEY_XBUTTON_LEFT:
-		case STEAMCONTROLLER_DPAD_LEFT:
-			// move selection to the left
-			iNewSelection--;
-			if ( iNewSelection < 1 )
-				iNewSelection = NUM_ENGY_BUILDINGS;
-			break;
-
-		case KEY_XBUTTON_A:
-		case KEY_XBUTTON_RTRIGGER:
-		case STEAMCONTROLLER_A:
-			// build selected item
-			SendBuildMessage( m_iSelectedItem );
-			return 0;
-
-		case KEY_XBUTTON_Y:
-		case KEY_XBUTTON_LTRIGGER:
-		case STEAMCONTROLLER_Y:
+			// slot10 cancels
+			if ( iSlot == 10 )
 			{
-				// destroy selected item
-				bool bSuccess = SendDestroyMessage( m_iSelectedItem );
-
-				if ( bSuccess )
-				{
-					engine->ExecuteClientCmd( "lastinv" );
-				}
+				engine->ExecuteClientCmd( "lastinv" );
+				return 0;
 			}
-			return 0;
 
-		case KEY_XBUTTON_B:
-		case STEAMCONTROLLER_B:
-			// cancel, close the menu
-			engine->ExecuteClientCmd( "lastinv" );
-			return 0;
+			// allow slot1 - slot4 
+			if ( iSlot < 1 || iSlot > NUM_ENGY_BUILDINGS )
+				return 1;
+		}
+		else
+		{
+			switch( keynum )
+			{
+			case KEY_1:
+				iSlot = 1;
+				iNewSelection = 1;
+				break;
+			case KEY_2:
+				iSlot = 2;
+				iNewSelection = 2;
+				break;
+			case KEY_3:
+				iSlot = 3;
+				iNewSelection = 3;
+				break;
+			case KEY_4:
+				iSlot = 4;
+				iNewSelection = 4;
+				break;
 
-		default:
-			return 1;	// key not handled
+			case KEY_5:
+			case KEY_6:
+			case KEY_7:
+			case KEY_8:
+			case KEY_9:
+				// Eat these keys
+				return 0;
+
+			case KEY_XBUTTON_UP:
+			case STEAMCONTROLLER_DPAD_UP:
+				// jump to last
+				iNewSelection = NUM_ENGY_BUILDINGS;
+				break;
+
+			case KEY_XBUTTON_DOWN:
+			case STEAMCONTROLLER_DPAD_DOWN:
+				// jump to first
+				iNewSelection = 1;
+				break;
+
+			case KEY_XBUTTON_RIGHT:
+			case STEAMCONTROLLER_DPAD_RIGHT:
+				// move selection to the right
+				iNewSelection++;
+				if ( iNewSelection > NUM_ENGY_BUILDINGS )
+					iNewSelection = 1;
+				break;
+
+			case KEY_XBUTTON_LEFT:
+			case STEAMCONTROLLER_DPAD_LEFT:
+				// move selection to the left
+				iNewSelection--;
+				if ( iNewSelection < 1 )
+					iNewSelection = NUM_ENGY_BUILDINGS;
+				break;
+
+			case KEY_XBUTTON_A:
+			case KEY_XBUTTON_RTRIGGER:
+			case STEAMCONTROLLER_A:
+				// build selected item
+				SendBuildMessage( m_iSelectedItem );
+				return 0;
+
+			case KEY_XBUTTON_Y:
+			case KEY_XBUTTON_LTRIGGER:
+			case STEAMCONTROLLER_Y:
+				{
+					// destroy selected item
+					bool bSuccess = SendDestroyMessage( m_iSelectedItem );
+
+					if ( bSuccess )
+					{
+						engine->ExecuteClientCmd( "lastinv" );
+					}
+				}
+				return 0;
+
+			case KEY_0:
+			case KEY_XBUTTON_B:
+			case STEAMCONTROLLER_B:
+				// cancel, close the menu
+				engine->ExecuteClientCmd( "lastinv" );
+				return 0;
+
+			default:
+				return 1;	// key not handled
+			}
 		}
 
 		SetSelectedItem( iNewSelection );
+
+		if ( iSlot != 0 )
+		{
+			bool bSuccess = SendDestroyMessage( m_iSelectedItem );
+			if ( bSuccess )
+			{
+				engine->ExecuteClientCmd( "lastinv" );
+			}
+			else
+			{
+				SendBuildMessage( m_iSelectedItem );
+			}
+		}
 
 		return 0;
 	}
