@@ -1221,6 +1221,114 @@ maps_config
 				allow_pd 1
 			}
 		}
+		workshop_3462743513
+		{
+			name "Oilchange"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3596869047
+		{
+			name "Mackintosh"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_snow 1
+				theme_city 1
+			}
+		}
+		workshop_3597952906
+		{
+			name "Candyland"
+			modename "#Gametype_Escort"
+			tags
+			{
+				stages 3
+				pl 1
+				theme_pyroland 1
+			}
+		}
+		workshop_3620337948
+		{
+			name "Stowaway"
+			modename "#Gametype_VSH"
+			tags
+			{
+				arena_pd 1
+				vsh 1
+				cp_count 1
+				theme_coast 1
+				vscript 1
+			}
+		}
+		workshop_3666526073
+		{
+			name "Colonia"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_3698548391
+		{
+			name "Uplink"
+			modename "#Gametype_RobotDestruction"
+			tags
+			{
+				rd 1
+				flag_count 2
+				theme_space 1
+				symm 1
+			}
+		}
+		workshop_3713160899
+		{
+			name "Zinc"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3714544700
+		{
+			name "Sanctuary"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_3715999959
+		{
+			name "Priory"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_castle 1
+			}
+		}
+		
 		
 	
 	}

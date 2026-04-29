@@ -7881,6 +7881,259 @@ maps_config
 				theme_snow 1
 			}
 		}
+		workshop_3608780921
+		{
+			name "Suburbia"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_snow 1
+				theme_city 1
+			}
+		}
+		workshop_3620337948
+		{
+			name "Stowaway"
+			modename "#Gametype_VSH"
+			tags
+			{
+				arena_pd 1
+				vsh 1
+				cp_count 1
+				theme_coast 1
+				vscript 1
+			}
+		}
+		workshop_3643006966
+		{
+			name "Vault"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3644748474
+		{
+			name "Skyline"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3648696644
+		{
+			name "Falloff"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_coast 1
+			}
+		}
+		workshop_3661939042
+		{
+			name "Fuseworks"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3666526073
+		{
+			name "Colonia"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_3696631536
+		{
+			name "Escathon"
+			modename "#Gametype_SD"
+			tags
+			{
+				sd 1
+				flag_count 1
+				flag_neutral 1
+				theme_desert 1
+			}
+		}
+		workshop_3697776786
+		{
+			name "Thunderbolt"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+			}
+		}
+		workshop_3698548391
+		{
+			name "Uplink"
+			modename "#Gametype_RobotDestruction"
+			tags
+			{
+				rd 1
+				flag_count 2
+				theme_space 1
+				symm 1
+			}
+		}
+		workshop_3700755834
+		{
+			name "Shaft"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3701055823
+		{
+			name "Holt"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 4
+				theme_forest 1
+			}
+		}
+		workshop_3704524832
+		{
+			name "Blackmoose"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_3709196757
+		{
+			name "Filter"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3709707905
+		{
+			name "Mirages"
+			modename "#Gametype_CP"
+			tags
+			{
+				mdv 1
+				cp 1
+				cp_count 3
+				symm 1
+				theme_egypt 1
+			}
+		}
+		workshop_3713160899
+		{
+			name "Zinc"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3713887895
+		{
+			name "Rafters"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				stages 2
+				ad 1
+				cp 1
+				cp_count 2
+				theme_desert 1
+			}
+		}
+		workshop_3713890115
+		{
+			name "Reservoir"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3714544700
+		{
+			name "Sanctuary"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_jungle 1
+			}
+		}
+		workshop_3715999959
+		{
+			name "Priory"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_castle 1
+			}
+		}
+		workshop_3716229024
+		{
+			name "Descent"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
 		
 	}
 }
