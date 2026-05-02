@@ -4532,6 +4532,14 @@ public:
 		g_ScriptErrorScreenOverlay.Draw();
 	}
 
+	virtual void Reload()
+	{
+		m_bAllowEntityCreationInScripts = false;
+		VScriptServerTerm();
+		VScriptServerInit();
+		m_bAllowEntityCreationInScripts = true;
+	}
+
 	bool m_bAllowEntityCreationInScripts;
 };
 
@@ -4544,6 +4552,10 @@ bool IsEntityCreationAllowedInScripts( void )
 
 static short VSCRIPT_SERVER_SAVE_RESTORE_VERSION = 2;
 
+CON_COMMAND_F( vscript_reload, "Restart the server VScript VM.", FCVAR_CHEAT )
+{
+	g_VScriptGameSystem.Reload();
+}
 
 //-----------------------------------------------------------------------------
 

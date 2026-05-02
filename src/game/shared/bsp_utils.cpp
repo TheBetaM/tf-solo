@@ -455,13 +455,13 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 
 		if (g_bspMemoryFiles.HasElement(outName))
 		{
-			Warning("BSP cache: File %s already exists in cache\n", outName);
+			DevWarning("BSP cache: File %s already exists in cache\n", outName);
 			continue;
 		}
 #ifndef _DEBUG
 		if (g_pFullFileSystem->IsFileCacheFileLoaded(NULL, outName))
 		{
-			Warning("BSP cache: File %s already exists in internal cache\n", outName);
+			DevWarning("BSP cache: File %s already exists in internal cache\n", outName);
 			continue;
 		}
 #endif // !_DEBUG
@@ -496,7 +496,7 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 		memfile->m_pFileName = (const char*)outNameMem;
 		if (!g_pFullFileSystem->RegisterMemoryFile(memfile, &existingFile))
 		{
-			Warning("BSP cache failed: File %s already exists in internal cache\n", outName);
+			DevWarning("BSP cache failed: File %s already exists in internal cache\n", outName);
 			continue;
 		}
 	}

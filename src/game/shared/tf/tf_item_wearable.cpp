@@ -137,6 +137,7 @@ int	CTFWearable::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 
 #ifdef CLIENT_DLL
 ConVar tf_test_hat_bodygroup( "tf_test_hat_bodygroup", "0", 0, "For testing bodygroups on hats." );
+ConVar tf_disguise_show_wearables( "tf_disguise_show_wearables", "1", FCVAR_ARCHIVE, "Show cosmetics on friendly disguised spies.\n" );
 #endif
 
 static int CalcBodyGroup( CBaseCombatCharacter* pOwner, CEconItemView *pItem, const char *pBodyGroup, codecontrolledbodygroupdata_t &ccbgd )
@@ -340,7 +341,7 @@ bool CTFWearable::ShouldDraw()
 	}
 
 	// Don't draw 3rd person wearables if our owner is disguised.
-	if ( pOwner && pOwner->m_Shared.InCond( TF_COND_DISGUISED ) && !IsViewModelWearable() )
+	if ( pOwner && pOwner->m_Shared.InCond( TF_COND_DISGUISED ) && !IsViewModelWearable() && !tf_disguise_show_wearables.GetBool() )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 		if ( m_bDisguiseWearable && pLocalPlayer )

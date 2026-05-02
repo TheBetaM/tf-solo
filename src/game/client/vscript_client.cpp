@@ -62,6 +62,11 @@ extern int g_bspCacheJobsRunning;
 
 #endif // VMPROFILE
 
+CON_COMMAND_F( vscript_client_reload, "Restart the client VScript VM.", FCVAR_CHEAT )
+{
+	g_VScriptGameSystem.Reload();
+}
+
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------

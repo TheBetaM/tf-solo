@@ -26,7 +26,7 @@
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
-nav_save_compressed, tf_bot_spells, 
+nav_save_compressed, tf_bot_spells, tf_disguise_show_wearables,
 tf_vision_force, tf_bot_buy_upgrades, tf_mirrormode, tf_revives_enable, 
 sv_mapentities_override, sv_mapentities_mod, nav_begin_ladder, 
 tf_flamethrower_oldeffects, cl_lockview, sv_lockview_force, 
@@ -35,7 +35,8 @@ tf_bot_sniper_lasersight, tf_player_maxspeed_override, tf_scoreboard_allow,
 tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom, 
 mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_type, 
 tf_overview_scoreboard, tf_allow_taunt_aerial, tf_allow_taunt_disguised, 
-tf_halloween_zombie_forceteam, tf_hud_deathnotice_filter, tf_taunt_disable_attack
+tf_halloween_zombie_forceteam, tf_hud_deathnotice_filter, tf_taunt_disable_attack, 
+vscript_reload
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
