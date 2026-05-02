@@ -302,7 +302,7 @@ void CTFStickBomb::Smack( void )
 			if ( IsCurrentAttackACrit() )
 				dmgType |= DMG_CRITICAL;
 			
-			float flDamage = 100.0f;
+			float flDamage = 75.0f;
 			CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg );
 
 			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, flDamage, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
