@@ -20878,7 +20878,7 @@ medigun_charge_types CTFPlayer::GetChargeEffectBeingProvided( void )
 	}
 
 	CWeaponMedigun* pAnyMedigun = dynamic_cast<CWeaponMedigun*>( Weapon_OwnsThisID(TF_WEAPON_MEDIGUN) );
-	if ( pAnyMedigun && pAnyMedigun->IsReleasingCharge() && pAnyMedigun->GetMedigunType() == MEDIGUN_EMERALD )
+	if ( pAnyMedigun && pAnyMedigun->IsReleasingCharge() && pAnyMedigun->GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		return pAnyMedigun->GetChargeType();
 	}

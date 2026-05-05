@@ -778,7 +778,7 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 	case ARMFILT_WEAPONS:
 		{
 			int iSlot = pDef->GetDefaultLoadoutSlot();
-			bInList = ( iSlot == LOADOUT_POSITION_PRIMARY || iSlot == LOADOUT_POSITION_SECONDARY || iSlot == LOADOUT_POSITION_MELEE );
+			bInList = ( iSlot == LOADOUT_POSITION_PRIMARY || iSlot == LOADOUT_POSITION_SECONDARY || iSlot == LOADOUT_POSITION_MELEE || iSlot == LOADOUT_POSITION_BUILDING || iSlot == LOADOUT_POSITION_PDA || iSlot == LOADOUT_POSITION_PDA2 );
 			break;
 		}
 

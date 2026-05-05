@@ -73,6 +73,7 @@ ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "0", FC
 
 ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
 ConVar tf_bot_buy_upgrades( "tf_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
+ConVar tf_bot_friendlyfire( "tf_bot_friendlyfire", "0", FCVAR_NONE, "Bots will treat friends as enemies when friendly fire is on." );
 
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
@@ -87,6 +88,7 @@ extern ConVar tf_bot_path_lookahead_range;
 extern ConVar tf_mvm_miniboss_scale;
 extern ConVar tf_bot_health_critical_ratio;
 extern ConVar tf_bot_health_ok_ratio;
+extern ConVar friendlyfire;
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -6103,6 +6105,53 @@ float CTFBot::GetUberDeployDelayDuration()
 	}
 	
 	return -1.f;
+}
+
+
+bool CTFBot::IsEnemy( const CBaseEntity* them ) const
+{
+	if ( them == NULL )
+		return false;
+
+	if ( m_Shared.InCond( TF_COND_REPROGRAMMED ) )
+	{
+		return GetTeamNumber() == them->GetTeamNumber();
+	}
+	CTFPlayer* pTFPlayer = ToTFPlayer( const_cast< CBaseEntity *>( them ) );
+	if ( pTFPlayer && !pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) && pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == GetEnemyTeam( pTFPlayer->GetTeamNumber() ) )
+	{
+		// Disguise sourced from enemy spy
+		return GetTeamNumber() == them->GetTeamNumber();
+	}
+	if ( pTFPlayer && friendlyfire.GetBool() && tf_bot_friendlyfire.GetBool() )
+	{
+		return true;
+	}
+
+	return GetTeamNumber() != them->GetTeamNumber();
+}
+
+bool CTFBot::IsFriend( const CBaseEntity* them ) const
+{
+	if ( them == NULL )
+		return false;
+
+	if ( m_Shared.InCond( TF_COND_REPROGRAMMED ) )
+	{
+		return GetTeamNumber() != them->GetTeamNumber();
+	}
+	CTFPlayer* pTFPlayer = ToTFPlayer( const_cast< CBaseEntity *>( them ) );
+	if ( pTFPlayer && !pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) && pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == GetEnemyTeam( pTFPlayer->GetTeamNumber() ) )
+	{
+		// Disguise sourced from enemy spy
+		return GetTeamNumber() != them->GetTeamNumber();
+	}
+	if ( pTFPlayer && friendlyfire.GetBool() && tf_bot_friendlyfire.GetBool() )
+	{
+		return false;
+	}
+
+	return GetTeamNumber() == them->GetTeamNumber();
 }
 
 void CTFBot::SpawnCustom()

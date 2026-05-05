@@ -246,6 +246,9 @@ public:
 	void ForgetSpy( CTFPlayer *player );					// remove player from spy suspect system
 	void StopSuspectingSpy( CTFPlayer *pPlayer );
 
+	virtual bool IsEnemy( const CBaseEntity* them ) const;			// return true if given entity is our enemy
+	virtual bool IsFriend( const CBaseEntity* them ) const;			// return true if given entity is our friend
+
 	CTFPlayer *GetClosestHumanLookingAtMe( int team = TEAM_ANY ) const;	// return the nearest human player on the given team who is looking directly at me
 
 	enum AttributeType

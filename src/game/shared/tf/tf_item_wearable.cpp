@@ -138,7 +138,7 @@ int	CTFWearable::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 
 #ifdef CLIENT_DLL
 ConVar tf_test_hat_bodygroup( "tf_test_hat_bodygroup", "0", 0, "For testing bodygroups on hats." );
-ConVar tf_disguise_show_wearables( "tf_disguise_show_wearables", "1", FCVAR_ARCHIVE, "Show cosmetics on friendly disguised spies.\n" );
+ConVar tf_disguise_show_wearables( "tf_disguise_show_wearables", "0", FCVAR_ARCHIVE, "Show cosmetics on friendly disguised spies.\n" );
 #endif
 
 static int CalcBodyGroup( CBaseCombatCharacter* pOwner, CEconItemView *pItem, const char *pBodyGroup, codecontrolledbodygroupdata_t &ccbgd )

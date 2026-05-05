@@ -23,6 +23,8 @@ enum knife_weapontypes_t
 	KNIFE_DISGUISE_ONKILL = 1,
 	KNIFE_MOVEMENT_CLOAK = 2,		// The Cloak and Dagger
 	KNIFE_ICICLE = 3,
+
+	KNIFE_TFSOLO_DISGUISER = 10,
 };
 
 //=============================================================================

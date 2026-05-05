@@ -43,10 +43,12 @@ public:
 
 	virtual void	PrimaryAttack( void );
 	virtual	float	GetWeaponSpread( void );
+	virtual void	ItemPostFrame( void );
 
 	virtual bool	DefaultReload( int iClipSize1, int iClipSize2, int iActivity );
 
 	bool			CanHeadshot( void ) const { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return (iMode == 1); };
+	bool			IsDuelReolver( void ) const { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return (iMode == 10); };
 
 	bool			SapperKillsCollectCrits( void ) const { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, sapper_kills_collect_crits ); return (iMode == 1); };
 
@@ -70,6 +72,7 @@ private:
 
 	float			m_flLastAccuracyCheck;
 	float			m_flAccuracyCheckTime;
+	bool			m_bIsChargingShot;
 };
 
 

@@ -305,14 +305,75 @@ armory_config
 		Cost 100
 	}
 	
+	//"Solo Crowbar"
+	//{
+	//	Cost 100
+	//}
+	//"Solo Fireworks Launcher"
+	//{
+	//	Cost 100
+	//}
+	//"Solo Reflect Shield"
+	//{
+	//	Cost 100
+	//}
 	//"Solo Wallboots"
 	//{
 		//Cost 100
 		// UnlockFlag ScenarioOnly
 		// UnlockText "Unlockable from WAR! scenarios"
 	//}
-	//"Solo Crowbar"
+	"Solo Sneezegun"
+	{
+		Cost 100
+	}
+	//"Solo Invented Shotgun"
 	//{
 	//	Cost 100
 	//}
+	//"Solo Invented Wrench"
+	//{
+	//	Cost 100
+	//}
+	"Solo Duel Revolver"
+	{
+		Cost 100
+	}
+	//"Solo Throwable Toolbox"
+	//{
+	//	Cost 100
+	//}
+	//"Solo Remote Trigger"
+	//{
+	//	Cost 100
+	//}
+	//"Solo Specimen"
+	//{
+	//	Cost 100
+	//}
+	"Solo Passive Medigun"
+	{
+		Cost 100
+	}
+	//"Solo Pyroland Opener"
+	//{
+	//	Cost 100
+	//}
+	//"Solo Bolt Launcher"
+	//{
+	//	Cost 100
+	//}
+	//"Solo Throwable Sapper"
+	//{
+	//	Cost 100
+	//}
+	"Solo Hypnopen"
+	{
+		Cost 100
+	}
+	"Solo Disguiser Knife"
+	{
+		Cost 100
+	}
+	
 }

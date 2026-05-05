@@ -54,6 +54,8 @@ private:
 	int								m_nLowAmmoImageOrigW;
 	int								m_nLowAmmoImageOrigH;
 
+	int								m_nAmmoContainerOrigH;
+
 	CExLabel						*m_pInClip;
 	CExLabel						*m_pInClipShadow;
 	CExLabel						*m_pInReserve;

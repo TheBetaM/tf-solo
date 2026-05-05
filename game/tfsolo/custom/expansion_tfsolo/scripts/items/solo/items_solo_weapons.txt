@@ -16,6 +16,28 @@
 				"tfsolo_substitute" "1"
 			}
 		}
+		"tfsolo_weapon_grenade"
+		{
+			"prefab" "tfsolo_item"
+			"item_class" "tf_weapon_jar"
+			"item_type_name" "Grenade"
+			"item_slot" "secondary"
+			"anim_slot"	"item1"
+			"attach_to_hands" "1"
+			"image_inventory" "backpack/weapons/c_models/urinejar"
+			"model_player" "models/weapons/c_models/urinejar.mdl"
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_SECONDARY_VM_INSPECT_START" "ACT_ITEM1_VM_INSPECT_START"
+					"ACT_SECONDARY_VM_INSPECT_IDLE" "ACT_ITEM1_VM_INSPECT_IDLE"
+					"ACT_SECONDARY_VM_INSPECT_END" "ACT_ITEM1_VM_INSPECT_END"
+				}
+			}
+			"mouse_pressed_sound" "ui/item_bottle_pickup.wav"
+			"drop_sound" "ui/item_bottle_drop.wav"
+		}
 		
 		"tfsolo_sub_scattergun"
 		{
@@ -278,7 +300,7 @@
 			"item_description"	""
 			"static_attrs"
 			{
-				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				//"paintkit_kv" "scripts/paintkits/scattergun_sub_bfb.txt"
 				"weapon_allow_inspect" "1"
 				"use_model_cache_icon" "1"
 			}
@@ -1829,10 +1851,15 @@
 			"item_class" "tf_weapon_stickbomb"
 			"attributes"
 			{
-				"damage penalty" 
+				"fire rate penalty"
 				{
-					"attribute_class"	"mult_dmg"
-					"value"	"0.55"
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"single wep deploy time increased"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"	"2.0"
 				}
 				"crit mod disabled"
 				{
@@ -2796,6 +2823,11 @@
 					"attribute_class" "set_weapon_mode"
 					"value" "1"
 				}
+				"jarate duration"
+				{
+					"attribute_class" "jarate_duration"
+					"value" "5"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class" "mult_crit_chance"
@@ -2805,11 +2837,6 @@
 				{
 					"attribute_class" "mult_sniper_charge_per_sec"
 					"value"	"1.25"
-				}
-				"rifle_jarate_on_hit"
-				{
-					"attribute_class" "rifle_jarate_on_hit"
-					"value"	"8"
 				}
 			}
 		}
@@ -3272,6 +3299,11 @@
 					"attribute_class" "special_taunt"
 					"value" "1"
 				}
+				"mult cloak meter consume rate"
+				{
+					"attribute_class"	"mult_cloak_meter_consume_rate"
+					"value" "1.33"
+				}
 				"mod_disguise_consumes_cloak"
 				{
 					"attribute_class" "mod_disguise_consumes_cloak"
@@ -3396,7 +3428,7 @@
 		{
 			"item_class" "saxxy"
 			"prefab" "weapon_melee_allclass tfsolo_item"
-			"soloitem" "1"
+			//"soloitem" "1"
 			"tags"
 			{
 				"can_deal_damage" "1"
@@ -3510,7 +3542,7 @@
 			"loadondemand" "1"
 			"show_in_armory" "1"
 			"item_type_name" "#TF_Wearable_Boots"
-			"item_name"	"The Wallboots"
+			"item_name"	"Wallboots"
 			"item_slot"	"secondary"
 			"equip_region" "feet"
 			"anim_slot"	"FORCE_NOT_USED"
@@ -3546,6 +3578,309 @@
 			"mouse_pressed_sound" "ui/item_metal_weapon_pickup.wav"
 			"drop_sound" "ui/item_metal_weapon_drop.wav"
 		}
+		"tfsolo_weapon_fireworks_launcher"
+		{
+			"prefab" "tfsolo_item weapon_grenade_launcher"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_grenadelauncher/c_grenadelauncher"
+			}
+			"item_name"	"Fireworks Launcher"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+		}
+		"tfsolo_weapon_reflect_shield"
+		{
+			"prefab" "tfsolo_item weapon_targe"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher"
+			}
+			"item_name"	"Reflect Shield"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class" "allowed_in_medieval_mode"
+					"value"	"1"
+				}
+			}
+		}
+		"tfsolo_weapon_sneezegun"
+		{
+			"prefab" "tfsolo_item weapon_shotgun_multiclass"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Nasty Sneeze"
+			"item_description"	""
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"panic_attack"
+				{
+					"attribute_class" "panic_attack"
+					"value"	"1"
+				}
+				"auto fires full clip hidden"
+				{
+					"attribute_class" "auto_fires_full_clip"
+					"value"	"1"
+				}
+				"Reload time decreased"
+				{
+					"attribute_class" "mult_reload_time"
+					"value" "0.5"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class" "mult_postfiredelay"
+					"value" "0.7"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_clipsize"
+					"value" "0.66"
+				}
+			}
+		}
+		"tfsolo_weapon_invented_shotgun"
+		{
+			"prefab" "tfsolo_item weapon_shotgun"
+			"item_slot"	"primary"
+			"used_by_classes"
+			{
+				"engineer" "1"
+			}
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"item_name"	"Invented Shotgun"
+			"item_description"	"Your very own invention!"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+		}
+		"tfsolo_weapon_invented_wrench"
+		{
+			"prefab" "tfsolo_item weapon_wrench"
+			"visuals"
+			{
+				"material_override" "models/weapons/c_models/c_wrench/c_wrench"
+			}
+			"item_name"	"Invented Wrench"
+			"item_description"	"Builds your very own invented sentry!"
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+		}
+		"tfsolo_weapon_duel_revolver"
+		{
+			"prefab" "tfsolo_item weapon_revolver"
+			"used_by_classes"
+			{
+				"engineer" "1"
+			}
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_revolver/c_revolver"
+			}
+			"item_name"	"Duel Revolver"
+			"item_description"	"Packs a punch."
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"10"
+				}
+				"damage bonus"
+				{
+					"attribute_class" "mult_dmg"
+					"value"	"1.5"
+				}
+				"spread bonus"
+				{
+					"attribute_class" "mult_spread_scale"
+					"value" "0.1"
+				}
+				"clip size penalty"
+				{
+					"attribute_class" "mult_dmg"
+					"value" "0.75"
+				}
+			}
+		}
+		"tfsolo_weapon_throwable_toolbox"
+		{
+			"prefab" "tfsolo_item weapon_pda"
+			"item_name"	"Throwable Toolbox"
+			"item_description" ""
+		}
+		"tfsolo_weapon_remote_trigger"
+		{
+			"prefab" "tfsolo_item weapon_pda"
+			"item_name"	"Remote Trigger"
+			"item_description" ""
+		}
+		"tfsolo_weapon_specimen"
+		{
+			"prefab" "tfsolo_item"
+			"item_class" "tf_weapon_jar"
+			"item_name"	"Specimen"
+			"item_description" ""
+			"item_type_name" "Rodent"
+			"item_slot" "primary"
+			"anim_slot"	"item1"
+			"attach_to_hands" "1"
+			"image_inventory" "backpack/weapons/c_models/urinejar"
+			"model_player" "models/weapons/c_models/urinejar.mdl"
+			"used_by_classes"
+			{
+				"medic" "primary"
+			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_SECONDARY_VM_INSPECT_START" "ACT_ITEM1_VM_INSPECT_START"
+					"ACT_SECONDARY_VM_INSPECT_IDLE" "ACT_ITEM1_VM_INSPECT_IDLE"
+					"ACT_SECONDARY_VM_INSPECT_END" "ACT_ITEM1_VM_INSPECT_END"
+				}
+			}
+			"mouse_pressed_sound" "ui/item_bottle_pickup.wav"
+			"drop_sound" "ui/item_bottle_drop.wav"
+		}
+		"tfsolo_weapon_passive_medigun"
+		{
+			"prefab" "tfsolo_item weapon_medigun"
+			"item_name"	"Passive Medigun"
+			"item_description"	""
+			"item_type_name" "Backpack"
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"10"
+				}
+			}
+		}
+		"tfsolo_weapon_pyroland_opener"
+		{
+			"prefab" "tfsolo_item weapon_fireaxe"
+			"item_name"	"Pyroland Opener"
+			"item_description"	""
+		}
+		"tfsolo_weapon_bolt_launcher"
+		{
+			"prefab" "tfsolo_item weapon_huntsman"
+			"item_name"	"Bolt Launcher"
+			"item_description"	""
+		}
+		"tfsolo_weapon_sapper_throwable"
+		{
+			"prefab" "tfsolo_item weapon_sapper"
+			"item_name"	"Throwable Sapper"
+			"item_description"	""
+		}
+		"tfsolo_weapon_hypnopen"
+		{
+			"prefab" "tfsolo_item weapon_sapper"
+			"item_name"	"Hypnopen"
+			"item_description"	""
+			"item_type_name" "Gadget"
+			"item_class" "tf_weapon_medigun"
+			"model_player" "models/weapons/c_models/c_medigun/c_medigun.mdl"
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"11"
+				}
+			}
+		}
+		"tfsolo_weapon_knife_disguiser"
+		{
+			"prefab" "tfsolo_item weapon_knife"
+			"visuals"
+			{
+				"material_override"	"models/weapons/c_models/c_knife/c_knife"
+			}
+			"item_name"	"Disguiser Knife"
+			"item_description" "Upon backstab, disguise the enemy without them knowing it. Deals NO damage."
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class" "set_weapon_mode"
+					"value"	"10"
+				}
+			}
+		}
+		
+		"tfsolo_weapon_grenade_dynamite"
+		{
+			"prefab" "tfsolo_weapon_grenade"
+			"item_name"	"Dynamite"
+			"item_description" ""
+			"model_player" "models/weapons/w_models/w_dynamite.mdl"
+			"visuals"
+			{
+				//"material_override" "models/weapons/c_models/c_shotgun/c_shotgun"
+			}
+			"used_by_classes"
+			{
+				"demoman" "1"
+			}
+			"static_attrs"
+			{
+				//"paintkit_kv" "scripts/dev/paintkit_minigun_test.txt"
+				"weapon_allow_inspect" "1"
+				"use_model_cache_icon" "1"
+			}
+			//"attributes"
+			//{
+				//"override projectile type"
+				//{
+				//	"attribute_class"	"override_projectile_type"
+				//	"value"				"24" 
+				//}
+			//}
+		}
+		
 	}
 	"items"
 	{
@@ -3940,8 +4275,83 @@
 		}
 		"101002"
 		{
+			"name" "Solo Fireworks Launcher"
+			"prefab" "tfsolo_weapon_fireworks_launcher"
+		}
+		"101003"
+		{
+			"name" "Solo Reflect Shield"
+			"prefab" "tfsolo_weapon_reflect_shield"
+		}
+		"101004"
+		{
 			"name" "Solo Wallboots"
 			"prefab" "tfsolo_weapon_wallboots"
+		}
+		"101005"
+		{
+			"name" "Solo Sneezegun"
+			"prefab" "tfsolo_weapon_sneezegun"
+		}
+		"101006"
+		{
+			"name" "Solo Invented Shotgun"
+			"prefab" "tfsolo_weapon_invented_shotgun"
+		}
+		"101007"
+		{
+			"name" "Solo Invented Wrench"
+			"prefab" "tfsolo_weapon_invented_wrench"
+		}
+		"101008"
+		{
+			"name" "Solo Duel Revolver"
+			"prefab" "tfsolo_weapon_duel_revolver"
+		}
+		"101009"
+		{
+			"name" "Solo Throwable Toolbox"
+			"prefab" "tfsolo_weapon_throwable_toolbox"
+		}
+		"101010"
+		{
+			"name" "Solo Remote Trigger"
+			"prefab" "tfsolo_weapon_remote_trigger"
+		}
+		"101011"
+		{
+			"name" "Solo Specimen"
+			"prefab" "tfsolo_weapon_specimen"
+		}
+		"101012"
+		{
+			"name" "Solo Passive Medigun"
+			"prefab" "tfsolo_weapon_passive_medigun"
+		}
+		"101013"
+		{
+			"name" "Solo Pyroland Opener"
+			"prefab" "tfsolo_weapon_pyroland_opener"
+		}
+		"101014"
+		{
+			"name" "Solo Bolt Launcher"
+			"prefab" "tfsolo_weapon_bolt_launcher"
+		}
+		"101015"
+		{
+			"name" "Solo Throwable Sapper"
+			"prefab" "tfsolo_weapon_sapper_throwable"
+		}
+		"101016"
+		{
+			"name" "Solo Hypnopen"
+			"prefab" "tfsolo_weapon_hypnopen"
+		}
+		"101017"
+		{
+			"name" "Solo Disguiser Knife"
+			"prefab" "tfsolo_weapon_knife_disguiser"
 		}
 	}
 	"attributes"

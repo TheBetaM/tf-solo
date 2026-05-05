@@ -41,6 +41,8 @@ DECLARE_HUDELEMENT( CTFHudWeaponAmmo );
 
 static ConVar hud_low_ammo_warning_threshold( "hud_lowammowarning_threshold", "0.40", FCVAR_CLIENTDLL | FCVAR_DEVELOPMENTONLY, "Percentage threshold at which the low ammo warning will become visible." );
 static ConVar hud_low_ammo_warning_max_pos_adjust( "hud_lowammowarning_maxposadjust", "5", FCVAR_CLIENTDLL | FCVAR_DEVELOPMENTONLY, "Maximum pixel amount to increase the low ammo warning image." );
+extern ConVar tf_maddash_mode;
+extern ConVar tf_maddash_infiltration;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -68,6 +70,7 @@ CTFHudWeaponAmmo::CTFHudWeaponAmmo( const char *pElementName ) : CHudElement( pE
 	m_nAmmo2 = -1;
 	m_hCurrentActiveWeapon = NULL;
 	m_flNextThink = 0.0f;
+	m_nAmmoContainerOrigH = 0;
 
 	RegisterForRenderGroup( "inspect_panel" );
 }
@@ -110,6 +113,10 @@ void CTFHudWeaponAmmo::ApplySchemeSettings( IScheme *pScheme )
 	m_nAmmo2 = -1;
 	m_hCurrentActiveWeapon = NULL;
 	m_flNextThink = 0.0f;
+
+	int x, y;
+	GetPos( x, y );
+	m_nAmmoContainerOrigH = y;
 
 	UpdateAmmoLabels( false, false, false );
 }
@@ -250,6 +257,27 @@ void CTFHudWeaponAmmo::OnThink()
 	// Get the player and active weapon.
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	C_BaseCombatWeapon *pWeapon = GetActiveWeapon();
+	C_TFPlayer *pTFPlayer = C_TFPlayer::GetLocalTFPlayer();
+
+	if ( pTFPlayer && pTFPlayer->IsPlayerClass( TF_CLASS_MEDIC ) && !tf_maddash_mode.GetBool() && TFGameRules() )
+	{
+		int x, y, bx, by;
+		GetBounds( x, y, bx, by );
+		GetPos( x, y );
+		if ( y == m_nAmmoContainerOrigH )
+		{
+			SetPos( x, y - by );
+		}
+	}
+	else
+	{
+		int x, y;
+		GetPos( x, y );
+		if ( y != m_nAmmoContainerOrigH ) 
+		{
+			SetPos( x, m_nAmmoContainerOrigH );
+		}
+	}
 
 	if ( m_flNextThink < gpGlobals->curtime )
 	{

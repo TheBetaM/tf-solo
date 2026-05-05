@@ -172,11 +172,13 @@ bool CHudMedicChargeMeter::ShouldDraw( void )
 		return false;
 	}
 
+	/*
 	if ( pWpn->GetWeaponID() != TF_WEAPON_MEDIGUN && pWpn->GetWeaponID() != TF_WEAPON_BONESAW && 
 		 !( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
 	{
 		return false;
 	}
+	*/
 
 	return CHudElement::ShouldDraw();
 }
@@ -272,8 +274,7 @@ void CHudMedicChargeMeter::OnTick( void )
 	if ( !pWpn )
 		return;
 
-	if ( pWpn->GetWeaponID() == TF_WEAPON_BONESAW || 
-		 ( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
+	if ( pWpn->GetWeaponID() != TF_WEAPON_MEDIGUN )
 	{
 		pWpn = pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN );
 	}

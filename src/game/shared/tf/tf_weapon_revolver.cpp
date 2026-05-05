@@ -7,6 +7,7 @@
 #include "tf_fx_shared.h"
 #include "datamap.h"
 #include "tf_weaponbase_gun.h"
+#include "in_buttons.h"
 
 // Client specific.
 #ifdef CLIENT_DLL
@@ -21,18 +22,26 @@
 // Weapon Revolver tables.
 //
 IMPLEMENT_NETWORKCLASS_ALIASED( TFRevolver, DT_WeaponRevolver )
+IMPLEMENT_NETWORKCLASS_ALIASED( TFRevolver_Secondary, DT_WeaponRevolver_Secondary )
 
 BEGIN_NETWORK_TABLE( CTFRevolver, DT_WeaponRevolver )
+END_NETWORK_TABLE()
+BEGIN_NETWORK_TABLE( CTFRevolver_Secondary, DT_WeaponRevolver_Secondary )
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
 BEGIN_PREDICTION_DATA( CTFRevolver )
 DEFINE_PRED_FIELD( m_flLastAccuracyCheck, FIELD_FLOAT, 0 ),
 END_PREDICTION_DATA()
+BEGIN_PREDICTION_DATA( CTFRevolver_Secondary )
+DEFINE_PRED_FIELD( m_flLastAccuracyCheck, FIELD_FLOAT, 0 ),
+END_PREDICTION_DATA()
 #endif
 
 LINK_ENTITY_TO_CLASS( tf_weapon_revolver, CTFRevolver );
 PRECACHE_WEAPON_REGISTER( tf_weapon_revolver );
+LINK_ENTITY_TO_CLASS( tf_weapon_revolver_secondary, CTFRevolver_Secondary );
+PRECACHE_WEAPON_REGISTER( tf_weapon_revolver_secondary );
 
 // Server specific.
 #ifndef CLIENT_DLL
@@ -40,6 +49,7 @@ BEGIN_DATADESC( CTFRevolver )
 END_DATADESC()
 #endif
 
+ConVar tf_revolver_duel_firing_delay( "tf_revolver_duel_firing_delay", "0.3", FCVAR_CHEAT | FCVAR_REPLICATED, "" );
 
 //=============================================================================
 //
@@ -50,6 +60,7 @@ CTFRevolver::CTFRevolver()
 {
 	m_flLastAccuracyCheck = 0.f;
 	m_flAccuracyCheckTime = 0.f;
+	m_bIsChargingShot = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -138,8 +149,24 @@ void CTFRevolver::PrimaryAttack( void )
 	if ( !CanAttack() )
 		return;
 
-	BaseClass::PrimaryAttack();
+	if ( IsDuelReolver() )
+	{
+		float flFireDelay = tf_revolver_duel_firing_delay.GetFloat();
+		if ( !m_bIsChargingShot )
+		{
+			m_bIsChargingShot = true;
+			m_flLastAccuracyCheck = gpGlobals->curtime;
+			return;
+		}
+		else if ( gpGlobals->curtime < m_flLastAccuracyCheck + flFireDelay )
+		{
+			return;
+		}
+	}
+	m_bIsChargingShot = false;
 
+	BaseClass::PrimaryAttack();
+	
 	if ( HasLastShotCritical() )
 	{
 		pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED );
@@ -178,6 +205,11 @@ void CTFRevolver::PrimaryAttack( void )
 		int iDecaps = pPlayer->m_Shared.GetDecapitations();
 		pPlayer->m_Shared.SetDecapitations( Max( 0, iDecaps - iExtraDamageOnHitPenalty ) );
 	}
+
+	if ( IsDuelReolver() )
+	{
+		pPlayer->ApplyPunchImpulseX( RandomInt(1, 2) );
+	}
 #endif
 }
 
@@ -215,6 +247,12 @@ void CTFRevolver::GetWeaponCrosshairScale( float &flScale )
 		float curtime = pTFPlayer->GetFinalPredictedTime() + ( gpGlobals->interpolation_amount * TICK_INTERVAL );
 		float flTimeSinceCheck = curtime - m_flLastAccuracyCheck;
 		flScale = RemapValClamped( flTimeSinceCheck, 1.0f, 0.5f, 0.75f, 2.5f );
+	}
+	else if ( IsDuelReolver() && m_bIsChargingShot )
+	{
+		float curtime = pTFPlayer->GetFinalPredictedTime() + ( gpGlobals->interpolation_amount * TICK_INTERVAL );
+		float flTimeSinceCheck = curtime - m_flLastAccuracyCheck;
+		flScale = RemapValClamped( flTimeSinceCheck, 0.3f, 0.0f, 0.75f, 2.5f );
 	}
 	else
 	{
@@ -349,3 +387,18 @@ float CTFRevolver::GetProjectileDamage( void )
 	return BaseClass::GetProjectileDamage() * flDamageMod;
 }
 #endif
+
+//-----------------------------------------------------------------------------
+void CTFRevolver::ItemPostFrame( void )
+{
+	if ( IsDuelReolver() && m_bIsChargingShot )
+	{
+		CTFPlayer* pTFPlayer = ToTFPlayer( GetOwner() );
+		if ( pTFPlayer && !( pTFPlayer->m_nButtons & IN_ATTACK ) )
+		{
+			m_bIsChargingShot = false;
+		}
+	}
+
+	BaseClass::ItemPostFrame();
+}

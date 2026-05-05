@@ -27,7 +27,8 @@ enum medigun_weapontypes_t
 	MEDIGUN_QUICKFIX,
 	MEDIGUN_RESIST,
 
-	MEDIGUN_EMERALD = 10,
+	MEDIGUN_TFSOLO_PASSIVE = 10,
+	MEDIGUN_TFSOLO_HYPNOPEN,
 };
 
 enum medigun_resist_types_t

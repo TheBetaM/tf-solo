@@ -600,6 +600,16 @@
 			"description_format"	"value_is_additive"
 			"hidden"	"1"
 		}
+		"100061"
+		{
+			"name"	"spread bonus"
+			"attribute_class"	"mult_spread_scale"
+			"description_string"	"#Attrib_Spread_Positive"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 		
 		
 	}

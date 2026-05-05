@@ -32,6 +32,8 @@
 
 
 extern ConVar tf_bot_health_ok_ratio;
+extern ConVar friendlyfire;
+extern ConVar tf_bot_friendlyfire;
 
 ConVar tf_bot_path_lookahead_range( "tf_bot_path_lookahead_range", "300" );
 ConVar tf_bot_sniper_aim_error( "tf_bot_sniper_aim_error", "0.01", FCVAR_CHEAT );
@@ -295,7 +297,7 @@ EventDesiredResult< CTFBot > CTFBotMainAction::OnInjured( CTFBot *me, const CTak
 	// notice the gunfire - needed for sentry guns, which don't go through the player OnWeaponFired() system
 	me->GetVisionInterface()->AddKnownEntity( subject );
 
-	if ( info.GetInflictor() && info.GetInflictor()->GetTeamNumber() != me->GetTeamNumber() )
+	if ( info.GetInflictor() && info.GetInflictor() != me )
 	{
 		CObjectSentrygun *sentrygun = dynamic_cast< CObjectSentrygun * >( info.GetInflictor() );
 
@@ -873,10 +875,24 @@ bool CTFBotMainAction::IsImmediateThreat( const CBaseCombatCharacter *subject, c
 	if ( !me || !me->IsSelf( subject ) )
 		return false;
 
-	if ( me->InSameTeam( threat->GetEntity() ) )
+	if ( !threat->GetEntity()->IsAlive() )
 		return false;
 
-	if ( !threat->GetEntity()->IsAlive() )
+	if ( me->m_Shared.InCond( TF_COND_REPROGRAMMED ) && !me->InSameTeam( threat->GetEntity() ) )
+		return false;
+
+	CTFPlayer *threatPlayer = ToTFPlayer( threat->GetEntity() );
+
+	bool bFriendlyFire = friendlyfire.GetBool() && tf_bot_friendlyfire.GetBool();
+
+	// Disguise sourced from enemy spy
+	bool bEnemyDisguise = false;
+	if ( threatPlayer && !threatPlayer->IsPlayerClass( TF_CLASS_SPY ) && threatPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && threatPlayer->m_Shared.GetDisguiseTeam() == GetEnemyTeam( threatPlayer->GetTeamNumber() ) )
+	{
+		bEnemyDisguise = true;
+	}
+
+	if ( me->InSameTeam( threat->GetEntity() ) && !me->m_Shared.InCond( TF_COND_REPROGRAMMED ) && !bEnemyDisguise && !bFriendlyFire )
 		return false;
 
 	if ( !threat->IsVisibleRecently() )
@@ -885,8 +901,6 @@ bool CTFBotMainAction::IsImmediateThreat( const CBaseCombatCharacter *subject, c
 	// if they can't hurt me, they aren't an immediate threat
 	if ( !me->IsLineOfFireClear( threat->GetEntity() ) )
 		return false;
-
-	CTFPlayer *threatPlayer = ToTFPlayer( threat->GetEntity() );
 
 	Vector to = me->GetAbsOrigin() - threat->GetLastKnownPosition();
 	float threatRange = to.NormalizeInPlace();

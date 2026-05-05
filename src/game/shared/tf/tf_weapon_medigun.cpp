@@ -38,6 +38,7 @@
 #include "soundenvelope.h"
 #include "effect_dispatch_data.h"
 #include "func_respawnroom.h"
+#include "tf/bot/tf_bot.h"
 #endif
 
 #include "tf_revive.h"
@@ -79,6 +80,8 @@ ConVar weapon_medigun_charge_rate( "weapon_medigun_charge_rate", "40", FCVAR_CHE
 ConVar weapon_medigun_chargerelease_rate( "weapon_medigun_chargerelease_rate", "8", FCVAR_CHEAT | FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY, "Amount of time it takes the a full charge of the medigun to be released." );
 ConVar weapon_medigun_resist_num_chunks( "weapon_medigun_resist_num_chunks", "4", FCVAR_CHEAT | FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY, "How many uber bar chunks the vaccinator has." );
 ConVar tf_vaccinator_uber_charge_rate_modifier( "tf_vaccinator_uber_charge_rate_modifier", "1.0", FCVAR_CHEAT | FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY , "Vaccinator uber charge rate." );
+ConVar tf_hypnopen_front_only( "tf_hypnopen_front_only", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "Only allow connecting hypnopen from the front." );
+ConVar tf_hypnopen_remove_disguise( "tf_hypnopen_remove_disguise", "1", FCVAR_CHEAT | FCVAR_REPLICATED, "" );
 
 #if defined (CLIENT_DLL)
 ConVar tf_medigun_autoheal( "tf_medigun_autoheal", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Setting this to 1 will cause the Medigun's primary attack to be a toggle instead of needing to be held down." );
@@ -278,7 +281,7 @@ void CWeaponMedigun::WeaponReset( void )
 	}
 
 #if defined( GAME_DLL )
-	if ( GetMedigunType() == MEDIGUN_EMERALD && pOwner )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE && pOwner )
 	{
 		if ( (pOwner->m_Shared.InState( TF_STATE_DYING ) || pOwner->m_Shared.InState( TF_STATE_OBSERVER ) ) )
 		{
@@ -324,7 +327,7 @@ void CWeaponMedigun::WeaponReset( void )
 
 #if defined( GAME_DLL )
 	StopHealingOwner();
-	if ( GetMedigunType() != MEDIGUN_EMERALD )
+	if ( GetMedigunType() != MEDIGUN_TFSOLO_PASSIVE )
 	{
 		m_hLastHealingTarget = NULL;
 	}
@@ -408,7 +411,7 @@ void CWeaponMedigun::Precache()
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::Deploy( void )
 {
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		return false;
 	}
@@ -615,6 +618,18 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 		bool bStealthed = pTFPlayer->m_Shared.IsStealthed() && !pOwner->m_Shared.IsStealthed(); // Allow stealthed medics to heal stealthed targets
 		bool bDisguised = pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED );
 
+		if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+		{
+			// Hypnopen only attaches to enemies and disguised enemies
+			if ( !bStealthed && 
+				( !pTFPlayer->InSameTeam( pOwner ) || 
+				( bDisguised && pTFPlayer->m_Shared.GetDisguiseTeam() == pOwner->GetTeamNumber() ) ) )
+			{
+				return true;
+			}
+			return false;
+		}
+
 		// We can heal teammates and enemies that are disguised as teammates
 		if ( !bStealthed && 
 			( pTFPlayer->InSameTeam( pOwner ) || 
@@ -625,6 +640,10 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 	}
 	else
 	{
+		// todo: hypnopen sucking up damage from enemy team property?
+		if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+			return false;
+
 		if ( !pTarget->InSameTeam( pOwner ) )
 			return false;
 
@@ -800,6 +819,37 @@ void CWeaponMedigun::FindNewTargetForSlot()
 
 		if ( pTarget )
 		{
+			if ( tf_hypnopen_front_only.GetBool() )
+			{
+				// Get a vector from owner origin to target origin
+				Vector vecToTarget;
+				vecToTarget = pTarget->WorldSpaceCenter() - pOwner->WorldSpaceCenter();
+				vecToTarget.z = 0.0f;
+				vecToTarget.NormalizeInPlace();
+
+				// Get owner forward view vector
+				Vector vecOwnerForward;
+				AngleVectors( pOwner->EyeAngles(), &vecOwnerForward, NULL, NULL );
+				vecOwnerForward.z = 0.0f;
+				vecOwnerForward.NormalizeInPlace();
+
+				// Get target forward view vector
+				Vector vecTargetForward;
+				AngleVectors( pTarget->EyeAngles(), &vecTargetForward, NULL, NULL );
+				vecTargetForward.z = 0.0f;
+				vecTargetForward.NormalizeInPlace();
+
+				// Make sure owner is in front, facing and aiming at target's face
+				float flPosVsTargetViewDot = DotProduct( vecToTarget, vecTargetForward );	// In Front?
+				float flPosVsOwnerViewDot = DotProduct( vecToTarget, vecOwnerForward );		// Facing?
+				float flViewAnglesDot = DotProduct( vecTargetForward, vecOwnerForward );	// Facestab?
+
+				bool bInFront = ( flPosVsTargetViewDot <= 0.f && flPosVsOwnerViewDot > 0.5 && flViewAnglesDot <= -0.3f );
+				if ( !bInFront )
+				{
+					return;
+				}
+			}
 #ifdef GAME_DLL
 			pOwner->SpeakConceptIfAllowed( MP_CONCEPT_MEDIC_STARTEDHEALING );
 			if ( pTarget->IsPlayer() )
@@ -822,7 +872,7 @@ void CWeaponMedigun::FindNewTargetForSlot()
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::IsReleasingCharge( void ) const
 {
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 		return m_bChargeRelease;
 	else
 		return (m_bChargeRelease && !m_bHolstered);
@@ -994,7 +1044,7 @@ bool CWeaponMedigun::IsAttachedToBuilding( void )
 void CWeaponMedigun::HealTargetThink( void )
 {	
 
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		CTFPlayer* pOwner = ToTFPlayer(GetOwnerEntity());
 		if ( !pOwner )
@@ -1199,6 +1249,22 @@ void CWeaponMedigun::StartHealingTarget( CBaseEntity *pTarget )
 	if ( !pOwner )
 		return;
 
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+	{
+		if ( ( pOwner->m_Shared.InCond( TF_COND_DISGUISED ) || pOwner->m_Shared.InCond( TF_COND_DISGUISING ) ) && tf_hypnopen_remove_disguise.GetBool() )
+		{
+			pOwner->m_Shared.RemoveDisguise();
+		}
+		// Hypnotize target
+		pTFTarget->m_Shared.AddCond( TF_COND_REPROGRAMMED, -1.0, pOwner );
+		CTFBot* pTFBot = ToTFBot( pTFTarget );
+		if ( pTFBot )
+		{
+
+		}
+		return;
+	}
+
 	float flOverhealBonus = GetOverHealBonus( pTFTarget );
 	float flOverhealDecayMult = GetOverHealDecayMult( pTFTarget );
 	pTFTarget->m_Shared.Heal( pOwner, GetHealRate(), flOverhealBonus, flOverhealDecayMult );
@@ -1281,6 +1347,10 @@ void CWeaponMedigun::UberchargeChunkDeployed()
 const char *CWeaponMedigun::GetHealSound( void ) const
 {
 	int iMedigunType = GetMedigunType();
+	if ( ( iMedigunType == MEDIGUN_TFSOLO_PASSIVE || iMedigunType == MEDIGUN_TFSOLO_HYPNOPEN ) )
+	{
+		return "WeaponMedigun.HealingWorld";
+	}
 	const char *pszRetVal = g_pszMedigunHealSounds[iMedigunType];
 	if ( ( iMedigunType == MEDIGUN_CHARGE_INVULN ) || ( iMedigunType == MEDIGUN_CHARGE_CRITICALBOOST ) )
 	{
@@ -1386,7 +1456,7 @@ void CWeaponMedigun::RemoveMedigunShield( void )
 void CWeaponMedigun::CreateMedigunDispenser(void)
 {
 #ifdef GAME_DLL
-	if ( GetMedigunType() != MEDIGUN_EMERALD )
+	if ( GetMedigunType() != MEDIGUN_TFSOLO_PASSIVE )
 		return;
 
 	if ( m_hLastHealingTarget )
@@ -1431,7 +1501,7 @@ void CWeaponMedigun::CreateMedigunDispenser(void)
 void CWeaponMedigun::RemoveMedigunDispenser(void)
 {
 #ifdef GAME_DLL
-	if ( GetMedigunType() != MEDIGUN_EMERALD )
+	if ( GetMedigunType() != MEDIGUN_TFSOLO_PASSIVE )
 		return;
 
 	if ( m_hLastHealingTarget )
@@ -1518,6 +1588,11 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 #endif
 	
 		bFound = true;
+
+		if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+		{
+			return bFound;
+		}
 
 		// Charge up our power if we're not releasing it, and our target
 		// isn't receiving any benefit from our healing.
@@ -1781,7 +1856,7 @@ void CWeaponMedigun::SubtractChargeAndUpdateDeployState( float flSubtractAmount,
 		RecalcEffectOnTarget( pOwner );
 		StopHealingOwner(); // QuickFix uber heals the target and medic
 
-		if ( GetMedigunType() == MEDIGUN_EMERALD )
+		if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 		{
 			CBaseEntity* pTarget = m_hLastHealingTarget;
 			if (!pTarget)
@@ -1818,6 +1893,11 @@ void CWeaponMedigun::ItemPostFrame( void )
 	// If we're lowered, we're not allowed to fire
 	if ( CanAttack() == false )
 	{
+		if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN && ( pOwner->m_nButtons & IN_ATTACK2 ) )
+		{
+			SecondaryAttack();
+			return;
+		}
 		RemoveHealingTarget( true );
 		return;
 	}
@@ -1996,18 +2076,28 @@ void CWeaponMedigun::RemoveHealingTarget( bool bStopHealingSelf )
 						pOwner->m_Shared.RemoveCond( cond );
 					}
 				}
+				else if ( nMedigunType == MEDIGUN_TFSOLO_HYPNOPEN )
+				{
+					// De-hypnotize target
+					pTFPlayer->m_Shared.RemoveCond( TF_COND_REPROGRAMMED );
+					CTFBot* pTFBot = ToTFBot( pTFPlayer );
+					if ( pTFBot )
+					{
+
+					}
+				}
 			}
 		}
 	}
 
 	// Stop thinking - we no longer have a heal target.
-	if ( GetMedigunType() != MEDIGUN_EMERALD )
+	if ( GetMedigunType() != MEDIGUN_TFSOLO_PASSIVE )
 	{
 		SetContextThink(NULL, 0, s_pszMedigunHealTargetThink);
 	}
 #endif
 
-	if  ( GetMedigunType() != MEDIGUN_EMERALD )
+	if  ( GetMedigunType() != MEDIGUN_TFSOLO_PASSIVE )
 	{
 		m_hLastHealingTarget.Set( m_hHealingTarget );
 	}
@@ -2096,6 +2186,13 @@ void CWeaponMedigun::SecondaryAttack( void )
 	CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
 	if ( !pOwner )
 		return;
+
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+	{
+		RemoveHealingTarget();
+		pOwner->DoClassSpecialSkill();
+		return;
+	}
 
 	if ( !CanAttack() )
 		return;
@@ -2684,7 +2781,7 @@ void CWeaponMedigun::UpdateEffects( void )
 	m_hHealingTargetEffect.pCustomEffect	= NULL;
 
 	// Don't add targets if the medic is dead
-	if ( !pEffectOwner || pFiringPlayer->IsPlayerDead() || !pFiringPlayer->IsPlayerClass( TF_CLASS_MEDIC ) || pFiringPlayer->m_Shared.IsFullyInvisible() )
+	if ( !pEffectOwner || pFiringPlayer->IsPlayerDead() || pFiringPlayer->m_Shared.IsFullyInvisible() )
 		return;
 
 	// Add our targets
@@ -2774,6 +2871,11 @@ void CWeaponMedigun::UpdateEffects( void )
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::UpdateMedicAutoCallers( void )
 {
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+	{
+		return;
+	}
+
 	// Find teammates that need healing
 	if ( gpGlobals->curtime > m_flAutoCallerCheckTime )
 	{
@@ -3019,7 +3121,7 @@ void CWeaponMedigun::HookAttributes( void )
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::CanBeSelected()
 {
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		return false;
 	}
@@ -3034,7 +3136,7 @@ bool CWeaponMedigun::CanBeSelected()
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::CanDeploy()
 {
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		return false;
 	}
@@ -3049,7 +3151,7 @@ bool CWeaponMedigun::CanDeploy()
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::VisibleInWeaponSelection()
 {
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		return false;
 	}
@@ -3064,7 +3166,7 @@ bool CWeaponMedigun::VisibleInWeaponSelection()
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::WeaponRegenerate()
 {
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		CreateMedigunDispenser();
 	}
@@ -3079,7 +3181,7 @@ void CWeaponMedigun::Equip(CBaseCombatCharacter* pOwner)
 {
 	BaseClass::Equip( pOwner );
 
-	if ( GetMedigunType() == MEDIGUN_EMERALD )
+	if ( GetMedigunType() == MEDIGUN_TFSOLO_PASSIVE )
 	{
 		CreateMedigunDispenser();
 	}

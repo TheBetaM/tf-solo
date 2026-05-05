@@ -1339,6 +1339,7 @@ CBaseEntity *CTFPlayerShared::GetConditionAssistFromAttacker( void )
 	{
 		TF_COND_OFFENSEBUFF,			// Highest priority
 		TF_COND_DEFENSEBUFF,
+		TF_COND_REPROGRAMMED,
 		TF_COND_REGENONDAMAGEBUFF,
 		TF_COND_NOHEALINGDAMAGEBUFF,	// Lowest priority
 	};
@@ -8192,10 +8193,10 @@ void CTFPlayerShared::Disguise( int nTeam, int nClass, CTFPlayer* pDesiredTarget
 	Assert ( ( nClass >= TF_CLASS_SCOUT ) && ( nClass <= TF_CLASS_ENGINEER ) );
 
 	// we're not a spy
-	if ( nRealClass != TF_CLASS_SPY )
-	{
-		return;
-	}
+	//if ( nRealClass != TF_CLASS_SPY )
+	//{
+	//	return;
+	//}
 
 	if ( InCond( TF_COND_TAUNTING ) )
 	{
@@ -13105,13 +13106,13 @@ bool CTFPlayer::IsMiniBoss( void ) const
 //-----------------------------------------------------------------------------
 CBaseEntity *CTFPlayer::MedicGetHealTarget( void )
 {
-	if ( IsPlayerClass(TF_CLASS_MEDIC) )
-	{
+	//if ( IsPlayerClass(TF_CLASS_MEDIC) )
+	//{
 		CWeaponMedigun *pWeapon = dynamic_cast <CWeaponMedigun*>( GetActiveWeapon() );
 
 		if ( pWeapon )
 			return pWeapon->GetHealTarget();
-	}
+	//}
 
 	return NULL;
 }

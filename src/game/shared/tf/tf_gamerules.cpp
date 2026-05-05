@@ -10560,6 +10560,12 @@ bool CTFGameRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAtt
 		}
 		else
 		{
+			CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
+			if ( pTFPlayer && !pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) && pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == GetEnemyTeam( pTFPlayer->GetTeamNumber() ) )
+			{
+				// Disguise sourced from enemy spy
+				return true;
+			}
 			// Teammates of the builder
 			return false;
 		}
@@ -10569,6 +10575,29 @@ bool CTFGameRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAtt
 	if ( info.GetDamageCustom() == TF_DMG_CUSTOM_SPELL_MONOCULUS && pAttacker->GetTeamNumber() == pPlayer->GetTeamNumber() )
 	{
 		return false;
+	}
+
+	CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
+	if ( pTFPlayer )
+	{
+		CTFPlayer* pTFAttackPlayer = ToTFPlayer( pAttacker );
+		if ( pTFAttackPlayer &&  pTFAttackPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) )
+		{
+			return true;
+		}
+		else if ( !pTFAttackPlayer && pAttacker->GetOwnerEntity() )
+		{
+			pTFAttackPlayer = ToTFPlayer( pAttacker->GetOwnerEntity() );
+			if ( pTFAttackPlayer &&  pTFAttackPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) )
+			{
+				return true;
+			}
+		}
+		if ( !pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) && pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == GetEnemyTeam( pTFPlayer->GetTeamNumber() ) )
+		{
+			// Disguise sourced from enemy spy
+			return true;
+		}
 	}
 
 	// in PvE modes, if entities are on the same team, they can't hurt each other

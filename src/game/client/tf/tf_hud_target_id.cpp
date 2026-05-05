@@ -1226,7 +1226,15 @@ int CSecondaryTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer )
 	{
 		if ( pHealTarget->entindex() != m_iTargetEntIndex )
 		{
-			g_pVGuiLocalize->ConstructString_safe( m_wszPrepend, g_pVGuiLocalize->Find("#TF_playerid_healtarget" ), 0 );
+			CWeaponMedigun* pWeapon = dynamic_cast <CWeaponMedigun*>( GetActiveWeapon() );
+			if ( pWeapon && pWeapon->GetMedigunType() == MEDIGUN_TFSOLO_HYPNOPEN )
+			{
+				g_pVGuiLocalize->ConstructString_safe( m_wszPrepend, g_pVGuiLocalize->Find( "#TFSOLO_Hypnopen_TargetID" ), 0 );
+			}
+			else
+			{
+				g_pVGuiLocalize->ConstructString_safe( m_wszPrepend, g_pVGuiLocalize->Find( "#TF_playerid_healtarget" ), 0 );
+			}
 		}
 		return pHealTarget->entindex();
 	}

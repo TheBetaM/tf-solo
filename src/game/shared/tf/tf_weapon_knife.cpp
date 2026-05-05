@@ -294,6 +294,11 @@ void CTFKnife::PrimaryAttack( void )
 			pPlayer->m_Shared.HealthKitPickupEffects( iDeltaHealth );
 		}
 	}
+
+	if ( GetKnifeType() == KNIFE_TFSOLO_DISGUISER && m_hBackstabVictim && IsBackstab() && m_hBackstabVictim->IsAlive() && !m_hBackstabVictim->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+	{
+		m_hBackstabVictim->m_Shared.Disguise( pPlayer->GetTeamNumber(), m_hBackstabVictim->GetPlayerClass()->GetClassIndex(), NULL, true );
+	}
 #endif // GAME_DLL
 }
 
@@ -359,6 +364,11 @@ float CTFKnife::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* pi
 	CTFPlayer *pTFOwner = ToTFPlayer( GetPlayerOwner() );
 	if ( !pTFOwner )
 		return false;
+
+	if ( GetKnifeType() == KNIFE_TFSOLO_DISGUISER )
+	{
+		return 0.0f;
+	}
 
 	if ( pTarget->IsPlayer() )
 	{
