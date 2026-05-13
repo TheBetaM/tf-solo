@@ -22,6 +22,7 @@
 
 
 extern ConVar tf_mvm_skill;
+extern ConVar tf_mvm_invert_factor;
 extern ConVar *sv_cheats;
 
 CHandle<CUpgrades>	g_hUpgradeEntity;
@@ -185,12 +186,13 @@ void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*=
 						// compute number of upgrade steps this upgrade has
 						bool bOverCap = false;
 						int iCurrentUpgradeStep = 0;
-						const int iNumMaxUpgradeStep = GetUpgradeStepData( pTFPlayer, iItemSlot, iUpgrade, iCurrentUpgradeStep, bOverCap );
+						bool bInverted = false;
+						const int iNumMaxUpgradeStep = GetUpgradeStepData( pTFPlayer, iItemSlot, iUpgrade, iCurrentUpgradeStep, bOverCap, bInverted );
 
 						// for each upgrade step
 						for ( int iStep = 0; iStep < iNumMaxUpgradeStep; ++iStep )
 						{
-							PlayerPurchasingUpgrade( pTFPlayer, iItemSlot, iUpgrade, bRemove, bFree, bRespec );
+							PlayerPurchasingUpgrade( pTFPlayer, iItemSlot, iUpgrade, bRemove, bFree, bRespec, bInverted );
 						}
 					}
 				}
@@ -204,7 +206,7 @@ void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*=
 // Purpose: Handles a player upgrade purchase request.
 //   Returns false if upgrade request is invalid.
 //-----------------------------------------------------------------------------
-bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, int iUpgrade, bool bDowngrade, bool bFree /*= false */, bool bRespec /*= false*/ )
+bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, int iUpgrade, bool bDowngrade, bool bFree /*= false */, bool bRespec /*= false*/, bool bInverted /*= false*/ )
 {
 	if ( !pTFPlayer ||
 		 iUpgrade < 0 ||
@@ -223,7 +225,7 @@ bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, in
 
 	int nCost = 0;
 
-	if ( bDowngrade )
+	if ( bDowngrade && !bInverted )
 	{
 		// See if we know the actual price paid, rather than asking what the current price is, which is exploitable
 		CUtlVector< CUpgradeInfo > *pUpgrades = pTFPlayer->GetRefundableUpgrades();
@@ -249,10 +251,15 @@ bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, in
 		nCost *= -1;
 	}
 
-	if ( !bFree )
+	if ( !bFree && !bInverted )
 	{
 		// Make sure the player can afford it
 		if ( pTFPlayer->GetCurrency() < nCost )
+			{ return false; }
+	}
+	else if ( !bFree && bInverted )
+	{
+		if ( pTFPlayer->GetCurrency() < -nCost )
 			{ return false; }
 	}
 
@@ -309,20 +316,24 @@ bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, in
 			{ return false; }
 	}
 
-	const attrib_definition_index_t nUpgradedAttrDefIndex = ApplyUpgradeToItem( pTFPlayer, pItem, iUpgrade, nCost, bDowngrade, !bFree );
+	const attrib_definition_index_t nUpgradedAttrDefIndex = ApplyUpgradeToItem( pTFPlayer, pItem, iUpgrade, nCost, bDowngrade, !bFree, bInverted );
 
 	// Failed to apply
 	if ( nUpgradedAttrDefIndex == INVALID_ATTRIB_DEF_INDEX )
 		{ return false; }
 
-	if ( !bFree )
+	if ( !bFree && !bInverted )
 	{
 		// Remove Currency
 		pTFPlayer->RemoveCurrency( nCost );
 	}
+	else if ( !bFree && bInverted )
+	{
+		pTFPlayer->RemoveCurrency( (int)( (float)nCost * -tf_mvm_invert_factor.GetFloat() ) );
+	}
 
 	// remember our upgrades so we can restore them at a checkpoint
-	pTFPlayer->RememberUpgrade( pTFPlayer->GetPlayerClass()->GetClassIndex(), pItem, iUpgrade, nCost, bDowngrade );
+	pTFPlayer->RememberUpgrade( pTFPlayer->GetPlayerClass()->GetClassIndex(), pItem, iUpgrade, nCost, bDowngrade, bInverted );
 
 	// Only regenerate if between waves
 	pTFPlayer->Regenerate( TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() );
@@ -353,7 +364,7 @@ bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, in
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *pTFPlayer, CEconItemView *pEconItemView, int nCost, bool bDowngrade )
+static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *pTFPlayer, CEconItemView *pEconItemView, int nCost, bool bDowngrade, bool bInverted )
 {
 	Assert( pTFPlayer );
 
@@ -365,6 +376,13 @@ static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *p
 	const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinitionByName( upgrade.szAttrib );
 	if ( !pAttrDef )
 		return INVALID_ATTRIB_DEF_INDEX;
+
+	if ( bInverted && upgrade.szInvAttrib && upgrade.szInvAttrib[ 0 ] )
+	{
+		pAttrDef = GetItemSchema()->GetAttributeDefinitionByName( upgrade.szInvAttrib );
+		if ( !pAttrDef )
+			return INVALID_ATTRIB_DEF_INDEX;
+	}
 
 	CTFWearable *pWearable = pTFPlayer->GetEquippedWearableForLoadoutSlot( LOADOUT_POSITION_ACTION );
 	CTFPowerupBottle *pPowerupBottle = dynamic_cast< CTFPowerupBottle * >( pWearable );
@@ -444,7 +462,7 @@ static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *p
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgrades& upgrade, CTFPlayer *pTFPlayer, CEconItemView *pEconItemView, int nCost, bool bDowngrade )
+static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgrades& upgrade, CTFPlayer *pTFPlayer, CEconItemView *pEconItemView, int nCost, bool bDowngrade, bool bInverted )
 {
 	Assert( pTFPlayer );
 	Assert( upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER || upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM );
@@ -454,6 +472,13 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 	const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinitionByName( upgrade.szAttrib );
 	if ( !pAttrDef )
 		return INVALID_ATTRIB_DEF_INDEX;
+
+	if ( bInverted && upgrade.szInvAttrib && upgrade.szInvAttrib[ 0 ] )
+	{
+		pAttrDef = GetItemSchema()->GetAttributeDefinitionByName( upgrade.szInvAttrib );
+		if ( !pAttrDef )
+			return INVALID_ATTRIB_DEF_INDEX;
+	}
 
 	Assert( !pAttrDef->BIsSetBonusAttribute() );
 
@@ -480,11 +505,20 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 	
 	// if the attribute exists, add the increment (but not if it's a set bonus attribute, they're recreated on each respawn)
 	float flIncrement = upgrade.flIncrement;
+	if ( bInverted )
+	{
+		flIncrement = -flIncrement;
+	}
 
 	float flCurrentValue;
 	if ( ::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pAttrList, pAttrDef, &flCurrentValue ) )
 	{
-		const float flCap = upgrade.flCap;
+		float flCap = upgrade.flCap;
+		if ( bInverted )
+		{
+			int nSteps = ( upgrade.flCap - fDefaultValue ) / upgrade.flIncrement;
+			flCap = fDefaultValue + ( flIncrement * nSteps );
+		}
 
 		if ( !bDowngrade && BIsAttributeValueWithDeltaOverCap( flCurrentValue, flIncrement, flCap ) )
 			return INVALID_ATTRIB_DEF_INDEX;
@@ -565,7 +599,7 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-attrib_definition_index_t CUpgrades::ApplyUpgradeToItem( CTFPlayer *pTFPlayer, CEconItemView *pView, int iUpgrade, int nCost, bool bDowngrade, bool bIsFresh )
+attrib_definition_index_t CUpgrades::ApplyUpgradeToItem( CTFPlayer *pTFPlayer, CEconItemView *pView, int iUpgrade, int nCost, bool bDowngrade, bool bIsFresh, bool bInverted )
 {
 	Assert( pTFPlayer );
 	Assert( g_MannVsMachineUpgrades.m_Upgrades.IsValidIndex( iUpgrade ) );
@@ -594,14 +628,14 @@ attrib_definition_index_t CUpgrades::ApplyUpgradeToItem( CTFPlayer *pTFPlayer, C
 
 	// ...powerup bottle?
 	if ( bIsBottle )
-		return ApplyUpgrade_Bottle( iUpgrade, pTFPlayer, pView, nCost, bDowngrade );
+		return ApplyUpgrade_Bottle( iUpgrade, pTFPlayer, pView, nCost, bDowngrade, bInverted );
 
 	// ...player upgrade?
 	if ( upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER )
-		return ApplyUpgrade_Default( upgrade, pTFPlayer, pView, nCost, bDowngrade );
+		return ApplyUpgrade_Default( upgrade, pTFPlayer, pView, nCost, bDowngrade, bInverted );
 
 	Assert( upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM );
-	return ApplyUpgrade_Default( upgrade, pTFPlayer, pView, nCost, bDowngrade );
+	return ApplyUpgrade_Default( upgrade, pTFPlayer, pView, nCost, bDowngrade, bInverted );
 }
 
 
@@ -628,6 +662,7 @@ void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_ind
 	switch( nAttrDefIndex )
 	{
 	case 286:	// "engy building health bonus"
+	case 100066:// "engy building health penalty"
 		{
 			// Tell the wrench we've upgraded our object health (which handles the rest)
 			CTFWrench *pWrench = dynamic_cast<CTFWrench *>( pTFPlayer->Weapon_OwnsThisID( TF_WEAPON_WRENCH ) );

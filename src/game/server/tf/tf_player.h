@@ -1080,7 +1080,7 @@ public:
 	void				CalculateExperienceLevel( bool bAnnounce = true );
 	void				RefundExperiencePoints( void );
 
-	void				RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUpgrade, int nCost, bool bDowngrade = false );	// store this upgrade for restoring at a checkpoint
+	void				RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUpgrade, int nCost, bool bDowngrade = false, bool bInverted = false );	// store this upgrade for restoring at a checkpoint
 	void				ForgetFirstUpgradeForItem( CEconItemView *pItem );						// erase the first upgrade stored for this item (for powerup bottles)
 	void				ClearUpgradeHistory( void );
 	void				ReapplyItemUpgrades ( CEconItemView *pItem );

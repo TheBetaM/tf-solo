@@ -174,6 +174,7 @@ extern ConVar	tf_revives_enable;
 extern ConVar	tf_subclass_allow;
 extern ConVar	tf_player_preventdeath;
 extern ConVar	tf_taunt_disable_attack;
+extern ConVar   tf_mvm_allow_refunds;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -22588,7 +22589,7 @@ void CTFPlayer::GrantOrRemoveAllUpgrades( bool bRemove, bool bRefund )
 //-----------------------------------------------------------------------------
 // Purpose: Store this upgrade for restoring at a checkpoint
 //-----------------------------------------------------------------------------
-void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUpgrade, int nCost, bool bDowngrade )
+void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUpgrade, int nCost, bool bDowngrade, bool bInverted )
 {
 	if ( IsBot() )
 	{
@@ -22612,6 +22613,7 @@ void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUp
 		info.m_itemDefIndex = iItemIndex;
 		info.m_upgrade = iUpgrade;
 		info.m_nCost = nCost;
+		info.m_inverted = bInverted;
 
 		if ( upgrades )
 		{
@@ -22742,7 +22744,7 @@ void CTFPlayer::ReapplyItemUpgrades( CEconItemView *pItem )
 		const CUpgradeInfo& upgrade = upgrades->Element(u);
 		if ( iClassIndex == upgrade.m_iPlayerClass && pItem->GetItemDefIndex() == upgrade.m_itemDefIndex )
 		{
-			g_hUpgradeEntity->ApplyUpgradeToItem( this, pItem, upgrade.m_upgrade, upgrade.m_nCost );
+			g_hUpgradeEntity->ApplyUpgradeToItem( this, pItem, upgrade.m_upgrade, upgrade.m_nCost, upgrade.m_inverted );
 		}
 	}
 
@@ -22780,7 +22782,7 @@ void CTFPlayer::ReapplyPlayerUpgrades( void )
 			// Upgrades applied to player
 			if ( upgrades->Element(u).m_itemDefIndex == INVALID_ITEM_DEF_INDEX )
 			{
-				g_hUpgradeEntity->ApplyUpgradeToItem( this, NULL, upgrades->Element(u).m_upgrade, upgrades->Element(u).m_nCost );
+				g_hUpgradeEntity->ApplyUpgradeToItem( this, NULL, upgrades->Element(u).m_upgrade, upgrades->Element(u).m_nCost, upgrades->Element(u).m_inverted );
 			}
 		}
 	}
@@ -22795,7 +22797,7 @@ void CTFPlayer::BeginPurchasableUpgrades( void )
 {
 	m_nCanPurchaseUpgradesCount++;
 
-	if ( TFObjectiveResource()->GetMannVsMachineWaveCount() > 1 )
+	if ( TFObjectiveResource()->GetMannVsMachineWaveCount() > 1 && !tf_mvm_allow_refunds.GetBool() && !IsBot() )
 	{
 		m_RefundableUpgrades.RemoveAll();
 	}
@@ -22812,7 +22814,7 @@ void CTFPlayer::EndPurchasableUpgrades( void )
 
 	m_nCanPurchaseUpgradesCount--;
 
-	if ( TFObjectiveResource()->GetMannVsMachineWaveCount() > 1 )
+	if ( TFObjectiveResource()->GetMannVsMachineWaveCount() > 1 && !tf_mvm_allow_refunds.GetBool() && !IsBot() )
 	{
 		m_RefundableUpgrades.RemoveAll();
 	}

@@ -928,7 +928,9 @@ ConVar tf_mvm_respec_limit( "tf_mvm_respec_limit", "0", FCVAR_CHEAT | FCVAR_REPL
 ConVar tf_mvm_respec_credit_goal( "tf_mvm_respec_credit_goal", "2000", FCVAR_CHEAT | FCVAR_REPLICATED, "When tf_mvm_respec_limit is non-zero, the total amount of money the team must collect to earn a respec credit." );
 ConVar tf_mvm_buybacks_method( "tf_mvm_buybacks_method", "0", FCVAR_REPLICATED | FCVAR_HIDDEN, "When set to 0, use the traditional, currency-based system.  When set to 1, use finite, charge-based system.", true, 0.0, true, 1.0 );
 ConVar tf_mvm_buybacks_per_wave( "tf_mvm_buybacks_per_wave", "3", FCVAR_REPLICATED | FCVAR_HIDDEN, "The fixed number of buybacks players can use per-wave." );
-
+ConVar tf_mvm_invert_enabled( "tf_mvm_invert_enabled", "0", FCVAR_REPLICATED, "Allow players to invert upgrades." );
+ConVar tf_mvm_invert_factor( "tf_mvm_invert_factor", "1.0", FCVAR_REPLICATED, "How much of the original cost do inverted upgrades offer." );
+ConVar tf_mvm_allow_refunds( "tf_mvm_allow_refunds", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "Allow players to refund upgrades after the first wave." );
 
 #ifdef GAME_DLL
 enum { kMVM_CurrencyPackMinSize = 1, };
@@ -15997,19 +15999,20 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 							pSubKey = pSubKey->GetNextTrueSubKey();
 							continue;
 						}
-						int iCount = pSubKey->GetInt("count");
+						int iCount = pSubKey->GetInt( "count" );
 						if ( iCount < 0 )
 						{
-							int iItemSlot = pSubKey->GetInt("itemslot");
-							int iUpgrade = pSubKey->GetInt("upgrade");
+							int iItemSlot = pSubKey->GetInt( "itemslot" );
+							int iUpgrade = pSubKey->GetInt( "upgrade" );
 							bool bFree = pSubKey->GetBool( "free", false );
+							bool bInverted = pSubKey->GetBool( "inverted" ) && tf_mvm_invert_enabled.GetBool();
 
 							// Stop attempting once no more purchases are possible to prevent spoofed messages DoSing
 							// the server.
 							bool bAllowed = true;
 							while ( bAllowed && iCount < 0 )
 							{
-								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, true, bFree );
+								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, true, bFree, false, bInverted );
 								++iCount;
 							}
 						}
@@ -16026,19 +16029,20 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 							pSubKey = pSubKey->GetNextTrueSubKey();
 							continue;
 						}
-						int iCount = pSubKey->GetInt("count");
+						int iCount = pSubKey->GetInt( "count" );
 						if ( iCount > 0 )
 						{
-							int iItemSlot = pSubKey->GetInt("itemslot");
-							int iUpgrade = pSubKey->GetInt("upgrade");
+							int iItemSlot = pSubKey->GetInt( "itemslot" );
+							int iUpgrade = pSubKey->GetInt( "upgrade" );
 							bool bFree = ( sv_cheats && sv_cheats->GetBool() ) ? pSubKey->GetBool( "free", false ) : false;	// Never let a client set "free" without sv_cheats 1
+							bool bInverted = pSubKey->GetBool( "inverted" ) && tf_mvm_invert_enabled.GetBool();
 
 							// Stop attempting once no more purchases are possible to prevent spoofed messages DoSing
 							// the server.
 							bool bAllowed = true;
 							while ( bAllowed && iCount > 0 )
 							{
-								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, false, bFree );
+								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, false, bFree, false, bInverted );
 								--iCount;
 							}
 						}

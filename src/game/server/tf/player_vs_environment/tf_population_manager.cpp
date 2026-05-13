@@ -1334,7 +1334,7 @@ void CPopulationManager::RestoreItemToCheckpointState( CTFPlayer *player, CEconI
 		{
 			if ( player->GetPlayerClass()->GetClassIndex() == snapshot->m_upgradeVector[u].m_iPlayerClass )
 			{
-				if ( g_hUpgradeEntity->ApplyUpgradeToItem( player, item, snapshot->m_upgradeVector[u].m_upgrade, snapshot->m_upgradeVector[u].m_nCost ) )
+				if ( g_hUpgradeEntity->ApplyUpgradeToItem( player, item, snapshot->m_upgradeVector[u].m_upgrade, snapshot->m_upgradeVector[u].m_nCost, snapshot->m_upgradeVector[u].m_inverted ) )
 				{
 					if ( tf_populator_debug.GetBool() )
 					{

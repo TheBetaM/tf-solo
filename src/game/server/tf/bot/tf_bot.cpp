@@ -5203,7 +5203,7 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 			}
 			while ( bAllowed )
 			{
-				bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( this, iSlot, iUpgrade, false, false );
+				bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( this, iSlot, iUpgrade, false, false, false );
 				if ( bAllowed && iSlot == LOADOUT_POSITION_ACTION )
 				{
 					bPickedCanteen = true;

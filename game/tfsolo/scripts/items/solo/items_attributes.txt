@@ -610,7 +610,168 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
-		
+		"100062"
+		{
+			"name"	"melee attack rate penalty"
+			"attribute_class"	"mult_postfiredelay"
+			"description_string"	"#Attrib_MeleeRate_Negative"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100063"
+		{
+			"name"	"clip size bonus penalty"
+			"attribute_class"	"mult_clipsize_upgrade"
+			"description_string"	"#Attrib_ClipSize_Negative"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100064"
+		{
+			"name"	"maxammo grenades1 reduced"
+			"attribute_class"	"mult_maxammo_grenades1"
+			"description_string"	"#Attrib_MaxammoGrenades1_Reduced"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		"100065"
+		{
+			"name"	"effect bar recharge rate reduced"
+			"attribute_class"	"effectbar_recharge_rate"
+			"description_string"	"#Attrib_EffectBarRechargeRateReduced"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100066"
+		{
+			"name"	"engy building health penalty"
+			"attribute_class"	"mult_engy_building_health"
+			"description_string"	"#Attrib_EngyBuildingHealthPenalty"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100067"
+		{
+			"name"	"engy sentry fire rate reduced"
+			"attribute_class"	"mult_sentry_firerate"
+			"description_string"	"#Attrib_SentryFireRate_Reduced"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100068"
+		{
+			"name"	"engy dispenser radius reduced"
+			"attribute_class"	"mult_dispenser_radius"
+			"description_string"	"#Attrib_DispenserRadius_Reduced"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100069"
+		{
+			"name"	"airblast pushback scale penalty"
+			"attribute_class"	"airblast_pushback_scale"
+			"description_string"	"#Attrib_AirBlastPushScale_Reduced"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100070"
+		{
+			"name"	"charge recharge rate reduced"
+			"attribute_class"	"charge_recharge_rate"
+			"description_string"	"#Attrib_ChargeRechargeRateReduced"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100071"
+		{
+			"name"	"uber duration penalty"
+			"attribute_class"	"add_uber_time"
+			"description_string"	"#Attrib_UberDurationReduced"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100072"
+		{
+			"name"	"reduce buff duration"
+			"attribute_class"	"mod_buff_duration"
+			"description_string"	"#Attrib_BuffTime_Reduced"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100073"
+		{
+			"name"	"clip size penalty atomic"
+			"attribute_class"	"mult_clipsize_upgrade_atomic"
+			"description_string"	"#Attrib_ClipSize_Atomic_Penalty"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100074"
+		{
+			"name"	"lock upgrade"
+			"attribute_class"	"tfsolo_lock_upgrade"
+			"description_string"	"#Attrib_LockUpgrade"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"100075"
+		{
+			"name"	"mult_item_meter_charge_rate_reduced"
+			"attribute_class"	"mult_item_meter_charge_rate"
+			"description_string" "#Attrib_ChargeMeterRateMultReduced"
+			"description_format"	"value_is_percentage"
+			"hidden"				"0"
+			"stored_as_integer"	"0"
+			"effect_type"	"negative"
+		}
+		"100076"
+		{
+			"name"	"metal drain"
+			"attribute_class"	"add_metal_regen"
+			"description_string"	"#Attrib_MetalDrain"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		"100077"
+		{
+			"name"	"reduced jump height"
+			"attribute_class"	"mod_jump_height"
+			"description_string"	"#Attrib_JumpHeightReduced"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
 		
 	}
 }

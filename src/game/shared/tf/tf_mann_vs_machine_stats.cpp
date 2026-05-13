@@ -233,10 +233,11 @@ USER_MESSAGE( MVMLocalPlayerUpgradesValue )
 	// Class(1), ItemDef(2), Upgrade(1), cost(1)
 	uint8 playerClass		= msg.ReadByte();
 	uint16 nItemDef			= msg.ReadWord();
-	//uint8 upgrade			= msg.ReadByte();
-	//uint16 cost			= msg.ReadByte();
+	uint8 upgrade			= msg.ReadByte();
+	uint16 cost				= msg.ReadWord();
+	uint8 inverted			= msg.ReadByte();
 
-	g_pMVMStats->AddLocalPlayerUpgrade( playerClass, (item_definition_index_t)nItemDef );
+	g_pMVMStats->AddLocalPlayerUpgrade( playerClass, (item_definition_index_t)nItemDef, inverted == 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -828,6 +829,7 @@ void CMannVsMachineStats::SendUpgradesToPlayer( CTFPlayer *pTFPlayer, CUtlVector
 		WRITE_WORD( (uint16)upgrades->Element(i).m_itemDefIndex );
 		WRITE_BYTE( (uint8)upgrades->Element(i).m_upgrade );
 		WRITE_WORD( (uint16)upgrades->Element(i).m_nCost );
+		WRITE_BYTE( (uint8)(upgrades->Element(i).m_inverted ? 1 : 0 ) );
 		MessageEnd();
 	}
 }
@@ -1138,13 +1140,14 @@ void CMannVsMachineStats::ClearLocalPlayerUpgrades ()
 //-----------------------------------------------------------------------------
 // Purpose: Add Local Player Upgrade
 //-----------------------------------------------------------------------------
-void CMannVsMachineStats::AddLocalPlayerUpgrade ( int iPlayerClass, item_definition_index_t iItemDef )
+void CMannVsMachineStats::AddLocalPlayerUpgrade ( int iPlayerClass, item_definition_index_t iItemDef, bool bInverted )
 {
 	CUpgradeInfo upgrade;
 	upgrade.m_iPlayerClass = iPlayerClass;
 	upgrade.m_itemDefIndex = iItemDef;
 	upgrade.m_upgrade = 0;
 	upgrade.m_nCost = 0;
+	upgrade.m_inverted = bInverted;
 	
 	m_vecLocalPlayerUpgrades.AddToTail( upgrade );
 }

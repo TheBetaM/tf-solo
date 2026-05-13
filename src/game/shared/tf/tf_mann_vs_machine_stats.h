@@ -345,7 +345,7 @@ public:
 
 	// Message from Server about Client Upgrades
 	void ClearLocalPlayerUpgrades ();
-	void AddLocalPlayerUpgrade( int iPlayerClass, item_definition_index_t iItemDef );
+	void AddLocalPlayerUpgrade( int iPlayerClass, item_definition_index_t iItemDef, bool bInverted );
 	
 	int GetLocalPlayerUpgradeSpending( int idxWave );
 	int GetLocalPlayerBottleSpending( int idxWave );

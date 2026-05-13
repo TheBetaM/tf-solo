@@ -25,6 +25,7 @@ public:
 	int nUIGroup;
 	int nQuality;
 	int nTier;		// If set, upgrades in the same tier - for the same player/item - will be mutually exclusive
+	char szInvAttrib[ MAX_ATTRIBUTE_DESCRIPTION_LENGTH ];
 };
 
 
@@ -52,6 +53,6 @@ private:
 };
 
 extern CMannVsMachineUpgradeManager g_MannVsMachineUpgrades;
-int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, int &nCurrentStep, bool &bOverCap );
+int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, int &nCurrentStep, bool &bOverCap, bool &bInverted );
 
 #endif // TF_UPGRADES_H

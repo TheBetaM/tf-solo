@@ -39,6 +39,9 @@
 
 
 extern CAchievementMgr g_AchievementMgrTF;
+extern ConVar tf_mvm_invert_enabled;
+extern ConVar tf_mvm_invert_factor;
+extern ConVar tf_mvm_allow_refunds;
 
 ConVar tf_mvm_tabs_discovered( "tf_mvm_tabs_discovered", "0", FCVAR_ARCHIVE, "Remember how many times players have clicked tabs." );
 
@@ -57,10 +60,12 @@ Color CUpgradeBuyPanel::m_rgbaDisabledBG( 0, 0, 0, 255 );
 CUpgradeBuyPanel::CUpgradeBuyPanel( Panel *parent, const char *panelName ) : BaseClass( parent, panelName )
 {
 	m_pIcon = new vgui::ImagePanel( this, "Icon" );
+	m_pInnerPanelRim = new vgui::Panel( this, "InnerPanelRim" );
 	m_pPriceLabel = new vgui::Label( this, "PriceLabel", "" );
 	m_pShortDescriptionLabel = new vgui::Label( this, "ShortDescriptionLabel", "" );
 	m_pIncrementButton = new CImageButton( this, "IncrementButton" );
 	m_pDecrementButton = new CImageButton( this, "DecrementButton" );
+	m_pInvertButton = new CImageButton( this, "InvertButton" );
 
 	m_pSkillTreeButtonKVs = NULL;
 
@@ -70,6 +75,8 @@ CUpgradeBuyPanel::CUpgradeBuyPanel( Panel *parent, const char *panelName ) : Bas
 	m_nGridPositionY = 0;
 
 	m_bInspectMode = false;
+	m_bInvertedMode = false;
+	m_bBotPlayer = false;
 }
 
 CUpgradeBuyPanel::~CUpgradeBuyPanel()
@@ -84,7 +91,7 @@ CUpgradeBuyPanel::~CUpgradeBuyPanel()
 void CUpgradeBuyPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/UpgradeBuyPanel.res" );
+	LoadControlSettings( "resource/UI/UpgradeBuyPanelSolo.res" );
 
 	BaseClass::ApplySchemeSettings( pScheme );
 
@@ -135,20 +142,27 @@ void CUpgradeBuyPanel::OnCommand( const char *command )
 		GetParent()->GetParent()->OnCommand( command );
 		return;
 	}
+	else if ( StringHasPrefix( command, "mvm_invert" ) )
+	{
+		GetParent()->GetParent()->OnCommand( command );
+		return;
+	}
 
 	BaseClass::OnCommand( command );
 }
 
-bool CUpgradeBuyPanel::ValidateUpgradeStepData( void ) 
+bool CUpgradeBuyPanel::ValidateUpgradeStepData( bool &bInverted ) 
 {
 	m_bOverCap = false;
 
 	if ( !m_hPlayer )
 		return false;
 	
-	int nNumSteps = GetUpgradeStepData( m_hPlayer, m_nWeaponSlot, m_nUpgradeIndex, m_nCurrentStep, m_bOverCap );
+	bool bInInverted = false;
+	int nNumSteps = GetUpgradeStepData( m_hPlayer, m_nWeaponSlot, m_nUpgradeIndex, m_nCurrentStep, m_bOverCap, bInInverted );
 	if ( nNumSteps )
 	{
+		bInverted = bInInverted;
 		SetNumLevelImages( nNumSteps );
 		m_pIcon->SetImage( g_MannVsMachineUpgrades.m_Upgrades[ m_nUpgradeIndex ].szIcon );
 		return true;
@@ -218,6 +232,10 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 	int nNumRemaining = ( nImageTotal - nCurrentStep );
 	int nAffordablePurchases = m_nPrice <= 0 ? INT_MAX : nCurrentMoney / m_nPrice;
 	int nUnaffordablePurchases = nNumRemaining - nAffordablePurchases;
+	if ( m_bInvertedMode )
+	{
+		nUnaffordablePurchases = nCurrentStep - nAffordablePurchases;
+	}
 
 	if ( nUnaffordablePurchases > 0 )
 	{
@@ -226,7 +244,7 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 
 	CMannVsMachineUpgrades *pMannVsMachineUpgrade = &( g_MannVsMachineUpgrades.m_Upgrades[ m_nUpgradeIndex ] );
 
-	bool bSellAllowed = ( TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 || m_nPurchases > 0 );
+	bool bSellAllowed = ( TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 || m_nPurchases > 0 || tf_mvm_allow_refunds.GetBool() || m_bBotPlayer );
 
 	// we'll decided if it's enabled below
 	m_pIncrementButton->SetEnabled( false );
@@ -238,9 +256,8 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 	{
 		m_pDecrementButton->SetEnabled( false );
 		m_pDecrementButton->SetVisible( false );
-		m_pIncrementButton->SetEnabled( true );
-		m_pIncrementButton->SetVisible( true );
-
+		m_pIncrementButton->SetEnabled( false );
+		m_pIncrementButton->SetVisible( false );
 	}
 	else if ( bSellAllowed )
 	{
@@ -265,6 +282,75 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 		m_pDecrementButton->SetVisible( false );
 	}
 
+	CEconItemAttributeDefinition *pAttribDef = ItemSystem()->GetStaticDataForAttributeByName( pMannVsMachineUpgrade->szAttrib );
+	if ( m_bInvertedMode && pMannVsMachineUpgrade->szInvAttrib && pMannVsMachineUpgrade->szInvAttrib[0] )
+	{
+		pAttribDef = ItemSystem()->GetStaticDataForAttributeByName( pMannVsMachineUpgrade->szInvAttrib );
+	}
+	float flValue = pMannVsMachineUpgrade->flIncrement;
+	int iFormat = pAttribDef->GetDescriptionFormat();
+	if ( iFormat == ATTDESCFORM_VALUE_IS_PERCENTAGE || iFormat == ATTDESCFORM_VALUE_IS_INVERTED_PERCENTAGE )
+	{
+		flValue += 1.0;
+	}
+	//if ( m_bInvertedMode )
+	//{
+	//	flValue = -flValue;
+	//}
+	CEconAttributeDescription AttrDesc( GLocalizationProvider(), pAttribDef, flValue );
+	const wchar_t *pDescription = AttrDesc.GetShortDescription().Get();
+	if ( pDescription && pDescription[ 0 ] )
+	{
+		m_pShortDescriptionLabel->SetText( pDescription );
+	}
+
+	bool bInvertAllowed = tf_mvm_invert_enabled.GetBool() && ( nCurrentStep == 0 || tf_mvm_allow_refunds.GetBool() || m_bBotPlayer ) 
+		&& pMannVsMachineUpgrade->szInvAttrib && pMannVsMachineUpgrade->szInvAttrib[ 0 ] 
+		&& !CheckInspectMode();
+
+	if ( bInvertAllowed )
+	{
+		m_pInvertButton->SetVisible( true );
+		m_pInvertButton->SetEnabled( true );
+		m_pInvertButton->SetInactiveImage( "pve/invert_enabled" );
+		m_pInvertButton->SetActiveImage( "pve/invert_selected" );
+	}
+	else
+	{
+		m_pInvertButton->SetVisible( false );
+		m_pInvertButton->SetEnabled( false );
+	}
+
+	if ( m_bInvertedMode )
+	{
+		m_pInnerPanelRim->SetBgColor( Color( 157, 49, 47, 255 ) );
+		locchar_t wzCost[64];
+		loc_sprintf_safe( wzCost, LOCCHAR( "+%d" ), (int)( (float)m_nPrice * tf_mvm_invert_factor.GetFloat() ) );
+		m_pPriceLabel->SetText( wzCost );
+		m_pDecrementButton->SetEnabled( false );
+		m_pDecrementButton->SetInactiveImage( "pve/sell_disabled" );
+		m_pDecrementButton->SetActiveImage( "pve/sell_disabled" );
+		if ( nNumRemaining > 0 )
+		{
+			m_pIncrementButton->SetEnabled( true );
+			m_pIncrementButton->SetInactiveImage( "pve/buy_enabled" );
+			m_pIncrementButton->SetActiveImage( "pve/buy_selected" );
+		}
+		else if ( nAffordability == CLCACHE_AFFORDABLE )
+		{
+			m_pDecrementButton->SetEnabled( true );
+			m_pDecrementButton->SetInactiveImage( "pve/sell_enabled" );
+			m_pDecrementButton->SetActiveImage( "pve/sell_selected" );
+		}
+	}
+	else
+	{
+		m_pInnerPanelRim->SetBgColor( Color( 97, 94, 85, 255 ) );
+		locchar_t wzCost[64];
+		loc_sprintf_safe( wzCost, LOCCHAR( "%d" ), m_nPrice );
+		m_pPriceLabel->SetText( wzCost );
+	}
+
 	for ( int nUpgradeButton = 0; nUpgradeButton < nImageTotal; ++nUpgradeButton )
 	{
 		if ( nUpgradeButton < MIN( m_nCurrentStep, nCurrentStep ) )
@@ -283,9 +369,21 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 			{
 				SetSkillTreeButtonColors( nUpgradeButton, CUpgradeBuyPanel::COLOR_SET_DEFAULT );
 
-				m_pIncrementButton->SetEnabled( true );
-				m_pIncrementButton->SetInactiveImage( "pve/buy_enabled" );
-				m_pIncrementButton->SetActiveImage( "pve/buy_selected" );
+				if ( m_bInvertedMode )
+				{
+					if ( nCurrentStep != 0 )
+					{
+						m_pDecrementButton->SetEnabled( true );
+						m_pDecrementButton->SetInactiveImage( "pve/sell_enabled" );
+						m_pDecrementButton->SetActiveImage( "pve/sell_selected" );
+					}
+				}
+				else
+				{
+					m_pIncrementButton->SetEnabled( true );
+					m_pIncrementButton->SetInactiveImage( "pve/buy_enabled" );
+					m_pIncrementButton->SetActiveImage( "pve/buy_selected" );
+				}
 				m_pIcon->SetImage( pMannVsMachineUpgrade->szIcon );
 			}
 			else
@@ -1135,6 +1233,7 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
 				pUpgradeBuyPanel->m_nUpgradeIndex = i;
 				pUpgradeBuyPanel->m_nWeaponSlot = pItemSlotBuyPanel->nSlot;
 				pUpgradeBuyPanel->SetInspectMode( ( m_bInspectMode ) ? true : false );
+				pUpgradeBuyPanel->m_bBotPlayer = m_hPlayer && m_hPlayer->IsABot();
 
 				// Store the item equipped at this time, so we can monitor for a change and mark the panel as dirty
 				CEconItemView *pCurItemData = CTFPlayerSharedUtils::GetEconItemViewByLoadoutSlot( m_hPlayer, pItemSlotBuyPanel->nSlot );
@@ -1147,16 +1246,19 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
 				{
 					pUpgradeBuyPanel->m_pIncrementButton->SetCommand( VarArgs( "mvm_upgrade%03d_%i", pUpgradeBuyPanel->m_nUpgradeIndex, pUpgradeBuyPanel->m_nPrice ) );
 					pUpgradeBuyPanel->m_pDecrementButton->SetCommand( VarArgs( "mvm_downgrade%03d_%i", pUpgradeBuyPanel->m_nUpgradeIndex, pUpgradeBuyPanel->m_nPrice ) );
+					pUpgradeBuyPanel->m_pInvertButton->SetCommand( VarArgs( "mvm_invert%03d_%i", pUpgradeBuyPanel->m_nUpgradeIndex, pUpgradeBuyPanel->m_nPrice ) );
 				}
 				pUpgradeBuyPanel->SetZPos( 30 );
 				pUpgradeBuyPanel->SetVisible( true );
 				pUpgradeBuyPanel->InvalidateLayout( true, true );
 
-				if ( !pUpgradeBuyPanel->ValidateUpgradeStepData() )
+				bool bInverted = false;
+				if ( !pUpgradeBuyPanel->ValidateUpgradeStepData( bInverted ) )
 				{
 					pUpgradeBuyPanel->MarkForDeletion();
 					continue;
-				}
+				};
+				pUpgradeBuyPanel->m_bInvertedMode = bInverted;
 
 				pItemSlotBuyPanel->upgradeBuyPanels.Insert( pUpgradeBuyPanel );
 
@@ -1166,6 +1268,10 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
 				{
 					flValue += 1.0;
 				}
+				//if ( pUpgradeBuyPanel->m_bInvertedMode )
+				//{
+				//	flValue = -flValue;
+				//}
 
 				CEconAttributeDescription AttrDesc( GLocalizationProvider(), pAttribDef, flValue );
 				const wchar_t *pDescription = AttrDesc.GetShortDescription().Get();
@@ -1206,10 +1312,11 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 
 	bool bAccept = vgui::input()->IsKeyDown( KEY_XBUTTON_A ) || vgui::input()->IsKeyDown( KEY_ENTER ) || vgui::input()->IsKeyDown( STEAMCONTROLLER_A );
 	bool bBack = vgui::input()->IsKeyDown( KEY_XBUTTON_X ) || vgui::input()->IsKeyDown( KEY_BACKSPACE ) || vgui::input()->IsKeyDown( STEAMCONTROLLER_X );
+	bool bAltButton = vgui::input()->IsKeyDown( KEY_XBUTTON_Y ) || vgui::input()->IsKeyDown( KEY_CAPSLOCK ) || vgui::input()->IsKeyDown( STEAMCONTROLLER_Y );
 	bool bDone = vgui::input()->IsKeyDown( KEY_XBUTTON_B ) || vgui::input()->IsKeyDown( KEY_ESCAPE ) || vgui::input()->IsKeyDown( STEAMCONTROLLER_B );
 	bool bNext = vgui::input()->IsKeyDown( KEY_XBUTTON_RIGHT_SHOULDER ) || vgui::input()->IsKeyDown( KEY_PAGEDOWN );
 	bool bPrev = vgui::input()->IsKeyDown( KEY_XBUTTON_LEFT_SHOULDER ) || vgui::input()->IsKeyDown( KEY_PAGEUP );
-	bool bNavButtonPressed = bAccept || bBack || bDone || bNext || bPrev;
+	bool bNavButtonPressed = bAccept || bBack || bDone || bNext || bPrev || bAltButton;
 
 	if ( m_bNavUpDownPressed )
 	{
@@ -1333,6 +1440,13 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 			if ( m_pActiveUpgradeBuyPanel && m_pActiveUpgradeBuyPanel->m_pDecrementButton && m_pActiveUpgradeBuyPanel->m_pDecrementButton->IsEnabled() && m_pActiveUpgradeBuyPanel->m_pDecrementButton->IsVisible() )
 			{
 				OnCommand( VarArgs( "mvm_downgrade%03d_%i", m_pActiveUpgradeBuyPanel->m_nUpgradeIndex, m_pActiveUpgradeBuyPanel->m_nPrice ) );
+			}
+		}
+		else if ( bAltButton )
+		{
+			if ( m_pActiveUpgradeBuyPanel && m_pActiveUpgradeBuyPanel->m_pInvertButton && m_pActiveUpgradeBuyPanel->m_pInvertButton->IsEnabled() && m_pActiveUpgradeBuyPanel->m_pInvertButton->IsVisible() )
+			{
+				OnCommand( VarArgs( "mvm_invert%03d_%i", m_pActiveUpgradeBuyPanel->m_nUpgradeIndex, m_pActiveUpgradeBuyPanel->m_nPrice ) );
 			}
 		}
 		else if ( bDone )
@@ -1495,6 +1609,10 @@ void CHudUpgradePanel::UpdateMouseOverHighlight( void )
 
 	CMannVsMachineUpgrades *pUpgrade = &(g_MannVsMachineUpgrades.m_Upgrades[ m_pActiveUpgradeBuyPanel->m_nUpgradeIndex ]);
 	CEconItemAttributeDefinition *pAttribDef = ItemSystem()->GetStaticDataForAttributeByName( pUpgrade->szAttrib );
+	if ( m_pActiveUpgradeBuyPanel->m_bInvertedMode && pUpgrade->szInvAttrib && pUpgrade->szInvAttrib[0] )
+	{
+		pAttribDef = ItemSystem()->GetStaticDataForAttributeByName( pUpgrade->szInvAttrib );
+	}
 
 	float flValue = pUpgrade->flIncrement;
 
@@ -1503,6 +1621,10 @@ void CHudUpgradePanel::UpdateMouseOverHighlight( void )
 	{
 		flValue += 1.0;
 	}
+	//if ( m_pActiveUpgradeBuyPanel->m_bInvertedMode )
+	//{
+	//	flValue = -flValue;
+	//}
 
 	CEconAttributeDescription AttrDesc( GLocalizationProvider(), pAttribDef, flValue );
 
@@ -1510,7 +1632,7 @@ void CHudUpgradePanel::UpdateMouseOverHighlight( void )
 	m_pSelectWeaponPanel->SetDialogVariable( "upgrade_stats", "" );
 }
 
-void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0*/, int nNumPurchased /*= 0*/ )
+void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0*/, int nNumPurchased /*= 0*/, int nInPrice /*= 0*/ )
 {	
 	C_TFPlayer* pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	for ( int nSlotIndex = 0; nSlotIndex < ARRAYSIZE( m_ItemSlotBuyPanels ); ++nSlotIndex )
@@ -1522,7 +1644,7 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 			continue;
 		}
 
-		bool bSellAllowed = ( TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 );
+		bool bSellAllowed = ( TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 || tf_mvm_allow_refunds.GetBool() || ( m_hPlayer && m_hPlayer->IsABot() ) );
 		bool bHideBottleHintText = true;
 
 		if ( m_iWeaponSlotBeingUpgraded == LOADOUT_POSITION_ACTION || ( TFGameRules() && TFGameRules()->GetUpgradeTier( nUpgrade ) ) )
@@ -1624,14 +1746,46 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 			if ( pUpgradeBuyPanel->m_nUpgradeIndex == nUpgrade && nNumPurchased != 0 )
 			{
 				// Purchased or sold something
-				pUpgradeBuyPanel->m_nPurchases += nNumPurchased;
+				if ( nNumPurchased != -2 )
+				{
+					pUpgradeBuyPanel->m_nPurchases += nNumPurchased;
+					/*
+					if ( !pUpgradeBuyPanel->m_bInvertedMode )
+					{
+						if ( nNumPurchased > 0 )
+						{
+							m_nCurrency -= nInPrice;
+						}
+						else
+						{
+							m_nCurrency += nInPrice;
+						}
+					}
+					else
+					{
+						if ( nNumPurchased > 0 )
+						{
+							m_nCurrency += nInPrice;
+						}
+						else
+						{
+							m_nCurrency -= nInPrice;
+						}
+					}
+					*/
+				}
+				else
+				{
+					// Inverted the upgrade
+					pUpgradeBuyPanel->m_bInvertedMode = !pUpgradeBuyPanel->m_bInvertedMode;
+				}
 
 				KeyValues *kv = new KeyValues( "MVM_Upgrade" );
 				KeyValues *kvSub = new KeyValues( "upgrade" );
 				kvSub->SetInt( "itemslot", pUpgradeBuyPanel->m_nWeaponSlot );
 				kvSub->SetInt( "upgrade", pUpgradeBuyPanel->m_nUpgradeIndex );
 
-				if ( m_iWeaponSlotBeingUpgraded == LOADOUT_POSITION_ACTION && !bSellAllowed )
+				if ( m_iWeaponSlotBeingUpgraded == LOADOUT_POSITION_ACTION && !bSellAllowed && nNumPurchased != -2 )
 				{
 					if ( pUpgradeBuyPanel->m_nPurchases <= 0 && nNumPurchased > 0 )
 					{
@@ -1652,6 +1806,7 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 				}
 
 				kvSub->SetInt( "count", nNumPurchased );
+				kvSub->SetBool( "inverted", pUpgradeBuyPanel->m_bInvertedMode );
 
 				KeyValues* kvSubT = new KeyValues( "targetplayer" );
 				kvSubT->SetInt( "player", -1 );
@@ -1662,7 +1817,10 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 				kv->AddSubKey( kvSubT );
 
 				kv->AddSubKey( kvSub );
-				engine->ServerCmdKeyValues( kv );
+				if ( nNumPurchased != -2 )
+				{
+					engine->ServerCmdKeyValues( kv );
+				}
 			}
 
 			pUpgradeBuyPanel->UpdateImages( nCurrentMoney );
@@ -1873,7 +2031,7 @@ void CHudUpgradePanel::UpdateItemStatsLabel( void )
 
 void CHudUpgradePanel::CancelUpgrades( void )
 {
-	bool bSellAllowed = ( TFObjectiveResource() ? TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 : true );
+	bool bSellAllowed = ( TFObjectiveResource() ? TFObjectiveResource()->GetMannVsMachineWaveCount() <= 1 : true ) || tf_mvm_allow_refunds.GetBool() || ( m_hPlayer && m_hPlayer->IsABot() );
 	C_TFPlayer* pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
 	KeyValues *kv = new KeyValues( "MVM_Upgrade" );
@@ -1892,6 +2050,7 @@ void CHudUpgradePanel::CancelUpgrades( void )
 				kvSub->SetInt( "itemslot", pUpgradeBuyPanel->m_nWeaponSlot );
 				kvSub->SetInt( "upgrade", pUpgradeBuyPanel->m_nUpgradeIndex );
 				kvSub->SetInt( "count", -pUpgradeBuyPanel->m_nPurchases );		// revert previous buy and sell
+				kvSub->SetInt( "inverted", pUpgradeBuyPanel->m_bInvertedMode );		// revert previous buy and sell
 
 				if ( pItemSlotBuyPanel->nSlot == LOADOUT_POSITION_ACTION && !bSellAllowed && 
 					 pUpgradeBuyPanel->m_nPurchases < 0 )
@@ -2146,7 +2305,7 @@ void CHudUpgradePanel::OnCommand( const char *command )
 		if ( m_hPlayer )
 		{
 			m_nCurrency -= nPrice;
-			UpdateButtonStates( m_nCurrency, nUpgrade, 1 );
+			UpdateButtonStates( m_nCurrency, nUpgrade, 1, nPrice );
 			m_pSelectWeaponPanel->SetControlEnabled( "CloseButton", true );
 
 			m_nUpgradeActivity++;
@@ -2164,7 +2323,28 @@ void CHudUpgradePanel::OnCommand( const char *command )
 		if ( m_hPlayer )
 		{
 			m_nCurrency += nPrice;
-			UpdateButtonStates( m_nCurrency, nUpgrade, -1 );
+			UpdateButtonStates( m_nCurrency, nUpgrade, -1, nPrice );
+			m_pSelectWeaponPanel->SetControlEnabled( "CloseButton", true );
+
+			m_nUpgradeActivity--;
+		}
+	}
+	else if ( StringHasPrefix( command, "mvm_invert" ) )
+	{
+		if ( !tf_mvm_invert_enabled.GetBool() )
+			return;
+
+		char szUpgradeNums[ 10 ];
+		V_strncpy( szUpgradeNums, command + V_strlen( "mvm_invert" ), sizeof( szUpgradeNums ) );
+		szUpgradeNums[ 3 ] = '\0';
+
+		int nUpgrade = atoi( szUpgradeNums );
+		int nPrice = atoi( szUpgradeNums + 4 );
+
+		if ( m_hPlayer )
+		{
+			//m_nCurrency += nPrice;
+			UpdateButtonStates( m_nCurrency, nUpgrade, -2, nPrice );
 			m_pSelectWeaponPanel->SetControlEnabled( "CloseButton", true );
 
 			m_nUpgradeActivity--;

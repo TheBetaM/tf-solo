@@ -41,9 +41,9 @@ public:
 	void			InputReset( inputdata_t &inputdata );
 
 	void			GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove = false, bool bRefund = true );
-	bool			PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, int iUpgrade, bool bDowngrade, bool bFree = false, bool bRespec = false );
+	bool			PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, int iUpgrade, bool bDowngrade, bool bFree = false, bool bRespec = false, bool bInverted = false );
 
-	attrib_definition_index_t ApplyUpgradeToItem( CTFPlayer *pTFPlayer, CEconItemView *pView, int iUpgrade, int nCost, bool bDowngrade = false, bool bIsFresh = false );		// needed for checkpoint restore
+	attrib_definition_index_t ApplyUpgradeToItem( CTFPlayer *pTFPlayer, CEconItemView *pView, int iUpgrade, int nCost, bool bDowngrade = false, bool bIsFresh = false, bool bInverted = false );		// needed for checkpoint restore
 
 	const char *	GetUpgradeAttributeName( int iUpgrade ) const;
 

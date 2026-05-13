@@ -199,6 +199,7 @@ public:
 	item_definition_index_t m_itemDefIndex;		// item that was upgraded (or INVALID_ITEM_DEF_INDEX for the player itself)
 	int m_upgrade;								// the upgrade that was applied
 	int m_nCost;								// price of the upgrade
+	bool m_inverted;							// if the upgrade was inverted
 };
 
 #define CONTROL_STUN_ANIM_TIME	1.5f

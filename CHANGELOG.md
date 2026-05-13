@@ -36,7 +36,8 @@ tf_player_preventdeath, tf_player_preventteamchange, nav_connect_ladder_bottom,
 mp_humans_maxrespawntime, mp_bots_maxrespawntime, tf_respawn_on_loadoutchanges_type, 
 tf_overview_scoreboard, tf_allow_taunt_aerial, tf_allow_taunt_disguised, 
 tf_halloween_zombie_forceteam, tf_hud_deathnotice_filter, tf_taunt_disable_attack, 
-vscript_reload, tf_bot_friendlyfire
+vscript_reload, tf_bot_friendlyfire, tf_mvm_invert_enabled, 
+tf_mvm_allow_refunds
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

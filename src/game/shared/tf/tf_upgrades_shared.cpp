@@ -54,6 +54,7 @@ void CMannVsMachineUpgradeManager::ParseUpgradeBlockForUIGroup( KeyValues *pKV, 
 		KeyValues *pkvIncrement = pData->FindKey( "increment" );
 		KeyValues *pkvCap = pData->FindKey( "cap" );
 		KeyValues *pkvCost = pData->FindKey( "cost" );
+		KeyValues *pkvInvAttribute = pData->FindKey( "inv_attr" );
 		if ( !pkvAttribute || !pkvIcon || !pkvIncrement || !pkvCap || !pkvCost )
 		{
 			Warning( "Upgrades: One or more upgrades missing attribute, icon, increment, cap, or cost value.\n" );
@@ -88,6 +89,37 @@ void CMannVsMachineUpgradeManager::ParseUpgradeBlockForUIGroup( KeyValues *pKV, 
 				m_Upgrades.Remove( index );
 				continue;
 			}
+		}
+
+		if ( pkvInvAttribute && pSchema )
+		{
+			const char *pszInvAttrib = pData->GetString( "inv_attr" );
+			V_strncpy( m_Upgrades[ index ].szInvAttrib, pszInvAttrib, sizeof( m_Upgrades[ index ].szInvAttrib ) );
+			// If we can't find a matching attribute, nuke this entry completely
+			const CEconItemAttributeDefinition *pInvAttr = pSchema->GetAttributeDefinitionByName( m_Upgrades[ index ].szInvAttrib );
+			if ( !pInvAttr )
+			{
+				Warning( "Upgrades: Invalid attribute reference! -- %s.\n", m_Upgrades[ index ].szInvAttrib );
+				m_Upgrades.Remove( index );
+				continue;
+			}
+			Assert( pAttr->GetAttributeType() );
+			if ( !pInvAttr->GetAttributeType()->BSupportsGameplayModificationAndNetworking() )
+			{
+				Warning( "Upgrades: Invalid attribute '%s' is of a type that doesn't support networking!\n", m_Upgrades[ index ].szInvAttrib );
+				m_Upgrades.Remove( index );
+				continue;
+			}
+			if ( !pInvAttr->IsStoredAsFloat() || pInvAttr->IsStoredAsInteger() )
+			{
+				Warning( "Upgrades: Attribute reference '%s' is not stored as a float!\n", m_Upgrades[ index ].szInvAttrib );
+				m_Upgrades.Remove( index );
+				continue;
+			}
+		}
+		else
+		{
+			m_Upgrades[ index ].szInvAttrib[ 0 ] = '\0';
 		}
 
 		V_strncpy( m_Upgrades[index].szIcon, pData->GetString( "icon" ), sizeof( m_Upgrades[ index ].szIcon ) );
@@ -182,7 +214,7 @@ void CMannVsMachineUpgradeManager::LoadUpgradesFileFromPath( const char *pszPath
 }
 
 
-int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, int &nCurrentStep, bool &bOverCap )
+int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, int &nCurrentStep, bool &bOverCap, bool &bInverted )
 {
 	if ( !pPlayer )
 		return 0;
@@ -213,6 +245,14 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 		return pPowerupBottle->GetMaxNumCharges();
 	}
 
+	CEconItemAttributeDefinition* pInvAttribDef = NULL;
+	if ( pMannVsMachineUpgrade->szInvAttrib && pMannVsMachineUpgrade->szAttrib[0] )
+	{
+		pInvAttribDef = ItemSystem()->GetStaticDataForAttributeByName( pMannVsMachineUpgrade->szInvAttrib );
+		if ( !pInvAttribDef )
+			return 0;
+	}
+
 	Assert( pAttribDef->IsStoredAsFloat() );
 	Assert( !pAttribDef->IsStoredAsInteger() );
 
@@ -235,28 +275,52 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 
 	// ...
 	float flCurrentAttribValue = bPercentage ? 1.0f : 0.0f;
+	float flDefaultAttribValue = bPercentage ? 1.0f : 0.0f;
 	
 	if ( pMannVsMachineUpgrade->nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER )
 	{
-		::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pPlayer->GetAttributeList(), pAttribDef, &flCurrentAttribValue );
+		if ( !::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pPlayer->GetAttributeList(), pAttribDef, &flCurrentAttribValue ) && pInvAttribDef );
+		{
+			bInverted = true;
+			if ( !::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pPlayer->GetAttributeList(), pInvAttribDef, &flCurrentAttribValue ) )
+			{
+				bInverted = false;
+			}
+		}
 	}
 	else
 	{
 		Assert( pMannVsMachineUpgrade->nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM );
 		if ( pItemData )
 		{
-			::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItemData, pAttribDef, &flCurrentAttribValue );
+			if ( !::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItemData, pAttribDef, &flCurrentAttribValue ) && pInvAttribDef )
+			{
+				bInverted = true;
+				if ( !::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItemData, pInvAttribDef, &flCurrentAttribValue ) )
+				{
+					bInverted = false;
+				}
+			}
 		}
 	}
 
 	// ...
-	const float flIncrement = pMannVsMachineUpgrade->flIncrement;
+	float flIncrement = pMannVsMachineUpgrade->flIncrement;
+	if ( bInverted )
+	{
+		flIncrement = -flIncrement;
+	}
 	
 	// Figure out the cap value for this attribute. We start by trusting whatever is specified in our
 	// upgrade config but if we're dealing with an item that specifies different properties at a level
 	// before MvM upgrades (ie., the Soda Popper already specifies "Reload time decreased") then we
 	// need to make sure we consider that the actual high end for UI purposes.
-	const float flCap = pMannVsMachineUpgrade->flCap;
+	float flCap = pMannVsMachineUpgrade->flCap;
+	if ( bInverted )
+	{
+		int nSteps = ( pMannVsMachineUpgrade->flCap - flDefaultAttribValue ) / pMannVsMachineUpgrade->flIncrement;
+		flCap = flDefaultAttribValue + ( flIncrement * nSteps );
+	}
 
 	if ( BIsAttributeValueWithDeltaOverCap( flCurrentAttribValue, flIncrement, flCap ) )
 	{

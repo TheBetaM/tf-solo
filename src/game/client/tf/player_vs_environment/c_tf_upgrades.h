@@ -71,7 +71,7 @@ public:
 	virtual void PerformLayout( void );
 	virtual void OnCommand( const char *command );
 
-	bool ValidateUpgradeStepData( void );
+	bool ValidateUpgradeStepData( bool &bInverted );
 
 	void SetNumLevelImages( int nValues );
 	void SetSkillTreeButtonColors( int nButton, ColorSet nColorSet );
@@ -90,10 +90,12 @@ public:
 	KeyValues *m_pSkillTreeButtonKVs;	
 
 	vgui::ImagePanel *m_pIcon;
+	vgui::Panel *m_pInnerPanelRim;
 	vgui::Label	*m_pPriceLabel;
 	vgui::Label	*m_pShortDescriptionLabel;
 	CImageButton *m_pIncrementButton;
 	CImageButton *m_pDecrementButton;
+	CImageButton *m_pInvertButton;
 	CUtlVector< vgui::ImagePanel* > m_SkillTreeImages;
 
 	int m_nWeaponSlot;
@@ -110,6 +112,8 @@ public:
 	char m_szAttribName[MAX_ATTRIBUTE_DESCRIPTION_LENGTH];
 
 	bool m_bInspectMode;
+	bool m_bInvertedMode;
+	bool m_bBotPlayer;
 
 	CPanelAnimationVarAliasType( int, m_iUpgradeButtonXPos, "upgradebutton_xpos", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iUpgradeButtonYPos, "upgradebutton_ypos", "0", "proportional_int" );
@@ -208,7 +212,7 @@ protected:
 	virtual void	SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver );
 	void			UpgradeItemInSlot( int iSlot );
 	void			UpdateUpgradeButtons( void );
-	void			UpdateButtonStates( int nCurrentCurrency, int nUpgrade = 0, int nNumPurchased = 0 );
+	void			UpdateButtonStates( int nCurrentCurrency, int nUpgrade = 0, int nNumPurchased = 0, int nPrice = 0 );
 	void			UpdateJoystickControls( void );
 	void			UpdateHighlights( void );
 	void			UpdateMouseOverHighlight( void );
