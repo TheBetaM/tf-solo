@@ -490,7 +490,7 @@
 			"increment"	"-0.15"			// 
 			"cap"		"0.4"			// 
 			"cost"		"250"
-			"inv_attr"	"mult_item_meter_charge_rate_reduce"
+			"inv_attr"	"mult_item_meter_charge_rate_reduced"
 		}
 		"57"
 		{
