@@ -23,6 +23,7 @@
 #include "tf_mapinfo.h"
 #include "vgui_avatarimage.h"
 #include "VGuiMatSurface/IMatSystemSurface.h"
+#include "filesystem.h"
 
 #include "tf_statsummary.h"
 #include <convar.h>
@@ -95,6 +96,12 @@ ConVar cl_loadingimage_override("cl_loadingimage_override", "", FCVAR_REPLICATED
 ConVar cl_loadingimage_force("cl_loadingimage_force", "0", FCVAR_REPLICATED, "Force the loading screen image to be used for the whole loading");
 ConVar cl_loadingimage_map("cl_loadingimage_map", "0", FCVAR_REPLICATED, "Force the loading screen image to persist into the second part of the loading screen");
 ConVar cl_loading_stats("cl_loading_stats", "0", FCVAR_ARCHIVE, "Show stats in the loading screen");
+ConVar cl_loading_lore("cl_loading_lore", "1", FCVAR_ARCHIVE, "Show lore in the loading screen");
+ConVar cl_loading_lore_override("cl_loading_lore_override", "-1", FCVAR_REPLICATED, "Show lore in the loading screen");
+ConVar cl_loading_lore_override_title("cl_loading_lore_override_title", "", FCVAR_REPLICATED, "");
+ConVar cl_loading_lore_override_body("cl_loading_lore_override_body", "", FCVAR_REPLICATED, "");
+extern ConVar tfsolo_mapentry;
+#define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/maps_config.txt"
 
 void SetLoadingVisibilityRecursive( vgui::VPANEL parentPanel, const char* targetPanelName, int depth = 0 )
 {
@@ -186,6 +193,10 @@ void CTFStatsSummaryPanel::Init( void )
 	m_pMainBackground = NULL;
 	m_pLeaderboardTitle = NULL;
 	m_pContributedPanel = NULL;
+
+	m_pLoreContainerPanel = NULL;
+	m_pLoreTitleLabel = NULL;
+	m_pLoreBodyLabel = NULL;
 
 #ifdef _X360
 	m_pFooter = new CTFFooter( this, "Footer" );
@@ -447,11 +458,11 @@ void CTFStatsSummaryPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 	if ( m_bEmbedded )
 	{
-		LoadControlSettings( "Resource/UI/StatSummary_Embedded.res" );
+		LoadControlSettings( "Resource/UI/StatSummarySolo_Embedded.res" );
 	}
 	else
 	{
-		LoadControlSettings( "Resource/UI/StatSummary.res" );
+		LoadControlSettings( "Resource/UI/StatSummarySolo.res" );
 	}
 	m_bControlsLoaded = true;
 
@@ -469,6 +480,13 @@ void CTFStatsSummaryPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 			pEntryUI->LoadControlSettings( "Resource/UI/LeaderboardEntry.res" );
 			m_vecLeaderboardEntries.AddToTail( pEntryUI );
 		}
+	}
+
+	m_pLoreContainerPanel = dynamic_cast< EditablePanel *>( FindChildByName( "LoreContainer" ) );
+	if ( m_pLoreContainerPanel )
+	{
+		m_pLoreTitleLabel = dynamic_cast< CExLabel *>( m_pLoreContainerPanel->FindChildByName( "LoreTitleLabel" ) );
+		m_pLoreBodyLabel = dynamic_cast< CExLabel *>( m_pLoreContainerPanel->FindChildByName( "LoreBodyLabel" ) );
 	}
 
 	// get the dimensions and position of a left-hand bar and a right-hand bar so we can do bar sizing later
@@ -612,6 +630,66 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 			pInfoBG->SetVisible( bShowMapInfo && !bIsMVM && !bBackgroundOverride );
 		}
 	}
+
+	if ( m_pLoreContainerPanel )
+	{
+		const char* pszMapName = tfsolo_mapentry.GetString();
+		bool pass = true;
+		m_pLoreContainerPanel->SetVisible( false );
+		if ( pszMapName && pszMapName[0] && ( cl_loading_lore.GetBool() || cl_loading_lore_override.GetInt() == 1 ) && cl_loading_lore_override.GetInt() != 0 && !bShowMapInfo )
+		{
+			if ( cl_loading_lore_override.GetInt() == 2 )
+			{
+				m_pLoreContainerPanel->SetDialogVariable( "loretitle", cl_loading_lore_override_title.GetString() );
+				m_pLoreContainerPanel->SetDialogVariable( "lorebody", cl_loading_lore_override_body.GetString() );
+				m_pLoreContainerPanel->SetVisible( true );
+				return;
+			}
+			KeyValuesAD config( "maps_config" );
+			if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
+			{
+				Msg( "Unable to parse maps_config.txt into keyvalues.\n" );
+				return;
+			}
+			KeyValues* maps = config->FindKey( "maps" );
+			if ( !maps )
+			{
+				return;
+			}
+			KeyValues* map = maps->FindKey( pszMapName );
+			if ( !map )
+			{
+				return;
+			}
+			KeyValues* loreholder = map->FindKey( "lore" );
+			if ( !loreholder || !loreholder->GetFirstSubKey() )
+			{
+				return;
+			}
+			KeyValues* lore = loreholder->GetFirstSubKey();
+			int count = 0;
+			while ( lore )
+			{
+				count++;
+				lore = lore->GetNextKey();
+			}
+			int pos = RandomInt( 0, count - 1 );
+			count = 0;
+			lore = loreholder->GetFirstSubKey();
+			while ( lore )
+			{
+				if ( count == pos )
+				{
+					break;
+				}
+				count++;
+				lore = lore->GetNextKey();
+			}
+			m_pLoreContainerPanel->SetDialogVariable( "loretitle", lore->GetString( "title" ) );
+			m_pLoreContainerPanel->SetDialogVariable( "lorebody", lore->GetString( "body" ) );
+			m_pLoreContainerPanel->SetVisible( true );
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -678,7 +756,7 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 		pAuthors = pMapInfo->pszAuthorsLocKey;
 	}
 	
-	ShowMapInfo( true, bIsMVM, ( pszBackgroundOverride != NULL ) );
+	ShowMapInfo( true, bIsMVM, ( pszBackgroundOverride != NULL || !bIsCommunityMap ) );
 
 	m_xStartLeaderboard = 0;
 	m_yStartLeaderboard = 0;

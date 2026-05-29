@@ -129,6 +129,9 @@ private:
 	CUtlVector< vgui::EditablePanel* > m_vecLeaderboardEntries;
 
 	ScalableImagePanel* m_pLoadingIcon;
+	vgui::EditablePanel* m_pLoreContainerPanel;
+	CExLabel* m_pLoreTitleLabel;
+	CExLabel* m_pLoreBodyLabel;
 #ifdef _X360
 	bool m_bShowBackButton;
 #endif
