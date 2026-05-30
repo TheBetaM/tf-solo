@@ -5421,7 +5421,7 @@ CTFOOBEDialog::CTFOOBEDialog( vgui::Panel* parent ) : BaseClass( NULL, "TFOOBEDi
 
 	m_pDescription = new CInfoDescription();
 	m_pDescription->InitFromFile( MOD_OOBE_FILE );
-	m_pDescription->TransferCurrentValues( NULL );
+	//m_pDescription->TransferCurrentValues( NULL );
 }
 
 //-----------------------------------------------------------------------------
@@ -5459,12 +5459,62 @@ void CTFOOBEDialog::ApplySettings( KeyValues* inResourceData )
 //-----------------------------------------------------------------------------
 void CTFOOBEDialog::OnClose()
 {
-	SaveValues();
+	ApplyOOBE();
 
 	BaseClass::OnClose();
 
 	TFModalStack()->PopModal( this );
 	MarkForDeletion();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFOOBEDialog::ApplyOOBE()
+{
+	ConVarRef tf_oobe_modern_controls( "tf_oobe_modern_controls" );
+	if ( tf_oobe_modern_controls.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_controls.cfg" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_controls_off.cfg" );
+	}
+
+	ConVarRef tf_oobe_modern_defaults( "tf_oobe_modern_defaults" );
+	if ( tf_oobe_modern_defaults.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults.cfg" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults_off.cfg" );
+	}
+
+	ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
+	if ( !tf_oobe_multiplayer.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 0" );
+		engine->ClientCmd_Unrestricted( "sv_lan 1" );
+		engine->ClientCmd_Unrestricted( "tf_party_ignore_invites 1" );
+		engine->ClientCmd_Unrestricted( "tf_party_join_request_mode 2" );
+		engine->ClientCmd_Unrestricted( "sv_friends_only 1" );
+		engine->ClientCmd_Unrestricted( "sv_allow_server_adverisement_to_master_server 0" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 1" );
+		engine->ClientCmd_Unrestricted( "sv_lan 0" );
+		engine->ClientCmd_Unrestricted( "tf_party_ignore_invites 0" );
+		engine->ClientCmd_Unrestricted( "tf_party_join_request_mode -1" );
+		engine->ClientCmd_Unrestricted( "sv_friends_only 1" );
+		engine->ClientCmd_Unrestricted( "sv_allow_server_adverisement_to_master_server 0" );
+	}
+
+	ConVarRef tf_oobe_viewed( "tf_oobe_viewed" );
+	tf_oobe_viewed.SetValue( 1 );
+	engine->ClientCmd_Unrestricted( "host_writeconfig" );
 }
 
 //-----------------------------------------------------------------------------
@@ -5475,12 +5525,12 @@ void CTFOOBEDialog::OnCommand( const char* command )
 {
 	if ( !stricmp( command, "Ok" ) )
 	{
-		OnClose();
+		SaveValues();
 		return;
 	}
 	else if ( !stricmp( command, "Close" ) )
 	{
-		OnClose();
+		SaveValues();
 		return;
 	}
 
@@ -5492,7 +5542,7 @@ void CTFOOBEDialog::OnKeyCodeTyped( KeyCode code )
 	// force ourselves to be closed if the escape key it pressed
 	if ( code == KEY_ESCAPE )
 	{
-		OnClose();
+		SaveValues();
 	}
 	else
 	{
@@ -5508,12 +5558,20 @@ void CTFOOBEDialog::OnKeyCodePressed(KeyCode code)
 	// force ourselves to be closed if the escape key it pressed
 	if ( GetBaseButtonCode( code ) == KEY_XBUTTON_B || GetBaseButtonCode( code ) == STEAMCONTROLLER_B || GetBaseButtonCode( code ) == STEAMCONTROLLER_START )
 	{
-		OnClose();
+		SaveValues();
 	}
 	else
 	{
 		BaseClass::OnKeyCodePressed( code );
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFOOBEDialog::OnDelayClose()
+{
+	OnClose();
 }
 
 //-----------------------------------------------------------------------------
@@ -5884,42 +5942,11 @@ void CTFOOBEDialog::GatherCurrentValues()
 void CTFOOBEDialog::SaveValues()
 {
 	GatherCurrentValues();
+
 	if ( m_pDescription )
 	{
 		m_pDescription->WriteToConfig();
 	}
 
-	ConVarRef tf_oobe_modern_defaults( "tf_oobe_modern_defaults" );
-	if ( tf_oobe_modern_defaults.GetBool() )
-	{
-		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults" );
-	}
-	else
-	{
-		engine->ClientCmd_Unrestricted( "exec solo/oobe/modern_defaults_off" );
-	}
-
-	ConVarRef tf_oobe_multiplayer( "tf_oobe_multiplayer" );
-	if ( !tf_oobe_multiplayer.GetBool() )
-	{
-		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 0" );
-		engine->ClientCmd_Unrestricted( "sv_lan 1" );
-		engine->ClientCmd_Unrestricted( "tf_party_ignore_invites 1" );
-		engine->ClientCmd_Unrestricted( "tf_party_join_request_mode 2" );
-		engine->ClientCmd_Unrestricted( "sv_friends_only 1" );
-		engine->ClientCmd_Unrestricted( "sv_allow_server_adverisement_to_master_server 0" );
-	}
-	else
-	{
-		engine->ClientCmd_Unrestricted( "sv_use_steam_networking 1" );
-		engine->ClientCmd_Unrestricted( "sv_lan 0" );
-		engine->ClientCmd_Unrestricted( "tf_party_ignore_invites 0" );
-		engine->ClientCmd_Unrestricted( "tf_party_join_request_mode -1" );
-		engine->ClientCmd_Unrestricted( "sv_friends_only 1" );
-		engine->ClientCmd_Unrestricted( "sv_allow_server_adverisement_to_master_server 0" );
-	}
-
-	ConVarRef tf_oobe_viewed( "tf_oobe_viewed" );
-	tf_oobe_viewed.SetValue( 1 );
-	engine->ClientCmd_Unrestricted( "host_writeconfig" );
+	PostMessage( GetVPanel(), new KeyValues( "DelayClose" ), 0.1f );
 }

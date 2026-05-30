@@ -13,7 +13,7 @@ DESCRIPTION INFO_OPTIONS
 		"#TFSOLO_OOBE_ModernControls"
 		"#TFSOLO_OOBE_ModernControls_Desc"
 		{ BOOL }
-		{ "1" }
+		{ "0" }
 	}
 	
 	"tf_oobe_modern_defaults"

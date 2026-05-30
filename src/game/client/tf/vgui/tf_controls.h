@@ -466,11 +466,14 @@ private:
 	void DestroyControls();
 	void GatherCurrentValues();
 	void SaveValues();
+	void ApplyOOBE();
 
 	virtual void OnCommand(const char* command);
 	virtual void OnClose();
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
+
+	MESSAGE_FUNC( OnDelayClose, "DelayClose" );
 
 private:
 	CInfoDescription* m_pDescription;
