@@ -11,6 +11,7 @@ maps_config
 				tfsolo_md 1
 				ad 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -24,6 +25,7 @@ maps_config
 				tfsolo_inf 1
 				ad 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -36,6 +38,7 @@ maps_config
 				tfsolo_pda 1
 				symm 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -49,6 +52,7 @@ maps_config
 				tfsolo_pde 1
 				ad 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -61,6 +65,7 @@ maps_config
 			{
 				tfsolo_fort 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -74,6 +79,7 @@ maps_config
 				tfsolo_cv 1
 				symm 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -87,6 +93,7 @@ maps_config
 				ad 1
 				tfsolo_cvr 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -101,6 +108,7 @@ maps_config
 				flag_count 1
 				theme_city 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
 			}
 		}
@@ -116,7 +124,125 @@ maps_config
 				hybrid 1
 				theme_hallow 1
 				tfsolo 1
+				tfsolo_oc 1
 				tfsolo_tc_hide 1
+			}
+		}
+		koth_gravelfort
+		{
+			name "Gravel Fort"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_gravelfort"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+				tfsolo 1
+				tfsolo_oc 1
+				allow_arena 1
+				allow_pd 1
+			}
+			pickups
+			{
+				cred1
+				{
+					pos "0 -1464 254"
+				}
+				cred2
+				{
+					pos "-215 513 -60"
+				}
+				cred3
+				{
+					pos "1724 -709 -68"
+				}
+				cred4
+				{
+					pos "-2358 953 -164"
+				}
+				cred5
+				{
+					pos "-2106 -141 -202"
+				}
+			}
+		}
+		arena_himalaya_ft_b3
+		{
+			name "Himalaya"
+			modename "#GameType_TFSOLO_FT_Arena"
+			thumbArt "maps/menu_thumb_arena_himalaya"
+			authors "#TFSOLO_Himalaya_authors"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				ft 1
+				theme_alpine 1
+				tfsolo 1
+			}
+			pickups
+			{
+				cred1
+				{
+					pos "2134 320 284"
+				}
+				cred2
+				{
+					pos "-1459 348 352"
+				}
+				cred3
+				{
+					pos "-2026 -1721 -66"
+				}
+				cred4
+				{
+					pos "608 384 296"
+				}
+				cred5
+				{
+					pos "1405 -841 102"
+				}
+			}
+		}
+		pl_effigy_rc2
+		{
+			name "Effigy"
+			modename "#Gametype_TOW"
+			thumbArt "maps/menu_thumb_tow_effigy"
+			authors "#TFSOLO_Effigy_authors"
+			tags
+			{
+				tow 1
+				pl 1
+				symm 1
+				theme_japan 1
+				tfsolo 1
+			}
+			pickups
+			{
+				cred1
+				{
+					pos "-1344 1248 158"
+				}
+				cred2
+				{
+					pos "1652 -792 232"
+				}
+				cred3
+				{
+					pos "65 -2486 44"
+				}
+				cred4
+				{
+					pos "451 -659 22"
+				}
+				cred5
+				{
+					pos "-348 -635 116"
+				}
 			}
 		}
 		

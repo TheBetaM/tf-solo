@@ -341,6 +341,7 @@ maps_config
 		}
 		workshop_543841027
 		{
+			disabled 1
 			name "Effigy"
 			modename "#Gametype_TOW"
 			tags
@@ -1089,6 +1090,7 @@ maps_config
 		}
 		workshop_3360981389
 		{
+			disabled 1
 			name "Himalaya"
 			modename "#Gametype_Arena"
 			tags

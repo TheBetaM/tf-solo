@@ -174,7 +174,7 @@ maps_config
 		}
 		cp_gravelpit
 		{
-			name "Gravelpit"
+			name "Gravel Pit"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_gravelpit"
 			photosArt "maps/menu_photos_cp_gravelpit"
@@ -349,7 +349,7 @@ maps_config
 		}
 		ctf_doublecross
 		{
-			name "Doublecross"
+			name "Double Cross"
 			modename "#Gametype_CTF"
 			thumbArt "maps/menu_thumb_ctf_doublecross"
 			photosArt "maps/menu_photos_ctf_doublecross"
@@ -650,7 +650,7 @@ maps_config
 		}
 		pl_badwater
 		{
-			name "Badwater"
+			name "Badwater Basin"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_badwater"
 			photosArt "maps/menu_photos_pl_badwater"
@@ -821,7 +821,7 @@ maps_config
 		}
 		mvm_coaltown
 		{
-			name "Coaltown"
+			name "Coal Town"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_coaltown"
 			photosArt "maps/menu_photos_mvm_coaltown"

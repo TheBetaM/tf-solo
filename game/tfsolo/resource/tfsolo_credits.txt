@@ -2,18 +2,50 @@ VERSION 1.0
 
 DESCRIPTION INFO_OPTIONS
 {
-	"category1"
+	"category1_a"
 	{
 		"Team Fortress: Greatest Hits"
 		{ CATEGORY }
 	}
 
-	"credit1_1"
+	"credit1_1a"
 	{
-		"Mod by BetaM"
-		"https://www.youtube.com/BetaM"
+		"BetaM"
+		"Lead Developer - https://www.youtube.com/BetaM"
 		{ BOOL }
 		{ "1" }
 	}
+	
+	"credit1_1b"
+	{
+		"Spartan Tanner"
+		"https://www.youtube.com/channel/UC67cycjKd_eICF0V7Kdb1dg"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"category1_maps"
+	{
+		"COMMUNITY MAPS"
+		{ CATEGORY }
+	}
+	
+	"credit1_m001"
+	{
+		"Himalaya by Freyja, Yrrzy, Stuffy360, Lo-Fi, Sarexicus and Le Codex (Used with permission)"
+		"https://tf2maps.net/downloads/himalaya-freeze-tag.17985/"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit1_m002"
+	{
+		"Effigy by Mimas Torres, Freyja and E-Arkham (TF2MCL License)"
+		"https://tf2maps.net/downloads/pl_effigy.924/"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	
 	
 }

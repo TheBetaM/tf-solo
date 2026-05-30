@@ -634,7 +634,6 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 	if ( m_pLoreContainerPanel )
 	{
 		const char* pszMapName = tfsolo_mapentry.GetString();
-		bool pass = true;
 		m_pLoreContainerPanel->SetVisible( false );
 		if ( pszMapName && pszMapName[0] && ( cl_loading_lore.GetBool() || cl_loading_lore_override.GetInt() == 1 ) && cl_loading_lore_override.GetInt() != 0 && !bShowMapInfo )
 		{
@@ -747,6 +746,7 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 	}
 
 	bool bIsCommunityMap = false;
+	bool bIsModMap = false;
 	const char *pAuthors = NULL;
 	
 	const MapDef_t *pMapInfo = GetItemSchema()->GetMasterMapDefByName( pMapName );
@@ -754,6 +754,29 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 	{
 		bIsCommunityMap = pMapInfo->IsCommunityMap();
 		pAuthors = pMapInfo->pszAuthorsLocKey;
+	}
+
+	const char* pszMapName = tfsolo_mapentry.GetString();
+	if ( pszMapName && pszMapName[0] )
+	{
+		KeyValuesAD config( "maps_config" );
+		if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
+		{
+			Msg("Unable to parse maps_config.txt into keyvalues.\n");
+			return;
+		}
+		KeyValues* maps = config->FindKey( "maps" );
+		if ( !maps )
+		{
+			return;
+		}
+		KeyValues* map = maps->FindKey( pszMapName );
+		if ( map && map->FindKey( "authors" ) )
+		{
+			bIsModMap = true;
+			bIsCommunityMap = true;
+			pAuthors = V_strdup( map->GetString( "authors" ) );
+		}
 	}
 	
 	ShowMapInfo( true, bIsMVM, ( pszBackgroundOverride != NULL || !bIsCommunityMap ) );
@@ -885,7 +908,7 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 			}
 			m_bLoadingCommunityMap = bIsCommunityMap;
 
-			if ( m_pContributedPanel && steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamFriends() )
+			if ( m_pContributedPanel && steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamFriends() && !bIsModMap )
 			{
 				int iDonationAmount = MapInfo_GetDonationAmount( steamapicontext->SteamUser()->GetSteamID().GetAccountID(), pMapName );
 				m_pContributedPanel->SetVisible( iDonationAmount != 0 );
