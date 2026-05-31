@@ -206,6 +206,22 @@ maps_config
 					pos "1405 -841 102"
 				}
 			}
+			lore
+			{
+				map
+				{
+					title "Map Lore - By Map Authors"
+					body "Set in the eponymous mountain range in Nepal, Himalaya sees the mercs taking a comfortable vacation at a mountain-top Nepalese monastery with a breathtaking view over the mountain range.
+					
+					Here at the resort, you may find yourself taking in the relaxing sights, or taking a scenic stroll around the cliff-side. Just remember to be careful, as someone forgot that they were legally obligated to install guard rails this high up."
+				}
+				dev
+				{
+					title "Development Info - By Map Authors"
+					body "Freeze Tag's take on the Arena formula on Himalaya aims to provide more of a 'back and forth' than a standard Arena game normally would, as allowing players the ability to bring their teammates back from the dead gives them more sway over the outcome of a match.
+					Should they push in and stop an enemy from thawing out a teammate, or should they retreat and find some teammates of their own to thaw out to turn the tide of battle in their favour?"
+				}
+			}
 		}
 		pl_effigy_rc2
 		{
