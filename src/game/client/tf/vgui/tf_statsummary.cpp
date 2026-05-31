@@ -639,8 +639,22 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 		{
 			if ( cl_loading_lore_override.GetInt() == 2 )
 			{
-				m_pLoreContainerPanel->SetDialogVariable( "loretitle", cl_loading_lore_override_title.GetString() );
-				m_pLoreContainerPanel->SetDialogVariable( "lorebody", cl_loading_lore_override_body.GetString() );
+				if ( g_pVGuiLocalize->FindIndex( cl_loading_lore_override_title.GetString() ) != INVALID_LOCALIZE_STRING_INDEX )
+				{
+					m_pLoreContainerPanel->SetDialogVariable( "loretitle", g_pVGuiLocalize->Find( cl_loading_lore_override_title.GetString() ) );
+				}
+				else
+				{
+					m_pLoreContainerPanel->SetDialogVariable( "loretitle", cl_loading_lore_override_title.GetString() );
+				}
+				if ( g_pVGuiLocalize->FindIndex( cl_loading_lore_override_body.GetString() ) != INVALID_LOCALIZE_STRING_INDEX )
+				{
+					m_pLoreContainerPanel->SetDialogVariable( "lorebody", g_pVGuiLocalize->Find( cl_loading_lore_override_body.GetString() ) );
+				}
+				else
+				{
+					m_pLoreContainerPanel->SetDialogVariable( "lorebody", cl_loading_lore_override_body.GetString() );
+				}
 				m_pLoreContainerPanel->SetVisible( true );
 				return;
 			}
@@ -684,8 +698,22 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 				count++;
 				lore = lore->GetNextKey();
 			}
-			m_pLoreContainerPanel->SetDialogVariable( "loretitle", lore->GetString( "title" ) );
-			m_pLoreContainerPanel->SetDialogVariable( "lorebody", lore->GetString( "body" ) );
+			if ( g_pVGuiLocalize->FindIndex( lore->GetString( "title" ) ) != INVALID_LOCALIZE_STRING_INDEX )
+			{
+				m_pLoreContainerPanel->SetDialogVariable( "loretitle", g_pVGuiLocalize->Find( lore->GetString( "title" ) ) );
+			}
+			else
+			{
+				m_pLoreContainerPanel->SetDialogVariable( "loretitle", lore->GetString( "title" ) );
+			}
+			if ( g_pVGuiLocalize->FindIndex( lore->GetString( "body" ) ) != INVALID_LOCALIZE_STRING_INDEX )
+			{
+				m_pLoreContainerPanel->SetDialogVariable( "lorebody", g_pVGuiLocalize->Find( lore->GetString( "body" ) ) );
+			}
+			else
+			{
+				m_pLoreContainerPanel->SetDialogVariable( "lorebody", lore->GetString( "body" ) );
+			}
 			m_pLoreContainerPanel->SetVisible( true );
 		}
 	}

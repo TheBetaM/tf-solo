@@ -3979,6 +3979,8 @@ void CTFCustomMatchModeDialog::CreateControls()
 		}
 	}
 
+	bool bFirstItem = false;
+
 	FOR_EACH_VEC( possibleModes, a )
 	{
 		ModeOption mode = possibleModes[a];
@@ -4198,6 +4200,12 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapButton->AddActionSignalTarget(this);
 			mapButton->SetVisible(true);
 			mapButton->PassMouseTicksTo(this, true);
+			if (!bFirstItem)
+			{
+				mapButton->SetArmed(true);
+				mapButton->RequestFocus(0);
+				bFirstItem = true;
+			}
 			MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup(fmtModeDesc));
 		}
 		else if ( mode.ModeOverride == 0 && mode.MapAlt && mode.MapAlt[0] )
@@ -4211,6 +4219,12 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapButton->AddActionSignalTarget(this);
 			mapButton->SetVisible(true);
 			mapButton->PassMouseTicksTo(this, true);
+			if (!bFirstItem)
+			{
+				mapButton->SetArmed(true);
+				mapButton->RequestFocus(0);
+				bFirstItem = true;
+			}
 			MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup(fmtModeDesc));
 		}
 		else
@@ -4224,6 +4238,12 @@ void CTFCustomMatchModeDialog::CreateControls()
 			mapButton->AddActionSignalTarget(this);
 			mapButton->SetVisible(true);
 			mapButton->PassMouseTicksTo(this, true);
+			if (!bFirstItem)
+			{
+				mapButton->SetArmed(true);
+				mapButton->RequestFocus(0);
+				bFirstItem = true;
+			}
 			MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup(fmtModeDesc));
 		}
 
@@ -5070,6 +5090,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			if ( !bFirstItem )
 			{
 				mapButton->SetArmed(true);
+				mapButton->RequestFocus(0);
 				m_iszRequestedMap = V_strdup(map.m_MapFile);
 				bFirstItem = true;
 			}

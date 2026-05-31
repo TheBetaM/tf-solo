@@ -116,17 +116,17 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore"
+					title "#TFSOLO_Lore_Map"
 					body "On the outskirts of the city of Teufort, New Mexico, RED and BLU control forts on opposite sides of a contaminated canal."
 				}
 				dev
 				{
-					title "Development Info"
+					title "#TFSOLO_Lore_Dev"
 					body "2Fort is a remake of the Team Fortress Classic map and one of the original 6 maps the game originally launched with. The wide open bridge recieved a roof covering it late in development."
 				}
 				player
 				{
-					title "Player Consensus"
+					title "#TFSOLO_Lore_Player"
 					body "2Fort is TF2's most popular map, far eclipsing every other map in the game in terms of playtime and active players. People generally don't play it seriously, instead goof around or just enjoy the endless skirmishes in an eternal stalemate."
 				}
 			}
@@ -347,7 +347,7 @@ maps_config
 			{
 				dev
 				{
-					title "Development Info"
+					title "#TFSOLO_Lore_Dev"
 					body "Asteroid introduced the space theme and the Robot Destruction gamemode to TF2, however it was never finished and remains as a beta version to this day."
 				}
 			}
@@ -358,7 +358,7 @@ maps_config
 			{
 				dev
 				{
-					title "Development Info"
+					title "#TFSOLO_Lore_Dev"
 					body "Cactus Canyon was tested with multiple various stages, however it was never finished and remains as a beta version to this day."
 				}
 			}

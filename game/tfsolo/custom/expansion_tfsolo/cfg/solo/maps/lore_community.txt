@@ -134,12 +134,12 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "A sprawling area located around and inside complex hydroponics structures. What knowledge does the other team hold in their greenhouses? Delve into the mysterious Reckoner facility to find out."
 				}
 				dev
 				{
-					title "Development Info - By Map Authors"
+					title "#TFSOLO_Lore_DevByAuthors"
 					body "From the maker of Sunshine, Reckoner is a competitive, fast-paced map that heavily encourages rotating, active play. You don't want to be sitting back and waiting for the enemy to push in this map! There are many locations that can only be most effectively used when pushed forward, actively engaging the other team.
 					
 					Reckoner has been extensively tested in casual environments alongside its competitive upbringing and plays exceptionally well, eschewing the usual issues many Control Point maps have on casual servers. Reckoner flows freely from point to point, with very few stalemates for the gamemode, and is designed to offer options for every skill level on every class."
@@ -200,7 +200,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "After years of misfortune, local self-proclaimed wizard Merasmus the Magician is eager to finally find peace and tranquility in his new suburban home, and the neighbors couldn't be happier. 'I've really put them under a spell.' Mr. Magician joked.
 					An avid enterpreneur and businessman, he's made many connections across the globe, but the newly installed Block Captain says he's finally ready to sit back and settle down. 'Peace and quiet,' he said. 'That's all I want. I hope those idiots don't find me. Please don't print that.' It remains to be seen if Mr. Magician's home and the Sandcastle in front of it will remain undisturbed."
 				}
@@ -236,7 +236,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Once upon a time, an innocent evil wizard named Merasmus bought a circus for $12000, hoping to flip it and make a fortune! Alas, he did not have $12000, but do you know who did? The Japanese Mafia! But, due to a language barrier, Merasmus was unclear about the frankly punitive interest rates! Now, he is looking for a bunch of freaks willing to kill people, and he is eager to provide powers capable of rivaling gods in exchange of money... at the Freaky Fair!"
 				}
 			}
@@ -247,12 +247,12 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "A spooky trip into darkness and a hellish landscape, dotted with pumpkins and clocktowers. All Hallow's Eve is upon us, take a walk in this nightmarish place known only as SINSHINE. (Get it? It's like SUNshine, but with SIN!)"
 				}
 				dev
 				{
-					title "Development Info - By Map Authors"
+					title "#TFSOLO_Lore_DevByAuthors"
 					body "Sinshine is a Halloween adaptation of the well-known competitive map known as Sunshine - with a remade last point to facilitate more wicked play; a large clocktower in place of the old lighthouse on second to mediate more dastardly tricks; and 5 deathpits located near (or under!) every cap of the map. Tread wisely!"
 				}
 			}
@@ -311,12 +311,12 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "On Landfall, Beneath an unassuming canopy of trees deep in an unassuming forest, RED and BLU are (presumably) fighting for space. And what better way to halt the other's operations than by stealing their building plans..."
 				}
 				dev
 				{
-					title "Development Info - By Map Authors"
+					title "#TFSOLO_Lore_DevByAuthors"
 					body "Landfall is designed for competitive and pub players alike. It's small, it's fast, and for those on the ground floor it teaches a valuable lesson about height advantage."
 				}
 			}
@@ -381,7 +381,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "H.A.A.R.P. (the High Frequency Active Auroral Red Project) is stationed inside a huge RED base built into a cliff. In the snowy Alaskan wilderness, they've constructed antenna arrays and a gigantic satellite dish. Is this a simple research facility (no), or something more sinister? (yes) BLU must infiltrate the base and deliver the shutdown codes before it's too late!"
 				}
 			}
@@ -410,12 +410,12 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Suijin is set on a Japanese cliffside shinto shrine to Suijin, the kami of water in Japanese mythology."
 				}
 				dev
 				{
-					title "Development Info - By Map Authors"
+					title "#TFSOLO_Lore_DevByAuthors"
 					body "Suijin focuses heavily on rooftop combat and clipping is very lenient. One of the mottos when making this map was 'clip only if have to,' so things like the far off islands, the roof tops, hiding spots are free game. It features a new theme entirely developed for this map, and serves half as an artwork and theme demonstration."
 				}
 			}
@@ -450,12 +450,12 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Lazarus is set on a volcanic island in Southeast Asia, revolving around RED & BLU's island bases and the archaeological dig site they're fighting over in search of the Fountain of Youth!"
 				}
 				dev
 				{
-					title "Development Info - By Map Authors"
+					title "#TFSOLO_Lore_DevByAuthors"
 					body "From the creative team behind the hit Halloween map Slasher, Lazarus is a compact 90-degree mirrored symmetry King of the Hill map designed for consideration for the Jungle Inferno Update. Originally started as Tachyon in 2011, the map gained a sort of notoriety for never being finished. Years later, salvaged from what could from Tachyon, run through the dev process, and breathed life into it as Lazarus!"
 				}
 			}
@@ -520,7 +520,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Slime takes place at a salty seaside fishery where it appears as if they have fished too deep and awoken an ancient horror. Something has stirred from the murky depths of Brinelake: an ancient evil with slippery skin and foul breath. The Salmann cometh. Don’t be fooled by their vacant expressions, behind those eyes lurks the minuscule brain of a cold blooded killer."
 				}
 			}
@@ -531,7 +531,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "The Sinclair Estate is a place of mystery. What was once a place of old money and built by a wealthy family has become little more than a cluster of decrepit buildings, buildings that hold a secret.
 					Annabelle Sinclair, the sole heir to the Sinclair fortune spent years alone on the property, fully consumed by her research. Using a combination of Magic and Science, she retrofitted the estate to cater to her experiments over the years. Bodies, machine parts, potions, and occult paraphernalia began to the grounds as her research lead her closer and closer to the goal of creating SYNTHETIC life and a full understanding of death itself. Her advances in Science and Magic had been fruitful over the years but, the years, had not been kind.
 					Death eventually found its way to the Sinclair estate, despite having been given poor directions, and the property was quickly put up for auction.
@@ -552,7 +552,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Ah, the pristine wilderness: beloved home of unfettered wildlife, stalwart opponent of reckless human exploitation, immortal muse of the great Transcendentalists; in sum, a hardy testament to the limitless natural beauty of our world... until now!
 					
 					Because on this grim Halloween night, something most foul and unnatural has entrenched itself in the tortuous root systems of the Undergrove, draining it of its verdant energy and depriving it of all natural life, turning it into the Moldergrove!"
@@ -613,7 +613,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Selbyen is a small Norwegian fishing village that is also a tourist attraction because of all the seals that are released back to nature. This year, the mercenaries have decided to compete over who feeds the most fish to the seals as a publicity stunt. Of course, they'll be bringing their dirtiest tactics to do whatever they can to win."
 				}
 			}
@@ -636,7 +636,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Step inside the haunted halls of Monster Bash, where mercenaries fight to the death in a creaking castle to collect buckets of their enemies gibs to bring to a central, monstrous Reanimator."
 				}
 			}
@@ -659,27 +659,27 @@ maps_config
 			{
 				map1
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Once a proud sea captain, Davy Jones is now very much dead, and very much will be even more dead if he is in debt to a man such as Saxton Hale. Davy Jones, originally from the town of Bristol, became a naval officer after years of service to the Royal Navy. Eventually, Jones grew tired of his life and turned to Privateering. Captaining his own vessel, he was recorded to have engaged at least 89 vessels over the course of his career, creating an infamous name for himself in the Caribbean. Wealthy and content, he settled down in the town of Cursed Cove to begin a more peaceful life. That is, until a well positioned cannonball from the 100 gunned HMS Prince bombarded the town in a brutal slaughter that killed many of the town's pirates. Jone's leg caught a cannonball in his home and it was a mortal wound. As the infection spead, he cursed the town and the Navy, swearing they will both suffer as he haunts the afterlife."
 				}
 				map2
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Centuries ago, deep within the tropical hell-scape that is the Caribbean, a town emerged from the dense underbrush, Cursed Cove. Originally a salty fishing village on the Iguana Islands, the town quickly grew as a popular place for rum runners, pirates, and other sailors in the West Indies. During the early 1700s, during the golden age of piracy, the cove flourished with taverns, distilleries and debauchery. As the century passed and life returned to normal with the decline of piracy, a fort was built by the Royal Navy to keep pirates at bay, further expanding the British Empire. In the latter half of the 1800s, in addition to purchasing land in New Mexico, Zepheniah Mann acquired the fort as a critical supply line for a trade route from the Gulf of Mexico. Through the modern age, the town remained a popular travel destination in the Caribbean for its tropical climate, beautiful vistas and charming pathways. That is, until Mann Co. came."
 				}
 				map3
 				{
-					title "Map Lore - By Map Authors"
-					body "In 1969, Mann Co. CEO and jean short investor, Saxton Hale was itching for a new adventure. As the Mann. Co cargo ships were making sufficient funds for the company, exporting arms to militias, Hale decided to charter his own ship. Full of new weapons he sat out for the port of Miami to trade with a local mafia. As he came close to the Florida Keys he was thrown off course and put into a deadly hurricane. Hale, no stranger to danger, steered the ship right into the middle of the beast. Unfortunately, the ship with its cargo sank, and disappeared beneath the waves along with its deckhands. As the ship sank, Hale spotted a pack of several bottlenose dolphins beneath the waves. Thinking quickly, he ripped off his chest hair to make a leash on two of the dolphins, successfully pulling him ashore to the Cursed Cove. 'Kangaroo's Mullet! That hurricane sunk my guns!' Naked and battered, withhis chest hair seemingly immediately replaced. Hale wandered into a tavern, explaining his tale to the local townspeople. Many blamed the Triangle as the source of the Hurricane. Confused and bewildered, Hale inquired about the Triangle. They proceeeded to tell him of the Triangle's great strength and mysterious nature. 'This triangle is looking to tango with Hale? Not on my watch.'"
+					title "#TFSOLO_Lore_MapByAuthors"
+					body "In 1969, Mann Co. CEO and jean short investor, Saxton Hale was itching for a new adventure. As the Mann. Co cargo ships were making sufficient funds for the company, exporting arms to militias, Hale decided to charter his own ship. Full of new weapons he sat out for the port of Miami to trade with a local mafia. As he came close to the Florida Keys he was thrown off course and put into a deadly hurricane. Hale, no stranger to danger, steered the ship right into the middle of the beast. Unfortunately, the ship with its cargo sank, and disappeared beneath the waves along with its deckhands. As the ship sank, Hale spotted a pack of several bottlenose dolphins beneath the waves. Thinking quickly, he ripped off his chest hair to make a leash on two of the dolphins, successfully pulling him ashore to the Cursed Cove. 'Kangaroo's Mullet! That hurricane sunk my guns!' Naked and battered, with his chest hair seemingly immediately replaced. Hale wandered into a tavern, explaining his tale to the local townspeople. Many blamed the Triangle as the source of the Hurricane. Confused and bewildered, Hale inquired about the Triangle. They proceeded to tell him of the Triangle's great strength and mysterious nature. 'This Triangle is looking to tango with Hale? Not on my watch.'"
 				}
 				map4
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Saxton Hale returned to Mann Co. still very much naked, but with a plan. Not to put clothes on, but to make an even bigger, more deadly shape in the Caribbean, one to rival the Triangle. After tracking down the great wizard Merasmus, and beating him to an inch of his life, he told Hale that he would need a great amount of spiritual energy to make the paranormal vortex work. Merasmus suggested his old University roommate can help him, Davy Jones from the town of Cursed Cove. After also nearly beating Davy Jones to an inch, possible centimeter, of his already dead spirit, Hale told him he needs souls to show that Triangle who's boss. Jones agreed and gave him his collection of souls."
 				}
 				map5
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "After storing the souls in spiritually bound barrels Saxton Hale sent them to six locations in shipping containers. Detonators inside all six ships, with a button press, Hale sunk all six in the ports of Miami, Havana, Cursed Cove and off the southern coast of Cuba, Parrot Cay, and south west of the Bahamas. 'This will show that Triangle not to mess with Saxton Hale.' Hale's outcome was entirely encompassing the Caribbean. The energy and paranormal activity generated by this stunt was three times that of the Triangle. Not only was it now Hale's own playground, but he demanded more. Every Halloween he demanded Davy Jones to pay his share of souls to him, if he wanted to still have working limbs. Davy Jones, a scheming man was able to cut a deal with some mercenaries that knew Hale..."
 				}
 			}
@@ -690,7 +690,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Watergate is set in a beer factory and its neighbouring buildings under the siege of an alien invasion. With aliens attacking, our merc teams sink back to their bars during the worldwide apocalypse, but with science they find aliens don't enjoy drinking beer! They concoct a plan of action and put it to use..."
 				}
 			}
@@ -761,7 +761,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Take a scenic tour of this notorious island. Escort a payload along beautiful beaches, through a heartwarming town, and finally along a Pier turned amusement park."
 				}
 			}
@@ -784,7 +784,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Embargo is a Cuban Island under the domain of the evil Comandante and his global counterfeit operation. As part of his operation he has been funneling money to sabotage mining operations over brazilium and risks the integrity of Mann Co. shipments for the next few decades.
 					
 					The Bureau has hired a group of mercenaries to do the dirty work and ruin his hometown vacation bank. But it looks like El Comandante took measures of his own..."
@@ -821,12 +821,12 @@ maps_config
 			{
 				map1
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Hassle Castle was built by an unspecified member of the Frankenstein family on top of an ancient Indian burial ground in Darmstadt, Germany back in 1876. Some wondered how an Indian burial ground got into Germany, but Frankensein told them to ask Indians themselves. After years of experiments and hundreds of sins against nature, the owner of the castle achieved the goal he had in mind when building the place - he brought a person back from the dead. Unfortunately, his triumph was short-lived. The cursed dead Indians who inhabited the aforementioned Indian burial ground and who's souls were used to resurrect that dead person, weren't very happy with their neighbor’s actions. After a trial at the local court, Indians won and Frankenstein was sentenced to death on an electric chair and was buried in a crypt near the castle he built. Everyone quickly forgot about the whole thing and the place was abandoned ever since..."
 				}
 				map2
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "In October of the year 1972, RED found out about Frankenstein's shenanigans and had a brilliant idea to resurrect Redmond Mann and get their jobs back. Upon entering the castle, they found out a giant broken Resurrector and decided to repair it. Little did they know, that the BLU team found out about this whole thing too, albeit a few days later, and had exactly the same idea. After some [non-]violent negotiations with RED, they took more drastic measures to obtain the Resurrector.
 					They forcefully took the Frankenstein Guest House, Hassle Castle, out of RED's possession, made a base there, brought Blutarch's corpse there and eventually, on October 31st, 1972, the same day that RED has finished repairing the Resurrector, BLU attacked the castle, pushing Blutarch's corpse up the hill. Will they bring their leader back to life, or will RED prevent them from doing that?"
 				}
@@ -910,7 +910,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Old Nick has scores of naughty children forced into his employ by the arcane rules of the Austrialian Christmas. However, Old Nick only has a small apartament above the liquor store. It has no room for small children crafting guns and hats. After a a search across the Badlands, he had them convert some old grain silos and the remnants of wooden crates into a makeshift prison, located just outside the northern suburbs of Pyroland.
 					Since then, year after year; the children cycle through Wutville. Some have spent several tours of duty in the striped workshops. Old Nick didn't care much for the youths nor watch over them. He needed to fill orders and those hats weren't going to magic themselves together. Not that he didn't try that for years... but then that's why he wasn't allowed to place his shanty town anywhere closer to reality.
 					The children, however, took advantage of Old Nick's lack of attention and intoxication. They made a plan and hired BLU with the promise of fancy hats to shove a train into Old Nick's Bottomless Pit as a distraction while they make their own safe exit."
@@ -923,7 +923,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "The Bureau aims to take control of Argentum mining operations from Bolefuego Sindicato that have been taking place in West Patagonia, a long forgotten element that is usefull for Rocket Fuel or anything flammable. Both teams face the calm forest of Patagonia, Argentina, sabotage railway and melt giant glaciers."
 				}
 			}
@@ -994,7 +994,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Not all of Hell is a desolate wasteland - lush forests found their way to bloom even in the most hostile environment known to Mann. Outburst is exactly the right place for a new CEO to meet his... clients? partners? victims? The Doomed Souls of the Dead? Either way, if your soul belongs to Hell Inc., Saxton is your guy!"
 				}
 			}
@@ -1048,7 +1048,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Sea Base Aquarius is located on a coral reef deep below the Caribbean, it is a frontier of research and discovery. The journey through it will take you through the beautiful waters with rich marine life, however, lurking in the depths are many dangers."
 				}
 			}
@@ -1077,7 +1077,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "The locals fled this picturesque coastal village after a sudden influx of violent thunderstorms, which mysteriously coincided with the acquisition of the historic hilltop Citadel by TF Industries and the subsequent construction of an enormous lightning rod on its roof. Faced with the daunting task of capturing the fortress and destroying the device, BLU engineers have invented the most cutting edge cart-based bomb pushing technology ever devised."
 				}
 			}
@@ -1094,7 +1094,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Mann Co. has found a new deposit of liquid australium beneath an old oil rig that was set to be demolished. After the news of this deposit RED (Reliable Extraction Division) and BLU (Butane Liquidation Unit) rushed to what is left of the oil rig. Now, both teams must fight while the oil rig burns the remaining petroleum in order to claim this deposit of australium for themselves before the Demolition."
 				}
 			}
@@ -1117,7 +1117,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "RED and BLU have discovered the legendary Megalodon still alive, as well the location where he hangs out the most, are now settling their differences... RED wants to kill the beast, to gain a boost from the press about their company, promoting them also as good hunters, while BLU wants to use it as their main attraction for their exclusive aquarium! After they finished digging through the middle, both teams meet and, under Pressure as always, they opened fire upon contact!"
 				}
 			}
@@ -1135,7 +1135,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "On Dusker, RED arranged an abandoned farm and lumbermill on a cursed hill, and are trying to summon something occult by completing a ritual...
 					Then, a voice started talking to them, something wicked, ordering to kill everything in their path that could stop them. BLU has a small mining facility nearby, and are trying to stop their activities. The voice is talking to them as well, ordering them to kill and claim this hill instead.
 					Whatever this strange voice is, it seems to have one goal, to cause as much damage and suffering as possible, and complete the ritual..."
@@ -1160,7 +1160,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "The mercenaries are deployed near Merasmus's vacation home in the Marshlands where he left a key component to his EVIL ritual! The briefcase of the damned! This ghoulish and haunted object can summon a world ending amount of spirits! And because of that, Merasmus doesn't want to get close... so he sent the mercenaries to do his bidding!"
 				}
 			}
@@ -1196,7 +1196,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "It was Smissmas Eve, and Dr. Ludwig, better known as the Medic, made a discovery. Nuts. Yes, nuts contain a mysterious compound capable of granting immortality. Unable to sleep, Ludwig found himself in the Mann Co. Toy Factory, the perfect place to build his newest invention - a machine capable of crushing nuts into pure life essence. As the clock struck midnight… something stirred. The machine roared to life. The Nutcracker awakened and spoke. The patient whose skeleton was stolen now inhabited a new body. Enraged by what Ludwig had done to him, he grew violent toward anyone foolish enough to approach. Now, news of this machine has spread across the Badlands. Could it truly make someone immortal? Could it decide the outcome of every war to come? Everyone wants a taste of eternity. And to win the fight, one thing is certain: Feed the Nutcracker. Survive his hunger. Oh, and… You wanna get nuts? Come on! Let’s get nuts!"
 				}
 			}
@@ -1207,7 +1207,7 @@ maps_config
 			{
 				map
 				{
-					title "Map Lore - By Map Authors"
+					title "#TFSOLO_Lore_MapByAuthors"
 					body "Welcome to Matterhorn, the former most luxurious Hotel in all Switzerland. What was once a bustling Ski Resort is now a ghost town of former opulence.
 					With the entire village evacuated due to unprecedented levels of snowfall, both RED and BLU seek to claim the Hotel for themselves.
 					However there are warnings of avalanches in the area, due to excessive snowfall... so fight quietly."
