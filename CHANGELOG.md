@@ -21,7 +21,7 @@
 -- Plus additional flavor text  
 - Added a map overview, replacing the scoreboard  
 - Added a choreography system for recording and playing back player inputs  
-- Added new achievements, and functionality for player-made ones  
+- Added new achievements, and functionality for custom-made ones  
 - Added console commands: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 

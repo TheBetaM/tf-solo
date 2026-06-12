@@ -1330,7 +1330,90 @@ maps_config
 				theme_castle 1
 			}
 		}
-		
+		workshop_3717177136
+		{
+			name "Swerve"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3717723939
+		{
+			name "Phoneyland"
+			modename "#Gametype_TOW"
+			tags
+			{
+				tow 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3719791801
+		{
+			name "Launch"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_3719980540
+		{
+			name "Databank"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3724266231
+		{
+			name "MannStreet"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+				vscript 1
+			}
+		}
+		workshop_3729485411
+		{
+			name "Lockdown"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+				theme_space 1
+				vscript 1
+			}
+		}
+		workshop_3734613353
+		{
+			name "Kalgoorlie"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
 		
 	
 	}

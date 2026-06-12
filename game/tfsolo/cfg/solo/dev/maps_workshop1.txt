@@ -8134,6 +8134,303 @@ maps_config
 				theme_alpine 1
 			}
 		}
+		workshop_3716486332
+		{
+			name "Farm Feud"
+			modename "#Gametype_VSH"
+			tags
+			{
+				arena_pd 1
+				vsh 1
+				cp_count 1
+				theme_farm 1
+				vscript 1
+			}
+		}
+		workshop_3716508869
+		{
+			name "Fuligo"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 4
+				theme_forest 1
+			}
+		}
+		workshop_3716788243
+		{
+			name "Werner"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_farm 1
+			}
+		}
+		workshop_3717118396
+		{
+			name "Frequency"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
+		workshop_3717177136
+		{
+			name "Swerve"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3717196536
+		{
+			name "Aridpass"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_3717448206
+		{
+			name "Spigot"
+			modename "#Gametype_RobotDestruction"
+			tags
+			{
+				rd 1
+				flag_count 2
+				symm 1
+				theme_desert 1
+			}
+		}
+		workshop_3717723939
+		{
+			name "Phoneyland"
+			modename "#Gametype_TOW"
+			tags
+			{
+				tow 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3717818537
+		{
+			name "Redwood"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_forest 1
+				vscript 1
+			}
+		}
+		workshop_3719791801
+		{
+			name "Launch"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_industrial 1
+			}
+		}
+		workshop_3719980540
+		{
+			name "Databank"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3721264596
+		{
+			name "Por do Sol"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		workshop_3723908486
+		{
+			name "Futura Town"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_space 1
+				theme_dino 1
+			}
+		}
+		workshop_3724266231
+		{
+			name "MannStreet"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_city 1
+				vscript 1
+			}
+		}
+		workshop_3724269728
+		{
+			name "Paragon"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_alpine 1
+			}
+		}
+		workshop_3725401196
+		{
+			name "Valhalla"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				mdv 1
+				symm 1
+				theme_castle 1
+			}
+		}
+		workshop_3726377415
+		{
+			name "Kyuko"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_japan 1
+				theme_city 1
+			}
+		}
+		workshop_3728646363
+		{
+			name "Flint"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_3729256813
+		{
+			name "Yukimuri"
+			modename "#Gametype_CP"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_snow 1
+				theme_japan 1
+			}
+		}
+		workshop_3729426064
+		{
+			name "Cornkeep"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_farm 1
+			}
+		}
+		workshop_3729485411
+		{
+			name "Lockdown"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+				theme_space 1
+				vscript 1
+			}
+		}
+		workshop_3731551646
+		{
+			name "Shamville"
+			modename "#Gametype_PlayerDestruction"
+			tags
+			{
+				pd 1
+				symm 1
+				theme_pyroland 1
+			}
+		}
+		workshop_3733254829
+		{
+			name "Suburbia"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_city 1
+			}
+		}
+		workshop_3734613353
+		{
+			name "Kalgoorlie"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_desert 1
+			}
+		}
+		workshop_3738230965
+		{
+			name "Shrine"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_japan 1
+			}
+		}
 		
 	}
 }
