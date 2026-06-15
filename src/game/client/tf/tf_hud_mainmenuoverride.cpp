@@ -112,7 +112,9 @@ ConVar cl_mainmenu_operation_motd_reset( "cl_mainmenu_operation_motd_reset", "0"
 ConVar cl_mainmenu_safemode( "cl_mainmenu_safemode", "0", FCVAR_NONE, "Enable safe mode", cc_tf_safemode_toggle );
 ConVar cl_mainmenu_updateglow( "cl_mainmenu_updateglow", "1", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 ConVar tf_mainmenu_match_panel_type( "tf_mainmenu_match_panel_type", "7", FCVAR_ARCHIVE | FCVAR_HIDDEN, "The match group data to show on the main menu", cc_tf_mainmenu_match_panel_type );
-ConVar cl_show_disabled_maps( "cl_show_disabled_maps", "0", FCVAR_NONE, "Show disabled maps in custom match dialog." );
+ConVar tfsolo_quickplay_show_disabled( "tfsolo_quickplay_show_disabled", "0", FCVAR_NONE, "Show disabled maps in custom match dialog." );
+ConVar tfsolo_quickplay_show_unsupported( "tfsolo_quickplay_show_unsupported", "1", FCVAR_ARCHIVE, "Show unsupported maps in custom match dialog." );
+ConVar tfsolo_quickplay_nav_unsupported( "tfsolo_quickplay_nav_unsupported", "1", FCVAR_ARCHIVE, "Auto-generate navmesh on unsupported maps." );
 ConVar tf_oobe_viewed( "tf_oobe_viewed", "0", FCVAR_ARCHIVE );
 ConVar tf_oobe_modern_controls( "tf_oobe_modern_controls", "0", FCVAR_ARCHIVE );
 ConVar tf_oobe_modern_defaults( "tf_oobe_modern_defaults", "0", FCVAR_ARCHIVE );

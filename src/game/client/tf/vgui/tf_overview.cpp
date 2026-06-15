@@ -226,7 +226,12 @@ void CTFMapOverview::ResetRound()
 		}
 		else
 		{
-			m_pTitleLabel->SetText( engine->GetLevelName() );
+			char szShortMapName[ 1024 ];
+			V_strncpy( szShortMapName, V_strdup( V_GetFileName( engine->GetLevelName() ) ), sizeof( szShortMapName ) );
+			V_StripExtension( szShortMapName, szShortMapName, sizeof( szShortMapName ) );
+			const char* MapName = V_strdup( szShortMapName );
+			const char* MapDisplayName = V_strdup( GetMapDisplayName( MapName, false ) );
+			m_pTitleLabel->SetText( V_strdup( MapDisplayName ) );
 		}
 	}
 	if ( m_pDrawingPanel )

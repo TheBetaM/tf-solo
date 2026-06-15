@@ -962,6 +962,36 @@ maps_config
 				valve 1
 			}
 		}
+		background01
+		{
+			disabled 1
+			name "N/A"
+			modename ""
+			tags
+			{
+				valve 1
+			}
+		}
+		cp_cloak
+		{
+			disabled 1
+			name "N/A"
+			modename ""
+			tags
+			{
+				valve 1
+			}
+		}
+		tr_dustbowl
+		{
+			disabled 1
+			name "N/A"
+			modename ""
+			tags
+			{
+				valve 1
+			}
+		}
 		
 		
 	}

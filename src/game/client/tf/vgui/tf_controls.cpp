@@ -3464,26 +3464,7 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		m_pDescription->WriteToConfig();
 	}
 
-	KeyValues* save = TFInventoryManager()->GetSaveData();
-	KeyValues* saveMaps = NULL;
-	KeyValues* saveMap = NULL;
-	if ( save )
-	{
-		saveMaps = save->FindKey( "Maps" );
-		if ( !saveMaps )
-		{
-			saveMaps = save->CreateKey( "Maps" );
-		}
-		saveMap = saveMaps->FindKey( m_iszRequestedMap );
-		if ( !saveMap )
-		{
-			saveMap = saveMaps->CreateKey( m_iszRequestedMap );
-		}
-		int saveVisits = saveMap->GetInt( "Visits" );
-		saveVisits++;
-		saveMap->SetInt( "Visits", saveVisits );
-		TFInventoryManager()->WriteSaveData();
-	}
+	bool bIsUnsupported = false;
 
 	KeyValuesAD config( "maps_config" );
 	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
@@ -3497,22 +3478,61 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		return;
 	}
 	KeyValues* mapKV = maps->FindKey( m_iszRequestedMap );
-	const char* loadArt = mapKV->GetString( "loadArt" );
-	if ( loadArt && loadArt[0] )
+	if ( !mapKV )
 	{
-		ConVarRef cl_loadingimage_override( "cl_loadingimage_override" );
-		cl_loadingimage_override.SetValue( loadArt );
-		ConVarRef cl_loadingimage_map( "cl_loadingimage_map" );
-		cl_loadingimage_map.SetValue( 1 );
+		bIsUnsupported = true;
 	}
 
-	ConVarRef tfsolo_mapentry( "tfsolo_mapentry" );
-	tfsolo_mapentry.SetValue( m_iszRequestedMap );
+	if ( !bIsUnsupported )
+	{
+		KeyValues* save = TFInventoryManager()->GetSaveData();
+		KeyValues* saveMaps = NULL;
+		KeyValues* saveMap = NULL;
+		if ( save )
+		{
+			saveMaps = save->FindKey( "Maps" );
+			if ( !saveMaps )
+			{
+				saveMaps = save->CreateKey( "Maps" );
+			}
+			saveMap = saveMaps->FindKey( m_iszRequestedMap );
+			if ( !saveMap )
+			{
+				saveMap = saveMaps->CreateKey( m_iszRequestedMap );
+			}
+			int saveVisits = saveMap->GetInt( "Visits" );
+			saveVisits++;
+			saveMap->SetInt( "Visits", saveVisits );
+			TFInventoryManager()->WriteSaveData();
+		}
+	
+		const char* loadArt = mapKV->GetString( "loadArt" );
+		if ( loadArt && loadArt[0] )
+		{
+			ConVarRef cl_loadingimage_override( "cl_loadingimage_override" );
+			cl_loadingimage_override.SetValue( loadArt );
+			ConVarRef cl_loadingimage_map( "cl_loadingimage_map" );
+			cl_loadingimage_map.SetValue( 1 );
+		}
+
+		ConVarRef tfsolo_mapentry( "tfsolo_mapentry" );
+		tfsolo_mapentry.SetValue( m_iszRequestedMap );
+	}
 
 	char* mapFile = V_strdup( m_iszRequestedMap );
 	if ( !V_strnicmp( mapFile, "workshop_", 9 ) )
 	{
 		mapFile[8] = '/';
+	}
+
+	ConVarRef tfsolo_quickplay_nav_unsupported( "tfsolo_quickplay_nav_unsupported" );
+	if ( bIsUnsupported && tfsolo_quickplay_nav_unsupported.GetBool() )
+	{
+		engine->ClientCmd_Unrestricted( "nav_generate_auto 1\n" );
+	}
+	else
+	{
+		engine->ClientCmd_Unrestricted( "nav_generate_auto 0\n" );
 	}
 
 	CFmtStr1024 fmtModeCommand(
@@ -3758,6 +3778,16 @@ void CTFCustomMatchModeDialog::CreateControls()
 	}
 
 	Panel* objParent = m_pListPanel;
+	int column = (ScreenWidth() - 40) / 256;
+	m_pListPanel->SetNumColumns( column );
+
+	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
+	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
+	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
+	Color textColor = Color(255, 255, 255, 255);
+	Color textShadowColor = Color(0, 0, 0, 255);
+	Color textGreenColor = Color(0, 255, 0, 255);
+	Color textYellowColor = Color(255, 255, 0, 255);
 
 	KeyValuesAD config("maps_config");
 	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
@@ -3773,16 +3803,66 @@ void CTFCustomMatchModeDialog::CreateControls()
 	KeyValues* map = maps->FindKey( m_iszRequestedMap );
 	if (!map)
 	{
+		EditablePanel* holder = new EditablePanel(objParent, "ModeHolder");
+		holder->SetSize(256, 256);
+
+		ImagePanel* mapIcon = new ImagePanel(holder, "MapImage");
+		mapIcon->SetSize(256, 256);
+		mapIcon->SetZPos(5);
+		mapIcon->SetShouldScaleImage(true);
+		mapIcon->SetMouseInputEnabled(false);
+		mapIcon->SetKeyBoardInputEnabled(false);
+		mapIcon->SetImage("illustrations/quickplay");
+		ImagePanel* mapIconBG = new ImagePanel(holder, "MapImageBG");
+		mapIconBG->SetImage("illustrations/bg");
+		mapIconBG->SetSize(256, 256);
+		mapIconBG->SetZPos(4);
+		mapIconBG->SetShouldScaleImage(true);
+		mapIconBG->SetMouseInputEnabled(false);
+		mapIconBG->SetKeyBoardInputEnabled(false);
+
+		CExLabel* label = new CExLabel(holder, "DescLabel", "#GameType_TFSOLO_Default");
+		label->SetContentAlignment(vgui::Label::a_southwest);
+		label->SetTextInset(5, 0);
+		label->SetFont(hTextFont);
+		label->InvalidateLayout(true, true);
+		label->SetFgColor(textColor);
+		label->SetZPos(10);
+		label->SetSize(256, 256);
+		label->SetMouseInputEnabled(false);
+		label->SetKeyBoardInputEnabled(false);
+		//label->SetWrap(true);
+
+		CExLabel* labelShadow = new CExLabel(holder, "DescLabelShadow", "#GameType_TFSOLO_Default");
+		labelShadow->SetContentAlignment(vgui::Label::a_southwest);
+		labelShadow->SetTextInset(8, 3);
+		labelShadow->SetFont(hTextFont);
+		labelShadow->InvalidateLayout(true, true);
+		labelShadow->SetFgColor(textShadowColor);
+		labelShadow->SetZPos(9);
+		labelShadow->SetSize(256, 256);
+		labelShadow->SetMouseInputEnabled(false);
+		labelShadow->SetKeyBoardInputEnabled(false);
+		//labelShadow->SetWrap(true);
+
+		label->SetFgColor(textGreenColor);
+
+		CFmtStr1024 fmtModeCommand(
+			"mode$%u", 0
+		);
+		CExButton* mapButton = new CExButton(holder, "ModeButton", "", this, fmtModeCommand);
+		mapButton->SetSize(256, 256);
+		mapButton->SetZPos(3);
+		mapButton->AddActionSignalTarget(this);
+		mapButton->SetVisible(true);
+		mapButton->PassMouseTicksTo(this, true);
+		mapButton->SetArmed(true);
+		mapButton->RequestFocus(0);
+		MapDesc.InsertOrReplace(V_strdup(fmtModeCommand), V_strdup("#GameType_TFSOLO_Default_Desc"));
+
+		m_pListPanel->AddItem(NULL, holder);
 		return;
 	}
-
-	IScheme* pScheme = scheme()->GetIScheme(GetScheme());
-	vgui::HFont hTextFont = pScheme->GetFont("HudFontSmallestBold", true);
-	Color tanDark = pScheme->GetColor("TanDark", Color(255, 0, 0, 255));
-	Color textColor = Color(255, 255, 255, 255);
-	Color textShadowColor = Color(0, 0, 0, 255);
-	Color textGreenColor = Color(0, 255, 0, 255);
-	Color textYellowColor = Color(255, 255, 0, 255);
 
 	enum
 	{
@@ -3802,8 +3882,6 @@ void CTFCustomMatchModeDialog::CreateControls()
 	{
 		m_TitleLabel->SetText( map->GetString("name") );
 	}
-	int column = (ScreenWidth() - 40) / 256;
-	m_pListPanel->SetNumColumns( column );
 
 	CUtlVector<ModeOption> possibleModes;
 
@@ -4598,13 +4676,304 @@ struct CTFCustomMatchMapInfo
 	const char* m_LoadArt;
 	const char* m_MapFile;
 	bool m_IsWorkshop;
+	bool m_IsUnsupported;
 	const char* m_StateText;
 	int m_MapState;
 };
 
 int TFCustomMatchMapSort( CTFCustomMatchMapInfo const* p1, CTFCustomMatchMapInfo const* p2 )
 {
-	return -V_strcmp( (p2)->m_Name, (p1)->m_Name );
+	if ( p1->m_IsUnsupported == p2->m_IsUnsupported )
+	{
+		return -V_strcmp( (p2)->m_Name, (p1)->m_Name );
+	}
+	else
+	{
+		if ( p1->m_IsUnsupported && !p2->m_IsUnsupported )
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+}
+
+const char *GetUnsupportedMapDisplayName( const char *mapName, bool bTitleCase /* = false */ )
+{
+	static char szDisplayName[256];
+	char szTempName[256];
+	const char *pszSrc = NULL;
+
+	szDisplayName[0] = '\0';
+
+	if ( !mapName )
+		return szDisplayName;
+
+	Q_strncpy( szTempName, mapName, sizeof( szTempName ) );
+	Q_strlower( szTempName );
+	pszSrc = szTempName;
+
+	char *pszFinal = Q_strstr( pszSrc, "_final" );
+	if ( pszFinal )
+	{
+		// truncate the _final (or _final1) part of the filename if it's at the end of the name
+		char *pszNextChar = pszFinal + Q_strlen( "_final" );
+		if ( pszNextChar )
+		{
+			if ( ( *pszNextChar == '\0' ) ||
+				 ( ( *pszNextChar == '1' ) && ( *(pszNextChar+1) == '\0' ) ) )
+			{
+				*pszFinal = '\0';
+			}
+		}
+	}
+
+	char* pszWorkshop = Q_strstr( pszSrc, "_workshop" );
+	if ( pszWorkshop )
+	{
+		char* pszNextChar = pszWorkshop + Q_strlen( "_workshop" );
+		if ( pszNextChar )
+		{
+			if ( ( *pszNextChar == '\0' ) ||
+				 ( ( *pszNextChar == '1' ) && ( *(pszNextChar+1) == '\0' ) ) )
+			{
+				*pszWorkshop = '\0';
+			}
+		}
+	}
+
+	char* pszBsp = Q_strstr( pszSrc, ".bsp" );
+	if ( pszBsp )
+	{
+		char* pszNextChar = pszBsp + Q_strlen( ".bsp" );
+		if ( pszNextChar )
+		{
+			if ( ( *pszNextChar == '\0' ) ||
+				 ( ( *pszNextChar == '1' ) && ( *(pszNextChar+1) == '\0' ) ) )
+			{
+				*pszBsp = '\0';
+			}
+		}
+	}
+
+	// Our workshop maps will be of the format workshop/cp_somemap.ugc12345
+	const char szWorkshop[] = "workshop/";
+	if ( V_strncmp( pszSrc, szWorkshop, sizeof( szWorkshop ) - 1 ) == 0 )
+	{
+		pszSrc += sizeof( szWorkshop ) - 1;
+		char *pszUGC = V_strstr( pszSrc, ".ugc" );
+		int nUGCLen = pszUGC ? strlen( pszUGC ) : 0;
+		if ( pszUGC && nUGCLen > 4 )
+		{
+			int i;
+			for ( i = 4; i < nUGCLen; i ++ )
+			{
+				if ( pszUGC[i] < '0' || pszUGC[i] > '9' )
+				{
+					break;
+				}
+			}
+
+			if ( i == nUGCLen )
+			{
+				*pszUGC = '\0';
+			}
+		}
+	}
+
+	// we haven't found a "friendly" map name, so let's just clean up what we have
+	if ( !Q_strncmp( pszSrc, "cp_", 3 ) ||
+		 !Q_strncmp( pszSrc, "tc_", 3 ) ||
+		 !Q_strncmp( pszSrc, "pl_", 3 ) ||
+		 !Q_strncmp( pszSrc, "ad_", 3 ) ||
+		 !Q_strncmp( pszSrc, "sd_", 3 ) || 
+		 !Q_strncmp( pszSrc, "rd_", 3 ) ||
+		 !Q_strncmp( pszSrc, "zi_", 3 ) ||
+		 !Q_strncmp( pszSrc, "pd_", 3 ) )
+	{
+		pszSrc +=  3;
+	}
+	else if ( !Q_strncmp( pszSrc, "ctf_", 4 ) ||
+			  !Q_strncmp( pszSrc, "vsh_", 4 ) ||
+			  !Q_strncmp( pszSrc, "htf_", 4 ) ||
+		      !Q_strncmp( pszSrc, "plr_", 4 ) )
+	{
+		pszSrc +=  4;
+	}
+	else if ( !Q_strncmp( szTempName, "koth_", 5 ) ||
+			  !Q_strncmp( szTempName, "pass_", 5 ) )
+	{
+		pszSrc +=  5;
+	}
+#ifdef TF_RAID_MODE
+	else if ( !Q_strncmp( pszSrc, "raid_", 5 ) )
+	{
+		pszSrc +=  5;
+	}
+#endif // TF_RAID_MODE
+	else if ( !Q_strncmp( pszSrc, "mvm_", 4 ) )
+	{
+		pszSrc +=  4;
+	}
+	else if ( !Q_strncmp( pszSrc, "arena_", 6 ) )
+	{
+		pszSrc +=  6;
+	}
+
+	Q_strncpy( szDisplayName, pszSrc, sizeof( szDisplayName ) );
+
+	// replace underscores with spaces
+	for ( char *pszUnderscore = szDisplayName ; pszUnderscore != NULL && *pszUnderscore != 0 ; pszUnderscore++ )
+	{
+		// Replace it with a space
+		if ( *pszUnderscore == '_' )
+		{
+			*pszUnderscore = ' ';
+		}
+	}
+
+	if ( bTitleCase )
+	{
+		V_strtitlecase( szDisplayName );
+	}
+	else
+	{
+		// Default behavior - tf maps are LOUD
+		Q_strupr( szDisplayName );
+	}
+
+	return szDisplayName;
+}
+
+bool CheckUnsupportedMapName( const char* mapName, int category )
+{
+	if ( !Q_strncmp( mapName, "merc_", 5 ) )
+	{
+		return false;
+	}
+	switch ( category )
+	{
+		default:
+			return false;
+		case MapCategory_Default:
+		case MapCategory_Workshop_TF2:
+			return true;
+		case MapCategory_ARENA:
+		{
+			if ( !Q_strncmp( mapName, "arena_", 6 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_CP:
+		{
+			if ( !Q_strncmp( mapName, "cp_", 3 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_CTF:
+		{
+			if ( !Q_strncmp( mapName, "ctf_", 4 ) )
+			{
+				return true;
+			}
+			if ( !Q_strncmp( mapName, "htf_", 4 ) )
+			{
+				return true;
+			}
+			if ( !Q_strncmp( mapName, "kotf_", 5 ) )
+			{
+				return true;
+			}
+			if ( !Q_strncmp( mapName, "rd_", 3 ) )
+			{
+				return true;
+			}
+			if ( !Q_strncmp( mapName, "sd_", 3 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_KOTH:
+		{
+			if ( !Q_strncmp( mapName, "koth_", 5 ) )
+			{
+				return true;
+			}
+			if ( !Q_strncmp( mapName, "2koth_", 6 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_MVM:
+		{
+			if ( !Q_strncmp( mapName, "mvm_", 4 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_PASS:
+		{
+			if ( !Q_strncmp( mapName, "pass_", 5 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_PD:
+		{
+			if ( !Q_strncmp( mapName, "pd_", 3 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_PL:
+		{
+			if ( !Q_strncmp( mapName, "pl_", 3 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_PLR:
+		{
+			if ( !Q_strncmp( mapName, "plr_", 4 ) )
+			{
+				return true;
+			}
+			if ( !Q_strncmp( mapName, "tow_", 4 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_VSH:
+		{
+			if ( !Q_strncmp( mapName, "vsh_", 4 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		case MapCategory_ZI:
+		{
+			if ( !Q_strncmp( mapName, "zi_", 3 ) )
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -4622,6 +4991,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		MapState_Hidden = 3,
 		MapState_LockedVisible = 4,
 		MapState_Mystery = 5,
+		MapState_Unsupported = 6,
 	};
 
 	Panel* objParent = m_pListPanel;
@@ -4636,13 +5006,20 @@ void CTFCustomMatchMapDialog::CreateControls()
 	Color textRedColor = Color(255, 0, 0, 255);
 
 	bool bShowDisabled = false;
-	ConVarRef cl_show_disabled_maps( "cl_show_disabled_maps" );
-	if ( cl_show_disabled_maps.GetBool() )
+	bool bShowUnsupported = false;
+	ConVarRef tfsolo_quickplay_show_disabled( "tfsolo_quickplay_show_disabled" );
+	ConVarRef tfsolo_quickplay_show_unsupported( "tfsolo_quickplay_show_unsupported" );
+	if ( tfsolo_quickplay_show_disabled.GetBool() )
 	{
 		bShowDisabled = true;
 	}
+	if ( tfsolo_quickplay_show_unsupported.GetBool() )
+	{
+		bShowUnsupported = true;
+	}
 
 	CUtlVector<CTFCustomMatchMapInfo> mapSort;
+	CUtlVector<CUtlString> mapDupeCheck;
 
 	KeyValuesAD config("maps_config");
 	if ( !config->LoadFromFile( g_pFullFileSystem, TFSOLO_CUSTOM_MATCH_MAPS_FILE, "GAME" ) )
@@ -4673,6 +5050,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		bool isWorkshop = false;
 		if ( key->GetInt("disabled") == 1 && !bShowDisabled )
 		{
+			mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 			key = key->GetNextKey();
 			continue;
 		}
@@ -4696,6 +5074,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		{
 			if ( tags->GetInt("custom_hide") == 1 )
 			{
+				mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 				key = key->GetNextKey();
 				continue;
 			}
@@ -4706,6 +5085,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 				if ( tags->GetInt("cp_count") < 1 || tags->GetInt("ad") != 0 || tags->GetInt("ctf") != 0 || tags->GetInt("koth") != 0 || tags->GetInt("mvm") != 0 || tags->GetInt("vsh") != 0
 					|| tags->GetInt("arena") != 0 || tags->GetInt("arena_pd") != 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4715,6 +5095,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("koth") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4724,6 +5105,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( ( tags->GetInt("arena") == 0 && tags->GetInt("arena_pd") == 0 ) || tags->GetInt("vsh") != 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4733,6 +5115,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("ad") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4742,6 +5125,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("ctf") == 0 && tags->GetInt("rd") == 0 && tags->GetInt("sd") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4751,6 +5135,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("pl") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4760,6 +5145,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("plr") == 0 && tags->GetInt("tow") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4769,6 +5155,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("mvm") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4778,6 +5165,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("pass") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4787,6 +5175,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("pd") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4796,6 +5185,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("vsh") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4805,6 +5195,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("zi") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4814,6 +5205,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("theme_hallow") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4823,6 +5215,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("theme_xmas") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4832,6 +5225,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( tags->GetInt("tfsolo") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4841,6 +5235,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4851,6 +5246,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 				if ( !isWorkshop || tags->GetInt("workshop_tfsolo") != 0 || tags->GetInt("workshop_tf2gr") != 0 || tags->GetInt("workshop_cf") != 0
 					|| tags->GetInt("tf2c") != 0 || tags->GetInt("workshop_tf2c") != 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4860,6 +5256,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( !isWorkshop || tags->GetInt("workshop_tf2gr") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4869,6 +5266,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( !isWorkshop || tags->GetInt("workshop_cf") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4878,6 +5276,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( !isWorkshop || tags->GetInt("tf2c") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4887,6 +5286,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 			{
 				if ( !isWorkshop || tags->GetInt("workshop_tf2c") == 0 )
 				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 					key = key->GetNextKey();
 					continue;
 				}
@@ -4900,6 +5300,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		}
 		else if ( m_iSelectedCategory != MapCategory_Default )
 		{
+			mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 			key = key->GetNextKey();
 			continue;
 		}
@@ -4937,6 +5338,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 
 		if ( nMapState == MapState_Hidden )
 		{
+			mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 			key = key->GetNextKey();
 			continue;
 		}
@@ -4956,11 +5358,114 @@ void CTFCustomMatchMapDialog::CreateControls()
 		info.m_ModeName = key->GetString("modename");
 		info.m_ThumbArt = key->GetString("thumbArt");
 		info.m_IsWorkshop = isWorkshop;
+		info.m_IsUnsupported = false;
 		info.m_StateText = V_strdup(pszStateText);
 		info.m_MapState = nMapState;
+		mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 
 		mapSort.AddToTail( info );
 		key = key->GetNextKey();
+	}
+
+	if ( bShowUnsupported )
+	{
+		// Unsupported local maps
+		FileFindHandle_t bspHandle;
+		const char *pBspFileName = filesystem->FindFirstEx( "maps/*.bsp", "GAME", &bspHandle );
+		while ( pBspFileName && pBspFileName[ 0 ] != '\0' )
+		{
+			if ( filesystem->FindIsDirectory( bspHandle ) )
+			{
+				pBspFileName = filesystem->FindNext( bspHandle );
+				continue;
+			}
+
+			char szMapName[ 1024 ];
+			V_strncpy( szMapName, pBspFileName, sizeof( szMapName ) );
+			V_StripExtension( szMapName, szMapName, sizeof( szMapName ) );
+			const char* MapName = V_strdup( szMapName );
+			const char* MapDisplayName = V_strdup( GetUnsupportedMapDisplayName( MapName, false ) );
+
+			if ( mapDupeCheck.Find( MapName ) != mapDupeCheck.InvalidIndex() )
+			{
+				pBspFileName = filesystem->FindNext( bspHandle );
+				continue;
+			}
+			if ( !CheckUnsupportedMapName( MapName, m_iSelectedCategory ) )
+			{
+				pBspFileName = filesystem->FindNext( bspHandle );
+				continue;
+			}
+			if ( m_wNameFilter.Count() != 0 )
+			{
+				if ( !DoesMapPassSearchFilter( MapDisplayName, MapName, m_wNameFilter.Base() ) )
+				{
+					pBspFileName = filesystem->FindNext( bspHandle );
+					continue;
+				}
+			}
+
+			CTFCustomMatchMapInfo info;
+			info.m_MapFile = V_strdup( MapName );
+			info.m_Name = V_strdup( MapDisplayName );
+			info.m_ModeName = NULL;
+			info.m_ThumbArt = NULL;
+			info.m_IsWorkshop = false;
+			info.m_IsUnsupported = true;
+			info.m_StateText = V_strdup( "UNSUPPORTED" );
+			info.m_MapState = MapState_Unsupported;
+			mapSort.AddToTail( info );
+
+			pBspFileName = filesystem->FindNext( bspHandle );
+		}
+		filesystem->FindClose( bspHandle );
+
+		// Unsupported workshop maps
+		KeyValues* wkey = workshopConfig->GetFirstSubKey();
+		while ( wkey )
+		{
+			CFmtStr1024 fmtMapFile(
+				"workshop_%s", wkey->GetName()
+			);
+			if ( mapDupeCheck.Find( fmtMapFile.Access() ) != mapDupeCheck.InvalidIndex() )
+			{
+				wkey = wkey->GetNextKey();
+				continue;
+			}
+
+			char szMapName[ 1024 ];
+			V_strncpy( szMapName, V_GetFileName( wkey->GetString() ), sizeof( szMapName ) );
+			V_StripExtension( szMapName, szMapName, sizeof( szMapName ) );
+			const char* MapName = V_strdup( szMapName );
+			const char* MapDisplayName = V_strdup( GetUnsupportedMapDisplayName( MapName, false ) );
+			if ( !CheckUnsupportedMapName( MapName, m_iSelectedCategory ) )
+			{
+				wkey = wkey->GetNextKey();
+				continue;
+			}
+
+			if ( m_wNameFilter.Count() != 0 )
+			{
+				if ( !DoesMapPassSearchFilter( MapDisplayName, MapName, m_wNameFilter.Base() ) )
+				{
+					wkey = wkey->GetNextKey();
+					continue;
+				}
+			}
+
+			CTFCustomMatchMapInfo info;
+			info.m_MapFile = V_strdup( fmtMapFile );
+			info.m_Name = V_strdup( MapDisplayName );
+			info.m_ModeName = NULL;
+			info.m_ThumbArt = NULL;
+			info.m_IsWorkshop = true;
+			info.m_IsUnsupported = true;
+			info.m_StateText = V_strdup( "UNSUPPORTED" );
+			info.m_MapState = MapState_Unsupported;
+
+			mapSort.AddToTail( info );
+			wkey = wkey->GetNextKey();
+		}
 	}
 
 	mapSort.Sort( TFCustomMatchMapSort );
@@ -4968,9 +5473,16 @@ void CTFCustomMatchMapDialog::CreateControls()
 	m_pListPanel->SetNumColumns( column );
 
 	bool bFirstItem = false;
+	int iItemCount = 0;
 
 	FOR_EACH_VEC( mapSort, a )
 	{
+		iItemCount++;
+		if ( iItemCount > 999 )
+		{
+			// too many items breaks the list panel
+			break;
+		}
 		CTFCustomMatchMapInfo map = mapSort[a];
 
 		EditablePanel* holder = new EditablePanel(objParent, "MapHolder");
