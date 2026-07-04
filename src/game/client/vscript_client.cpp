@@ -1225,12 +1225,14 @@ static void Script_ServerCmd( const char* pszCmd )
 static void Script_ServerCmdTable( HSCRIPT hTable )
 {
 	KeyValues* hKV = ScriptTableToKeyValues(g_pScriptVM, "ScriptTable", hTable);
+	hKV->SetString( "id", "ScriptTable" );
 	engine->ServerCmdKeyValues( hKV );
 }
 
 static void Script_ServerCmdKeyValues( const char* pszName, HSCRIPT hTable )
 {
 	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, pszName, hTable );
+	hKV->SetString( "id", pszName );
 	engine->ServerCmdKeyValues( hKV );
 }
 

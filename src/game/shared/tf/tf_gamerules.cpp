@@ -15892,7 +15892,7 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 	if ( !pTFPlayer )
 		return;
 
-	char const *pszCommand = pKeyValues->GetName();
+	char const *pszCommand = pKeyValues->GetString( "id" );
 	if ( pszCommand && pszCommand[0] )
 	{
 		if ( FStrEq( pszCommand, "ScriptTable" ) )

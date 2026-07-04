@@ -379,6 +379,7 @@ static void PromptAcceptReviveCallback( bool bCancel, void *pContext )
 	{
 		KeyValues *kv = new KeyValues( "MVM_Revive_Response" );
 		kv->SetBool( "accepted", false );
+		kv->SetString( "id", "MVM_Revive_Response" );
 		engine->ServerCmdKeyValues( kv );
 	}
 }
@@ -4716,6 +4717,7 @@ void C_TFPlayer::OnDataChanged( DataUpdateType_t updateType )
 			if ( UseVR() )
 			{
 				KeyValues *kv = new KeyValues( "UsingVRHeadset" );
+				kv->SetString( "id", "UsingVRHeadset" );
 				engine->ServerCmdKeyValues( kv );
 			}
 		}

@@ -626,6 +626,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 		m_bUsingController = false;
 
 		KeyValues *kv = new KeyValues( "MvM_UpgradesBegin" );
+		kv->SetString( "id", "MvM_UpgradesBegin" );
 		engine->ServerCmdKeyValues( kv );
 		
 		// Get our currency
@@ -690,6 +691,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 		// let the server know that we've close the menu with the number of upgrades
 		// so the response rules can do their thing
 		KeyValues *kv = new KeyValues( "MvM_UpgradesDone" );
+		kv->SetString( "id", "MvM_UpgradesDone" );
 		kv->SetInt( "num_upgrades", m_nUpgradeActivity );
 		engine->ServerCmdKeyValues( kv );
 	}
@@ -1697,6 +1699,7 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 							}
 							kv->AddSubKey( kvSubT );
 
+							kv->SetString( "id", "MVM_Upgrade" );
 							engine->ServerCmdKeyValues( kv );
 						}
 					}
@@ -1816,6 +1819,7 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 				}
 				kv->AddSubKey( kvSubT );
 
+				kv->SetString( "id", "MVM_Upgrade" );
 				kv->AddSubKey( kvSub );
 				if ( nNumPurchased != -2 )
 				{
@@ -1950,6 +1954,7 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
 						{
 							kvSubT->SetInt( "player", m_hPlayer->GetUserID() );
 						}
+						kv->SetString( "id", "MVM_Upgrade" );
 						kv->AddSubKey( kvSubT );
 
 						engine->ServerCmdKeyValues( kv );
@@ -2070,6 +2075,7 @@ void CHudUpgradePanel::CancelUpgrades( void )
 	{
 		kvSubT->SetInt( "player", m_hPlayer->GetUserID() );
 	}
+	kv->SetString( "id", "MVM_Upgrade" );
 	kv->AddSubKey( kvSubT );
 
 	engine->ServerCmdKeyValues( kv );
@@ -2361,6 +2367,7 @@ void CHudUpgradePanel::OnCommand( const char *command )
 			CancelUpgrades();
 			OnCommand( "close" );
 			KeyValues *kv = new KeyValues( "MVM_Respec" );
+			kv->SetString( "id", "MVM_Respec" );
 			engine->ServerCmdKeyValues( kv );
 		}
 	}

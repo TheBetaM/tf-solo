@@ -455,6 +455,7 @@ void CItemQuickSwitchPanel::CloseQS( void )
 			GCSDK::CGCMsg< ::MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
 			GCClientSystem()->BSendMessage( msg );
 			KeyValues* kv = new KeyValues( "sdk_inventory_update" );
+			kv->SetString( "id", "sdk_inventory_update" );
 			engine->ServerCmdKeyValues( kv );
 		}
 

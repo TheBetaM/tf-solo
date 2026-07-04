@@ -1768,6 +1768,7 @@ void CAchievementMgr::Steam_OnUserStatsStored( UserStatsStored_t *pUserStatsStor
 						}
 
 						KeyValues *kv = new KeyValues( "AchievementEarned" );
+						kv->SetString( "id", "AchievementEarned" );
 						kv->SetInt( "achievementID", nAchievementID );
 						engine->ServerCmdKeyValues( kv );
 					}

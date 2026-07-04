@@ -1674,7 +1674,7 @@ ConVarRef suitcharger( "sk_suitcharger" );
 		if ( !pPlayer )
 			return;
 
-		char const *pszCommand = pKeyValues->GetName();
+		char const *pszCommand = pKeyValues->GetString( "id" );
 		if ( pszCommand && pszCommand[0] )
 		{
 			if ( FStrEq( pszCommand, "AchievementEarned" ) )

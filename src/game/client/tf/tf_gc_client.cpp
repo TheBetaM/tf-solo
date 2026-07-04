@@ -115,7 +115,7 @@ CTFGCClientSystem::CTFGCClientSystem( void )
 	SetGCClientSystem( this );
 
 	s_pRejoinLobbyDialog = NULL;
-
+	m_bFirstBoot = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -560,6 +560,7 @@ void CTFGCClientSystem::WebapiInventoryThink()
 
 		// Build KV and send to server
 		KeyValues *kv = new KeyValues( "sdk_inventory" );
+		kv->SetString( "id", "sdk_inventory" );
 		kv->SetString( "msg", state.m_strMsgItems.Base() );
 		kv->SetString( "ticket", strHexToken.Base() );
 

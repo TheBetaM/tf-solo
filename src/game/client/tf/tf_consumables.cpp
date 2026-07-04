@@ -320,6 +320,7 @@ void CEconTool_Noisemaker::OnClientUseConsumable( CEconItemView *pItem, vgui::Pa
 
 	// Tell the game server to play the sound.
 	KeyValues *kv = new KeyValues( "use_action_slot_item_server" );
+	kv->SetString( "id", "use_action_slot_item_server" );
 	engine->ServerCmdKeyValues( kv );
 
 	// Tell the GC to consume a charge.
@@ -1076,6 +1077,7 @@ static void StartUseActionSlotItem( const CCommand &args )
 	if ( pLocalPlayer->GetDroppedWeaponInRange() != NULL )
 	{
 		KeyValues *kv = new KeyValues( "+use_action_slot_item_server" );
+		kv->SetString( "id", "+use_action_slot_item_server" );
 		engine->ServerCmdKeyValues( kv );
 		return;
 	}
@@ -1091,6 +1093,7 @@ static void StartUseActionSlotItem( const CCommand &args )
 			}
 
 			KeyValues *kv = new KeyValues( "+use_action_slot_item_server" );
+			kv->SetString( "id", "+use_action_slot_item_server" );
 			engine->ServerCmdKeyValues( kv );
 
 			return;
@@ -1115,6 +1118,7 @@ static void StartUseActionSlotItem( const CCommand &args )
 	if ( !g_bUsedGCItem )
 	{
 		KeyValues *kv = new KeyValues( "+use_action_slot_item_server" );
+		kv->SetString( "id", "+use_action_slot_item_server" );
 		engine->ServerCmdKeyValues( kv );
 	}
 }
@@ -1135,6 +1139,7 @@ static void EndUseActionSlotItem( const CCommand &args )
 		if ( pLocalPlayer->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_GRAPPLINGHOOK )
 		{
 			KeyValues *kv = new KeyValues( "-use_action_slot_item_server" );
+			kv->SetString( "id", "-use_action_slot_item_server" );
 			engine->ServerCmdKeyValues( kv );
 
 			C_BaseCombatWeapon* pLastWeapon = pLocalPlayer->GetLastWeapon();
@@ -1158,6 +1163,7 @@ static void EndUseActionSlotItem( const CCommand &args )
 	if ( !g_bUsedGCItem )
 	{
 		KeyValues *kv = new KeyValues( "-use_action_slot_item_server" );
+		kv->SetString( "id", "-use_action_slot_item_server" );
 		engine->ServerCmdKeyValues( kv );
 	}
 }
