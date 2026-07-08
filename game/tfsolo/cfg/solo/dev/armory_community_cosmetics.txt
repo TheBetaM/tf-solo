@@ -6264,4 +6264,100 @@ armory_config
 	{
 		Cost 100
 	}
+	"Hard Hearing"
+	{
+		Cost 100
+	}
+	"Deadwave Communicator"
+	{
+		Cost 100
+	}
+	"Beachcomber's Brim"
+	{
+		Cost 100
+	}
+	"Chief Executor"
+	{
+		Cost 100
+	}
+	"Vested Investor's Vest"
+	{
+		Cost 100
+	}
+	"Standing Offer"
+	{
+		Cost 100
+	}
+	"Tzar Athlete"
+	{
+		Cost 100
+	}
+	"Barbeque Bacon Britches"
+	{
+		Cost 100
+	}
+	"The Unknown Warrior"
+	{
+		Cost 100
+	}
+	"Tropical Torcher"
+	{
+		Cost 100
+	}
+	"Pyro's Overalls"
+	{
+		Cost 100
+	}
+	"The Deadliest Match"
+	{
+		Cost 100
+	}
+	"Bomb Blanket"
+	{
+		Cost 100
+	}
+	"The Handsome Ranger"
+	{
+		Cost 100
+	}
+	"The Long Shot"
+	{
+		Cost 100
+	}
+	"The Night Riders"
+	{
+		Cost 100
+	}
+	"Atomic Bomber"
+	{
+		Cost 100
+	}
+	"Bonk! Atomic Kicks"
+	{
+		Cost 100
+	}
+	"Lieutenant's Cut"
+	{
+		Cost 100
+	}
+	"Inglorious Patriot"
+	{
+		Cost 100
+	}
+	"Delusions of Grandeur"
+	{
+		Cost 100
+	}
+	"Unruly Ruler"
+	{
+		Cost 100
+	}
+	"Bald Spotter"
+	{
+		Cost 100
+	}
+	"Surgical Shroud"
+	{
+		Cost 100
+	}
 }

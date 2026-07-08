@@ -348,4 +348,20 @@ armory_config
 	{
 		Cost 100
 	}
+	"Taunt: The Circuit Breaker"
+	{
+		Cost 100
+	}
+	"Taunt: Buffoon's Bivouac"
+	{
+		Cost 100
+	}
+	"Taunt: Faux-calization"
+	{
+		Cost 100
+	}
+	"Taunt: Friendly Fire"
+	{
+		Cost 100
+	}
 }

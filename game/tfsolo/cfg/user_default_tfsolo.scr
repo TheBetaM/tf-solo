@@ -76,5 +76,14 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
+	
+	"tfsolo_quickplay_show_unsupported"
+	{
+		"Show unsupported maps in Quickplay"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	
 
 }

@@ -144,7 +144,7 @@ maps_config
 			{
 				pd 1
 				symm 1
-				theme_farm 1
+				theme_desert 1
 			}
 		}
 		workshop_454118349
@@ -276,19 +276,6 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_snow 1
-			}
-		}
-		workshop_460544858
-		{
-			name "Mojave"
-			modename "#Gametype_AttackDefense"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 2
-				stages 2
-				theme_desert 1
 			}
 		}
 		workshop_468770640

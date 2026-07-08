@@ -127,7 +127,7 @@
 			"ControlName"	"EditablePanel"
 			"fieldName"		"MainContainer"
 			"xpos"			"cs-0.5"
-			"ypos"			"20"
+			"ypos"			"0"
 			"zpos"			"1"
 			"wide"			"f0"//"700"
 			"tall"			"f0"

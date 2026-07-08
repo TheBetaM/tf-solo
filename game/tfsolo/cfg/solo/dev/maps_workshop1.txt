@@ -2633,18 +2633,6 @@ maps_config
 				theme_snow 1
 			}
 		}
-		workshop_2904068868
-		{
-			name "Premuda"
-			modename "#Gametype_AttackDefense"
-			tags
-			{
-				ad 1
-				ctf 1
-				cp_count 2
-				stages 3
-			}
-		}
 		workshop_2905735376
 		{
 			name "Glacier"
@@ -3624,18 +3612,6 @@ maps_config
 				theme_alpine 1
 			}
 		}
-		workshop_3462326252
-		{
-			name "Dryfield"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_desert 1
-			}
-		}
 		workshop_3464832118
 		{
 			name "Wildlife"
@@ -3823,18 +3799,6 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_desert 1
-			}
-		}
-		workshop_2808425307
-		{
-			name "Shorelight"
-			modename "#Gametype_Koth"
-			tags
-			{
-				koth 1
-				cp_count 1
-				symm 1
-				theme_coast 1
 			}
 		}
 		workshop_2964782550
@@ -4146,7 +4110,7 @@ maps_config
 			{
 				pd 1
 				symm 1
-				theme_farm 1
+				theme_desert 1
 			}
 		}
 		workshop_3500150662
@@ -4753,19 +4717,6 @@ maps_config
 				cp 1
 				cp_count 5
 				theme_industrial 1
-			}
-		}
-		workshop_460544858
-		{
-			name "Mojave"
-			modename "#Gametype_AttackDefense"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 2
-				stages 2
-				theme_desert 1
 			}
 		}
 		workshop_468770640
@@ -8226,17 +8177,6 @@ maps_config
 				tow 1
 				symm 1
 				theme_coast 1
-			}
-		}
-		workshop_3717818537
-		{
-			name "Redwood"
-			modename "#Gametype_Escort"
-			tags
-			{
-				pl 1
-				theme_forest 1
-				vscript 1
 			}
 		}
 		workshop_3719791801

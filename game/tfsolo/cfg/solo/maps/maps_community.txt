@@ -2323,5 +2323,90 @@ maps_config
 			}
 		}
 		
+		koth_dryfield
+		{
+			name "Dryfield"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_dryfield"
+			photosArt "maps/menu_photos_koth_dryfield"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_desert 1
+			}
+		}
+		koth_camp_saxton
+		{
+			name "Camp Saxton"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_camp_saxton"
+			photosArt "maps/menu_photos_koth_camp_saxton"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_autumn 1
+			}
+		}
+		koth_shorelight
+		{
+			name "Shorelight"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_shorelight"
+			photosArt "maps/menu_photos_koth_shorelight"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_coast 1
+			}
+		}
+		pl_redwood
+		{
+			name "Redwood"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_redwood"
+			photosArt "maps/menu_photos_pl_redwood"
+			tags
+			{
+				pl 1
+				theme_forest 1
+				vscript 1
+			}
+		}
+		cp_premuda
+		{
+			name "Premuda"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_premuda"
+			photosArt "maps/menu_photos_cp_premuda"
+			tags
+			{
+				ad 1
+				ctf 1
+				cp_count 2
+				stages 3
+			}
+		}
+		cp_mojave
+		{
+			name "Mojave"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_mojave"
+			photosArt "maps/menu_photos_cp_mojave"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				stages 2
+				theme_desert 1
+			}
+		}
+		
 	}
 }
