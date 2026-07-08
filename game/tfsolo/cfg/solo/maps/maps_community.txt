@@ -2387,9 +2387,10 @@ maps_config
 			tags
 			{
 				ad 1
-				ctf 1
+				cp 1
 				cp_count 2
 				stages 3
+				theme_coast 1
 			}
 		}
 		cp_mojave

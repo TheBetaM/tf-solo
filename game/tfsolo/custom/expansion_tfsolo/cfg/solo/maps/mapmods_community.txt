@@ -467,6 +467,29 @@ maps_config
 				allow_pd 1
 			}
 		}
-		
+		koth_dryfield
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_camp_saxton
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_shorelight
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
 	}
 }

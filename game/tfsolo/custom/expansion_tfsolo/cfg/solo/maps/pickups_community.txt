@@ -4394,5 +4394,182 @@ maps_config
 			}
 		}
 		
+		koth_dryfield
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "1770 605 -299"
+				}
+				cred2
+				{
+					pos "54 1677 474"
+				}
+				cred3
+				{
+					pos "114 1667 101"
+				}
+				cred4
+				{
+					pos "1123 -375 103"
+				}
+				cred5
+				{
+					pos "-163 -984 203"
+				}
+			}
+		}
+		koth_camp_saxton
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "745 -522 320"
+				}
+				cred2
+				{
+					pos "452 1014 103"
+				}
+				cred3
+				{
+					pos "-1122 2500 -82"
+				}
+				cred4
+				{
+					pos "435 -4212 -57"
+				}
+				cred5
+				{
+					pos "-413 -1695 120"
+				}
+			}
+		}
+		koth_shorelight
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2459 -1314 -146"
+				}
+				cred2
+				{
+					pos "1479 -1432 -29"
+				}
+				cred3
+				{
+					pos "3664 833 -146"
+				}
+				cred4
+				{
+					pos "-3235 -466 -99"
+				}
+				cred5
+				{
+					pos "347 -643 211"
+				}
+			}
+		}
+		pl_redwood
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-5686 -5822 248"
+				}
+				cred2
+				{
+					pos "-8079 -7488 384"
+				}
+				cred3
+				{
+					pos "-2712 -10585 556"
+				}
+				cred4
+				{
+					pos "-2141 -9216 46"
+				}
+				cred5
+				{
+					pos "-5801 -9929 430"
+				}
+			}
+		}
+		cp_premuda
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-2158 1871 776"
+				}
+				cred2
+				{
+					pos "425 3346 958"
+				}
+				cred3
+				{
+					pos "812 1415 1127"
+				}
+				cred4
+				{
+					pos "-1298 -3589 1398"
+				}
+				cred5
+				{
+					pos "848 -1701 1207"
+				}
+				cred6
+				{
+					pos "-541 -1982 1026"
+				}
+				cred7
+				{
+					pos "-2007 -1346 212"
+				}
+				cred8
+				{
+					pos "-1015 -1709 967"
+				}
+				cred9
+				{
+					pos "-1205 -808 1223"
+				}
+			}
+		}
+		cp_mojave
+		{
+			pickups
+			{
+				cred1
+				{
+					pos "-834 -239 252"
+				}
+				cred2
+				{
+					pos "-3518 215 116"
+				}
+				cred3
+				{
+					pos "52 998 88"
+				}
+				cred4
+				{
+					pos "-1648 4292 112"
+				}
+				cred5
+				{
+					pos "-3860 3496 272"
+				}
+				cred6
+				{
+					pos "-671 2484 32"
+				}
+			}
+		}
+		
 	}
 }

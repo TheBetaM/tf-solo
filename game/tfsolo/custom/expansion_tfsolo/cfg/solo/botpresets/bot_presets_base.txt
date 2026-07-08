@@ -399,6 +399,18 @@ bot_presets
 			"Ripped Runts" {}
 		}
 	}
+	AtomicBomber
+	{
+		Name "Atomic Bomber"
+		Class Scout
+		Items
+		{
+			"Atomic Bomber" {}
+			"Bonk! Atomic Kicks" {}
+			
+			"Bonk! Atomic Punch" {}
+		}
+	}
 	
 	TankBuster
 	{
@@ -763,6 +775,16 @@ bot_presets
 		Items
 		{
 			"Jarhead" {}
+		}
+	}
+	IngloriousPatriot
+	{
+		Name "Inglorious Patriot"
+		Class Soldier
+		Items
+		{
+			"Lieutenant's Cut" {}
+			"Inglorious Patriot" {}
 		}
 	}
 	
@@ -1223,6 +1245,34 @@ bot_presets
 			"Veteran's Visor" {}
 		}
 	}
+	TropicalTorcher
+	{
+		Name "Tropical Torcher"
+		Class Pyro
+		Items
+		{
+			"Tropical Torcher" {}
+		}
+	}
+	UnknownWarrior
+	{
+		Name "Unknown Warrior"
+		Class Pyro
+		Items
+		{
+			"The Unknown Warrior" {}
+		}
+	}
+	BeanieBaby
+	{
+		Name "Beanie Baby"
+		Class Pyro
+		Items
+		{
+			"Pyro's Beanie" {}
+			"Pyro's Overalls" {}
+		}
+	}
 	
 	ExpertOrdinance
 	{
@@ -1634,6 +1684,16 @@ bot_presets
 			"Short Fuse" {}
 		}
 	}
+	DeadliestMatch
+	{
+		Name "Deadliest Match"
+		Class Demoman
+		Items
+		{
+			"Bomb Blanket" {}
+			"The Deadliest Match" {}
+		}
+	}
 	
 	BigChief
 	{
@@ -2011,6 +2071,16 @@ bot_presets
 			"Poncho del Pesado" {}
 		}
 	}
+	TzarAthlete
+	{
+		Name "Tzar Athlete"
+		Class HeavyWeapons
+		Items
+		{
+			"Tzar Athlete" {}
+			"Barbeque Bacon Britches" {}
+		}
+	}
 	
 	Brainiac
 	{
@@ -2382,6 +2452,26 @@ bot_presets
 			"Heat Shield" {}
 			"Technician's Tunic" {}
 			"Service Satchel" {}
+		}
+	}
+	ChiefExecutor
+	{
+		Name "Chief Executor"
+		Class Engineer
+		Items
+		{
+			"Chief Executor" {}
+			"Vested Investor's Vest" {}
+			"Standing Offer" {}
+		}
+	}
+	HardHearing
+	{
+		Name "Hard Hearing"
+		Class Engineer
+		Items
+		{
+			"Hard Hearing" {}
 		}
 	}
 	
@@ -2783,6 +2873,16 @@ bot_presets
 			"Cardiologist's Cardigan" {}
 			"Flatline Flatcap" {}
 			"Scrub Stompers" {}
+		}
+	}
+	BaldSpotter
+	{
+		Name "Bald Spotter"
+		Class Medic
+		Items
+		{
+			"Bald Spotter" {}
+			"Surgical Shroud" {}
 		}
 	}
 	
@@ -3203,6 +3303,26 @@ bot_presets
 			"Pantaloons of Unabashed Villainy" {}
 		}
 	}
+	LongShot
+	{
+		Name "Long Shot"
+		Class Sniper
+		Items
+		{
+			"The Handsome Ranger" {}
+			"The Long Shot" {}
+			"The Night Riders" {}
+		}
+	}
+	Beachcomber
+	{
+		Name "Beachcomber"
+		Class Sniper
+		Items
+		{
+			"Beachcomber's Brim" {}
+		}
+	}
 	
 	Saharan
 	{
@@ -3553,6 +3673,16 @@ bot_presets
 			"The Misdirector" {}
 			"Sleight of Hand" {}
 			"Vanishing Act" {}
+		}
+	}
+	UnrulyRuler
+	{
+		Name "Unruly Ruler"
+		Class Spy
+		Items
+		{
+			"Delusions of Grandeur" {}
+			"Unruly Ruler" {}
 		}
 	}
 	

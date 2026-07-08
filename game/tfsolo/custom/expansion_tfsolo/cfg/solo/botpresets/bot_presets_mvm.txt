@@ -83,6 +83,16 @@ bot_presets
 			"Fuel Injector" {}
 		}
 	}
+	Deadwave
+	{
+		Name "Deadwave"
+		Class Scout
+		Robot 1
+		Items
+		{
+			"Deadwave Communicator" {}
+		}
+	}
 	
 	Signal
 	{
