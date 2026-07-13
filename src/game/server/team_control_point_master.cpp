@@ -206,6 +206,7 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 	CBaseEntity *pEnt = gEntList.FindEntityByClassname( NULL, GetControlPointName() );
 
 	int numFound = 0;
+#if defined ( TF_DLL )
 
 	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD 
 		|| tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDEFENSE )
@@ -283,6 +284,7 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 		}
 	}
 	else
+#endif
 	{
 		while( pEnt )
 		{

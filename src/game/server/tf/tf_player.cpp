@@ -9328,7 +9328,8 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 					if ( FClassnameIs( pObjects[i], "tf_propertydamage_prop" ) || FClassnameIs( pObjects[i], "func_propertydamage_brush" )
 						|| FClassnameIs( pObjects[i], "tf_propertydamage_nextbot" ) || FClassnameIs( pObjects[i], "tf_propertydamage_prop_physics" ) )
 					{
-						pObjects[i]->Deflected( this, Vector( 0, 0, 0 ) );
+						Vector vec( 0, 0, 0 );
+						pObjects[i]->Deflected( this, vec );
 					}
 				}
 			}

@@ -540,7 +540,8 @@ void CTFFlareGun_Revenge::ChargePostFrame( void )
 				if ( FClassnameIs( tr.m_pEnt, "tf_propertydamage_prop" ) || FClassnameIs( tr.m_pEnt, "func_propertydamage_brush" )
 					|| FClassnameIs( tr.m_pEnt, "tf_propertydamage_nextbot" ) || FClassnameIs( tr.m_pEnt, "tf_propertydamage_prop_physics" ) )
 				{
-					tr.m_pEnt->Deflected( pOwner, Vector( 0, 0, 0 ) );
+					Vector vec( 0, 0, 0 );
+					tr.m_pEnt->Deflected( pOwner, vec );
 					m_fLastExtinguishTime = gpGlobals->curtime;
 				}
 			}

@@ -350,7 +350,7 @@ void CAchievementMgr::PostInit()
 	{
 		// create and initialize all achievements and insert them in our map
 		CBaseAchievement *pAchievement = pAchievementHelper->m_pfnCreate();
-		if ( pAchievement->GetAchievementID() < ACHIEVEMENT_START_TFSOLO )
+		if ( pAchievement->GetAchievementID() < 5000 )
 		{
 			delete pAchievement;
 			pAchievementHelper = pAchievementHelper->m_pNext;

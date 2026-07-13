@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:		Client handler for instruction players how to play
 //
@@ -541,7 +541,7 @@ class CScriptedIconLesson : public CIconLesson
     LessonEvent_t *AddUpdateEvent(void);
 
   private:
-    static CUtlDict<int, int> CScriptedIconLesson::LessonActionMap;
+    static CUtlDict<int, int> LessonActionMap;
 
     EHANDLE m_hLocalPlayer;
     float m_fOutput;

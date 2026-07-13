@@ -84,7 +84,9 @@ extern void longjmp( jmp_buf, int ) __attribute__((noreturn));
 #include "xbox/xbox_win32stubs.h"
 #endif
 
+#ifdef WIN32
 #include "../thirdparty/lunasvg/include/lunasvg.h"
+#endif
 #include "tier1/lzmaDecoder.h"
 #include "lzma/lzma.h"
 
@@ -982,6 +984,7 @@ unsigned char *ImgUtl_ReadSVGAsRGBA( const char *svgPath, int& width, int& heigh
 		CLZMA::Uncompress( (unsigned char*)bufFileContents.Base(), pOriginalData );
 		bufFileContents.AssumeMemory( pOriginalData, originalSize, originalSize, CUtlBuffer::READ_ONLY );
 	}
+#ifdef WIN32
 	auto document = lunasvg::Document::loadFromData( (const char*)bufFileContents.Base() );
 	if ( document == nullptr )
 	{
@@ -1004,6 +1007,11 @@ unsigned char *ImgUtl_ReadSVGAsRGBA( const char *svgPath, int& width, int& heigh
 
 	errcode = CE_SUCCESS;
 	return pResultData;
+#endif
+
+#ifndef WIN32
+	return NULL;
+#endif
 }
 
 unsigned char *ImgUtl_ReadImageAsRGBA( const char *path, int &width, int &height, ConversionErrorType &errcode )

@@ -511,3 +511,9 @@ game/steam_appid.txt
 game/mod_tf*.exe
 game/tfsolo*.exe
 game/tfgreatesthits*.exe
+.ninja_deps
+.ninja_log
+compile_commands.json
+mod_hl2mp_linux64
+mod_tf_linux64
+tfsolo_linux64

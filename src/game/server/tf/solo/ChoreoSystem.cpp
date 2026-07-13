@@ -505,7 +505,7 @@ void CChoreoSystem::RecordStop( int entindex )
 	while ( true )
 	{
 		char szAnsi[1024];
-		Q_snprintf( szAnsi, 1024, "%llu", elemkey );
+		Q_snprintf( szAnsi, 1024, "%lu", elemkey );
 
 		KeyValues* tickKey = new KeyValues( szAnsi );
 		tickKey->SetInt( "btn", elem->buttons );
@@ -583,7 +583,7 @@ void CChoreoSystem::RecordStop( int entindex )
 	ResetChoreo( entindex );
 }
 
-uint64_t CChoreoSystem::GetTick( int entindex )
+int CChoreoSystem::GetTick( int entindex )
 {
 	CTFPlayer* pPlayer = ToTFPlayer( UTIL_PlayerByIndex( entindex ) );
 	if ( !pPlayer )
@@ -592,7 +592,7 @@ uint64_t CChoreoSystem::GetTick( int entindex )
 	return m_PlayerChoreo[entindex].PlaybackTick;
 }
 
-uint64_t CChoreoSystem::GetTickCount( int entindex )
+int CChoreoSystem::GetTickCount( int entindex )
 {
 	CTFPlayer* pPlayer = ToTFPlayer( UTIL_PlayerByIndex( entindex ) );
 	if ( !pPlayer )
@@ -601,7 +601,7 @@ uint64_t CChoreoSystem::GetTickCount( int entindex )
 	return m_PlayerChoreo[entindex].TickCount;
 }
 
-void CChoreoSystem::SetTickCount( int entindex, uint64_t count )
+void CChoreoSystem::SetTickCount( int entindex, int count )
 {
 	CTFPlayer* pPlayer = ToTFPlayer( UTIL_PlayerByIndex( entindex ) );
 	if ( !pPlayer )

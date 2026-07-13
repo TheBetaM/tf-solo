@@ -104,7 +104,7 @@
 extern ConVar tf_mm_trusted;
 extern ConVar tf_mm_servermode;
 extern ConVar sv_mapentities_mod;
-extern int g_bspCacheJobsRunning;
+//extern int g_bspCacheJobsRunning;
 CUtlVector<const char*> g_bspCacheMapMemoryFiles;
 CUtlVector<const char*> g_mapModSearchPaths;
 #endif

@@ -799,8 +799,8 @@ DEFINE_SCRIPTFUNC_WRAPPED( IsBehaviorFlagSet, "Return true if the given behavior
 DEFINE_SCRIPTFUNC_WRAPPED( SetActionPoint, "Set the given action point for this bot" )
 DEFINE_SCRIPTFUNC_WRAPPED( GetActionPoint, "Get the given action point for this bot" )
 
-DEFINE_SCRIPTFUNC_WRAPPED( GetPreset, "GetPreset", "Get the preset for this bot");
-DEFINE_SCRIPTFUNC_WRAPPED( SetPreset, "SetPreset", "Set the preset for this bot");
+DEFINE_SCRIPTFUNC_WRAPPED( GetPreset, "Get the preset for this bot" )
+DEFINE_SCRIPTFUNC_WRAPPED( SetPreset, "Set the preset for this bot" )
 
 END_SCRIPTDESC();
 

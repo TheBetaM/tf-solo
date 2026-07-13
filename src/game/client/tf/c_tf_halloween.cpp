@@ -550,7 +550,7 @@ public:
 	const char* m_pszPickupModel;
 	int m_iPickupType;
 
-	static void C_GenericItemPickup::Create( const char* name, Vector pos, int type, const char* model )
+	static void Create( const char* name, Vector pos, int type, const char* model )
 	{
 		C_GenericItemPickup* pPickup = new C_GenericItemPickup;
 		pPickup->m_pszPickupName = V_strdup( name );

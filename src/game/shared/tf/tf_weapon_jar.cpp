@@ -474,7 +474,8 @@ void JarExplode( int iEntIndex, CTFPlayer *pAttacker, CBaseEntity *pOriginalWeap
 		{
 			if ( pAttacker )
 			{
-				pListOfEntities[i]->Deflected( pAttacker, Vector( 0, 0, 0 ) );
+				Vector vec( 0, 0, 0 );
+				pListOfEntities[i]->Deflected( pAttacker, vec );
 			}
 		}
 	}

@@ -56,9 +56,9 @@ public:
 	void Stop( int entindex );
 	void RecordStart( int entindex, const char* pszFile );
 	void RecordStop( int entindex );
-	uint64_t GetTick( int entindex );
-	uint64_t GetTickCount( int entindex );
-	void SetTickCount( int entindex, uint64_t count );
+	int GetTick( int entindex );
+	int GetTickCount( int entindex );
+	void SetTickCount( int entindex, int count );
 	bool IsPlaying( int entindex );
 	bool IsRecording( int entindex );
 	bool IsBlockingCommands( int entindex );

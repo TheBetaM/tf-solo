@@ -1,4 +1,5 @@
 #include "cbase.h"
+#ifdef _WIN32
 #include <iostream>
 #include <windows.h>
 #include <Psapi.h>
@@ -114,3 +115,4 @@ void TFSOLO_Patch_Singleplayer()
 		VirtualProtect( (void*)ptr3, 2, protect3, &protect3 );
 	}
 }
+#endif

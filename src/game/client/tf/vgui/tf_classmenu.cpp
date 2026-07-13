@@ -485,7 +485,7 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 
 	m_pEditLoadoutButton = NULL;
 	m_nBaseMusicGuid = -1;
-	m_pszCurrentSubClass = '\0';
+	m_pszCurrentSubClass = NULL;
 
 	ListenForGameEvent( "localplayer_changeteam" );
 	ListenForGameEvent( "show_match_summary" );
@@ -748,7 +748,7 @@ void CTFClassMenu::SelectClass( int iClass )
 
 	// Cache current player class
 	m_iCurrentClassIndex = iClass;
-	m_pszCurrentSubClass = '\0';
+	m_pszCurrentSubClass = NULL;
 
 	UpdateButtonSelectionStates( iClass );
 

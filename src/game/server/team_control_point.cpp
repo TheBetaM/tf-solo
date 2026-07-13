@@ -1092,6 +1092,7 @@ void CTeamControlPoint::UnlockThink( void )
 	{
 		InternalSetLocked( false );
 
+#ifdef TF_DLL
 		if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
 		{
 			CArenaLogic* pArenaLogic = dynamic_cast<CArenaLogic*> ( gEntList.FindEntityByClassname(NULL, "tf_logic_arena" ) );
@@ -1101,6 +1102,7 @@ void CTeamControlPoint::UnlockThink( void )
 				pArenaLogic->m_OnCapEnabled.FireOutput( pArenaLogic, pArenaLogic );
 			}
 		}
+#endif
 
 		return;
 	}

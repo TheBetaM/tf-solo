@@ -17,8 +17,12 @@
 //#include "gameui/gameui_interface.h"
 #include "vscript_utils.h"
 #include "in_buttons.h"
+#include "vgui_controls/Controls.h"
 #include "vgui/ISurface.h"
+#include "vgui/ILocalize.h"
 #include <tier1/utlhashtable.h>
+#include "iclientmode.h"
+#include "steam/steam_api.h"
 #include "bsp_utils.h"
 #include "achievementmgr.h"
 
@@ -46,7 +50,7 @@
 extern IScriptManager *scriptmanager;
 extern ScriptClassDesc_t * GetScriptDesc( CBaseEntity * );
 CVScriptGameSystem g_VScriptGameSystem;
-extern int g_bspCacheJobsRunning;
+//extern int g_bspCacheJobsRunning;
 
 // #define VMPROFILE 1
 
@@ -965,6 +969,7 @@ static void SendToServerConsole(const char* pszCommand)
 	engine->ServerCmd(pszCommand);
 }
 
+#ifdef TF_CLIENT_DLL
 void Script_BSP_CacheStartSingle( HSCRIPT hTable )
 {
 	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
@@ -1162,6 +1167,7 @@ void Script_BSP_CacheClear()
 {
 	BSP_ClearCache();
 }
+#endif
 
 const char* Script_LocalizeString(const char* input)
 {
@@ -1483,6 +1489,7 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ScreenHeight, "ScreenHeight", "");
 				ScriptRegisterFunctionNamed(g_pScriptVM, DoIncludeScriptsDir, "IncludeScriptsDir", "Execute all scripts from a directory");
 
+#ifdef TF_CLIENT_DLL
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartRemap, "BSP_CacheStartRemap", "Request assets to be loaded from map files with filename remapping. Example table: [maps/pd_selbyen.bsp] = { [models/props_selbyen/seal.mdl] = models/props_selbyen/sealremap.mdl }");
@@ -1490,6 +1497,7 @@ bool VScriptClientInit()
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheRemove, "BSP_CacheRemove", "Remove an asset from the BSP cache.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheRemoveArray, "BSP_CacheRemoveArray", "Remove multiple assets from the BSP cache.");
 				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheClear, "BSP_CacheClear", "Clear out the BSP cache.");
+#endif
 
 #if defined( PORTAL2_PUZZLEMAKER )
 				ScriptRegisterFunction( g_pScriptVM, RequestMapRating, "Pops up the map rating dialog for user input" );

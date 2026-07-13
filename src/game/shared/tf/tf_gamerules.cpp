@@ -5363,7 +5363,8 @@ void CTFGameRules::SetupOnRoundStart( void )
 		pPDLogic->KeyValueFromFloat( "blue_respawn_time", 10.0f );
 		DispatchSpawn( pPDLogic );
 		pPDLogic->SetName( AllocPooledString( "pd_logic" ) );
-		pPDLogic->InputEnableMaxScoreUpdating( inputdata_t() );
+		inputdata_t pdInput;
+		pPDLogic->InputEnableMaxScoreUpdating( pdInput );
 		g_EventQueue.AddEvent( pPDLogic, "DisableMaxScoreUpdating", variant_t(), 30.0f, NULL, NULL );
 
 		Vector capZoneOrigin = vec3_origin;

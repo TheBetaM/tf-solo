@@ -10451,7 +10451,8 @@ void CTFPlayer::FireBullet( CTFWeaponBase *pWpn, const FireBulletsInfo_t &info, 
 					if ( FClassnameIs( pTarget, "tf_propertydamage_prop" ) || FClassnameIs( pTarget, "func_propertydamage_brush" )
 						|| FClassnameIs( pTarget, "tf_propertydamage_nextbot" ) || FClassnameIs( pTarget, "tf_propertydamage_prop_physics" ) )
 					{
-						pTarget->Deflected( this, Vector( 0, 0, 0 ) );
+						Vector vec( 0, 0, 0 );
+						pTarget->Deflected( this, vec );
 					}
 				}
 

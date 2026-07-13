@@ -20,6 +20,7 @@
 #include "toolframework/iserverenginetools.h"
 #include "vscript_server.h"
 #include "filesystem.h"
+#include "utlbuffer.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

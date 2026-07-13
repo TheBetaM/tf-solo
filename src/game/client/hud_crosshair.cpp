@@ -227,11 +227,11 @@ void CHudCrosshair::GetDrawPosition ( float *pX, float *pY, bool *pbBehindCamera
 			float offset = sv_thirdperson_platformer_distright.GetFloat();
 			if ( offset != 0 )
 			{
+#ifdef TF_CLIENT_DLL
 				if ( tf_mirrormode.GetBool() )
 				{
 					offset = -offset;
 				}
-#ifdef TF_CLIENT_DLL
 				if ( cl_flipviewmodels.GetBool() )
 				{
 					offset = -offset;

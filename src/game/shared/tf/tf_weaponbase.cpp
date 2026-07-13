@@ -6061,7 +6061,8 @@ bool CTFWeaponBase::DeflectEntity( CBaseEntity *pTarget, CTFPlayer *pOwner, Vect
 
 	if ( FClassnameIs( pTarget, "tf_propertydamage_prop" ) || FClassnameIs( pTarget, "func_propertydamage_brush" ) || FClassnameIs( pTarget, "tf_propertydamage_nextbot" ) )
 	{
-		pTarget->Deflected( pOwner, Vector( 0, 0, 0 ) );
+		Vector vec( 0, 0, 0 );
+		pTarget->Deflected( pOwner, vec );
 		return false;
 	}
 
