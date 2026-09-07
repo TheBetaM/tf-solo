@@ -628,9 +628,9 @@ ConCommand open_charinfo_direct( "open_charinfo_direct", Open_CharInfoDirect, "O
 //-----------------------------------------------------------------------------
 void Open_CharInfoBackpack( const CCommand &args )
 {
-	EconUI()->OpenEconUI( ECONUI_ARMORY );
+	EconUI()->OpenEconUI( TF_CLASS_UNDEFINED );
 }
-ConCommand open_charinfo_backpack( "open_charinfo_backpack", Open_CharInfoBackpack, "Open the character info panel directly to armory.", FCVAR_NONE );
+ConCommand open_charinfo_backpack( "open_charinfo_backpack", Open_CharInfoBackpack, "Open the character info panel.", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
 // Purpose: 

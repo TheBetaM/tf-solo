@@ -764,7 +764,7 @@
 		{
 			"ControlName"	"CExImageButton"
 			"fieldName"		"RestartButton"
-			"xpos"			"cs-1.2"
+			"xpos"			"c-50"
 			"ypos"			"0"
 			"zpos"			"100"
 			"wide"			"100"

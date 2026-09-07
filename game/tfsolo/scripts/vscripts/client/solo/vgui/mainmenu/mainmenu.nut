@@ -13,6 +13,7 @@ SoloMainMenu.Init <- function()
 	printl("[TFSOLO] MainMenuInit")
 	SoloMainMenu.InitDone = true
 	SoloMainMenu.InitClassLineup()
+	Music.PlayMainMenu()
 }
 
 
@@ -39,6 +40,12 @@ getroottable()[TFSOLO.MainMenuEventTag] <- {
 		{
 			SoloMainMenu.Init()
 		}
+	}
+
+	OnGameEvent_client_disconnect = function(params)
+	{
+		// Clean up panel on map load start
+		MainMenu.ClearAllScriptPanels()
 	}
 	
 	OnScriptHook_solo_save_reset = function(params)

@@ -2617,7 +2617,7 @@ void CHudMainMenuOverride::RunAnimationScript( const char* pszScript, bool bCanB
 // Purpose: Reload the .res file
 //-----------------------------------------------------------------------------
 
-BEGIN_SCRIPTDESC_ROOT(CHudMainMenuOverride, SCRIPT_SINGLETON "Used to access the main menu interface")
+BEGIN_SCRIPTDESC(CHudMainMenuOverride, EditablePanel, "Used to access the main menu interface")
 	DEFINE_SCRIPTFUNC(Reset, "")
 	DEFINE_SCRIPTFUNC(CreatePanel, "")
 	DEFINE_SCRIPTFUNC(CreatePanelRoot, "")

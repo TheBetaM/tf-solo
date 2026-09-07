@@ -17,22 +17,21 @@ Music.Stop <- function()
 		Music.Track = ""
 	}
 }
+Music.PlayMainMenu <- function()
+{
+	Music.Play("*#ui/cyoa_musicteamfortress2.mp3")
+}
 
 TFSOLO.MusicEventTag <- UniqueString()
 getroottable()[TFSOLO.MusicEventTag] <- {
-	OnGameEvent_mainmenu_stabilized = function(params)
+	OnGameEvent_client_disconnect = function(params)
 	{
-		Music.Play("*#ui/gamestartup1.mp3")
+		Music.Track = ""
 	}
 	
 	OnScriptHook_LevelInitPreEntity = function(params)
 	{
 		Music.Track = ""
-	}
-	
-	OnScriptHook_LevelDisconnect = function(params)
-	{
-		Music.Play("*#ui/gamestartup1.mp3")
 	}
 }
 TFSOLO.MusicEventTable <- getroottable()[TFSOLO.MusicEventTag]
