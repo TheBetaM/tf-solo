@@ -26,6 +26,6 @@ fi
 #trap 'echo "Received SIGTERM, shutting down gracefully..." && kill -TERM $!' SIGTERM
 #trap 'echo "Received SIGPIPE, shutting down gracefully..." && continue' SIGPIPE
 
-${SLR_SNIPER_PATH} --devel -- ./tfsolo_linux64 . -steam -dev "$@" +ip 127.0.0.1
+${SLR_SNIPER_PATH} --devel -- ./tfsolo_linux64 . -steam "$@" +ip 127.0.0.1
 
 popd > /dev/null

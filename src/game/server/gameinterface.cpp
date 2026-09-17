@@ -1995,6 +1995,7 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 		{
 			KeyValues* keyImports = modKV->FindKey( "cache" );
 			KeyValues* keyMounts = modKV->FindKey( "mount" );
+			KeyValues* keyCVars = modKV->FindKey( "cvar" );
 			if ( keyMounts )
 			{
 				int nMounts = 0;
@@ -2043,6 +2044,13 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 					}
 				}
 				Msg( "Started cache jobs for %d files in %d maps.\n", nFiles, nMaps );
+			}
+			if ( keyCVars )
+			{
+				for ( KeyValues* pItem = keyCVars->GetFirstSubKey(); pItem != NULL; pItem = pItem->GetNextKey() )
+				{
+					engine->ServerCommand( CFmtStr1024( "%s %s\n", pItem->GetName(), pItem->GetString() ) );
+				}
 			}
 		}
 	}

@@ -5059,10 +5059,11 @@ void CTFCustomMatchMapDialog::CreateControls()
 			isWorkshop = true;
 			if ( engine->GetAppID() != 440 && workshopConfig )
 			{
-				char mapIDstr[MAX_PATH] = { 0 };
-				V_StrSlice( key->GetName(), 9, 0, mapIDstr, sizeof( mapIDstr ) );
+				//char mapIDstr[MAX_PATH] = { 0 };
+				//V_StrSlice( key->GetName(), 9, 0, mapIDstr, sizeof( mapIDstr ) );
 				//PublishedFileId_t mapID = V_atoui64( mapIDstr );
-				if ( !workshopConfig->FindKey( mapIDstr ) )
+				const char* mapKey = key->GetName() + 9;
+				if ( !workshopConfig->FindKey( mapKey ) )
 				{
 					key = key->GetNextKey();
 					continue;

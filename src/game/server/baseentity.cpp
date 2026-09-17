@@ -99,6 +99,8 @@ bool CBaseEntity::s_bAbsQueriesValid = true;
 ConVar sv_netvisdist( "sv_netvisdist", "10000", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Test networking visibility distance" );
 
 ConVar sv_script_think_interval("sv_script_think_interval", "0.1");
+ConVar sv_script_block_entityscript( "sv_script_block_entityscript", "0", FCVAR_REPLICATED, "Block entities running scripts on spawn.\n" );
+ConVar sv_script_block_runscriptfile( "sv_script_block_runscriptfile", "0", FCVAR_REPLICATED, "Block entities from using the RunScriptFile input.\n" );
 
 // This table encodes edict data.
 void SendProxy_AnimTime( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
@@ -7231,6 +7233,11 @@ void CBaseEntity::InputFireUser4( inputdata_t& inputdata )
 //---------------------------------------------------------
 void CBaseEntity::InputRunScriptFile( inputdata_t& inputdata )
 {
+	if ( sv_script_block_runscriptfile.GetBool() )
+	{
+		return;
+	}
+
 	if( !ValidateScriptScope() )
 	{
 		DevMsg("\n***\nFAILED to create private ScriptScope. ABORTING script\n***\n");
@@ -8336,7 +8343,7 @@ bool CBaseEntity::ValidateScriptScope()
 //-----------------------------------------------------------------------------
 void CBaseEntity::RunVScripts()
 {
-	if( m_iszVScripts == NULL_STRING )
+	if( m_iszVScripts == NULL_STRING || sv_script_block_entityscript.GetBool() )
 	{
 		return;
 	}

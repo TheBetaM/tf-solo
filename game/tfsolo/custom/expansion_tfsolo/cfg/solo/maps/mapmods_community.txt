@@ -350,17 +350,22 @@ maps_config
 		{
 			mods
 			{
+				koth_noboss
+				{
+					modename "NO BOSS"
+					modfile "scripts/mapmods/koth_krampus_noboss.txt"
+				}
 				arena
 				{
 					modeoverride 2
 					modename "#GameType_Arena"
-					modfile "scripts/mapmods/filter_generic.txt"
+					modfile "scripts/mapmods/koth_krampus_arena.txt"
 				}
 				pd
 				{
 					modeoverride 5
 					modename "#Gametype_PlayerDestruction"
-					modfile "scripts/mapmods/filter_generic.txt"
+					modfile "scripts/mapmods/koth_krampus_pd.txt"
 				}
 			}
 		}

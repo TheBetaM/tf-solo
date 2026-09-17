@@ -81,6 +81,7 @@ ConVar script_connect_debugger_on_mapspawn( "script_connect_debugger_on_mapspawn
 
 ConVar script_attach_debugger_at_startup( "script_attach_debugger_at_startup", "0" );
 ConVar script_break_in_native_debugger_on_error( "script_break_in_native_debugger_on_error", "0" );
+ConVar sv_script_block_mapspawn( "sv_script_block_mapspawn", "0", FCVAR_REPLICATED, "Block the mapspawn script from executing.\n" );
 
 #define VSCRIPT_CONVAR_ALLOWLIST_NAME "cfg/vscript_convar_allowlist.txt"
 
@@ -4052,7 +4053,10 @@ REGISTER_SCRIPT_CONST_TABLE( Server )
 				g_VScriptGameEventListener.Init();
 
 				VScriptRunScript( "tfsolo_init", false );
-				VScriptRunScript( "mapspawn", false );
+				if ( !sv_script_block_mapspawn.GetBool() )
+				{
+					VScriptRunScript( "mapspawn", false );
+				}
 				VScriptRunScript( "tfsolo_postinit", false );
 
 				if ( script_connect_debugger_on_mapspawn.GetBool() )
