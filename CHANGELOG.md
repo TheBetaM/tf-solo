@@ -38,7 +38,7 @@ tf_overview_scoreboard, tf_allow_taunt_aerial, tf_allow_taunt_disguised,
 tf_halloween_zombie_forceteam, tf_hud_deathnotice_filter, tf_taunt_disable_attack, 
 vscript_reload, tf_bot_friendlyfire, tf_mvm_invert_enabled, 
 tf_mvm_allow_refunds, sv_script_block_mapspawn, sv_script_block_entityscript,
-sv_script_block_runscriptfile
+sv_script_block_runscriptfile, tf_teamgoal_hide
 - New inputs for tf_gamerules:  
 -- SoloSaveData, SoloUnlockItem<string>, SoloUnlockItemID<int>, SoloAddCredits<int>
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity

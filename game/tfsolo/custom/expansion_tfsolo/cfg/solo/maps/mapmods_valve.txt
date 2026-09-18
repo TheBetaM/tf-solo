@@ -38,6 +38,17 @@ maps_config
 				allow_pd 1
 			}
 		}
+		cp_degrootkeep
+		{
+			mods
+			{
+				nomdv
+				{
+					modename "#Gametype_AttackDefense"
+					modfile "scripts/mapmods/nomedieval.txt"
+				}
+			}
+		}
 		cp_well
 		{
 			tags
@@ -61,6 +72,14 @@ maps_config
 				allow_ctf 1
 				allow_arena 1
 				allow_pd 1
+			}
+			mods
+			{
+				koth
+				{
+					modename "#Gametype_Koth"
+					modfile "scripts/mapmods/cp_foundry_timerfix.txt"
+				}
 			}
 		}
 		cp_granary

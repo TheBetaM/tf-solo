@@ -1,0 +1,16 @@
+mapmod
+{
+
+filter
+{
+	fnopower1
+	{
+		"classname" "tf_logic_mannpower"
+	}
+	fnopower2
+	{
+		"classname" "info_powerup_spawn"
+	}
+}
+
+}

@@ -18,6 +18,28 @@ maps_config
 				allow_pd 1
 			}
 		}
+		cp_burghausen
+		{
+			mods
+			{
+				nomdv
+				{
+					modename "#Gametype_AttackDefense"
+					modfile "scripts/mapmods/nomedieval.txt"
+				}
+			}
+		}
+		cp_degrootkeep_rats
+		{
+			mods
+			{
+				nomdv
+				{
+					modename "#Gametype_AttackDefense"
+					modfile "scripts/mapmods/nomedieval.txt"
+				}
+			}
+		}
 		cp_fastlane
 		{
 			tags
@@ -352,20 +374,21 @@ maps_config
 			{
 				koth_noboss
 				{
-					modename "NO BOSS"
-					modfile "scripts/mapmods/koth_krampus_noboss.txt"
+					modeoverride 3
+					modename "#GameType_TFSOLO_NoBoss"
+					modfile "scripts/mapmods/novscript.txt"
 				}
 				arena
 				{
 					modeoverride 2
 					modename "#GameType_Arena"
-					modfile "scripts/mapmods/koth_krampus_arena.txt"
+					modfile "scripts/mapmods/novscript.txt"
 				}
 				pd
 				{
 					modeoverride 5
 					modename "#Gametype_PlayerDestruction"
-					modfile "scripts/mapmods/koth_krampus_pd.txt"
+					modfile "scripts/mapmods/novscript.txt"
 				}
 			}
 		}

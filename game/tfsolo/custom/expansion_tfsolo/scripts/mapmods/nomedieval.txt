@@ -1,0 +1,12 @@
+mapmod
+{
+
+filter
+{
+	fnomdv
+	{
+		"classname" "tf_logic_medieval"
+	}
+}
+
+}

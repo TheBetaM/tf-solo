@@ -175,7 +175,7 @@ public:
 
 	// Data accessors
 	inline gamerules_roundstate_t State_Get( void ) { return m_iRoundState; }
-	bool	IsInWaitingForPlayers( void ) { return m_bInWaitingForPlayers; }
+	virtual bool	IsInWaitingForPlayers( void ) { return m_bInWaitingForPlayers; }
 	virtual bool InRoundRestart( void ) { return State_Get() == GR_STATE_PREROUND; }
 	bool	InStalemate( void ) { return State_Get() == GR_STATE_STALEMATE; }
 	bool	RoundHasBeenWon( void ) { return State_Get() == GR_STATE_TEAM_WIN; }

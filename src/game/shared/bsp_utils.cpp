@@ -328,8 +328,6 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 		if ( !workshopConfig->LoadFromFile( g_pFullFileSystem, "workshop_localcache.txt", "GAME" ) )
 		{
 			Msg( "Unable to parse workshop_localcache.txt into keyvalues.\n" );
-			g_bspCacheJobsRunning--;
-			g_BspPackLock = false;
 			return false;
 		}
 		char mapIDstr[MAX_PATH] = { 0 };
@@ -354,8 +352,6 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 			if (ugcQuery == k_UGCQueryHandleInvalid || !setMeta || !setCache)
 			{
 				Warning("Failed to create UGC details request for map [ %llu ]\n", nMapID);
-				g_bspCacheJobsRunning--;
-				g_BspPackLock = false;
 				return false;
 			}
 			SteamAPICall_t hSteamAPICall = steamUGC->SendQueryUGCRequest(ugcQuery);
@@ -370,22 +366,16 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 				// TODO
 				//Sleep(100);
 				Warning("Download callback not yet implemeted\n");
-				g_bspCacheJobsRunning--;
-				g_BspPackLock = false;
 				return false;
 			}
 			if (m_MapReadyStatus == MapReadyStatus_Error)
 			{
-				g_bspCacheJobsRunning--;
-				g_BspPackLock = false;
 				return false;
 			}
 
 			if (!GetSteamUGC()->GetItemInstallInfo(nMapID, &nUGCSize, szFolder, sizeof(szFolder), &nTimestamp))
 			{
 				Msg("BSP cache failed: GetItemInstallInfo failed for item, map not usable [ %s ]\n", m_strCanonicalName);
-				g_bspCacheJobsRunning--;
-				g_BspPackLock = false;
 				return false;
 			}
 
@@ -398,17 +388,8 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 	if (!g_pFullFileSystem->FileExists(pszInputMapFile))
 	{
 		Warning("BSP cache failed: Couldn't open input file %s\n", pszInputMapFile);
-		g_bspCacheJobsRunning--;
-		g_BspPackLock = false;
 		return false;
 	}
-
-	while (g_BspPackLock)
-	{
-		// Too fast, too quick
-		Sleep(100);
-	}
-	g_BspPackLock = true;
 
 	// read the file
 	FileHandle_t file = g_pFullFileSystem->Open(pszInputMapFile, "rb");
@@ -503,8 +484,6 @@ bool BackgroundBSPCacheThread::BSP_CacheAssets(const char* pszInputMapFile)
 
 	IZip::ReleaseZip(zip);
 	Msg("Successfully cached %s\n", pszInputMapFile);
-	g_BspPackLock = false;
-	g_bspCacheJobsRunning--;
 	return true;
 }
 

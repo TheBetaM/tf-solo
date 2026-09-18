@@ -980,6 +980,10 @@ ConVar tf_player_preventdeath( "tf_player_preventdeath", "0", FCVAR_REPLICATED, 
 ConVar tf_player_preventteamchange( "tf_player_preventteamchange", "0", FCVAR_REPLICATED, "Prevent players from switching teams.\n" );
 ConVar tf_hud_deathnotice_filter( "tf_hud_deathnotice_filter", "0", FCVAR_REPLICATED, "1 - disable all death notices, 2 - disable all except local player's\n" );
 ConVar tf_taunt_disable_attack( "tf_taunt_disable_attack", "0", FCVAR_REPLICATED, "Disable taunt attacks from dealing damage.\n" );
+ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
+ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - KOTH\n4 - CTF\n5 - PD\n6 - Mad Dash\n7 - Property Damage\n8 - Property Defense\n9 - Infiltration" );
+ConVar tf_teamgoal_hide( "tf_teamgoal_hide", "1", FCVAR_REPLICATED, "Disable the team goal from showing up.\n" );
 ConVar tfsolo_mapentry( "tfsolo_mapentry", "", FCVAR_REPLICATED, "Name of the current map's config entry.\n" );
 
 #ifdef GAME_DLL
@@ -1152,9 +1156,6 @@ ConVar tf_gamemode_payload ( "tf_gamemode_payload", "0", FCVAR_REPLICATED | FCVA
 ConVar tf_gamemode_mvm ( "tf_gamemode_mvm", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - KOTH\n4 - CTF\n5 - PD\n6 - Mad Dash\n7 - Property Damage\n8 - Property Defense\n9 - Infiltration" );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_DEVELOPMENTONLY );
 
@@ -3894,6 +3895,12 @@ bool CTFGameRules::IsTruceActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
+bool CTFGameRules::IsInWaitingForPlayers( void )
+{
+	return m_bInWaitingForPlayers || (tf_gamemode_override.GetInt() == 1);
+}
+
+//-----------------------------------------------------------------------------
 bool CTFGameRules::CanInitiateDuels( void )
 {
 	if ( IsInWaitingForPlayers() )
@@ -4570,7 +4577,7 @@ void CTFGameRules::Activate()
 	}
 
 	CMedievalLogic *pMedieval = dynamic_cast<CMedievalLogic*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_medieval" ) );
-	if ( (pMedieval || tf_medieval.GetBool()) && !isOverriden )
+	if ( (pMedieval && !isOverriden) || tf_medieval.GetBool() )
 	{
 		m_bPlayingMedieval.Set( true );
 	}
@@ -19392,6 +19399,11 @@ void CTFGameRules::HandleOvertimeBegin()
 bool CTFGameRules::ShouldShowTeamGoal( void )
 {
 
+	if ( tf_gamemode_override.GetInt() == 1 || tf_teamgoal_hide.GetInt() == 1 )
+	{
+		return false;
+	}
+	
 //=============================================================================
 // HPE_BEGIN
 // [msmith] We always show the team goal when in training.
@@ -22932,6 +22944,9 @@ void CTFGameRules::BalanceTeams( bool bRequireSwitcheesToBeDead )
 //-----------------------------------------------------------------------------
 bool CTFGameRules::PointsMayBeCaptured( void )
 {
+	if ( tf_gamemode_override.GetInt() == 1 )
+		return false;
+
 #ifdef GAME_DLL
 	if ( IsHolidayActive( kHoliday_Halloween ) && GetActiveBoss() )
 	{

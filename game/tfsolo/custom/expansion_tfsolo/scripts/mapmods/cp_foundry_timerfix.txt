@@ -1,0 +1,13 @@
+mapmod
+{
+
+filter
+{
+	fkoth1
+	{
+		"classname" "logic_relay"
+		"targetname" "relayTimer"
+	}
+}
+
+}

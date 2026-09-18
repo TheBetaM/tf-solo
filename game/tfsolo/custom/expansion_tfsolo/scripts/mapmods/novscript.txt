@@ -6,7 +6,6 @@ cvar
     sv_script_block_mapspawn 1
     sv_script_block_entityscript 1
     sv_script_block_runscriptfile 1
-    tf_gamemode_override 3
 }
 
 }

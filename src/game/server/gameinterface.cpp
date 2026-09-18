@@ -2055,18 +2055,18 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 		}
 	}
 
-	while ( g_bspCacheJobsRunning > 0 )
-	{
-		ThreadSleep( 10 );
-		if ( engine->IsDedicatedServer() )
-		{
-			SteamGameServer_RunCallbacks();
-		}
-		else
-		{
-			SteamAPI_RunCallbacks();
-		}
-	}
+	//while ( g_bspCacheJobsRunning > 0 )
+	//{
+	//	ThreadSleep( 10 );
+	//	if ( engine->IsDedicatedServer() )
+	//	{
+	//		SteamGameServer_RunCallbacks();
+	//	}
+	//	else
+	//	{
+	//		SteamAPI_RunCallbacks();
+	//	}
+	//}
 
 	TFMapsWorkshop()->PrepareLevelResources( pszMapName, nMapNameSize, pszMapFile, nMapFileSize );
 #endif // TF_DLL

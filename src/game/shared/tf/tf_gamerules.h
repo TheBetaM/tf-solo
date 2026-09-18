@@ -393,6 +393,7 @@ public:
 	virtual bool	TeamMayCapturePoint( int iTeam, int iPointIndex );
 	virtual bool	PlayerMayCapturePoint( CBasePlayer *pPlayer, int iPointIndex, char *pszReason = NULL, int iMaxReasonLength = 0 );
 	virtual bool	PlayerMayBlockPoint( CBasePlayer *pPlayer, int iPointIndex, char *pszReason = NULL, int iMaxReasonLength = 0 );
+	virtual bool	IsInWaitingForPlayers( void );
 
 	static int		CalcPlayerScore( RoundStats_t *pRoundStats, CTFPlayer *pPlayer );
 	static int		CalcPlayerSupportScore( RoundStats_t *pRoundStats, int iPlayerIdx );

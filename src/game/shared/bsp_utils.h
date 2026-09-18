@@ -24,7 +24,6 @@ void BSP_BackgroundRepack( const char *pszInputMapFile,
 #endif // CLIENT_DLL
 
 static int g_bspCacheJobsRunning = 0;
-static bool g_BspPackLock;
 
 class BackgroundBSPCacheThread : public CThread, public CAutoGameSystemPerFrame
 {
@@ -61,6 +60,8 @@ public:
 			{
 				Warning("Map %s cache thread failed :(\n", m_strInput);
 			}
+
+			g_bspCacheJobsRunning--;
 
 			// AutoGameSystem deregisters itself on destruction, we're done
 			delete this;

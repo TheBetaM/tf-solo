@@ -362,7 +362,7 @@ maps_config
 		cp_burghausen
 		{
 			name "Burghausen"
-			modename "#Gametype_AttackDefense"
+			modename "#GameType_Medieval"
 			thumbArt "maps/menu_thumb_cp_burghausen"
 			photosArt "maps/menu_photos_cp_burghausen"
 			tags
@@ -436,7 +436,7 @@ maps_config
 		cp_degrootkeep_rats
 		{
 			name "Sandcastle"
-			modename "#Gametype_AttackDefense"
+			modename "#GameType_Medieval"
 			thumbArt "maps/menu_thumb_cp_degrootkeep_rats"
 			photosArt "maps/menu_photos_cp_degrootkeep_rats"
 			tags

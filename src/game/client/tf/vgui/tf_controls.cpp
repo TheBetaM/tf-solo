@@ -3535,6 +3535,14 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		engine->ClientCmd_Unrestricted( "nav_generate_auto 0\n" );
 	}
 
+	if ( m_iRequestedMode == 1 )
+	{
+		engine->ClientCmd_Unrestricted( "sv_script_block_mapspawn 1\n" );
+		engine->ClientCmd_Unrestricted( "sv_script_block_runscriptfile 1\n" );
+		engine->ClientCmd_Unrestricted( "sv_script_block_entityscript 1\n" );
+		engine->ClientCmd_Unrestricted( "mp_enableroundwaittime 0.04\n" );
+		engine->ClientCmd_Unrestricted( "tf_roundstarttalk_disable 1\n" );
+	}
 	CFmtStr1024 fmtModeCommand(
 		"tf_gamemode_override %u\n", m_iRequestedMode
 	);
@@ -3943,6 +3951,42 @@ void CTFCustomMatchModeDialog::CreateControls()
 			key = key->GetNextKey();
 		}
 	}
+	if ( alts )
+	{
+		KeyValues* key = alts->GetFirstSubKey();
+		while ( key )
+		{
+			KeyValues* altmap = maps->FindKey( key->GetName() );
+			if ( !altmap || altmap->GetInt( "disabled" ) == 1 )
+			{
+				key = key->GetNextKey();
+				continue;
+			}
+
+			KeyValues* altmods = altmap->FindKey("mods");
+			if ( altmods )
+			{
+				KeyValues* akey = altmods->GetFirstSubKey();
+				while ( akey )
+				{
+					ModeOption modemap;
+					modemap.ModeOverride = akey->GetInt( "modeoverride" );
+					modemap.MapAlt = V_strdup( akey->GetString( "mapreplace", altmap->GetName() ) );
+					modemap.ModeName = V_strdup( akey->GetString( "modename", altmap->GetString( "modename" ) ) );
+					modemap.MapMod = V_strdup( akey->GetString( "modfile" ) );
+					modemap.MapOverride = V_strdup( akey->GetString( "overridefile" ) );
+					modemap.ModeArt = V_strdup( akey->GetString( "modeart" ) );
+
+					possibleModes.AddToTail( modemap );
+					MapMods.AddToTail( modemap );
+
+					akey = akey->GetNextKey();
+				}
+			}
+
+			key = key->GetNextKey();
+		}
+	}
 
 	KeyValues* tags = map->FindKey("tags");
 	if ( tags )
@@ -4043,7 +4087,7 @@ void CTFCustomMatchModeDialog::CreateControls()
 			possibleModes.AddToTail( mode9 );
 			MapMods.AddToTail( mode9 );
 		}
-		if ( tags->GetInt( "allow_tfsolo_explore" ) == 1 )
+		if ( tags->GetInt( "block_tfsolo_explore" ) != 1 )
 		{
 			ModeOption mode10;
 			mode10.ModeOverride = OVERRIDE_NOMODE;
@@ -4135,6 +4179,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 		else if (!stricmp(mode.ModeName, "#Gametype_PlayerDestruction"))
 		{
 			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
+		else if (!stricmp(mode.ModeName, "#GameType_Medieval"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_attackdefend");
 		}
 		else if (!stricmp(mode.ModeName, "#Gametype_TOW"))
 		{
