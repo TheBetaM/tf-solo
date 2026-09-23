@@ -2671,12 +2671,12 @@ void CTFNavMesh::ScriptRecalculateBlocked( float delay )
 	ScheduleRecomputationOfInternalData( MAP_LOGIC, delay );
 }
 
-void CTFNavMesh::ScriptRecalculateBlockedWithCapture( float delay )
+void CTFNavMesh::ScriptRecalculateBlockedWithCapture( float delay, int point )
 {
-	ScheduleRecomputationOfInternalData( POINT_CAPTURED, delay );
+	ScheduleRecomputationOfInternalData( POINT_CAPTURED, delay, point );
 }
 
 BEGIN_SCRIPTDESC( CTFNavMesh, CNavMesh, "The TF nav mesh" )
 DEFINE_SCRIPTFUNC_NAMED( ScriptRecalculateBlocked, "RecomputeBlockers", "Arguments: ( delay ) - schedule recalculating blocked state of all areas" )
-DEFINE_SCRIPTFUNC_NAMED( ScriptRecalculateBlockedWithCapture, "RecomputeBlockersWithCapture", "Arguments: ( delay ) - schedule recalculating blocked state of all areas, include point capture blocking" )
+DEFINE_SCRIPTFUNC_NAMED( ScriptRecalculateBlockedWithCapture, "RecomputeBlockersWithCapture", "Arguments: ( delay, point ID ) - schedule recalculating blocked state of all areas, include point capture blocking" )
 END_SCRIPTDESC();

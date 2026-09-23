@@ -110,7 +110,7 @@ SetInt/SetFloat/SetBool/SetString/SetKeyInt/SetKeyFloat/SetKeyBool/SetKeyString,
 - TFBot: Added GetPreset(), SetPreset(string)
 - TFPlayer: Added PostInventoryApplication(), GetKills(), GetDeaths(), GetSuicides(), GetBuildingsBuilt(), 
 GetDamageDone(), GetCrits(), GetPoints()
-- NavMesh: RecomputeBlockers(delay), RecomputeBlockersWithCapture(delay)
+- NavMesh: RecomputeBlockers(delay), RecomputeBlockersWithCapture(delay, point)
 - Moved TFBot.GenerateAndWearItem to TFPlayer and optimized execution time
 - Added IncludeScriptsDir(string, scope) to include all files in a directory
 ## Item changes

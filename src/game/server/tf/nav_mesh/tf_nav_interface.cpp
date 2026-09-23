@@ -52,6 +52,6 @@ void CPointNavInterface::RecomputeBlockersWithCapture( inputdata_t &inputdata )
 	Assert( pTFNavMesh );
 	if( pTFNavMesh )
 	{
-		pTFNavMesh->ScheduleRecomputationOfInternalData( CTFNavMesh::POINT_CAPTURED );
+		pTFNavMesh->ScheduleRecomputationOfInternalData( CTFNavMesh::POINT_CAPTURED, 2.0f, inputdata.value.Int() );
 	}
 }

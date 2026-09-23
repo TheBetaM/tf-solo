@@ -111,11 +111,12 @@ public:
 	};
 	void ScheduleRecomputationOfInternalData( RecomputeReasonType reason, int whichPoint );
 	void ScheduleRecomputationOfInternalData( RecomputeReasonType reason, float delay );
+	void ScheduleRecomputationOfInternalData( RecomputeReasonType reason, float delay, int whichPoint );
 
 	virtual void OnDoorCreated( CBaseEntity *door );					// invoked when a door is created
 	
 	void ScriptRecalculateBlocked( float delay );
-	void ScriptRecalculateBlockedWithCapture( float delay );
+	void ScriptRecalculateBlockedWithCapture( float delay, int point );
 
 protected:
 	virtual void BeginCustomAnalysis( bool bIncremental );
@@ -176,6 +177,13 @@ inline void CTFNavMesh::ScheduleRecomputationOfInternalData( CTFNavMesh::Recompu
 	m_recomputeInternalDataTimer.Start( delay );
 	m_recomputeReason = reason;
 	m_recomputeReasonWhichPoint = 0;
+}
+
+inline void CTFNavMesh::ScheduleRecomputationOfInternalData( CTFNavMesh::RecomputeReasonType reason, float delay, int whichPoint )
+{
+	m_recomputeInternalDataTimer.Start( delay );
+	m_recomputeReason = reason;
+	m_recomputeReasonWhichPoint = whichPoint;
 }
 
 inline const CUtlVector< CTFNavArea * > *CTFNavMesh::GetSpawnRoomAreas( int team ) const

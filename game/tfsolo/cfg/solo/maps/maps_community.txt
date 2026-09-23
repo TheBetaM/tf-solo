@@ -1095,7 +1095,6 @@ maps_config
 		}
 		koth_toxic
 		{
-			disabled 1
 			name "Toxic"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_toxic"
@@ -1504,7 +1503,6 @@ maps_config
 		}
 		pl_embargo
 		{
-			disabled 1
 			name "Embargo"
 			modename "#Gametype_Escort"
 			thumbArt "maps/menu_thumb_pl_embargo"
