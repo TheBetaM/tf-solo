@@ -9,20 +9,15 @@
 - Added new gamemodes:  
 -- Mad Dash - Maintain your ÜberCharge long enough to reach the enemy base!  
 -- Property Damage - Capture team owned property by damaging it!  
-- Added new maps  
 - Loadouts now work offline; accessing your base TF2 inventory still requires an internet connection
 - Added Armory - a way to unlock items using credits earned in the game
-- Added new weapon and taunt items
 - Added Hit List - browse enemies encountered in the game
 - Added Subs - class substitute playable characters
-- Added the Game Instructor feature from Alien Swarm:  
--- Optional context-sensitive tutorials for base TF2 mechanics  
--- Optional context-sensitive tutorials for new mechanics  
--- Plus additional flavor text  
-- Added a map overview, replacing the scoreboard  
 - Added a choreography system for recording and playing back player inputs  
+- Added new maps  
+- Added new weapon and taunt items
 - Added new achievements, and functionality for custom-made ones  
-- Added console commands: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
+- Added console commands/features: mp_humans_must_join_class, tf_player_responses_mute, tf_viewmodel_forcehide, 
 tf_bot_quota_use_presets, nav_generate_noreload, tf_bot_add preset <presetname>, 
 nav_generate_auto, nav_generate_auto_view_distance, tf_mvm_popfile_requested, 
 mp_restartblock, tf_roundstarttalk_disable, tf_gamemode_override, 
@@ -44,18 +39,17 @@ sv_script_block_runscriptfile, tf_teamgoal_hide
 - The item schema is now loaded from items_custom.txt, allowing for extension and modularity
 - Disabled halloween taunts, holiday restrictions by default
 - Disabled soul gargoyle and halloween soul spawning
-- Fixed some cases of MvM workshop maps not being able to find any popfile
 - Minimal HUD no longer prevents game_text_tf from appearing
 - Fixed round restart commands not working in Arena mode
-- Fixed mini-rounds without a setup timer being stuck in setup mode
+- Fixed mini-rounds without a setup timer being stuck in setup mode (ex. Pipeline/Nightfall)
 - Fixed canteens being unusable in Sudden Death/Arena
 - Added #basedir to KeyValues to base on top of all files in a directory
 - Added functionality to change Pyrovision into any custom vision
 - Improved thirdperson_platformer, now allows firing in the direction you're aiming
 - Increased maximum FoV to 130
-- Spawning is no longer prevented while having the class select menu open with hud_classautokill 0
+- Spawning is no longer prevented while having the class select menu open with hud_classautokill set to 0
 - Fixed loadout changes not respawning players during the preround period in Arena mode
-- Added SVG and bitmap support to ImagePanel (can now use SVG/BMP/JPG/TGA/PNG files directly in VGUI images)
+- Added bitmap support to ImagePanel (can now use BMP/JPG/TGA/PNG files directly in VGUI images)
 - Added support for custom decorated weapons
 - tf_build_menu_controller_mode now also works with keyboard controls
 ## TFBot improvements
@@ -74,7 +68,7 @@ sv_script_block_runscriptfile, tf_teamgoal_hide
 - Bots can now use Sweeping Charge and Brave Jump in VSH
 - Bots can now buyback in MvM
 - Medic bots can now revive teammates if revives are active in MvM/PvP
-- Bots will now try to escape the Underworld and Loot Island through nav areas marked with nav_stop, detected through TF_COND_PURGATORY, TF_COND_HALLOWEEN_IN_HELL, or nav areas marked with nav_no_hostages
+- Bots will now try to escape the Underworld and Loot Island through nav areas marked with nav_stop, detected through TF_COND_PURGATORY, TF_COND_HALLOWEEN_IN_HELL, or while walking on nav areas marked with nav_no_hostages
 - Fixed generated nav meshes for workshop maps not being loaded
 - Fixed nav_generate nav mesh generation not taking into account multiple spawn areas and stages
 - Fixed bots not working correctly in PLR

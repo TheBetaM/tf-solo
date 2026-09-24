@@ -4510,11 +4510,11 @@ enum CustomMatchMapCategory
 	MapCategory_VSH,
 	MapCategory_ZI,
 
-	MapCategory_Workshop,
 	MapCategory_Workshop_TF2,
 	
 	MapCategory_MAX,
 
+	MapCategory_Workshop,
 	MapCategory_TFSOLO,
 	MapCategory_Hallow,
 	MapCategory_Xmas,
@@ -4574,7 +4574,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	//m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	//m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
 
-	m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_Mod", NULL);
+	//m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_Mod", NULL);
 	m_pCategoryList->AddItem("#TFSOLO_WorkshopSource_TF2", NULL);
 	/*
 	if ( SteamApps()->BIsAppInstalled( 3826520 ) )
