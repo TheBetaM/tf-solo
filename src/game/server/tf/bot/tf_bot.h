@@ -510,9 +510,9 @@ public:
 	void ReEvaluateCurrentClass( void );
 
 	void SpawnCustom( void );
-	CUtlString GetPreset() { return m_preset; }
-	void SetPreset(CUtlString preset) { m_preset = preset; }
-	CUtlString ScriptGetPreset() { return GetPreset(); }
+	const char* GetPreset() { return m_preset.ToCStr(); }
+	void SetPreset(const char* preset) { m_preset = AllocPooledString( preset ); }
+	const char* ScriptGetPreset() { return m_preset.ToCStr(); }
 	void ScriptSetPreset(const char* preset) { SetPreset(preset); }
 
 private:
@@ -606,7 +606,7 @@ private:
 
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
 
-	CUtlString m_preset;
+	string_t m_preset;
 	CountdownTimer m_lastUsedCanteenTimer;
 	CountdownTimer m_lastUsedHaleChargeTimer;
 	CountdownTimer m_checkUpgradesTimer;

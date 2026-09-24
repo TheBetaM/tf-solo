@@ -4,7 +4,8 @@ getroottable()[TFSOLO.BotStatsEventTag] <- {
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local aplayer = GetPlayerFromUserID(params.attacker)
-		if (params.userid == 0) return
+		if (params.userid == 0 || !player || !aplayer) return
+		if (!player.IsBotOfType(1337) && !aplayer.IsBotOfType(1337)) return
 		if (!IsPlayerABot(player) && IsPlayerABot(aplayer))
 		{
 			local botpreset = aplayer.GetPreset()

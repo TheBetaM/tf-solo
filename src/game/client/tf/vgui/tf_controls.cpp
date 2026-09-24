@@ -4964,10 +4964,6 @@ const char *GetUnsupportedMapDisplayName( const char *mapName, bool bTitleCase /
 
 bool CheckUnsupportedMapName( const char* mapName, int category )
 {
-	if ( !Q_strncmp( mapName, "merc_", 5 ) )
-	{
-		return false;
-	}
 	switch ( category )
 	{
 		default:

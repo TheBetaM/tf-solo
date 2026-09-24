@@ -513,7 +513,7 @@ void CTFBotManager::MaintainBotQuota()
 				{
 					pBot->SetAttribute(CTFBot::QUOTA_MANANGED);
 
-					pBot->SetPreset(preset);
+					pBot->SetPreset( V_strdup( preset ) );
 					if (presetKey->FindKey("Team"))
 					{
 						int team = presetKey->GetInt("Team");

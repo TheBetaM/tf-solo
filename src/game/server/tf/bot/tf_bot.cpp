@@ -485,8 +485,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 		{
 			if (preset != NULL)
 			{
-				CUtlString spreset(preset);
-				pBot->SetPreset(spreset);
+				pBot->SetPreset( V_strdup( preset ) );
 			}
 			if ( bQuotaManaged || preset != NULL )
 			{
@@ -6156,12 +6155,12 @@ bool CTFBot::IsFriend( const CBaseEntity* them ) const
 
 void CTFBot::SpawnCustom()
 {
-	if (!m_preset || m_preset == "")
+	if ( m_preset == NULL_STRING || !m_preset.ToCStr()[0] )
 	{
 		return;
 	}
 
-	auto preset = TheTFBots().m_presetsKV->FindKey(m_preset);
+	auto preset = TheTFBots().m_presetsKV->FindKey(m_preset.ToCStr());
 	if (!preset)
 	{
 		Msg("Bot preset not found.\n");
