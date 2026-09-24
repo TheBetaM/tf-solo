@@ -4,7 +4,7 @@ DESCRIPTION INFO_OPTIONS
 {
 	"category_tfsolo"
 	{
-		"Team Fortress: Greatest Hits"
+		"Mod Options"
 		{ CATEGORY }
 	}
 	
@@ -14,30 +14,6 @@ DESCRIPTION INFO_OPTIONS
 		"#TFSOLO_Settings_General_Desc"
 		{ BUTTON }
 		{ "OpenOptionsDialog" }
-	}
-	
-	"tf_oobe_modern_controls"
-	{
-		"#TFSOLO_OOBE_ModernControls"
-		"#TFSOLO_OOBE_ModernControls_Desc"
-		{ BOOL }
-		{ "0" }
-	}
-	
-	"tf_oobe_hints_base"
-	{
-		"#TFSOLO_OOBE_TutorialHints"
-		"#TFSOLO_OOBE_TutorialHints_Desc"
-		{ BOOL }
-		{ "0" }
-	}
-	
-	"tf_oobe_hints_mod"
-	{
-		"#TFSOLO_OOBE_TFSOLOHints"
-		"#TFSOLO_OOBE_TFSOLOHints_Desc"
-		{ BOOL }
-		{ "0" }
 	}
 	
 	"mod_reset_progress"
@@ -53,13 +29,6 @@ DESCRIPTION INFO_OPTIONS
 		"#GameUI_FOV"
 		{ SLIDER 75 130 }
 		{ "90" }
-	}
-	
-	"tf_overview_pause"
-	{
-		"Pause the game while in map overview"
-		{ BOOL }
-		{ "0" }
 	}
 	
 	"tf_bot_sniper_lasersight"

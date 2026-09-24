@@ -25,27 +25,9 @@ DESCRIPTION SERVER_OPTIONS
 	
 	"tf_mirrormode"
 	{
-		"Mirror Mode"
+		"Enable Mirror Mode"
 		{ BOOL }
 		{ "0" }
-	}
-	
-	"tf_vision_force"
-	{
-		"Force Vision"
-		{
-			LIST
-			"Default" "0"
-			"Pyrovision" "1"
-		}
-		{ "0" }
-	}
-	
-	"tf_subclass_allow"
-	{
-		"Allow Class Substitute Characters"
-		{ BOOL }
-		{ "1" }
 	}
 
 	"mp_disable_respawn_times"
@@ -83,7 +65,7 @@ DESCRIPTION SERVER_OPTIONS
 	
 	"tf_spells_enabled"
 	{
-		"Enable Halloween Spells"
+		"Force Enable Halloween Spells"
 		{ BOOL }
 		{ "0" }
 	}
