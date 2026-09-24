@@ -163,4 +163,29 @@
 			//"centerwrap"	"1"
 		}
 	}	
+
+	"FavButton"
+	{
+		"ControlName"	"CExButton"
+		"fieldName"		"FavButton"
+		"xpos"			"r240"
+		"ypos"			"10"
+		"zpos"			"1"
+		"wide"			"200"
+		"tall"			"25"
+		"autoResize"	"0"
+		"pinCorner"		"3"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"	"0"
+		"labelText"		"#TFSOLO_CustomMatch_AddToFav"
+		"font"			"HudFontSmallBold"
+		"textAlignment"	"center"
+		"dulltext"		"0"
+		"brighttext"	"0"
+		"default"		"1"
+		"Command"		"Fav"
+		"sound_depressed"	"UI/buttonclick.wav"
+		"sound_released"	"UI/buttonclickrelease.wav"
+	}
 }

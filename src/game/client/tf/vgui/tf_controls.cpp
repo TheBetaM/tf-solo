@@ -3580,6 +3580,7 @@ CTFCustomMatchModeDialog::CTFCustomMatchModeDialog(vgui::Panel* parent) : BaseCl
 	SetProportional(true);
 
 	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+	m_FavButton = new CExButton(this, "FavButton", "", this, "Fav");
 
 	m_TitleLabel = new CExLabel(this, "TitleLabel", "");
 	m_DescLabel = new CExLabel(this, "DescLabel", "");
@@ -3666,6 +3667,43 @@ void CTFCustomMatchModeDialog::OnCommand(const char* command)
 		g_pTFCustomMatchMapDialog->m_pCategoryList->ActivateItemByRow(m_iLastCategory);
 		g_pTFCustomMatchMapDialog->Deploy();
 
+		return;
+	}
+	else if ( !stricmp( command, "Fav" ) )
+	{
+		KeyValues* save = TFInventoryManager()->GetSaveData();
+		KeyValues* saveMaps = NULL;
+		KeyValues* saveMap = NULL;
+		if ( save )
+		{
+			saveMaps = save->FindKey( "Maps" );
+			if ( !saveMaps )
+			{
+				saveMaps = save->CreateKey( "Maps" );
+			}
+			saveMap = saveMaps->FindKey( m_iszRequestedMap );
+			if ( !saveMap )
+			{
+				saveMap = saveMaps->CreateKey( m_iszRequestedMap );
+			}
+		}
+		else 
+		{
+			return;
+		}
+
+		if ( saveMap->GetInt("Fav") == 0 )
+		{
+			saveMap->SetInt("Fav", 1);
+			m_FavButton->SetText("#TFSOLO_CustomMatch_RemoveFav");
+		}
+		else 
+		{
+			saveMap->SetInt("Fav", 0);
+			m_FavButton->SetText("#TFSOLO_CustomMatch_AddToFav");
+		}
+		
+		TFInventoryManager()->WriteSaveData();
 		return;
 	}
 	else if ( !V_strnicmp( command, "map$", 4 ) )
@@ -4224,6 +4262,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 		{
 			mapIcon->SetImage("illustrations/gamemode_payloadrace");
 		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_MercMode"))
+		{
+			mapIcon->SetImage("illustrations/training_offlinepractice");
+		}
 		else
 		{
 			mapIcon->SetImage("illustrations/quickplay");
@@ -4376,6 +4418,29 @@ void CTFCustomMatchModeDialog::CreateControls()
 		m_pListPanel->AddItem(NULL, holder);
 	}
 
+	KeyValues* save = TFInventoryManager()->GetSaveData();
+	KeyValues* saveMaps = NULL;
+	KeyValues* saveMap = NULL;
+	if ( save )
+	{
+		saveMaps = save->FindKey( "Maps" );
+		if ( saveMaps )
+		{
+			saveMap = saveMaps->FindKey( m_iszRequestedMap );
+			if ( saveMap )
+			{
+				if ( saveMap->GetInt("Fav") == 0 )
+				{
+					m_FavButton->SetText("#TFSOLO_CustomMatch_AddToFav");
+				}
+				else 
+				{
+					m_FavButton->SetText("#TFSOLO_CustomMatch_RemoveFav");
+				}
+			}
+		}
+	}
+	
 }
 
 
@@ -4430,7 +4495,7 @@ void CTFCustomMatchModeDialog::Deploy( const char* map )
 enum CustomMatchMapCategory
 {
 	MapCategory_Default = 0,
-	MapCategory_TFSOLO,
+	MapCategory_Favorites,
 
 	MapCategory_CP,
 	MapCategory_KOTH,
@@ -4450,6 +4515,7 @@ enum CustomMatchMapCategory
 	
 	MapCategory_MAX,
 
+	MapCategory_TFSOLO,
 	MapCategory_Hallow,
 	MapCategory_Xmas,
 
@@ -4471,7 +4537,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	SetProportional(true);
 
 	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
-	m_iSelectedCategory = MapCategory_TFSOLO;
+	m_iSelectedCategory = RandomInt( MapCategory_CP, MapCategory_ZI );
 
 	m_pToolTip = new CTFTextToolTip(this);
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
@@ -4490,7 +4556,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 
 	m_pCategoryList = new vgui::ComboBox( this, "MapCategoryList", MapCategory_MAX, false );
 	m_pCategoryList->AddItem("#Store_Filter_All", NULL);
-	m_pCategoryList->AddItem("#MapCategory_TFSOLO", NULL);
+	m_pCategoryList->AddItem("#MapCategory_Favorites", NULL);
 
 	m_pCategoryList->AddItem("#Gametype_CP", NULL);
 	m_pCategoryList->AddItem("#Gametype_Koth", NULL);
@@ -4851,6 +4917,7 @@ const char *GetUnsupportedMapDisplayName( const char *mapName, bool bTitleCase /
 		pszSrc +=  4;
 	}
 	else if ( !Q_strncmp( szTempName, "koth_", 5 ) ||
+			  !Q_strncmp( szTempName, "merc_", 5 ) ||
 			  !Q_strncmp( szTempName, "pass_", 5 ) )
 	{
 		pszSrc +=  5;
@@ -5101,6 +5168,25 @@ void CTFCustomMatchMapDialog::CreateControls()
 			mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
 			key = key->GetNextKey();
 			continue;
+		}
+		if ( m_iSelectedCategory == MapCategory_Favorites )
+		{
+			if ( maps && saveMaps && saveMaps->FindKey( key->GetName() ) )
+			{
+				KeyValues* pickupsSave = saveMaps->FindKey( key->GetName() );
+				if ( pickupsSave->GetInt("Fav") == 0 )
+				{
+					mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
+					key = key->GetNextKey();
+					continue;
+				}
+			}
+			else 
+			{
+				mapDupeCheck.AddToTail( V_strdup( key->GetName() ) );
+				key = key->GetNextKey();
+				continue;
+			}
 		}
 		if ( !V_strnicmp( key->GetName(), "workshop_", 9 ) )
 		{
@@ -5358,8 +5444,11 @@ void CTFCustomMatchMapDialog::CreateControls()
 		int nMapState = MapState_Open;
 		if ( saveMaps && saveMaps->FindKey( key->GetName() ) )
 		{
-			pszStateText = ""; // "CLEAR";
 			KeyValues* pickupsSave = saveMaps->FindKey( key->GetName() );
+			if ( pickupsSave->GetInt( "Visits" ) != 0 )
+			{
+				pszStateText = ""; // "CLEAR"
+			}
 			nMapState = pickupsSave->GetInt( "State" );
 			/*
 			KeyValues* pickups = key->FindKey( "pickups" );

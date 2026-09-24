@@ -318,6 +318,7 @@ public:
 	const char* m_iszRequestedMapMod;
 	const char* m_iszRequestedMapOverride;
 	vgui::Panel* m_SelectedModePanel;
+	CExButton* m_FavButton;
 
 private:
 
