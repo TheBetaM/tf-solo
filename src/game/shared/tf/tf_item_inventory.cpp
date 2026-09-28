@@ -52,6 +52,7 @@ using namespace GCSDK;
 #define LOCAL_LOADOUT_FILE		"cfg/local_loadout.txt"
 const itemid_t LOCAL_LOADOUT_RESERVE = ( (itemid_t) - INT_MAX );
 
+ConVar tf_disable_econ_items("tf_disable_econ_items", "0", FCVAR_REPLICATED, "Disable all inventory items from being equippable (stock only mode).");
 ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "0", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
 ConVar tf_disable_holiday_restrictions("tf_disable_holiday_restrictions", "1", FCVAR_REPLICATED, "Disable holiday restrictions on items.");
 

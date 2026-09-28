@@ -89,6 +89,7 @@ extern ConVar tf_mvm_miniboss_scale;
 extern ConVar tf_bot_health_critical_ratio;
 extern ConVar tf_bot_health_ok_ratio;
 extern ConVar friendlyfire;
+extern ConVar tf_disable_econ_items;
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -6155,7 +6156,7 @@ bool CTFBot::IsFriend( const CBaseEntity* them ) const
 
 void CTFBot::SpawnCustom()
 {
-	if ( m_preset == NULL_STRING || !m_preset.ToCStr()[0] )
+	if ( m_preset == NULL_STRING || !m_preset.ToCStr()[0] || tf_disable_econ_items.GetBool() )
 	{
 		return;
 	}

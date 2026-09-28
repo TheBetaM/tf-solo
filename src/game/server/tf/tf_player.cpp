@@ -175,6 +175,7 @@ extern ConVar	tf_subclass_allow;
 extern ConVar	tf_player_preventdeath;
 extern ConVar	tf_taunt_disable_attack;
 extern ConVar   tf_mvm_allow_refunds;
+extern ConVar   tf_disable_econ_items;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -5016,6 +5017,12 @@ CEconItemView *CTFPlayer::GetLoadoutItem( int iClass, int iSlot, bool bReportWhi
 	}
 
 	CEconItemView *pItem = m_Inventory.GetItemInLoadout( iClass, iSlot, ScriptGetSubClass() );
+
+	if ( tf_disable_econ_items.GetBool() )
+	{
+		pItem = TFInventoryManager()->GetBaseItemForClass( iClass, iSlot, ScriptGetSubClass() );
+		return pItem;
+	}
 
 	// Check to see if this item passes the tournament rules (in whitelist/or normal quality).
 	// If it doesn't, we fall back to the base item for the loadout slot.

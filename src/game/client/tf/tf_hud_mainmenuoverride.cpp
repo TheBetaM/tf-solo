@@ -132,6 +132,16 @@ void cc_promotional_codes_button_changed( IConVar *pConVar, const char *pOldStri
 }
 ConVar cl_promotional_codes_button_show( "cl_promotional_codes_button_show", "1", FCVAR_ARCHIVE, "Toggles the 'View Promotional Codes' button in the main menu for players that have used the 'RIFT Well Spun Hat Claim Code'.", cc_promotional_codes_button_changed );
 
+void CL_OpenCampaignsPanel( const CCommand &args )
+{
+	IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
+	if ( pMMOverride )
+	{
+		( (CHudMainMenuOverride*)pMMOverride )->OnCommand( "open_campaigns" );
+	}
+}
+static ConCommand opencampaigns( "opencampaigns", &CL_OpenCampaignsPanel, "Displays the Campaigns panel." );
+
 extern bool Training_IsComplete();
 
 void PromptOrFireCommand( const char* pszCommand )

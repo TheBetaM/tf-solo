@@ -76,5 +76,12 @@ DESCRIPTION SERVER_OPTIONS
 		{ SLIDER 0.0 1.0 }
 		{ "0" }
 	}
+
+	"tf_disable_econ_items"
+	{
+		"Stock Items Only"
+		{ BOOL }
+		{ "0" }
+	}
 	
 }

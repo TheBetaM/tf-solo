@@ -29,6 +29,8 @@
 
 using namespace vgui;
 
+extern ConVar tf_disable_econ_items;
+
 //======================================
 
 DECLARE_HUDELEMENT( CHudMenuTauntSelection );
@@ -462,6 +464,10 @@ static void OpenTauntSelectionUI()
 				break;
 			}
 		}
+	}
+	if ( tf_disable_econ_items.GetBool() )
+	{
+		bHasAnyTauntEquipped = false;
 	}
 
 	if ( !bHasAnyTauntEquipped )

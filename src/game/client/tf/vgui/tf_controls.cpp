@@ -4266,6 +4266,10 @@ void CTFCustomMatchModeDialog::CreateControls()
 		{
 			mapIcon->SetImage("illustrations/training_offlinepractice");
 		}
+		else if (!stricmp(mode.ModeName, "#GameType_TFSOLO_Explore"))
+		{
+			mapIcon->SetImage("illustrations/gamemode_operation_gunmettle");
+		}
 		else
 		{
 			mapIcon->SetImage("illustrations/quickplay");
