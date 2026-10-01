@@ -1401,6 +1401,43 @@ maps_config
 				theme_desert 1
 			}
 		}
+		workshop_3789293911
+		{
+			name "Repent"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
+		workshop_3793747813
+		{
+			name "Doomtown"
+			modename "#Gametype_ZI"
+			tags
+			{
+				zi 1
+				theme_desert 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
+		workshop_3795225054
+		{
+			name "Outbreak"
+			modename "#Gametype_ZI"
+			tags
+			{
+				zi 1
+				theme_desert 1
+				theme_city 1
+				vscript 1
+			}
+		}
 		
 	
 	}

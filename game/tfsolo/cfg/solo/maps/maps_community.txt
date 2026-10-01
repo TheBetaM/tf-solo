@@ -2406,6 +2406,77 @@ maps_config
 				theme_desert 1
 			}
 		}
+
+		pl_aridpass_event
+		{
+			name "Scarypass"
+			modename "#Gametype_Escort"
+			thumbArt "maps/menu_thumb_pl_aridpass_event"
+			photosArt "maps/menu_photos_pl_aridpass_event"
+			tags
+			{
+				pl 1
+				theme_hallow 1
+			}
+		}
+		cp_holyhell
+		{
+			name "HolyHell"
+			modename "#Gametype_CP"
+			thumbArt "maps/menu_thumb_cp_holyhell"
+			photosArt "maps/menu_photos_cp_holyhell"
+			tags
+			{
+				cp 1
+				cp_count 5
+				symm 1
+				theme_hallow 1
+				theme_castle 1
+			}
+		}
+		koth_trainsawlaser
+		{
+			name "Shorelight"
+			modename "#Gametype_Koth"
+			thumbArt "maps/menu_thumb_koth_trainsawlaser"
+			photosArt "maps/menu_photos_koth_trainsawlaser"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+			}
+		}
+		ctf_medi_evil
+		{
+			name "Medi-Evil"
+			modename "#Gametype_CTF"
+			thumbArt "maps/menu_thumb_ctf_medi_evil"
+			photosArt "maps/menu_photos_ctf_medi_evil"
+			tags
+			{
+				mdv 1
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_hallow 1
+			}
+		}
+		cp_scaredycat
+		{
+			name "Scaredy-Cat"
+			modename "#Gametype_AttackDefense"
+			thumbArt "maps/menu_thumb_cp_scaredycat"
+			photosArt "maps/menu_photos_cp_scaredycat"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 2
+				theme_hallow 1
+			}
+		}
 		
 	}
 }

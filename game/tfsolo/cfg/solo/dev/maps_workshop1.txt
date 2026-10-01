@@ -7678,18 +7678,6 @@ maps_config
 				theme_hallow 1
 			}
 		}
-		workshop_3563662184
-		{
-			name "Scaredy Cat"
-			modename "#Gametype_AttackDefense"
-			tags
-			{
-				ad 1
-				cp 1
-				cp_count 2
-				theme_hallow 1
-			}
-		}
 		workshop_3564318980
 		{
 			name "Hellsgate"
@@ -8369,6 +8357,229 @@ maps_config
 				cp_count 1
 				symm 1
 				theme_japan 1
+			}
+		}
+		workshop_3753006271
+		{
+			name "Spiral"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_3757008423
+		{
+			name "Crevasse Pass"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3758709084
+		{
+			name "HarpyHills"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_desert 1
+			}
+		}
+		workshop_3759233822
+		{
+			name "Timbersaw"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_swamp 1
+			}
+		}
+		workshop_3772469024
+		{
+			name "Skater"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3778832099
+		{
+			name "Badmoon"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3788346360
+		{
+			name "Stardust"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_space 1
+			}
+		}
+		workshop_3789293911
+		{
+			name "Repent"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
+		workshop_3792088932
+		{
+			name "Breeze"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_alpine 1
+			}
+		}
+		workshop_3792851654
+		{
+			name "Unearthed"
+			modename "#Gametype_CTF"
+			tags
+			{
+				ctf 1
+				flag_count 2
+				symm 1
+				theme_hallow 1
+			}
+		}
+		workshop_3793747813
+		{
+			name "Doomtown"
+			modename "#Gametype_ZI"
+			tags
+			{
+				zi 1
+				theme_desert 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
+		workshop_3794060481
+		{
+			name "Theatrical"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_city 1
+			}
+		}
+		workshop_3794068319
+		{
+			name "Dreadlake"
+			modename "#Gametype_AttackDefense"
+			tags
+			{
+				ad 1
+				cp 1
+				cp_count 3
+				theme_hallow 1
+			}
+		}
+		workshop_3795225054
+		{
+			name "Outbreak"
+			modename "#Gametype_ZI"
+			tags
+			{
+				zi 1
+				theme_city 1
+				theme_hallow 1
+				vscript 1
+			}
+		}
+		workshop_3795235526
+		{
+			name "Nupower"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena_pd 1
+				cp_count 1
+				symm 1
+				theme_industrial 1
+			}
+		}
+		workshop_3797817333
+		{
+			name "Snowblind"
+			modename "#Gametype_Koth"
+			tags
+			{
+				koth 1
+				cp_count 1
+				symm 1
+				theme_snow 1
+			}
+		}
+		workshop_3798068932
+		{
+			name "Antidote"
+			modename "#Gametype_ZI"
+			tags
+			{
+				zi 1
+				theme_hallow 1
+				theme_industrial 1
+				vscript 1
+			}
+		}
+		workshop_3798816740
+		{
+			name "Carcass Canyon"
+			modename "#Gametype_Escort"
+			tags
+			{
+				pl 1
+				theme_hallow 1
+			}
+		}
+		workshop_3801180194
+		{
+			name "Coaxel"
+			modename "#Gametype_Arena"
+			tags
+			{
+				arena 1
+				flag_count 2
+				symm 1
+				theme_industrial 1
 			}
 		}
 		
