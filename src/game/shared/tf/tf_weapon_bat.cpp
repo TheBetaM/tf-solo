@@ -749,7 +749,7 @@ void CTFStunBall::ApplyBallImpactEffectOnVictim( CBaseEntity *pOther )
 		}
 
 		// MvM bots
-		if ( TFGameRules() && TFGameRules()->GameModeUsesUpgrades() && pPlayer->IsBot() && pPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && pPlayer->IsBot() && pPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
 			// Distance mod
 			flStunAmount = ( bMax ) ? 1.f : RemapValClamped( flLifeTimeRatio, 0.1f, 0.99f, 0.5f, 0.75 );

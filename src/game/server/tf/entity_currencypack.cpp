@@ -219,7 +219,7 @@ void CCurrencyPack::ComeToRest( void )
 	for ( int i = 0; i < ITriggerHurtAutoList::AutoList().Count(); i++ )
 	{
 		CTriggerHurt *pTrigger = static_cast<CTriggerHurt*>( ITriggerHurtAutoList::AutoList()[i] );
-		if ( !pTrigger->m_bDisabled && pTrigger->PointIsWithin( GetAbsOrigin() ) )
+		if ( !pTrigger->m_bDisabled )
 		{
 			ForceCollect();
 			return;
