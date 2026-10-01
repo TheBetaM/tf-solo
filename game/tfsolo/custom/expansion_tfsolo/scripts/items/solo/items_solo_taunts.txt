@@ -150,7 +150,7 @@
 		{
 			"name" "Taunt HeroPose"
 			"prefab" "taunt"
-			"item_name" "Taunt: Signature Stance"
+			"item_name" "Taunt: Classy Mercenary"
 			"item_description" ""
 			"image_inventory" "backpack/player/items/all_class/taunt_replay"
 			"image_inventory_size_w" "128"

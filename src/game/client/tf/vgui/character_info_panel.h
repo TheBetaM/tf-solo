@@ -155,8 +155,8 @@ private:
 	bool						m_bPreventClosure;
 	int							m_iClosePanel;
 	int							m_iDefaultTeam;
-	CTFAchievementsDialog		*m_pAchievementsPanel;
-	CTFModCreditsDialog			*m_pModCreditsPanel;
+	//CTFAchievementsDialog		*m_pAchievementsPanel;
+	//CTFModCreditsDialog			*m_pModCreditsPanel;
 
 	CUtlVector< vgui::VPanelHandle >	m_vecOnCloseListeners;
 

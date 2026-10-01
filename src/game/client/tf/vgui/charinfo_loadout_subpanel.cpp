@@ -263,19 +263,27 @@ void CImageButton::Paint()
 
 const char *g_pszSubButtonNames[CHSB_NUM_BUTTONS] =
 {
-	"ShowBackpackButton",	// CHSB_BACKPACK,
-	"ShowCraftingButton",	// CHSB_CRAFTING,
-	"ShowArmoryButton",		// CHSB_ARMORY,
-	"ShowTradeButton",		// CHSB_TRADING,
-	"ShowPaintkitsButton"	// CHSB_PAINTKITS
+	"ShowMapInfoButton",
+	"ShowAchievementsButton",
+	"ShowSkillButton",
+	"ShowDemomanButton",
+	"ShowArmoryButton",
+	"ShowCraftingButton",
+	"ShowLessonsButton",
+	"ShowBestiaryButton",
+	"ShowModCreditsButton",
 };
 const char *g_pszSubButtonLabelNames[CHSB_NUM_BUTTONS] =
 {
-	"ShowBackpackLabel",	// CHSB_BACKPACK,
-	"ShowCraftingLabel",	// CHSB_CRAFTING,
-	"ShowArmoryLabel",		// CHSB_ARMORY,
-	"ShowTradeLabel",		// CHSB_TRADING,
-	"ShowPaintkitsLabel",	// CHSB_PAINTKITS
+	"ShowMapInfoLabel",
+	"ShowAchievementsLabel",
+	"ShowSkillBLabel",
+	"ShowDemomanLabel",
+	"ShowArmoryLabel",
+	"ShowCraftingLabel",
+	"ShowLessonsLabel",
+	"ShowBestiaryLabel",
+	"ShowModCreditsLabel",
 };
 
 int g_nLoadoutClassOrder[] =
@@ -447,7 +455,7 @@ void CCharInfoLoadoutSubPanel::OnCharInfoClosing( void )
 {
 	switch ( m_iShowingPanel )
 	{
-	case CHAP_CRAFTING:
+	case CHAP_BESTIARY:
 		PostMessage( m_pCraftingPanel, new KeyValues("Closing") );
 		break;
 	case CHAP_BACKPACK:
@@ -478,7 +486,7 @@ void CCharInfoLoadoutSubPanel::OnCraftingClosed( void )
 {
 	PostMessage( m_pCraftingPanel, new KeyValues("Closing") );
 	m_iShowingPanel = CHAP_LOADOUT;
-	m_iPrevShowingPanel = CHAP_CRAFTING;
+	m_iPrevShowingPanel = CHAP_BESTIARY;
 	m_flStartExplanationsAt = 0; 
 	m_iCurrentClassIndex = TF_CLASS_UNDEFINED; 
 	UpdateModelPanels();
@@ -535,6 +543,41 @@ void CCharInfoLoadoutSubPanel::OnCommand( const char *command )
 	else if ( !Q_strnicmp( command, "armory", 6 ) )
 	{
 		OpenToArmory();
+	}
+	else if ( !Q_strnicmp( command, "mapinfo", 6 ) )
+	{
+		OpenToMapInfo();
+	}
+	else if ( !Q_strnicmp( command, "achievements", 6 ) )
+	{
+		OpenToAchievements();
+	}
+	else if ( !Q_strnicmp( command, "lessons", 6 ) )
+	{
+		OpenToLessons();
+	}
+	else if ( !Q_strnicmp( command, "skill", 6 ) )
+	{
+		if ( engine->IsInGame() )
+		{
+			
+		}
+		else 
+		{
+			OpenToSkill();
+		}
+	}
+	else if ( !Q_strnicmp( command, "demoman", 6 ) )
+	{
+		OpenToDemoman();
+	}
+	else if ( !Q_strnicmp( command, "bestiary", 6 ) )
+	{
+		OpenToBestiary();
+	}
+	else if ( !Q_strnicmp( command, "modcredits", 6 ) )
+	{
+		OpenToModCredits();
 	}
 	else if ( !Q_strnicmp( command, "trading", 7 ) )
 	{
@@ -665,6 +708,16 @@ void CCharInfoLoadoutSubPanel::OpenToPaintkitPreview( CEconItemView* pItem, bool
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OpenSubPanel( charinfo_activepanels_t iPanel )
 {
+	if ( iPanel == CHAP_ACHIEVEMENTS )
+	{
+		engine->ClientCmd_Unrestricted( "openachievements" );
+		return;
+	}
+	if ( iPanel == CHAP_MODCREDITS )
+	{
+		engine->ClientCmd_Unrestricted( "openmodcredits" );
+		return;
+	}
 	m_flStartExplanationsAt = 0; 
 	m_iCurrentClassIndex = TF_CLASS_UNDEFINED; 
 	m_iPrevShowingPanel = m_iShowingPanel;
@@ -683,7 +736,7 @@ void CCharInfoLoadoutSubPanel::UpdateModelPanels( bool bOpenClassLoadout )
 	int iLabelClassToSet = -1;
 	int iClassIndexToSet = 0;
 
-	if ( m_iShowingPanel == CHAP_CRAFTING )
+	if ( m_iShowingPanel == CHAP_BESTIARY )
 	{
 		m_pClassLoadoutPanel->SetVisible( false );
 		m_pBackpackPanel->SetVisible( false );
@@ -710,6 +763,62 @@ void CCharInfoLoadoutSubPanel::UpdateModelPanels( bool bOpenClassLoadout )
 	else if ( m_iShowingPanel == CHAP_PAINTKIT_PREVIEW )
 	{
 		m_pInspectPanel->SetVisible( true );
+	}
+	else if ( m_iShowingPanel == CHAP_ACHIEVEMENTS )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
+	}
+	else if ( m_iShowingPanel == CHAP_CRAFTING )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
+	}
+	else if ( m_iShowingPanel == CHAP_DEMOMAN )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
+	}
+	else if ( m_iShowingPanel == CHAP_LESSONS )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
+	}
+	else if ( m_iShowingPanel == CHAP_MAPINFO )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
+	}
+	else if ( m_iShowingPanel == CHAP_SKILL )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
+	}
+	else if ( m_iShowingPanel == CHAP_MODCREDITS )
+	{
+		m_pClassLoadoutPanel->SetVisible( false );
+		m_pCraftingPanel->SetVisible( false );
+		m_pBackpackPanel->SetVisible( false );
+		m_pArmoryPanel->SetVisible( false );
+		m_pInspectPanel->SetVisible( false );
 	}
 	else
 	{
@@ -978,11 +1087,32 @@ void CCharInfoLoadoutSubPanel::UpdateLabelFromSubButton( int nButton )
 			}
 		}
 		break;
-	case CHSB_CRAFTING:
+	case CHSB_BESTIARY:
 		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenBestiaryDesc" ) );
 		break;
 	case CHSB_ARMORY:
 		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenArmoryDesc" ) );
+		break;
+	case CHSB_CRAFTING:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenCraftingDesc" ) );
+		break;
+	case CHSB_MAPINFO:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenMapInfosDesc" ) );
+		break;
+	case CHSB_LESSONS:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenLessonsDesc" ) );
+		break;
+	case CHSB_SKILL:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenSkillDesc" ) );
+		break;
+	case CHSB_DEMOMAN:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenMapInfosDesc" ) );
+		break;
+	case CHSB_ACHIEVEMENTS:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenAchDesc" ) );
+		break;
+	case CHSB_MODCREDITS:
+		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "TFSOLO_Loadout_OpenModCreditsDesc" ) );
 		break;
 	case CHSB_TRADING:
 		m_pItemsLabel->SetText( g_pVGuiLocalize->Find( "Loadout_OpenTradingDesc" ) );

@@ -63,17 +63,35 @@ enum charinfo_activepanels_t
 	CHAP_CRAFTING,
 	CHAP_ARMORY,
 	CHAP_PAINTKIT_PREVIEW,
+	CHAP_ACHIEVEMENTS,
+	CHAP_MAPINFO,
+	CHAP_LESSONS,
+	CHAP_SKILL,
+	CHAP_BESTIARY,
+	CHAP_DEMOMAN,
+	CHAP_MEDIC,
+	CHAP_MODCREDITS,
 };
 
 enum charinfosubbuttons_t
 {
-	CHSB_BACKPACK,
-	CHSB_CRAFTING,
+	CHSB_MAPINFO,
+	CHSB_ACHIEVEMENTS,
+	CHSB_SKILL,
+	CHSB_DEMOMAN,
 	CHSB_ARMORY,
+	CHSB_CRAFTING,
+	CHSB_LESSONS,
+	CHSB_BESTIARY,
+	CHSB_MODCREDITS,
+
+	CHSB_NUM_BUTTONS,
+
+	CHSB_BACKPACK,
+	//CHSB_CRAFTING,
+	//CHSB_ARMORY,
 	CHSB_TRADING,
 	CHSB_PAINTKITS,
-
-	CHSB_NUM_BUTTONS
 };
 
 
@@ -97,6 +115,14 @@ public:
 	void			OpenToBackpack( void ) { OpenSubPanel( CHAP_BACKPACK ); }
 	void			OpenToCrafting( void ) { OpenSubPanel( CHAP_CRAFTING ); }
 	void			OpenToArmory( int iItemDef = 0 ) { m_iArmoryItemDef = iItemDef; OpenSubPanel( CHAP_ARMORY ); }
+	void			OpenToAchievements( void ) { OpenSubPanel( CHAP_ACHIEVEMENTS ); }
+	void			OpenToMapInfo( void ) { OpenSubPanel( CHAP_MAPINFO ); }
+	void			OpenToLessons( void ) { OpenSubPanel( CHAP_LESSONS ); }
+	void			OpenToSkill( void ) { OpenSubPanel( CHAP_SKILL ); }
+	void			OpenToBestiary( void ) { OpenSubPanel( CHAP_BESTIARY ); }
+	void			OpenToDemoman( void ) { OpenSubPanel( CHAP_DEMOMAN); }
+	void			OpenToMedic( void ) { OpenSubPanel( CHAP_MEDIC ); }
+	void			OpenToModCredits( void ) { OpenSubPanel( CHAP_MODCREDITS ); }
 	void			OpenToPaintkitPreview( CEconItemView* pItem, bool bFixedItem, bool bFixedPaintkit );
 	void			OpenSubPanel( charinfo_activepanels_t iPanel );
 	void			UpdateModelPanels( bool bOpenClassLoadout = true );
