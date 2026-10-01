@@ -364,4 +364,24 @@ armory_config
 	{
 		Cost 100
 	}
+	"Taunt: Hippocratic Hypocrite"
+	{
+		Cost 100
+	}
+	"Taunt: One-Eyed Punt"
+	{
+		Cost 100
+	}
+	"Taunt: Showrunner's Spirit"
+	{
+		Cost 100
+	}
+	"Taunt: Barrel Roll"
+	{
+		Cost 100
+	}
+	"Taunt: Sear You Later"
+	{
+		Cost 100
+	}
 }

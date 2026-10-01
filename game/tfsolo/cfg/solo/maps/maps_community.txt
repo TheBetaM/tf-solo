@@ -2463,12 +2463,12 @@ maps_config
 				theme_hallow 1
 			}
 		}
-		cp_scaredycat
+		cp_wildcat_event
 		{
 			name "Scaredy-Cat"
 			modename "#Gametype_AttackDefense"
-			thumbArt "maps/menu_thumb_cp_scaredycat"
-			photosArt "maps/menu_photos_cp_scaredycat"
+			thumbArt "maps/menu_thumb_cp_wildcat_event"
+			photosArt "maps/menu_photos_cp_wildcat_event"
 			tags
 			{
 				ad 1

@@ -519,5 +519,23 @@ maps_config
 				allow_pd 1
 			}
 		}
+		cp_holyhell
+		{
+			tags
+			{
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+		}
+		koth_trainsawlaser
+		{
+			tags
+			{
+				allow_arena 1
+				allow_pd 1
+			}
+		}
 	}
 }

@@ -6360,4 +6360,96 @@ armory_config
 	{
 		Cost 100
 	}
+	"Royal Remains"
+	{
+		Cost 100
+	}
+	"The Damage Dealer"
+	{
+		Cost 100
+	}
+	"Gunpowder Grin"
+	{
+		Cost 100
+	}
+	"Wayward Wrap"
+	{
+		Cost 100
+	}
+	"Scaled Surcoat"
+	{
+		Cost 100
+	}
+	"Crown of the Ye Olde Kingdom"
+	{
+		Cost 100
+	}
+	"Desperado Disguise"
+	{
+		Cost 100
+	}
+	"General's Greatcoat"
+	{
+		Cost 100
+	}
+	"Hell-Bent Leather"
+	{
+		Cost 100
+	}
+	"Cogwork Cargos"
+	{
+		Cost 100
+	}
+	"Clowning Cowl"
+	{
+		Cost 100
+	}
+	"Showdown Slacks"
+	{
+		Cost 100
+	}
+	"Bone Chiller"
+	{
+		Cost 100
+	}
+	"Skeleton Crew"
+	{
+		Cost 100
+	}
+	"Mined Mind"
+	{
+		Cost 100
+	}
+	"High Caliber Earner"
+	{
+		Cost 100
+	}
+	"Two Faced Terror"
+	{
+		Cost 100
+	}
+	"Vance's Vest"
+	{
+		Cost 100
+	}
+	"Rough Rider"
+	{
+		Cost 100
+	}
+	"Batter's Jersey"
+	{
+		Cost 100
+	}
+	"Grenadier's Goggles"
+	{
+		Cost 100
+	}
+	"Bounty Hunter's Brim"
+	{
+		Cost 100
+	}
+	"Twain Tassets"
+	{
+		Cost 100
+	}
 }
