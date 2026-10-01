@@ -648,7 +648,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem, bool bPreserve
 			}
 			else
 			{
-				SetToPlayerClass( m_iCurrentClassIndex, false, m_strPlayerModelOverride, false, bPreserveModelOverride ? m_strPlayerModelOverride.Get() : NULL, bPreserveModelOverride );
+				SetToPlayerClass( m_iCurrentClassIndex, false, m_strPlayerModelOverride, false );
 			}
 		}
 	}
