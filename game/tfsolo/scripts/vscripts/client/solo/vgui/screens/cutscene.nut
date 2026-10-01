@@ -253,7 +253,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 			}
 		}
 		ActorPanel1 <- SoloPanel.CreatePanelRoot(kvActorPanel1)
-		ActorPanel1.SetToPlayerClass(5, true, null)
+		ActorPanel1.SetToPlayerClass(5, true, null, false)
 		ActorPanel1.SetDisableSpeak(false)
 		
 		local kvActorPanel2 = {
@@ -293,7 +293,7 @@ TFSOLO.Screens.Cutscene <- class extends TFSOLO.Screen
 			}
 		}
 		ActorPanel2 <- SoloPanel.CreatePanelRoot(kvActorPanel2)
-		ActorPanel2.SetToPlayerClass(1, true, null)
+		ActorPanel2.SetToPlayerClass(1, true, null, false)
 		ActorPanel2.SetDisableSpeak(false)
 	}
 }

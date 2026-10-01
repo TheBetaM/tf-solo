@@ -132,7 +132,7 @@ SoloMainMenu.InitClassLineup <- function()
 	for (local i = 1; i < 10; i++)
 	{
 		SoloMainMenu.ActorPanels[i] = MainMenu.CreatePanelRoot(SoloMainMenu.ClassLineupKV(i))
-		SoloMainMenu.ActorPanels[i].SetToPlayerClass(i, true, null)
+		SoloMainMenu.ActorPanels[i].SetToPlayerClass(i, true, null, false)
 		SoloMainMenu.ActorPanels[i].SetTeam(team)
 		SoloMainMenu.ActorPanels[i].SetDisableSpeak(true)
 		//SoloMainMenu.ActorPanels[i].SetFreezeScene(true)
@@ -145,7 +145,7 @@ SoloMainMenu.InitClassLineup <- function()
 		{
 			SoloMainMenu.ActorPanels[i].PlayVCD("scenes/player/" + SoloMainMenu.ClassLineupNames[i] + "/low/idle.vcd", null, true, false)
 		}
-		SoloMainMenu.ActorPanels[i].HoldItemInSlot(SoloMainMenu.ClassLineupSlots[i])
+		SoloMainMenu.ActorPanels[i].HoldItemInSlot(SoloMainMenu.ClassLineupSlots[i], false)
 	}
 }
 
@@ -163,6 +163,6 @@ SoloMainMenu.UpdateClassLineup <- function()
 		{
 			SoloMainMenu.ActorPanels[i].PlayVCD("scenes/player/" + SoloMainMenu.ClassLineupNames[i] + "/low/idle.vcd", null, true, false)
 		}
-		SoloMainMenu.ActorPanels[i].HoldItemInSlot(SoloMainMenu.ClassLineupSlots[i])
+		SoloMainMenu.ActorPanels[i].HoldItemInSlot(SoloMainMenu.ClassLineupSlots[i], false)
 	}
 }

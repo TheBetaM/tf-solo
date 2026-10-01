@@ -2436,7 +2436,7 @@ maps_config
 		}
 		koth_trainsawlaser
 		{
-			name "Shorelight"
+			name "Trainsawlaser"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_trainsawlaser"
 			photosArt "maps/menu_photos_koth_trainsawlaser"
