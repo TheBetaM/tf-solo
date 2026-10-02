@@ -2451,7 +2451,7 @@ maps_config
 		ctf_medi_evil
 		{
 			name "Medi-Evil"
-			modename "#Gametype_CTF"
+			modename "#GameType_Medieval"
 			thumbArt "maps/menu_thumb_ctf_medi_evil"
 			photosArt "maps/menu_photos_ctf_medi_evil"
 			tags

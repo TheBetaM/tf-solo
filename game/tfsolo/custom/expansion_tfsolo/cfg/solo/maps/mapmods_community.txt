@@ -537,5 +537,16 @@ maps_config
 				allow_pd 1
 			}
 		}
+		ctf_medi_evil
+		{
+			mods
+			{
+				nomdv
+				{
+					modename "#Gametype_CTF"
+					modfile "scripts/mapmods/nomedieval.txt"
+				}
+			}
+		}
 	}
 }
