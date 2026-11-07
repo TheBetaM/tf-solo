@@ -462,8 +462,9 @@ void KeyValues::Init()
 	m_bHasEscapeSequences = false;
 	m_bEvaluateConditionals = true;
 
-	// for future proof
-	memset( unused, 0, sizeof(unused) );
+	m_bUsesPrivateSymbols = false;
+	m_bOwnsPrivateSymbols = false;
+	m_pPrivateSymbols = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -528,6 +529,15 @@ void KeyValues::ChainKeyValue( KeyValues* pChain )
 //-----------------------------------------------------------------------------
 const char *KeyValues::GetName( void ) const
 {
+	if ( m_bUsesPrivateSymbols )
+	{
+		if ( m_iKeyName == INVALID_KEY_SYMBOL )
+			return "";
+		const size_t nPoolOffset = ( sizeof(void*) == 8 ) ? 0x58 : 0x34;
+		const char *pszPool = *reinterpret_cast<const char* const*>( reinterpret_cast<const char*>( m_pPrivateSymbols ) + nPoolOffset );
+		return pszPool + m_iKeyName;
+	}
+
 	return s_pfGetStringForSymbol( m_iKeyName );
 }
 
@@ -1003,7 +1013,7 @@ KeyValues *KeyValues::FindKey(const char *keyName, bool bCreate)
 	// lookup the symbol for the search string
 	HKeySymbol iSearchStr = s_pfGetSymbolForString( searchStr, bCreate );
 
-	if ( iSearchStr == INVALID_KEY_SYMBOL )
+	if ( iSearchStr == INVALID_KEY_SYMBOL && !m_bUsesPrivateSymbols )
 	{
 		// not found, couldn't possibly be in key value list
 		return NULL;
@@ -1017,7 +1027,7 @@ KeyValues *KeyValues::FindKey(const char *keyName, bool bCreate)
 		lastItem = dat;	// record the last item looked at (for if we need to append to the end of the list)
 
 		// symbol compare
-		if (dat->m_iKeyName == iSearchStr)
+		if (dat->m_bUsesPrivateSymbols ? !Q_stricmp(dat->GetName(), searchStr) : dat->m_iKeyName == iSearchStr)
 		{
 			break;
 		}
@@ -1808,7 +1818,10 @@ void KeyValues::CopyKeyValuesFromRecursive( const KeyValues& rootSrc )
 //-----------------------------------------------------------------------------
 void KeyValues::CopyKeyValue( const KeyValues& src, size_t tmpBufferSizeB, char* tmpBuffer )
 {
-	m_iKeyName = src.GetNameSymbol();
+	if ( src.m_bUsesPrivateSymbols )
+		SetName( src.GetName() );
+	else
+		m_iKeyName = src.GetNameSymbol();
 
 	if ( src.m_pSub )
 		return;
@@ -2898,13 +2911,13 @@ bool KeyValues::ReadAsBinary( CUtlBuffer &buffer, int nStackDepth )
 void *KeyValues::operator new( size_t iAllocSize )
 {
 	MEM_ALLOC_CREDIT();
-	return KeyValuesSystem()->AllocKeyValuesMemory( (int)iAllocSize );
+	return KeyValuesSystem()->AllocKeyValuesMemory( Max( (int)iAllocSize, (int)sizeof( KeyValues ) ) );
 }
 
 void *KeyValues::operator new( size_t iAllocSize, int nBlockUse, const char *pFileName, int nLine )
 {
 	MemAlloc_PushAllocDbgInfo( pFileName, nLine );
-	void *p = KeyValuesSystem()->AllocKeyValuesMemory( (int)iAllocSize );
+	void *p = KeyValuesSystem()->AllocKeyValuesMemory( Max( (int)iAllocSize, (int)sizeof( KeyValues ) ) );
 	MemAlloc_PopAllocDbgInfo();
 	return p;
 }

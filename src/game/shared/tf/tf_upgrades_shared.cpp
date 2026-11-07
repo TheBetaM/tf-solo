@@ -103,7 +103,7 @@ void CMannVsMachineUpgradeManager::ParseUpgradeBlockForUIGroup( KeyValues *pKV, 
 				m_Upgrades.Remove( index );
 				continue;
 			}
-			Assert( pAttr->GetAttributeType() );
+			Assert( pInvAttr->GetAttributeType() );
 			if ( !pInvAttr->GetAttributeType()->BSupportsGameplayModificationAndNetworking() )
 			{
 				Warning( "Upgrades: Invalid attribute '%s' is of a type that doesn't support networking!\n", m_Upgrades[ index ].szInvAttrib );

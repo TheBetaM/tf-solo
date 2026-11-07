@@ -330,11 +330,14 @@ private:
 	char	   m_iDataType;
 	char	   m_bHasEscapeSequences; // true, if while parsing this KeyValue, Escape Sequences are used (default false)
 	char	   m_bEvaluateConditionals; // true, if while parsing this KeyValue, conditionals blocks are evaluated (default true)
-	char	   unused[1];
+
+	char	   m_bUsesPrivateSymbols;
+	char	   m_bOwnsPrivateSymbols;
 
 	KeyValues *m_pPeer;	// pointer to next key in list
 	KeyValues *m_pSub;	// pointer to Start of a new sub key list
 	KeyValues *m_pChain;// Search here if it's not in our list
+	void	  *m_pPrivateSymbols;
 
 private:
 	// Statics to implement the optional growable string table
